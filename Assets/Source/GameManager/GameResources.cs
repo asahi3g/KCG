@@ -157,7 +157,7 @@ public class GameResources
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Ore1);
         GameState.TileCreationApi.SetTilePropertyName("ore_1");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(OreSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();*/
 
@@ -180,7 +180,7 @@ public class GameResources
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Glass);
         GameState.TileCreationApi.SetTilePropertyName("glass");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 11, 10);
         GameState.TileCreationApi.EndTileProperty();*/
@@ -204,7 +204,7 @@ public class GameResources
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Moon);
         GameState.TileCreationApi.SetTilePropertyName("moon");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();*/
@@ -251,14 +251,14 @@ public class GameResources
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Ore2);
         GameState.TileCreationApi.SetTilePropertyName("ore_2");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(Ore2SpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();*/
 
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Ore3);
         GameState.TileCreationApi.SetTilePropertyName("ore_3");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(Ore3SpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();*/
 
@@ -280,7 +280,7 @@ public class GameResources
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Pipe);
         GameState.TileCreationApi.SetTilePropertyName("pipe");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();*/

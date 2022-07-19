@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Enums.Tile;
-using KMath;
-
 //MOST IMPORTANT TILE
 
 /*
@@ -156,12 +150,11 @@ namespace PlanetTileMap
             CurrentTileIndex = tileID;
         }*/
 
-        public void SetTilePropertyShape(TileShape shape, TileShapeAndRotation shapeAndRotation)
+        public void SetTilePropertyShape(TileShape shape)
         {
             Utils.Assert(CurrentTileIndex != 0);
 
             TilePropertyArray[(int) CurrentTileIndex].BlockShapeType = shape;
-            TilePropertyArray[(int) CurrentTileIndex].BlockShapeAndRotation = shapeAndRotation;
         }
 
         /*public void SetTilePropertySpriteSheet16(int spriteSheetId, int row, int column)

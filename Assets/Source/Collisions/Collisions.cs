@@ -1,8 +1,6 @@
 using Enums.Tile;
 using KMath;
 using Utility;
-using UnityEngine;
-using System;
 
 namespace Collisions
 {
@@ -20,13 +18,9 @@ namespace Collisions
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
-                        ref var tile = ref tileMap.GetFrontTile(x, y);
-                        if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
+                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        if (frontTileID != TileID.Air)
                         {
-                            if (IsAPlatform(tile))
-                            {
-                                return false;
-                            }
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
                             return true;
@@ -50,14 +44,9 @@ namespace Collisions
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
-                        ref var tile = ref tileMap.GetFrontTile(x, y);
-
-                        if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
+                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        if (frontTileID != TileID.Air)
                         {
-                            if (IsAPlatform(tile))
-                            {
-                                return false;
-                            }
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
                             return true;
@@ -85,14 +74,10 @@ namespace Collisions
                 {
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
-                        ref var tile = ref tileMap.GetFrontTile(x, y);
-                        if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
+                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        if (frontTileID != TileID.Air)
                         {
                             var tileBorders = new AABox2D(x, y);
-                            if(Math.Abs(borders.ymin - tileBorders.ymax) > 0.1f && tile.MaterialType == PlanetTileMap.TileMaterialType.Platform)
-                            {
-                                return false;
-                            }
                             tileBorders.DrawBox();
                             return true;
                         }
@@ -117,14 +102,9 @@ namespace Collisions
                 {
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
-                        ref var tile = ref tileMap.GetFrontTile(x, y);
-                        
-                        if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
+                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        if (frontTileID != TileID.Air)
                         {
-                            if (IsAPlatform(tile))
-                            {
-                                return false;
-                            }
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
                             return true;

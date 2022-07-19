@@ -1,8 +1,5 @@
 using Enums.Tile;
-using KMath;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utility;
 
@@ -20,7 +17,7 @@ namespace PlanetTileMap
 
             for (int i = 0; i < LayerCount; i++)
             {
-                LayerMeshes[i] = new Utility.FrameMesh(("layerMesh" + i), material, transform,
+                LayerMeshes[i] = new FrameMesh(("layerMesh" + i), material, transform,
                     GameState.TileSpriteAtlasManager.GetSpriteAtlas(0), drawOrder + i);
             }
         }
@@ -46,7 +43,7 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetMidTile(x, y);
+                        ref var tile = ref tileMap.GetMidTileID(x, y);
 
                         if (tile.TileID >= 0)
                         {
@@ -117,7 +114,7 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetFrontTile(x, y);
+                        ref var tile = ref tileMap.GetFrontTileID(x, y);
 
                         if (tile.TileID >= 0)
                         {
@@ -189,7 +186,7 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetBackTile(x, y);
+                        ref var tile = ref tileMap.GetBackTileID(x, y);
 
                         if (tile.TileID >= 0)
                         {

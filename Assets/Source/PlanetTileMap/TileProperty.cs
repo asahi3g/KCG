@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Enums.Tile;
-using KMath;
+﻿using Enums.Tile;
 
 //TODO: add material type for block
 //TODO: per material coefficient of restitution, coefficient of static friction and coefficient of dynamic friction
@@ -28,7 +25,6 @@ namespace PlanetTileMap
 
         public CollisionType CollisionIsoType;
         public TileShape BlockShapeType;
-        public TileShapeAndRotation BlockShapeAndRotation;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
 
