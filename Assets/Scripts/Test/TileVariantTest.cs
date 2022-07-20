@@ -34,7 +34,7 @@ namespace Planet.Unity
                 Planet.TileMap.RemoveFrontTile(x, y);                
             }
 
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(ref Planet.TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh(Planet.TileMap);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
         }
 
