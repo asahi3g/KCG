@@ -7,6 +7,8 @@ namespace PlanetTileMap
         public TileMaterialType MaterialType;
         public int TileID;
 
+        public int MechID;
+
         public TileDrawType DrawType;
         public int SpriteId2;
     }

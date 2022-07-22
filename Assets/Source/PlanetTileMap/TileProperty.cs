@@ -21,7 +21,7 @@ namespace PlanetTileMap
         public int TileID;
         public TileMaterialType MaterialType;
         public int SpriteId;
-        
+
         /// <summary>
         /// To map neighbour tiles or not
         /// </summary>

@@ -6,17 +6,17 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class GameComponentsLookup {
+public static class MechComponentsLookup {
 
-    public const int MechID = 0;
+    public const int MechMechPositioning = 0;
 
     public const int TotalComponents = 1;
 
     public static readonly string[] componentNames = {
-        "MechID"
+        "MechMechPositioning"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Mech.IDComponent)
+        typeof(Mech.MechPositioningComponent)
     };
 }
