@@ -2271,12 +2271,14 @@ MonoBehaviour:
   center: {x: 0, y: 0, z: 0}
   texture: {fileID: 0}
   renderer: {fileID: 0}
+  pixelate: 0
   blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
   scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
   exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
   distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
   circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
   circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 0}
 --- !u!4 &410944484
 Transform:
   m_ObjectHideFlags: 0
@@ -2405,6 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: {fileID: 451157161}
+  seed: 0
   StarCount: 1
   InnerPlanets: 4
   OuterPlanets: 6
@@ -2428,6 +2431,8 @@ MonoBehaviour:
   distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
   circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
   circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 7200000, guid: 9b36951ceb5da9a4398e2a7dd2fe8a4e, type: 3}
+  pixelate: 0
   rocky_planet_base_color: {r: 0.3490566, g: 0.2755455, b: 0.23544855, a: 1}
   gas_giant_base_color: {r: 0.8490566, g: 0.75820327, b: 0.59674263, a: 1}
   moon_base_color: {r: 0.26415092, g: 0.25696966, b: 0.25044498, a: 1}
@@ -10717,12 +10722,14 @@ MonoBehaviour:
   center: {x: 0, y: 0, z: 0}
   texture: {fileID: 0}
   renderer: {fileID: 0}
+  pixelate: 0
   blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
   scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
   exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
   distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
   circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
   circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 0}
 --- !u!4 &1768860445
 Transform:
   m_ObjectHideFlags: 0

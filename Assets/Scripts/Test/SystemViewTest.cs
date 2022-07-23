@@ -49,6 +49,9 @@ namespace Scripts {
             public  ComputeShader    distortion_shader;
             public  ComputeShader    circular_blur_shader;
             public  ComputeShader    circular_mask_shader;
+            public  ComputeShader    pixelate_shader;
+
+            public  bool             pixelate;
 
             public  Color            rocky_planet_base_color;
             public  Color            gas_giant_base_color;
@@ -267,8 +270,10 @@ namespace Scripts {
                     Planet.renderer.distortion_shader         = distortion_shader;
                     Planet.renderer.circular_blur_shader      = circular_blur_shader;
                     Planet.renderer.circular_mask_shader      = circular_mask_shader;
+                    Planet.renderer.pixelate_shader           = pixelate_shader;
 
                     Planet.renderer.seed                      = rnd.Next();
+                    Planet.renderer.pixelate                  = pixelate;
 
                     switch(Planet.obj.type) {
 
