@@ -1,0 +1,27 @@
+#pragma kernel pixelate
+
+  StructuredBuffer<float>       noise;
+RWStructuredBuffer<float> outputnoise;
+
+uint width;
+uint height;
+
+uint radius;
+
+[numthreads(8, 8, 1)]
+void pixelate(uint3 id : SV_DispatchThreadID) {
+    float pixels = 0.0f;
+    float value  = 0.0f;
+
+    uint  startx = id.x / radius;
+    uint  starty = id.y / radius;
+
+    for(uint x = startx; x < startx + radius; x++)
+        for(uint y = starty; y <= starty + radius; y++) {
+            pixels++;
+
+            value += noise[x + y * width];
+        }
+
+    outputnoise[id.x + id.y * width] = value / pixels;
+}

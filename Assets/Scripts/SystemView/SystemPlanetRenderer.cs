@@ -21,12 +21,15 @@ namespace Scripts {
             public  CameraController Camera;
             private System.Random    rng;
 
+            public  bool             pixelate;
+
             public  ComputeShader    blur_noise_shader;
             public  ComputeShader    scale_noise_shader;
             public  ComputeShader    exponential_filter_shader;
             public  ComputeShader    distortion_shader;
             public  ComputeShader    circular_blur_shader;
             public  ComputeShader    circular_mask_shader;
+            public  ComputeShader    pixelate_shader;
 
             public  bool             autoinit; // For testing
 
@@ -167,45 +170,66 @@ namespace Scripts {
 
                     circular_blur_shader.Dispatch(0, radius / 8, radius / 8, 1);
 
-                    color_buffer2.Release();
-
                     float[] alpha = new float[radius * radius];
-                    color_buffer1.GetData(alpha);
-                    color_buffer1.Release();
 
-                    for(int x = 0; x < radius; x++)
-                        for(int y = 0; y < radius; y++) {
-                            int id = x + y * radius;
+                    if(pixelate) {
+                        pixelate_shader.SetInt( width_id, radius);
+                        pixelate_shader.SetInt(height_id, radius);
+                        pixelate_shader.SetInt(radius_id, 16);
 
-                            if(base_alpha[id] == 0.0f) continue;
+                        pixelate_shader.SetBuffer(0,  noise_id, color_buffer1);
+                        pixelate_shader.SetBuffer(0, output_id, color_buffer2);
 
-                            float colorid = alpha[id] * colors.Length;
-                            if(colorid >= colors.Length) colorid = colors.Length - 1;
+                        pixelate_shader.Dispatch(0, radius / 8, radius / 8, 1);
 
+                        color_buffer2.GetData(alpha);
+                        color_buffer2.Release();
+                        color_buffer1.Release();
+                    } else {
+                        color_buffer1.GetData(alpha);
+                        color_buffer1.Release();
+                        color_buffer2.Release();
+                    }
+
+                    for(int id = 0; id < radius * radius; id++) {
+                        if(base_alpha[id] == 0.0f) continue;
+
+                        float r, g, b, a;
+
+                        float colorid = alpha[id] * colors.Length;
+                        if(colorid <  0.0f)          colorid *= -1;
+                        if(colorid >= colors.Length) colorid = colors.Length - 1;
+
+                        if(!pixelate) {
                             int color0id = (int)colorid;
                             int color1id = (color0id + 1) % colors.Length;
 
                             float dx = colorid - color0id;
 
-                            float r = Tools.smootherstep(colors[color0id].r, colors[color1id].r, dx);
-                            float g = Tools.smootherstep(colors[color0id].g, colors[color1id].g, dx);
-                            float b = Tools.smootherstep(colors[color0id].b, colors[color1id].b, dx);
-                            float a = Tools.smootherstep(colors[color0id].a, colors[color1id].a, dx);
+                            r = Tools.smoothstep(colors[color0id].r, colors[color1id].r, dx);
+                            g = Tools.smoothstep(colors[color0id].g, colors[color1id].g, dx);
+                            b = Tools.smoothstep(colors[color0id].b, colors[color1id].b, dx);
+                            a = Tools.smoothstep(colors[color0id].a, colors[color1id].a, dx);
+                        } else {
+                            r = colors[(int)colorid].r;
+                            g = colors[(int)colorid].g;
+                            b = colors[(int)colorid].b;
+                            a = colors[(int)colorid].a;
+                        }
 
-                            float blend                    =      a + base_alpha[id] * (1.0f - a);
-                            pixels[x + y * radius].r = (r * a + basecolor.r * base_alpha[id] * (1.0f - a)) / blend;
-                            pixels[x + y * radius].g = (g * a + basecolor.g * base_alpha[id] * (1.0f - a)) / blend;
-                            pixels[x + y * radius].b = (b * a + basecolor.b * base_alpha[id] * (1.0f - a)) / blend;
-                            pixels[x + y * radius].a = base_alpha[id];
-                        }
+                        float blend  =      a +               base_alpha[id] * (1.0f - a);
+                        pixels[id].r = (r * a + basecolor.r * base_alpha[id] * (1.0f - a)) / blend;
+                        pixels[id].g = (g * a + basecolor.g * base_alpha[id] * (1.0f - a)) / blend;
+                        pixels[id].b = (b * a + basecolor.b * base_alpha[id] * (1.0f - a)) / blend;
+                        pixels[id].a = base_alpha[id];
+                    }
                 } else
-                    for(int x = 0; x < radius; x++)
-                        for(int y = 0; y < radius; y++) {
-                            pixels[x + y * radius].r = basecolor.r;
-                            pixels[x + y * radius].g = basecolor.g;
-                            pixels[x + y * radius].b = basecolor.b;
-                            pixels[x + y * radius].a = base_alpha[x + y * radius];
-                        }
+                    for(int id = 0; id < radius * radius; id++) {
+                        pixels[id].r = basecolor.r;
+                        pixels[id].g = basecolor.g;
+                        pixels[id].b = basecolor.b;
+                        pixels[id].a = base_alpha[id];
+                    }
 
                 texture = new Texture2D(radius, radius);
                 texture.filterMode = FilterMode.Trilinear;

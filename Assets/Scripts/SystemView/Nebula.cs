@@ -20,6 +20,8 @@ namespace Scripts {
             public Texture2D      texture;
             public SpriteRenderer renderer;
 
+            public bool           pixelate;
+
             private System.Random rng;
             private float         last_time;
 
@@ -29,6 +31,7 @@ namespace Scripts {
             public  ComputeShader         distortion_shader;
             public  ComputeShader      circular_blur_shader;
             public  ComputeShader      circular_mask_shader;
+            public  ComputeShader           pixelate_shader;
 
             private void generate() {
                 // Shaders properties
@@ -232,7 +235,6 @@ namespace Scripts {
                     circular_blur_shader.SetBuffer(0, output_id, color_buffer1);
 
                     circular_blur_shader.Dispatch(0, width / 8, height / 8, 1);
-                    color_buffer2.Release();
 
                     // Soften noise
                     color_buffer1.GetData(alpha);
@@ -248,8 +250,25 @@ namespace Scripts {
 
                     circular_mask_shader.Dispatch(0, width / 8, height / 8, 1);
 
-                    color_buffer1.GetData(alpha);
-                    color_buffer1.Release();
+                    if(pixelate) {
+                        pixelate_shader.SetInt( width_id, width);
+                        pixelate_shader.SetInt(height_id, height);
+                        pixelate_shader.SetInt(radius_id, 16);
+
+                        pixelate_shader.SetBuffer(0, noise_id, color_buffer1);
+                        pixelate_shader.SetBuffer(0, noise_id, color_buffer2);
+
+                        pixelate_shader.Dispatch(0, width / 8, height / 8, 1);
+
+                        color_buffer2.GetData(alpha);
+                        color_buffer2.Release();
+                        color_buffer1.Release();
+                    } else {
+                        color_buffer1.GetData(alpha);
+                        color_buffer1.Release();
+                        color_buffer2.Release();
+                    }
+
 
                     for(int x = 0; x < width; x++)
                         for(int y = 0; y < height; y++) {
