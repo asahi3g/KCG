@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KGUI.Elements
 {
-    public class ProgressBar
+    public class CircleProgressBar
     {
         // Bar Gameobject
         private GameObject Bar;
@@ -13,7 +13,7 @@ namespace KGUI.Elements
         public float _fillValue;
 
         // Constructor
-        public ProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue, AgentEntity agentEntity)
+        public CircleProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue, AgentEntity agentEntity)
         {
             // Set Fill Value
             _fillValue = fillValue;
@@ -52,7 +52,7 @@ namespace KGUI.Elements
             Bar.GetComponent<UnityEngine.UI.Image>().type = UnityEngine.UI.Image.Type.Filled;
 
             // Set Fill Method
-            Bar.GetComponent<UnityEngine.UI.Image>().fillMethod = UnityEngine.UI.Image.FillMethod.Horizontal;
+            Bar.GetComponent<UnityEngine.UI.Image>().fillMethod = UnityEngine.UI.Image.FillMethod.Radial360;
 
             // Set Fill Origin
             Bar.GetComponent<UnityEngine.UI.Image>().fillOrigin = 0;
@@ -61,7 +61,7 @@ namespace KGUI.Elements
             Bar.GetComponent<UnityEngine.UI.Image>().fillAmount = fillValue;
 
             // Set Fil Clockwise
-            Bar.GetComponent<UnityEngine.UI.Image>().fillClockwise = false;
+            Bar.GetComponent<UnityEngine.UI.Image>().fillClockwise = true;
         }
 
         public void SetPosition(Vector3 newPos)

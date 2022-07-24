@@ -154,7 +154,7 @@ namespace KGUI
                 }
                 else if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) > 30.0f)
                 {
-                    // Reset When Out Of the UI Element
+                    // Set Condition to True
                     UIList[i].CanRun = true;
                 }
             }
@@ -171,12 +171,8 @@ namespace KGUI
                     // Set Condition to True
                     UIList[i].CanRun = true;
 
-                    // If Cursor is Out of UI Element
-                    if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) > 30.0f)
-                    {
-                        // On Mouse Exit
-                        UIList[i].OnMouseExit();
-                    }
+                    // On Mouse Exit
+                    UIList[i].OnMouseExit();
                 }
             }
         }

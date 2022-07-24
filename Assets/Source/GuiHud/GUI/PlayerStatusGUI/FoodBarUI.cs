@@ -19,7 +19,7 @@ namespace KGUI.PlayerStatus
         Sprites.Sprite fill;
 
         // Image
-        public ProgressBar foodBar;
+        public CircleProgressBar foodBar;
         private Image Icon;
 
         public override void Initialize(Contexts contexts, AgentEntity agentEntity)
@@ -97,7 +97,7 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Food Bar Initializon
-            foodBar = new ProgressBar("Food Bar", Icon.GetTransform(), bar, UnityEngine.UI.Image.FillMethod.Radial360, agentEntity.agentStats.Food / 100, agentEntity);
+            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, agentEntity.agentStats.Food / 100, agentEntity);
             foodBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             foodBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 

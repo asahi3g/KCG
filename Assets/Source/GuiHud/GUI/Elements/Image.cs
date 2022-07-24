@@ -83,6 +83,12 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<RectTransform>().localScale = newScale;
         }
 
+        public void SetImage(Sprite sprite)
+        {
+            // Set New Image
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+        }
+
         public Transform GetTransform()
         {
             // Return Transform

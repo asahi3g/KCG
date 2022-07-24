@@ -17,7 +17,7 @@ namespace KGUI.PlayerStatus
         Sprites.Sprite fill;
 
         // Image
-        public ProgressBar oxygenBar;
+        public CircleProgressBar oxygenBar;
         private Image iconCanvas;
 
         public override void Initialize(Contexts contexts, AgentEntity agentEntity)
@@ -95,7 +95,7 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Oxygen Bar Initializon
-            oxygenBar = new ProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, UnityEngine.UI.Image.FillMethod.Radial360, agentEntity.agentStats.Oxygen / 100, agentEntity);
+            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Oxygen / 100, agentEntity);
             oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 

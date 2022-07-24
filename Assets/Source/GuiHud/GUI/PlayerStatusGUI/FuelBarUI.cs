@@ -17,7 +17,7 @@ namespace KGUI.PlayerStatus
         Sprites.Sprite fill;
 
         // Progress Bar
-        public ProgressBar progressBar;
+        public CircleProgressBar progressBar;
         private Image iconCanvas;
 
         public override void Initialize(Contexts contexts, AgentEntity agentEntity)
@@ -96,7 +96,7 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Fuel Bar Initializon
-            progressBar = new ProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, UnityEngine.UI.Image.FillMethod.Radial360, agentEntity.agentStats.Fuel / 100, agentEntity);
+            progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Fuel / 100, agentEntity);
             progressBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             progressBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 

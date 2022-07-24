@@ -17,7 +17,7 @@ namespace KGUI.PlayerStatus
         Sprites.Sprite fill;
 
         // Image
-        public ProgressBar waterBar;
+        public CircleProgressBar waterBar;
         private Image iconCanvas;
 
         public override void Initialize(Contexts contexts, AgentEntity agentEntity)
@@ -95,7 +95,7 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Water Bar Initializon
-            waterBar = new ProgressBar("Water Bar", iconCanvas.GetTransform(), bar, UnityEngine.UI.Image.FillMethod.Radial360, agentEntity.agentStats.Water / 100, agentEntity);
+            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Water / 100, agentEntity);
             waterBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             waterBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 

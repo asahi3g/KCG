@@ -8,29 +8,26 @@ namespace KGUI.PlayerStatus
         // Init Condition
         private static bool Init;
 
+        // Fill Value
+        float fillValue;
+
+        // Div Global Sprites
+        Sprite barDiv1Sprite;
+        Sprite barDiv2Sprite;
+
         // Icon
-        Sprites.Sprite icon;
-
-        // Bar
-        Sprites.Sprite barBorder;
-        private Texture2D healthBar;
-
-        Sprites.Sprite barDiv1;
-        Sprites.Sprite barDiv2;
-
-        // Player Health
-        public float playerHealth;
-        public Rect fillPosition = new Rect(78, 36, 226, 14);
-        public Rect div1Position = new Rect(130, 52, 3, -17);
-        public Rect div2Position = new Rect(190, 52, 3, -17);
-        public Rect div3Position = new Rect(250, 52, 3, -17);
-        public Rect borderPosition = new Rect(72, 54, 238, -20);
-        public Rect IconPosition = new Rect(10, 75, 50, -50);
-        public Rect TextPosition = new Rect(250, 60, 55, 22);
-        public Color color = new Color(0.6f, 0, 0, 1.0f);
-
         Image Icon;
+
+        // Border
         Image Border;
+
+        // Div's
+        Image BarDiv1;
+        Image BarDiv2;
+        Image BarDiv3;
+
+        // Health Bar
+        ProgressBar Bar;
 
         public override void Initialize(Contexts contexts, AgentEntity agentEntity)
         {
@@ -55,9 +52,36 @@ namespace KGUI.PlayerStatus
             Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
 
             // Create the sprite
-            icon = new Sprites.Sprite
+            Sprites.Sprite icon = new Sprites.Sprite
             {
                 Texture = iconTex,
+                TextureCoords = new Vector4(0, 0, 1, 1)
+            };
+
+            // Set Width and Height
+            int FillWidth = 5;
+            int FillHeight = 5;
+            Vector2Int fillPngSize = new Vector2Int(FillWidth, FillHeight);
+
+            // Load image from file
+            var fillSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_fill.png", FillWidth, FillHeight);
+
+            // Set Sprite ID from Sprite Atlas
+            int fillID = GameState.SpriteAtlasManager.CopySpriteToAtlas(fillSheet, 0, 0, Enums.AtlasType.Particle);
+
+            // Set Sprite Data
+            byte[] fillSpriteData = new byte[fillPngSize.x * fillPngSize.y * 4];
+
+            // Get Sprite Bytes
+            GameState.SpriteAtlasManager.GetSpriteBytes(fillID, fillSpriteData, Enums.AtlasType.Particle);
+
+            // Set Texture
+            Texture2D fillTex = Utility.Texture.CreateTextureFromRGBA(fillSpriteData, fillPngSize.x, fillPngSize.y);
+
+            // Create the sprite
+            Sprites.Sprite fill = new Sprites.Sprite
+            {
+                Texture = fillTex,
                 TextureCoords = new Vector4(0, 0, 1, 1)
             };
 
@@ -82,7 +106,7 @@ namespace KGUI.PlayerStatus
             Texture2D BarBorderTex = Utility.Texture.CreateTextureFromRGBA(BarBorderSpriteData, BarBorderPngSize.x, BarBorderPngSize.y);
 
             // Create the sprite
-            barBorder = new Sprites.Sprite
+            Sprites.Sprite barBorder = new Sprites.Sprite
             {
                 Texture = BarBorderTex,
                 TextureCoords = new Vector4(0, 0, 1, 1)
@@ -109,7 +133,7 @@ namespace KGUI.PlayerStatus
             Texture2D BarDiv1Tex = Utility.Texture.CreateTextureFromRGBA(BarDiv1SpriteData, BarDiv1PngSize.x, BarDiv1PngSize.y);
 
             // Create the sprite
-            barDiv1 = new Sprites.Sprite
+            Sprites.Sprite barDiv1 = new Sprites.Sprite
             {
                 Texture = BarDiv1Tex,
                 TextureCoords = new Vector4(0, 0, 1, 1)
@@ -136,7 +160,7 @@ namespace KGUI.PlayerStatus
             Texture2D BarDiv2Tex = Utility.Texture.CreateTextureFromRGBA(BarDiv2SpriteData, BarDiv2PngSize.x, BarDiv2PngSize.y);
 
             // Create the sprite
-            barDiv2 = new Sprites.Sprite
+            Sprites.Sprite barDiv2 = new Sprites.Sprite
             {
                 Texture = BarDiv2Tex,
                 TextureCoords = new Vector4(0, 0, 1, 1)
@@ -145,63 +169,55 @@ namespace KGUI.PlayerStatus
             // Add Components and setup agent object
             Sprite iconBar = Sprite.Create(icon.Texture, new Rect(0.0f, 0.0f, IconWidth, IconHeight), new Vector2(0.5f, 0.5f));
             Sprite borderSprite = Sprite.Create(barBorder.Texture, new Rect(0.0f, 0.0f, BarBorderWidth, BarBorderHeight), new Vector2(0.5f, 0.5f));
-
+            Sprite fillSprite = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
+            barDiv1Sprite = Sprite.Create(barDiv1.Texture, new Rect(0.0f, 0.0f, BarDiv1Width, BarDiv1Height), new Vector2(0.5f, 0.5f));
+            barDiv2Sprite = Sprite.Create(barDiv2.Texture, new Rect(0.0f, 0.0f, BarDiv2Width, BarDiv2Height), new Vector2(0.5f, 0.5f));
 
             Icon = new Image("Health Bar", iconBar);
+            fillValue = agentEntity.agentStats.Health;
             Border = new Image("Border", Icon.GetTransform(), borderSprite);
+            Bar = new ProgressBar("Health Bar", Icon.GetTransform(), fillSprite, fillValue / 100, agentEntity);
+            BarDiv1 = new Image("BarDiv1", Icon.GetTransform(), barDiv1Sprite);
+            BarDiv2 = new Image("BarDiv2", Icon.GetTransform(), barDiv1Sprite);
+            BarDiv3 = new Image("BarDiv3", Icon.GetTransform(), barDiv1Sprite);
+
 
             if (Camera.main.aspect >= 1.7f)
             {
                 Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
-                Border.SetPosition(new Vector3(338.9f, 58f, 0.0f));
+                Border.SetPosition(new Vector3(287f, 7f, 0));
+                Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
             }
             else if (Camera.main.aspect >= 1.5f)
             {
-                Icon.SetPosition(new Vector3(-335.6f, 9.6f, 4.873917f));
-
+                Icon.SetPosition(new Vector3(-335.6f, 180.6f, 4.873917f));
+                Border.SetPosition(new Vector3(287f, 7f, 0));
+                Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
             }
             else
             {
-                Icon.SetPosition(new Vector3(-364.8f, 255.3f, 4.873917f));
-
+                Icon.SetPosition(new Vector3(-362.8f, 254.3f, 4.873917f));
+                Border.SetPosition(new Vector3(287f, 7f, 0));
+                Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
             }
 
             Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
-            Border.SetScale(new Vector3(4.06952143f, 0.46484375f, 1));
-
-            healthBar = new Texture2D(100, 1);
+            Border.SetScale(new Vector3(4.069521f, 0.3654834f, 1));
+            Bar.SetScale(new Vector3(3.933964f, 0.27499f, 1));
+            BarDiv1.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
+            BarDiv2.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
+            BarDiv3.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
 
             Init = true;
-        }
-
-        void DrawHealthBar(AgentEntity agentEntity)
-        {
-            playerHealth = agentEntity.agentStats.Health;
-            
-            ClearHealthBar();
-
-            UpdateHealthBar((int)playerHealth);
-        }
-
-        private void ClearHealthBar()
-        {
-            // Clear Health Bar Texture
-            healthBar = new Texture2D(100, 1);
-        }
-
-        public void UpdateHealthBar(int percantage)
-        {
-            int j = 0;
-            for(; j < percantage; j++)
-            {
-                healthBar.SetPixel(j, 0, color);
-            }
-            healthBar.Apply();
-            GUI.skin.box.normal.background = healthBar;
-            GUI.backgroundColor = Color.white;
-
-            // Create Box
-            GUI.Box(fillPosition, GUIContent.none);
         }
 
         public override void Update(AgentEntity agentEntity)
@@ -210,57 +226,67 @@ namespace KGUI.PlayerStatus
             {
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
 
-                DrawHealthBar(agentEntity);
+                fillValue = agentEntity.agentStats.Health;
+                Bar.Update(fillValue / 100);
 
                 // Update Div Textures for under 25
-                if (playerHealth < 25)
+                if (fillValue < 25)
                 {
-                    GUI.DrawTexture(div1Position, barDiv2.Texture);
+                    BarDiv1.SetImage(barDiv2Sprite);
                 }
                 else
                 {
-                    GUI.DrawTexture(div1Position, barDiv1.Texture);
+                    BarDiv1.SetImage(barDiv1Sprite);
                 }
 
                 // Update Div Textures for under 50
-                if (playerHealth < 50)
+                if (fillValue < 50)
                 {
-                    GUI.DrawTexture(div2Position, barDiv2.Texture);
+                    BarDiv2.SetImage(barDiv2Sprite);
                 }
                 else
                 {
-                    GUI.DrawTexture(div2Position, barDiv1.Texture);
+                    BarDiv2.SetImage(barDiv1Sprite);
                 }
 
                 // Update Div Textures for under 75
-                if (playerHealth < 75)
+                if (fillValue < 75)
                 {
-                    GUI.DrawTexture(div3Position, barDiv2.Texture);
+                    BarDiv3.SetImage(barDiv2Sprite);
                 }
                 else
                 {
-                    GUI.DrawTexture(div3Position, barDiv1.Texture);
+                    BarDiv3.SetImage(barDiv1Sprite);
                 }
 
                 if (Camera.main.aspect >= 1.7f)
                 {
                     Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
-                    Border.SetPosition(new Vector3(338.9f, 58f, 0.0f));
+                    Border.SetPosition(new Vector3(287f, 7f, 0));
+                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
                 }
                 else if (Camera.main.aspect >= 1.5f)
                 {
-                    Icon.SetPosition(new Vector3(-335.6f, 9.6f, 4.873917f));
-
+                    Icon.SetPosition(new Vector3(-335.6f, 180.6f, 4.873917f));
+                    Border.SetPosition(new Vector3(287f, 7f, 0));
+                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
                 }
                 else
                 {
-                    Icon.SetPosition(new Vector3(-364.8f, 255.3f, 4.873917f));
-
+                    Icon.SetPosition(new Vector3(-362.8f, 254.3f, 4.873917f));
+                    Border.SetPosition(new Vector3(287f, 7f, 0));
+                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
+                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
                 }
             }
-
-            // Show Health With Text
-            GUI.TextArea(TextPosition, playerHealth + "/100");
         }
 
         public override void OnMouseClick(AgentEntity agentEntity)
