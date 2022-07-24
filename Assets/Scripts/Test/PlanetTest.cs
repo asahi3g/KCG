@@ -209,7 +209,7 @@ namespace Planet.Unity
             GenerateMap();
             SpawnStuff();
 
-            TileMapManager.Save(Planet.TileMap, "map.kmap");
+            //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
             inventoryID = Player.agentInventory.InventoryID;
             toolBarID = Player.agentToolBar.ToolBarID;
