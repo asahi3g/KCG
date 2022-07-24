@@ -9,7 +9,7 @@ namespace Scripts {
     namespace SystemView {
 
         public class SystemViewTest : MonoBehaviour {
-            public SystemState       State;
+            public SystemState       state;
 
             private float            LastTime;
             public System.Random     rnd;
@@ -52,6 +52,8 @@ namespace Scripts {
             public  ComputeShader    pixelate_shader;
 
             public  bool             pixelate;
+            public  bool             smoothstepped_colors;
+            public  int              pixelation_size;
 
             public  Color            rocky_planet_base_color;
             public  Color            gas_giant_base_color;
@@ -97,23 +99,23 @@ namespace Scripts {
             }
                 
             public void engage_autopilot() {
-                State.player.ship.engage_orbital_autopilot();
+                state.player.ship.engage_orbital_autopilot();
             }
 
             public void circularize() {
-                State.player.circularizing = true;
+                state.player.circularizing = true;
             }
 
             public void set_periapsis(string s) {
-                State.player.periapsis = float.Parse(s);
+                state.player.periapsis = float.Parse(s);
             }
 
             public void set_apoapsis(string s) {
-                State.player.apoapsis = float.Parse(s);
+                state.player.apoapsis = float.Parse(s);
             }
 
             public void set_rotation(string s) { 
-                State.player.rotation = Tools.normalize_angle(float.Parse(s) * Tools.pi / 180.0f);
+                state.player.rotation = Tools.normalize_angle(float.Parse(s) * Tools.pi / 180.0f);
             }
 
             public  Dropdown DockingTargetSelector;
@@ -130,7 +132,7 @@ namespace Scripts {
             }
 
             public void CenterCamera() {
-                Camera.set_position(-State.player.ship.self.posx, -State.player.ship.self.posy, 0.25f / system_scale);
+                Camera.set_position(-state.player.ship.self.posx, -state.player.ship.self.posy, 0.25f / system_scale);
             }
 
             public void TogglePlayerTracking() {
@@ -142,18 +144,18 @@ namespace Scripts {
 
                 // delete previous system
 
-                State.cleanup();
+                state.cleanup();
 
                 rnd = new System.Random(seed);
 
                 for(int i = 0; i < StarCount; i++) {
 
-                    State.stars.Add(new());
+                    state.stars.Add(new());
 
-                    State.stars[i].obj.self.mass                    = SunMass * (float)rnd.NextDouble() * (i + 1);
-                    State.stars[i].obj.self.posx                    = ((float)rnd.NextDouble() * 16.0f - 64.0f) * system_scale;
-                    State.stars[i].obj.self.posy                    = ((float)rnd.NextDouble() * 16.0f -  8.0f) * system_scale;
-                    State.stars[i].obj.render_orbit                 = StarCount > 1;
+                    state.stars[i].obj.self.mass                    = SunMass * (float)rnd.NextDouble() * (i + 1);
+                    state.stars[i].obj.self.posx                    = ((float)rnd.NextDouble() * 16.0f - 64.0f) * system_scale;
+                    state.stars[i].obj.self.posy                    = ((float)rnd.NextDouble() * 16.0f -  8.0f) * system_scale;
+                    state.stars[i].obj.render_orbit                 = StarCount > 1;
 
                 }
 
@@ -164,12 +166,12 @@ namespace Scripts {
                         do j = rnd.Next(StarCount);
                         while(j == i);
 
-                        State.stars[i].obj.descriptor.semiminoraxis = (float)rnd.NextDouble() * 32.0f * system_scale;
-                        State.stars[i].obj.descriptor.semimajoraxis = (float)rnd.NextDouble() * 32.0f * system_scale + State.stars[i].obj.descriptor.semiminoraxis;
-                        State.stars[i].obj.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
-                        State.stars[i].obj.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
-                        State.stars[i].obj.descriptor.mean_anomaly  = (float)rnd.NextDouble() * Tools.twopi;
-                        State.stars[i].obj.descriptor.central_body  = State.stars[j].obj.self;
+                        state.stars[i].obj.descriptor.semiminoraxis = (float)rnd.NextDouble() * 32.0f * system_scale;
+                        state.stars[i].obj.descriptor.semimajoraxis = (float)rnd.NextDouble() * 32.0f * system_scale + state.stars[i].obj.descriptor.semiminoraxis;
+                        state.stars[i].obj.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
+                        state.stars[i].obj.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
+                        state.stars[i].obj.descriptor.mean_anomaly  = (float)rnd.NextDouble() * Tools.twopi;
+                        state.stars[i].obj.descriptor.central_body  = state.stars[j].obj.self;
 
                     }
 
@@ -177,7 +179,7 @@ namespace Scripts {
 
                     SystemPlanet Planet = new SystemPlanet();
 
-                    Planet.descriptor.central_body  = State.stars[0].obj.self;
+                    Planet.descriptor.central_body  = state.stars[0].obj.self;
                     Planet.descriptor.semiminoraxis = (30.0f + (i + 1) * (i + 1) * 10) * system_scale;
                     Planet.descriptor.semimajoraxis = Planet.descriptor.semiminoraxis + ((float)rnd.NextDouble() * (i + 5) * system_scale);
                     Planet.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
@@ -185,8 +187,8 @@ namespace Scripts {
                     Planet.descriptor.self.mass     = PlanetMass;
                     Planet.type                     = PlanetType.PLANET_ROCKY;
 
-                    State.planets.Add(new());
-                    var p = State.planets[State.planets.Count - 1];
+                    state.planets.Add(new());
+                    var p = state.planets[state.planets.Count - 1];
                     p.obj = Planet;
 
                 }
@@ -195,16 +197,16 @@ namespace Scripts {
 
                     SystemPlanet Planet = new SystemPlanet();
 
-                    Planet.descriptor.central_body  = State.stars[0].obj.self;
-                    Planet.descriptor.semiminoraxis = State.planets[InnerPlanets - 1].obj.descriptor.semimajoraxis + ((i + 3) * (i + 3) * 10 * system_scale);
+                    Planet.descriptor.central_body  = state.stars[0].obj.self;
+                    Planet.descriptor.semiminoraxis = state.planets[InnerPlanets - 1].obj.descriptor.semimajoraxis + ((i + 3) * (i + 3) * 10 * system_scale);
                     Planet.descriptor.semimajoraxis = Planet.descriptor.semiminoraxis + ((float)rnd.NextDouble() * i / 20.0f) * system_scale;
                     Planet.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
                     Planet.descriptor.mean_anomaly  = (float)rnd.NextDouble() * Tools.twopi;
                     Planet.descriptor.self.mass     = PlanetMass;
                     Planet.type                     = PlanetType.PLANET_GAS_GIANT;
 
-                    State.planets.Add(new());
-                    var p = State.planets[State.planets.Count - 1];
+                    state.planets.Add(new());
+                    var p = state.planets[state.planets.Count - 1];
                     p.obj = Planet;
 
                     for(int j = 0; j < rnd.Next(i + 1); j++) {
@@ -219,8 +221,8 @@ namespace Scripts {
                         Moon.descriptor.mean_anomaly  = (float)rnd.NextDouble() * Tools.twopi;
                         Moon.type                     = PlanetType.PLANET_MOON;
 
-                        State.planets.Add(new());
-                        var m = State.planets[State.planets.Count - 1];
+                        state.planets.Add(new());
+                        var m = state.planets[state.planets.Count - 1];
                         m.obj = Moon;
 
                     }
@@ -231,8 +233,8 @@ namespace Scripts {
 
                     SystemPlanet Planet = new SystemPlanet();
 
-                    Planet.descriptor.central_body  = State.stars[0].obj.self;
-                    Planet.descriptor.semiminoraxis = State.planets[InnerPlanets + OuterPlanets - 1].obj.descriptor.semimajoraxis
+                    Planet.descriptor.central_body  = state.stars[0].obj.self;
+                    Planet.descriptor.semiminoraxis = state.planets[InnerPlanets + OuterPlanets - 1].obj.descriptor.semimajoraxis
                                                     + ((i + 3) * (i + 3) * 31 * system_scale);
                     Planet.descriptor.semimajoraxis = Planet.descriptor.semiminoraxis + (float)rnd.NextDouble() * (i + 1) * 82 * system_scale;
                     Planet.descriptor.rotation      = (float)rnd.NextDouble() * Tools.twopi;
@@ -240,71 +242,73 @@ namespace Scripts {
                     Planet.descriptor.self.mass     = PlanetMass;
                     Planet.type                     = PlanetType.PLANET_ROCKY;
 
-                    State.planets.Add(new());
-                    var p = State.planets[State.planets.Count - 1];
+                    state.planets.Add(new());
+                    var p = state.planets[state.planets.Count - 1];
                     p.obj = Planet;
 
                 }
 
                 for(int i = 0; i < SpaceStations; i++) {
 
-                    State.stations.Add(new());
+                    state.stations.Add(new());
 
-                    State.stations[i].obj.descriptor.central_body  =  State.stars[0].obj.self;
-                    State.stations[i].obj.descriptor.semiminoraxis = ((float)rnd.NextDouble()
-                                                                   *  State.planets[InnerPlanets + OuterPlanets - 1].obj.descriptor.semimajoraxis + 4.0f);
-                    State.stations[i].obj.descriptor.semimajoraxis =  (float)rnd.NextDouble() * system_scale
-                                                                   +  State.stations[i].obj.descriptor.semiminoraxis;
-                    State.stations[i].obj.descriptor.rotation      =  (float)rnd.NextDouble() * Tools.twopi;
-                    State.stations[i].obj.descriptor.mean_anomaly  =  (float)rnd.NextDouble() * Tools.twopi;
-                    State.stations[i].obj.descriptor.self.mass     =  StationMass;
+                    state.stations[i].obj.descriptor.central_body  =  state.stars[0].obj.self;
+                    state.stations[i].obj.descriptor.semiminoraxis = ((float)rnd.NextDouble()
+                                                                   *  state.planets[InnerPlanets + OuterPlanets - 1].obj.descriptor.semimajoraxis + 4.0f);
+                    state.stations[i].obj.descriptor.semimajoraxis =  (float)rnd.NextDouble() * system_scale
+                                                                   +  state.stations[i].obj.descriptor.semiminoraxis;
+                    state.stations[i].obj.descriptor.rotation      =  (float)rnd.NextDouble() * Tools.twopi;
+                    state.stations[i].obj.descriptor.mean_anomaly  =  (float)rnd.NextDouble() * Tools.twopi;
+                    state.stations[i].obj.descriptor.self.mass     =  StationMass;
 
                 }
 
-                State.create_renderers();
+                state.create_renderers();
 
-                foreach(var Planet in State.planets) {
-                    Planet.renderer.blur_noise_shader         = blur_noise_shader;
-                    Planet.renderer.scale_noise_shader        = scale_noise_shader;
-                    Planet.renderer.exponential_filter_shader = exponential_filter_shader;
-                    Planet.renderer.distortion_shader         = distortion_shader;
-                    Planet.renderer.circular_blur_shader      = circular_blur_shader;
-                    Planet.renderer.circular_mask_shader      = circular_mask_shader;
-                    Planet.renderer.pixelate_shader           = pixelate_shader;
+                foreach(var planet in state.planets) {
+                    planet.renderer.blur_noise_shader         = blur_noise_shader;
+                    planet.renderer.scale_noise_shader        = scale_noise_shader;
+                    planet.renderer.exponential_filter_shader = exponential_filter_shader;
+                    planet.renderer.distortion_shader         = distortion_shader;
+                    planet.renderer.circular_blur_shader      = circular_blur_shader;
+                    planet.renderer.circular_mask_shader      = circular_mask_shader;
+                    planet.renderer.pixelate_shader           = pixelate_shader;
 
-                    Planet.renderer.seed                      = rnd.Next();
-                    Planet.renderer.pixelate                  = pixelate;
+                    planet.renderer.seed                      = rnd.Next();
+                    planet.renderer.pixelate                  = pixelate;
+                    planet.renderer.pixelation_size           = pixelation_size;
+                    planet.renderer.smoothstepped_colors      = smoothstepped_colors;
 
-                    switch(Planet.obj.type) {
+                    switch(planet.obj.type) {
 
                         case PlanetType.PLANET_ROCKY:
-                            Planet.renderer.radius    = rocky_planet_radius;
-                            Planet.renderer.layers    = rocky_planet_layers;
-                            Planet.renderer.basecolor = rocky_planet_base_color;
-                            Planet.renderer.colors    = rocky_planet_colors;
+                            planet.renderer.radius    = rocky_planet_radius;
+                            planet.renderer.layers    = rocky_planet_layers;
+                            planet.renderer.basecolor = rocky_planet_base_color;
+                            planet.renderer.colors    = rocky_planet_colors;
                             break;
 
                         case PlanetType.PLANET_GAS_GIANT:
-                            Planet.renderer.radius    = gas_giant_radius;
-                            Planet.renderer.layers    = gas_giant_layers;
-                            Planet.renderer.basecolor = gas_giant_base_color;
-                            Planet.renderer.colors    = gas_giant_colors;
+                            planet.renderer.radius    = gas_giant_radius;
+                            planet.renderer.layers    = gas_giant_layers;
+                            planet.renderer.basecolor = gas_giant_base_color;
+                            planet.renderer.colors    = gas_giant_colors;
                             break;
 
                         case PlanetType.PLANET_MOON:
-                            Planet.renderer.radius    = moon_radius;
-                            Planet.renderer.layers    = moon_layers;
-                            Planet.renderer.basecolor = moon_base_color;
-                            Planet.renderer.colors    = moon_colors;
+                            planet.renderer.radius    = moon_radius;
+                            planet.renderer.layers    = moon_layers;
+                            planet.renderer.basecolor = moon_base_color;
+                            planet.renderer.colors    = moon_colors;
                             break;
 
                     }
                 }
 
-                State.generate_renderers();
+                state.generate_renderers();
 
-                State.player              = gameObject.AddComponent<PlayerShip>();
-                State.player.system_scale = system_scale;
+                state.player              = gameObject.AddComponent<PlayerShip>();
+                state.player.system_scale = system_scale;
             }
 
             private SpaceObject gravity_cycle(SpaceObject self, float current_time) {
@@ -313,7 +317,7 @@ namespace Scripts {
                 float       grav_velx       = 0.0f;
                 float       grav_vely       = 0.0f;
 
-                foreach(SpaceObject body in State.objects) {
+                foreach(SpaceObject body in state.objects) {
 
                     if(body == self) continue;
 
@@ -387,7 +391,7 @@ namespace Scripts {
                         Moons.ElementAt(i).Key.descriptor.self.mass = MoonMass;
                 }*/
                 
-                foreach(var ship in State.ships) {
+                foreach(var ship in state.ships) {
                     SystemShip s = ship.obj;
 
                     if(!s.path_planned)
@@ -401,21 +405,21 @@ namespace Scripts {
                     s.descriptor.update_position(current_time);
                 }
 
-                State.player.stations_orbiting = planet_movement;
+                state.player.stations_orbiting = planet_movement;
 
                 if(planet_movement) {
 
                     if(StarCount <= 1 || !n_body_gravity) {
 
-                        foreach(var p in State.planets)
+                        foreach(var p in state.planets)
                             p.obj.descriptor.update_position(current_time);
 
-                        foreach(var s in State.stations)
+                        foreach(var s in state.stations)
                             s.obj.descriptor.update_position(current_time);
 
                     } else {
 
-                        foreach(var star in State.stars) {
+                        foreach(var star in state.stars) {
 
                             SpaceObject strongest_body = gravity_cycle(star.obj.self, current_time);
 
@@ -424,7 +428,7 @@ namespace Scripts {
 
                         }
 
-                        foreach(var planet in State.planets) {
+                        foreach(var planet in state.planets) {
 
                             SpaceObject strongest_body = gravity_cycle(planet.obj.self, current_time);
 
@@ -433,7 +437,7 @@ namespace Scripts {
 
                         }
 
-                        foreach(var station in State.stations) {
+                        foreach(var station in state.stations) {
 
                             SpaceObject strongest_body = gravity_cycle(station.obj.self, current_time);
 
@@ -446,16 +450,16 @@ namespace Scripts {
 
                 }
 
-                if(!State.player.ship.ignore_gravity) {
+                if(!state.player.ship.ignore_gravity) {
                     float maxg = 0.0f;
                     float GravVelX = 0.0f;
                     float GravVelY = 0.0f;
 
                     // this behaves weird when getting really close to central body --- is float too inaccurate?
-                    foreach(SpaceObject body in State.objects) {
+                    foreach(SpaceObject body in state.objects) {
 
-                        float dx = body.posx - State.player.ship.self.posx;
-                        float dy = body.posy - State.player.ship.self.posy;
+                        float dx = body.posx - state.player.ship.self.posx;
+                        float dy = body.posy - state.player.ship.self.posy;
 
                         float d2 = dx * dx + dy * dy;
                         float d = (float)Math.Sqrt(d2);
@@ -483,10 +487,10 @@ namespace Scripts {
 
                     }
 
-                    State.player.gravitational_strength = (float)Math.Sqrt(GravVelX * GravVelX + GravVelY * GravVelY) * 0.4f / current_time;
+                    state.player.gravitational_strength = (float)Math.Sqrt(GravVelX * GravVelX + GravVelY * GravVelY) * 0.4f / current_time;
 
-                    State.player.ship.self.velx   += GravVelX;
-                    State.player.ship.self.vely   += GravVelY;
+                    state.player.ship.self.velx   += GravVelX;
+                    state.player.ship.self.vely   += GravVelY;
 
                     // For some reason this messes stuff up?!
 
@@ -494,17 +498,17 @@ namespace Scripts {
                     //State.Player.ship.self.posy   += GravVelY * CurrentTime * 0.5f;
                 }
 
-                State.player.ship.acceleration = acceleration;
-                State.player.drag_factor       = drag_factor;
-                State.player.sailing_factor    = sailing_factor;
-                State.player.time_scale        = time_scale;
+                state.player.ship.acceleration = acceleration;
+                state.player.drag_factor       = drag_factor;
+                state.player.sailing_factor    = sailing_factor;
+                state.player.time_scale        = time_scale;
 
                 UpdateDropdownMenu();
 
                 if(TrackingPlayer) {
                     if(Input.GetMouseButton(1)) TrackingPlayer = false; // Disable camera tracking if user is manually moving camera
                     else
-                        Camera.set_position(-State.player.ship.self.posx, -State.player.ship.self.posy, Camera.scale);
+                        Camera.set_position(-state.player.ship.self.posx, -state.player.ship.self.posy, Camera.scale);
                 }
             }
 
@@ -513,14 +517,14 @@ namespace Scripts {
 
                 List<string> Options = new();
 
-                if(State.stations.Count == 0) {
+                if(state.stations.Count == 0) {
                     Options.Add("-- No stations --");
 
                     DockingTargetSelector.interactable = false;
                 } else {
                     Options.Add("-- Select a station --");
 
-                    for(int i = 0; i < State.stations.Count;)
+                    for(int i = 0; i < state.stations.Count;)
                         Options.Add("Station " + ++i);
 
                     DockingTargetSelector.interactable = true;
@@ -530,19 +534,19 @@ namespace Scripts {
 
                 DockingTargetSelector.value = 0;
 
-                for(int i = 0; i < State.stations.Count; i++)
-                    if(State.stations[i].obj == DockingTarget) {
+                for(int i = 0; i < state.stations.Count; i++)
+                    if(state.stations[i].obj == DockingTarget) {
                         DockingTargetSelector.value = i + 1;
                         break;
                     }
             }
 
             public void SelectDockingTarget(int i) {
-                if(i == 0 || i > State.stations.Count) {
+                if(i == 0 || i > state.stations.Count) {
                     DockingTarget = null;
-                    State.player.ship.disengage_docking_autopilot();
-                } else if(DockingTarget != State.stations[i - 1].obj)
-                    State.player.ship.engage_docking_autopilot(DockingTarget = State.stations[i - 1].obj);
+                    state.player.ship.disengage_docking_autopilot();
+                } else if(DockingTarget != state.stations[i - 1].obj)
+                    state.player.ship.engage_docking_autopilot(DockingTarget = state.stations[i - 1].obj);
             }
         }
     }

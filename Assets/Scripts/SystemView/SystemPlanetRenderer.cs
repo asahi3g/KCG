@@ -22,6 +22,8 @@ namespace Scripts {
             private System.Random    rng;
 
             public  bool             pixelate;
+            public  bool             smoothstepped_colors;
+            public  int              pixelation_size;
 
             public  ComputeShader    blur_noise_shader;
             public  ComputeShader    scale_noise_shader;
@@ -71,16 +73,25 @@ namespace Scripts {
 
                 circular_mask_shader.Dispatch(0, radius / 8, radius / 8, 1);
 
-                base_buffer.GetData(base_alpha);
-                base_buffer.Release();
+                if(pixelate) {
+                    ComputeBuffer base_buffer2 = new ComputeBuffer(radius * radius, sizeof(float));
 
-                for(int x = 0; x < radius; x++)
-                    for(int y = 0; y < radius; y++) {
-                        pixels[x + y * radius].r = basecolor.r;
-                        pixels[x + y * radius].g = basecolor.g;
-                        pixels[x + y * radius].b = basecolor.b;
-                        pixels[x + y * radius].a = base_alpha[x + y * radius];
-                    }
+                    pixelate_shader.SetInt( width_id, radius);
+                    pixelate_shader.SetInt(height_id, radius);
+                    pixelate_shader.SetInt(radius_id, pixelation_size);
+
+                    pixelate_shader.SetBuffer(0,  noise_id, base_buffer);
+                    pixelate_shader.SetBuffer(0, output_id, base_buffer2);
+
+                    pixelate_shader.Dispatch(0, radius / 8, radius / 8, 1);
+
+                    base_buffer2.GetData(base_alpha);
+                    base_buffer2.Release();
+                    base_buffer.Release();
+                } else {
+                    base_buffer.GetData(base_alpha);
+                    base_buffer.Release();
+                }
 
                 if(colors != null && colors.Length != 0) {
                     ComputeBuffer color_buffer1 = new ComputeBuffer(radius * radius, sizeof(float));
@@ -175,7 +186,7 @@ namespace Scripts {
                     if(pixelate) {
                         pixelate_shader.SetInt( width_id, radius);
                         pixelate_shader.SetInt(height_id, radius);
-                        pixelate_shader.SetInt(radius_id, 16);
+                        pixelate_shader.SetInt(radius_id, pixelation_size);
 
                         pixelate_shader.SetBuffer(0,  noise_id, color_buffer1);
                         pixelate_shader.SetBuffer(0, output_id, color_buffer2);
@@ -200,7 +211,7 @@ namespace Scripts {
                         if(colorid <  0.0f)          colorid *= -1;
                         if(colorid >= colors.Length) colorid = colors.Length - 1;
 
-                        if(!pixelate) {
+                        if(smoothstepped_colors) {
                             int color0id = (int)colorid;
                             int color1id = (color0id + 1) % colors.Length;
 

@@ -13,8 +13,8 @@ void pixelate(uint3 id : SV_DispatchThreadID) {
     float pixels = 0.0f;
     float value  = 0.0f;
 
-    uint  startx = id.x / radius;
-    uint  starty = id.y / radius;
+    uint  startx = (id.x / radius) * radius;
+    uint  starty = (id.y / radius) * radius;
 
     for(uint x = startx; x < startx + radius; x++)
         for(uint y = starty; y <= starty + radius; y++) {

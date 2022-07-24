@@ -21,6 +21,7 @@ namespace Scripts {
             public SpriteRenderer renderer;
 
             public bool           pixelate;
+            public int            pixelation_size;
 
             private System.Random rng;
             private float         last_time;
@@ -119,8 +120,6 @@ namespace Scripts {
 
                 circular_blur_shader.Dispatch(0, width / 8, height / 8, 1);
 
-                base_buffer2.Release(); 
-
                 // Apply circular mask
                 circular_mask_shader.SetInt( width_id, width);
                 circular_mask_shader.SetInt(height_id, height);
@@ -131,8 +130,24 @@ namespace Scripts {
 
                 circular_mask_shader.Dispatch(0, width / 8, height / 8, 1);
                 
-                base_buffer1.GetData(base_alpha);
-                base_buffer1.Release();
+                if(pixelate) {
+                    pixelate_shader.SetInt( width_id, width);
+                    pixelate_shader.SetInt(height_id, height);
+                    pixelate_shader.SetInt(radius_id, pixelation_size);
+
+                    pixelate_shader.SetBuffer(0,  noise_id, base_buffer1);
+                    pixelate_shader.SetBuffer(0, output_id, base_buffer2);
+
+                    pixelate_shader.Dispatch(0, width / 8, height / 8, 1);
+
+                    base_buffer2.GetData(base_alpha);
+                    base_buffer2.Release();
+                    base_buffer1.Release();
+                } else {
+                    base_buffer1.GetData(base_alpha);
+                    base_buffer1.Release();
+                    base_buffer2.Release();
+                }
 
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++) {
@@ -231,7 +246,7 @@ namespace Scripts {
 
                     circular_blur_shader.SetFloat(radius_id, 4.0f);
 
-                    circular_blur_shader.SetBuffer(0, noise_id, color_buffer2);
+                    circular_blur_shader.SetBuffer(0,  noise_id, color_buffer2);
                     circular_blur_shader.SetBuffer(0, output_id, color_buffer1);
 
                     circular_blur_shader.Dispatch(0, width / 8, height / 8, 1);
@@ -253,10 +268,10 @@ namespace Scripts {
                     if(pixelate) {
                         pixelate_shader.SetInt( width_id, width);
                         pixelate_shader.SetInt(height_id, height);
-                        pixelate_shader.SetInt(radius_id, 16);
+                        pixelate_shader.SetInt(radius_id, pixelation_size);
 
-                        pixelate_shader.SetBuffer(0, noise_id, color_buffer1);
-                        pixelate_shader.SetBuffer(0, noise_id, color_buffer2);
+                        pixelate_shader.SetBuffer(0,  noise_id, color_buffer1);
+                        pixelate_shader.SetBuffer(0, output_id, color_buffer2);
 
                         pixelate_shader.Dispatch(0, width / 8, height / 8, 1);
 
