@@ -12,7 +12,7 @@ float smootherstep(float a, float b, float w) {
     return (b - a) * w * w * w * (w * (w * 6.0f - 15.0f) + 10.0f) + a;
 }
 
-[numthreads(8, 8, 1)]
+[numthreads(4, 4, 4)]
 void distort(uint3 id : SV_DispatchThreadID) {
     float distortion_angle        = distortionnoise[id.x + id.y * width] * 6.2831852f;
 
@@ -33,9 +33,9 @@ void distort(uint3 id : SV_DispatchThreadID) {
     float dx = original_x - x0;
     float dy = original_y - y0;
 
-    outputnoise[id.x + id.y * width] = smootherstep(smootherstep(noise[x0 % width + (y0 % height) * width],
-                                                                 noise[x1 % width + (y0 % height) * width], dx),
-                                                    smootherstep(noise[x0 % width + (y1 % height) * width],
-                                                                 noise[x1 % width + (y1 % height) * width], dx),
-                                                                                                            dy);
+    outputnoise[id.x + id.y * width + id.z * width * height] = smootherstep(smootherstep(noise[x0 % width + (y0 % height) * width + id.z * width * height],
+                                                                                         noise[x1 % width + (y0 % height) * width + id.z * width * height],dx),
+                                                                            smootherstep(noise[x0 % width + (y1 % height) * width + id.z * width * height],
+                                                                                         noise[x1 % width + (y1 % height) * width + id.z * width * height],dx),
+                                                                                                                                                           dy);
 }

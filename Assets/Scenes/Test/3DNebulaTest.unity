@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 0
-  layers: 1
+  layers: 7
   basecolor: {r: 0.18039216, g: 0.23529413, b: 0.16862746, a: 0}
   colors:
   - {r: 0.4431373, g: 0.8588236, b: 0.36078432, a: 0}
@@ -236,13 +236,8 @@ MonoBehaviour:
   pixelate: 0
   pixelation_size: 8
   gen3dnoise_shader: {fileID: 7200000, guid: d04c71755e8d4e2478d5c2021096ac4c, type: 3}
-  blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
-  scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
-  exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
-  distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
-  circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
-  circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
-  pixelate_shader: {fileID: 7200000, guid: 9b36951ceb5da9a4398e2a7dd2fe8a4e, type: 3}
+  scale_noise_shader: {fileID: 7200000, guid: 9967b60d88b4f674eaf3f3e51566c21c, type: 3}
+  distortion_shader: {fileID: 7200000, guid: 4858805dba354fe44bd8906b394e58ab, type: 3}
 --- !u!1 &1913073819
 GameObject:
   m_ObjectHideFlags: 0

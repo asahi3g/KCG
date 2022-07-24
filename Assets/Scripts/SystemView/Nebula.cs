@@ -53,7 +53,7 @@ namespace Scripts {
                 for(int i = 0; i < width * height; i++) pixels[i] = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
                 // Generate base noise
-                ComputeBuffer base_buffer1 = new ComputeBuffer(width * height, sizeof(float));
+                ComputeBuffer base_buffer1 = new ComputeBuffer(width * height, sizeof(float));  
                 ComputeBuffer base_buffer2 = new ComputeBuffer(width * height / 4096, sizeof(float));
 
                 base_buffer2.SetData(ProceduralImages.generate_noise(rng, 1.0f, width / 64, height / 64));
