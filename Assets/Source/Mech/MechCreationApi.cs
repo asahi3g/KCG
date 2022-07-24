@@ -84,6 +84,14 @@ namespace Mech
             PropertiesArray[CurrentIndex].Name = name;
         }
 
+        public void SetSpriteSize(Vec2f size)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].SpriteSize = size;
+            }
+        }
+
         public void SetMechTileMaterialTypes(TileMaterialType[] tileMaterialType)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)

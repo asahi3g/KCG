@@ -133,6 +133,7 @@ public class GameResources
             CreateParticles();
             CreateParticleEmitters();
             CreateProjectiles();
+            CreateMechs();
 
 
 
@@ -598,6 +599,14 @@ public class GameResources
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.SetAttackCooldown(0.8f);
         GameState.AgentCreationApi.End();
+    }
+
+    private static void CreateMechs()
+    {
+        GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
+        GameState.MechCreationApi.SetName("chest");
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.End();
     }
 
     private static void CreateParticles()

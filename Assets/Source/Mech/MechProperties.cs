@@ -13,6 +13,7 @@ namespace Mech
         public int MechID;
 
         public string Name;
+        public Vec2f SpriteSize;
 
         public TileMaterialType[] TileMaterialTypes;
 

@@ -56,6 +56,7 @@ namespace Planet
             GameState.AgentMeshBuilderSystem.Initialize(material, transform, 12);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
+            GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
         }
 
 
@@ -99,11 +100,11 @@ namespace Planet
             return newEntity;
         }
 
-        public MechEntity AddMech(Vec2f position)
+        public MechEntity AddMech(Vec2f position, MechType mechType)
         {
             Utils.Assert(MechList.Size < PlanetEntityLimits.MechLimit);
 
-            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, -1));
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, position, 0, mechType));
             return newEntity;
         }
 
@@ -283,6 +284,7 @@ namespace Planet
             GameState.AgentMeshBuilderSystem.UpdateMesh(EntitasContext.agent);
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
+            GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
 
             // Draw Frames.
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);

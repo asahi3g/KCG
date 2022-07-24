@@ -39,6 +39,7 @@ public class GameState
     #region Mech
     public static readonly Mech.MechCreationApi MechCreationApi;
     public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
+    public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
 
     #endregion
 
@@ -141,5 +142,6 @@ public class GameState
         ProjectileMovementSystem = new Projectile.MovementSystem(ProjectileCreationApi);
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
+        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
     }
 }

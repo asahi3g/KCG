@@ -16,15 +16,40 @@ namespace Mech
             MechCreationApi = mechCreationApi;
         }
         
-        public MechEntity Spawn(Contexts entitasContext, int mechID)
+        public MechEntity Spawn(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
+            int mechID, MechType mechType)
         {
+            var spriteSize = new Vec2f(width / 32f, height / 32f);
+
             MechProperties mechProperties = MechCreationApi.Get(mechID);
 
             var entity = entitasContext.mech.CreateEntity();
+            entity.AddMechID(mechID);
+            entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
+            entity.AddMechPosition2D(position);
 
             return entity;
         }
-        
+
+        public MechEntity Spawn(Contexts entitasContext, Vec2f position, int mechID, MechType mechType)
+        {
+            ref MechProperties properties = ref MechCreationApi.GetRef((int)mechType);
+
+            var spriteSize = properties.SpriteSize;
+
+            MechProperties mechProperties = MechCreationApi.Get(mechID);
+
+            var spriteId = 0;
+
+            var entity = entitasContext.mech.CreateEntity();
+            entity.AddMechID(mechID);
+            entity.AddMechSprite2D(spriteId, spriteSize);
+            entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
+            entity.AddMechPosition2D(position);
+
+            return entity;
+        }
+
     }
 }
