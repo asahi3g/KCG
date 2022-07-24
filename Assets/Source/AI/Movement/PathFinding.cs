@@ -282,8 +282,8 @@ namespace AI.Movement
         bool PassableJump(ref TileMap tileMap, ref Node current, int indDir)
         {
             // TODO -- parameterized
-            const int MAX_UP = 3; // Maximum number of blocks down.
-            const int MAX_DOWN = 9;
+            const int MAX_UP = 2; // Maximum number of blocks down.
+            const int MAX_DOWN = 6;
 
             // Todo: deals with diagonals.
             // Algorithm consider that character can move one block to the right for each one up.
@@ -307,8 +307,14 @@ namespace AI.Movement
             {
                 if (indDir < 5) // UP
                 {
-                    if (current.jumpValue >= 3)
+                    if (current.jumpValue >= maxJump)
                         return false;
+                    if (indDir > 2)
+                    {
+                        // Return false if tile above is solid when doing a diagonal.
+                        if (tileMap.GetFrontTile(current.pos.X - directions[indDir].dir.X, current.pos.Y).MaterialType != TileMaterialType.Air)
+                            return false;
+                    }
                     current.jumpValue++;
                 }
                 else // Dowm
@@ -316,17 +322,21 @@ namespace AI.Movement
                     // Todo deals with falling speed. When falling speed it too high diagonals may be impossible.
                     if (current.jumpValue >= maxDown)
                         return false;
-                    current.jumpValue = (current.jumpValue < 8) ? 8 : current.jumpValue + 1;
+                    current.jumpValue = (current.jumpValue < MAX_UP) ? MAX_UP + 1 : current.jumpValue + 1;
                 }
                 // Set jump to zero when tile it on ground.
                 if (tileMap.GetFrontTile(current.pos.X, current.pos.Y - 1).MaterialType != TileMaterialType.Air)
-                    current.jumpValue = 0;  
+                    current.jumpValue = 0;
             }
             else
             {
                 // Is tile on ground. // Deals with corners.
                 if (tileMap.GetFrontTile(current.pos.X, current.pos.Y - 1).MaterialType == TileMaterialType.Air)
-                    current.jumpValue = maxDown; // Make sure character can't jump if falling.   
+                {
+                    if (current.jumpValue != 0)
+                        return false;
+                    current.jumpValue = MAX_UP; // Make sure character can't jump if falling.
+                }
             }
 
             return true;
@@ -375,9 +385,9 @@ namespace AI.Movement
         void SetFirstNodeJumpValue(Vec2i start, ref TileMap tileMap)
         {
             // TODO -- parameterized
-            const int MAX_UP = 3;
-            const int MAX_DOWN = 9;
-            const int MAX_JUMP = MAX_UP * 2 + 1;
+            const int MAX_UP = 2;
+            const int MAX_DOWN = 6;
+            const int MAX_JUMP = MAX_UP;
 
             // Is tile on ground.
             if (tileMap.GetFrontTile(start.X, start.Y - 1).MaterialType != TileMaterialType.Air)

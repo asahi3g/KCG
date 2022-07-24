@@ -138,7 +138,6 @@ namespace Collisions
 
         public static bool IsAPlatform(PlanetTileMap.Tile tile)
         {
-            Debug.Log(tile.MaterialType);
             return tile.MaterialType == PlanetTileMap.TileMaterialType.Platform;
         }
     }

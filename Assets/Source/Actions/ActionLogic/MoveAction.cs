@@ -51,22 +51,15 @@ namespace Action
             {
                 if (--pathLength == 0)
                 {
-                    AgentEntity.physicsMovable.Acceleration = Vec2f.Zero;
+                    AgentEntity.physicsMovable.Acceleration.X = 0;
                     ActionEntity.actionExecution.State = Enums.ActionState.Success;
                     return;
-                }
-                // Reset jump if landed.
-                if (!availableJump)
-                {
-                    if (path[pathLength - 1].Y == path[pathLength].Y)
-                        availableJump = true;
                 }
             }
 
             // Jumping is just an increase in velocity.
-            if (direction.Y > 0 && availableJump)
+            if (direction.Y > 0 && AgentEntity.physicsMovable.Landed)
             {
-                availableJump = false;
                 AgentEntity.physicsMovable.Acceleration.Y = 0.0f;
                 AgentEntity.physicsMovable.Velocity.Y = 7.5f;
             }
@@ -74,7 +67,7 @@ namespace Action
             // Todo: deals with flying agents.
             direction.Y = 0;
             direction.Normalize();
-            AgentEntity.physicsMovable.Acceleration = direction * AgentEntity.physicsMovable.Speed * 25.0f;
+            AgentEntity.physicsMovable.Acceleration.X = direction.X * AgentEntity.physicsMovable.Speed * 25.0f;
         }
 
         public override void OnExit(ref Planet.PlanetState planet)
