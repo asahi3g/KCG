@@ -34,8 +34,8 @@ void distort(uint3 id : SV_DispatchThreadID) {
     float dy = original_y - y0;
 
     outputnoise[id.x + id.y * width + id.z * width * height] = smootherstep(smootherstep(noise[x0 % width + (y0 % height) * width + id.z * width * height],
-                                                                                         noise[x1 % width + (y0 % height) * width + id.z * width * height],dx),
+                                                                                         noise[x1 % width + (y0 % height) * width + id.z * width * height], dx),
                                                                             smootherstep(noise[x0 % width + (y1 % height) * width + id.z * width * height],
-                                                                                         noise[x1 % width + (y1 % height) * width + id.z * width * height],dx),
-                                                                                                                                                           dy);
+                                                                                         noise[x1 % width + (y1 % height) * width + id.z * width * height], dx),
+                                                                                                                                                            dy);
 }
