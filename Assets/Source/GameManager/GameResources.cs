@@ -220,21 +220,26 @@ public class GameResources
                 GameState.TileCreationApi.SetTilePropertyTexture16(BackgroundSpriteSheet, i, j);
                 GameState.TileCreationApi.EndTileProperty();
 
-                GameState.TileCreationApi.EndMaterial();
+                
             }
         }
+        GameState.TileCreationApi.EndMaterial();
 
 
         GameState.TileCreationApi.BeginMaterial(TileMaterialType.Platform);
         GameState.TileCreationApi.SetMaterialName("platform");
+        GameState.TileCreationApi.SetMaterialSpriteRuleType(SpriteRuleType.R3);
+        for(int j = 0; j < 5; j++)
+        {
+            for(int i = 0; i < 11; i++)
+            {
+                GameState.TileCreationApi.CreateTileProperty();
+                GameState.TileCreationApi.SetTilePropertyTexture16(BackgroundSpriteSheet, i, j);
+                GameState.TileCreationApi.EndTileProperty();
 
-        GameState.TileCreationApi.CreateTileProperty();
-        GameState.TileCreationApi.SetTilePropertyTexture16(RockSpriteSheet, 0, 0);
-
-        GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
-
-        GameState.TileCreationApi.EndTileProperty();
-
+                
+            }
+        }
         GameState.TileCreationApi.EndMaterial();
 
         /*GameState.TileCreationApi.CreateTileProperty(TileID.Background);
@@ -329,13 +334,6 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 10);
         GameState.TileCreationApi.EndTileProperty();*/
 
-        GameState.TileCreationApi.BeginMaterial(TileMaterialType.Platform);
-        GameState.TileCreationApi.CreateTileProperty();
-        GameState.TileCreationApi.SetMaterialName("Platform");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
-        GameState.TileCreationApi.SetMaterialSpriteRuleType(SpriteRuleType.R3);
-        GameState.TileCreationApi.EndTileProperty();
-        GameState.TileCreationApi.EndMaterial();
 
         
     }
