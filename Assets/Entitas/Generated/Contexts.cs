@@ -201,9 +201,9 @@ public partial class Contexts {
             itemParticle.GetGroup(ItemParticleMatcher.ItemType),
             (e, c) => ((Item.TypeComponent)c).Type));
 
-        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, int>(
+        mech.AddEntityIndex(new Entitas.PrimaryEntityIndex<MechEntity, int>(
             MechID,
-            game.GetGroup(GameMatcher.MechID),
+            mech.GetGroup(MechMatcher.MechID),
             (e, c) => ((Mech.IDComponent)c).ID));
 
         particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, int>(
@@ -301,8 +301,8 @@ public static class ContextsExtensions {
         return ((Entitas.EntityIndex<ItemParticleEntity, Enums.ItemType>)context.GetEntityIndex(Contexts.ItemType)).GetEntities(Type);
     }
 
-    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithMechID(this GameContext context, int ID) {
-        return ((Entitas.EntityIndex<GameEntity, int>)context.GetEntityIndex(Contexts.MechID)).GetEntities(ID);
+    public static MechEntity GetEntityWithMechID(this MechContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<MechEntity, int>)context.GetEntityIndex(Contexts.MechID)).GetEntity(ID);
     }
 
     public static ParticleEntity GetEntityWithParticleEmitterID(this ParticleContext context, int ParticleEmitterId) {

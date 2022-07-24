@@ -8,12 +8,12 @@
 //------------------------------------------------------------------------------
 public partial class MechEntity {
 
-    public Mech.MechPositioningComponent mechMechPositioning { get { return (Mech.MechPositioningComponent)GetComponent(MechComponentsLookup.MechMechPositioning); } }
-    public bool hasMechMechPositioning { get { return HasComponent(MechComponentsLookup.MechMechPositioning); } }
+    public Mech.PositionLimitsComponent mechPositionLimits { get { return (Mech.PositionLimitsComponent)GetComponent(MechComponentsLookup.MechPositionLimits); } }
+    public bool hasMechPositionLimits { get { return HasComponent(MechComponentsLookup.MechPositionLimits); } }
 
-    public void AddMechMechPositioning(int newXMin, int newXMax, int newYMin, int newYMax) {
-        var index = MechComponentsLookup.MechMechPositioning;
-        var component = (Mech.MechPositioningComponent)CreateComponent(index, typeof(Mech.MechPositioningComponent));
+    public void AddMechPositionLimits(int newXMin, int newXMax, int newYMin, int newYMax) {
+        var index = MechComponentsLookup.MechPositionLimits;
+        var component = (Mech.PositionLimitsComponent)CreateComponent(index, typeof(Mech.PositionLimitsComponent));
         component.XMin = newXMin;
         component.XMax = newXMax;
         component.YMin = newYMin;
@@ -21,9 +21,9 @@ public partial class MechEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceMechMechPositioning(int newXMin, int newXMax, int newYMin, int newYMax) {
-        var index = MechComponentsLookup.MechMechPositioning;
-        var component = (Mech.MechPositioningComponent)CreateComponent(index, typeof(Mech.MechPositioningComponent));
+    public void ReplaceMechPositionLimits(int newXMin, int newXMax, int newYMin, int newYMax) {
+        var index = MechComponentsLookup.MechPositionLimits;
+        var component = (Mech.PositionLimitsComponent)CreateComponent(index, typeof(Mech.PositionLimitsComponent));
         component.XMin = newXMin;
         component.XMax = newXMax;
         component.YMin = newYMin;
@@ -31,8 +31,8 @@ public partial class MechEntity {
         ReplaceComponent(index, component);
     }
 
-    public void RemoveMechMechPositioning() {
-        RemoveComponent(MechComponentsLookup.MechMechPositioning);
+    public void RemoveMechPositionLimits() {
+        RemoveComponent(MechComponentsLookup.MechPositionLimits);
     }
 }
 
@@ -46,17 +46,17 @@ public partial class MechEntity {
 //------------------------------------------------------------------------------
 public sealed partial class MechMatcher {
 
-    static Entitas.IMatcher<MechEntity> _matcherMechMechPositioning;
+    static Entitas.IMatcher<MechEntity> _matcherMechPositionLimits;
 
-    public static Entitas.IMatcher<MechEntity> MechMechPositioning {
+    public static Entitas.IMatcher<MechEntity> MechPositionLimits {
         get {
-            if (_matcherMechMechPositioning == null) {
-                var matcher = (Entitas.Matcher<MechEntity>)Entitas.Matcher<MechEntity>.AllOf(MechComponentsLookup.MechMechPositioning);
+            if (_matcherMechPositionLimits == null) {
+                var matcher = (Entitas.Matcher<MechEntity>)Entitas.Matcher<MechEntity>.AllOf(MechComponentsLookup.MechPositionLimits);
                 matcher.componentNames = MechComponentsLookup.componentNames;
-                _matcherMechMechPositioning = matcher;
+                _matcherMechPositionLimits = matcher;
             }
 
-            return _matcherMechMechPositioning;
+            return _matcherMechPositionLimits;
         }
     }
 }

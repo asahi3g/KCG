@@ -9,7 +9,7 @@ using Entitas.CodeGeneration.Attributes;
 namespace Mech
 {
     [Mech]
-    public class MechPositioningComponent : IComponent
+    public class PositionLimitsComponent : IComponent
     {
 
         public int XMin, XMax, YMin, YMax;

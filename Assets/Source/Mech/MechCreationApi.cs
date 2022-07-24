@@ -11,7 +11,6 @@ namespace Mech
 
     public class MechCreationApi
     {
-        // Start is called before the first frame update
         public MechProperties[] PropertiesArray;
 
         public int CurrentIndex;

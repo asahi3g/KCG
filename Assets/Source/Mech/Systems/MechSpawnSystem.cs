@@ -16,11 +16,12 @@ namespace Mech
             MechCreationApi = mechCreationApi;
         }
         
-        public MechEntity SpawnMech(Contexts entitasContext, MechType mechType)
+        public MechEntity Spawn(Contexts entitasContext, int mechID)
         {
-            MechProperties mechProperties = MechCreationApi.Get((int)mechType);
+            MechProperties mechProperties = MechCreationApi.Get(mechID);
 
             var entity = entitasContext.mech.CreateEntity();
+            entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
 
             return entity;
         }

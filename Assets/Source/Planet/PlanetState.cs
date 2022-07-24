@@ -1,5 +1,6 @@
  using Agent;
 using Enums.Tile;
+using Mech;
 using Vehicle;
 using Projectile;
 using FloatingText;
@@ -18,6 +19,7 @@ namespace Planet
 
         public PlanetTileMap.TileMap TileMap;
         public AgentList AgentList;
+        public MechList MechList;
         public VehicleList VehicleList;
         public ProjectileList ProjectileList;
         public FloatingTextList FloatingTextList;
@@ -32,6 +34,7 @@ namespace Planet
         {
             TileMap = new PlanetTileMap.TileMap(mapSize);
             AgentList = new AgentList();
+            MechList = new MechList();
             VehicleList = new VehicleList();
             ProjectileList = new ProjectileList();
             FloatingTextList = new FloatingTextList();
@@ -93,6 +96,14 @@ namespace Planet
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
                     -1, Agent.AgentType.Agent));
+            return newEntity;
+        }
+
+        public MechEntity AddMech(Vec2f position)
+        {
+            Utils.Assert(MechList.Size < PlanetEntityLimits.MechLimit);
+
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, -1));
             return newEntity;
         }
 

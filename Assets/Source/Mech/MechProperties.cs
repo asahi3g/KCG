@@ -16,5 +16,7 @@ namespace Mech
 
         public TileMaterialType[] TileMaterialTypes;
 
-    } 
+        public int XMin, XMax, YMin, YMax;
+
+    }
 }

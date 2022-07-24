@@ -5,9 +5,10 @@ using Enums;
 
 namespace Mech
 {
+    [Mech]
     public class IDComponent : IComponent
     {
-        [EntityIndex]
+        [PrimaryEntityIndex]
         public int ID;
     }
 }

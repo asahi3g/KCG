@@ -8,15 +8,18 @@
 //------------------------------------------------------------------------------
 public static class MechComponentsLookup {
 
-    public const int MechMechPositioning = 0;
+    public const int MechID = 0;
+    public const int MechPositionLimits = 1;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "MechMechPositioning"
+        "MechID",
+        "MechPositionLimits"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Mech.MechPositioningComponent)
+        typeof(Mech.IDComponent),
+        typeof(Mech.PositionLimitsComponent)
     };
 }
