@@ -19,8 +19,10 @@ namespace KGUI.PlayerStatus
         // Progress Bar
         public CircleProgressBar progressBar;
         private Image iconCanvas;
+        private Text infoText = new Text();
+        private float fillValue;
 
-        public override void Initialize(Contexts contexts, AgentEntity agentEntity)
+        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -95,8 +97,10 @@ namespace KGUI.PlayerStatus
             // Add Components and setup game object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
+            fillValue = agentEntity.agentStats.Fuel;
+
             // Fuel Bar Initializon
-            progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Fuel / 100, agentEntity);
+            progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
             progressBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             progressBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 
@@ -108,12 +112,15 @@ namespace KGUI.PlayerStatus
             if(Init)
             {
                 ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x, iconCanvas.GetTransform().position.y);
-                float fuelValue = agentEntity.agentStats.Fuel;
-                if (fuelValue <= 0)
+
+                infoText.Update();
+
+                fillValue = agentEntity.agentStats.Fuel;
+                if (fillValue <= 0)
                 {
-                    fuelValue = 0;
+                    fillValue = 0;
                 }
-                progressBar.Update(fuelValue / 100);
+                progressBar.Update(fillValue / 100);
 
                 // Calculate position using aspect ratio
                 if (Camera.main.aspect >= 1.7f)
@@ -124,7 +131,7 @@ namespace KGUI.PlayerStatus
                     iconCanvas.SetPosition(new Vector3(-363.8f, 16.6f, 4.873917f));
             }
         }
-
+        
         public override void OnMouseClick(AgentEntity agentEntity)
         {
             Debug.LogWarning("Fuel Bar Clicked");
@@ -133,6 +140,19 @@ namespace KGUI.PlayerStatus
         public override void OnMouseEnter()
         {
             Debug.LogWarning("Fuel Bar Mouse Enter");
+
+            if (fillValue < 50)
+            {
+                infoText.Create("Fuel Indicator", "Fuel Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
+            else
+            {
+                infoText.Create("Fuel DeIndicator", "Fuel Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
         }
 
         public override void OnMouseStay()
@@ -143,6 +163,8 @@ namespace KGUI.PlayerStatus
         public override void OnMouseExit()
         {
             Debug.LogWarning("Fuel Bar Mouse Exit");
+
+            infoText.startLifeTime = true;
         }
     }
 }

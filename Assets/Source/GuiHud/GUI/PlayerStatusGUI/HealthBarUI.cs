@@ -29,8 +29,12 @@ namespace KGUI.PlayerStatus
         // Health Bar
         ProgressBar Bar;
 
-        public override void Initialize(Contexts contexts, AgentEntity agentEntity)
+        Planet.PlanetState _planet;
+
+        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
+            _planet = planet;
+
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;

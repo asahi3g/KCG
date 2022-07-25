@@ -163,7 +163,7 @@ namespace Planet.Unity
             toolBarID = Player.agentToolBar.ToolBarID;
 
             // Player Status UI Init
-            hudManager = new HUDManager(Planet.EntitasContext, Player);
+            hudManager = new HUDManager(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

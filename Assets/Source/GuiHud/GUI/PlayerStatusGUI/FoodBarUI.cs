@@ -11,9 +11,9 @@ namespace KGUI.PlayerStatus
         // Init
         private static bool Init;
 
-        // Food Bar Icon Position
-        public Rect iconPosition = new Rect(7, 140, 60, -60);
-
+        // Food Bar Fill Value
+        float fillValue;
+        
         // Food Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
@@ -21,9 +21,14 @@ namespace KGUI.PlayerStatus
         // Image
         public CircleProgressBar foodBar;
         private Image Icon;
+        private Text infoText = new Text();
 
-        public override void Initialize(Contexts contexts, AgentEntity agentEntity)
+        Planet.PlanetState planet;
+
+        public override void Initialize(Planet.PlanetState planetState, AgentEntity agentEntity)
         {
+            planet = planetState;
+            
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
@@ -96,8 +101,10 @@ namespace KGUI.PlayerStatus
             // Add Components and setup game object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
+            fillValue = agentEntity.agentStats.Food;
+
             // Food Bar Initializon
-            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, agentEntity.agentStats.Food / 100, agentEntity);
+            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, fillValue / 100, agentEntity);
             foodBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             foodBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 
@@ -109,7 +116,12 @@ namespace KGUI.PlayerStatus
             if (Init)
             {
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
-                foodBar.Update(agentEntity.agentStats.Food / 100);
+
+                fillValue = agentEntity.agentStats.Food;
+
+                foodBar.Update(fillValue / 100);
+
+                infoText.Update();
 
                 if (Camera.main.aspect >= 1.7f)
                     Icon.SetPosition(new Vector3(-377.3f, 123.8f, 4.873917f));
@@ -128,6 +140,19 @@ namespace KGUI.PlayerStatus
         public override void OnMouseEnter()
         {
             Debug.LogWarning("Food Bar Mouse Enter");
+
+            if (fillValue < 50)
+            {
+                infoText.Create("Food Indicator", "Hunger Bar\nStatus: Low", Icon.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
+            else 
+            {
+                infoText.Create("Food DeIndicator", "Hunger Bar\nStatus: Normal", Icon.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
         }
 
         public override void OnMouseStay()
@@ -138,6 +163,8 @@ namespace KGUI.PlayerStatus
         public override void OnMouseExit()
         {
             Debug.LogWarning("Food Bar Mouse Exit");
+
+            infoText.startLifeTime = true;
         }
     }
 }

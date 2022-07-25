@@ -19,8 +19,10 @@ namespace KGUI.PlayerStatus
         // Image
         public CircleProgressBar oxygenBar;
         private Image iconCanvas;
+        private Text infoText = new Text();
+        private float fillValue;
 
-        public override void Initialize(Contexts contexts, AgentEntity agentEntity)
+        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -94,8 +96,10 @@ namespace KGUI.PlayerStatus
             // Add Components and setup agent object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
+            fillValue = agentEntity.agentStats.Oxygen;
+
             // Oxygen Bar Initializon
-            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Oxygen / 100, agentEntity);
+            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
             oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
             oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 
@@ -107,7 +111,9 @@ namespace KGUI.PlayerStatus
             if (Init)
             {
                 ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x, iconCanvas.GetTransform().position.y);
-                oxygenBar.Update(agentEntity.agentStats.Oxygen / 100);
+                oxygenBar.Update(fillValue / 100);
+
+                infoText.Update();
 
                 if (Camera.main.aspect >= 1.7f)
                     iconCanvas.SetPosition(new Vector3(-377.3f, 5.9f, 4.873917f));
@@ -126,6 +132,20 @@ namespace KGUI.PlayerStatus
         public override void OnMouseEnter()
         {
             Debug.LogWarning("Oxygen Bar Mouse Enter");
+
+            if (fillValue < 50)
+            {
+                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
+            else
+            {
+                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
+                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
+
         }
 
         public override void OnMouseStay()
@@ -136,6 +156,8 @@ namespace KGUI.PlayerStatus
         public override void OnMouseExit()
         {
             Debug.LogWarning("Oxygen Bar Mouse Exit");
+
+            infoText.startLifeTime = true;
         }
     }
 }
