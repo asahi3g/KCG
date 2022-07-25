@@ -1,13 +1,15 @@
 using System;
+using Collisions;
 using Enums.Tile;
 using KMath;
+using Planet;
 using PlanetTileMap;
 using UnityEngine;
 
 public class RectangleTileCollisionTest_v2 : MonoBehaviour 
 {
     // 16x16 background grid
-    public TileMap tileMap;
+    public PlanetState Planet;
     public Material Material;
     
     public TestSquare square1;
@@ -77,24 +79,55 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         R1.ymin = r1_ymin;
         R1.ymax = r1_ymax;
         
+        if(r1_xmin < 0 || r1_xmin > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r1_xmax < 0 || r1_xmax > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r1_ymin < 0 || r1_ymin > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r1_ymax < 0 || r1_ymax > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+
         R2.xmin = r2_xmin;
         R2.xmax = r2_xmax;
         R2.ymin = r2_ymin;
         R2.ymax = r2_ymax;
+        
+        if(r2_xmin < 0 || r2_xmin > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r2_xmax < 0 || r2_xmax > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r2_ymin < 0 || r2_ymin > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
+        if(r2_ymax < 0 || r2_ymax > mapSize.X)
+        {
+            Debug.Log("Outside of map");
+        }
 
         R1.no_collision_color = Color.yellow;
         R1.color              = Color.yellow;
         
-        R2.no_collision_color = Color.yellow;
-        R2.color              = Color.yellow;
+        R2.no_collision_color = Color.magenta;
+        R2.color              = Color.magenta;
     }
 
     void Start()
     {
-        GameState.TileMapRenderer.Initialize(Material, transform, 7);
-        
-        GameObject.Find("Main Camera").transform.position = new Vector3(144f / 2f, 144f / 2f, -10);
-        tileMap                          = new TileMap(mapSize);
+        GameObject.Find("Main Camera").transform.position = new Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
 
         // Alternate colors for odd and even tiles to make grid more pleasurable to look at
         Color odd_collision_color     = new(1.00f, 0.50f, 0.50f, 1.0f);
@@ -115,42 +148,88 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
             name = "Test Region 1"
         };
         R1       = region1_obj.AddComponent<TestSquare>();
-        
+
         var region2_obj = new GameObject
         {
             name = "Test Region 2"
         };
         R2       = region2_obj.AddComponent<TestSquare>();
-        SetRegions(square1.xmin, square1.xmax, square1.ymin, square1.ymax, new Vec2f(12f, 12f));
+        SetRegions(square1.xmin, square1.xmax, square1.ymin, square1.ymax, new Vec2f(3f, 3f));
         
-        var halfSize2 = new Vec2f(square2_size.X / 2f, square2_size.Y / 2f);
+        /*var halfSize2 = new Vec2f(square2_size.X / 2f, square2_size.Y / 2f);
         var center2 = new Vec2f(mapSize.X - halfSize2.X, mapSize.Y - halfSize2.Y);
         square2 = SetSquare(center2, halfSize2);
         square2.collision_color    = square2_collision_color;
         square2.no_collision_color = square2_no_collision_color;
-        square2.color              = square2_no_collision_color;
+        square2.color              = square2_no_collision_color;*/
         
-        int tilesMoon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\Tiles_Moon.png", 16, 16);
-        int oreTileSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
-        
-        GameState.TileCreationApi.CreateTileProperty(TileID.Ore1);
-        GameState.TileCreationApi.SetTilePropertyName("ore_1");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
-        GameState.TileCreationApi.SetTilePropertyTexture16(oreTileSheet, 0, 0);
-        GameState.TileCreationApi.EndTileProperty();
-        
-        GameState.TileCreationApi.CreateTileProperty(TileID.Glass);
-        GameState.TileCreationApi.SetTilePropertyName("glass");
-        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
-        GameState.TileCreationApi.SetTilePropertySpriteSheet16(tilesMoon, 11, 10);
-        GameState.TileCreationApi.EndTileProperty();
-        
+        GameResources.Initialize();
 
+        // Generating the map
+        Planet = new PlanetState();
+        Planet.Init(mapSize);
+
+        Planet.InitializeSystems(Material, transform);
+        
+        GenerateMap();
+    }
+
+    void GenerateMap()
+    {
+        var halfSize = new Vec2f(16f / 2f, 16f / 2f);
+        
+        var chunk1Pos = new Vec2f(halfSize.X, halfSize.Y);
+        var chunk1 = SetSquare(chunk1Pos, halfSize);
+        chunk1.draggable = false;
+        chunk1.color              = Color.white;
+        
+        var chunk2Pos = new Vec2f(halfSize.X + 16f, halfSize.Y);
+        var chunk2 = SetSquare(chunk2Pos, halfSize);
+        chunk2.draggable = false;
+        chunk2.color              = Color.white;
+        
+        var chunk3Pos = new Vec2f(halfSize.X, halfSize.Y + 16f);
+        var chunk3 = SetSquare(chunk3Pos, halfSize);
+        chunk3.draggable = false;
+        chunk3.color              = Color.white;
+        
+        var chunk4Pos = new Vec2f(halfSize.X + 16f, halfSize.Y + 16f);
+        var chunk4 = SetSquare(chunk4Pos, halfSize);
+        chunk4.draggable = false;
+        chunk4.color              = Color.white;
+        
         for (int x = 0; x < mapSize.X; x++)
         {
-            for (int y = 0; y < mapSize.Y; y++)
+            for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                tileMap.SetFrontTile(x, y, TileID.Glass);
+                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+            }
+        }
+        
+        for (int x = 0; x < mapSize.X; x++)
+        {
+            for (int y = 0; y < mapSize.Y - 2; y++)
+            {
+                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+            }
+        }
+    }
+
+    void RegenerateMap()
+    {
+        for (int x = 0; x < mapSize.X; x++)
+        {
+            for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
+            {
+                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+            }
+        }
+        
+        for (int x = 0; x < mapSize.X; x++)
+        {
+            for (int y = 0; y < mapSize.Y - 2; y++)
+            {
+                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
@@ -167,11 +246,11 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
                 square1.xmax = mouse.x + square1_size.X / 2f;
                 square1.ymin = mouse.y - square1_size.Y / 2f;
                 square1.ymax = mouse.y + square1_size.Y / 2f;
-                SetRegions(square1.xmin, square1.xmax, square1.ymin, square1.ymax, new Vec2f(12f, 12f));
+                SetRegions(square1.xmin, square1.xmax, square1.ymin, square1.ymax, new Vec2f(3f, 3f));
             }
         }
 
-        if(square2.draggable) 
+        /*if(square2.draggable) 
         {
             Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -182,61 +261,14 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
                 square2.ymin = mouse.y - square2_size.Y / 2f;
                 square2.ymax = mouse.y + square2_size.Y / 2f;
             }
-        }
+        }*/
 
         // Reset colors for all squares
-        for (int x = 0; x < mapSize.X; x++)
-        {
-            for (int y = 0; y < mapSize.Y; y++)
-            {
-                tileMap.SetFrontTile(x, y, TileID.Glass);
-            }
-        }
-        square1.color = square1.no_collision_color;
-        square2.color = square2.no_collision_color;
+        RegenerateMap();
 
-        // Check collisions for square 1
-        for (int x = 0; x < mapSize.X; x++)
-        {
-            for (int y = 0; y < mapSize.Y; y++)
-            {
-                if (Collisions.Collisions.RectOverlapRect(square1.xmin, square1.xmax, square1.ymin, square1.ymax,
-                                                          x, x + 1f, y, y + 1f))
-                {
-                    square1.color    = square1.collision_color;
-                    tileMap.SetFrontTile(x, y, TileID.Ore1);
-                }
-            }
-        }
+        TileCollisions.RegionTileCollisionCheck(Planet.TileMap, (int)R1.xmin, (int)R1.xmax, (int)R1.ymin, (int)R1.ymax);
+        //TileCollisions.RegionTileCollisionCheck(Planet.TileMap, (int)R1.xmin, (int)R1.xmax, (int)R1.ymin, (int)R1.ymax);
 
-
-        // Check collisions for square 2
-        for (int x = 0; x < mapSize.X; x++)
-        {
-            for (int y = 0; y < mapSize.Y; y++)
-            {
-                if (Collisions.Collisions.RectOverlapRect(square2.xmin, square2.xmax, square2.ymin, square2.ymax,
-                        x, x + 1f, y, y + 1f))
-                {
-                    square2.color    = square2.collision_color;
-                    tileMap.SetFrontTile(x, y, TileID.Ore1);
-                }
-            }
-        }
-        
-        // check if the sprite atlas textures needs to be updated
-        for(int type = 0; type < GameState.SpriteAtlasManager.Length; type++)
-        {
-            GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-        }
-
-        // check if the tile sprite atlas textures needs to be updated
-        for(int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-        {
-            GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-        }
-        
-        GameState.TileMapRenderer.UpdateFrontLayerMesh(tileMap);
-        GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
+        Planet.Update(Time.deltaTime, Material, transform);
     }
 }

@@ -8,14 +8,14 @@ namespace Collisions
     {        
         public static bool RegionTileCollisionCheck(PlanetTileMap.TileMap tileMap, int xmin, int xmax, int ymin, int ymax)
         {
-            var xchunkmin = xmin << 4;
-            var xchunkmax = xmax << 4;
-            var ychunkmin = ymin << 4;
-            var ychunkmax = ymax << 4;
+            var xchunkmin = xmin >> 4;
+            var xchunkmax = xmax >> 4;
+            var ychunkmin = ymin >> 4;
+            var ychunkmax = ymax >> 4;
 
-            for (int x = xchunkmin; x < xchunkmax; x++) 
+            for (int x = xchunkmin; x <= xchunkmax; x++) 
             {
-                for (int y = ychunkmin; y < ychunkmax; y++)
+                for (int y = ychunkmin; y <= ychunkmax; y++)
                 {
                     //note: we already divided by 16 above
                     int chunk_index = x + y * tileMap.ChunkSize.X;

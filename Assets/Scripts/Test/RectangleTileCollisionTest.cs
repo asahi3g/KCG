@@ -31,7 +31,7 @@ public class TestSquare : MonoBehaviour
 
     // Used by renderer
     public Vector3[] corners   = new Vector3[4];
-    public const float LineThickness = 1.0f;
+    public const float LineThickness = 0.1f;
 
     void Start() 
     {
@@ -47,6 +47,8 @@ public class TestSquare : MonoBehaviour
         renderer.loop          = true;
 
         renderer.startWidth    = renderer.endWidth = LineThickness;
+
+        renderer.sortingOrder = 10;
 
         corners[0]             = new Vector3();
         corners[1]             = new Vector3();
