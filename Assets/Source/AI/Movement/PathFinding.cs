@@ -299,7 +299,7 @@ namespace AI.Movement
                 return false;
 
             // If solid return false.
-            if (tileMap.GetFrontTile(current.pos.X, current.pos.Y).MaterialType != TileMaterialType.Air)
+            if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y) != TileID.Air)
                 return false;
 
             // Todo deals with jumping.
@@ -315,7 +315,7 @@ namespace AI.Movement
                     if (indDir > 2)
                     {
                         // Return false if tile above is solid when doing a diagonal.
-                        if (tileMap.GetFrontTile(current.pos.X - directions[indDir].dir.X, current.pos.Y).MaterialType != TileMaterialType.Air)
+                        if (tileMap.GetFrontTileID(current.pos.X - directions[indDir].dir.X, current.pos.Y) != TileID.Air)
                             return false;
                     }
                     current.jumpValue++;
@@ -328,25 +328,25 @@ namespace AI.Movement
                     current.jumpValue = (current.jumpValue < MAX_UP) ? MAX_UP + 1 : current.jumpValue + 1;
                 }
                 // Set jump to zero when tile it on ground.
-                if (tileMap.GetFrontTile(current.pos.X, current.pos.Y - 1).MaterialType != TileMaterialType.Air)
+                if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) != TileID.Air)
                     current.jumpValue = 0;
             }
 
             // Check if character can move to this tile
-            Vec2i tilePos =
-                new Vec2i((int)(current.pos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
-                    (int)(current.pos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
+            //Vec2i tilePos =
+                //new Vec2i((int)(current.pos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
+                    //(int)(current.pos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
 
             // Check if tile is inside the map.
-            if (tilePos.X < 0 || tilePos.X > tileMap.MapSize.X ||
-                tilePos.Y < 0 || tilePos.Y > tileMap.MapSize.Y)
-                return false;
+            //if (tilePos.X < 0 || tilePos.X > tileMap.MapSize.X ||
+                //tilePos.Y < 0 || tilePos.Y > tileMap.MapSize.Y)
+                //return false;
 
             // If solid return false.
-            else
+            //else
             {
                 // Is tile on ground. // Deals with corners.
-                if (tileMap.GetFrontTile(current.pos.X, current.pos.Y - 1).MaterialType == TileMaterialType.Air)
+                if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) == TileID.Air)
                 {
                     if (current.jumpValue != 0)
                         return false;
@@ -405,14 +405,14 @@ namespace AI.Movement
             const int MAX_JUMP = MAX_UP;
 
             // Is tile on ground.
-            if (tileMap.GetFrontTile(start.X, start.Y - 1).MaterialType != TileMaterialType.Air)
+            if (tileMap.GetFrontTileID(start.X, start.Y - 1) != TileID.Air)
             {
                 firstNode.jumpValue = 0;
                 return;
             }
 
             // If its on the ceiling
-            if (tileMap.GetFrontTile(start.X, start.Y + 1).MaterialType != TileMaterialType.Air)
+            if (tileMap.GetFrontTileID(start.X, start.Y + 1) != TileID.Air)
             {
                 firstNode.jumpValue = MAX_JUMP; // Next node needs to be down.
                 return;

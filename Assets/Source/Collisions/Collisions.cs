@@ -1,3 +1,5 @@
+using System;
+
 namespace Collisions
 {
     public static class Collisions
@@ -25,7 +27,8 @@ namespace Collisions
 
         public static bool IsAPlatform(PlanetTileMap.Tile tile)
         {
-            return tile.MaterialType == PlanetTileMap.TileMaterialType.Platform;
+            //return tile.FrontTileID == PlanetTileMap.TileID.Platform;
+            throw new NotImplementedException();
         }
     }
 }
