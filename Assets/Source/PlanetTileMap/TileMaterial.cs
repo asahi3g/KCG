@@ -2,7 +2,7 @@ namespace PlanetTileMap
 {
     public struct TileMaterial
     {
-        public TileMaterialType MaterialType; // material type
+        //public TileMaterialType MaterialType; // material type
         public string Name; // name of the material
         public byte Durability; //max health of tile
 

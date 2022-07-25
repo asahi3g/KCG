@@ -882,9 +882,9 @@ namespace PlanetTileMap
             
         }
 
-        public static void UpdateBackSprite(int x, int y, TileMap tileMap)
+        /*public static void UpdateBackSprite(int x, int y, TileMap tileMap)
         {
-            ref var tile = ref tileMap.GetBackTile(x, y);
+            ref var tile = ref tileMap.GetTile(x, y);
             ref TileMaterial tileMaterial = ref GameState.TileCreationApi.GetMaterial(tile.MaterialType);
 
             int neighborsBitField = 0;
@@ -1227,6 +1227,6 @@ namespace PlanetTileMap
             // the sprite ids are next to each other in the sprite atlas
             // we just have to know which one to draw based on the offset
             tile.TileID = tileMaterial.StartTileIndex + tilePosition;
-        }
+        }*/
     }
 }

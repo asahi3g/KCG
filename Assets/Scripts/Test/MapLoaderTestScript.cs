@@ -1,12 +1,9 @@
-using System;
 using UnityEngine;
-using System.Collections.Generic;
 using Enums.Tile;
 using Physics;
-using Agent;
+using KMath;
 
 #if UNITY_EDITOR
-using KMath;
 using UnityEditor;
 #endif
 
@@ -118,7 +115,7 @@ namespace Planet.Unity
             AgentProcessCollisionSystem.Update(Contexts.sharedInstance.agent, ref PlanetState.TileMap);
 
             AgentMeshBuilderSystem.UpdateMesh(Contexts.sharedInstance.agent);
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(ref PlanetState.TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
 
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
             Utility.Render.DrawFrame(ref AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
@@ -138,13 +135,13 @@ namespace Planet.Unity
 
            /* GameState.TileCreationApi.CreateTileProperty(TileMaterialType.Ore1);
             GameState.TileCreationApi.SetTilePropertyName("ore_1");
-            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
             GameState.TileCreationApi.SetTilePropertyTexture16(oreTileSheet, 0, 0);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileMaterialType.Glass);
             GameState.TileCreationApi.SetTilePropertyName("glass");
-            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock, TileShapeAndRotation.FB);
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(tilesMoon, 11, 10);
             GameState.TileCreationApi.EndTileProperty();*/
 

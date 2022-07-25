@@ -88,10 +88,9 @@ namespace KMath
         [MethodImpl((MethodImplOptions)256)]
         public static bool operator ==(Vec2i lhs, Vec2i rhs)
         {
-            int num1 = lhs.X - rhs.X;
-            int num2 = lhs.Y - rhs.Y;
-            return num1 * (double)num1 + num2 * (double)num2 < 9.99999943962493E-11;
+            return (rhs.X == lhs.X && rhs.Y == lhs.Y) ? true : false;
         }
+
         [MethodImpl((MethodImplOptions)256)]
         public static bool operator !=(Vec2i lhs, Vec2i rhs) => !(lhs == rhs);
 
