@@ -23,7 +23,7 @@ namespace Collisions
                         ref var tile = ref tileMap.GetFrontTile(x, y);
                         if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
                         {
-                            if (IsAPlatform(tile))
+                            if (GameState.TileCreationApi.GetTileProperty(tile.TileID).IsPlatform)
                             {
                                 return false;
                             }
@@ -54,7 +54,8 @@ namespace Collisions
 
                         if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
                         {
-                            if (IsAPlatform(tile))
+                            Debug.Log(tile.TileID);
+                            if (GameState.TileCreationApi.GetTileProperty(tile.TileID).IsPlatform)
                             {
                                 return false;
                             }
@@ -89,10 +90,10 @@ namespace Collisions
                         if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
                         {
                             var tileBorders = new AABox2D(x, y);
-                            if(Math.Abs(borders.ymin - tileBorders.ymax) > 0.1f && tile.MaterialType == PlanetTileMap.TileMaterialType.Platform)
-                            {
-                                return false;
-                            }
+                            //if(Math.Abs(borders.ymin - tileBorders.ymax) > 0.1f && tile.MaterialType == PlanetTileMap.TileMaterialType.Platform)
+                            //{
+                            //    return false;
+                            //}
                             tileBorders.DrawBox();
                             return true;
                         }
@@ -121,7 +122,7 @@ namespace Collisions
                         
                         if (tile.MaterialType != PlanetTileMap.TileMaterialType.Air)
                         {
-                            if (IsAPlatform(tile))
+                            if (GameState.TileCreationApi.GetTileProperty(tile.TileID).IsPlatform)
                             {
                                 return false;
                             }
@@ -136,10 +137,5 @@ namespace Collisions
             return false;
         }
 
-        public static bool IsAPlatform(PlanetTileMap.Tile tile)
-        {
-            Debug.Log(tile.MaterialType);
-            return tile.MaterialType == PlanetTileMap.TileMaterialType.Platform;
-        }
     }
 }
