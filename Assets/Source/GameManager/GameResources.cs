@@ -26,6 +26,8 @@ public class GameResources
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
 
+    public static int PlatformSpriteSheet;
+
 
     public static int OreSprite;
     public static int Ore2Sprite;
@@ -56,6 +58,7 @@ public class GameResources
     public static int RemoveToolIcon;
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
+    public static int PlatformSpriteSheetID;
 
 
 
@@ -97,7 +100,7 @@ public class GameResources
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
-
+            PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -124,7 +127,6 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
-
 
             CreateTiles();
             CreateAnimations();
@@ -219,8 +221,6 @@ public class GameResources
                 GameState.TileCreationApi.CreateTileProperty();
                 GameState.TileCreationApi.SetTilePropertyTexture16(BackgroundSpriteSheet, i, j);
                 GameState.TileCreationApi.EndTileProperty();
-
-                
             }
         }
         GameState.TileCreationApi.EndMaterial();
@@ -229,15 +229,14 @@ public class GameResources
         GameState.TileCreationApi.BeginMaterial(TileMaterialType.Platform);
         GameState.TileCreationApi.SetMaterialName("platform");
         GameState.TileCreationApi.SetMaterialSpriteRuleType(SpriteRuleType.R3);
-        for(int j = 0; j < 5; j++)
+        for(int j = 0; j < 3; j++)
         {
-            for(int i = 0; i < 11; i++)
+            for(int i = 0; i < 3; i++)
             {
                 GameState.TileCreationApi.CreateTileProperty();
-                GameState.TileCreationApi.SetTilePropertyTexture16(BackgroundSpriteSheet, i, j);
+                GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, i, j);
+                GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
                 GameState.TileCreationApi.EndTileProperty();
-
-                
             }
         }
         GameState.TileCreationApi.EndMaterial();
