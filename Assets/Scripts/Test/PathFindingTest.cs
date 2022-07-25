@@ -91,15 +91,15 @@ namespace Planet.Unity
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
-                    TileMaterialType frontTile;
+                    TileID frontTile;
 
                     if (map[j,i] == 1)
                     {
-                       frontTile = TileMaterialType.Moon;
+                       frontTile = TileID.Moon;
                     }
                     else
                     {
-                        frontTile = TileMaterialType.Air;
+                        frontTile = TileID.Air;
                     }
 
                     tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1 - j, frontTile);
