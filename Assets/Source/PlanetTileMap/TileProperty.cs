@@ -31,6 +31,6 @@ namespace PlanetTileMap
         public TileShapeAndRotation BlockShapeAndRotation;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
-
+        public bool IsPlatform => CollisionIsoType == CollisionType.Platform;
     }
 }
