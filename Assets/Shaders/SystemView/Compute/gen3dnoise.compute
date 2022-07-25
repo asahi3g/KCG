@@ -1,0 +1,40 @@
+#pragma kernel gen3dnoise
+
+RWStructuredBuffer<float> noise;
+
+uint width;
+uint height;
+uint depth;
+
+uint seed;
+uint size;
+uint scale;
+
+uint random(uint current_seed) {
+    uint value = current_seed;
+
+    value ^=  value >> 11;
+    value ^= (value <<  7) & 0x92DC5680;
+    value ^= (value << 15) & 0xEFC60000;
+    value ^= (value >> 18);
+
+    return value;
+}
+
+[numthreads(4, 4, 4)]
+void gen3dnoise(uint3 id : SV_DispatchThreadID) {
+    float value = (random(seed + id.x + id.y * width + id.z * width * height) % scale) / 255.0f;
+
+    uint  startx = id.x * size;
+    uint  starty = id.y * size;
+    uint  startz = id.z * size;
+
+    uint  endx   = id.x * size + size;
+    uint  endy   = id.y * size + size;
+    uint  endz   = id.z * size + size;
+
+    for(uint x = startx; x < endx; x++)
+        for(uint y = starty; y < endy; y++)
+            for(uint z = startz; z < endz; z++)
+                noise[x + y * width + z * width * height] += value;
+}

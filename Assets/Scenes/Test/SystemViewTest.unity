@@ -2260,14 +2260,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 69420
   layers: 5
-  colors: 2
+  basecolor: {r: 0.31545216, g: 0.8018868, b: 0.23073156, a: 0}
+  colors: []
   width: 512
   height: 512
   opacity: 1
   contrast: 0.5
   cutoff: 0.1
+  spin: 0
+  center: {x: 0, y: 0, z: 0}
   texture: {fileID: 0}
   renderer: {fileID: 0}
+  pixelate: 1
+  pixelation_size: 8
+  blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
+  scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
+  exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
+  distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
+  circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
+  circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 7200000, guid: 9b36951ceb5da9a4398e2a7dd2fe8a4e, type: 3}
 --- !u!4 &410944484
 Transform:
   m_ObjectHideFlags: 0
@@ -2395,7 +2407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9782b1730888064795e3890a6487e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: {fileID: 451157161}
+  state: {fileID: 451157161}
+  seed: 0
   StarCount: 1
   InnerPlanets: 4
   OuterPlanets: 6
@@ -2413,6 +2426,40 @@ MonoBehaviour:
   TrackingPlayer: 0
   planet_movement: 1
   n_body_gravity: 1
+  blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
+  scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
+  exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
+  distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
+  circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
+  circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 7200000, guid: 9b36951ceb5da9a4398e2a7dd2fe8a4e, type: 3}
+  pixelate: 1
+  smoothstepped_colors: 1
+  pixelation_size: 8
+  rocky_planet_base_color: {r: 0.3490566, g: 0.2755455, b: 0.23544855, a: 1}
+  gas_giant_base_color: {r: 0.8490566, g: 0.75820327, b: 0.59674263, a: 1}
+  moon_base_color: {r: 0.26415092, g: 0.25696966, b: 0.25044498, a: 1}
+  rocky_planet_colors:
+  - {r: 0.16037738, g: 0.14297795, b: 0.14297795, a: 0.7647059}
+  - {r: 0.5754717, g: 0.4804646, b: 0.36645603, a: 0.92941177}
+  - {r: 0.6415094, g: 0.6159566, b: 0.58401567, a: 0.92941177}
+  gas_giant_colors:
+  - {r: 1, g: 0.452836, b: 0.0141509175, a: 0.8352941}
+  - {r: 0.754717, g: 0.2654738, b: 0.16731933, a: 0.8352941}
+  - {r: 0.41509432, g: 0.13971391, b: 0.08419366, a: 0.8352941}
+  - {r: 0.9056604, g: 0.81523806, b: 0.72196513, a: 0.8352941}
+  - {r: 0.9622642, g: 0.947789, b: 0.9123354, a: 0.8352941}
+  - {r: 0.764151, g: 0.68412715, b: 0.64520293, a: 0.8352941}
+  moon_colors:
+  - {r: 0.20754719, g: 0.18503028, b: 0.18503028, a: 0.9490196}
+  - {r: 0.8207547, g: 0.7549395, b: 0.7549395, a: 0.84313726}
+  - {r: 0.5566038, g: 0.510879, b: 0.4542097, a: 0.84313726}
+  rocky_planet_radius: 256
+  gas_giant_radius: 384
+  moon_radius: 96
+  rocky_planet_layers: 5
+  gas_giant_layers: 6
+  moon_layers: 4
   Camera: {fileID: 0}
   DockingTargetSelector: {fileID: 1953044954}
   gravity_renderer: {fileID: 451157162}
@@ -10668,14 +10715,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 42069
   layers: 5
-  colors: 2
+  basecolor: {r: 0.5931827, g: 0.7521614, b: 0.8113208, a: 0}
+  colors: []
   width: 512
   height: 512
   opacity: 0.75
   contrast: 0.5
   cutoff: 0.2
+  spin: 0
+  center: {x: 0, y: 0, z: 0}
   texture: {fileID: 0}
   renderer: {fileID: 0}
+  pixelate: 1
+  pixelation_size: 8
+  blur_noise_shader: {fileID: 7200000, guid: 6265a9d36a176594480881d07bfe6ddf, type: 3}
+  scale_noise_shader: {fileID: 7200000, guid: 79f3f8a43bab1ba4399f86e66416a993, type: 3}
+  exponential_filter_shader: {fileID: 7200000, guid: 1954e415a298c274481ea30b23eee6d6, type: 3}
+  distortion_shader: {fileID: 7200000, guid: ebbb666a38ff3b7429286b25473a81fc, type: 3}
+  circular_blur_shader: {fileID: 7200000, guid: 0daecd51ef16bf5419fd99ed4c4a3103, type: 3}
+  circular_mask_shader: {fileID: 7200000, guid: 3a81d580afd4b1748bf5c40b11e020a4, type: 3}
+  pixelate_shader: {fileID: 7200000, guid: 9b36951ceb5da9a4398e2a7dd2fe8a4e, type: 3}
 --- !u!4 &1768860445
 Transform:
   m_ObjectHideFlags: 0
