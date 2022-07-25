@@ -9,7 +9,7 @@ namespace Action
     {
         public struct Data
         {
-            public TileMaterialType MaterialType;
+            public TileID TileID;
             public MapLayerType Layer;
         }
 
@@ -29,18 +29,18 @@ namespace Action
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-            switch (data.Layer)
-            {
-                case MapLayerType.Back:
-                    planet.TileMap.SetBackTile(x, y, data.MaterialType);
-                    break;
-                case MapLayerType.Mid:
-                    planet.TileMap.SetMidTile(x, y, data.MaterialType);
-                    break;
-                case MapLayerType.Front:
-                    planet.TileMap.SetFrontTile(x, y, data.MaterialType);
-                    break;
-            }
+                switch (data.Layer)
+                {
+                    case MapLayerType.Back:
+                        planet.TileMap.SetBackTile(x, y, data.TileID);
+                        break;
+                    case MapLayerType.Mid:
+                        planet.TileMap.SetMidTile(x, y, data.TileID);
+                        break;
+                    case MapLayerType.Front:
+                        planet.TileMap.SetFrontTile(x, y, data.TileID);
+                        break;
+                }
             }
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);

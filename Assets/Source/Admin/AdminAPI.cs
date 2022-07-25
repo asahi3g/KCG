@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Enums.Tile;
 using UnityEngine;
 using PlanetTileMap;
 
@@ -55,13 +54,13 @@ namespace Admin
                 for(int x = 0; x < tileMap.MapSize.X; x++)
                 {
                     // If chunk is empty/air make it black
-                    if (tileMap.GetFrontTile(x, y).MaterialType == TileMaterialType.Air)
+                    if (tileMap.GetFrontTileID(x, y) == TileID.Air)
                         Gizmos.color = Color.black;
-                    if (tileMap.GetFrontTile(x, y).MaterialType != TileMaterialType.Air)
+                    if (tileMap.GetFrontTileID(x, y) != TileID.Air)
                         Gizmos.color = Color.green;
-                    if (tileMap.GetBackTile(x, y).MaterialType != TileMaterialType.Air)
+                    if (tileMap.GetBackTileID(x, y) != TileID.Air)
                         Gizmos.color = Color.cyan;
-                    if (tileMap.GetMidTile(x, y).MaterialType != TileMaterialType.Air)
+                    if (tileMap.GetMidTileID(x, y) != TileID.Air)
                         Gizmos.color = Color.yellow;
 
                     if (!Utility.ObjectMesh.isOnScreen(x, y))

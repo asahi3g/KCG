@@ -12,11 +12,11 @@ namespace PlanetTileMap
         // Updating the Sprite id requires checking the neighboring tiles
         // each sprite Rule respresent a different way of looking at the neighbors
         // to determine the sprite ids
-        public static void UpdateBackNeighbourTiles(int x, int y, TileMap tileMap)
+        /*public static void UpdateBackNeighbourTiles(int x, int y, TileMap tileMap)
         {
-            ref var tile = ref tileMap.GetBackTile(x, y);
+            ref var tile = ref tileMap.GetTile(x, y);
             
-            if (tile.MaterialType != TileMaterialType.Error)
+            if (tile.BackTileID != TileID.Error)
             {
                 ref TileMaterial material = ref GameState.TileCreationApi.GetMaterial(tile.MaterialType);
                 if (material.SpriteRuleType != SpriteRuleType.NoRule )
@@ -54,7 +54,7 @@ namespace PlanetTileMap
         // to determine the sprite ids
         public static void UpdateMidNeighbourTiles(int x, int y, TileMap tileMap)
         {
-            ref var tile = ref tileMap.GetMidTile(x, y);
+            ref var tile = ref tileMap.GetTile(x, y);
             
             if (tile.MaterialType != TileMaterialType.Error)
             {
@@ -94,7 +94,7 @@ namespace PlanetTileMap
         // to determine the sprite ids
         public static void UpdateFrontNeighbourTiles(int x, int y, TileMap tileMap)
         {
-            ref var tile = ref tileMap.GetFrontTile(x, y);
+            ref var tile = ref tileMap.GetTile(x, y);
             
  
             if ( tile.MaterialType != TileMaterialType.Error)
@@ -282,6 +282,6 @@ namespace PlanetTileMap
                     UpdateFrontNeighbourTiles(i, j, tileMap);
                 }
             }
-        }
+        }*/
     }
 }

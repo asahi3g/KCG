@@ -9,7 +9,7 @@ namespace Action
     [Action]
     public class ToolComponent : IComponent
     {
-        [PrimaryEntityIndex]
+        [EntityIndex]
         public int ItemID;
     }
 }

@@ -209,7 +209,7 @@ namespace Planet.Unity
             GenerateMap();
             SpawnStuff();
 
-            TileMapManager.Save(Planet.TileMap, "map.kmap");
+            //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
             inventoryID = Player.agentInventory.InventoryID;
             toolBarID = Player.agentToolBar.ToolBarID;
@@ -240,56 +240,56 @@ namespace Planet.Unity
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
-                    var frontTileID = TileMaterialType.Air;
-                    var backTileID = TileMaterialType.Air;
+                    var frontTileID = TileID.Air;
+                    var backTileID = TileID.Air;
 
                     if (i >= tileMap.MapSize.X / 2)
                     {
                         if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
                         {
-                            frontTileID = TileMaterialType.Moon;
-                            backTileID = TileMaterialType.Background;
+                            frontTileID = TileID.Moon;
+                            backTileID = TileID.Background;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Glass;
-                            backTileID = TileMaterialType.Background;
+                            frontTileID = TileID.Glass;
+                            backTileID = TileID.Background;
                         }
                     }
                     else
                     {
                         if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
                         {
-                            frontTileID = TileMaterialType.Glass;
-                            backTileID = TileMaterialType.Background;
+                            frontTileID = TileID.Glass;
+                            backTileID = TileID.Background;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Moon;
-                            backTileID = TileMaterialType.Background;
+                            frontTileID = TileID.Moon;
+                            backTileID = TileID.Background;
                             if ((int) KMath.Random.Mt19937.genrand_int32() % 10 == 0)
                             {
                                 int oreRandom = (int) KMath.Random.Mt19937.genrand_int32() % 3;
                                 if (oreRandom == 0)
                                 {
-                                    tileMap.GetFrontTile(i, j).SpriteId2 = GameResources.OreSprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.OreSprite;
                                 }
                                 else if (oreRandom == 1)
                                 {
-                                    tileMap.GetFrontTile(i, j).SpriteId2 = GameResources.Ore2Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore2Sprite;
                                 }
                                 else
                                 {
-                                    tileMap.GetFrontTile(i, j).SpriteId2 = GameResources.Ore3Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore3Sprite;
                                 }
 
-                                tileMap.GetFrontTile(i, j).DrawType = TileDrawType.Composited;
+                                tileMap.GetTile(i, j).DrawType = TileDrawType.Composited;
                             }
                         }
                     }
 
-                    tileMap.GetFrontTile(i, j).MaterialType = frontTileID;
-                    tileMap.GetBackTile(i, j).MaterialType = backTileID;
+                    tileMap.SetFrontTile(i, j, frontTileID);
+                    tileMap.SetBackTile(i, j, backTileID);
                 }
             }
 
@@ -299,8 +299,8 @@ namespace Planet.Unity
             {
                 for (int j = tileMap.MapSize.Y - 10; j < tileMap.MapSize.Y; j++)
                 {
-                    tileMap.GetFrontTile(i, j).MaterialType = TileMaterialType.Air;
-                    tileMap.GetBackTile(i, j).MaterialType = TileMaterialType.Air;
+                    tileMap.SetFrontTile(i, j, TileID.Air);
+                    tileMap.SetBackTile(i, j, TileID.Air);
                 }
             }
 
@@ -327,9 +327,9 @@ namespace Planet.Unity
 
                 for (int j = carveHeight; j < tileMap.MapSize.Y && j < carveHeight + 4; j++)
                 {
-                    tileMap.GetFrontTile(i, j).MaterialType = TileMaterialType.Air;
-                    tileMap.GetBackTile(i, j).MaterialType = TileMaterialType.Air;
-                    tileMap.GetMidTile(i, j).MaterialType = TileMaterialType.Wire;
+                    tileMap.SetFrontTile(i, j, TileID.Air);
+                    tileMap.SetBackTile(i, j, TileID.Air);
+                    tileMap.SetMidTile(i, j, TileID.Wire);
                 }
             }
 
@@ -356,30 +356,30 @@ namespace Planet.Unity
 
                 for (int j = carveHeight; j < tileMap.MapSize.Y && j < carveHeight + 4; j++)
                 {
-                    tileMap.GetFrontTile(i, j).MaterialType = TileMaterialType.Air;
-                    tileMap.GetMidTile(i, j).MaterialType = TileMaterialType.Pipe;
+                    tileMap.SetFrontTile(i, j, TileID.Air);
+                    tileMap.SetMidTile(i, j, TileID.Pipe);
                 }
             }
 
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
-                tileMap.GetFrontTile(i, 0).MaterialType = TileMaterialType.Bedrock;
-                tileMap.GetFrontTile(i, tileMap.MapSize.Y - 1).MaterialType = TileMaterialType.Bedrock;
+                tileMap.SetFrontTile(i, 0, TileID.Bedrock);
+                tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1, TileID.Bedrock);
             }
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
-                tileMap.GetFrontTile(0, j).MaterialType = TileMaterialType.Bedrock;
-                tileMap.GetFrontTile(tileMap.MapSize.X - 1, j).MaterialType = TileMaterialType.Bedrock;
+                tileMap.SetFrontTile(0, j, TileID.Bedrock);
+                tileMap.SetFrontTile(tileMap.MapSize.X - 1, j, TileID.Bedrock);
             }
 
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-            tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
         }
 
         void SpawnStuff()

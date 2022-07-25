@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/PlanetTileMap/TileMapManager.cs.meta
+guid: e1ea540c34002174d94a7bdfe623613c
+========
+guid: 26a1f0ecbdca2d1418b6ff5142bfef21
+>>>>>>>> df2dde22 (RectScanTileRef2 complete implementation):Assets/Source/Math/Int.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

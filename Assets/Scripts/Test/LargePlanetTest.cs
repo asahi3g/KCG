@@ -110,33 +110,33 @@ namespace Planet.Unity
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
-                    var frontTileID = TileMaterialType.Air;
+                    var frontTileID = TileID.Air;
 
                     if (i >= tileMap.MapSize.X / 2)
                     {
                         if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
                         {
-                            frontTileID = TileMaterialType.Moon;
+                            frontTileID = TileID.Moon;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Glass;
+                            frontTileID = TileID.Glass;
                         }
                     }
                     else
                     {
                         if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
                         {
-                            frontTileID = TileMaterialType.Glass;
+                            frontTileID = TileID.Glass;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Moon;
+                            frontTileID = TileID.Moon;
                         }
                     }
 
 
-                    tileMap.GetFrontTile(i, j).MaterialType =  frontTileID;
+                    tileMap.SetFrontTile(i, j, frontTileID);
                 }
             }
 
@@ -205,9 +205,9 @@ namespace Planet.Unity
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-            tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
         }
 
