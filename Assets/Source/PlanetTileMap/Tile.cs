@@ -4,6 +4,9 @@ namespace PlanetTileMap
 {
     public struct Tile
     {
+        public TileDrawType DrawType;
+        public int CompositeTileSpriteID;
+        
         public TileID BackTileID;
         public int BackTileSpriteID;
         
