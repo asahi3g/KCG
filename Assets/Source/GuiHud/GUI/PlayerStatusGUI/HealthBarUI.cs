@@ -12,29 +12,28 @@ namespace KGUI.PlayerStatus
         float fillValue;
 
         // Div Global Sprites
-        Sprite barDiv1Sprite;
-        Sprite barDiv2Sprite;
+        private Sprite barDiv1Sprite;
+        private Sprite barDiv2Sprite;
 
         // Icon
-        Image Icon;
+        private Image Icon;
 
         // Border
-        Image Border;
+        private Image Border;
 
         // Div's
-        Image BarDiv1;
-        Image BarDiv2;
-        Image BarDiv3;
+        private Image BarDiv1;
+        private Image BarDiv2;
+        private Image BarDiv3;
+
+        // Hover Text
+        private Text infoText = new Text();
 
         // Health Bar
-        ProgressBar Bar;
-
-        Planet.PlanetState _planet;
+        private ProgressBar Bar;
 
         public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
-            _planet = planet;
-
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
@@ -170,22 +169,43 @@ namespace KGUI.PlayerStatus
                 TextureCoords = new Vector4(0, 0, 1, 1)
             };
 
-            // Add Components and setup agent object
+            // Create Icon Sprite
             Sprite iconBar = Sprite.Create(icon.Texture, new Rect(0.0f, 0.0f, IconWidth, IconHeight), new Vector2(0.5f, 0.5f));
+
+            // Create Border Sprite
             Sprite borderSprite = Sprite.Create(barBorder.Texture, new Rect(0.0f, 0.0f, BarBorderWidth, BarBorderHeight), new Vector2(0.5f, 0.5f));
+
+            // Create Fill Sprite
             Sprite fillSprite = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
+
+            // Create Bar Divide 1 Sprite
             barDiv1Sprite = Sprite.Create(barDiv1.Texture, new Rect(0.0f, 0.0f, BarDiv1Width, BarDiv1Height), new Vector2(0.5f, 0.5f));
+
+            // Create Bar Divide 2 Sprite
             barDiv2Sprite = Sprite.Create(barDiv2.Texture, new Rect(0.0f, 0.0f, BarDiv2Width, BarDiv2Height), new Vector2(0.5f, 0.5f));
 
+            // Create Icon
             Icon = new Image("Health Bar", iconBar);
+
+            // Create Fill Value
             fillValue = agentEntity.agentStats.Health;
+
+            // Create Border
             Border = new Image("Border", Icon.GetTransform(), borderSprite);
+
+            // Create Bar
             Bar = new ProgressBar("Health Bar", Icon.GetTransform(), fillSprite, fillValue / 100, agentEntity);
+
+            // Create Bar Div 1
             BarDiv1 = new Image("BarDiv1", Icon.GetTransform(), barDiv1Sprite);
+
+            // Create Bar Div 2
             BarDiv2 = new Image("BarDiv2", Icon.GetTransform(), barDiv1Sprite);
+
+            // Create Bar Div 3
             BarDiv3 = new Image("BarDiv3", Icon.GetTransform(), barDiv1Sprite);
 
-
+            // Set Icon Position Based On Aspect Ratio
             if (Camera.main.aspect >= 1.7f)
             {
                 Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
@@ -214,11 +234,22 @@ namespace KGUI.PlayerStatus
                 BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
             }
 
+            // Set Icon Scale
             Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
+
+            // Set Border Scale
             Border.SetScale(new Vector3(4.069521f, 0.3654834f, 1));
+
+            // Set Bar Scale
             Bar.SetScale(new Vector3(3.933964f, 0.27499f, 1));
+
+            // Set BarDiv1 Scale
             BarDiv1.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
+
+            // Set BarDiv2 Scale
             BarDiv2.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
+
+            // Set BarDiv3 Scale
             BarDiv3.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
 
             Init = true;
@@ -228,10 +259,17 @@ namespace KGUI.PlayerStatus
         {
             if(Init)
             {
+                // Update Object Position
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
 
+                // Update Fill Amount
                 fillValue = agentEntity.agentStats.Health;
+
+                // Water Bar Update Fill Amount
                 Bar.Update(fillValue / 100);
+
+                // Info Text Update
+                infoText.Update();
 
                 // Update Div Textures for under 25
                 if (fillValue < 25)
@@ -263,6 +301,7 @@ namespace KGUI.PlayerStatus
                     BarDiv3.SetImage(barDiv1Sprite);
                 }
 
+                // Set Icon Position Based On Aspect Ratio
                 if (Camera.main.aspect >= 1.7f)
                 {
                     Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
@@ -293,24 +332,55 @@ namespace KGUI.PlayerStatus
             }
         }
 
+        // Health Bar OnMouseClick Event
         public override void OnMouseClick(AgentEntity agentEntity)
         {
             Debug.LogWarning("Health Bar Clicked");
         }
 
+        // Health Bar OnMouseEnter Event
         public override void OnMouseEnter()
         {
             Debug.LogWarning("Health Bar Mouse Enter");
+
+            // If Health level less than 50
+            if (fillValue < 50)
+            {
+                // Create Hover Text
+                infoText.Create("Health Indicator", "Health Bar\nStatus: Low", Icon.GetTransform(), 2.0f);
+
+                // Set Size Delta
+                infoText.SetSizeDelta(new Vector2(250, 50));
+
+                // Set Position
+                infoText.SetPosition(new Vector3(700.0f, 0, 0));
+            }
+            else
+            {
+                // Create Hover Text
+                infoText.Create("Health DeIndicator", "Health Bar\nStatus: Normal", Icon.GetTransform(), 2.0f);
+
+                // Set Size Delta
+                infoText.SetSizeDelta(new Vector2(250, 50));
+
+                // Set Position
+                infoText.SetPosition(new Vector3(700.0f, 0, 0));
+            }
         }
 
+        // Health Bar OnMouseStay Event
         public override void OnMouseStay()
         {
             Debug.LogWarning("Health Bar Mouse Stay");
         }
 
+        // Health Bar OnMouseExit Event
         public override void OnMouseExit()
         {
             Debug.LogWarning("Health Bar Mouse Exit");
+
+            // Start Life Time
+            infoText.startLifeTime = true;
         }
     }
 }

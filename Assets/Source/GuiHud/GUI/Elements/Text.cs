@@ -9,13 +9,18 @@ namespace KGUI.Elements
         // Image Gameobject
         private GameObject textCanvas;
 
+        // Countdown
         float timeLeft;
 
+        // Start Life Time Condition
         public bool startLifeTime;
 
         // Constructor
         public void Create(string objectName, string text, Transform parent, float lifeTime)
         {
+            if (textCanvas != null)
+                return;
+
             timeLeft = lifeTime;
 
             // Create Gameobject
@@ -48,6 +53,7 @@ namespace KGUI.Elements
             // Set Pivot
             textCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
+            // Reset Transform
             SetPosition(Vector3.zero);
         }
 
