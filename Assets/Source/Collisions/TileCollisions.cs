@@ -63,7 +63,7 @@ namespace Collisions
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
@@ -89,7 +89,7 @@ namespace Collisions
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
@@ -119,7 +119,7 @@ namespace Collisions
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air )
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
@@ -147,7 +147,7 @@ namespace Collisions
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
