@@ -36,6 +36,13 @@ public class GameState
 
     #endregion
 
+    #region Mech
+    public static readonly Mech.MechCreationApi MechCreationApi;
+    public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
+    public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
+
+    #endregion
+
     #region Agent
     public static readonly Agent.AgentCreationApi AgentCreationApi;
     public static readonly Agent.AgentSpawnerSystem AgentSpawnerSystem;
@@ -100,6 +107,8 @@ public class GameState
         InputProcessSystem = new ECSInput.InputProcessSystem();
         AgentCreationApi = new Agent.AgentCreationApi();
         AgentSpawnerSystem = new Agent.AgentSpawnerSystem(AgentCreationApi);
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         PhysicsMovableSystem = new Physics.PhysicsMovableSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         InventoryManager = new Inventory.InventoryManager();
@@ -133,5 +142,6 @@ public class GameState
         ProjectileMovementSystem = new Projectile.MovementSystem(ProjectileCreationApi);
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
+        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
     }
 }

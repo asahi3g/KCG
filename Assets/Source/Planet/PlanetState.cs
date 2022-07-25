@@ -1,5 +1,6 @@
  using Agent;
 using Enums.Tile;
+using Mech;
 using Vehicle;
 using Projectile;
 using FloatingText;
@@ -18,6 +19,7 @@ namespace Planet
 
         public PlanetTileMap.TileMap TileMap;
         public AgentList AgentList;
+        public MechList MechList;
         public VehicleList VehicleList;
         public ProjectileList ProjectileList;
         public FloatingTextList FloatingTextList;
@@ -32,6 +34,7 @@ namespace Planet
         {
             TileMap = new PlanetTileMap.TileMap(mapSize);
             AgentList = new AgentList();
+            MechList = new MechList();
             VehicleList = new VehicleList();
             ProjectileList = new ProjectileList();
             FloatingTextList = new FloatingTextList();
@@ -53,6 +56,7 @@ namespace Planet
             GameState.AgentMeshBuilderSystem.Initialize(material, transform, 12);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
+            GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
         }
 
 
@@ -93,6 +97,14 @@ namespace Planet
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
                     -1, Agent.AgentType.Agent));
+            return newEntity;
+        }
+
+        public MechEntity AddMech(Vec2f position, MechType mechType)
+        {
+            Utils.Assert(MechList.Size < PlanetEntityLimits.MechLimit);
+
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, position, -1, mechType));
             return newEntity;
         }
 
@@ -272,6 +284,7 @@ namespace Planet
             GameState.AgentMeshBuilderSystem.UpdateMesh(EntitasContext.agent);
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
+            GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
 
             // Draw Frames.
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);
@@ -281,6 +294,7 @@ namespace Planet
             Utility.Render.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
             Utility.Render.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             Utility.Render.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
+            Utility.Render.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
             GameState.FloatingTextDrawSystem.Draw(EntitasContext.floatingText, transform, 10000);
         }

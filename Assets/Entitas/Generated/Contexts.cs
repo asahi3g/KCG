@@ -32,11 +32,12 @@ public partial class Contexts : Entitas.IContexts {
     public InventoryContext inventory { get; set; }
     public ItemInventoryContext itemInventory { get; set; }
     public ItemParticleContext itemParticle { get; set; }
+    public MechContext mech { get; set; }
     public ParticleContext particle { get; set; }
     public ProjectileContext projectile { get; set; }
     public VehicleContext vehicle { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, actionProperties, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, particle, projectile, vehicle }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, actionProperties, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, particle, projectile, vehicle }; } }
 
     public Contexts() {
         action = new ActionContext();
@@ -50,6 +51,7 @@ public partial class Contexts : Entitas.IContexts {
         inventory = new InventoryContext();
         itemInventory = new ItemInventoryContext();
         itemParticle = new ItemParticleContext();
+        mech = new MechContext();
         particle = new ParticleContext();
         projectile = new ProjectileContext();
         vehicle = new VehicleContext();
@@ -99,6 +101,7 @@ public partial class Contexts {
     public const string ItemID = "ItemID";
     public const string ItemInventory = "ItemInventory";
     public const string ItemType = "ItemType";
+    public const string MechID = "MechID";
     public const string ParticleEmitterID = "ParticleEmitterID";
     public const string ProjectileID = "ProjectileID";
     public const string VehicleID = "VehicleID";
@@ -198,6 +201,11 @@ public partial class Contexts {
             itemParticle.GetGroup(ItemParticleMatcher.ItemType),
             (e, c) => ((Item.TypeComponent)c).Type));
 
+        mech.AddEntityIndex(new Entitas.PrimaryEntityIndex<MechEntity, int>(
+            MechID,
+            mech.GetGroup(MechMatcher.MechID),
+            (e, c) => ((Mech.IDComponent)c).ID));
+
         particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, int>(
             ParticleEmitterID,
             particle.GetGroup(ParticleMatcher.ParticleEmitterID),
@@ -293,6 +301,10 @@ public static class ContextsExtensions {
         return ((Entitas.EntityIndex<ItemParticleEntity, Enums.ItemType>)context.GetEntityIndex(Contexts.ItemType)).GetEntities(Type);
     }
 
+    public static MechEntity GetEntityWithMechID(this MechContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<MechEntity, int>)context.GetEntityIndex(Contexts.MechID)).GetEntity(ID);
+    }
+
     public static ParticleEntity GetEntityWithParticleEmitterID(this ParticleContext context, int ParticleEmitterId) {
         return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleEmitterID)).GetEntity(ParticleEmitterId);
     }
@@ -331,6 +343,7 @@ public partial class Contexts {
             CreateContextObserver(inventory);
             CreateContextObserver(itemInventory);
             CreateContextObserver(itemParticle);
+            CreateContextObserver(mech);
             CreateContextObserver(particle);
             CreateContextObserver(projectile);
             CreateContextObserver(vehicle);
