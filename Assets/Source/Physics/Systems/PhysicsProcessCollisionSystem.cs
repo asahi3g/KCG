@@ -22,7 +22,15 @@ namespace Physics
             if (entityBoxBorders.IsCollidingBottom(tileMap, movable.Velocity))
             {
                 var tile = tileMap.GetFrontTile((int)pos.Value.X, (int)Math.Ceiling(pos.Value.Y)-1);
-                if (tile.MaterialType != TileMaterialType.Platform || !movable.Droping)
+                var tileProperty = GameState.TileCreationApi.GetTileProperty(tile.TileID);
+                if (tileProperty.CollisionIsoType == CollisionType.Platform && !movable.Droping)
+                {
+                    pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
+                    movable.Velocity.Y = 0.0f;
+                    movable.Acceleration.Y = 0.0f;
+                    movable.Landed = true;
+                }
+                if (tileProperty.CollisionIsoType != CollisionType.Platform)
                 {
                     pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
                     movable.Velocity.Y = 0.0f;
@@ -30,7 +38,7 @@ namespace Physics
                     movable.Landed = true;
                 }
 
-               
+
             }
             if (entityBoxBorders.IsCollidingTop(tileMap, movable.Velocity))
             {   
