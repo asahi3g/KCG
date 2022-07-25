@@ -262,12 +262,12 @@ namespace Planet
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
             cameraFollow.Update(ref this);
 
-            TileMap.UpdateTileSprites();
+            //TileMap.UpdateTileSprites();
             
             // Update Meshes.
-            GameState.TileMapRenderer.UpdateBackLayerMesh(ref TileMap);
-            GameState.TileMapRenderer.UpdateMidLayerMesh(ref TileMap);
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(ref TileMap);
+            GameState.TileMapRenderer.UpdateBackLayerMesh(TileMap);
+            GameState.TileMapRenderer.UpdateMidLayerMesh(TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh(TileMap);
             GameState.ItemMeshBuilderSystem.UpdateMesh(EntitasContext);
             GameState.AgentMeshBuilderSystem.UpdateMesh(EntitasContext.agent);
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);

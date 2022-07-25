@@ -108,28 +108,28 @@ namespace Planet.Unity
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
-                    var frontTileID = TileMaterialType.Air;
+                    var frontTileID = TileID.Air;
 
                     if (i >= tileMap.MapSize.X / 2)
                     {
                         if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
                         {
-                            frontTileID = TileMaterialType.Moon;
+                            frontTileID = TileID.Moon;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Glass;
+                            frontTileID = TileID.Glass;
                         }
                     }
                     else
                     {
                         if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
                         {
-                            frontTileID = TileMaterialType.Glass;
+                            frontTileID = TileID.Glass;
                         }
                         else
                         {
-                            frontTileID = TileMaterialType.Moon;
+                            frontTileID = TileID.Moon;
                         }
                     }
 

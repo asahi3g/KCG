@@ -4,7 +4,7 @@ using PlanetTileMap;
 using UnityEngine;
 using Utility;
 using Enums.Tile;
-using System;
+
 namespace Physics
 {
     //TODO: Collision calculation should internally cache the chunks around player
@@ -21,16 +21,10 @@ namespace Physics
 
             if (entityBoxBorders.IsCollidingBottom(tileMap, movable.Velocity))
             {
-                var tile = tileMap.GetFrontTile((int)pos.Value.X, (int)Math.Ceiling(pos.Value.Y)-1);
-                if (tile.MaterialType != TileMaterialType.Platform || !movable.Droping)
-                {
-                    pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
-                    movable.Velocity.Y = 0.0f;
-                    movable.Acceleration.Y = 0.0f;
-                    movable.Landed = true;
-                }
-
-               
+                pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
+                movable.Velocity.Y = 0.0f;
+                movable.Acceleration.Y = 0.0f;
+                movable.Landed = true;
             }
             if (entityBoxBorders.IsCollidingTop(tileMap, movable.Velocity))
             {   
@@ -63,7 +57,7 @@ namespace Physics
             if ((int)position.X > 0 && (int)position.X + 1 < tileMap.MapSize.X &&
             (int)position.Y > 0 && (int)position.Y < tileMap.MapSize.Y)
             {
-                if (tileMap.GetFrontTile((int)position.X + 1, (int)position.Y).MaterialType == TileMaterialType.Air)
+                if (tileMap.GetFrontTileID((int)position.X + 1, (int)position.Y)== TileID.Air)
                 {
                     movable.SlidingRight = false;
                 }
@@ -72,7 +66,7 @@ namespace Physics
             if ((int)position.X > 0 && (int)position.X - 1 < tileMap.MapSize.X &&
             (int)position.Y > 0 && (int)position.Y < tileMap.MapSize.Y)
             {
-                if (tileMap.GetFrontTile((int)position.X - 1, (int)position.Y).MaterialType == TileMaterialType.Air)
+                if (tileMap.GetFrontTileID((int)position.X - 1, (int)position.Y) == TileID.Air)
                 {
                     movable.SlidingLeft = false;
                 }

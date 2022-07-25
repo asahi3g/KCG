@@ -1,38 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Enums.Tile;
 using KMath;
 using PlanetTileMap;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 namespace AI.Movement
 {
-    internal struct Node
+    struct Node
     {
         public int id;  // Is  equal closedList index. 
         public int parentID;
-        public Vec2f pos;
+        public Vec2i pos;
 
-        public int pathCost;
-        public int heuristicCost;
-        public int totalCost;
+        public float pathCost;
+        public float heuristicCost;
+        public float totalCost;
+        
+        public int jumpValue;
 
         public bool IsCheaper(ref Node node)
         {
             return totalCost < node.totalCost ? true : false;
         }
 
-        public void UpdateCost(Vec2f end)
+        public void UpdateCost(Vec2i end)
         {
-            heuristicCost = (int)Heuristics.euclidean_distance(pos, end) * 100;
+            heuristicCost = Heuristics.euclidean_distance(pos, end) * 100f;
             totalCost = heuristicCost + pathCost;
+        }
+
+        // Used by Array.indexOF
+        public override bool Equals(object obj)
+        {
+            if (obj is Node)
+                return pos == ((Node)obj).pos ? true : false;
+            return false;
         }
     }
 
     internal struct PathAdjacency
     {
-        public Vec2f dir;
+        public Vec2i dir;
         public int cost;
     }
 
@@ -45,14 +59,14 @@ namespace AI.Movement
 
     internal static class Heuristics
     {
-        static public float euclidean_distance(Vec2f firstPos, Vec2f secondPos)
+        static public float euclidean_distance(Vec2i firstPos, Vec2i secondPos)
         {
             float x = firstPos.X - secondPos.X;
             float y = firstPos.Y - secondPos.Y;
             return System.MathF.Sqrt(x * x + y * y);
         }
 
-        static public float manhattan_distance(Vec2f firstPos, Vec2f secondPos)
+        static public float manhattan_distance(Vec2i firstPos, Vec2i secondPos)
         {
             float x = firstPos.X - secondPos.X;
             float y = firstPos.Y - secondPos.Y;
@@ -64,22 +78,24 @@ namespace AI.Movement
     {
         const int MAX_NUM_NODES = 256; // Maximum size of open/closed Map.
 
-        readonly PathAdjacency[] directions = new PathAdjacency[8] 
-            {   new PathAdjacency() { dir = new Vec2f(1f, 0f),  cost = 100 },   // Right
-                new PathAdjacency() { dir = new Vec2f(-1f, 0f), cost = 100 },   // Left
-                new PathAdjacency() { dir = new Vec2f(0f, 1f),  cost = 100 },   // Up
-                new PathAdjacency() { dir = new Vec2f(0f, -1f), cost = 100 },   // Down
-                new PathAdjacency() { dir = new Vec2f(1f, 1f),  cost = 144 },   // Right Up 
-                new PathAdjacency() { dir = new Vec2f(1f, -1f), cost = 144 },   // Right Down
-                new PathAdjacency() { dir = new Vec2f(-1f, 1f), cost = 144 },   // Left Up
-                new PathAdjacency() { dir = new Vec2f(-1f,-1f), cost = 144 }};  // Left Down
+        readonly PathAdjacency[] directions = new PathAdjacency[8]
+            {   new PathAdjacency() { dir = new Vec2i(1, 0),  cost = 100 },   // Right
+                new PathAdjacency() { dir = new Vec2i(-1, 0), cost = 100 },   // Left
+                new PathAdjacency() { dir = new Vec2i(0, 1),  cost = 100 },   // Up
+                new PathAdjacency() { dir = new Vec2i(1, 1),  cost = 144 },   // Right Up 
+                new PathAdjacency() { dir = new Vec2i(-1, 1), cost = 144 },   // Left Up
+                new PathAdjacency() { dir = new Vec2i(0, -1), cost = 100 },   // Down
+                new PathAdjacency() { dir = new Vec2i(1, -1), cost = 144 },   // Right Down
+                new PathAdjacency() { dir = new Vec2i(-1,-1), cost = 144 }};  // Left Down
 
         Node[] openList;
         Node[] closedList;
         Node firstNode;
 
-        HashSet<Vec2f> openSet;
-        HashSet<Vec2f> closedSet;
+        // Used to check if node exists. 
+        // Todo: Use a binary grid to do the testing. 
+        HashSet<Vec2i> openSet;
+        HashSet<Vec2i> closedSet;
 
         public void Initialize()
         {
@@ -87,21 +103,29 @@ namespace AI.Movement
             closedList = new Node[MAX_NUM_NODES];
             firstNode = new Node();
 
-            openSet = new HashSet<Vec2f>();
-            closedSet = new HashSet<Vec2f>();
+            openSet = new HashSet<Vec2i>();
+            closedSet = new HashSet<Vec2i>();
             openSet.EnsureCapacity(MAX_NUM_NODES);
             closedSet.EnsureCapacity(MAX_NUM_NODES);
         }
 
+        /// <summary>
+        /// Path is the shortest possible path.
+        /// Vec2f[] has closest node at the end of the list.
+        /// </summary>
         public Vec2f[] getPath(ref TileMap tileMap, Vec2f start, Vec2f end)
         {
-            if (tileMap.GetFrontTile((int)end.X, (int)end.Y).MaterialType != TileMaterialType.Air)
+            if (tileMap.GetFrontTileID((int)end.X, (int)end.Y) != TileID.Air)
             {
                 Debug.Log("Not possible path. Endpoint is solid(unreacheable)");
             }
 
+            Vec2i startPos = new Vec2i((int)start.X, (int)start.Y);
+            Vec2i endPos = new Vec2i((int)end.X, (int)end.Y);
+
             // Check max distance here.
-            SetFirstNode(start, end);
+            SetFirstNode(startPos, endPos);
+            SetFirstNodeJumpValue(startPos, ref tileMap);
 
             // Todo: Profile sorting against searching, Gnomescroll sort the nodes. I am not sure its the fatest way.
             // It's possible that 
@@ -128,15 +152,14 @@ namespace AI.Movement
                 }
 
                 // Move to closed list.
-                ref Node current = ref openList[openSet.Count];
+                Node current = openList[openSet.Count - 1];
                 openSet.Remove(current.pos);
 
                 current.id = closedSet.Count;
                 AddNodeCloseList(ref current);
 
-                if (current.pos == end)
+                if (current.pos == endPos)
                 {
-                    Debug.Log("Path found.");
                     break;
                 }
 
@@ -148,7 +171,7 @@ namespace AI.Movement
                     if (!PassableJump(ref tileMap, ref node, i))
                         continue;
 
-                    node.UpdateCost(end);
+                    node.UpdateCost(endPos);
 
                     if (openSet.Contains(node.pos))
                     {
@@ -157,7 +180,7 @@ namespace AI.Movement
                         if (node.IsCheaper(ref openList[index]))
                         {
                             openList[index] = node;
-                            if(sortStartPost > index)
+                            if (sortStartPost > index)
                                 sortStartPost = index;
                         }
                         continue;
@@ -172,33 +195,36 @@ namespace AI.Movement
                         }
                     }
 
+                    openList[openSet.Count] = node;
                     openSet.Add(node.pos);
-                    sortStartPost = openSet.Count - 1;
+                    if (sortStartPost == 0)
+                        sortStartPost = openSet.Count - 1;
                 }
             }
 
-            return constructPath(end);
+            // Todo filter nodes befores returning path.
+            return constructPath(endPos);
         }
 
-        Vec2f[] constructPath(Vec2f end)
+        Vec2f[] constructPath(Vec2i end)
         {
             int first = closedList[closedSet.Count - 1].parentID;
-            int len = 1;
+            int length = 0;
 
             // Get path lenth.
             while (first >= 0)
             {
                 first = closedList[first].parentID;
-                len++;
+                length++;
             }
 
-            Vec2f[] path = new Vec2f[len];
+            Vec2f[] path = new Vec2f[length];
 
             // Add to path array starting form last element.
-            first = closedList[closedSet.Count - 1].parentID;
-            while (first >= 0)
+            first = closedList[closedSet.Count - 1].id;
+            for (int i = 0; i < length; i++)
             {
-                path[--len] = closedList[first].pos;
+                path[i] = new Vec2f(closedList[first].pos.X, closedList[first].pos.Y);
                 first = closedList[first].parentID;
             }
 
@@ -208,12 +234,13 @@ namespace AI.Movement
         }
 
         // todo: Deals with non square blocks.
+        /*
         bool PassableFly(ref TileMap tileMap, ref Node current, int indDir)
         {
             // TODO -- parameterized
             Vec2i CHARACTER_SIZE = new Vec2i(1, 1); // How many blocks character takes.
 
-            Vec2f exitPos = current.pos + directions[indDir].dir;
+            Vec2i exitPos = current.pos + directions[indDir].dir;
 
             // Check if character can move to this tile
             Vec2i tilePos =
@@ -221,7 +248,7 @@ namespace AI.Movement
                     (int)(exitPos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
 
             // If solid return false.
-            if (tileMap.GetFrontTile(tilePos.X, tilePos.Y).MaterialType != TileMaterialType.Air)
+            if (tileMap.GetFrontTileID(tilePos.X, tilePos.Y) != TileID.Air)
                 return false;
 
             // if Diagonal directions.
@@ -232,20 +259,20 @@ namespace AI.Movement
                 Vec2i verTilePos = tilePos;
                 verTilePos.X -= (int)directions[indDir].dir.X;
 
-                if (tileMap.GetFrontTile(verTilePos.X, verTilePos.Y).MaterialType != TileMaterialType.Air)
+                if (tileMap.GetFrontTileID(verTilePos.X, verTilePos.Y) != TileID.Air)
                     return false;
 
                 Vec2i horTilePos = tilePos;
                 horTilePos.Y -= (int)directions[indDir].dir.Y;
 
-                if (tileMap.GetFrontTile(horTilePos.X, horTilePos.Y).MaterialType != TileMaterialType.Air)
+                if (tileMap.GetFrontTileID(horTilePos.X, horTilePos.Y) != TileID.Air)
                     return false;
             }
 
             current.pos = exitPos;
             current.pathCost += directions[indDir].cost;
             return true;
-        }
+        }*/
 
         /// <summary>
         /// Check if player can reach the space. 
@@ -255,43 +282,77 @@ namespace AI.Movement
         bool PassableJump(ref TileMap tileMap, ref Node current, int indDir)
         {
             // TODO -- parameterized
-            Vec2i CHARACTER_SIZE = new Vec2i(1, 1); // How many blocks character takes.
-            const int MAX_UP = 3;
-            const int MAX_DOWN = 9;
+            const int MAX_UP = 2; // Maximum number of blocks down.
+            const int MAX_DOWN = 6;
+
+            // Todo: deals with diagonals.
+            // Algorithm consider that character can move one block to the right for each one up.
+            const int maxJump = MAX_UP; // Todo: check agent speed and deals with max number of blocks moved at x direction.
+            const int maxDown = maxJump + MAX_DOWN;
 
             current.pos = current.pos + directions[indDir].dir;
-            
+            current.pathCost += directions[indDir].cost;
+
             // Check if tile is inside the map.
             if (current.pos.X < 0 || current.pos.X > tileMap.MapSize.X ||
                 current.pos.Y < 0 || current.pos.Y > tileMap.MapSize.Y)
                 return false;
 
-            current.pathCost += directions[indDir].cost;
+            // If solid return false.
+            if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y) != TileID.Air)
+                return false;
 
             // Todo deals with jumping.
             if (indDir > 2)
+            // Jump and falling paths:
+            if (indDir > 1)
             {
                 return false;
+                if (indDir < 5) // UP
+                {
+                    if (current.jumpValue >= maxJump)
+                        return false;
+                    if (indDir > 2)
+                    {
+                        // Return false if tile above is solid when doing a diagonal.
+                        if (tileMap.GetFrontTileID(current.pos.X - directions[indDir].dir.X, current.pos.Y) != TileID.Air)
+                            return false;
+                    }
+                    current.jumpValue++;
+                }
+                else // Dowm
+                {
+                    // Todo deals with falling speed. When falling speed it too high diagonals may be impossible.
+                    if (current.jumpValue >= maxDown)
+                        return false;
+                    current.jumpValue = (current.jumpValue < MAX_UP) ? MAX_UP + 1 : current.jumpValue + 1;
+                }
+                // Set jump to zero when tile it on ground.
+                if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) != TileID.Air)
+                    current.jumpValue = 0;
             }
 
             // Check if character can move to this tile
-            Vec2i tilePos =
-                new Vec2i((int)(current.pos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
-                    (int)(current.pos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
+            //Vec2i tilePos =
+                //new Vec2i((int)(current.pos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
+                    //(int)(current.pos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
 
             // Check if tile is inside the map.
-            if (tilePos.X < 0 || tilePos.X > tileMap.MapSize.X ||
-                tilePos.Y < 0 || tilePos.Y > tileMap.MapSize.Y)
-                return false;
+            //if (tilePos.X < 0 || tilePos.X > tileMap.MapSize.X ||
+                //tilePos.Y < 0 || tilePos.Y > tileMap.MapSize.Y)
+                //return false;
 
             // If solid return false.
-            if (tileMap.GetFrontTile(tilePos.X, tilePos.Y).MaterialType != TileMaterialType.Air)
-                return false;
-
-            // Is tile at ground.
-            Vec2i GroundPos = new Vec2i((int)(current.pos.X - 0.5f), (int)(current.pos.Y - 0.5f) - 1);
-            if (tileMap.GetFrontTile(GroundPos.X, GroundPos.Y).MaterialType == TileMaterialType.Air)
-                return false;
+            //else
+            {
+                // Is tile on ground. // Deals with corners.
+                if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) == TileID.Air)
+                {
+                    if (current.jumpValue != 0)
+                        return false;
+                    current.jumpValue = MAX_UP; // Make sure character can't jump if falling.
+                }
+            }
 
             return true;
         }
@@ -324,10 +385,10 @@ namespace AI.Movement
         void AddNodeCloseList(ref Node node)
         {
             closedList[closedSet.Count] = node;
-            closedSet.Add(firstNode.pos);
+            closedSet.Add(node.pos);
         }
 
-        void SetFirstNode(Vec2f start, Vec2f end)
+        void SetFirstNode(Vec2i start, Vec2i end)
         {
             firstNode.parentID = -1;
             firstNode.id = 0;
@@ -335,6 +396,27 @@ namespace AI.Movement
             firstNode.pos = start;
             firstNode.UpdateCost(end);
             AddNodeOpenList(ref firstNode);
+        }
+        void SetFirstNodeJumpValue(Vec2i start, ref TileMap tileMap)
+        {
+            // TODO -- parameterized
+            const int MAX_UP = 2;
+            const int MAX_DOWN = 6;
+            const int MAX_JUMP = MAX_UP;
+
+            // Is tile on ground.
+            if (tileMap.GetFrontTileID(start.X, start.Y - 1) != TileID.Air)
+            {
+                firstNode.jumpValue = 0;
+                return;
+            }
+
+            // If its on the ceiling
+            if (tileMap.GetFrontTileID(start.X, start.Y + 1) != TileID.Air)
+            {
+                firstNode.jumpValue = MAX_JUMP; // Next node needs to be down.
+                return;
+            }
         }
     }
 }
