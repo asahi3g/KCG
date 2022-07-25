@@ -24,9 +24,13 @@ namespace Planet.Unity
         {
             Debug.Log("PLACE MECH");
 
-            var planet = FindObjectOfType<MovementSceneScript>().Planet;
+            var planet = FindObjectOfType<ItemTest>().Planet;
 
-            planet.AddMech(new Vec2f(15F, 15F), MechType.Storage);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            planet.AddMech(new Vec2f(x, y), MechType.Storage);
         }
     } 
 }

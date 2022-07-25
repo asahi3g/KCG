@@ -12,7 +12,7 @@ namespace Planet.Unity
     {
         [SerializeField] Material   Material;
 
-        Planet.PlanetState    Planet;
+        public Planet.PlanetState    Planet;
         AgentEntity           Player;
 
         static bool Init = false;

@@ -13,9 +13,11 @@ namespace Mech
         public int MechID;
 
         public string Name;
-        public Vec2f SpriteSize;
 
-        public TileMaterialType[] TileMaterialTypes;
+        // Mech's Sprite ID
+        public int SpriteID;
+
+        public Vec2f SpriteSize;
 
         public int XMin, XMax, YMin, YMax;
 

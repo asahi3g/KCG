@@ -21,7 +21,7 @@ namespace Mech
         {
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
-            MechProperties mechProperties = MechCreationApi.Get(mechID);
+            ref MechProperties mechProperties = ref MechCreationApi.GetRef((int)mechType);
 
             var entity = entitasContext.mech.CreateEntity();
             entity.AddMechID(mechID);
@@ -34,11 +34,9 @@ namespace Mech
 
         public MechEntity Spawn(Contexts entitasContext, Vec2f position, int mechID, MechType mechType)
         {
-            ref MechProperties properties = ref MechCreationApi.GetRef((int)mechType);
+            ref MechProperties mechProperties = ref MechCreationApi.GetRef((int)mechType);
 
-            var spriteSize = properties.SpriteSize;
-
-            MechProperties mechProperties = MechCreationApi.Get(mechID);
+            var spriteSize = mechProperties.SpriteSize;
 
             var spriteId = 0;
 

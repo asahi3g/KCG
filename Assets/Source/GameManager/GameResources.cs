@@ -56,6 +56,7 @@ public class GameResources
     public static int RemoveToolIcon;
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
+    public static int ChestIcon;
 
 
 
@@ -97,7 +98,7 @@ public class GameResources
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
-
+            ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -124,6 +125,7 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
 
 
             CreateTiles();
@@ -474,6 +476,7 @@ public class GameResources
     {
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
+        GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
     }
