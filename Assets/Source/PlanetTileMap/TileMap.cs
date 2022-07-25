@@ -283,7 +283,7 @@ namespace PlanetTileMap
         #region Tile neighbour updater
 
         // updates all the sprite ids in the layer
-        public void UpdateBackTileMapPositions(int x, int y)
+        /*public void UpdateBackTileMapPositions(int x, int y)
         {
             TileSpriteUpdate.UpdateBackTileMapPositions(this, x, y);
         }
@@ -307,7 +307,7 @@ namespace PlanetTileMap
         {
             TileSpriteUpdateQueue.UpdateTileSprites(this);
         }
-
+*/
         #endregion
     }
 }

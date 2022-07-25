@@ -10,7 +10,7 @@ namespace PlanetTileMap
     {
 
          // TODO: Refactor
-        public static TilePosition GetTilePosition(TileMaterialType[] neighbors, TileMaterialType materialType)
+        /*public static TilePosition GetTilePosition(TileMaterialType[] neighbors, TileMaterialType materialType)
         {
             int biggestMatch = 0;
             TilePosition tilePosition = 0;
@@ -230,6 +230,6 @@ namespace PlanetTileMap
             // the sprite ids are next to each other in the sprite atlas
             // we just have to know which one to draw based on the offset
             tile.TileID = tileMaterial.StartTileIndex + tilePositionToTileSet[(int) tilePosition];
-        }
+        }*/
     }
 }

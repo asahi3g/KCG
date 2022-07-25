@@ -22,7 +22,7 @@ namespace PlanetTileMap
             }
         }
 
-        public void UpdateMidLayerMesh(ref TileMap tileMap)
+        public void UpdateMidLayerMesh(TileMap tileMap)
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -43,12 +43,12 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetMidTileID(x, y);
+                        ref var tile = ref tileMap.GetTile(x, y);
 
-                        if (tile.TileID >= 0)
+                        if (tile.MidTileSpriteID >= 0)
                         {
-                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.TileID);
-                            var spriteId = tileProperty.SpriteId;
+                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.MidTileID);
+                            var spriteId = tileProperty.BaseSpriteId;
 
                             if (spriteId >= 0)
                             {
@@ -70,7 +70,7 @@ namespace PlanetTileMap
 
                                 if (tile.DrawType == TileDrawType.Composited)
                                 {
-                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.SpriteId2).TextureCoords;
+                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.CompositeTileSpriteID).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
@@ -93,7 +93,7 @@ namespace PlanetTileMap
             }
         }
 
-        public void UpdateFrontLayerMesh(ref TileMap tileMap)
+        public void UpdateFrontLayerMesh(TileMap tileMap)
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -114,13 +114,13 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetFrontTileID(x, y);
+                        ref var tile = ref tileMap.GetTile(x, y);
 
-                        if (tile.TileID >= 0)
+                        if (tile.FrontTileSpriteID >= 0)
                         {
 
-                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.TileID);
-                            var spriteId = tileProperty.SpriteId;
+                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                            var spriteId = tileProperty.BaseSpriteId;
 
                             if (spriteId >= 0)
                             {
@@ -142,7 +142,7 @@ namespace PlanetTileMap
 
                                 if (tile.DrawType == TileDrawType.Composited)
                                 {
-                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.SpriteId2).TextureCoords;
+                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.CompositeTileSpriteID).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
@@ -165,7 +165,7 @@ namespace PlanetTileMap
             }
         }
         
-        public void UpdateBackLayerMesh(ref TileMap tileMap)
+        public void UpdateBackLayerMesh(TileMap tileMap)
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -186,13 +186,13 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetBackTileID(x, y);
+                        ref var tile = ref tileMap.GetTile(x, y);
 
-                        if (tile.TileID >= 0)
+                        if (tile.BackTileSpriteID >= 0)
                         {
 
-                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.TileID);
-                            var spriteId = tileProperty.SpriteId;
+                            ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.BackTileID);
+                            var spriteId = tileProperty.BaseSpriteId;
 
                             if (spriteId >= 0)
                             {
@@ -214,7 +214,7 @@ namespace PlanetTileMap
 
                                 if (tile.DrawType == TileDrawType.Composited)
                                 {
-                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.SpriteId2).TextureCoords;
+                                    Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(tile.CompositeTileSpriteID).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
