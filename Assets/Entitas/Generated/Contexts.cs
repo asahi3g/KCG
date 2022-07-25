@@ -145,7 +145,7 @@ public partial class Contexts {
             actionProperties.GetGroup(ActionPropertiesMatcher.ActionPropertyName),
             (e, c) => ((Action.Property.NameComponent)c).TypeName));
 
-        action.AddEntityIndex(new Entitas.PrimaryEntityIndex<ActionEntity, int>(
+        action.AddEntityIndex(new Entitas.EntityIndex<ActionEntity, int>(
             ActionTool,
             action.GetGroup(ActionMatcher.ActionTool),
             (e, c) => ((Action.ToolComponent)c).ItemID));
@@ -249,8 +249,8 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<ActionPropertiesEntity, string>)context.GetEntityIndex(Contexts.ActionPropertyName)).GetEntity(TypeName);
     }
 
-    public static ActionEntity GetEntityWithActionTool(this ActionContext context, int ItemID) {
-        return ((Entitas.PrimaryEntityIndex<ActionEntity, int>)context.GetEntityIndex(Contexts.ActionTool)).GetEntity(ItemID);
+    public static System.Collections.Generic.HashSet<ActionEntity> GetEntitiesWithActionTool(this ActionContext context, int ItemID) {
+        return ((Entitas.EntityIndex<ActionEntity, int>)context.GetEntityIndex(Contexts.ActionTool)).GetEntities(ItemID);
     }
 
     public static AgentEntity GetEntityWithAgentAIController(this AgentContext context, int AgentPlannerID) {

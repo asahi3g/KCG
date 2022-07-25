@@ -11,14 +11,15 @@ namespace Planet.Unity
         [SerializeField] Material Material;
 
         Planet.PlanetState Planet;
-        AgentEntity Player;
         AgentEntity Agent;
 
         static bool Init = false;
 
+        byte[,] map = new byte[12, 12];
+
         public void Start()
         {
-
+            Debug.Log("Click somewhere to set slime target gol.");
             if (!Init)
             {
                 Initialize();
@@ -37,7 +38,7 @@ namespace Planet.Unity
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vec2f goalPos = new Vec2f(worldPosition.x, worldPosition.y);
                 GameState.ActionCreationSystem.CreateMovementAction(Planet.EntitasContext, Enums.ActionType.MoveAction,
-                   Player.agentID.ID, goalPos);
+                   Agent.agentID.ID, goalPos);
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
@@ -53,61 +54,57 @@ namespace Planet.Unity
         {
             GameResources.Initialize();
 
+            // Set map path.
+
+            map = new byte[12, 12]
+                {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+                { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+                { 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
+                { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0},
+                { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                };
+
             // Generating the map
-            Vec2i mapSize = new Vec2i(16, 16);
+            Vec2i mapSize = new Vec2i(12, 12);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
 
-            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(3.0f, 3.0f), 0, 100, 100, 100, 100, 100);
-            Agent = Planet.AddAgent(new Vec2f(1.0f, 3.0f));
+            Agent = Planet.AddEnemy(new Vec2f(0.0f, 4.0f));
         }
 
         void GenerateMap()
         {
             ref var tileMap = ref Planet.TileMap;
 
-            for (int j = 0; j < tileMap.MapSize.Y; j++)
+            for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
                     TileMaterialType frontTile;
 
-                    if (i >= tileMap.MapSize.X / 2)
+                    if (map[j,i] == 1)
                     {
-                        if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
-                        {
-                            frontTile = TileMaterialType.Moon;
-                        }
-                        else
-                        {
-                            frontTile = TileMaterialType.Glass;
-                        }
+                       frontTile = TileMaterialType.Moon;
                     }
                     else
-                    {
-                        if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
-                        {
-                            frontTile = TileMaterialType.Glass;
-                        }
-                        else
-                        {
-                            frontTile = TileMaterialType.Moon;
-                        }
-                    }
-
-                    if (j is > 1 and < 6 || (j > 8 + i))
                     {
                         frontTile = TileMaterialType.Air;
                     }
 
-
-                    tileMap.SetFrontTile(i, j, frontTile);
+                    tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1 - j, frontTile);
                 }
             }
-            //TileMap.BuildLayerTexture(MapLayerType.Front);
         }
     }
 }
