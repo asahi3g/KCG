@@ -58,7 +58,8 @@ public class GameResources
     public static int PipePlacementToolIcon;
     public static int ChestIcon;
 
-
+    public static int PotIcon;
+    public static int Plant1Icon;
 
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
@@ -99,6 +100,8 @@ public class GameResources
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
+            PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\Pots\\pot_1.png", 32, 16);
+            Plant1Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -126,6 +129,8 @@ public class GameResources
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
+            PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
+            Plant1Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant1Icon, 0, 0, Enums.AtlasType.Mech);
 
 
             CreateTiles();
@@ -442,6 +447,13 @@ public class GameResources
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceParticle);
         GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
+        GameState.ItemCreationApi.SetTexture(Plant1Icon);
+        GameState.ItemCreationApi.SetInventoryTexture(Plant1Icon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
+        GameState.ItemCreationApi.EndItem();
     }
 
     private static void CreateAgents()
@@ -477,6 +489,12 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
         GameState.MechCreationApi.SetTexture(ChestIcon);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
+        GameState.MechCreationApi.SetName("planter");
+        GameState.MechCreationApi.SetTexture(PotIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
     }
