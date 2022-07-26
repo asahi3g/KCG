@@ -7,6 +7,7 @@ namespace Enums
         Agent = 2,
         Vehicle = 3,
         Particle = 4,
-        BackGround = 5
+        BackGround = 5,
+        Mech = 6
     }
 }
