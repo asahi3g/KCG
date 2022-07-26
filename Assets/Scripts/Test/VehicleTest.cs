@@ -75,7 +75,7 @@ public class VehicleTest : MonoBehaviour
 
         MeshBuilderSystem.UpdateMesh();
         // Draw Vehicle
-        Utility.Render.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
+        GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
 
         Controls();
     }

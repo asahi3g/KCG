@@ -7,9 +7,31 @@ using UnityEditor;
 namespace Utility
 {
 
-    internal static class Render
+    public class Render
     {
-       public static void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
+        private static Render instance;
+        public static Render Instance => instance ??= new Render();
+
+        /// Materials are used by immediate draw calls.
+        Material[] MatTextures;
+
+        // Update materials once every frame.
+        int CurrentFrame = 0;
+        // ID of next material used by immediate drawing.
+        int CurrentTexMaterialID = 0;
+
+        public void Initialize(Material material)
+        {
+            MatTextures = new Material[126];
+
+            // Initialzie materials.
+            for (int i = 0; i < 126; i++)
+            {
+                MatTextures[i] = Material.Instantiate(material);
+            }
+        }
+
+       public void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
         {
             var mesh = frameMesh.obj.GetComponent<MeshFilter>().sharedMesh;
             mesh.Clear(); // This makes sure you never have out of bounds data.
@@ -22,7 +44,7 @@ namespace Utility
             mesh.SetTriangles(frameMesh.triangles, 0);
         }
 
-        public static void DrawSprite(GameObject gameObject, float x, float y, float w, float h,
+        public void DrawSprite(GameObject gameObject, float x, float y, float w, float h,
             Sprites.Sprite sprite)
         {
             var tex = sprite.Texture;
@@ -73,7 +95,7 @@ namespace Utility
             mesh.SetTriangles(triangles, 0);
         }
 
-        public static void DrawQuadColor(GameObject gameObject, float x, float y, float w, float h,
+        public void DrawQuadColor(GameObject gameObject, float x, float y, float w, float h,
             Color color)
         {
             var mr = gameObject.GetComponent<MeshRenderer>();
@@ -109,7 +131,7 @@ namespace Utility
         }
 
 
-        public static void DrawString(GameObject gameObject, float x, float y, float characterSize, string label, int fontSize, Color color, int sortOrder)
+        public void DrawString(GameObject gameObject, float x, float y, float characterSize, string label, int fontSize, Color color, int sortOrder)
         {
             var textMesh = gameObject.GetComponent<TextMesh>();
             var mr = gameObject.GetComponent<MeshRenderer>();
@@ -126,48 +148,52 @@ namespace Utility
         /// These functions draw immediately on screen. 
         /// It doesn't work inside OnUpdate, because camera clear screen before drawing.
         /// </summary>
-        public static void DrawSpriteNow(float x, float y, float w, float h,
-            Sprites.Sprite sprite, Material material)
+        public void DrawSpriteNow(float x, float y, float w, float h,
+            Sprites.Sprite sprite)
         {
             GL.PushMatrix();
-            DrawGlSprite(x, y, w, h, sprite, material);
+            DrawGlSprite(x, y, w, h, sprite);
         }
 
-        public static void DrawQuadColorNow(float x, float y, float w, float h,
-            Color color, Material material)
+        public void DrawQuadColorNow(float x, float y, float w, float h,
+            Color color)
         {
             GL.PushMatrix();
-            DrawGlQuad(x, y, w, h, color, material);
+            DrawGlQuad(x, y, w, h, color);
         }
 
         /// <summary>
         /// [x, y] = (0, 0) is lower left coner of the screen.
         /// [x, y] = (1, 1) is upper right coner of the screen.
         /// </summary>
-        public static void DrawSpriteColorGui(float x, float y, float w, float h,
-            Sprites.Sprite sprite, Material material)
+        public void DrawSpriteGui(float x, float y, float w, float h,
+            Sprites.Sprite sprite)
         {
             GL.PushMatrix();
             GL.LoadOrtho();
-            DrawGlSprite(x, y, w, h, sprite, material);
+            DrawGlSprite(x, y, w, h, sprite);
         }
 
-        public static void DrawQuadColorGui(float x, float y, float w, float h,
-                Color color, Material material)
+        public void DrawQuadColorGui(float x, float y, float w, float h,
+                Color color)
         {
             GL.PushMatrix();
             GL.LoadOrtho();
-            DrawGlQuad(x, y, w, h, color, material);
+            DrawGlQuad(x, y, w, h, color);
         }
 
 
         /// <summary>
         /// Helper Functions.
         /// </summary>
-        private static void DrawGlSprite(float x, float y, float w, float h,
-            Sprites.Sprite sprite, Material material)
+        private void DrawGlSprite(float x, float y, float w, float h,
+            Sprites.Sprite sprite)
         {
-            // Todo: Fix memory leak. Track and release Instantiate materials.
+            if (Time.frameCount != CurrentFrame) // Todo: make this atomic.
+            {
+                CurrentFrame = Time.frameCount;
+                CurrentTexMaterialID = 0;
+            }
 
             Vector4 texCoord = sprite.TextureCoords;
             var uv0 = new Vector2(texCoord.x, texCoord.y + texCoord.w);
@@ -175,10 +201,8 @@ namespace Utility
             var uv1 = uv0; uv1.y = uv2.y;
             var uv3 = uv2; uv3.y = uv0.y;
 
-            var mat = Material.Instantiate(material);
-
+            var mat = MatTextures[CurrentTexMaterialID++];
             mat.SetTexture("_MainTex", sprite.Texture);
-
             mat.SetPass(0);
 
             GL.Begin(GL.QUADS);
@@ -199,12 +223,18 @@ namespace Utility
             GL.PopMatrix();
         }
 
-        private static void DrawGlQuad(float x, float y, float w, float h,
-                Color color, Material material)
+        private void DrawGlQuad(float x, float y, float w, float h, Color color)
         {
-            var mat = Material.Instantiate(material);
-            mat.SetPass(0);
+            if (Time.frameCount != CurrentFrame) // Todo: make this atomic.
+            {
+                CurrentFrame = Time.frameCount;
+                CurrentTexMaterialID = 0;
+            }
 
+            var mat = MatTextures[CurrentTexMaterialID++];
+            mat.SetColor("_Color", color);
+
+            mat.SetPass(0);
             GL.Begin(GL.QUADS);
             GL.Color(color);
 

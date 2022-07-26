@@ -16,7 +16,7 @@ namespace FloatingText
                 var state = entity.floatingTextState;
                 var sprite = entity.floatingTextSprite;
 
-                Utility.Render.DrawString(sprite.GameObject, movable.Position.X, movable.Position.Y,
+                GameState.Renderer.DrawString(sprite.GameObject, movable.Position.X, movable.Position.Y,
                      0.35f, state.Text, 18, new Color(255, 0, 0, 255), drawOrder);
             }
         }

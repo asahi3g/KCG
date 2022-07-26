@@ -73,6 +73,7 @@ namespace AI.Movement
     {
         const int MAX_NUM_NODES = 256; // Maximum size of open/closed Map.
 
+        // Todo: use only Up down, left right for pathfinding: Then filtering. 
         readonly PathAdjacency[] directions = new PathAdjacency[8]
             {   new PathAdjacency() { dir = new Vec2i(1, 0),  cost = 100 },   // Right
                 new PathAdjacency() { dir = new Vec2i(-1, 0), cost = 100 },   // Left

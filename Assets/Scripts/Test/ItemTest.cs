@@ -59,7 +59,7 @@ namespace Planet.Unity
 
         private void OnRenderObject()
         {
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Material, transform);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         // create the sprite atlas for testing purposes

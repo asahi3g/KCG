@@ -96,6 +96,11 @@ public class GameState
     public static readonly Particle.MeshBuilderSystem ParticleMeshBuilderSystem;
     #endregion
 
+    #region Render
+    public static Utility.Render Renderer;
+    #endregion
+
+
     static GameState()
     {
         SpriteLoader = new Sprites.SpriteLoader();
@@ -143,5 +148,6 @@ public class GameState
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
+        Renderer = new Utility.Render();
     }
 }
