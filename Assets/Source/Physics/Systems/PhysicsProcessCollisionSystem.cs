@@ -21,10 +21,23 @@ namespace Physics
 
             if (entityBoxBorders.IsCollidingBottom(tileMap, movable.Velocity))
             {
-                pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
-                movable.Velocity.Y = 0.0f;
-                movable.Acceleration.Y = 0.0f;
-                movable.Landed = true;
+                var tile = tileMap.GetTile((int)pos.Value.X, (int)pos.Value.Y-1);
+                var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                entityBoxBorders.DrawBox();
+                Debug.Log(property.IsAPlatform);
+                 if (!property.IsAPlatform || !movable.Droping)
+                {
+                    pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
+                    movable.Velocity.Y = 0.0f;
+                    movable.Acceleration.Y = 0.0f;
+                    movable.Landed = true;
+                }
+                 else if(property.IsAPlatform && movable.Droping)
+                {
+                    movable.Landed = false;
+                    movable.Acceleration.Y = 100.0f;
+                }
+                
             }
             if (entityBoxBorders.IsCollidingTop(tileMap, movable.Velocity))
             {   
