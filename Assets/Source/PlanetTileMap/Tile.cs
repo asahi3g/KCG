@@ -18,5 +18,7 @@ namespace PlanetTileMap
         
         public TileShapeAndRotation CollisionIsoType1;
         public TileAdjacencyType CollisionIsoType2;
+
+        public int MechID;
     }
 }
