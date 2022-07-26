@@ -22,15 +22,18 @@ namespace PlanetTileMap
             TileSpriteUpdateQueue = new TileSpriteUpdateQueue();
 
             // >> 4 == / 16
-            ChunkArrayCapacity = (mapSize.X + mapSize.Y) >> 4;
-
+            
             // & 0x0F == & 15
             // 17 & 15 = 1
             // 16 & 15 = 0
-            if (((mapSize.X + mapSize.Y) & 0x0F) != 0)
-            {
-                ChunkArrayCapacity++;
-            }
+            var chunkSizeX = mapSize.X >> 4;
+            if ((mapSize.X & 0x0F) != 0) chunkSizeX++;
+            
+            var chunkSizeY = mapSize.Y >> 4;
+            if ((mapSize.Y & 0x0F) != 0) chunkSizeY++;
+            
+            
+            ChunkArrayCapacity = chunkSizeX * chunkSizeY;
             ChunkIndexLookup = new int[ChunkArrayCapacity];
             ChunkArray = new Chunk[ChunkArrayCapacity];
 
