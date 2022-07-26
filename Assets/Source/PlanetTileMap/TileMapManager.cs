@@ -49,9 +49,9 @@ namespace PlanetTileMap
                     }
 
 
-                    //tileMap.UpdateBackTileMapPositions(playerPositionX, playerPositionY);
-                    //tileMap.UpdateMidTileMapPositions(playerPositionX, playerPositionY);
-                    //tileMap.UpdateFrontTileMapPositions(playerPositionX, playerPositionY);
+                    tileMap.UpdateBackTileMapPositions(playerPositionX, playerPositionY);
+                    tileMap.UpdateMidTileMapPositions(playerPositionX, playerPositionY);
+                    tileMap.UpdateFrontTileMapPositions(playerPositionX, playerPositionY);
                 }
             }
 
