@@ -78,7 +78,7 @@ namespace Planet.Unity
 
         private void OnRenderObject()
         {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Material, transform);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnGUI()
@@ -230,10 +230,6 @@ namespace Planet.Unity
             //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-
-           
-
-
         }
 
     }

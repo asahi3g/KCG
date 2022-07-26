@@ -239,7 +239,7 @@ namespace PlanetTileMap
 
         public void DrawLayer(MapLayerType planetLayer)
         {
-            Render.DrawFrame(ref LayerMeshes[(int)planetLayer], GameState.TileSpriteAtlasManager.GetSpriteAtlas(0));
+            GameState.Renderer.DrawFrame(ref LayerMeshes[(int)planetLayer], GameState.TileSpriteAtlasManager.GetSpriteAtlas(0));
         }
     }
 }

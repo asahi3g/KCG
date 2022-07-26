@@ -96,7 +96,7 @@ namespace Planet.Unity
         
         private void OnRenderObject()
         {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Material, transform);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnGUI()

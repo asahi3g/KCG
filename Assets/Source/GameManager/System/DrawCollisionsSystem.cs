@@ -4,7 +4,6 @@ namespace Game
     {
         public void DrawCollisions()
         {
-            
         }
     }
 }

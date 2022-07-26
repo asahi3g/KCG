@@ -222,6 +222,6 @@ public class AIGridWorldTest : MonoBehaviour
                 Debug.Log("Not supported square type.");
                 break;
         }
-        Utility.Render.DrawQuadColor(posY, posX, cornerSize, cornerSize, color, Instantiate(Material), transform, 0);
+        GameState.Renderer.DrawQuadColor(posY, posX, cornerSize, cornerSize, color, Instantiate(Material), transform, 0);
     }
 }*/

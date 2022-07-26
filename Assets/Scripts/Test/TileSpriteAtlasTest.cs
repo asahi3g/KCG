@@ -67,15 +67,15 @@ namespace Planet.Unity
             sprite.Texture = atlas.Texture;
             sprite.TextureCoords = new Vector4(0, 0, 1, 1);
             
-            Utility.Render.DrawSpriteNow(-3, -1, 
-                  atlas.Width, atlas.Height, sprite, Material);
+            GameState.Renderer.DrawSpriteNow(-3, -1, 
+                  atlas.Width, atlas.Height, sprite);
         }
 
         void DrawSprite(float x, float y, float w, float h, int spriteId)
         {
             var sprite = GameState.TileSpriteAtlasManager.GetSprite(spriteId);
 
-            Utility.Render.DrawSpriteNow(x, y, w, h, sprite, Material);
+            GameState.Renderer.DrawSpriteNow(x, y, w, h, sprite);
         }
     }
 }

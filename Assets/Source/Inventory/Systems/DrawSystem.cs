@@ -9,21 +9,21 @@ namespace Inventory
     public class DrawSystem
     {
 
-        public void Draw(Contexts contexts, Material material, Transform transform)
+        public void Draw(Contexts contexts, Transform transform)
         {
             var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
             // If empty Draw ToolBar.
 
             foreach (InventoryEntity inventoryEntity in openInventories)
             {
-                DrawInventory(contexts, material, transform, inventoryEntity);
+                DrawInventory(contexts, transform, inventoryEntity);
             }
         }
 
-        private void DrawInventory(Contexts entitasContext, Material material, Transform transform, InventoryEntity inventoryEntity)
+        private void DrawInventory(Contexts entitasContext, Transform transform, InventoryEntity inventoryEntity)
         {
             // Todo: Add scrool bar.
-            // Todo: allow user to move inventory position?
+            // Todo: Allow user to move inventory position?
 
             // Calculate Positions and Tile Sizes relative to sceen.
 
@@ -48,21 +48,21 @@ namespace Inventory
             if (inventoryEntity.isInventoryToolBar)
                 y = tileSize.Y / 2f;
 
-            DrawBackGround(x, y, w, h, material);
+            DrawBackGround(x, y, w, h);
 
-            DrawCells(x, y, width, height, tileSize, slotSize, material, inventoryEntity);
+            DrawCells(x, y, width, height, tileSize, slotSize, inventoryEntity);
 
             var itemsInInventory = entitasContext.itemInventory.GetEntitiesWithItemInventory(inventoryEntity.inventoryID.ID);
-            DrawIcons(entitasContext, x, y, width, height, tileSize, slotSize, material, transform, itemsInInventory);
+            DrawIcons(entitasContext, x, y, width, height, tileSize, slotSize, transform, itemsInInventory);
         }
 
-        void DrawBackGround(float x, float y, float w, float h, Material material)
+        void DrawBackGround(float x, float y, float w, float h)
         {
             Color backGround = new Color(0.2f, 0.2f, 0.2f, 1.0f);
-            Utility.Render.DrawQuadColorGui(x, y, w, h, backGround, material);
+            GameState.Renderer.DrawQuadColorGui(x, y, w, h, backGround);
         }
 
-        void DrawCells(float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, Material material, InventoryEntity inventoryEntity)
+        void DrawCells(float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, InventoryEntity inventoryEntity)
         {
             Color borderColor = Color.grey;
             Color selectedBorderColor = Color.yellow;
@@ -79,7 +79,7 @@ namespace Inventory
                     float slotX = x + i * tileSize.X + slotSize.X * 0.5f - 0.125f;
                     float slotY = y - slotSize.Y * 0.5f;
 
-                    //Utility.Render.DrawString(slotX + (tileSize.X - slotSize.X) / 2.0f, 
+                    //GameState.Renderer.DrawString(slotX + (tileSize.X - slotSize.X) / 2.0f, 
                     //           slotY + (tileSize.Y - slotSize.Y) / 2.0f, 0.25f, "" + (i + 1), 16, new Color(255, 255, 255, 255));
                 }
 
@@ -94,15 +94,15 @@ namespace Inventory
                     float slotX = x + i * tileSize.X;
                     float slotY = y + j * tileSize.Y;
 
-                    Utility.Render.DrawQuadColorGui(slotX + (tileSize.X - slotSize.X) / 2.0f, slotY + (tileSize.Y - slotSize.Y) / 2.0f, slotSize.X, slotSize.Y, quadColor, material);
+                    GameState.Renderer.DrawQuadColorGui(slotX + (tileSize.X - slotSize.X) / 2.0f, slotY + (tileSize.Y - slotSize.Y) / 2.0f, slotSize.X, slotSize.Y, quadColor);
                     Vec2f spriteSize = slotSize * 0.8f;
-                    Utility.Render.DrawQuadColorGui(slotX + (tileSize.X - spriteSize.X) / 2.0f, slotY + (tileSize.Y - spriteSize.Y) / 2.0f, spriteSize.X, spriteSize.Y, borderColor, material);
+                    GameState.Renderer.DrawQuadColorGui(slotX + (tileSize.X - spriteSize.X) / 2.0f, slotY + (tileSize.Y - spriteSize.Y) / 2.0f, spriteSize.X, spriteSize.Y, borderColor);
 
                 }
             }
         }
 
-        void DrawIcons(Contexts entitasContext, float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, Material material, Transform transform, HashSet<ItemInventoryEntity> itemInInventory)
+        void DrawIcons(Contexts entitasContext, float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, Transform transform, HashSet<ItemInventoryEntity> itemInInventory)
         {
             foreach (ItemInventoryEntity itemEntity in itemInInventory)
             {
@@ -118,7 +118,7 @@ namespace Inventory
                 if (itemEntity.hasItemStack)
                 {
                     //int fontSize = 50;
-                    
+
                     // these Change with Camera size. Find better soluiton. AutoSize? MeshPro?
                     float characterSize = 0.05f * Camera.main.pixelWidth / 1024.0f;
                     float posOffset = 0.04f;
@@ -126,7 +126,7 @@ namespace Inventory
                     var rect = new Rect(600 * Random.value, 450 * Random.value, 200, 150);
 
                     // Todo: Implement or import librart to draw string on screen immediately. 
-                    //Utility.Render.DrawString(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white, transform, drawOrder + 4);
+                    //GameState.Renderer.DrawString(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white, transform, drawOrder + 4);
                 }
 
                 // Draw sprites.
@@ -138,7 +138,7 @@ namespace Inventory
                 Vec2f spriteSize = slotSize * 0.8f;
                 slotX = slotX + (tileSize.X - spriteSize.X) / 2.0f;
                 slotY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
-                Utility.Render.DrawSpriteColorGui(slotX, slotY, spriteSize.X, spriteSize.Y, sprite, material);
+                GameState.Renderer.DrawSpriteGui(slotX, slotY, spriteSize.X, spriteSize.Y, sprite);
             }
         }
     }
