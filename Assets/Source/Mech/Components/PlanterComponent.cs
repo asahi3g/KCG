@@ -4,6 +4,7 @@ using Enums;
 
 namespace Mech.Planter
 {
+    // Planter Properties Component
     [Mech]
     public class PlanterComponent : IComponent
     {
