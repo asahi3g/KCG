@@ -76,8 +76,16 @@ namespace ECSInput
                 //{
                 //    movable.Droping = false;
                 //}
-                movable.Droping = downKey;
-                
+                if (downKey)
+                {
+                    movable.Droping = true;
+                    movable.Landed = false;
+                    movable.WantToDrop = true;
+                }
+                if (movable.Landed)
+                {
+                    movable.Droping = false;
+                }
                 // handling horizontal movement (left/right)
                 if (movementState.Running)
                 {
