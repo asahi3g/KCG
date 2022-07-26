@@ -17,13 +17,13 @@ namespace HUD
         }
 
         // Constructor
-        public HUDManager(Contexts contexts, AgentEntity agentEntity)
+        public HUDManager(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Create GUI Manager
             guiManager = new GUIManager();
 
             // Initialize GUI Manager
-            guiManager.Initialize(contexts, agentEntity);
+            guiManager.Initialize(planet, agentEntity);
         }
 
         public void Update(AgentEntity agentEntity)

@@ -41,7 +41,7 @@ namespace KGUI
         Canvas _Canvas;
 
         // Initialize
-        public virtual void Initialize(Contexts contexts, AgentEntity agentEntity)
+        public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Canvas
             _Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -67,7 +67,7 @@ namespace KGUI
             // Init Elements
             for (int i = 0; i < UIList.Count; i++)
             {
-                UIList[i].Initialize(contexts, agentEntity);
+                UIList[i].Initialize(planet, agentEntity);
             }
         }
 
@@ -96,6 +96,27 @@ namespace KGUI
 
             // On Mouse Stay Event
             OnMouseStay();
+        }
+
+        public void HandleIndicators()
+        {
+            if(foodBarUI.foodBar._fillValue < 50)
+            {
+                // TODO: Show Indicator Icon
+            }
+            else
+            {
+                // TODO: Don't show indicator Icon
+            }
+
+            if (waterBarUI.waterBar._fillValue < 50)
+            {
+                // TODO: Show Indicator Icon
+            }
+            else
+            {
+                // TODO: Don't show indicator Icon
+            }
         }
 
         public virtual void OnMouseClick(AgentEntity agentEntity)
@@ -152,10 +173,12 @@ namespace KGUI
                     // Call Mouse Stay Event For Each
                     UIList[i].OnMouseStay();
                 }
-                else if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) > 30.0f)
+                else
                 {
                     // Set Condition to True
                     UIList[i].CanRun = true;
+
+                    OnMouseExit();
                 }
             }
         }
@@ -165,15 +188,8 @@ namespace KGUI
             // Handle Inputs
             for (int i = 0; i < UIList.Count; i++)
             {
-                // If Condition Is False
-                if (!UIList[i].CanRun)
-                {
-                    // Set Condition to True
-                    UIList[i].CanRun = true;
-
-                    // On Mouse Exit
-                    UIList[i].OnMouseExit();
-                }
+                // On Mouse Exit
+                UIList[i].OnMouseExit();
             }
         }
     }

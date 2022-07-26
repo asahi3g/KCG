@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 4
   DisableDragging: 0
+  background: {fileID: 0}
 --- !u!114 &519420038
 MonoBehaviour:
   m_ObjectHideFlags: 0
