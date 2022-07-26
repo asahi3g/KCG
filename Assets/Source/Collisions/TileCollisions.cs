@@ -1,5 +1,6 @@
 using Enums.Tile;
 using KMath;
+using System;
 using Utility;
 
 namespace Collisions
@@ -121,8 +122,13 @@ namespace Collisions
                         var frontTileID = tileMap.GetFrontTileID(x, y);
                         if (frontTileID != TileID.Air )
                         {
+                            
                             var tileBorders = new AABox2D(x, y);
-                            tileBorders.DrawBox();
+                            if (Math.Abs(borders.ymin - tileBorders.ymax) > 0.3f && frontTileID  == TileID.Platform)
+                            {
+                                return false;
+                            }
+                                tileBorders.DrawBox();
                             return true;
                         }
                     }
