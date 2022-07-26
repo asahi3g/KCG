@@ -383,6 +383,11 @@ namespace Planet.Unity
             tileMap.SetFrontTile(7, 15, TileID.Platform);
             tileMap.SetFrontTile(8, 15, TileID.Platform);
 
+            tileMap.SetFrontTile(4, 18, TileID.Platform);
+            tileMap.SetFrontTile(5, 18, TileID.Platform);
+            tileMap.SetFrontTile(6, 18, TileID.Platform);
+            tileMap.SetFrontTile(7, 18, TileID.Platform);
+            tileMap.SetFrontTile(8, 18, TileID.Platform);
 
             //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
