@@ -276,7 +276,7 @@ namespace Planet
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
             cameraFollow.Update(ref this);
 
-            //TileMap.UpdateTileSprites();
+            TileMap.UpdateTileSprites();
             
             // Update Meshes.
             GameState.TileMapRenderer.UpdateBackLayerMesh(TileMap);

@@ -160,6 +160,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].BackTileID = TileID.Air;
             chunk.TileArray[tileIndex].BackTileSpriteID = -1;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Back);
         }
         public void RemoveMidTile(int x, int y)
         {
@@ -181,6 +183,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].MidTileID = TileID.Air;
             chunk.TileArray[tileIndex].MidTileSpriteID = -1;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Mid);
         }
         public void RemoveFrontTile(int x, int y)
         {
@@ -205,6 +209,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].CollisionIsoType1 = TileShapeAndRotation.EmptyBlock;
             chunk.TileArray[tileIndex].CollisionIsoType2 = TileAdjacencyType.EmptyBlock;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Front);
         }
 
         #endregion
@@ -286,7 +292,7 @@ namespace PlanetTileMap
         #region Tile neighbour updater
 
         // updates all the sprite ids in the layer
-        /*public void UpdateBackTileMapPositions(int x, int y)
+        public void UpdateBackTileMapPositions(int x, int y)
         {
             TileSpriteUpdate.UpdateBackTileMapPositions(this, x, y);
         }
@@ -310,7 +316,7 @@ namespace PlanetTileMap
         {
             TileSpriteUpdateQueue.UpdateTileSprites(this);
         }
-*/
+
         #endregion
     }
 }
