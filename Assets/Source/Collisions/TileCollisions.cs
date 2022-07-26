@@ -37,8 +37,11 @@ namespace Collisions
                     {
                         for (var tmp_y = tmp_ymin; tmp_y < tmp_ymax; tmp_y++)
                         {
-                            var frontTileID = tileMap.GetFrontTileID(tmp_x, tmp_y);
-                            if (frontTileID != TileID.Air)
+                            var xIndex = tmp_x & 0x0f;
+                            var yIndex = tmp_y & 0x0f;
+                            var tileIndex = xIndex + (yIndex << 4);
+                            
+                            if (tileMap.ChunkArray[chunk_index].TileArray[tileIndex].FrontTileID != TileID.Air)
                             {
                                 return true;
                             }

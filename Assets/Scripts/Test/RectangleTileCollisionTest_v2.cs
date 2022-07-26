@@ -71,27 +71,28 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
 
         int r2_xmin = velocity.X >= 0f ? (int)Math.Floor(box1_xmax) : (int)Math.Floor(box2_xmin);       //round down
         int r2_xmax = velocity.X >= 0f ? (int)Math.Ceiling(box2_xmax) : (int)Math.Ceiling(box1_xmin);   //round up
-        int r2_ymin = (int)Math.Floor(box1_ymin);                                                       //round down
-        int r2_ymax = (int)Math.Ceiling(box1_ymax);                                                     //round up
+        // We don't need to test blocks that are inside of region 1 square
+        int r2_ymin = velocity.Y >= 0f ? (int)Math.Floor(box1_ymin) : r1_ymax;                          //round down
+        int r2_ymax = velocity.Y >= 0f ? r1_ymin : (int)Math.Ceiling(box1_ymax);                        //round up
 
         R1.xmin = r1_xmin;
         R1.xmax = r1_xmax;
         R1.ymin = r1_ymin;
         R1.ymax = r1_ymax;
         
-        if(r1_xmin < 0 || r1_xmin > mapSize.X)
+        if(r1_xmin < 0 || r1_xmin >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r1_xmax < 0 || r1_xmax > mapSize.X)
+        if(r1_xmax < 0 || r1_xmax >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r1_ymin < 0 || r1_ymin > mapSize.X)
+        if(r1_ymin < 0 || r1_ymin >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r1_ymax < 0 || r1_ymax > mapSize.X)
+        if(r1_ymax < 0 || r1_ymax >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
@@ -101,19 +102,19 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         R2.ymin = r2_ymin;
         R2.ymax = r2_ymax;
         
-        if(r2_xmin < 0 || r2_xmin > mapSize.X)
+        if(r2_xmin < 0 || r2_xmin >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r2_xmax < 0 || r2_xmax > mapSize.X)
+        if(r2_xmax < 0 || r2_xmax >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r2_ymin < 0 || r2_ymin > mapSize.X)
+        if(r2_ymin < 0 || r2_ymin >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
-        if(r2_ymax < 0 || r2_ymax > mapSize.X)
+        if(r2_ymax < 0 || r2_ymax >= mapSize.X)
         {
             Debug.Log("Outside of map");
         }
