@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using KMath;
 using Sprites;
 using UnityEditor;
@@ -13,7 +14,7 @@ namespace Utility
         public static Render Instance => instance ??= new Render();
 
         /// Materials are used by immediate draw calls.
-        Material[] MatTextures;
+        Material[] Materials;
 
         // Update materials once every frame.
         int CurrentFrame = 0;
@@ -22,16 +23,20 @@ namespace Utility
 
         public void Initialize(Material material)
         {
-            MatTextures = new Material[126];
+            Materials = new Material[126];
 
             // Initialzie materials.
             for (int i = 0; i < 126; i++)
             {
-                MatTextures[i] = Material.Instantiate(material);
+                Materials[i] = Material.Instantiate(material);
             }
         }
 
-       public void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
+        void ExpandArray()
+        {
+            Array.Resize(ref Materials, Materials.Length + 126);
+        }
+        public void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
         {
             var mesh = frameMesh.obj.GetComponent<MeshFilter>().sharedMesh;
             mesh.Clear(); // This makes sure you never have out of bounds data.
@@ -195,13 +200,16 @@ namespace Utility
                 CurrentTexMaterialID = 0;
             }
 
+            if (CurrentTexMaterialID >= Materials.Length)
+                ExpandArray();
+
             Vector4 texCoord = sprite.TextureCoords;
             var uv0 = new Vector2(texCoord.x, texCoord.y + texCoord.w);
             var uv2 = new Vector2(texCoord.x + texCoord.z, texCoord.y);
             var uv1 = uv0; uv1.y = uv2.y;
             var uv3 = uv2; uv3.y = uv0.y;
 
-            var mat = MatTextures[CurrentTexMaterialID++];
+            var mat = Materials[CurrentTexMaterialID++];
             mat.SetTexture("_MainTex", sprite.Texture);
             mat.SetPass(0);
 
@@ -231,7 +239,10 @@ namespace Utility
                 CurrentTexMaterialID = 0;
             }
 
-            var mat = MatTextures[CurrentTexMaterialID++];
+            if (CurrentTexMaterialID >= Materials.Length)
+                ExpandArray();
+
+            var mat = Materials[CurrentTexMaterialID++];
             mat.SetColor("_Color", color);
 
             mat.SetPass(0);
