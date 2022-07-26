@@ -30,7 +30,7 @@ namespace Planet.Unity
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            planet.AddMech(new Vec2f(x, y), MechType.Storage);
+            planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
         }
     } 
 }

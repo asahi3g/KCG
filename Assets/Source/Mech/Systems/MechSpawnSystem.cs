@@ -38,7 +38,7 @@ namespace Mech
 
             var spriteSize = mechProperties.SpriteSize;
 
-            var spriteId = 0;
+            var spriteId = mechProperties.SpriteID;
 
             var entity = entitasContext.mech.CreateEntity();
             entity.AddMechID(mechID);
