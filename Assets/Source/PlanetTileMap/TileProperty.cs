@@ -28,7 +28,6 @@ namespace PlanetTileMap
         public bool CannotBeRemoved; // bedrock cannot be removed
 
         public SpriteRuleType SpriteRuleType;
-
         public CollisionType CollisionIsoType;
         public TileShape BlockShapeType;
 
