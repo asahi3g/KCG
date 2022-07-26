@@ -64,6 +64,30 @@ namespace KGUI.Elements
             Bar.GetComponent<UnityEngine.UI.Image>().fillClockwise = false;
         }
 
+        public void SetType(UnityEngine.UI.Image.Type type)
+        {
+            // Set Image Type
+            Bar.GetComponent<UnityEngine.UI.Image>().type = type;
+        }
+
+        public void SetFillMethod(UnityEngine.UI.Image.FillMethod type)
+        {
+            // Set Fill Method
+            Bar.GetComponent<UnityEngine.UI.Image>().fillMethod = type;
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            // Set Fill Method
+            Bar.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+        }
+
+        public void SetRaycastTarget(bool raycastTarget)
+        {
+            // Set Fill Method
+            Bar.GetComponent<UnityEngine.UI.Image>().raycastTarget = raycastTarget;
+        }
+
         public void SetPosition(Vector3 newPos)
         {
             // Set Position

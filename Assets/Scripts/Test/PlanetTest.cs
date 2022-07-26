@@ -214,7 +214,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
             toolBarID = Player.agentToolBar.ToolBarID;
 
-            hudManager = new HUDManager(Planet.EntitasContext, Player);
+            hudManager = new HUDManager(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
