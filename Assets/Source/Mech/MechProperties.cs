@@ -9,7 +9,6 @@ namespace Mech
 {
     public struct MechProperties
     {
-
         public int MechID;
 
         public string Name;
@@ -20,6 +19,8 @@ namespace Mech
         public Vec2f SpriteSize;
 
         public int XMin, XMax, YMin, YMax;
+
+        public MechType mechType;
 
     }
 }
