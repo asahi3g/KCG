@@ -11,6 +11,7 @@ namespace Mech
         Planter,
         Light,
         Storage,
-        Crafting
+        Crafting,
+        Plant
     }
 }

@@ -18,6 +18,11 @@ namespace Planet.Unity
             {
                 PlacePlanter();
             }
+
+            if (Input.GetMouseButtonDown(2))
+            {
+                PlaceLight();
+            }
         }
 
         private void PlacePlanter()
@@ -29,6 +34,17 @@ namespace Planet.Unity
             float y = worldPosition.y;
 
             planet.AddMech(new Vec2f(x, y), MechType.Planter);
+        }
+
+        private void PlaceLight()
+        {
+            var planet = FindObjectOfType<ItemTest>().Planet;
+
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            planet.AddMech(new Vec2f(x, y), MechType.Light);
         }
     }
 }
