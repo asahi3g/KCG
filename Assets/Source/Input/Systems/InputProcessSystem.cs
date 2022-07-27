@@ -101,9 +101,8 @@ namespace ECSInput
 
                 // dash
                 if (dash && movementState.DashCooldown <= 0.0f)
-                {
-                    movable.Acceleration.X += 500.0f * x;
-                    movable.Velocity.X = 90.0f * x;
+                    movable.Acceleration.X += 1000.0f * x;
+                    movable.Velocity.X = 30.0f * x;
                     movable.Velocity.Y = 0.0f;
                     movable.Acceleration.Y = 0.0f;
 
