@@ -32,6 +32,7 @@ namespace Physics
         public bool SlidingLeft; // sliding down
 
         public bool Droping;//dropping
+        public bool WantToDrop;//DropKey is pressed or not
     }
 }
 

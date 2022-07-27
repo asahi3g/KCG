@@ -12,6 +12,7 @@
         Pipe,
         Background,
         Wire,
-        Bedrock
+        Bedrock,
+        Platform
     }
 }

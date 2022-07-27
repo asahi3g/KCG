@@ -34,7 +34,7 @@ namespace PlanetTileMap
         public TileShape BlockShapeType;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
-
+        public bool IsAPlatform => CollisionIsoType == CollisionType.Platform;
         public TileProperty(TileID tileID, int baseSpriteId) : this()
         {
             TileID = tileID;
