@@ -11,7 +11,7 @@ public partial class MechEntity {
     public Mech.Planter.PlanterComponent mechPlanterPlanter { get { return (Mech.Planter.PlanterComponent)GetComponent(MechComponentsLookup.MechPlanterPlanter); } }
     public bool hasMechPlanterPlanter { get { return HasComponent(MechComponentsLookup.MechPlanterPlanter); } }
 
-    public void AddMechPlanterPlanter(bool newGotSeed, Enums.PlantType newPlant, float newPlantGrowth, float newGrowthTarget, float newWaterLevel, float newMaxWaterLevel, int newLightLevel) {
+    public void AddMechPlanterPlanter(bool newGotSeed, MechEntity newPlant, float newPlantGrowth, float newGrowthTarget, float newWaterLevel, float newMaxWaterLevel, int newLightLevel) {
         var index = MechComponentsLookup.MechPlanterPlanter;
         var component = (Mech.Planter.PlanterComponent)CreateComponent(index, typeof(Mech.Planter.PlanterComponent));
         component.GotSeed = newGotSeed;
@@ -24,7 +24,7 @@ public partial class MechEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceMechPlanterPlanter(bool newGotSeed, Enums.PlantType newPlant, float newPlantGrowth, float newGrowthTarget, float newWaterLevel, float newMaxWaterLevel, int newLightLevel) {
+    public void ReplaceMechPlanterPlanter(bool newGotSeed, MechEntity newPlant, float newPlantGrowth, float newGrowthTarget, float newWaterLevel, float newMaxWaterLevel, int newLightLevel) {
         var index = MechComponentsLookup.MechPlanterPlanter;
         var component = (Mech.Planter.PlanterComponent)CreateComponent(index, typeof(Mech.Planter.PlanterComponent));
         component.GotSeed = newGotSeed;

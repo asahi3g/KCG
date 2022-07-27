@@ -31,7 +31,7 @@ namespace Mech
             entity.AddMechType(mechType);
 
             if (mechType == MechType.Planter)
-                entity.AddMechPlanterPlanter(false, PlantType.Lily, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+                entity.AddMechPlanterPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
 
             return entity;
         }
@@ -52,7 +52,7 @@ namespace Mech
             entity.AddMechType(mechType);
 
             if (mechType == MechType.Planter)
-                entity.AddMechPlanterPlanter(false, PlantType.Lily, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+                entity.AddMechPlanterPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
 
             return entity;
         }
