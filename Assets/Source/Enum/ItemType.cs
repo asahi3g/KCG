@@ -26,6 +26,11 @@
         RiotShield,
 
         /// <summary>
+        /// Mech's As Item
+        /// </summary>
+        Plant,
+
+        /// <summary>
         /// Tools
         /// </summary>
         PlacementTool,

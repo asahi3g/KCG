@@ -60,6 +60,7 @@ public class GameResources
 
     public static int PotIcon;
     public static int Plant1Icon;
+    public static int Plant2;
     public static int Plant2Icon;
     public static int Light2Icon;
 
@@ -104,6 +105,7 @@ public class GameResources
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\Pots\\pot_1.png", 32, 16);
             Plant1Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
+            Plant2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Plant2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
 
@@ -134,8 +136,9 @@ public class GameResources
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
-            Plant1Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant1Icon, 0, 0, Enums.AtlasType.Mech);
-            Plant2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2Icon, 0, 0, Enums.AtlasType.Mech);
+            Plant1Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant1Icon, 0, 0, Enums.AtlasType.Particle);
+            Plant2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2, 0, 0, Enums.AtlasType.Mech);
+            Plant2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2Icon, 0, 0, Enums.AtlasType.Particle);
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
 
 
@@ -460,6 +463,13 @@ public class GameResources
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Plant, "Plant");
+        GameState.ItemCreationApi.SetTexture(Plant2Icon);
+        GameState.ItemCreationApi.SetInventoryTexture(Plant2Icon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
+        GameState.ItemCreationApi.EndItem();
     }
 
     private static void CreateAgents()
@@ -512,7 +522,7 @@ public class GameResources
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Plant);
         GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant2Icon);
+        GameState.MechCreationApi.SetTexture(Plant2);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
         GameState.MechCreationApi.End();
     }

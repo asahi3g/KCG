@@ -18,6 +18,8 @@ namespace Action
         // Light Entities List
         private List<MechEntity> lights = new List<MechEntity>();
 
+        private bool DrawIndicator = true;
+
         // Constructor
         public ToolActionPlanter(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -52,6 +54,18 @@ namespace Action
                         // Is Mech Planter?
                         if (entity.mechType.mechType == Mech.MechType.Planter)
                         {
+                            if (entity.mechPlanterPlanter.PlantGrowth >= 100)
+                            {
+                                entity.mechPlanterPlanter.Plant.Destroy();
+                                GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Plant, entity.mechPosition2D.Value);
+                                entity.mechPlanterPlanter.GotSeed = false;
+                                entity.mechPlanterPlanter.PlantGrowth = 0;
+                                entity.mechPlanterPlanter.WaterLevel = 0;
+                                entity.mechPlanterPlanter.LightLevel = 0;
+                                ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                                break;
+                            }
+
                             // Has Planter Component?
                             if (entity.hasMechPlanterPlanter)
                             {
@@ -97,12 +111,47 @@ namespace Action
                     // Is Mech Planter?
                     if (entity.mechType.mechType == Mech.MechType.Planter)
                     {
+                        if (entity.mechPlanterPlanter.PlantGrowth >= 100)
+                        {
+                            ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                            break;
+                        }
+
+                        if (DrawIndicator)
+                        {
+
+                            // Get Cursor Position
+                            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            float x = worldPosition.x;
+                            float y = worldPosition.y;
+                            if (Vector2.Distance(new Vector2(x, y), new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.5f)
+                            {
+                                if (!entity.mechPlanterPlanter.GotSeed)
+                                    planet.AddFloatingText("Need Seed", 3.0f, Vec2f.Zero, entity.mechPosition2D.Value);
+
+                                if (entity.mechPlanterPlanter.WaterLevel <= 0.0f)
+                                    planet.AddFloatingText("Need Water", 3.0f, Vec2f.Zero, entity.mechPosition2D.Value);
+
+                                if (entity.mechPlanterPlanter.LightLevel <= 0.0f)
+                                    planet.AddFloatingText("Need Light", 3.0f, Vec2f.Zero, entity.mechPosition2D.Value);
+
+                                if (entity.mechPlanterPlanter.PlantGrowth >= 100)
+                                    planet.AddFloatingText("Ready For Harvest", 3.0f, Vec2f.Zero, entity.mechPosition2D.Value);
+
+                                DrawIndicator = false;
+                            }
+                            else
+                            {
+                                DrawIndicator = true;
+                            }
+                        }
+
                         // Set Light Level Set Zero
                         entity.mechPlanterPlanter.LightLevel = 0;
 
                         // Check Plant Null or Not, Update Plant Position Relavtive to The Pot
-                        if(entity.mechPlanterPlanter.Plant != null)
-                            entity.mechPlanterPlanter.Plant.mechPosition2D.Value = new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f);
+                        //if(entity.mechPlanterPlanter.Plant != null)
+                          //  entity.mechPlanterPlanter.Plant.mechPosition2D.Value = new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f);
 
                         // Iterate All Light Mechs 
                         for (int i = 0; i < lights.Count; i++)
@@ -140,6 +189,11 @@ namespace Action
                                 if(entity.mechPlanterPlanter.WaterLevel <= 0)
                                 {
                                     // Return True
+                                    ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                                }
+
+                                if(entity.mechPlanterPlanter.PlantGrowth >= 100)
+                                {
                                     ActionEntity.actionExecution.State = Enums.ActionState.Success;
                                 }
                             }
