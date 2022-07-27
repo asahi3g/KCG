@@ -118,7 +118,7 @@ namespace Planet.Unity
             GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
 
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
-            Utility.Render.DrawFrame(ref AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
+            GameState.Renderer.DrawFrame(ref AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
         }
 
         public void CreateDefaultTiles()

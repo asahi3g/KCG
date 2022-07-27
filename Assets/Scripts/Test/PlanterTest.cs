@@ -9,28 +9,26 @@ using Mech;
 
 namespace Planet.Unity
 {
-    public class MechTest : MonoBehaviour
+    public class PlanterTest : MonoBehaviour
     {
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(1))
             {
-                PlaceMech();
+                PlacePlanter();
             }
         }
 
-        private void PlaceMech()
+        private void PlacePlanter()
         {
-            Debug.Log("PLACE MECH");
-
             var planet = FindObjectOfType<ItemTest>().Planet;
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
+            planet.AddMech(new Vec2f(x, y), MechType.Planter);
         }
-    } 
+    }
 }

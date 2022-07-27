@@ -45,6 +45,7 @@ public class PerlinNoiseTest : MonoBehaviour
             TextureCoords = new Vector4(0, 0, 1, 1)
         };
 
+        GameState.Renderer.Initialize(Unlit);
         Init = true;
     }
 
@@ -53,10 +54,10 @@ public class PerlinNoiseTest : MonoBehaviour
     {
         if(Init)
         {
-            Utility.Render.DrawSpriteNow(-7, 1, 5, 5, MathfNoiseTex, Unlit);
+            GameState.Renderer.DrawSpriteNow(-7, 1, 5, 5, MathfNoiseTex);
 
 
-            Utility.Render.DrawSpriteNow(1.5f, 1, 5, 5, KMathNoiseTex, Unlit);
+            GameState.Renderer.DrawSpriteNow(1.5f, 1, 5, 5, KMathNoiseTex);
         }
     }
 

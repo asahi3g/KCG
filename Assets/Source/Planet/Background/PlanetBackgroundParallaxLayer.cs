@@ -304,9 +304,9 @@ namespace Planet.Background
 
         private void DrawMesh()
         {
-            Utility.Render.DrawFrame(ref Planet, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
-            Utility.Render.DrawFrame(ref Star, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
-            Utility.Render.DrawFrame(ref Space, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
+            GameState.Renderer.DrawFrame(ref Planet, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
+            GameState.Renderer.DrawFrame(ref Star, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
+            GameState.Renderer.DrawFrame(ref Space, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.BackGround));
         }
 
         // Generates Perlin Map

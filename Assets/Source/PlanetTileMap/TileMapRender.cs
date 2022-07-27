@@ -48,7 +48,7 @@ namespace PlanetTileMap
                         if (tile.MidTileSpriteID >= 0)
                         {
                             ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.MidTileID);
-                            var spriteId = tileProperty.BaseSpriteId;
+                            var spriteId = tile.MidTileSpriteID;
 
                             if (spriteId >= 0)
                             {
@@ -120,7 +120,7 @@ namespace PlanetTileMap
                         {
 
                             ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
-                            var spriteId = tileProperty.BaseSpriteId;
+                            var spriteId = tile.FrontTileSpriteID;
 
                             if (spriteId >= 0)
                             {
@@ -192,7 +192,7 @@ namespace PlanetTileMap
                         {
 
                             ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.BackTileID);
-                            var spriteId = tileProperty.BaseSpriteId;
+                            var spriteId = tile.BackTileSpriteID;
 
                             if (spriteId >= 0)
                             {
@@ -239,7 +239,7 @@ namespace PlanetTileMap
 
         public void DrawLayer(MapLayerType planetLayer)
         {
-            Render.DrawFrame(ref LayerMeshes[(int)planetLayer], GameState.TileSpriteAtlasManager.GetSpriteAtlas(0));
+            GameState.Renderer.DrawFrame(ref LayerMeshes[(int)planetLayer], GameState.TileSpriteAtlasManager.GetSpriteAtlas(0));
         }
     }
 }

@@ -34,6 +34,7 @@
         MiningLaserTool,
         SpawnEnemySlimeTool,
         PipePlacementTool,
-        ParticleEmitterPlacementTool
+        ParticleEmitterPlacementTool,
+        PlanterTool,
     }
 }

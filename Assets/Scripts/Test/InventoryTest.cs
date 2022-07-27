@@ -77,7 +77,7 @@ public class InventoryTest : MonoBehaviour
 
     private void OnRenderObject()
     {
-        inventoryDrawSystem.Draw(Contexts.sharedInstance, material, transform);
+        inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
     }
 
     private void Initialize()

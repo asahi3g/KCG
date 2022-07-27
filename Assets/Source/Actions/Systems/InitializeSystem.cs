@@ -144,6 +144,11 @@ namespace Action
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionShieldCreator());
             GameState.ActionPropertyManager.SetShieldActive(false);
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Planter
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlanter);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlanterCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }

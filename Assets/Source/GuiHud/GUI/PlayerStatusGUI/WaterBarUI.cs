@@ -9,18 +9,23 @@ namespace KGUI.PlayerStatus
         // Init
         private static bool Init;
 
-        // Water Bar Icon Position
-        public Rect iconPosition = new Rect(7, 140, 60, -60);
-
         // Water Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
 
-        // Image
+        // Bar
         public CircleProgressBar waterBar;
+
+        // Icon
         private Image iconCanvas;
 
-        public override void Initialize(Contexts contexts, AgentEntity agentEntity)
+        // Hover Text
+        private Text infoText = new Text();
+
+        // Fill Amount Value
+        private float fillValue;
+
+        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -82,6 +87,7 @@ namespace KGUI.PlayerStatus
             // Water Bar Initializon
             iconCanvas = new Image("Water Icon", iconBar);
 
+            // Set Icon Position Based On Aspect Ratio
             if (Camera.main.aspect >= 1.7f)
                 iconCanvas.SetPosition(new Vector3(-377.3f, 64.9f, 4.873917f));
             else if (Camera.main.aspect >= 1.5f)
@@ -89,16 +95,25 @@ namespace KGUI.PlayerStatus
             else
                 iconCanvas.SetPosition(new Vector3(-363.8f, 134.2f, 4.873917f));
 
+            // Set Icon Scale
             iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
 
             // Add Components and setup game object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
+            // Set Fill Amount Value
+            fillValue = agentEntity.agentStats.Water;
+
             // Water Bar Initializon
-            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, agentEntity.agentStats.Water / 100, agentEntity);
+            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
+
+            // Water Bar Set Position
             waterBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
+
+            // Water Bar Set Scale
             waterBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
 
+            // Initializon Done
             Init = true;
         }
 
@@ -106,9 +121,19 @@ namespace KGUI.PlayerStatus
         {
             if (Init)
             {
+                // Update Object Position
                 ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x, iconCanvas.GetTransform().position.y);
-                waterBar.Update(agentEntity.agentStats.Water / 100);
 
+                // Update Fill Amount
+                fillValue = agentEntity.agentStats.Water;
+
+                // Water Bar Update Fill Amount
+                waterBar.Update(fillValue / 100);
+
+                // Info Text Update
+                infoText.Update();
+
+                // Set Icon Position Based On Aspect Ratio
                 if (Camera.main.aspect >= 1.7f)
                     iconCanvas.SetPosition(new Vector3(-377.3f, 64.9f, 4.873917f));
                 else if (Camera.main.aspect >= 1.5f)
@@ -118,24 +143,54 @@ namespace KGUI.PlayerStatus
             }
         }
 
+        // Water Bar OnMouseClick Event
         public override void OnMouseClick(AgentEntity agentEntity)
         {
             Debug.LogWarning("Water Bar Clicked");
         }
 
+        // Water Bar OnMouseEnter Event
         public override void OnMouseEnter()
         {
             Debug.LogWarning("Water Bar Mouse Enter");
+
+            // If Water level less than 50
+            if (fillValue < 50)
+            {
+                // Create Hover Text
+                infoText.Create("Water Indicator", "Water Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
+
+                // Set Size Delta
+                infoText.SetSizeDelta(new Vector2(250, 50));
+
+                // Set Position
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
+            else
+            {
+                // Create Hover Text
+                infoText.Create("Water DeIndicator", "Water Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
+
+                // Set Size Delta
+                infoText.SetSizeDelta(new Vector2(250, 50));
+
+                // Set Position
+                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+            }
         }
 
+        // Water Bar OnMouseStay Event
         public override void OnMouseStay()
         {
             Debug.LogWarning("Water Bar Mouse Stay");
         }
 
+        // Water Bar OnMouseExit Event
         public override void OnMouseExit()
         {
             Debug.LogWarning("Water Bar Mouse Exit");
+
+            infoText.startLifeTime = true;
         }
     }
 }

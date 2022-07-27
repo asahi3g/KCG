@@ -78,7 +78,7 @@ namespace Planet.Unity
 
         private void OnRenderObject()
         {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Material, transform);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnGUI()
@@ -163,7 +163,7 @@ namespace Planet.Unity
             toolBarID = Player.agentToolBar.ToolBarID;
 
             // Player Status UI Init
-            hudManager = new HUDManager(Planet.EntitasContext, Player);
+            hudManager = new HUDManager(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
@@ -230,10 +230,6 @@ namespace Planet.Unity
             //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-
-           
-
-
         }
 
     }

@@ -22,15 +22,18 @@ namespace PlanetTileMap
             TileSpriteUpdateQueue = new TileSpriteUpdateQueue();
 
             // >> 4 == / 16
-            ChunkArrayCapacity = (mapSize.X + mapSize.Y) >> 4;
-
+            
             // & 0x0F == & 15
             // 17 & 15 = 1
             // 16 & 15 = 0
-            if (((mapSize.X + mapSize.Y) & 0x0F) != 0)
-            {
-                ChunkArrayCapacity++;
-            }
+            var chunkSizeX = mapSize.X >> 4;
+            if ((mapSize.X & 0x0F) != 0) chunkSizeX++;
+            
+            var chunkSizeY = mapSize.Y >> 4;
+            if ((mapSize.Y & 0x0F) != 0) chunkSizeY++;
+            
+            
+            ChunkArrayCapacity = chunkSizeX * chunkSizeY;
             ChunkIndexLookup = new int[ChunkArrayCapacity];
             ChunkArray = new Chunk[ChunkArrayCapacity];
 
@@ -157,6 +160,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].BackTileID = TileID.Air;
             chunk.TileArray[tileIndex].BackTileSpriteID = -1;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Back);
         }
         public void RemoveMidTile(int x, int y)
         {
@@ -178,6 +183,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].MidTileID = TileID.Air;
             chunk.TileArray[tileIndex].MidTileSpriteID = -1;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Mid);
         }
         public void RemoveFrontTile(int x, int y)
         {
@@ -202,6 +209,8 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].CollisionIsoType1 = TileShapeAndRotation.EmptyBlock;
             chunk.TileArray[tileIndex].CollisionIsoType2 = TileAdjacencyType.EmptyBlock;
+
+            TileSpriteUpdateQueue.Add(x, y, MapLayerType.Front);
         }
 
         #endregion
@@ -283,7 +292,7 @@ namespace PlanetTileMap
         #region Tile neighbour updater
 
         // updates all the sprite ids in the layer
-        /*public void UpdateBackTileMapPositions(int x, int y)
+        public void UpdateBackTileMapPositions(int x, int y)
         {
             TileSpriteUpdate.UpdateBackTileMapPositions(this, x, y);
         }
@@ -307,7 +316,7 @@ namespace PlanetTileMap
         {
             TileSpriteUpdateQueue.UpdateTileSprites(this);
         }
-*/
+
         #endregion
     }
 }

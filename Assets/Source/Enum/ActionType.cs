@@ -37,5 +37,6 @@
         ToolActionMeleeAttack,
         ToolActionPulseWeapon,
         ToolActionShield,
+        ToolActionPlanter,
     }
 }

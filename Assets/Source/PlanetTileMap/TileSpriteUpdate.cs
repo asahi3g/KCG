@@ -12,39 +12,38 @@ namespace PlanetTileMap
         // Updating the Sprite id requires checking the neighboring tiles
         // each sprite Rule respresent a different way of looking at the neighbors
         // to determine the sprite ids
-        /*public static void UpdateBackNeighbourTiles(int x, int y, TileMap tileMap)
+        public static void UpdateBackNeighbourTiles(int x, int y, TileMap tileMap)
         {
             ref var tile = ref tileMap.GetTile(x, y);
             
             if (tile.BackTileID != TileID.Error)
             {
-                ref TileMaterial material = ref GameState.TileCreationApi.GetMaterial(tile.MaterialType);
-                if (material.SpriteRuleType != SpriteRuleType.NoRule )
+                ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.BackTileID);
+                if (tileProperty.SpriteRuleType != SpriteRuleType.NoRule)
                 {
-                    if (material.SpriteRuleType == SpriteRuleType.R1)
+                    if (tileProperty.SpriteRuleType == SpriteRuleType.R1)
                     {
                         SpriteRule_R1.UpdateBackSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R2)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R2)
                     {
                         SpriteRule_R2.UpdateBackSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R3)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R3)
                     {
                         SpriteRule_R3.UpdateBackSprite(x, y, tileMap);
                     }
                 }
                 else
                 {
-                    tile.TileID = -1;
+                    tile.BackTileSpriteID = -1;
                 }
             }
             else
             {
-                tile.TileID = -1;
+                tile.BackTileSpriteID = -1;
             }
 
-            tileMap.NeedsUpdate[(int) MapLayerType.Back] = true;
         }
 
 
@@ -56,35 +55,34 @@ namespace PlanetTileMap
         {
             ref var tile = ref tileMap.GetTile(x, y);
             
-            if (tile.MaterialType != TileMaterialType.Error)
+            if (tile.MidTileID != TileID.Error)
             {
-                ref TileMaterial material = ref GameState.TileCreationApi.GetMaterial(tile.MaterialType);
-                if (material.SpriteRuleType != SpriteRuleType.NoRule)
+                ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.MidTileID);
+                if (tileProperty.SpriteRuleType != SpriteRuleType.NoRule)
                 {
-                    if (material.SpriteRuleType == SpriteRuleType.R1)
+                    if (tileProperty.SpriteRuleType == SpriteRuleType.R1)
                     {
                         SpriteRule_R1.UpdateMidSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R2)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R2)
                     {
                         SpriteRule_R2.UpdateMidSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R3)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R3)
                     {
                         SpriteRule_R3.UpdateMidSprite(x, y, tileMap);
                     }
                 }
                 else
                 {
-                    tile.TileID = -1;
+                    tile.MidTileSpriteID = -1;
                 }
             }
             else
             {
-                tile.TileID = -1;
+                tile.MidTileSpriteID = -1;
             }
 
-            tileMap.NeedsUpdate[(int) MapLayerType.Back] = true;
         }
 
 
@@ -97,20 +95,20 @@ namespace PlanetTileMap
             ref var tile = ref tileMap.GetTile(x, y);
             
  
-            if ( tile.MaterialType != TileMaterialType.Error)
+            if ( tile.FrontTileID != TileID.Error)
             {
-                ref TileMaterial material = ref GameState.TileCreationApi.GetMaterial(tile.MaterialType);
-                if (material.SpriteRuleType != SpriteRuleType.NoRule )
+                ref TileProperty tileProperty = ref GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                if (tileProperty.SpriteRuleType != SpriteRuleType.NoRule )
                 {
-                    if (material.SpriteRuleType == SpriteRuleType.R1)
+                    if (tileProperty.SpriteRuleType == SpriteRuleType.R1)
                     {
                         SpriteRule_R1.UpdateFrontSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R2)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R2)
                     {
                         SpriteRule_R2.UpdateFrontSprite(x, y, tileMap);
                     }
-                    else if (material.SpriteRuleType == SpriteRuleType.R3)
+                    else if (tileProperty.SpriteRuleType == SpriteRuleType.R3)
                     {
                         
                         SpriteRule_R3.UpdateFrontSprite(x, y, tileMap);
@@ -118,15 +116,15 @@ namespace PlanetTileMap
                 }
                 else
                 {
-                    tile.TileID = -1;
+                    tile.FrontTileSpriteID = -1;
                 }
             }
             else
             {
-                tile.TileID = -1;
+                tile.FrontTileSpriteID = -1;
             }
 
-            tileMap.NeedsUpdate[(int) MapLayerType.Back] = true;
+
         }
 
 
@@ -282,6 +280,6 @@ namespace PlanetTileMap
                     UpdateFrontNeighbourTiles(i, j, tileMap);
                 }
             }
-        }*/
+        }
     }
 }

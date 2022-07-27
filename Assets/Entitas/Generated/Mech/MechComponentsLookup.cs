@@ -9,23 +9,29 @@
 public static class MechComponentsLookup {
 
     public const int MechID = 0;
-    public const int MechPosition2D = 1;
-    public const int MechPositionLimits = 2;
-    public const int MechSprite2D = 3;
+    public const int MechPlanterPlanter = 1;
+    public const int MechPosition2D = 2;
+    public const int MechPositionLimits = 3;
+    public const int MechSprite2D = 4;
+    public const int MechType = 5;
 
-    public const int TotalComponents = 4;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
         "MechID",
+        "MechPlanterPlanter",
         "MechPosition2D",
         "MechPositionLimits",
-        "MechSprite2D"
+        "MechSprite2D",
+        "MechType"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(Mech.IDComponent),
+        typeof(Mech.Planter.PlanterComponent),
         typeof(Mech.Position2DComponent),
         typeof(Mech.PositionLimitsComponent),
-        typeof(Mech.Sprite2DComponent)
+        typeof(Mech.Sprite2DComponent),
+        typeof(Mech.TypeComponent)
     };
 }

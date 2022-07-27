@@ -28,6 +28,10 @@ namespace Mech
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
             entity.AddMechPosition2D(position);
+            entity.AddMechType(mechType);
+
+            if (mechType == MechType.Planter)
+                entity.AddMechPlanterPlanter(false, PlantType.Lily, 0.0f, 100.0f, 0.0f, 100.0f);
 
             return entity;
         }
@@ -38,13 +42,17 @@ namespace Mech
 
             var spriteSize = mechProperties.SpriteSize;
 
-            var spriteId = 0;
+            var spriteId = mechProperties.SpriteID;
 
             var entity = entitasContext.mech.CreateEntity();
             entity.AddMechID(mechID);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
             entity.AddMechPosition2D(position);
+            entity.AddMechType(mechType);
+
+            if (mechType == MechType.Planter)
+                entity.AddMechPlanterPlanter(false, PlantType.Lily, 0.0f, 100.0f, 0.0f, 100.0f);
 
             return entity;
         }

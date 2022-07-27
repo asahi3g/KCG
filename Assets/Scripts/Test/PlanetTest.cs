@@ -96,7 +96,7 @@ namespace Planet.Unity
         
         private void OnRenderObject()
         {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Material, transform);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnGUI()
@@ -214,7 +214,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
             toolBarID = Player.agentToolBar.ToolBarID;
 
-            hudManager = new HUDManager(Planet.EntitasContext, Player);
+            hudManager = new HUDManager(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
@@ -389,9 +389,9 @@ namespace Planet.Unity
             tileMap.SetFrontTile(7, 18, TileID.Platform);
             tileMap.SetFrontTile(8, 18, TileID.Platform);
 
-            //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
         }
 
         void SpawnStuff()

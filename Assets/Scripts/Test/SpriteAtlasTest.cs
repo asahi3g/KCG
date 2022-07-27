@@ -89,14 +89,14 @@ namespace Planet.Unity
                 Texture = atlas.Texture,
                 TextureCoords = new Vector4(0, 0, 1, 1)
             };
-            Utility.Render.DrawSpriteNow(-3, -1, atlas.Width/32f, atlas.Height/32f, sprite, Material);
+            GameState.Renderer.DrawSpriteNow(-3, -1, atlas.Width/32f, atlas.Height/32f, sprite);
         }
 
         void DrawSprite(float x, float y, float w, float h, int spriteId)
         {
             var sprite = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Generic);
 
-            Utility.Render.DrawSpriteNow(x, y, w, h, sprite, Material);
+            GameState.Renderer.DrawSpriteNow(x, y, w, h, sprite);
         }
     }
 }

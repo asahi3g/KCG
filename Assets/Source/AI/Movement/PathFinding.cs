@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Enums.Tile;
 using KMath;
 using PlanetTileMap;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 namespace AI.Movement
 {
@@ -78,6 +73,7 @@ namespace AI.Movement
     {
         const int MAX_NUM_NODES = 256; // Maximum size of open/closed Map.
 
+        // Todo: use only Up down, left right for pathfinding: Then filtering. 
         readonly PathAdjacency[] directions = new PathAdjacency[8]
             {   new PathAdjacency() { dir = new Vec2i(1, 0),  cost = 100 },   // Right
                 new PathAdjacency() { dir = new Vec2i(-1, 0), cost = 100 },   // Left
@@ -302,12 +298,9 @@ namespace AI.Movement
             if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y) != TileID.Air)
                 return false;
 
-            // Todo deals with jumping.
-            if (indDir > 2)
             // Jump and falling paths:
             if (indDir > 1)
             {
-                return false;
                 if (indDir < 5) // UP
                 {
                     if (current.jumpValue >= maxJump)
@@ -331,19 +324,7 @@ namespace AI.Movement
                 if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) != TileID.Air)
                     current.jumpValue = 0;
             }
-
-            // Check if character can move to this tile
-            //Vec2i tilePos =
-                //new Vec2i((int)(current.pos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
-                    //(int)(current.pos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
-
-            // Check if tile is inside the map.
-            //if (tilePos.X < 0 || tilePos.X > tileMap.MapSize.X ||
-                //tilePos.Y < 0 || tilePos.Y > tileMap.MapSize.Y)
-                //return false;
-
-            // If solid return false.
-            //else
+            else
             {
                 // Is tile on ground. // Deals with corners.
                 if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y - 1) == TileID.Air)
