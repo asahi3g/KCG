@@ -1,4 +1,5 @@
-﻿using Enums.Tile;
+﻿using Collisions;
+using Enums.Tile;
 using KMath;
 
 namespace PlanetTileMap
@@ -6,7 +7,8 @@ namespace PlanetTileMap
     public class TileMap
     {
         public Vec2i MapSize;
-        public Vec2i ChunkSize;
+        public int ChunkSizeX;
+        public int ChunkSizeY;
         TileSpriteUpdateQueue TileSpriteUpdateQueue;
         
         //Array that maps to Chunk List
@@ -25,11 +27,12 @@ namespace PlanetTileMap
             // & 0x0F == & 15
             // 17 & 15 = 1
             // 16 & 15 = 0
-            ChunkSize = new Vec2i(mapSize.X >> 4, mapSize.Y >> 4);
-            if ((mapSize.X & 0x0F) != 0) ChunkSize.X++;
-            if ((mapSize.Y & 0x0F) != 0) ChunkSize.Y++;
-            
-            ChunkArrayCapacity = ChunkSize.X * ChunkSize.Y;
+            ChunkSizeX = mapSize.X >> 4;
+            ChunkSizeY = mapSize.Y >> 4;
+            Utils.Assert((mapSize.X & 0x0F) != 0);
+            Utils.Assert((mapSize.Y & 0x0F) != 0);
+
+            ChunkArrayCapacity = ChunkSizeX * ChunkSizeY;
             ChunkIndexLookup = new int[ChunkArrayCapacity];
             ChunkArray = new Chunk[ChunkArrayCapacity];
 
