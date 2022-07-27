@@ -33,7 +33,7 @@ namespace KMath
         /// </summary>
         public float SqrMagnitude
         {
-            [MethodImpl((MethodImplOptions) 256)] get => (float) (X * (double) X + Y * (double) Y);
+            [MethodImpl((MethodImplOptions) 256)] get => X * X + Y * Y;
         }
         
         /// <summary>
@@ -41,7 +41,7 @@ namespace KMath
         /// </summary>
         public float Magnitude
         {
-            [MethodImpl((MethodImplOptions) 256)] get => (float) Math.Sqrt(X * (double)X + Y * (double)Y);
+            [MethodImpl((MethodImplOptions) 256)] get => MathF.Sqrt(X * X + Y * Y);
         }
         
         /// <summary>
@@ -67,7 +67,7 @@ namespace KMath
         /// <param name="lhs"></param>
         /// <param name="rhs"></param>
         [MethodImpl((MethodImplOptions) 256)]
-        public static float Dot(Vec2f lhs, Vec2f rhs) => (float) (lhs.X * (double) rhs.X + lhs.Y * (double) rhs.Y);
+        public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
 
         /// <summary>
         ///   <para>Makes this vector have a magnitude of 1.</para>
@@ -153,7 +153,7 @@ namespace KMath
         {
             float num1 = lhs.X - rhs.X;
             float num2 = lhs.Y - rhs.Y;
-            return num1 * (double) num1 + num2 * (double) num2 < 9.99999943962493E-11;
+            return num1 * num1 + num2 * num2 < 9.99999943962493E-11;
         }
 
         [MethodImpl((MethodImplOptions) 256)]
