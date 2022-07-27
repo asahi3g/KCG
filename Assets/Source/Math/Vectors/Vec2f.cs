@@ -99,6 +99,19 @@ namespace KMath
         }
         
         /// <summary>
+        ///   <para>Returns the distance between a and b.</para>
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        [MethodImpl((MethodImplOptions) 256)]
+        public static float Distance(Vec2f a, Vec2f b)
+        {
+            float num1 = a.X - b.X;
+            float num2 = a.Y - b.Y;
+            return (float) Math.Sqrt((double) num1 * (double) num1 + (double) num2 * (double) num2);
+        }
+        
+        /// <summary>
         ///   <para>Returns the 2D vector perpendicular to this 2D vector. The result is always rotated 90-degrees in a counter-clockwise direction for a 2D coordinate system where the positive Y axis goes up.</para>
         /// </summary>
         /// <param name="inDirection">The input direction.</param>
