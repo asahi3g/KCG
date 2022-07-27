@@ -204,6 +204,58 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         }
     }
 
+    Hit GetCollisionHitAABB_AABB(Vec2f velocity)
+    {
+        var R1_tiles = TileCollisions.GetTilesRegionBroadPhase(Planet.TileMap, (int)R1.xmin, (int)R1.xmax, (int)R1.ymin, (int)R1.ymax);
+        var R2_tiles = TileCollisions.GetTilesRegionBroadPhase(Planet.TileMap, (int)R2.xmin, (int)R2.xmax, (int)R2.ymin, (int)R2.ymax);
+
+        float lowestTime = float.MaxValue;
+        Vec2i nearestTilePos = default;
+
+        for (int i = 0; i < R1_tiles.Length; i++)
+        {
+            var tile = new Rect
+            {
+                xmin = R1_tiles[i].X,
+                xmax = R1_tiles[i].X + 1,
+                ymin = R1_tiles[i].Y,
+                ymax = R1_tiles[i].Y + 1
+            };
+            var distance = TileCollisions.CalculateDistanceAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax,
+                tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
+            if (distance / velocity.Y < lowestTime)
+            {
+                lowestTime = distance / velocity.Y;
+                nearestTilePos = R1_tiles[i];
+            }
+        }
+        
+        for (int i = 0; i < R2_tiles.Length; i++)
+        {
+            var tile = new Rect
+            {
+                xmin = R2_tiles[i].X,
+                xmax = R2_tiles[i].X + 1,
+                ymin = R2_tiles[i].Y,
+                ymax = R2_tiles[i].Y + 1
+            };
+            var distance = TileCollisions.CalculateDistanceAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax,
+                tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
+            var newTime = distance / velocity.X;
+            if (newTime < lowestTime)
+            {
+                lowestTime = newTime;
+                nearestTilePos = R1_tiles[i];
+            }
+        }
+
+        return new Hit
+        {
+            point = (Vec2f) nearestTilePos,
+            time = lowestTime
+        };
+    }
+
     void Update()
     {
         if(square.draggable) 
@@ -223,56 +275,15 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         // Reset colors for all squares
         RegenerateMap();
 
-        var R1_tiles = TileCollisions.GetTilesRegionBroadPhase(Planet.TileMap, (int)R1.xmin, (int)R1.xmax, (int)R1.ymin, (int)R1.ymax);
-        var R2_tiles = TileCollisions.GetTilesRegionBroadPhase(Planet.TileMap, (int)R2.xmin, (int)R2.xmax, (int)R2.ymin, (int)R2.ymax);
-
-        float lowestTime = float.MaxValue;
-        Rect nearestTile = default;
         var velocity = new Vec2f(3f, 3f);
-        
-        for (int i = 0; i < R1_tiles.Length; i++)
-        {
-            var tile = new Rect
-            {
-                xmin = R1_tiles[i].X,
-                xmax = R1_tiles[i].X + 1,
-                ymin = R1_tiles[i].Y,
-                ymax = R1_tiles[i].Y + 1
-            };
-            var distance = TileCollisions.CalculateDistanceAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax,
-                tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
-            if (distance / velocity.Y < lowestTime)
-            {
-                lowestTime = distance / velocity.Y;
-                nearestTile = tile;
-            }
-        }
-        
-        for (int i = 0; i < R2_tiles.Length; i++)
-        {
-            var tile = new Rect
-            {
-                xmin = R2_tiles[i].X,
-                xmax = R2_tiles[i].X + 1,
-                ymin = R2_tiles[i].Y,
-                ymax = R2_tiles[i].Y + 1
-            };
-            var distance = TileCollisions.CalculateDistanceAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax,
-                tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
-            var newTime = distance / velocity.X;
-            if (newTime < lowestTime)
-            {
-                lowestTime = newTime;
-                nearestTile = tile;
-            }
-        }
-        
-        if (lowestTime <= 1)
+        var hit = GetCollisionHitAABB_AABB(velocity);
+
+        if (hit.time <= 1)
         {
             Debug.Log(Collisions.Collisions.RectOverlapRect(
                 square.xmin + velocity.X, square.xmax + velocity.X,
                 square.ymin + velocity.Y, square.ymax + velocity.Y, 
-                nearestTile.xmin, nearestTile.xmax, nearestTile.ymin, nearestTile.ymax));
+                hit.point.X, hit.point.X + 1, hit.point.Y, hit.point.Y + 1));
         }
         else
         {

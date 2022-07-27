@@ -225,7 +225,7 @@ namespace Collisions
                 for (int y = ychunkmin; y < ychunkmax; y++)
                 {
                     //note: we already divided by 16 above
-                    int chunk_index = x + y * tileMap.ChunkSize.X;
+                    int chunk_index = x + y * tileMap.ChunkSizeX;
                     //check index if chunk is empty
                     if (tileMap.ChunkArray[chunk_index].Type == MapChunkType.Empty)
                     {

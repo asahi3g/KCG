@@ -1,4 +1,4 @@
-namespace Enums.Tile
+namespace Collisions
 {
     public enum TileShapeAndRotation
     {
