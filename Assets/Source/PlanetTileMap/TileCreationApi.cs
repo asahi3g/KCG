@@ -76,6 +76,13 @@ namespace PlanetTileMap
             CurrentTileIndex = tileID;
         }
 
+        public void SetTileMaterialType(MaterialType materialType)
+        {
+            if (CurrentTileIndex == TileID.Error) return;
+
+            TilePropertyArray[(int) CurrentTileIndex].MaterialType = materialType;
+        }
+
         public void SetTilePropertyShape(TileShape shape)
         {
             if (CurrentTileIndex == TileID.Error) return;

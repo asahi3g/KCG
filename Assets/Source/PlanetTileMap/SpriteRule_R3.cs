@@ -900,7 +900,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Right;
                 }
@@ -911,7 +912,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Left;
                 }
@@ -922,7 +924,8 @@ namespace PlanetTileMap
             if (y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Up;
                 }
@@ -933,7 +936,8 @@ namespace PlanetTileMap
             if (y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Down;
                 }
@@ -944,7 +948,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y + 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpRight;
                 }
@@ -955,7 +960,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y + 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpLeft;
                 }
@@ -966,7 +972,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y - 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownRight;
                 }
@@ -977,7 +984,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y - 1);
-                if (neighborTile.FrontTileID == tile.FrontTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownLeft;
                 }
@@ -1009,7 +1017,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Right;
                 }
@@ -1020,7 +1029,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Left;
                 }
@@ -1031,7 +1041,8 @@ namespace PlanetTileMap
             if (y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Up;
                 }
@@ -1042,7 +1053,8 @@ namespace PlanetTileMap
             if (y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Down;
                 }
@@ -1053,7 +1065,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y + 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpRight;
                 }
@@ -1064,7 +1077,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y + 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpLeft;
                 }
@@ -1075,7 +1089,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y - 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownRight;
                 }
@@ -1086,7 +1101,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y - 1);
-                if (neighborTile.MidTileID == tile.MidTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownLeft;
                 }
@@ -1121,7 +1137,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Right;
                 }
@@ -1132,7 +1149,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Left;
                 }
@@ -1143,7 +1161,8 @@ namespace PlanetTileMap
             if (y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Up;
                 }
@@ -1154,7 +1173,8 @@ namespace PlanetTileMap
             if (y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_Down;
                 }
@@ -1165,7 +1185,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y + 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpRight;
                 }
@@ -1176,7 +1197,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y + 1 < tileMap.MapSize.Y)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y + 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_UpLeft;
                 }
@@ -1187,7 +1209,8 @@ namespace PlanetTileMap
             if (x + 1 < tileMap.MapSize.X && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x + 1, y - 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownRight;
                 }
@@ -1198,7 +1221,8 @@ namespace PlanetTileMap
             if (x - 1 >= 0 && y - 1 >= 0)
             {
                 ref var neighborTile = ref tileMap.GetTile(x - 1, y - 1);
-                if (neighborTile.BackTileID == tile.BackTileID)
+                MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                if (neighborMaterialType == tileProperty.MaterialType)
                 {
                     neighborsBitField |= BitField_DownLeft;
                 }

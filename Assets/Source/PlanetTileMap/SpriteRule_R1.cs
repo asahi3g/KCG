@@ -10,7 +10,7 @@ namespace PlanetTileMap
     {
 
          // TODO: Refactor
-         public static TilePosition GetTilePosition(TileID[] neighbors, TileID materialType)
+         public static TilePosition GetTilePosition(MaterialType[] neighbors, MaterialType materialType)
          {
              int biggestMatch = 0;
              TilePosition tilePosition = 0;
@@ -34,7 +34,7 @@ namespace PlanetTileMap
  
  
          // TODO: Refactor
-         public static int CheckTile(TileID[] neighbors, TilePosition rules, TileID materialType)
+         public static int CheckTile(MaterialType[] neighbors, TilePosition rules, MaterialType materialType)
          {
              // 16 different values can be stored
              // using only 4 bits for the
@@ -79,39 +79,43 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new TileID[4];
+             var neighbors = new MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = TileID.Air;
+                 neighbors[i] = MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 neighbors[(int) Neighbor.Right] = neighborTile.BackTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 neighbors[(int) Neighbor.Left] = neighborTile.BackTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 neighbors[(int) Neighbor.Up] = neighborTile.BackTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 neighbors[(int) Neighbor.Down] = neighborTile.BackTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  
  
-             var tilePosition = GetTilePosition(neighbors, tile.BackTileID);
+             var tilePosition = GetTilePosition(neighbors, tileProperty.MaterialType);
  
              // the sprite ids are next to each other in the sprite atlas
              // we just have to know which one to draw based on the offset
@@ -138,39 +142,43 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new TileID[4];
+             var neighbors = new MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = TileID.Air;
+                 neighbors[i] = MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 neighbors[(int) Neighbor.Right] = neighborTile.MidTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 neighbors[(int) Neighbor.Left] = neighborTile.MidTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 neighbors[(int) Neighbor.Up] = neighborTile.MidTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 neighbors[(int) Neighbor.Down] = neighborTile.MidTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  
  
-             var tilePosition = GetTilePosition(neighbors, tile.MidTileID);
+             var tilePosition = GetTilePosition(neighbors, tileProperty.MaterialType);
  
              // the sprite ids are next to each other in the sprite atlas
              // we just have to know which one to draw based on the offset
@@ -196,39 +204,43 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new TileID[4];
+             var neighbors = new MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = TileID.Air;
+                 neighbors[i] = MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 neighbors[(int) Neighbor.Right] = neighborTile.FrontTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 neighbors[(int) Neighbor.Left] = neighborTile.FrontTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 neighbors[(int) Neighbor.Up] = neighborTile.FrontTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 neighbors[(int) Neighbor.Down] = neighborTile.FrontTileID;
+                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  
  
-             var tilePosition = GetTilePosition(neighbors, tile.FrontTileID);
+             var tilePosition = GetTilePosition(neighbors, tileProperty.MaterialType);
  
              // the sprite ids are next to each other in the sprite atlas
              // we just have to know which one to draw based on the offset
