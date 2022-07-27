@@ -356,22 +356,22 @@ namespace Planet.Unity
 
                 for (int j = carveHeight; j < tileMap.MapSize.Y && j < carveHeight + 4; j++)
                 {
-                    tileMap.SetFrontTile(i, j, TileID.Air);
-                    tileMap.SetMidTile(i, j, TileID.Pipe);
+                    tileMap.GetTile(i, j).FrontTileID = TileID.Air;
+                    tileMap.GetTile(i, j).MidTileID =  TileID.Pipe;
                 }
             }
 
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
-                tileMap.SetFrontTile(i, 0, TileID.Bedrock);
-                tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1, TileID.Bedrock);
+                tileMap.GetTile(i, 0).FrontTileID = TileID.Bedrock;
+                tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
             }
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
-                tileMap.SetFrontTile(0, j, TileID.Bedrock);
-                tileMap.SetFrontTile(tileMap.MapSize.X - 1, j, TileID.Bedrock);
+                tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
+                tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
             }
 
             var camera = Camera.main;

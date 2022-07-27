@@ -16,8 +16,10 @@ namespace PlanetTileMap
         public string Description; //later use string pool
         
         public TileID TileID;
+        public MaterialType MaterialType;
         public int BaseSpriteId;
         public TileDrawType DrawType;
+
 
         public byte Durability; //max health of tile
         
