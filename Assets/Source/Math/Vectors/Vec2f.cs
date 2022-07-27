@@ -108,7 +108,7 @@ namespace KMath
         {
             float num1 = a.X - b.X;
             float num2 = a.Y - b.Y;
-            return (float) Math.Sqrt((double) num1 * (double) num1 + (double) num2 * (double) num2);
+            return MathF.Sqrt(num1 * num1 + num2 * num2);
         }
         
         /// <summary>
