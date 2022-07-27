@@ -14,6 +14,7 @@ namespace Mech.Planter
         public float GrowthTarget;
         public float WaterLevel;
         public float MaxWaterLevel;
+        public int LightLevel;
     }
 }
 
