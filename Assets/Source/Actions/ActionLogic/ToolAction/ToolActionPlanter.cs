@@ -56,19 +56,19 @@ namespace Action
                             PlanterPosition = entity.mechPosition2D.Value;
 
                             // Has Planter Component?
-                            if (entity.hasMechPlanterPlanter)
+                            if (entity.hasMechPlanter)
                             {
                                 // Plant Growth Reached Maximum?
-                                if (entity.mechPlanterPlanter.PlantGrowth < 100.0f)
+                                if (entity.mechPlanter.PlantGrowth < 100.0f)
                                 {
                                     // Is seed placed?
-                                    if (!entity.mechPlanterPlanter.GotSeed)
+                                    if (!entity.mechPlanter.GotSeed)
                                     {
                                         PlantToAdd = true;
-                                        entity.mechPlanterPlanter.Plant = Plant;
+                                        entity.mechPlanter.Plant = Plant;
 
                                         // Mech Property
-                                        entity.mechPlanterPlanter.GotSeed = true;
+                                        entity.mechPlanter.GotSeed = true;
                                     }
                                 }
                             }
@@ -110,7 +110,7 @@ namespace Action
                         // Is Mech Planter?
                         if (entity.mechType.mechType == Mech.MechType.Planter)
                         {
-                            entity.mechPlanterPlanter.Plant = Plant;
+                            entity.mechPlanter.Plant = Plant;
                         }
                     }
                 }
