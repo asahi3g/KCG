@@ -1,53 +1,61 @@
+using System.Collections.Generic;
 using Enums.Tile;
 using KMath;
+using System;
 using Utility;
 
 namespace Collisions
 {
     public static class TileCollisions
     {        
-        public static bool RegionTileCollisionCheck(PlanetTileMap.TileMap tileMap, int xmin, int xmax, int ymin, int ymax)
+        public static Vec2i[] GetTilesRegionBroadPhase(PlanetTileMap.TileMap tileMap, int xmin, int xmax, int ymin, int ymax)
         {
-            var xchunkmin = xmin << 4;
-            var xchunkmax = xmax << 4;
-            var ychunkmin = ymin << 4;
-            var ychunkmax = ymax << 4;
-
-            for (int x = xchunkmin; x < xchunkmax; x++) 
+            List<Vec2i> positions = new List<Vec2i>();
+            
+            for (int i = xmin; i <= xmax; i++)
             {
-                for (int y = ychunkmin; y < ychunkmax; y++)
+                for (int j = ymin; j < ymax; j++)
                 {
-                    //note: we already divided by 16 above
-                    int chunk_index = x + y * tileMap.ChunkSize.X;
-                    //check index if chunk is empty
-                    if (tileMap.ChunkArray[chunk_index].Type == MapChunkType.Empty)
+                    var tile = tileMap.GetTile(i, j);
+                    if (tile.FrontTileID != TileID.Air)
                     {
-                        //skip-chunk its air
-                        continue;
-                    }
-                    
-                    //do the checks here for collisions
-                    int tmp_xmin = Int.IntMax(xmin, xmin & 0x0f);
-                    int tmp_xmax = Int.IntMin(xmax, xmax & 0x0f);
-                    int tmp_ymin = Int.IntMax(ymin, xmax & 0x0f);
-                    int tmp_ymax = Int.IntMin(ymax, ymax & 0x0f);
-                    
-                    //Do collision for each tile
-                    for (var tmp_x = tmp_xmin; tmp_x < tmp_xmax; tmp_x++) 
-                    {
-                        for (var tmp_y = tmp_ymin; tmp_y < tmp_ymax; tmp_y++)
-                        {
-                            var frontTileID = tileMap.GetFrontTileID(tmp_x, tmp_y);
-                            if (frontTileID != TileID.Air)
-                            {
-                                return true;
-                            }
-                        }
+                        positions.Add(new Vec2i(i, j));
                     }
                 }
             }
             
-            return false;
+            return positions.ToArray();
+        }
+
+        public static float CalculateDistanceAABB_AABB(float box1_xmin, float box1_xmax, float box1_ymin, float box1_ymax,
+            float box2_xmin, float box2_xmax, float box2_ymin, float box2_ymax, Vec2f velocity)
+        {
+            Vec2f line1 = default;
+            Vec2f line2 = default;
+            
+            if (velocity.X > 0f)
+            {
+                line1.X = box1_xmax;
+                line2.X = box2_xmin;
+            }
+            else if (velocity.X < 0f)
+            {
+                line1.X = box1_xmin;
+                line2.X = box2_xmax;
+            }
+            
+            if (velocity.Y > 0f)
+            {
+                line1.Y = box1_ymax;
+                line2.Y = box2_ymin;
+            }
+            else if (velocity.Y < 0f)
+            {
+                line1.Y = box1_ymin;
+                line2.Y = box2_ymax;
+            }
+
+            return Vec2f.Distance(line1, line2);
         }
         
         public static bool IsCollidingLeft(this AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
@@ -63,7 +71,7 @@ namespace Collisions
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
@@ -89,7 +97,7 @@ namespace Collisions
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();
@@ -119,10 +127,15 @@ namespace Collisions
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air )
                         {
+                            
                             var tileBorders = new AABox2D(x, y);
-                            tileBorders.DrawBox();
+                            if (Math.Abs(borders.ymin - tileBorders.ymax) > 0.3f && frontTileID  == TileID.Platform)
+                            {
+                                return false;
+                            }
+                                tileBorders.DrawBox();
                             return true;
                         }
                     }
@@ -147,7 +160,7 @@ namespace Collisions
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air)
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
                             tileBorders.DrawBox();

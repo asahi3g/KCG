@@ -51,9 +51,9 @@ namespace Planet.Unity
                 Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
                 Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                //Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                //Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                //Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
                 Debug.Log("loaded!");
             }
@@ -152,9 +152,9 @@ namespace Planet.Unity
 
             GenerateMap();
 
-            //Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
@@ -198,8 +198,8 @@ namespace Planet.Unity
             {
                 for(int i = 0; i < tileMap.MapSize.X; i++)
                 {
-                    tileMap.SetFrontTile(i, j, TileID.Moon);
-                    tileMap.SetBackTile(i, j, TileID.Background);
+                    tileMap.GetTile(i, j).FrontTileID = TileID.Moon;
+                    tileMap.GetTile(i, j).BackTileID = TileID.Background;
                 }
             }
 
@@ -207,29 +207,23 @@ namespace Planet.Unity
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
-                tileMap.SetFrontTile(i, 0, TileID.Bedrock);
-                tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1, TileID.Bedrock);
+                tileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
+                tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
             }
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
-                tileMap.SetFrontTile(0, j, TileID.Bedrock);
-                tileMap.SetFrontTile(tileMap.MapSize.X - 1, j, TileID.Bedrock);
+                tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
+                tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
             }
 
-            //tileMap.SetFrontTile(8, 14, TileID.Platform);
-            //tileMap.SetFrontTile(9, 14, TileID.Platform);
-            //tileMap.SetFrontTile(10, 14, TileID.Platform);
-            //tileMap.SetFrontTile(11, 14, TileID.Platform);
-            //tileMap.SetFrontTile(12, 14, TileID.Platform);
-            //tileMap.SetFrontTile(13, 14, TileID.Platform);
+           /* tileMap.SetFrontTile(8, 14, TileID.Platform);
+            tileMap.SetFrontTile(9, 14, TileID.Platform);
+            tileMap.SetFrontTile(10, 14, TileID.Platform);
+            tileMap.SetFrontTile(11, 14, TileID.Platform);
+            tileMap.SetFrontTile(12, 14, TileID.Platform);
+            tileMap.SetFrontTile(13, 14, TileID.Platform);*/
 
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-
-            //tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            //tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
         }
 
     }

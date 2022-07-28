@@ -2,6 +2,7 @@ using Enums.Tile;
 using KMath;
 using UnityEngine;
 using System;
+using Collisions;
 using PlanetTileMap;
 
 public class GameResources
@@ -26,6 +27,7 @@ public class GameResources
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
 
+    public static int PlatformSpriteSheet;
 
     public static int OreSprite;
     public static int Ore2Sprite;
@@ -102,12 +104,15 @@ public class GameResources
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
+
+            PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\Pots\\pot_1.png", 32, 16);
             Plant1Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
             Plant2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Plant2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
+
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -164,12 +169,14 @@ public class GameResources
                             GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(LoadingTilePlaceholderSpriteSheet, 0, 0, 0);
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Ore1);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore1);
         GameState.TileCreationApi.SetTilePropertyName("ore_1");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(OreSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Glass);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Glass);
         GameState.TileCreationApi.SetTilePropertyName("glass");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
@@ -178,6 +185,7 @@ public class GameResources
 
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Moon);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Moon);
         GameState.TileCreationApi.SetTilePropertyName("moon");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
@@ -185,6 +193,7 @@ public class GameResources
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Background);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Background);
         GameState.TileCreationApi.SetTilePropertyName("background");
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(BackgroundSpriteSheet, 0, 0);
@@ -192,6 +201,7 @@ public class GameResources
 
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Ore2);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore2);
         GameState.TileCreationApi.SetTilePropertyName("ore_2");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(Ore2SpriteSheet, 0, 0);
@@ -199,12 +209,14 @@ public class GameResources
 
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Ore3);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore3);
         GameState.TileCreationApi.SetTilePropertyName("ore_3");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetTilePropertyTexture16(Ore3SpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Pipe);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Pipe);
         GameState.TileCreationApi.SetTilePropertyName("pipe");
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
@@ -212,18 +224,28 @@ public class GameResources
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Wire);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Wire);
         GameState.TileCreationApi.SetTilePropertyName("wire");
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 4, 12);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Bedrock);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Bedrock);
         GameState.TileCreationApi.SetTilePropertyName("Bedrock");
         GameState.TileCreationApi.SetCannotBeRemoved(true);
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 10);
         GameState.TileCreationApi.EndTileProperty();
+
+        GameState.TileCreationApi.CreateTileProperty(TileID.Platform);
+        GameState.TileCreationApi.SetTilePropertyName("Platform");
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+        GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
+        GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
+        GameState.TileCreationApi.EndTileProperty();
+
     }
 
     private static void CreateAnimations()

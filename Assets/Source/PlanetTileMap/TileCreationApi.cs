@@ -1,3 +1,4 @@
+using Collisions;
 using Enums.Tile;
 //MOST IMPORTANT TILE
 
@@ -74,6 +75,13 @@ namespace PlanetTileMap
 
             TilePropertyArray[(int)CurrentTileIndex].TileID = tileID;
             CurrentTileIndex = tileID;
+        }
+
+        public void SetTileMaterialType(MaterialType materialType)
+        {
+            if (CurrentTileIndex == TileID.Error) return;
+
+            TilePropertyArray[(int) CurrentTileIndex].MaterialType = materialType;
         }
 
         public void SetTilePropertyShape(TileShape shape)

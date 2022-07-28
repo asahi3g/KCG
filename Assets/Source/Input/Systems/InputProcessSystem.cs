@@ -49,7 +49,7 @@ namespace ECSInput
             bool dash = Input.GetKeyDown(KeyCode.Space);
             bool running = Input.GetKey(KeyCode.LeftAlt);
             bool flying = Input.GetKey(KeyCode.F);
-            bool downKey = Input.GetKey(KeyCode.DownArrow);
+            bool downKey = Input.GetKeyDown(KeyCode.DownArrow);
 
             float x = 0.0f;
             if (Input.GetKey(KeyCode.RightArrow))
@@ -72,9 +72,20 @@ namespace ECSInput
 
                 var movementState = entity.agentMovementState;
                 movementState.Running = running;
-
-                movable.Droping = downKey;
-
+                //if (movable.Landed && movable.Droping)
+                //{
+                //    movable.Droping = false;
+                //}
+                if (downKey)
+                {
+                    movable.Droping = true;
+                    movable.Landed = false;
+                    movable.WantToDrop = true;
+                }
+                if (movable.Landed)
+                {
+                    movable.Droping = false;
+                }
                 // handling horizontal movement (left/right)
                 if (movementState.Running)
                 {
@@ -91,8 +102,8 @@ namespace ECSInput
                 // dash
                 if (dash && movementState.DashCooldown <= 0.0f)
                 {
-                    movable.Acceleration.X += 500.0f * x;
-                    movable.Velocity.X = 90.0f * x;
+                    movable.Acceleration.X += 1000.0f * x;
+                    movable.Velocity.X = 30.0f * x;
                     movable.Velocity.Y = 0.0f;
                     movable.Acceleration.Y = 0.0f;
 

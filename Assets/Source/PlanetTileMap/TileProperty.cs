@@ -1,4 +1,5 @@
-﻿using Enums.Tile;
+﻿using Collisions;
+using Enums.Tile;
 
 //TODO: add material type for block
 //TODO: per material coefficient of restitution, coefficient of static friction and coefficient of dynamic friction
@@ -16,8 +17,10 @@ namespace PlanetTileMap
         public string Description; //later use string pool
         
         public TileID TileID;
+        public MaterialType MaterialType;
         public int BaseSpriteId;
         public TileDrawType DrawType;
+
 
         public byte Durability; //max health of tile
         
@@ -32,7 +35,7 @@ namespace PlanetTileMap
         public TileShape BlockShapeType;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
-
+        public bool IsAPlatform => CollisionIsoType == CollisionType.Platform;
         public TileProperty(TileID tileID, int baseSpriteId) : this()
         {
             TileID = tileID;
