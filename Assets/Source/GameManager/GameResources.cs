@@ -58,6 +58,8 @@ public class GameResources
     public static int RemoveToolIcon;
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
+    public static int ConstructionToolIcon;
+
     public static int ChestIcon;
 
     public static int PotIcon;
@@ -128,6 +130,8 @@ public class GameResources
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
 
+            ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture1\\dev-furniture.png", 16, 16);
+
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -167,7 +171,7 @@ public class GameResources
             Plant5Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant5Icon, 0, 0, Enums.AtlasType.Particle);
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
-
+            ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, Enums.AtlasType.Particle);
 
             CreateTiles();
             CreateAnimations();
@@ -548,6 +552,13 @@ public class GameResources
         GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionHarvest);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.ConstructionTool, "ConstructionTool");
+        GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionConstruction);
         GameState.ItemCreationApi.EndItem();
     }
 

@@ -40,5 +40,6 @@
         ToolActionPlanter,
         ToolActionWater,
         ToolActionHarvest,
+        ToolActionConstruction
     }
 }

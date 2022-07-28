@@ -46,5 +46,6 @@
         ParticleEmitterPlacementTool,
         PlanterTool,
         HarvestTool,
+        ConstructionTool
     }
 }
