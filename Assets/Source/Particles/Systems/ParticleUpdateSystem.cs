@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
+using KMath;
 
 namespace Particle
 {
@@ -32,15 +33,15 @@ namespace Particle
                 gameEntity.ReplaceParticleState(newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale);
 
                 var pos = gameEntity.particlePosition2D;
-                Vector2 displacement = 
+                Vec2f displacement = 
                         0.5f * pos.Acceleration * (deltaTime * deltaTime) + pos.Velocity * deltaTime;
-                Vector2 newVelocity = pos.Acceleration * deltaTime + pos.Velocity;
+                Vec2f newVelocity = pos.Acceleration * deltaTime + pos.Velocity;
 
-                Vector2 newPosition = pos.Position + displacement;
+                Vec2f newPosition = pos.Position + displacement;
 
                 float newRotation = pos.Rotation + state.DeltaRotation * deltaTime;
                 
-                gameEntity.ReplaceParticlePosition2D(newPosition, pos.Acceleration, newVelocity, newRotation);
+                gameEntity.ReplaceParticlePosition2D(newPosition, pos.Position, pos.Acceleration, newVelocity, newRotation);
 
                 /*state.GameObject.transform.position = new Vector3(newPosition.x, newPosition.y, 0.0f);
                 state.GameObject.transform.Rotate(0.0f, 0.0f, state.DeltaRotation, Space.Self);*/

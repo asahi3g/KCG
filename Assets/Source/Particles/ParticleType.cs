@@ -6,6 +6,7 @@ namespace Particle
     {
         Ore, 
         OreExplosionParticle,
-        DustParticle
+        DustParticle,
+        Debris
     }
 }

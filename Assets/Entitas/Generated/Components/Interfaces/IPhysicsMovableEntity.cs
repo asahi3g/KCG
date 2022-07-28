@@ -11,7 +11,7 @@ public partial interface IPhysicsMovableEntity {
     Physics.MovableComponent physicsMovable { get; }
     bool hasPhysicsMovable { get; }
 
-    void AddPhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping);
-    void ReplacePhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping);
+    void AddPhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping, bool newWantToDrop);
+    void ReplacePhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping, bool newWantToDrop);
     void RemovePhysicsMovable();
 }

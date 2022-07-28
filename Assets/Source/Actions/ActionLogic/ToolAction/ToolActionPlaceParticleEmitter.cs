@@ -35,7 +35,8 @@ namespace Action
             int t = System.Math.Abs((int)KMath.Random.Mt19937.genrand_int32() % System.Enum.GetNames(typeof(Particle.ParticleType)).Length);
 
             Debug.Log((Particle.ParticleEmitterType)t);
-            planet.AddParticleEmitter(new Vec2f(x, y), (Particle.ParticleEmitterType)t);
+            //planet.AddParticleEmitter(new Vec2f(x, y), (Particle.ParticleEmitterType)t);
+            planet.AddDebris(new Vec2f(x, y));
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

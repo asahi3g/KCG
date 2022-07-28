@@ -11,20 +11,22 @@ public partial class ParticleEntity {
     public Particle.Position2DComponent particlePosition2D { get { return (Particle.Position2DComponent)GetComponent(ParticleComponentsLookup.ParticlePosition2D); } }
     public bool hasParticlePosition2D { get { return HasComponent(ParticleComponentsLookup.ParticlePosition2D); } }
 
-    public void AddParticlePosition2D(UnityEngine.Vector2 newPosition, UnityEngine.Vector2 newAcceleration, UnityEngine.Vector2 newVelocity, float newRotation) {
+    public void AddParticlePosition2D(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
         var index = ParticleComponentsLookup.ParticlePosition2D;
         var component = (Particle.Position2DComponent)CreateComponent(index, typeof(Particle.Position2DComponent));
         component.Position = newPosition;
+        component.PreviousPosition = newPreviousPosition;
         component.Acceleration = newAcceleration;
         component.Velocity = newVelocity;
         component.Rotation = newRotation;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticlePosition2D(UnityEngine.Vector2 newPosition, UnityEngine.Vector2 newAcceleration, UnityEngine.Vector2 newVelocity, float newRotation) {
+    public void ReplaceParticlePosition2D(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
         var index = ParticleComponentsLookup.ParticlePosition2D;
         var component = (Particle.Position2DComponent)CreateComponent(index, typeof(Particle.Position2DComponent));
         component.Position = newPosition;
+        component.PreviousPosition = newPreviousPosition;
         component.Acceleration = newAcceleration;
         component.Velocity = newVelocity;
         component.Rotation = newRotation;

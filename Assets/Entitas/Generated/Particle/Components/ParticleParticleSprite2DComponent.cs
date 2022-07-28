@@ -11,18 +11,22 @@ public partial class ParticleEntity {
     public Particle.Sprite2DComponent particleSprite2D { get { return (Particle.Sprite2DComponent)GetComponent(ParticleComponentsLookup.ParticleSprite2D); } }
     public bool hasParticleSprite2D { get { return HasComponent(ParticleComponentsLookup.ParticleSprite2D); } }
 
-    public void AddParticleSprite2D(int newSpriteId, KMath.Vec2f newSize) {
+    public void AddParticleSprite2D(int newSpriteId, KMath.Vec2f[] newVertices, KMath.Vec2f[] newTextureCoords, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleSprite2D;
         var component = (Particle.Sprite2DComponent)CreateComponent(index, typeof(Particle.Sprite2DComponent));
         component.SpriteId = newSpriteId;
+        component.Vertices = newVertices;
+        component.TextureCoords = newTextureCoords;
         component.Size = newSize;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticleSprite2D(int newSpriteId, KMath.Vec2f newSize) {
+    public void ReplaceParticleSprite2D(int newSpriteId, KMath.Vec2f[] newVertices, KMath.Vec2f[] newTextureCoords, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleSprite2D;
         var component = (Particle.Sprite2DComponent)CreateComponent(index, typeof(Particle.Sprite2DComponent));
         component.SpriteId = newSpriteId;
+        component.Vertices = newVertices;
+        component.TextureCoords = newTextureCoords;
         component.Size = newSize;
         ReplaceComponent(index, component);
     }

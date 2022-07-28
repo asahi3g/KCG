@@ -11,7 +11,7 @@ namespace Particle
         public string Name;
         
         public float DecayRate;
-        public Vector2 Acceleration;
+        public Vec2f Acceleration;
         public float DeltaRotation;
         public float DeltaScale;
 
@@ -23,11 +23,16 @@ namespace Particle
 
         // the starting properties of the particles
         public Vec2f Size;
-        public Vector2 StartingVelocity;
+        public Vec2f StartingVelocity;
         public float StartingRotation;
         public float StartingScale;
         public Color StartingColor;
         public float AnimationSpeed;
+
+
+        // Box Debris
+        public bool IsCollidable;
+
     }
 }
 
