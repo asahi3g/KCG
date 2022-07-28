@@ -66,6 +66,8 @@ public class GameResources
     public static int Plant2Icon;
     public static int Light2Icon;
 
+    public static int WaterIcon;
+
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
 
@@ -112,6 +114,7 @@ public class GameResources
             Plant2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Plant2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
+            WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
 
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
@@ -145,6 +148,7 @@ public class GameResources
             Plant2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2, 0, 0, Enums.AtlasType.Mech);
             Plant2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2Icon, 0, 0, Enums.AtlasType.Particle);
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
+            WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
 
 
             CreateTiles();
@@ -491,6 +495,20 @@ public class GameResources
         GameState.ItemCreationApi.SetInventoryTexture(Plant2Icon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.WaterBottle, "Water");
+        GameState.ItemCreationApi.SetTexture(WaterIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(WaterIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionWater);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.HarvestTool, "HarvestTool");
+        GameState.ItemCreationApi.SetTexture(SwordSpriteId);
+        GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionHarvest);
         GameState.ItemCreationApi.EndItem();
     }
 

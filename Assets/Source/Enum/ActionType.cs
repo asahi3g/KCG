@@ -38,5 +38,7 @@
         ToolActionPulseWeapon,
         ToolActionShield,
         ToolActionPlanter,
+        ToolActionWater,
+        ToolActionHarvest,
     }
 }

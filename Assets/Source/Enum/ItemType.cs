@@ -29,6 +29,7 @@
         /// Mech's As Item
         /// </summary>
         Plant,
+        WaterBottle,
 
         /// <summary>
         /// Tools
@@ -41,5 +42,6 @@
         PipePlacementTool,
         ParticleEmitterPlacementTool,
         PlanterTool,
+        HarvestTool,
     }
 }
