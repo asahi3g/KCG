@@ -12,6 +12,9 @@ namespace Mech
         Light,
         Storage,
         Crafting,
-        Plant
+        Plant,
+        Plant2,
+        Plant3,
+        Plant4,
     }
 }

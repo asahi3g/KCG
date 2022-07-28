@@ -15,10 +15,13 @@ namespace Action
         // Item Entity
         private ItemInventoryEntity ItemEntity;
 
+        // Mech Entity
         private MechEntity Plant;
 
+        // Plant To Add
         private bool PlantToAdd = false;
 
+        // Planter Position
         private Vec2f PlanterPosition = Vec2f.Zero;
 
 
@@ -26,7 +29,6 @@ namespace Action
         public ToolActionPlanter(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
         }
-
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
@@ -75,9 +77,26 @@ namespace Action
                 }
             }
 
+            int random = Random.Range(0, 4);
+            Debug.Log("Random: " + random);
+
             if (PlantToAdd)
             {
-                Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant);
+                switch (random)
+                {
+                    case 0:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant);
+                        break;
+                    case 1:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant2);
+                        break;
+                    case 2:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant3);
+                        break;
+                    case 3:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant4);
+                        break;
+                }
             }
 
             foreach (var entity in entities)
@@ -96,7 +115,6 @@ namespace Action
                     }
                 }
             }
-
 
             // Return True
             ActionEntity.actionExecution.State = Enums.ActionState.Success;
