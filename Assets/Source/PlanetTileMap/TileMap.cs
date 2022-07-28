@@ -29,8 +29,8 @@ namespace PlanetTileMap
             // 16 & 15 = 0
             ChunkSizeX = mapSize.X >> 4;
             ChunkSizeY = mapSize.Y >> 4;
-            Utils.Assert((mapSize.X & 0x0F) != 0);
-            Utils.Assert((mapSize.Y & 0x0F) != 0);
+            Utils.Assert((mapSize.X & 0x0F) == 0);
+            Utils.Assert((mapSize.Y & 0x0F) == 0);
 
             ChunkArrayCapacity = ChunkSizeX * ChunkSizeY;
             ChunkIndexLookup = new int[ChunkArrayCapacity];

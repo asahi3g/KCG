@@ -47,8 +47,8 @@ namespace Particle
                             float x = position.Position.x;
                             float y = position.Position.y;
 
-                            Vec2f Velocity = new Vec2f(particleProperties.StartingVelocity.x,
-                                                        particleProperties.StartingVelocity.y);
+                            Vec2f Velocity = new Vec2f(particleProperties.StartingVelocity.X,
+                                                        particleProperties.StartingVelocity.Y);
 
                             float rand1 = KMath.Random.Mt19937.genrand_realf();
                             float rand2 = KMath.Random.Mt19937.genrand_realf() ;

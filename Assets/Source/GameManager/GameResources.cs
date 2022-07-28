@@ -544,12 +544,12 @@ public class GameResources
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Ore);
         GameState.ParticleCreationApi.SetName("Ore");
         GameState.ParticleCreationApi.SetDecayRate(1.0f);
-        GameState.ParticleCreationApi.SetAcceleration(new Vector2(0.0f, -20.0f));
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -20.0f));
         GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
         GameState.ParticleCreationApi.SetDeltaScale(0.0f);
         GameState.ParticleCreationApi.SetSpriteId(OreIcon);
         GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ParticleCreationApi.SetStartingVelocity(new Vector2(1.0f, 10.0f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 10.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
@@ -558,12 +558,12 @@ public class GameResources
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.OreExplosionParticle);
         GameState.ParticleCreationApi.SetName("ore-explosion-particle");
         GameState.ParticleCreationApi.SetDecayRate(1.0f);
-        GameState.ParticleCreationApi.SetAcceleration(new Vector2(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
         GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
         GameState.ParticleCreationApi.SetSpriteId(OreIcon);
         GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ParticleCreationApi.SetStartingVelocity(new Vector2(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
@@ -572,15 +572,29 @@ public class GameResources
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.DustParticle);
         GameState.ParticleCreationApi.SetName("dust-particle");
         GameState.ParticleCreationApi.SetDecayRate(4.0f);
-        GameState.ParticleCreationApi.SetAcceleration(new Vector2(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetDeltaRotation(0);
         GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
         GameState.ParticleCreationApi.SetAnimationType(Animation.AnimationType.Dust);
         GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ParticleCreationApi.SetStartingVelocity(new Vector2(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.End();
+
+
+
+        GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Debris);
+        GameState.ParticleCreationApi.SetName("debris");
+        GameState.ParticleCreationApi.SetDecayRate(0.5f);
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -5.0f));
+        GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+        GameState.ParticleCreationApi.SetStartingScale(1.0f);
+        GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.SetIsCollidable(true);
         GameState.ParticleCreationApi.End();
     }
 
