@@ -15,14 +15,20 @@ namespace Action
         // Item Entity
         private ItemInventoryEntity ItemEntity;
 
-        // Light Entities List
-        private List<MechEntity> lights = new List<MechEntity>();
+        // Mech Entity
+        private MechEntity Plant;
+
+        // Plant To Add
+        private bool PlantToAdd = false;
+
+        // Planter Position
+        private Vec2f PlanterPosition = Vec2f.Zero;
+
 
         // Constructor
         public ToolActionPlanter(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
         }
-
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
@@ -44,14 +50,11 @@ namespace Action
                     // Has Mech Type Component?
                     if (entity.hasMechType)
                     {
-                        if (entity.mechType.mechType == Mech.MechType.Light)
-                        {
-                            lights.Add(entity);
-                        }
-
                         // Is Mech Planter?
                         if (entity.mechType.mechType == Mech.MechType.Planter)
                         {
+                            PlanterPosition = entity.mechPosition2D.Value;
+
                             // Has Planter Component?
                             if (entity.hasMechPlanterPlanter)
                             {
@@ -61,98 +64,69 @@ namespace Action
                                     // Is seed placed?
                                     if (!entity.mechPlanterPlanter.GotSeed)
                                     {
-                                        entity.mechPlanterPlanter.Plant = planet.AddMech(new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f), Mech.MechType.Plant);
-
+                                        PlantToAdd = true;
+                                        entity.mechPlanterPlanter.Plant = Plant;
 
                                         // Mech Property
                                         entity.mechPlanterPlanter.GotSeed = true;
                                     }
-
-                                    if (entity.mechPlanterPlanter.WaterLevel < entity.mechPlanterPlanter.MaxWaterLevel)
-                                        entity.mechPlanterPlanter.WaterLevel += 10.0f;
-                                    else
-                                        entity.mechPlanterPlanter.WaterLevel = 99;
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            int random = Random.Range(0, 4);
+            Debug.Log("Random: " + random);
+
+            if (PlantToAdd)
+            {
+                switch (random)
+                {
+                    case 0:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant);
+                        break;
+                    case 1:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant2);
+                        break;
+                    case 2:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant3);
+                        break;
+                    case 3:
+                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant4);
+                        break;
+                }
+            }
+
+            foreach (var entity in entities)
+            {
+                // Mesure to Understand Cursor Inside the Mech
+                if (Vector2.Distance(new Vector2(x, y), new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.5f)
+                {
+                    // Has Mech Type Component?
+                    if (entity.hasMechType)
+                    {
+                        // Is Mech Planter?
+                        if (entity.mechType.mechType == Mech.MechType.Planter)
+                        {
+                            entity.mechPlanterPlanter.Plant = Plant;
                         }
                     }
                 }
             }
 
             // Return True
-            ActionEntity.actionExecution.State = Enums.ActionState.Running;
+            ActionEntity.actionExecution.State = Enums.ActionState.Success;
         }
 
-
-
-        public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
+        public override void OnExit(ref Planet.PlanetState planet)
         {
-            // Get Mech Entities
-            var entities = EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechPosition2D));
-            foreach (var entity in entities)
+            if (ItemEntity != null)
             {
-                // Has Mech Type Component?
-                if (entity.hasMechType)
-                {
-                    // Is Mech Planter?
-                    if (entity.mechType.mechType == Mech.MechType.Planter)
-                    {
-                        // Set Light Level Set Zero
-                        entity.mechPlanterPlanter.LightLevel = 0;
-
-                        // Check Plant Null or Not, Update Plant Position Relavtive to The Pot
-                        if(entity.mechPlanterPlanter.Plant != null)
-                            entity.mechPlanterPlanter.Plant.mechPosition2D.Value = new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f);
-
-                        // Iterate All Light Mechs 
-                        for (int i = 0; i < lights.Count; i++)
-                        {
-                            // Get All Lights near the Pot
-                            if (Vector2.Distance(new Vector2(lights[i].mechPosition2D.Value.X, lights[i].mechPosition2D.Value.Y),
-                                new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 10.0f)
-                            {
-                                // Increase Ligth Level
-                                entity.mechPlanterPlanter.LightLevel++;
-                            }
-                        }
-
-                        // Has Planter Component?
-                        if (entity.hasMechPlanterPlanter)
-                        {
-                            // Check Water Level and Light Level
-                            if (entity.mechPlanterPlanter.WaterLevel > 0 && entity.mechPlanterPlanter.LightLevel > 0)
-                            {
-                                // Increase Water Level
-                                if (entity.mechPlanterPlanter.WaterLevel < entity.mechPlanterPlanter.MaxWaterLevel)
-                                    entity.mechPlanterPlanter.WaterLevel -= Time.deltaTime * 0.4f;
-
-                                // Increase Plant Growth Related to The Water Level
-                                if (entity.mechPlanterPlanter.PlantGrowth < entity.mechPlanterPlanter.GrowthTarget)
-                                    entity.mechPlanterPlanter.PlantGrowth += Time.deltaTime * 0.3f;
-
-                                // Check Plant
-                                if (entity.mechPlanterPlanter.Plant != null)
-                                {
-                                    // Increase Y Scale
-                                    entity.mechPlanterPlanter.Plant.mechSprite2D.Size.Y += 0.000001f;
-                                }
-
-                                if(entity.mechPlanterPlanter.WaterLevel <= 0)
-                                {
-                                    // Return True
-                                    ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                                }
-                            }
-                            else
-                            {
-                                // Return True
-                                ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                            }
-
-                        }
-                    }
-                }
+                ItemEntity.Destroy();
             }
+            base.OnExit(ref planet);
         }
     }
 
