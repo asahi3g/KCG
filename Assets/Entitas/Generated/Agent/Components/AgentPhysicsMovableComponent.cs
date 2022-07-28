@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Physics.MovableComponent physicsMovable { get { return (Physics.MovableComponent)GetComponent(AgentComponentsLookup.PhysicsMovable); } }
     public bool hasPhysicsMovable { get { return HasComponent(AgentComponentsLookup.PhysicsMovable); } }
 
-    public void AddPhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping) {
+    public void AddPhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping, bool newWantToDrop) {
         var index = AgentComponentsLookup.PhysicsMovable;
         var component = (Physics.MovableComponent)CreateComponent(index, typeof(Physics.MovableComponent));
         component.Speed = newSpeed;
@@ -24,10 +24,11 @@ public partial class AgentEntity {
         component.SlidingRight = newSlidingRight;
         component.SlidingLeft = newSlidingLeft;
         component.Droping = newDroping;
+        component.WantToDrop = newWantToDrop;
         AddComponent(index, component);
     }
 
-    public void ReplacePhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping) {
+    public void ReplacePhysicsMovable(float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, bool newAffectedByGroundFriction, bool newInvulnerable, bool newLanded, bool newSlidingRight, bool newSlidingLeft, bool newDroping, bool newWantToDrop) {
         var index = AgentComponentsLookup.PhysicsMovable;
         var component = (Physics.MovableComponent)CreateComponent(index, typeof(Physics.MovableComponent));
         component.Speed = newSpeed;
@@ -40,6 +41,7 @@ public partial class AgentEntity {
         component.SlidingRight = newSlidingRight;
         component.SlidingLeft = newSlidingLeft;
         component.Droping = newDroping;
+        component.WantToDrop = newWantToDrop;
         ReplaceComponent(index, component);
     }
 

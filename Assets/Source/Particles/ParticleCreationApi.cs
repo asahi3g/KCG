@@ -95,7 +95,7 @@ namespace Particle
             }
         }
 
-        public void SetAcceleration(Vector2 acceleration)
+        public void SetAcceleration(Vec2f acceleration)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -135,7 +135,7 @@ namespace Particle
             }
         }
 
-        public void SetStartingVelocity(Vector2 startingVelocity)
+        public void SetStartingVelocity(Vec2f startingVelocity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -172,6 +172,14 @@ namespace Particle
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
                 PropertiesArray[CurrentIndex].AnimationSpeed = animationSpeed;
+            }
+        }
+
+        public void SetIsCollidable(bool isCollidable)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].IsCollidable = isCollidable;
             }
         }
 

@@ -93,6 +93,28 @@ namespace Utility
             triangles.Add(triangleIndex + 3);
         }
 
+
+        public void UpdateVertex(Vec2f[] verts, float x, float y, float angle = 0)
+        {
+            angle = angle * 3.14f / 180.0f;
+
+            if (angle != 0)
+            {
+                for(int i = 0; i < verts.Length; i++)
+                {
+                    verts[i] = RotatePoint(verts[i], angle);
+                }
+            }
+
+            int triangleIndex = vertices.Count;
+
+            for(int i = 0; i < verts.Length; i++)
+            {
+                vertices.Add(new Vector3(verts[i].X + x, verts[i].Y + y, 0));
+                triangles.Add(triangleIndex + i);
+            }
+        }
+
         public void UpdateUV(Vector4 textureCoords, int index)
         {
             var uv0 = new Vector2(textureCoords.x, textureCoords.y + textureCoords.w);
@@ -104,6 +126,14 @@ namespace Utility
             uvs.Add(uv1);
             uvs.Add(uv2);
             uvs.Add(uv3);
+        }
+
+        public void UpdateUV(Vec2f[] coords)
+        {
+            for(int i = 0; i < coords.Length; i++)
+            {
+                uvs.Add(new Vector2(coords[i].X, coords[i].Y));
+            }
         }
     }
 

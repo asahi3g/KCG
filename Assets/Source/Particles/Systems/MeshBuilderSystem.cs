@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using KMath;
 
 namespace Particle
 {
@@ -34,21 +35,47 @@ namespace Particle
                     spriteId = animation.State.GetSpriteId();
                 }
 
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
+                
+                if (spriteId >= 0)
+                {
+                    Vector4 textureCoords = new Vector4();
+                   textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
 
-                var pos = entity.particlePosition2D.Position;
-                var x = pos.x;
-                var y = pos.y;
-                var width = entity.particleSprite2D.Size.X;
-                var height = entity.particleSprite2D.Size.Y;
+                   var pos = entity.particlePosition2D.Position;
+                    var x = pos.X;
+                    var y = pos.Y;
+                    var width = entity.particleSprite2D.Size.X;
+                    var height = entity.particleSprite2D.Size.Y;
 
-                if (!Utility.ObjectMesh.isOnScreen(x, y))
-                    continue;
+                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                        continue;
 
-                // Update UVs
-                Mesh.UpdateUV(textureCoords, (index) * 4);
-                // Update Vertices
-                Mesh.UpdateVertex((index * 4), x, y, width, height, entity.particlePosition2D.Rotation);
+                    // Update UVs
+                    Mesh.UpdateUV(textureCoords, (index) * 4);
+                    // Update Vertices
+                    Mesh.UpdateVertex((index * 4), x, y, width, height, entity.particlePosition2D.Rotation);
+
+                }
+                else
+                {
+                    Vec2f[] textureCoords = entity.particleSprite2D.TextureCoords;
+
+
+                    var pos = entity.particlePosition2D.Position;
+                    var x = pos.X;
+                    var y = pos.Y;
+                    var width = entity.particleSprite2D.Size.X;
+                    var height = entity.particleSprite2D.Size.Y;
+
+                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                        continue;
+
+                    // Update UVs
+                    Mesh.UpdateUV(textureCoords);
+                    // Update Vertices
+                    Mesh.UpdateVertex(entity.particleSprite2D.Vertices, x, y, entity.particlePosition2D.Rotation);
+                }
+
                 index++;
             }
         }
