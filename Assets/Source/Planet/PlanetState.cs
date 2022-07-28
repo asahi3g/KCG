@@ -180,12 +180,204 @@ namespace Planet
         {
             Utils.Assert(ParticleList.Size < PlanetEntityLimits.ParticleLimit);
 
-            Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(0, Enums.AtlasType.Particle).TextureCoords;
+            Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(2, Enums.AtlasType.Particle).TextureCoords;
             float x = spriteCoords.x;
             float y = spriteCoords.y;
             float width = spriteCoords.z;
             float height = spriteCoords.w;
 
+            Vec2f[] part1Vertices = new Vec2f[12];
+            part1Vertices[0] = new Vec2f(0.0f, 0.0f);
+            part1Vertices[1] = new Vec2f(0.73f, 0.0f);
+            part1Vertices[2] = new Vec2f(0.66f, 0.26f);
+
+            part1Vertices[3] = new Vec2f(0.0f, 0.0f);
+            part1Vertices[4] = new Vec2f(0.66f, 0.26f);
+            part1Vertices[5] = new Vec2f(0.5f, 0.4f);
+
+            part1Vertices[6] = new Vec2f(0.0f, 0.0f);
+            part1Vertices[7] = new Vec2f(0.5f, 0.4f);
+            part1Vertices[8] = new Vec2f(0.5f, 0.5f);
+
+            part1Vertices[9] = new Vec2f(0.0f, 0.0f);
+            part1Vertices[10] = new Vec2f(0.5f, 0.5f);
+            part1Vertices[11] = new Vec2f(0.0f, 0.4f);
+
+
+            Vec2f[] part1Coords = new Vec2f[12];
+            part1Coords[0] = new Vec2f(x + 0.0f * width, y + 0.0f * height);
+            part1Coords[1] = new Vec2f(x + 0.73f * width, y + 0.0f * height);
+            part1Coords[2] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+
+            part1Coords[3] = new Vec2f(x + 0.0f * width, y + 0.0f * height);
+            part1Coords[4] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+            part1Coords[5] = new Vec2f(x + 0.5f * width, y + 0.4f * height);
+
+            part1Coords[6] = new Vec2f(x + 0.0f * width, y + 0.0f * height);
+            part1Coords[7] = new Vec2f(x + 0.5f * width, y + 0.4f * height);
+            part1Coords[8] = new Vec2f(x + 0.5f * width, y + 0.5f * height);
+
+            part1Coords[9] = new Vec2f(x + 0.0f * width, y + 0.0f * height);
+            part1Coords[10] = new Vec2f(x + 0.5f * width, y + 0.5f * height);
+            part1Coords[11] = new Vec2f(x + 0.0f * width, y + 0.4f * height);
+
+
+
+            Vec2f[] part2Vertices = new Vec2f[12];
+            part2Vertices[0] = new Vec2f(1.0f, 0.0f);
+            part2Vertices[1] = new Vec2f(1.0f, 1.0f);
+            part2Vertices[2] = new Vec2f(0.83f, 0.66f);
+
+            part2Vertices[3] = new Vec2f(1.0f, 0.0f);
+            part2Vertices[4] = new Vec2f(0.83f, 0.66f);
+            part2Vertices[5] = new Vec2f(0.83f, 0.33f);
+
+            part2Vertices[6] = new Vec2f(1.0f, 0.0f);
+            part2Vertices[7] = new Vec2f(0.83f, 0.33f);
+            part2Vertices[8] = new Vec2f(0.66f, 0.26f);
+
+            part2Vertices[9] = new Vec2f(1.0f, 0.0f);
+            part2Vertices[10] = new Vec2f(0.66f, 0.26f);
+            part2Vertices[11] = new Vec2f(0.73f, 0.0f);
+
+
+            Vec2f[] part2Coords = new Vec2f[12];
+            part2Coords[0] = new Vec2f(x + 1.0f * width, y + 0.0f * height);
+            part2Coords[1] = new Vec2f(x + 1.0f * width, y + 1.0f * height);
+            part2Coords[2] = new Vec2f(x + 0.83f * width, y + 0.66f * height);
+
+            part2Coords[3] = new Vec2f(x + 1.0f * width, y + 0.0f * height);
+            part2Coords[4] = new Vec2f(x + 0.83f * width, y + 0.66f * height);
+            part2Coords[5] = new Vec2f(x + 0.83f * width, y + 0.33f * height);
+
+            part2Coords[6] = new Vec2f(x + 1.0f * width, y + 0.0f * height);
+            part2Coords[7] = new Vec2f(x + 0.83f * width, y + 0.33f * height);
+            part2Coords[8] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+
+            part2Coords[9] = new Vec2f(x + 1.0f * width, y + 0.0f * height);
+            part2Coords[10] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+            part2Coords[11] = new Vec2f(x + 0.73f * width, y + 0.0f * height);
+
+
+
+
+            Vec2f[] part3Vertices = new Vec2f[9];
+            part3Vertices[0] = new Vec2f(0.66f, 0.0f);
+            part3Vertices[1] = new Vec2f(0.83f, 0.7f);
+            part3Vertices[2] = new Vec2f(0.83f, 0.4f);
+            part3Vertices[3] = new Vec2f(0.66f, 0.0f);
+            part3Vertices[4] = new Vec2f(0.83f, 0.4f);
+            part3Vertices[5] = new Vec2f(0.5f, 0.4f);
+            part3Vertices[6] = new Vec2f(0.66f, 0.0f);
+            part3Vertices[7] = new Vec2f(0.5f, 0.4f);
+            part3Vertices[8] = new Vec2f(0.5f, 0.14f);
+
+
+            Vec2f[] part3Coords = new Vec2f[9];
+            part3Coords[0] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+            part3Coords[1] = new Vec2f(x + 0.83f * width, y + 0.33f * height);
+            part3Coords[2] = new Vec2f(x + 0.83f * width, y + 0.66f * height);
+            part3Coords[3] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+            part3Coords[4] = new Vec2f(x + 0.83f * width, y + 0.66f * height);
+            part3Coords[5] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+            part3Coords[6] = new Vec2f(x + 0.66f * width, y + 0.26f * height);
+            part3Coords[7] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+            part3Coords[8] = new Vec2f(x + 0.5f * width, y + 0.4f * height);
+
+
+
+
+            Vec2f[] part4Vertices = new Vec2f[6];
+            part4Vertices[0] = new Vec2f(0.5f, 0.0f);
+            part4Vertices[1] = new Vec2f(0.83f, 0.0f);
+            part4Vertices[2] = new Vec2f(1.0f, 0.33f);
+
+            part4Vertices[3] = new Vec2f(0.5f, 0.0f);
+            part4Vertices[4] = new Vec2f(1.0f, 0.33f);
+            part4Vertices[5] = new Vec2f(0.0f, 0.33f);
+
+
+            Vec2f[] part4Coords = new Vec2f[6];
+            part4Coords[0] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+            part4Coords[1] = new Vec2f(x + 0.83f * width, y + 0.66f * height);
+            part4Coords[2] = new Vec2f(x + 1.0f * width, y + 1.0f * height);
+
+            part4Coords[3] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+            part4Coords[4] = new Vec2f(x + 1.0f * width, y + 1.0f * height);
+            part4Coords[5] = new Vec2f(x + 0.0f * width, y + 1.0f * height);
+
+
+
+            Vec2f[] part5Vertices = new Vec2f[6];
+            part5Vertices[0] = new Vec2f(0.0f, 0.0f);
+            part5Vertices[1] = new Vec2f(0.5f, 0.1f);
+            part5Vertices[2] = new Vec2f(0.5f, 0.26f);
+
+            part5Vertices[3] = new Vec2f(0.0f, 0.0f);
+            part5Vertices[4] = new Vec2f(0.5f, 0.26f);
+            part5Vertices[5] = new Vec2f(0.0f, 0.6f);
+
+
+            Vec2f[] part5Coords = new Vec2f[6];
+            part5Coords[0] = new Vec2f(x + 0.0f * width, y + 0.4f * height);
+            part5Coords[1] = new Vec2f(x + 0.5f * width, y + 0.5f * height);
+            part5Coords[2] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+
+            part5Coords[3] = new Vec2f(x + 0.0f * width, y + 0.4f * height);
+            part5Coords[4] = new Vec2f(x + 0.5f * width, y + 0.66f * height);
+            part5Coords[5] = new Vec2f(x + 0.0f * width, y + 1.0f * height);
+
+
+            float rand1 = KMath.Random.Mt19937.genrand_realf();
+            float rand2 = KMath.Random.Mt19937.genrand_realf();
+
+            Vec2f velocity;
+            velocity.X = rand1;
+            velocity.Y = rand2;
+
+            var cc = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
+            part1Vertices, part1Coords, velocity, -1));
+
+
+            rand1 = KMath.Random.Mt19937.genrand_realf();
+            rand2 = KMath.Random.Mt19937.genrand_realf();
+
+            velocity.X = rand1;
+            velocity.Y = rand2;
+
+            ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
+            part2Vertices, part2Coords, velocity, -1));
+
+            rand1 = KMath.Random.Mt19937.genrand_realf();
+            rand2 = KMath.Random.Mt19937.genrand_realf();
+
+            velocity.X = rand1;
+            velocity.Y = rand2;
+
+            ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
+            part3Vertices, part3Coords, velocity, -1));
+
+            rand1 = KMath.Random.Mt19937.genrand_realf();
+            rand2 = KMath.Random.Mt19937.genrand_realf();
+
+            velocity.X = rand1;
+            velocity.Y = rand2;
+
+            ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
+            part4Vertices, part4Coords, velocity, -1));
+
+
+            rand1 = KMath.Random.Mt19937.genrand_realf();
+            rand2 = KMath.Random.Mt19937.genrand_realf();
+
+            velocity.X = rand1;
+            velocity.Y = rand2;
+
+            ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.0f, 0.4f), 
+            part5Vertices, part5Coords, velocity, -1));
+
+
+            return cc;
 
 
             Vec2f[] triangle1 = new Vec2f[3];
@@ -211,10 +403,9 @@ namespace Planet
             triangle4[2] = new Vec2f(0.0f, 0.0f);
 
 
-            float rand1 = KMath.Random.Mt19937.genrand_realf();
-            float rand2 = KMath.Random.Mt19937.genrand_realf();
+            rand1 = KMath.Random.Mt19937.genrand_realf();
+            rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            Vec2f velocity;
             velocity.X = rand1;
             velocity.Y = rand2;
 
