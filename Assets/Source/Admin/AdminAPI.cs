@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Enums.Tile;
 using UnityEngine;
 using PlanetTileMap;
@@ -69,6 +70,17 @@ namespace Admin
                     // Draw colored cubes to the editor display (Debug)
                     Gizmos.DrawCube(new Vector3(x + chunkVisualizerXOffset, y + chunkVisualizerYOffset), new Vector3(1, 1));
                 }
+            }
+        }
+
+        public static void DrawSelectedTiles(List<KMath.Vec2i> list, ref Planet.PlanetState planet)
+        {
+            for(int i = 0; i < list.Count; i++)
+            {
+                Gizmos.color = Color.red;
+                    
+                // Draw colored cubes to the editor display (Debug)
+                Gizmos.DrawCube(new Vector3(list[i].X, list[i].X), new Vector3(1, 1));
             }
         }
     }
