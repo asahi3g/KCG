@@ -19,6 +19,8 @@ namespace Planet.Unity
 
         static bool Init = false;
 
+        private bool showMechInventory;
+
         public void Start()
         {
 
@@ -39,21 +41,20 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                PlaceMech();
-            }
-
             int toolBarID = Player.agentToolBar.ToolBarID;
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
             int selectedSlot = Inventory.inventorySlots.Selected;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+
             if (item != null)
             {
                 ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
                 if (itemProperty.IsTool())
                 {
+                    showMechInventory = itemProperty.ToolActionType == Enums.ActionType.ToolActionConstruction;
+
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
@@ -67,6 +68,9 @@ namespace Planet.Unity
         private void OnRenderObject()
         {
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+
+            if (showMechInventory)
+                GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         // create the sprite atlas for testing purposes
