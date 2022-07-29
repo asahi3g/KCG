@@ -61,15 +61,12 @@ public class GameResources
     public static int ChestIcon;
 
     public static int PotIcon;
-    public static int Plant1Icon;
-    public static int Plant2;
-    public static int Plant3;
-    public static int Plant4;
-    public static int Plant5;
-    public static int Plant2Icon;
-    public static int Plant3Icon;
-    public static int Plant4Icon;
-    public static int Plant5Icon;
+
+    public static int MajestyPalm;
+    public static int MajestyPalmS1;
+    public static int MajestyPalmS2;
+    public static int MajestyPalmIcon;
+
     public static int Light2Icon;
 
     public static int WaterIcon;
@@ -115,16 +112,11 @@ public class GameResources
 
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
-            PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\Pots\\pot_1.png", 32, 16);
-            Plant1Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
-            Plant2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
-            Plant3 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
-            Plant4 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_3_v2.png", 16, 32);
-            Plant5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_4_v1.png", 16, 32);
-            Plant2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
-            Plant3Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
-            Plant4Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_3_v2.png", 16, 32);
-            Plant5Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_4_v1.png", 16, 32);
+            PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
+            MajestyPalm = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
+            MajestyPalmS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3_v1.png", 16, 16);
+            MajestyPalmS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3_v2.png", 16, 32);
+            MajestyPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
 
@@ -155,15 +147,10 @@ public class GameResources
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
-            Plant1Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant1Icon, 0, 0, Enums.AtlasType.Particle);
-            Plant2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2, 0, 0, Enums.AtlasType.Mech);
-            Plant3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant3, 0, 0, Enums.AtlasType.Mech);
-            Plant4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant4, 0, 0, Enums.AtlasType.Mech);
-            Plant5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant5, 0, 0, Enums.AtlasType.Mech);
-            Plant2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2Icon, 0, 0, Enums.AtlasType.Particle);
-            Plant3Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant3Icon, 0, 0, Enums.AtlasType.Particle);
-            Plant4Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant4Icon, 0, 0, Enums.AtlasType.Particle);
-            Plant5Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant5Icon, 0, 0, Enums.AtlasType.Particle);
+            MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, Enums.AtlasType.Mech);
+            MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, Enums.AtlasType.Mech);
+            MajestyPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS2, 0, 0, Enums.AtlasType.Mech);
+            MajestyPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmIcon, 0, 0, Enums.AtlasType.Particle);
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
 
@@ -501,36 +488,15 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
-        GameState.ItemCreationApi.SetTexture(Plant1Icon);
-        GameState.ItemCreationApi.SetInventoryTexture(Plant1Icon);
+        GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Plant, "Plant");
-        GameState.ItemCreationApi.SetTexture(Plant2Icon);
-        GameState.ItemCreationApi.SetInventoryTexture(Plant2Icon);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
-        GameState.ItemCreationApi.EndItem();
-
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Plant2, "Plant2");
-        GameState.ItemCreationApi.SetTexture(Plant3Icon);
-        GameState.ItemCreationApi.SetInventoryTexture(Plant4Icon);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
-        GameState.ItemCreationApi.EndItem();
-
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Plant3, "Plant3");
-        GameState.ItemCreationApi.SetTexture(Plant3Icon);
-        GameState.ItemCreationApi.SetInventoryTexture(Plant3Icon);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
-        GameState.ItemCreationApi.EndItem();
-
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Plant4, "Plant4");
-        GameState.ItemCreationApi.SetTexture(Plant4Icon);
-        GameState.ItemCreationApi.SetInventoryTexture(Plant4Icon);
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "Plant");
+        GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
@@ -598,28 +564,10 @@ public class GameResources
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
 
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant2);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant2);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant3);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant3);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant4);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant4);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant5);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
+        GameState.MechCreationApi.Create((int)Mech.MechType.MajestyPalm);
+        GameState.MechCreationApi.SetName("majesty");
+        GameState.MechCreationApi.SetTexture(MajestyPalm);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
         GameState.MechCreationApi.End();
     }
 
@@ -666,7 +614,6 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
         GameState.ParticleCreationApi.End();
-
 
 
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Debris);

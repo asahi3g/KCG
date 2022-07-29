@@ -42,14 +42,8 @@ namespace Action
                         {
                             if (entity.mechPlanter.PlantGrowth >= 100)
                             {
-                                if(entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.Plant)
-                                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Plant, entity.mechPosition2D.Value);
-                                else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.Plant2)
-                                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Plant2, entity.mechPosition2D.Value);
-                                else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.Plant3)
-                                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Plant3, entity.mechPosition2D.Value);
-                                else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.Plant4)
-                                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Plant4, entity.mechPosition2D.Value);
+                                if(entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.MajestyPalm)
+                                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.MajestyPalm, entity.mechPosition2D.Value);
 
                                 entity.mechPlanter.Plant.Destroy();
                                 entity.mechPlanter.GotSeed = false;

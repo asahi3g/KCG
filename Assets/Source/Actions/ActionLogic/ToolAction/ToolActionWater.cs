@@ -151,11 +151,17 @@ namespace Action
                                 if (entity.mechPlanter.PlantGrowth < entity.mechPlanter.GrowthTarget)
                                     entity.mechPlanter.PlantGrowth += Time.deltaTime * 0.3f;
 
-                                // Check Plant
-                                if (entity.mechPlanter.Plant != null)
+                                // Check Plant Growth
+                                if (entity.mechPlanter.PlantGrowth >= 50 && entity.mechPlanter.PlantGrowth < 100)
                                 {
-                                    // Increase Y Scale
-                                    entity.mechPlanter.Plant.mechSprite2D.Size.Y += 0.000005f;
+                                    // Increase Stage
+                                    entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
+                                }
+
+                                else if (entity.mechPlanter.PlantGrowth >= 100)
+                                {
+                                    // Increase Stage
+                                    entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
                                 }
 
                                 if (entity.mechPlanter.WaterLevel <= 0)

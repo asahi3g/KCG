@@ -82,21 +82,7 @@ namespace Action
 
             if (PlantToAdd)
             {
-                switch (random)
-                {
-                    case 0:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant);
-                        break;
-                    case 1:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant2);
-                        break;
-                    case 2:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant3);
-                        break;
-                    case 3:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant4);
-                        break;
-                }
+                Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.MajestyPalm);
             }
 
             foreach (var entity in entities)
