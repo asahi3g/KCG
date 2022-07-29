@@ -21,7 +21,7 @@ public class GameResources
     public static int CharacterSpriteSheet;
     public static int LaserSpriteSheet;
     public static int PipeSpriteSheet;
-
+    public static int ChestSpriteSheet;
     public static int pipeIconSpriteSheet;
     public static int DustSpriteSheet;
     public static int GrenadeSpriteSheet;
@@ -59,6 +59,7 @@ public class GameResources
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
     public static int ChestIcon;
+    public static int ChestIconParticle;
 
     public static int PotIcon;
     public static int Plant1Icon;
@@ -114,7 +115,7 @@ public class GameResources
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
 
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
-            ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
+            ChestSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\Pots\\pot_1.png", 32, 16);
             Plant1Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_1.png", 32, 16);
             Plant2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\plant_2.png", 32, 32);
@@ -154,7 +155,8 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
-            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
+            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
             Plant1Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant1Icon, 0, 0, Enums.AtlasType.Particle);
             Plant2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(Plant2, 0, 0, Enums.AtlasType.Mech);
@@ -501,6 +503,13 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceParticle);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.ChestPlacementTool, "ChestPlacementTool");
+        GameState.ItemCreationApi.SetTexture(OreIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceChest);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
         GameState.ItemCreationApi.SetTexture(Plant1Icon);
         GameState.ItemCreationApi.SetInventoryTexture(Plant1Icon);
@@ -579,50 +588,7 @@ public class GameResources
         GameState.AgentCreationApi.End();
     }
 
-    private static void CreateMechs()
-    {
-        GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
-        GameState.MechCreationApi.SetName("chest");
-        GameState.MechCreationApi.SetTexture(ChestIcon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
-        GameState.MechCreationApi.SetName("planter");
-        GameState.MechCreationApi.SetTexture(PotIcon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Light);
-        GameState.MechCreationApi.SetName("light");
-        GameState.MechCreationApi.SetTexture(Light2Icon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant2);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant2);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant3);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant3);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant4);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-
-        GameState.MechCreationApi.Create((int)Mech.MechType.Plant4);
-        GameState.MechCreationApi.SetName("plant");
-        GameState.MechCreationApi.SetTexture(Plant5);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
-        GameState.MechCreationApi.End();
-    }
+    
 
     private static void CreateParticles()
     {
@@ -674,7 +640,6 @@ public class GameResources
         GameState.ParticleCreationApi.SetName("debris");
         GameState.ParticleCreationApi.SetDecayRate(0.5f);
         GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -5.0f));
-        GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
@@ -756,5 +721,51 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
+    }
+
+
+    private static void CreateMechs()
+    {
+        GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
+        GameState.MechCreationApi.SetName("chest");
+        GameState.MechCreationApi.SetTexture(ChestIcon);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
+        GameState.MechCreationApi.SetName("planter");
+        GameState.MechCreationApi.SetTexture(PotIcon);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Light);
+        GameState.MechCreationApi.SetName("light");
+        GameState.MechCreationApi.SetTexture(Light2Icon);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Plant);
+        GameState.MechCreationApi.SetName("plant");
+        GameState.MechCreationApi.SetTexture(Plant2);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Plant2);
+        GameState.MechCreationApi.SetName("plant");
+        GameState.MechCreationApi.SetTexture(Plant3);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Plant3);
+        GameState.MechCreationApi.SetName("plant");
+        GameState.MechCreationApi.SetTexture(Plant4);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.Plant4);
+        GameState.MechCreationApi.SetName("plant");
+        GameState.MechCreationApi.SetTexture(Plant5);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 0.5f));
+        GameState.MechCreationApi.End();
     }
 }
