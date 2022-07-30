@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class ActionEntity {
 
-    public Action.InterruptComponent actionInterrupt { get { return (Action.InterruptComponent)GetComponent(ActionComponentsLookup.ActionInterrupt); } }
-    public bool hasActionInterrupt { get { return HasComponent(ActionComponentsLookup.ActionInterrupt); } }
+    static readonly Action.InterruptComponent actionInterruptComponent = new Action.InterruptComponent();
 
-    public void AddActionInterrupt(int newID) {
-        var index = ActionComponentsLookup.ActionInterrupt;
-        var component = (Action.InterruptComponent)CreateComponent(index, typeof(Action.InterruptComponent));
-        component.ID = newID;
-        AddComponent(index, component);
-    }
+    public bool isActionInterrupt {
+        get { return HasComponent(ActionComponentsLookup.ActionInterrupt); }
+        set {
+            if (value != isActionInterrupt) {
+                var index = ActionComponentsLookup.ActionInterrupt;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : actionInterruptComponent;
 
-    public void ReplaceActionInterrupt(int newID) {
-        var index = ActionComponentsLookup.ActionInterrupt;
-        var component = (Action.InterruptComponent)CreateComponent(index, typeof(Action.InterruptComponent));
-        component.ID = newID;
-        ReplaceComponent(index, component);
-    }
-
-    public void RemoveActionInterrupt() {
-        RemoveComponent(ActionComponentsLookup.ActionInterrupt);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

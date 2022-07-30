@@ -283,6 +283,14 @@ namespace ECSInput
                     GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,Enums.ActionType.ChargeAction, player.agentID.ID);
             }
 
+            // Drop Action. 
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+                foreach (var player in players)
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.ActionType.DropAction, player.agentID.ID);
+            }
+
             // Reload Weapon.
             if (Input.GetKeyDown(KeyCode.R))
             {

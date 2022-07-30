@@ -144,7 +144,6 @@ namespace Planet.Unity
                     tileMap.SetFrontTile(i, j, frontTile);
                 }
             }
-            //TileMap.BuildLayerTexture(MapLayerType.Front);
         }
     }
 }
