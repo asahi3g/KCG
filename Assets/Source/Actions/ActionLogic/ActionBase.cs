@@ -20,7 +20,7 @@ namespace Action
 
         public virtual void OnEnter(ref Planet.PlanetState planet)
         {
-            if(ActionEntity.hasActionInterrupt)
+            if(ActionEntity.isActionInterrupt)
             {
                 ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
             }
