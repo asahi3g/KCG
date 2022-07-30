@@ -168,10 +168,10 @@ public class MiningLaser : MonoBehaviour
 
             // Get Laser Position
             IGroup<ItemEntity> Laserentities =
-            contexts.item.GetGroup(ItemMatcher.PhysicsPosition2D);
+            contexts.item.GetGroup(ItemMatcher.agentPosition2D);
             foreach (var laser in Laserentities)
             {
-                laserPosition = laser.physicsPosition2D.Value;
+                laserPosition = laser.agentPosition2D.Value;
             }
 
             // Delete the old one

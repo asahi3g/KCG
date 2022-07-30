@@ -33,9 +33,9 @@ namespace Planet.Unity
         
         ECSInput.InputProcessSystem InputProcessSystems;
         Agent.AgentSpawnerSystem AgentSpawnerSystem;
-        PhysicsMovableSystem PhysicsMovableSystem;
+        Agent.MovableSystem PhysicsMovableSystem;
         Agent.MeshBuilderSystem AgentMeshBuilderSystem;
-        PhysicsProcessCollisionSystem AgentProcessCollisionSystem;
+        Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
 
         public void Start()
         {
@@ -57,9 +57,9 @@ namespace Planet.Unity
 
 
             InputProcessSystems = new ECSInput.InputProcessSystem();
-            PhysicsMovableSystem = new Physics.PhysicsMovableSystem();
+            PhysicsMovableSystem = new Agent.MovableSystem();
             AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
-            AgentProcessCollisionSystem = new Physics.PhysicsProcessCollisionSystem();
+            AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
 
             AgentMeshBuilderSystem.Initialize(Material, transform, 12);
             GameState.AgentSpawnerSystem.SpawnPlayer(Contexts.sharedInstance, CharacterSpriteId, 32, 48, new Vec2f(3.0f, 2.0f), 0, 0, 100, 100, 100, 100, 100, 0.2f);

@@ -10,33 +10,15 @@ namespace Item
 
     public struct ItemProprieties
     {
-        // Item Type
         public ItemType ItemType;
-
-        // Item's Invetory Sprite Id
-        public int InventorSpriteID;
-
-        // Item's Sprite ID
-        public int SpriteID;
-
-        // Item's Sprite Size
-        public Vec2f SpriteSize;
-
-        // Item's Tool Action Type
         public Enums.ActionType ToolActionType;
 
-        // Item's Fire Weapon ID
+        public int InventorSpriteID;
+        public int SpriteID;
+        public Vec2f SpriteSize;
+
         public int FireWeaponID;
 
-        /// <summary>
-        /// Item Flags:
-        /// 
-        /// Placeable -> If Item Placable Flag
-        /// Consumable -> If Item Consumable
-        /// Stackable -> If Item Stackable (Takeable more than once)
-        /// Tool -> If Item is Tool
-        /// 
-        /// </summary>
         public Flags ItemFlags;
         [Flags]
         public enum Flags : byte
@@ -47,17 +29,9 @@ namespace Item
             Tool        = 1 << 3
         }
 
-
-        // Is Item Placable
-       public bool IsPlaceable() { return ItemFlags.HasFlag(Flags.Placeable); }
-
-        // Is Item Consumable
+        public bool IsPlaceable() { return ItemFlags.HasFlag(Flags.Placeable); }
         public bool IsConsumable() { return ItemFlags.HasFlag(Flags.Consumable); }
-
-        // Is Item Stackable
         public bool IsStackable() { return ItemFlags.HasFlag(Flags.Stackable); }
-
-        // Is Item Tool
         public bool IsTool() { return ItemFlags.HasFlag(Flags.Tool); }
     }
 
@@ -101,6 +75,7 @@ namespace Item
         public float ChargePerShot;
         public float ChargeMin;
         public float ChargeMax;
+        
         /// <summary>
         /// Clip attributes.
         /// 
@@ -144,18 +119,17 @@ namespace Item
         public float StaggerTime;
         [Range(0, 1)]
         public float StaggerRate;
-
         public bool ShieldActive;
 
         /// <summary>
         /// Pulse Weapon Properties
         /// 
-        /// isLaunchGreanade -> Launch Grenade Mode Condition
+        /// IsLaunchGreanade -> Launch Grenade Mode Condition
         /// NumberOfGrenades-> Number Of Grenades in Clip
         /// GrenadeClipSize -> Size of the Grenade Clip
         /// 
         /// </summary>
-        public bool isLaunchGreanade;
+        public bool IsLaunchGreanade;
         public int NumberOfGrenades;
         public int GrenadeClipSize;
 
@@ -208,22 +182,11 @@ namespace Item
             Fragmentation = 3 << 2
         }
 
-        // Weapon Has Clip?
         public bool HasClip() { return WeaponFlags.HasFlag(Flags.HasClip); }
-
-        // Weapon Should Spread?
         public bool ShouldSpread() { return WeaponFlags.HasFlag(Flags.ShouldSpread); }
-
-        // Weapon Has Charge Flag?
         public bool HasCharge() { return WeaponFlags.HasFlag(Flags.HasCharge); }
-
-        // Is Weapon Stabs
         public bool IsStab() { return WeaponFlags.HasFlag(MeleeFlags.Stab); }
-
-        // Is Weapon Slash
         public bool IsSlash() { return WeaponFlags.HasFlag(MeleeFlags.Slash); }
-
-        // Is Weapon Pulse
         public bool IsPulse() { return WeaponFlags.HasFlag(Flags.PulseWeapon); }
 
     }

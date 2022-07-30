@@ -12,18 +12,18 @@ public static class AgentComponentsLookup {
     public const int AgentEnemy = 1;
     public const int AgentID = 2;
     public const int AgentInventory = 3;
-    public const int AgentMovementState = 4;
-    public const int AgentPlayer = 5;
-    public const int AgentPositionDiscrete2D = 6;
-    public const int AgentSprite2D = 7;
-    public const int AgentStats = 8;
-    public const int AgentToolBar = 9;
-    public const int AnimationState = 10;
-    public const int ECSInput = 11;
-    public const int ECSInputXY = 12;
-    public const int PhysicsBox2DCollider = 13;
-    public const int PhysicsMovable = 14;
-    public const int PhysicsPosition2D = 15;
+    public const int AgentMovable = 4;
+    public const int AgentMovementState = 5;
+    public const int AgentPlayer = 6;
+    public const int AgentPosition2D = 7;
+    public const int AgentPositionDiscrete2D = 8;
+    public const int AgentSprite2D = 9;
+    public const int AgentStats = 10;
+    public const int AgentToolBar = 11;
+    public const int AnimationState = 12;
+    public const int ECSInput = 13;
+    public const int ECSInputXY = 14;
+    public const int PhysicsBox2DCollider = 15;
     public const int PhysicsSphere2DCollider = 16;
 
     public const int TotalComponents = 17;
@@ -33,8 +33,10 @@ public static class AgentComponentsLookup {
         "AgentEnemy",
         "AgentID",
         "AgentInventory",
+        "AgentMovable",
         "AgentMovementState",
         "AgentPlayer",
+        "AgentPosition2D",
         "AgentPositionDiscrete2D",
         "AgentSprite2D",
         "AgentStats",
@@ -43,8 +45,6 @@ public static class AgentComponentsLookup {
         "ECSInput",
         "ECSInputXY",
         "PhysicsBox2DCollider",
-        "PhysicsMovable",
-        "PhysicsPosition2D",
         "PhysicsSphere2DCollider"
     };
 
@@ -53,8 +53,10 @@ public static class AgentComponentsLookup {
         typeof(Agent.EnemyComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
+        typeof(Agent.MovableComponent),
         typeof(Agent.MovementStateComponent),
         typeof(Agent.PlayerComponent),
+        typeof(Agent.Position2DComponent),
         typeof(Agent.PositionDiscrete2DComponent),
         typeof(Agent.Sprite2DComponent),
         typeof(Agent.StatsComponent),
@@ -63,8 +65,6 @@ public static class AgentComponentsLookup {
         typeof(ECSInput.Component),
         typeof(ECSInput.XYComponent),
         typeof(Physics.Box2DColliderComponent),
-        typeof(Physics.MovableComponent),
-        typeof(Physics.Position2DComponent),
         typeof(Physics.Sphere2DColliderComponent)
     };
 }

@@ -2,9 +2,9 @@ using System;
 using KMath;
 using UnityEngine;
 
-namespace Physics
+namespace Agent
 {
-    public class PhysicsMovableSystem
+    public class MovableSystem
     {
         private void Update(Position2DComponent pos, MovableComponent movable, float deltaTime)
         {
@@ -77,25 +77,12 @@ namespace Physics
         {
             
             float deltaTime = Time.deltaTime;
-            var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsMovable, AgentMatcher.PhysicsPosition2D));
+            var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentMovable, AgentMatcher.AgentPosition2D));
             foreach (var entity in EntitiesWithVelocity)
             {
 
-                var pos = entity.physicsPosition2D;
-                var movable = entity.physicsMovable;
-
-                Update(pos, movable, deltaTime);
-            }
-        }
-
-        public void Update(ItemParticleContext Context)
-        {
-            float deltaTime = Time.deltaTime;
-            var EntitiesWithVelocity = Context.GetGroup(ItemParticleMatcher.AllOf(ItemParticleMatcher.PhysicsMovable, ItemParticleMatcher.PhysicsPosition2D));
-            foreach (var entity in EntitiesWithVelocity)
-            {
-                var pos = entity.physicsPosition2D;
-                var movable = entity.physicsMovable;
+                var pos = entity.agentPosition2D;
+                var movable = entity.agentMovable;
 
                 Update(pos, movable, deltaTime);
             }

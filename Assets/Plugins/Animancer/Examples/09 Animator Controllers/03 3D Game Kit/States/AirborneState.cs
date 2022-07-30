@@ -51,7 +51,7 @@ namespace Animancer.Examples.AnimatorControllers.GameKit
 
         private void FixedUpdate()
         {
-            // When you jump, do not start checking if you have landed until you stop going up.
+            // When you jump, do not start checking if you have OnGrounded until you stop going up.
             if (_IsJumping)
             {
                 if (Character.Parameters.VerticalSpeed <= 0)

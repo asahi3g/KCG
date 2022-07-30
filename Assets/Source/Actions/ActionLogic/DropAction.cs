@@ -31,15 +31,15 @@ namespace Action
                 }
 
                 GameState.InventoryManager.RemoveItem(planet.EntitasContext, itemInventory, selected);
-                itemInventory.Destroy();
 
-                Vec2f pos = AgentEntity.physicsPosition2D.Value;
+                // Create item particle from item inventory.
+                Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;
                 ItemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
+                ItemParticle.itemMovement.Velocity = new Vec2f(-8.0f, 8.0f);
                 ItemParticle.isItemUnpickable = true;
 
                 ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Running);
                 return;
-
             }
             // ToolBar is non existent. 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
@@ -64,6 +64,7 @@ namespace Action
             base.OnExit(ref planet);
         }
     }
+
     // Factory Method
     public class DropActionCreator : ActionCreator
     {

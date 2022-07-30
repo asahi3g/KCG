@@ -3,9 +3,10 @@ using KMath;
 using PlanetTileMap;
 using UnityEngine;
 using Utility;
+using Physics;
 using Enums.Tile;
 
-namespace Physics
+namespace Agent
 {
     //TODO: Collision calculation should internally cache the chunks around player
     //TODO: (up left, up right, bottom left, bottom right) instead of doing GetTile for each tile.
@@ -13,7 +14,7 @@ namespace Physics
     //TODO: Create broad-phase for getting tiles
     // https://www.flipcode.com/archives/Raytracing_Topics_Techniques-Part_4_Spatial_Subdivisions.shtml
     // http://www.cs.yorku.ca/~amana/research/grid.pdf
-    public class PhysicsProcessCollisionSystem
+    public class ProcessCollisionSystem
     {
         private void Update(ref TileMap tileMap, Position2DComponent pos, MovableComponent movable, Box2DColliderComponent box2DCollider, float deltaTime)
         {       
@@ -31,7 +32,7 @@ namespace Physics
                     pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
                     movable.Velocity.Y = 0.0f;
                     movable.Acceleration.Y = 0.0f;
-                    movable.Landed = true;
+                    movable.OnGrounded = true;
                 }
                 else if (property.IsAPlatform && movable.Droping)
                 {
@@ -41,7 +42,7 @@ namespace Physics
                     }
                     else
                     {
-                        movable.Landed = false;
+                        movable.OnGrounded = false;
                         movable.Acceleration.Y = -100.0f;
                     }
                     
@@ -104,31 +105,15 @@ namespace Physics
         public void Update(AgentContext agentContext, ref PlanetTileMap.TileMap tileMap)
         {
             float deltaTime = Time.deltaTime;
-            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.PhysicsPosition2D));
+            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPosition2D));
 
             foreach (var agentEntity in agentEntitiesWithBox)
             {
-                var pos = agentEntity.physicsPosition2D;
-                var movable = agentEntity.physicsMovable;
+                var pos = agentEntity.agentPosition2D;
+                var movable = agentEntity.agentMovable;
                 var box2DCollider = agentEntity.physicsBox2DCollider;
 
                 Update(ref tileMap, pos, movable, box2DCollider, deltaTime); 
-            }
-
-        }
-
-        public void Update(ItemParticleContext itemContext, ref PlanetTileMap.TileMap tileMap)
-        {
-            float deltaTime = Time.deltaTime;
-            var entitiesWithBox = itemContext.GetGroup(ItemParticleMatcher.AllOf(ItemParticleMatcher.PhysicsBox2DCollider, ItemParticleMatcher.PhysicsPosition2D));
-
-            foreach (var entity in entitiesWithBox)
-            {
-                var pos = entity.physicsPosition2D;
-                var movable = entity.physicsMovable;
-                var box2DColider = entity.physicsBox2DCollider;
-
-                Update(ref tileMap, pos, movable, box2DColider, deltaTime);
             }
         }
     }
