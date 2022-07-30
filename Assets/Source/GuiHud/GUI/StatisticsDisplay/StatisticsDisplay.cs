@@ -53,7 +53,7 @@ namespace KGUI.Statistics
                 IGroup<AgentEntity> Playerentities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentPlayer);
                 foreach (var entity in Playerentities)
                 {
-                    playerPosition = entity.physicsPosition2D.Value;
+                    playerPosition = entity.agentPosition2D.Value;
                 }
 
                 if (Camera.main.aspect >= 1.7f)

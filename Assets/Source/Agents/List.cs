@@ -17,7 +17,7 @@ namespace Agent
             agentContext = Contexts.sharedInstance.agent;
             AgentsWithSprite = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentSprite2D));
             AgentsWithXY = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
-            AgentsWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsMovable, AgentMatcher.PhysicsPosition2D));
+            AgentsWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentMovable, AgentMatcher.AgentPosition2D));
         }
     }
 }

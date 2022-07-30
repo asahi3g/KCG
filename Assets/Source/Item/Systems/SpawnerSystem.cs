@@ -21,9 +21,9 @@ namespace Item
             var entity = entitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID);
             entity.AddItemType(itemType);
-            entity.AddPhysicsPosition2D(position, Vec2f.Zero);
+            entity.AddItemPosition2D(position, Vec2f.Zero);
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
-            entity.AddPhysicsMovable(0f, Vec2f.Zero, Vec2f.Zero, true, true, false, false, false, false, false, false);
+            entity.AddItemMovement(Vec2f.Zero, Vec2f.Zero, false);
 
             if (weaponProperty.HasClip())
             {
@@ -37,7 +37,7 @@ namespace Item
 
             if (weaponProperty.IsPulse())
             {
-                entity.AddItemPulseWeaponPulse(weaponProperty.isLaunchGreanade, weaponProperty.NumberOfGrenades);
+                entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
             }
 
             ItemID++;
@@ -94,7 +94,7 @@ namespace Item
 
             if (weaponProperty.IsPulse())
             {
-                entity.AddItemPulseWeaponPulse(weaponProperty.isLaunchGreanade, weaponProperty.NumberOfGrenades);
+                entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
             }
 
             ItemID++;

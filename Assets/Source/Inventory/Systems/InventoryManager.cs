@@ -84,7 +84,7 @@ namespace Inventory
         {
             var inventoryEntity = contexts.inventory.GetEntityWithInventoryID(entity.itemInventory.InventoryID);
             inventoryEntity.inventorySlots.Values.Set(slot, false);
-            entity.itemInventory.InventoryID = -1;
+            entity.RemoveItemInventory();
         }
         
         public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)

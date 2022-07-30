@@ -2,9 +2,9 @@ using Entitas;
 using KMath;
 using UnityEngine;
 
-namespace Physics
+namespace Item
 {
-    [Agent, ItemParticle]
+    [ItemParticle]
     public class Position2DComponent : IComponent
     {
         public Vec2f Value;

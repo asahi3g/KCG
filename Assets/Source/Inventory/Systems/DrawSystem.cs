@@ -106,6 +106,9 @@ namespace Inventory
         {
             foreach (ItemInventoryEntity itemEntity in itemInInventory)
             {
+                if (!itemEntity.isEnabled)
+                    return;
+
                 int slotNumber = itemEntity.itemInventory.SlotNumber;
                 int i = slotNumber % width;
                 int j = (height - 1) - (slotNumber - i) / width;

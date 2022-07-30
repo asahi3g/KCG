@@ -51,7 +51,7 @@ public class RasterScanTest : MonoBehaviour
             foreach (var player in entities)
             {
                 // Get Players Position
-                playerPosition = player.physicsPosition2D.Value;
+                playerPosition = player.agentPosition2D.Value;
             }
 
             // Get Mouse Position

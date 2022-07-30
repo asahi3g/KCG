@@ -367,10 +367,10 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-            GameState.PhysicsMovableSystem.Update(EntitasContext.agent);
-            GameState.PhysicsMovableSystem.Update(EntitasContext.itemParticle);
-            GameState.PhysicsProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
-            GameState.PhysicsProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
+            GameState.AgentMovableSystem.Update(EntitasContext.agent);
+            GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
+            GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);

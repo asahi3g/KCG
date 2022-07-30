@@ -15,21 +15,21 @@ namespace Item
         {
             // Get agents able to pick an object.
             var agents = contexts.agent.GetGroup(
-                AgentMatcher.AllOf(AgentMatcher.PhysicsPosition2D).AnyOf(AgentMatcher.AgentInventory, AgentMatcher.AgentToolBar));
+                AgentMatcher.AllOf(AgentMatcher.AgentPosition2D).AnyOf(AgentMatcher.AgentInventory, AgentMatcher.AgentToolBar));
 
             // Get all pickable items.
             var pickableItems = contexts.itemParticle.GetGroup(
-                ItemParticleMatcher.AllOf(ItemParticleMatcher.ItemID, ItemParticleMatcher.PhysicsPosition2D).NoneOf(ItemParticleMatcher.ItemUnpickable));
+                ItemParticleMatcher.AllOf(ItemParticleMatcher.ItemID, ItemParticleMatcher.ItemPosition2D).NoneOf(ItemParticleMatcher.ItemUnpickable));
 
             foreach (var item in pickableItems)
             {
                 // Get item ceter position.
                 var itemPropreties = GameState.ItemCreationApi.Get(item.itemType.Type);
-                Vec2f centerPos = item.physicsPosition2D.Value + itemPropreties.SpriteSize / 2.0f;
+                Vec2f centerPos = item.itemPosition2D.Value + itemPropreties.SpriteSize / 2.0f;
                 foreach (var agent in agents)
                 {
                     // Todo: Use action center Position.
-                    if ((agent.physicsPosition2D.Value - centerPos).Magnitude <= 1.25f)
+                    if ((agent.agentPosition2D.Value - centerPos).Magnitude <= 1.25f)
                     {
                         GameState.ActionInitializeSystem.CreatePickUpAction(contexts, agent.agentID.ID, item.itemID.ID);
                     }
