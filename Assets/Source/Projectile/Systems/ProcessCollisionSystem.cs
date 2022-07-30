@@ -8,8 +8,8 @@ namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        List<ProjectileEntity> ToRemoveList = new List<ProjectileEntity>();
-        List<ProjectileEntity> ToRemoveArrowList = new List<ProjectileEntity>();
+        List<ProjectileEntity> ToRemoveList = new();
+        List<ProjectileEntity> ToRemoveArrowList = new();
         public void Update(ref PlanetTileMap.TileMap tileMap)
         {
             // Get Delta Time

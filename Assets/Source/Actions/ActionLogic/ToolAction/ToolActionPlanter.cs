@@ -56,19 +56,19 @@ namespace Action
                             PlanterPosition = entity.mechPosition2D.Value;
 
                             // Has Planter Component?
-                            if (entity.hasMechPlanterPlanter)
+                            if (entity.hasMechPlanter)
                             {
                                 // Plant Growth Reached Maximum?
-                                if (entity.mechPlanterPlanter.PlantGrowth < 100.0f)
+                                if (entity.mechPlanter.PlantGrowth < 100.0f)
                                 {
                                     // Is seed placed?
-                                    if (!entity.mechPlanterPlanter.GotSeed)
+                                    if (!entity.mechPlanter.GotSeed)
                                     {
                                         PlantToAdd = true;
-                                        entity.mechPlanterPlanter.Plant = Plant;
+                                        entity.mechPlanter.Plant = Plant;
 
                                         // Mech Property
-                                        entity.mechPlanterPlanter.GotSeed = true;
+                                        entity.mechPlanter.GotSeed = true;
                                     }
                                 }
                             }
@@ -82,21 +82,7 @@ namespace Action
 
             if (PlantToAdd)
             {
-                switch (random)
-                {
-                    case 0:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant);
-                        break;
-                    case 1:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant2);
-                        break;
-                    case 2:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant3);
-                        break;
-                    case 3:
-                        Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.Plant4);
-                        break;
-                }
+                Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.MajestyPalm);
             }
 
             foreach (var entity in entities)
@@ -110,7 +96,7 @@ namespace Action
                         // Is Mech Planter?
                         if (entity.mechType.mechType == Mech.MechType.Planter)
                         {
-                            entity.mechPlanterPlanter.Plant = Plant;
+                            entity.mechPlanter.Plant = Plant;
                         }
                     }
                 }

@@ -45,6 +45,13 @@ namespace Action
             ActionPropertyEntity.AddActionPropertyCoolDown(coolDown);
         }
 
+        public void SetTiles()
+        {
+            ActionPropertyEntity.AddActionPropertyTilePlacement(null, null);
+            ActionPropertyEntity.actionPropertyTilePlacement.Tiles = new List<PlanetTileMap.Tile>();
+            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos = new List<KMath.Vec2i>();
+        }
+
         public void SetShieldActive(bool ShieldActive)
         {
             ActionPropertyEntity.AddActionPropertyShield(ShieldActive);

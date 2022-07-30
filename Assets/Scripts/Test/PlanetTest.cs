@@ -141,6 +141,13 @@ namespace Planet.Unity
 
             // Draw Chunk Visualizer
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+
+            // Draw Selected Tiles
+            var entities = Planet.EntitasContext.actionProperties.GetGroup(ActionPropertiesMatcher.AllOf(ActionPropertiesMatcher.ActionPropertyTilePlacement));
+            foreach (var entity in entities)
+            {
+                Admin.AdminAPI.DrawSelectedTiles(entity.actionPropertyTilePlacement.TilesPos, ref Planet);
+            }
         }
 
         // create the sprite atlas for testing purposes
@@ -196,7 +203,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(32, 24);
+            Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
