@@ -78,7 +78,8 @@ namespace Particle
             float height = spriteCoords.w;
             
 
-            float velocityValue = 1.0f;
+            float velocityValueX = 1.0f;
+            float velocityValueY = 2.0f;
 
             // the box debris is composed of 
             // 5 parts, each part will have some vertices and 
@@ -239,8 +240,8 @@ namespace Particle
             float rand2 = KMath.Random.Mt19937.genrand_realf();
 
             Vec2f velocity;
-            velocity.X = rand1 * velocityValue;
-            velocity.Y = rand2 * velocityValue;
+            velocity.X = rand1 * velocityValueX;
+            velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
             part1Vertices, part1Coords, velocity, -1));
@@ -249,8 +250,8 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValue;
-            velocity.Y = rand2 * velocityValue;
+            velocity.X = rand1 * velocityValueX;
+            velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
             part2Vertices, part2Coords, velocity, -1));
@@ -258,8 +259,8 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValue;
-            velocity.Y = rand2 * velocityValue;
+            velocity.X = rand1 * velocityValueX;
+            velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
             part3Vertices, part3Coords, velocity, -1));
@@ -267,8 +268,8 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValue;
-            velocity.Y = rand2 * velocityValue;
+            velocity.X = rand1 * velocityValueX;
+            velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
             part4Vertices, part4Coords, velocity, -1));
@@ -277,8 +278,8 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValue;
-            velocity.Y = rand2 * velocityValue;
+            velocity.X = rand1 * velocityValueX;
+            velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.4f), 
             part5Vertices, part5Coords, velocity, -1));

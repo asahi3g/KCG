@@ -28,10 +28,7 @@
         /// <summary>
         /// Mech's As Item
         /// </summary>
-        Plant,
-        Plant2,
-        Plant3,
-        Plant4,
+        MajestyPalm,
         WaterBottle,
 
         /// <summary>
