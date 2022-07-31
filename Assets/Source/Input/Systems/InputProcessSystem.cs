@@ -332,15 +332,14 @@ namespace ECSInput
                 planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
-            //  Open Inventory with Tab.
-            var PlayerWithInventory = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentInventory, AgentMatcher.AgentPlayer));
-            foreach (var entity in PlayerWithInventory)
+            //  Open Inventory with Tab.        
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
-                int inventoryID = entity.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                if (Input.GetKeyDown(KeyCode.Tab))
+                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
+                foreach (var player in players)
                 {
+                    int inventoryID = player.agentInventory.InventoryID;
+                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
                     inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
                 }
             }
@@ -348,9 +347,8 @@ namespace ECSInput
             // Change Pulse Weapon Mode.
             if (Input.GetKeyDown(KeyCode.N))
             {
-                // Change Item Selection with nums.
                 var PlayerWithToolBarPulse = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentToolBar));
-                foreach (var entity in PlayerWithInventory)
+                foreach (var entity in PlayerWithToolBarPulse)
                 {
                     int inventoryID = entity.agentToolBar.ToolBarID;
                     InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
@@ -376,7 +374,7 @@ namespace ECSInput
 
             // Change Item Selection with nums.
             var PlayerWithToolBar = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentToolBar));
-            foreach (var entity in PlayerWithInventory)
+            foreach (var entity in PlayerWithToolBar)
             {
                 int inventoryID = entity.agentToolBar.ToolBarID;
                 InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);

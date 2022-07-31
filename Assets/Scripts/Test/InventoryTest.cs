@@ -12,6 +12,7 @@ public class InventoryTest : MonoBehaviour
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
     ECSInput.InputProcessSystem  inputProcessSystem;
+    bool Init = false;
 
     [SerializeField] Material material;
 
@@ -24,6 +25,7 @@ public class InventoryTest : MonoBehaviour
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
         inputProcessSystem = new ECSInput.InputProcessSystem();
+        GameState.Renderer.Initialize(material);
         var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
         // Create Agent and inventory.
@@ -56,6 +58,7 @@ public class InventoryTest : MonoBehaviour
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Rock), inventoryID);
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.RockDust), inventoryID);
         }
+        Init = true;
     }
 
     public void Update()
@@ -75,9 +78,10 @@ public class InventoryTest : MonoBehaviour
        // inputProcessSystem.Update(ref context);
     }
 
-    private void OnRenderObject()
+    private void OnGUI()
     {
-        inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
+        if(Init)
+            inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
     }
 
     private void Initialize()

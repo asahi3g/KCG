@@ -28,7 +28,7 @@ namespace Inventory
             // Calculate Positions and Tile Sizes relative to sceen.
 
             Vec2f tileSize = new Vec2f(1f / 16f, 1f / 16f * Screen.width / Screen.height);
-            Vec2f slotSize = tileSize * 0.9f;
+            Vec2f slotSize = tileSize * 0.9f;   // Area of icon.
 
             // Get Inventory Info.
             int width = inventoryEntity.inventorySize.Width;
@@ -73,16 +73,6 @@ namespace Inventory
 
             for (int i = 0; i < width; i++)
             {
-                if (inventoryEntity.isInventoryToolBar)
-                {
-                    // Get Quad Position
-                    float slotX = x + i * tileSize.X + slotSize.X * 0.5f - 0.125f;
-                    float slotY = y - slotSize.Y * 0.5f;
-
-                    //GameState.Renderer.DrawString(slotX + (tileSize.X - slotSize.X) / 2.0f, 
-                    //           slotY + (tileSize.Y - slotSize.Y) / 2.0f, 0.25f, "" + (i + 1), 16, new Color(255, 255, 255, 255));
-                }
-
                 for (int j = 0; j < height; j++)
                 {
                     // Assign Border Color.
@@ -94,10 +84,29 @@ namespace Inventory
                     float slotX = x + i * tileSize.X;
                     float slotY = y + j * tileSize.Y;
 
-                    GameState.Renderer.DrawQuadColorGui(slotX + (tileSize.X - slotSize.X) / 2.0f, slotY + (tileSize.Y - slotSize.Y) / 2.0f, slotSize.X, slotSize.Y, quadColor);
+                    // Draw OutsideBorder Cell.
+                    float posX = slotX + (tileSize.X - slotSize.X) / 2.0f;
+                    float posY = slotY + (tileSize.Y - slotSize.Y) / 2.0f;
+                    GameState.Renderer.DrawQuadColorGui(posX, posY, slotSize.X, slotSize.Y, quadColor);
+                    // Draw cell border.
                     Vec2f spriteSize = slotSize * 0.8f;
-                    GameState.Renderer.DrawQuadColorGui(slotX + (tileSize.X - spriteSize.X) / 2.0f, slotY + (tileSize.Y - spriteSize.Y) / 2.0f, spriteSize.X, spriteSize.Y, borderColor);
+                    posX = slotX + (tileSize.X - spriteSize.X) / 2.0f;
+                    posY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
+                    GameState.Renderer.DrawQuadColorGui(posX, posY, spriteSize.X, spriteSize.Y, borderColor);
 
+
+                    if (inventoryEntity.isInventoryToolBar)
+                    {
+                        GameState.Renderer.DrawStringGui(
+                                slotX + (tileSize.X - slotSize.X) / 2.0f,
+                                slotY + (tileSize.Y - slotSize.Y) / 2.0f,
+                                slotSize.X,
+                                slotSize.Y/2,
+                                label: (i + 1).ToString(),
+                                fontSize: 16,
+                                alignment: TextAnchor.UpperCenter,
+                                color: new Color(255, 255, 255, 255));
+                    }
                 }
             }
         }
@@ -123,13 +132,10 @@ namespace Inventory
                     //int fontSize = 50;
 
                     // these Change with Camera size. Find better soluiton. AutoSize? MeshPro?
-                    float characterSize = 0.05f * Camera.main.pixelWidth / 1024.0f;
-                    float posOffset = 0.04f;
+                    //float characterSize = 0.05f * Camera.main.pixelWidth / 1024.0f;
+                    //float posOffset = 0.04f;
 
-                    var rect = new Rect(600 * Random.value, 450 * Random.value, 200, 150);
-
-                    // Todo: Implement or import librart to draw string on screen immediately. 
-                    //GameState.Renderer.DrawString(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white, transform, drawOrder + 4);
+                    //GameState.Renderer.DrawStringGui(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white);
                 }
 
                 // Draw sprites.

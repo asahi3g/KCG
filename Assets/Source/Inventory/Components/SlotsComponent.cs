@@ -1,4 +1,5 @@
 using System.Collections;
+using Utility;
 using Entitas;
 
 namespace Inventory
@@ -9,7 +10,7 @@ namespace Inventory
         /// <summary>
         /// Current Slots(inventory.Width * inventory.Heigh)
         /// </summary>
-        public BitArray Values; // Todo: Implement faster bitfield implementation.
+        public BitSet Values; // Todo: Implement faster bitfield implementation.
         /// <summary>
         /// Selected slot
         /// </summary>

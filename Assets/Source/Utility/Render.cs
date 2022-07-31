@@ -179,12 +179,28 @@ namespace Utility
             DrawGlSprite(x, y, w, h, sprite);
         }
 
-        public void DrawQuadColorGui(float x, float y, float w, float h,
-                Color color)
+        public void DrawQuadColorGui(float x, float y, float w, float h, Color color)
         {
             GL.PushMatrix();
             GL.LoadOrtho();
             DrawGlQuad(x, y, w, h, color);
+        }
+
+        public void DrawStringGui(float x, float y, float w, float h, string label, 
+            int fontSize = 16, TextAnchor alignment = TextAnchor.UpperLeft, Color color = default(Color))
+        {
+            x *= Screen.width;
+            y = Screen.height - y * Screen.height;
+            w *= Screen.width;
+            h *= Screen.height;
+
+            Rect pos = new Rect(x, y, w, h);
+
+            GUI.contentColor = color;
+            GUI.skin.label.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+            GUI.skin.label.fontSize = fontSize;
+            GUI.skin.label.alignment = alignment;
+            GUI.Label(pos, label);
         }
 
 
@@ -257,5 +273,7 @@ namespace Utility
             GL.End();
             GL.PopMatrix();
         }
+
+
     }
 }

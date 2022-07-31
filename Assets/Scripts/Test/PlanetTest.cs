@@ -93,22 +93,22 @@ namespace Planet.Unity
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
-        
-        private void OnRenderObject()
-        {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        }
 
         private void OnGUI()
         {
-            if (Init)
-            {
-                // Draw HUD UI
-                hudManager.Update(Player);
+            if (!Init)
+                return;
 
-                // Draw Statistics
-                KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-            }
+            // Draw HUD UI
+            hudManager.Update(Player);
+
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            // Draw Statistics
+            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnDrawGizmos()
