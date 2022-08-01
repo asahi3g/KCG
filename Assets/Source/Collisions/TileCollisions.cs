@@ -78,9 +78,10 @@ namespace Collisions
                 var distance = CalculateDistanceAABB_AABB(
                     xmin, xmax, ymin, ymax,
                     tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
-                if (distance / velocity.Y < lowestTime)
+                var newTime = distance / velocity.Y;
+                if (newTime < lowestTime)
                 {
-                    lowestTime = distance / velocity.Y;
+                    lowestTime = newTime;
                     nearestTilePos = R1_tiles[i];
                 }
             }
