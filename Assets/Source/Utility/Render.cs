@@ -23,18 +23,22 @@ namespace Utility
 
         public void Initialize(Material material)
         {
-            Materials = new Material[126];
+            Materials = new Material[256];
 
             // Initialzie materials.
-            for (int i = 0; i < 126; i++)
+            for (int i = 0; i < 256; i++)
             {
                 Materials[i] = Material.Instantiate(material);
             }
         }
-
         void ExpandArray()
         {
-            Array.Resize(ref Materials, Materials.Length + 126);
+            int currentLegnth = Materials.Length;
+            Array.Resize(ref Materials, Materials.Length + 256);
+            for (int i = 0; i < 256; i++)
+            {
+                Materials[currentLegnth + i] = Material.Instantiate(Materials[0]);
+            }
         }
         public void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
         {
@@ -156,34 +160,52 @@ namespace Utility
         public void DrawSpriteNow(float x, float y, float w, float h,
             Sprites.Sprite sprite)
         {
-            GL.PushMatrix();
             DrawGlSprite(x, y, w, h, sprite);
-            GL.PopMatrix();
         }
 
         public void DrawQuadColorNow(float x, float y, float w, float h,
             Color color)
         {
-            GL.PushMatrix();
             DrawGlQuad(x, y, w, h, color);
-            GL.PopMatrix();
         }
 
         /// <summary>
+        /// These functions should only be used inside OnGUI
+        /// We use GUI functions because of bugs with GL.Push and GL.Pop functions.
         /// [x, y] = (0, 0) is lower left coner of the screen.
         /// [x, y] = (1, 1) is upper right coner of the screen.
         /// </summary>
         public void DrawSpriteGui(float x, float y, float w, float h,
             Sprites.Sprite sprite)
         {
-            GL.LoadOrtho();
-            DrawGlSprite(x, y, w, h, sprite);
+            y += h;
+            x *= Screen.width;
+            y = Screen.height - y * Screen.height;
+            w *= Screen.width;
+            h *= Screen.height;
+            Rect pos = new Rect(x, y, w, h);
+
+            Vector4 texCoord = sprite.TextureCoords;
+            Rect textCoord = new Rect(texCoord.x, texCoord.y + texCoord.w, texCoord.z, - texCoord.w);
+
+            GUI.DrawTextureWithTexCoords(pos, sprite.Texture, textCoord);
         }
 
         public void DrawQuadColorGui(float x, float y, float w, float h, Color color)
         {
-            GL.LoadOrtho();
-            DrawGlQuad(x, y, w, h, color);
+            y += h;
+            x *= Screen.width;
+            y = Screen.height - y * Screen.height;
+            w *= Screen.width;
+            h *= Screen.height;
+
+            Rect pos = new Rect(x, y, w, h);
+
+            Texture2D texture = new Texture2D(1, 1);
+            texture.SetPixel(0, 0, color);
+            texture.Apply();
+
+            GUI.DrawTexture(pos , texture);
         }
 
         public void DrawStringGui(float x, float y, float w, float h, string label, 

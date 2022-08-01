@@ -29,6 +29,7 @@ namespace Planet.Unity
             if (!InitTiles)
             {
                 LoadSprites();
+                GameState.Renderer.Initialize(Material);
                 InitTiles = true;
             }
         }

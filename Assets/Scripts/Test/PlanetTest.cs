@@ -102,11 +102,11 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            // Draw HUD UI
-            hudManager.Update(Player);
-
             if (Event.current.type != EventType.Repaint)
                 return;
+
+            // Draw HUD UI
+            hudManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
