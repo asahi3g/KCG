@@ -24,7 +24,7 @@ namespace KGUI.PlayerStatus
         
         // Fill Amount Value
         private float fillValue;
-
+        
         public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height

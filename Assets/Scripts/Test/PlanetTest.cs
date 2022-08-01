@@ -141,13 +141,6 @@ namespace Planet.Unity
 
             // Draw Chunk Visualizer
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
-
-            // Draw Selected Tiles
-            var entities = Planet.EntitasContext.actionProperties.GetGroup(ActionPropertiesMatcher.AllOf(ActionPropertiesMatcher.ActionPropertyTilePlacement));
-            foreach (var entity in entities)
-            {
-                Admin.AdminAPI.DrawSelectedTiles(entity.actionPropertyTilePlacement.TilesPos, ref Planet);
-            }
         }
 
         // create the sprite atlas for testing purposes

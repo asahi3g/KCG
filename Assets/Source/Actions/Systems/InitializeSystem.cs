@@ -23,12 +23,9 @@ namespace Action
 
             // Set Logic Factory
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceTileCreator());
-            
-            // Add Tiles Component
-            GameState.ActionPropertyManager.SetTiles();
 
             // Set Data Struct
-            var data = new ToolActionPlaceTile.Data
+            var data = new Data
             {
                 // Set Tile ID
                 TileID = tileID,

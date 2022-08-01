@@ -22,6 +22,12 @@ namespace KGUI
         // Health Bar
         static KGUI.PlayerStatus.HealthBarUI healthBarUI = new PlayerStatus.HealthBarUI();
 
+        // Bedrock
+        static KGUI.Tiles.Bedrock bedrockUI = new Tiles.Bedrock();
+
+        // Dirt
+        static KGUI.Tiles.Dirt dirtUI = new Tiles.Dirt();
+
         // GUI Elements List
         static List<GUIManager> UIList = new List<GUIManager>();
 
@@ -63,6 +69,12 @@ namespace KGUI
 
             // Add Health Bar To Draw Array
             UIList.Add(healthBarUI);
+
+            // Add Bedrock Tile To Draw Array
+            UIList.Add(bedrockUI);
+
+            // Add Dirt Tile To Draw Array
+            UIList.Add(dirtUI);
 
             // Init Elements
             for (int i = 0; i < UIList.Count; i++)
@@ -117,6 +129,8 @@ namespace KGUI
             {
                 // TODO: Don't show indicator Icon
             }
+
+
         }
 
         public virtual void OnMouseClick(AgentEntity agentEntity)

@@ -14,6 +14,7 @@ namespace PlanetTileMap
         Pipe,
         Background,
         Wire,
-        Bedrock
+        Bedrock,
+        Stone,
     }
 }

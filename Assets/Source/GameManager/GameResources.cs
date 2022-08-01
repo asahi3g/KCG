@@ -28,6 +28,7 @@ public class GameResources
     public static int SwordSpriteSheet;
 
     public static int PlatformSpriteSheet;
+    public static int StoneSpriteSheet;
 
     public static int OreSprite;
     public static int Ore2Sprite;
@@ -111,6 +112,7 @@ public class GameResources
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
 
+            StoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Stone\\stone.png", 16, 16);
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
@@ -193,6 +195,12 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 11, 10);
         GameState.TileCreationApi.EndTileProperty();
 
+        GameState.TileCreationApi.CreateTileProperty(TileID.Stone);
+        GameState.TileCreationApi.SetTileMaterialType(MaterialType.Stone);
+        GameState.TileCreationApi.SetTilePropertyName("stone");
+        GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+        GameState.TileCreationApi.SetTilePropertySpriteSheet(StoneSpriteSheet, 0, 0);
+        GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Moon);
         GameState.TileCreationApi.SetTileMaterialType(MaterialType.Moon);
@@ -444,6 +452,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilMoonAction);
         GameState.ItemCreationApi.EndItem();
 
