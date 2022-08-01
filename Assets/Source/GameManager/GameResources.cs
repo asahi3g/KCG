@@ -523,6 +523,13 @@ public class GameResources
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionHarvest);
         GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.ScannerTool, "ScannerTool");
+        GameState.ItemCreationApi.SetTexture(OreSprite);
+        GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionScanner);
+        GameState.ItemCreationApi.EndItem();
     }
 
     private static void CreateAgents()

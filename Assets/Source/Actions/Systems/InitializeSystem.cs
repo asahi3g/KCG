@@ -171,6 +171,11 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionHarvest);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionHarvestCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Harvest
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionScanner);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionScannerCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }
