@@ -53,7 +53,7 @@ namespace Planet.Unity
             bool idle = Input.GetKeyDown(KeyCode.I);
             bool golf = Input.GetKeyDown(KeyCode.G);
 
-            for(int i = 0; i < HumanoidCount; i++)
+            for (int i = 0; i < HumanoidCount; i++)
             {
                 if (run)
                 {
@@ -78,13 +78,16 @@ namespace Planet.Unity
             int selectedSlot = Inventory.inventorySlots.Selected;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-            if (itemProperty.IsTool())
+            if (item != null)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                if (itemProperty.IsTool())
                 {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, 
-                       Player.agentID.ID, item.itemID.ID);
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                            Player.agentID.ID, item.itemID.ID);
+                    }   
                 }
             }
             

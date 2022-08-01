@@ -158,6 +158,7 @@ namespace Utility
         {
             GL.PushMatrix();
             DrawGlSprite(x, y, w, h, sprite);
+            GL.PopMatrix();
         }
 
         public void DrawQuadColorNow(float x, float y, float w, float h,
@@ -165,6 +166,7 @@ namespace Utility
         {
             GL.PushMatrix();
             DrawGlQuad(x, y, w, h, color);
+            GL.PopMatrix();
         }
 
         /// <summary>
@@ -174,14 +176,12 @@ namespace Utility
         public void DrawSpriteGui(float x, float y, float w, float h,
             Sprites.Sprite sprite)
         {
-            GL.PushMatrix();
             GL.LoadOrtho();
             DrawGlSprite(x, y, w, h, sprite);
         }
 
         public void DrawQuadColorGui(float x, float y, float w, float h, Color color)
         {
-            GL.PushMatrix();
             GL.LoadOrtho();
             DrawGlQuad(x, y, w, h, color);
         }
@@ -245,7 +245,6 @@ namespace Utility
             GL.Vertex3((x + w), y, 0);
 
             GL.End();
-            GL.PopMatrix();
         }
 
         private void DrawGlQuad(float x, float y, float w, float h, Color color)
@@ -272,7 +271,6 @@ namespace Utility
             GL.Vertex3((x + w), y, 0);
 
             GL.End();
-            GL.PopMatrix();
         }
 
 
