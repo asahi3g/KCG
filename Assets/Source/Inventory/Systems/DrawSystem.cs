@@ -94,19 +94,18 @@ namespace Inventory
                     posY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
                     GameState.Renderer.DrawQuadColorGui(posX, posY, spriteSize.X, spriteSize.Y, borderColor);
 
-
-                    //if (inventoryEntity.isInventoryToolBar)
-                    //{
-                    //    GameState.Renderer.DrawStringGui(
-                    //            slotX + (tileSize.X - slotSize.X) / 2.0f,
-                    //            slotY + (tileSize.Y - slotSize.Y) / 2.0f - slotSize.Y,
-                    //            slotSize.X,
-                    //            slotSize.Y,
-                    //            label: (i + 1).ToString(),
-                    //            fontSize: 16,
-                    //            alignment: TextAnchor.UpperCenter,
-                    //            color: new Color(255, 255, 255, 255));
-                    //}
+                    if (inventoryEntity.isInventoryToolBar)
+                    {
+                        GameState.Renderer.DrawStringGui(
+                                slotX + (tileSize.X - slotSize.X) / 2.0f,
+                                slotY + (tileSize.Y - slotSize.Y) / 2.0f - slotSize.Y,
+                                slotSize.X,
+                                slotSize.Y,
+                                label: (i + 1).ToString(),
+                                fontSize: 16,
+                                alignment: TextAnchor.UpperCenter,
+                                color: new Color(255, 255, 255, 255));
+                    }
                 }
             }
         }
@@ -138,18 +137,18 @@ namespace Inventory
                 GameState.Renderer.DrawSpriteGui(posX, posY, spriteSize.X, spriteSize.Y, sprite);
 
                 // Draw Count if stackable.
-                //if (itemEntity.hasItemStack)
-                //{
-                //    GameState.Renderer.DrawStringGui(
-                //        slotX + (tileSize.X - slotSize.X) / 2.0f,
-                //        slotY + (tileSize.Y - slotSize.Y) / 2.0f,
-                //        slotSize.X,
-                //        slotSize.Y,
-                //        itemEntity.itemStack.Count.ToString(),
-                //        20,
-                //        TextAnchor.LowerRight,
-                //        Color.white);
-                //}
+                if (itemEntity.hasItemStack)
+                {
+                    GameState.Renderer.DrawStringGui(
+                        slotX + (tileSize.X - slotSize.X) / 2.0f,
+                        slotY + (tileSize.Y - slotSize.Y) / 2.0f,
+                        slotSize.X,
+                        slotSize.Y,
+                        itemEntity.itemStack.Count.ToString(),
+                        20,
+                        TextAnchor.LowerRight,
+                        Color.white);
+                }
             }
         }
     }

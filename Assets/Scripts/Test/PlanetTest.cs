@@ -94,11 +94,6 @@ namespace Planet.Unity
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
 
-                //private void OnRenderObject()
-        //{
-        //    GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        //}
-
         private void OnGUI()
         {
             if (!Init)
