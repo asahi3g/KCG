@@ -117,9 +117,9 @@ namespace Inventory
                 if (!itemEntity.isEnabled)
                     return;
 
-                int slotNumber = itemEntity.itemInventory.SlotNumber;
-                int i = slotNumber % width;
-                int j = (height - 1) - (slotNumber - i) / width;
+                int SlotID = itemEntity.itemInventory.SlotID;
+                int i = SlotID % width;
+                int j = (height - 1) - (SlotID - i) / width;
 
                 // Calculate Slot Border positon.
                 float slotX = x + i * tileSize.X;

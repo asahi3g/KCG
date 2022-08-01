@@ -10,7 +10,7 @@ namespace Inventory
         /// <summary>
         /// Current Slots(inventory.Width * inventory.Heigh)
         /// </summary>
-        public BitSet Values; // Todo: Implement faster bitfield implementation.
+        public BitSet Values;
         /// <summary>
         /// Selected slot
         /// </summary>

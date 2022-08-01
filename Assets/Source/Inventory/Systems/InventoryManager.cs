@@ -121,7 +121,7 @@ namespace Inventory
 
             foreach (var item in items)
             {
-                if (item.itemInventory.SlotNumber == slot)
+                if (item.itemInventory.SlotID == slot)
                 {
                     return item;
                 }

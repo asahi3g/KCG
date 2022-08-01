@@ -8,6 +8,6 @@ namespace Item
     {
         [EntityIndex]
         public int      InventoryID;
-        public int      SlotNumber;
+        public int      SlotID;
     }
 }
