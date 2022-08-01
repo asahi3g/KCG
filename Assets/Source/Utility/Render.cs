@@ -189,6 +189,7 @@ namespace Utility
         public void DrawStringGui(float x, float y, float w, float h, string label, 
             int fontSize = 16, TextAnchor alignment = TextAnchor.UpperLeft, Color color = default(Color))
         {
+            y += h;
             x *= Screen.width;
             y = Screen.height - y * Screen.height;
             w *= Screen.width;

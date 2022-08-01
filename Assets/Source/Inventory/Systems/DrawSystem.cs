@@ -8,7 +8,6 @@ namespace Inventory
 {
     public class DrawSystem
     {
-
         public void Draw(Contexts contexts, Transform transform)
         {
             var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
@@ -24,6 +23,7 @@ namespace Inventory
         {
             // Todo: Add scrool bar.
             // Todo: Allow user to move inventory position?
+            // Todo: Change font size with the size of the inventory.
 
             // Calculate Positions and Tile Sizes relative to sceen.
 
@@ -95,18 +95,18 @@ namespace Inventory
                     GameState.Renderer.DrawQuadColorGui(posX, posY, spriteSize.X, spriteSize.Y, borderColor);
 
 
-                    if (inventoryEntity.isInventoryToolBar)
-                    {
-                        GameState.Renderer.DrawStringGui(
-                                slotX + (tileSize.X - slotSize.X) / 2.0f,
-                                slotY + (tileSize.Y - slotSize.Y) / 2.0f,
-                                slotSize.X,
-                                slotSize.Y/2,
-                                label: (i + 1).ToString(),
-                                fontSize: 16,
-                                alignment: TextAnchor.UpperCenter,
-                                color: new Color(255, 255, 255, 255));
-                    }
+                    //if (inventoryEntity.isInventoryToolBar)
+                    //{
+                    //    GameState.Renderer.DrawStringGui(
+                    //            slotX + (tileSize.X - slotSize.X) / 2.0f,
+                    //            slotY + (tileSize.Y - slotSize.Y) / 2.0f - slotSize.Y,
+                    //            slotSize.X,
+                    //            slotSize.Y,
+                    //            label: (i + 1).ToString(),
+                    //            fontSize: 16,
+                    //            alignment: TextAnchor.UpperCenter,
+                    //            color: new Color(255, 255, 255, 255));
+                    //}
                 }
             }
         }
@@ -126,18 +126,6 @@ namespace Inventory
                 float slotX = x + i * tileSize.X;
                 float slotY = y + j * tileSize.Y;
 
-                // Draw Count if stackable.
-                if (itemEntity.hasItemStack)
-                {
-                    //int fontSize = 50;
-
-                    // these Change with Camera size. Find better soluiton. AutoSize? MeshPro?
-                    //float characterSize = 0.05f * Camera.main.pixelWidth / 1024.0f;
-                    //float posOffset = 0.04f;
-
-                    //GameState.Renderer.DrawStringGui(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white);
-                }
-
                 // Draw sprites.
                 Item.ItemProprieties itemProprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
                 int SpriteID = itemProprieties.SpriteID;
@@ -145,9 +133,23 @@ namespace Inventory
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle);
 
                 Vec2f spriteSize = slotSize * 0.8f;
-                slotX = slotX + (tileSize.X - spriteSize.X) / 2.0f;
-                slotY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
-                GameState.Renderer.DrawSpriteGui(slotX, slotY, spriteSize.X, spriteSize.Y, sprite);
+                float posX = slotX + (tileSize.X - spriteSize.X) / 2.0f;
+                float posY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
+                GameState.Renderer.DrawSpriteGui(posX, posY, spriteSize.X, spriteSize.Y, sprite);
+
+                // Draw Count if stackable.
+                //if (itemEntity.hasItemStack)
+                //{
+                //    GameState.Renderer.DrawStringGui(
+                //        slotX + (tileSize.X - slotSize.X) / 2.0f,
+                //        slotY + (tileSize.Y - slotSize.Y) / 2.0f,
+                //        slotSize.X,
+                //        slotSize.Y,
+                //        itemEntity.itemStack.Count.ToString(),
+                //        20,
+                //        TextAnchor.LowerRight,
+                //        Color.white);
+                //}
             }
         }
     }

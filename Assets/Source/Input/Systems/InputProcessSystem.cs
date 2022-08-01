@@ -284,7 +284,7 @@ namespace ECSInput
             }
 
             // Drop Action. 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyUp(KeyCode.T))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
@@ -471,7 +471,7 @@ namespace ECSInput
                          entity.agentPosition2D.Value.Y));
                 }
 
-                            // Remove Tile Back At Cursor Position.
+            // Remove Tile Back At Cursor Position.
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
                 if (mode == Enums.Mode.Agent)

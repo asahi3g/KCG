@@ -75,13 +75,27 @@ public class InventoryTest : MonoBehaviour
             GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
         }
 
-       // inputProcessSystem.Update(ref context);
+        //  Open Inventory with Tab.        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            var players = context.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
+            foreach (var player in players)
+            {
+                int inventoryID = player.agentInventory.InventoryID;
+                InventoryEntity inventoryEntity = context.inventory.GetEntityWithInventoryID(inventoryID);
+                inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
+            }
+        }
     }
 
     private void OnGUI()
     {
-        if(Init)
-            inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
+        if (!Init)
+            return;
+        if (Event.current.type != EventType.Repaint)
+            return;
+
+        inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
     }
 
     private void Initialize()
