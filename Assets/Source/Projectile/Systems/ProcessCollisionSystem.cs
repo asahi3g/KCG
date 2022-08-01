@@ -8,8 +8,8 @@ namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        List<ProjectileEntity> ToRemoveList = new List<ProjectileEntity>();
-        List<ProjectileEntity> ToRemoveArrowList = new List<ProjectileEntity>();
+        List<ProjectileEntity> ToRemoveList = new();
+        List<ProjectileEntity> ToRemoveArrowList = new();
         public void Update(ref PlanetTileMap.TileMap tileMap)
         {
             // Get Delta Time
@@ -174,13 +174,13 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {   
-                        float dist = Vector2.Distance(new Vector2(entity.physicsPosition2D.Value.X, entity.physicsPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
 
                         float radius = 2.0f;
 
                         if (dist < radius)
                         {
-                            Vec2f entityPos = entity.physicsPosition2D.Value;
+                            Vec2f entityPos = entity.agentPosition2D.Value;
                             Vec2f bulletPos = entityP.projectilePosition2D.Value;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
@@ -210,13 +210,13 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {
-                        float dist = Vector2.Distance(new Vector2(entity.physicsPosition2D.Value.X, entity.physicsPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
 
                         float radius = 4.0f;
 
                         if (dist < radius)
                         {
-                            Vec2f entityPos = entity.physicsPosition2D.Value;
+                            Vec2f entityPos = entity.agentPosition2D.Value;
                             Vec2f bulletPos = entityP.projectilePosition2D.Value;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;

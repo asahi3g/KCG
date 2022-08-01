@@ -6,6 +6,7 @@ using Animancer;
 using HUD;
 using PlanetTileMap;
 using Mech;
+using System.Linq;
 
 namespace Planet.Unity
 {
@@ -21,6 +22,10 @@ namespace Planet.Unity
 
         private bool showMechInventory;
 
+        private int selectedMechIndex;
+
+        private int totalMechs;
+
         public void Start()
         {
 
@@ -35,6 +40,16 @@ namespace Planet.Unity
         {
             ref var tileMap = ref Planet.TileMap;
             Material material = Material;
+
+            if(Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                selectedMechIndex++;
+            } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                selectedMechIndex--;
+            }
+
+            selectedMechIndex = Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
             if (Input.GetKeyDown(KeyCode.T))
             {
@@ -70,7 +85,7 @@ namespace Planet.Unity
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
 
             if (showMechInventory)
-                GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform);
+                GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform, selectedMechIndex);
         }
 
         // create the sprite atlas for testing purposes
@@ -112,6 +127,8 @@ namespace Planet.Unity
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, toolBarID);
+
+            totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
         }
 
         void GenerateMap()

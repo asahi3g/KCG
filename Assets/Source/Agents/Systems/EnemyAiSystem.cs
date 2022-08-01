@@ -20,11 +20,11 @@ namespace Agent
 
                 foreach (var entity in entities)
                 {
-                    var targetPos = closestPlayer.physicsPosition2D;
-                    var targetMovable = closestPlayer.physicsMovable;
+                    var targetPos = closestPlayer.agentPosition2D;
+                    var targetMovable = closestPlayer.agentMovable;
 
-                    var pos = entity.physicsPosition2D;
-                    var movable = entity.physicsMovable;
+                    var pos = entity.agentPosition2D;
+                    var movable = entity.agentMovable;
 
                     Vec2f direction = targetPos.Value - pos.Value;
 

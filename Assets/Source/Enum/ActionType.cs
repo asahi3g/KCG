@@ -30,6 +30,7 @@
         /// </summary>
         ToolActionFireWeapon,
         ToolActionPlaceParticle,
+        ToolActionPlaceChest,
         ToolActionEnemySpawn,
         ToolActionMiningLaser,
         ToolActionRemoveTile,

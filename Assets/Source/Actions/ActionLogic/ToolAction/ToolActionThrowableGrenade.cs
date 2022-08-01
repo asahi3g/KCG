@@ -50,14 +50,14 @@ namespace Action
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
             // Start position
-            StartPos = AgentEntity.physicsPosition2D.Value;
+            StartPos = AgentEntity.agentPosition2D.Value;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
             if(ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
             {
                 ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
-                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.physicsPosition2D.Value.X + 0.5f, AgentEntity.physicsPosition2D.Value.Y));
+                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPosition2D.Value.X + 0.5f, AgentEntity.agentPosition2D.Value.Y));
             }
             else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
             {
@@ -93,11 +93,11 @@ namespace Action
                 // Todo: Create a agent colision system?
                 foreach (var entity in entities)
                 {
-                    float dist = Vector2.Distance(new Vector2(AgentEntity.physicsPosition2D.Value.X, AgentEntity.physicsPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
+                    float dist = Vector2.Distance(new Vector2(AgentEntity.agentPosition2D.Value.X, AgentEntity.agentPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
 
                     if (dist < radius)
                     {
-                        Vec2f entityPos = entity.physicsPosition2D.Value;
+                        Vec2f entityPos = entity.agentPosition2D.Value;
                         Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
                         Vec2f diff = bulletPos - entityPos;
                         diff.Y = 0;

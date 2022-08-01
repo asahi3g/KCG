@@ -10,7 +10,7 @@ namespace ECSInput
 
         private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
         {
-            agentEntity.physicsMovable.Invulnerable = false;
+            agentEntity.agentMovable.Invulnerable = false;
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = false;
 
@@ -35,7 +35,7 @@ namespace ECSInput
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
-                agentEntity.physicsMovable.Invulnerable = true;
+                agentEntity.agentMovable.Invulnerable = true;
             }
         }
 
@@ -65,24 +65,24 @@ namespace ECSInput
             {
                 entity.ReplaceECSInputXY(new Vec2f(x, 0.0f), jump, dash);
 
-                var pos = entity.physicsPosition2D;
+                var pos = entity.agentPosition2D;
                 var input = entity.eCSInputXY;
-                var movable = entity.physicsMovable;
+                var movable = entity.agentMovable;
                 var stats = entity.agentStats;
 
                 var movementState = entity.agentMovementState;
                 movementState.Running = running;
-                //if (movable.Landed && movable.Droping)
+                //if (movable.OnGrounded && movable.Droping)
                 //{
                 //    movable.Droping = false;
                 //}
                 if (downKey)
                 {
                     movable.Droping = true;
-                    movable.Landed = false;
+                    movable.OnGrounded = false;
                     movable.WantToDrop = true;
                 }
-                if (movable.Landed)
+                if (movable.OnGrounded)
                 {
                     movable.Droping = false;
                 }
@@ -139,7 +139,7 @@ namespace ECSInput
 
 
                         // jumping
-                        movable.Landed = false;
+                        movable.OnGrounded = false;
                         movable.Acceleration.Y = 100.0f;
                         movable.Velocity.Y = 11.5f;
                         movable.AffectedByGroundFriction = false;
@@ -211,7 +211,7 @@ namespace ECSInput
 
 
                 // if we are on the ground we reset the jump counter
-                if (movable.Landed)
+                if (movable.OnGrounded)
                 {
                     movementState.JumpCounter = 0;
                     movable.AffectedByGroundFriction = true;
@@ -265,10 +265,10 @@ namespace ECSInput
                 {
                     planet.AddParticleEmitter(pos.Value, Particle.ParticleEmitterType.DustEmitter);
                 }
-                //if (movable.Droping && movable.Landed)
+                //if (movable.Droping && movable.OnGrounded)
                 //{
                    
-                //        movable.Landed = false;
+                //        movable.OnGrounded = false;
                 //        movable.Acceleration.Y = 100.0f;
                     
 
@@ -281,6 +281,14 @@ namespace ECSInput
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
                     GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,Enums.ActionType.ChargeAction, player.agentID.ID);
+            }
+
+            // Drop Action. 
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+                foreach (var player in players)
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.ActionType.DropAction, player.agentID.ID);
             }
 
             // Reload Weapon.
@@ -355,12 +363,12 @@ namespace ECSInput
                         if (!item.itemPulseWeaponPulse.GrenadeMode)
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = true;
-                            planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.physicsPosition2D.Value);
+                            planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.agentPosition2D.Value);
                         }
                         else
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = false;
-                            planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.physicsPosition2D.Value);
+                            planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.agentPosition2D.Value);
                         }
                     }
                 }
@@ -380,8 +388,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 0);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
@@ -389,8 +397,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 1);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
@@ -398,8 +406,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 2);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
@@ -407,8 +415,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 3);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                        entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                        entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
@@ -416,8 +424,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 4);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
@@ -425,8 +433,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 5);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha7))
                 {
@@ -434,8 +442,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 6);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha8))
                 {
@@ -443,8 +451,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 7);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                                entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha9))
                 {
@@ -452,8 +460,8 @@ namespace ECSInput
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 8);
 
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                        entity.physicsPosition2D.Value.Y));
+                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                        entity.agentPosition2D.Value.Y));
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha0))
                 {
@@ -461,8 +469,8 @@ namespace ECSInput
 
                      var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 9);
 
-                     planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.physicsPosition2D.Value.X + 0.4f,
-                         entity.physicsPosition2D.Value.Y));
+                     planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                         entity.agentPosition2D.Value.Y));
                 }
 
                             // Remove Tile Back At Cursor Position.

@@ -30,7 +30,7 @@ public class CameraFollow
                 if(entity.isAgentPlayer)
                 {
                     // Set Player Position from Player Entity
-                    PlayerPos = new KMath.Vec2f(entity.physicsPosition2D.Value.X, entity.physicsPosition2D.Value.Y) + offset;
+                    PlayerPos = new KMath.Vec2f(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y) + offset;
                 }
             }
 

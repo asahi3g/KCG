@@ -170,7 +170,7 @@ namespace Item
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
                 Range = range,
-                isLaunchGreanade = isLaunchGrenade,
+                IsLaunchGreanade = isLaunchGrenade,
                 BasicDemage = basicDamage,
             };
 

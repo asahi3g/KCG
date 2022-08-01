@@ -23,6 +23,9 @@ namespace Action
 
             // Set Logic Factory
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceTileCreator());
+            
+            // Add Tiles Component
+            GameState.ActionPropertyManager.SetTiles();
 
             // Set Data Struct
             var data = new ToolActionPlaceTile.Data
@@ -104,6 +107,15 @@ namespace Action
             ToolActionPlaceParticleEmitter.Data placeParticleEmitterData = new ToolActionPlaceParticleEmitter.Data();
             placeParticleEmitterData.Material = material;
             GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+
+            // Create Tool Action Place Chest
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceChest);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceChestCreator());
+            ToolActionPlaceChest.Data placeChestData = new ToolActionPlaceChest.Data();
+            placeChestData.Material = material;
+            GameState.ActionPropertyManager.SetData(placeChestData);
             GameState.ActionPropertyManager.EndActionPropertyType();
 
             // Create Tool Action Spawn Enemy

@@ -26,24 +26,41 @@ namespace Action
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            if (x >= 0 && x < planet.TileMap.MapSize.X &&
-            y >= 0 && y < planet.TileMap.MapSize.Y)
+            if(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Contains(new KMath.Vec2i(x, y)))
             {
-                switch (data.Layer)
+                if (x >= 0 && x < planet.TileMap.MapSize.X &&
+                y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    case MapLayerType.Back:
-                        planet.TileMap.SetBackTile(x, y, data.TileID);
-                        break;
-                    case MapLayerType.Mid:
-                        planet.TileMap.SetMidTile(x, y, data.TileID);
-                        break;
-                    case MapLayerType.Front:
-                        planet.TileMap.SetFrontTile(x, y, data.TileID);
-                        break;
+                    for(int i = 0; i < ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Count; i++)
+                    {
+                        switch (data.Layer)
+                        {
+                            case MapLayerType.Back:
+                                planet.TileMap.SetBackTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
+                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
+                                break;
+                            case MapLayerType.Mid:
+                                planet.TileMap.SetMidTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
+                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
+                                break;
+                            case MapLayerType.Front:
+                                planet.TileMap.SetFrontTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
+                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
+                                break;
+                        }
+                    }
                 }
-            }
 
-            ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Clear();
+                ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Clear();
+                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+            }
+            else
+            {
+                ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Add(planet.TileMap.GetTile(x, y));
+                ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Add(new KMath.Vec2i(x, y));
+                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+            }
         }
     }
 

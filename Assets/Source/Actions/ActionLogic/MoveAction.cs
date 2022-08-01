@@ -25,7 +25,7 @@ namespace Action
 
             AI.Movement.PathFinding pathFinding = new AI.Movement.PathFinding();
             pathFinding.Initialize();
-            path = pathFinding.getPath(ref planet.TileMap, AgentEntity.physicsPosition2D.Value, goalPosition);
+            path = pathFinding.getPath(ref planet.TileMap, AgentEntity.agentPosition2D.Value, goalPosition);
 #if DEBUG
             deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
             Debug.Log("Found time in " + deltaTime.ToString() + "ms");
@@ -45,29 +45,29 @@ namespace Action
         {
             Vec2f targetPos = path[pathLength - 1];
 
-            Vec2f direction = targetPos - AgentEntity.physicsPosition2D.Value;
+            Vec2f direction = targetPos - AgentEntity.agentPosition2D.Value;
 
             if (direction.Magnitude < 0.1f)
             {
                 if (--pathLength == 0)
                 {
-                    AgentEntity.physicsMovable.Acceleration.X = 0;
+                    AgentEntity.agentMovable.Acceleration.X = 0;
                     ActionEntity.actionExecution.State = Enums.ActionState.Success;
                     return;
                 }
             }
 
             // Jumping is just an increase in velocity.
-            if (direction.Y > 0 && AgentEntity.physicsMovable.Landed)
+            if (direction.Y > 0 && AgentEntity.agentMovable.OnGrounded)
             {
-                AgentEntity.physicsMovable.Acceleration.Y = 0.0f;
-                AgentEntity.physicsMovable.Velocity.Y = 7.5f;
+                AgentEntity.agentMovable.Acceleration.Y = 0.0f;
+                AgentEntity.agentMovable.Velocity.Y = 7.5f;
             }
 
             // Todo: deals with flying agents.
             direction.Y = 0;
             direction.Normalize();
-            AgentEntity.physicsMovable.Acceleration.X = direction.X * AgentEntity.physicsMovable.Speed * 25.0f;
+            AgentEntity.agentMovable.Acceleration.X = direction.X * AgentEntity.agentMovable.Speed * 25.0f;
         }
 
         public override void OnExit(ref Planet.PlanetState planet)

@@ -85,7 +85,7 @@ namespace Animancer.Examples.AnimatorControllers.GameKit
 
             if (_IsSoftLanding)
             {
-                // Update the horizontal speed but keep the initial vertical speed from when you first landed.
+                // Update the horizontal speed but keep the initial vertical speed from when you first OnGrounded.
                 var parameter = _SoftLanding.State.Parameter;
                 parameter.x = Character.Parameters.ForwardSpeed;
                 _SoftLanding.State.Parameter = parameter;

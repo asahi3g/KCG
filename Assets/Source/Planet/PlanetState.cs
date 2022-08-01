@@ -176,111 +176,11 @@ namespace Planet
             return newEntity;
         }
 
-        public ParticleEntity AddDebris(Vec2f position)
+        public void AddDebris(Vec2f position, int spriteId, float spriteWidth, float spriteHeight)
         {
-            Utils.Assert(ParticleList.Size < PlanetEntityLimits.ParticleLimit);
+            Utils.Assert(ParticleList.Size + 5 < PlanetEntityLimits.ParticleLimit);
 
-            Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(0, Enums.AtlasType.Particle).TextureCoords;
-            float x = spriteCoords.x;
-            float y = spriteCoords.y;
-            float width = spriteCoords.z;
-            float height = spriteCoords.w;
-
-
-
-            Vec2f[] triangle1 = new Vec2f[3];
-            triangle1[0] = new Vec2f(0, 0);
-            triangle1[1] = new Vec2f(0.5f, 0.5f);
-            triangle1[2] = new Vec2f(0.0f, 1.0f);
-
-            Vec2f[] triangle2 = new Vec2f[3];
-            triangle2[0] = new Vec2f(0, 0.5f);
-            triangle2[1] = new Vec2f(0.5f, 0.0f);
-            triangle2[2] = new Vec2f(1.0f, 0.5f);
-
-
-            Vec2f[] triangle3 = new Vec2f[3];
-            triangle3[0] = new Vec2f(1.0f, 1.0f);
-            triangle3[1] = new Vec2f(0.5f, 0.5f);
-            triangle3[2] = new Vec2f(1.0f, 0.0f);
-
-
-            Vec2f[] triangle4 = new Vec2f[3];
-            triangle4[0] = new Vec2f(1.0f, 0.0f);
-            triangle4[1] = new Vec2f(0.5f, 0.5f);
-            triangle4[2] = new Vec2f(0.0f, 0.0f);
-
-
-            float rand1 = KMath.Random.Mt19937.genrand_realf();
-            float rand2 = KMath.Random.Mt19937.genrand_realf();
-
-            Vec2f velocity;
-            velocity.X = rand1;
-            velocity.Y = rand2;
-
-            Vec2f[] triangle1Coords = new Vec2f[3];
-            triangle1Coords[0] = new Vec2f(x, y);
-            triangle1Coords[1] = new Vec2f(x + width / 2, y + height / 2);
-            triangle1Coords[2] = new Vec2f(x, y + height);
-
-            ParticleEntity particle1 = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
-            triangle1, triangle1Coords, velocity, -1));
-
-
-            rand1 = KMath.Random.Mt19937.genrand_realf();
-            rand2 = KMath.Random.Mt19937.genrand_realf();
-            velocity.X = rand1;
-            velocity.Y = rand2;
-
-            Vec2f[] triangle2Coords = new Vec2f[3];
-            triangle2Coords[0] = new Vec2f(x, y + height);
-            triangle2Coords[1] = new Vec2f(x + width / 2, y + height / 2);
-            triangle2Coords[2] = new Vec2f(x + width, y + height);
-
-            ParticleEntity particle2 = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.0f, 0.5f), 
-            triangle2, triangle2Coords, velocity, -1));
-
-
-            rand1 = KMath.Random.Mt19937.genrand_realf();
-            rand2 = KMath.Random.Mt19937.genrand_realf();
-            velocity.X = rand1;
-            velocity.Y = rand2;
-
-            Vec2f[] triangle3Coords = new Vec2f[3];
-            triangle3Coords[0] = new Vec2f(x + width, y + height);
-            triangle3Coords[1] = new Vec2f(x + width / 2, y + height / 2);
-            triangle3Coords[2] = new Vec2f(x + width, y);
-
-            ParticleEntity particle3 = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
-            triangle3, triangle3Coords, velocity, -1));
-
-
-            rand1 = KMath.Random.Mt19937.genrand_realf();
-            rand2 = KMath.Random.Mt19937.genrand_realf();
-            velocity.X = rand1;
-            velocity.Y = rand2;
-
-            Vec2f[] triangle4Coords = new Vec2f[3];
-            triangle4Coords[0] = new Vec2f(x + width, y);
-            triangle4Coords[1] = new Vec2f(x + width / 2, y + height / 2);
-            triangle4Coords[2] = new Vec2f(x, y);
-
-            ParticleEntity particle4 = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
-            triangle4, triangle4Coords, velocity, -1));
-
-            /*ParticleEntity a = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position, 
-            new Vector4(spriteCoords.x, spriteCoords.y, width / 2, height / 2), -1));
-
-            ParticleEntity b = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.5f, 0.0f), 
-            new Vector4(spriteCoords.x + width / 2.0f, spriteCoords.y, width / 2, height / 2), -1));
-
-            ParticleEntity c = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.0f, -0.5f), 
-            new Vector4(spriteCoords.x, spriteCoords.y + height / 2.0f, width / 2, height / 2), -1));
-
-            ParticleEntity d = ParticleList.Add(GameState.ParticleSpawnerSystem.SpawnDebris(EntitasContext.particle, position + new Vec2f(0.5f, -0.5f), 
-            new Vector4(spriteCoords.x + width / 2.0f, spriteCoords.y + height / 2.0f, width / 2, height / 2), -1));*/
-
-            return particle4;
+            GameState.ParticleSpawnerSystem.SpawnSpriteDebris(this, position, spriteId, spriteWidth, spriteHeight);
         }
 
         public void RemoveParticle(int particleId)
@@ -367,10 +267,10 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-            GameState.PhysicsMovableSystem.Update(EntitasContext.agent);
-            GameState.PhysicsMovableSystem.Update(EntitasContext.itemParticle);
-            GameState.PhysicsProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
-            GameState.PhysicsProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
+            GameState.AgentMovableSystem.Update(EntitasContext.agent);
+            GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
+            GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);

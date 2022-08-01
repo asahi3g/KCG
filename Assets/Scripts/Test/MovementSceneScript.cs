@@ -105,21 +105,21 @@ namespace Planet.Unity
 
             // Draw lines around player if out of bounds
             if (Player != null)
-                if(Player.physicsPosition2D.Value.X -10.0f >= Planet.TileMap.MapSize.X)
+                if(Player.agentPosition2D.Value.X -10.0f >= Planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
                 
                     // X+
-                    Gizmos.DrawLine(new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y, 0.0f), new Vector3(Player.physicsPosition2D.Value.X + 10.0f, Player.physicsPosition2D.Value.Y));
+                    Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector3(Player.agentPosition2D.Value.X + 10.0f, Player.agentPosition2D.Value.Y));
 
                     // X-
-                    Gizmos.DrawLine(new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y, 0.0f), new Vector3(Player.physicsPosition2D.Value.X - 10.0f, Player.physicsPosition2D.Value.Y));
+                    Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector3(Player.agentPosition2D.Value.X - 10.0f, Player.agentPosition2D.Value.Y));
 
                     // Y+
-                    Gizmos.DrawLine(new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y, 0.0f), new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y + 10.0f));
+                    Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y + 10.0f));
 
                     // Y-
-                    Gizmos.DrawLine(new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y, 0.0f), new Vector3(Player.physicsPosition2D.Value.X, Player.physicsPosition2D.Value.Y - 10.0f));
+                    Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -176,6 +176,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.ChestPlacementTool, Planet.EntitasContext);
 
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(3.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(4.0f, 25.0f));

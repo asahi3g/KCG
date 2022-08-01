@@ -102,7 +102,7 @@ namespace Action
             }
 
             // Start position
-            StartPos = AgentEntity.physicsPosition2D.Value;
+            StartPos = AgentEntity.agentPosition2D.Value;
             StartPos.X += 0.3f;
             StartPos.Y += 0.5f;
 
@@ -166,11 +166,11 @@ namespace Action
                 {
                     if (!entity.isAgentPlayer)
                     {
-                        float dist = Vector2.Distance(new Vector2(AgentEntity.physicsPosition2D.Value.X, AgentEntity.physicsPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(AgentEntity.agentPosition2D.Value.X, AgentEntity.agentPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
 
                         if (dist < 2.0f)
                         {
-                            Vec2f entityPos = entity.physicsPosition2D.Value;
+                            Vec2f entityPos = entity.agentPosition2D.Value;
                             Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
@@ -216,9 +216,9 @@ namespace Action
                     if (entity == AgentEntity)
                         continue;
 
-                    Vec2f entityPos = entity.physicsPosition2D.Value;
+                    Vec2f entityPos = entity.agentPosition2D.Value;
                     Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
-                    var movable = entity.physicsMovable;
+                    var movable = entity.agentMovable;
 
                     Vec2f diff = bulletPos - entityPos;
 

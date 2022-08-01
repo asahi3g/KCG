@@ -12,8 +12,8 @@ namespace Planet.Unity
     {
         [SerializeField] Material   Material;
 
-        public Planet.PlanetState    Planet;
-        AgentEntity           Player;
+        public Planet.PlanetState       Planet;
+        AgentEntity                     Player;
 
         static bool Init = false;
 
@@ -75,7 +75,7 @@ namespace Planet.Unity
 
             GenerateMap();
 
-            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int toolBarID = Player.agentToolBar.ToolBarID;
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
@@ -144,7 +144,6 @@ namespace Planet.Unity
                     tileMap.SetFrontTile(i, j, frontTile);
                 }
             }
-            //TileMap.BuildLayerTexture(MapLayerType.Front);
         }
     }
 }

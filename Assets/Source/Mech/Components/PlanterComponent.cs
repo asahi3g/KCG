@@ -2,7 +2,7 @@ using Entitas;
 using Entitas.CodeGeneration.Attributes;
 using Enums;
 
-namespace Mech.Planter
+namespace Mech
 {
     // Planter Properties Component
     [Mech]

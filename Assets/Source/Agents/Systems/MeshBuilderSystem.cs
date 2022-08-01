@@ -35,8 +35,8 @@ namespace Agent
 
                 Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Agent).TextureCoords;
 
-                var x = entity.physicsPosition2D.Value.X;
-                var y = entity.physicsPosition2D.Value.Y;
+                var x = entity.agentPosition2D.Value.X;
+                var y = entity.agentPosition2D.Value.Y;
                 var width = entity.agentSprite2D.Size.X;
                 var height = entity.agentSprite2D.Size.Y;
 

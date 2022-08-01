@@ -65,7 +65,7 @@ namespace Action
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
             // Start positiom
-            StartPos = AgentEntity.physicsPosition2D.Value;
+            StartPos = AgentEntity.agentPosition2D.Value;
             StartPos.X += 0.3f;
             StartPos.Y += 0.5f;
 
@@ -163,13 +163,13 @@ namespace Action
                     continue;
 
                 //
-                Vec2f entityPos = entity.physicsPosition2D.Value;
+                Vec2f entityPos = entity.agentPosition2D.Value;
 
                 // Get Bullet Position from Projectile Position Component
                 Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
 
                 // Get Agent Physics Movable Component
-                var movable = entity.physicsMovable;
+                var movable = entity.agentMovable;
 
                 // Difference Calculation
                 Vec2f diff = bulletPos - entityPos;

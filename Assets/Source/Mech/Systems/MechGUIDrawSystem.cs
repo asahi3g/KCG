@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using KMath;
 using Entitas;
 using Item;
+using System.Linq;
 
 namespace Mech
 {
 
     public class MechGUIDrawSystem
     {
-        public void Draw(Contexts contexts, Transform transform)
+        public void Draw(Contexts contexts, Transform transform, int selectedIndex)
         {
             /*var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
             // If empty Draw ToolBar.
@@ -36,14 +37,22 @@ namespace Mech
             y -= h / 2f;
 
             // var mechs = contexts.mech.GetGroup(MechMatcher.MechSprite2D);
+            var mechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).ToArray();
 
-            Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(0, Enums.AtlasType.Mech);
+            for (int i = 0; i < mechs.Length; i++)
+            {
+                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(mechs[i].SpriteID, Enums.AtlasType.Mech);
 
+                var thisX = x + w * (i - mechs.Length / 2);
 
+                if(i == selectedIndex)
+                    GameState.Renderer.DrawQuadColorGui(thisX, y, w, h, Color.yellow);
+                else 
+                    DrawBackGround(thisX, y, w, h);
 
-            DrawBackGround(x, y, w, h);
+                GameState.Renderer.DrawSpriteGui(thisX, y, w * 0.8F, h * 0.8F, sprite);
+            }
 
-            GameState.Renderer.DrawSpriteGui(x, y, w * 0.8F, h * 0.8F, sprite);
         }
 
         private void DrawBackGround(float x, float y, float w, float h)

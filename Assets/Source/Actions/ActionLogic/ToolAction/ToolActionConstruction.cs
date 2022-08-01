@@ -21,7 +21,7 @@ namespace Action
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-                planet.AddMech(new KMath.Vec2f(x, y), Mech.MechType.Storage);
+                //planet.AddMech(new KMath.Vec2f(x, y), Mech.MechType.Storage);
             }
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);

@@ -48,13 +48,9 @@ public class GameState
     public static readonly Agent.AgentSpawnerSystem AgentSpawnerSystem;
     public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
+    public static readonly Agent.MovableSystem AgentMovableSystem;
+    public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
 
-
-    #endregion
-
-    #region Physics
-    public static readonly Physics.PhysicsMovableSystem PhysicsMovableSystem;
-    public static readonly Physics.PhysicsProcessCollisionSystem PhysicsProcessCollisionSystem;
     #endregion
 
     #region Inventory
@@ -66,6 +62,8 @@ public class GameState
     public static readonly Item.SpawnerSystem ItemSpawnSystem;
     public static readonly Item.PickUpSystem ItemPickUpSystem;
     public static readonly Item.MeshBuilderSystem ItemMeshBuilderSystem;
+    public static readonly Item.MovementSystem ItemMovableSystem;
+    public static readonly Item.ProcessCollisionSystem ItemProcessCollisionSystem;
     public static readonly Item.ItemCreationApi ItemCreationApi;
     #endregion
 
@@ -113,13 +111,13 @@ public class GameState
         InputProcessSystem = new ECSInput.InputProcessSystem();
         AgentCreationApi = new Agent.AgentCreationApi();
         AgentSpawnerSystem = new Agent.AgentSpawnerSystem(AgentCreationApi);
+        AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
+        AgentMovableSystem = new Agent.MovableSystem();
+        AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
-        PhysicsMovableSystem = new Physics.PhysicsMovableSystem();
-        AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
-        PhysicsProcessCollisionSystem = new Physics.PhysicsProcessCollisionSystem();
         EnemyAiSystem = new Agent.EnemyAiSystem();
         AnimationManager = new Animation.AnimationManager();
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();
@@ -131,6 +129,8 @@ public class GameState
         ItemSpawnSystem = new Item.SpawnerSystem();
         ItemPickUpSystem = new Item.PickUpSystem();
         ItemMeshBuilderSystem = new Item.MeshBuilderSystem();
+        ItemMovableSystem = new Item.MovementSystem();
+        ItemProcessCollisionSystem = new Item.ProcessCollisionSystem();
         ActionPropertyManager = new Action.ActionPropertyManager();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();
