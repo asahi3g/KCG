@@ -10,6 +10,7 @@ public class GameResources
     // sprite sheets ids
     public static int LoadingTilePlaceholderSpriteSheet;
     public static int BackgroundSpriteSheet;
+    public static int ColoredNumberedWangSpriteSheet;
     public static int MoonSpriteSheet;
     public static int OreSpriteSheet;
     public static int Ore2SpriteSheet;
@@ -21,7 +22,7 @@ public class GameResources
     public static int CharacterSpriteSheet;
     public static int LaserSpriteSheet;
     public static int PipeSpriteSheet;
-
+    public static int ChestSpriteSheet;
     public static int pipeIconSpriteSheet;
     public static int DustSpriteSheet;
     public static int GrenadeSpriteSheet;
@@ -59,6 +60,7 @@ public class GameResources
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
     public static int ChestIcon;
+    public static int ChestIconParticle;
 
     public static int PotIcon;
 
@@ -88,6 +90,7 @@ public class GameResources
             // loading the sprite sheets
             LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
             BackgroundSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\test - Copy.png", 16, 16);
+            ColoredNumberedWangSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\colored-numbered-wang.png", 16, 16);
             MoonSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\Tiles_Moon.png", 16, 16);
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
             Ore2SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Copper\\ore_copper_1.png", 16, 16);
@@ -145,7 +148,8 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
-            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
+            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
             MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, Enums.AtlasType.Mech);
             MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, Enums.AtlasType.Mech);
@@ -204,7 +208,7 @@ public class GameResources
         GameState.TileCreationApi.SetTileMaterialType(MaterialType.Background);
         GameState.TileCreationApi.SetTilePropertyName("background");
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
-        GameState.TileCreationApi.SetTilePropertySpriteSheet16(BackgroundSpriteSheet, 0, 0);
+        GameState.TileCreationApi.SetTilePropertySpriteSheet16(ColoredNumberedWangSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();
 
 
@@ -487,6 +491,13 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceParticle);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.ChestPlacementTool, "ChestPlacementTool");
+        GameState.ItemCreationApi.SetTexture(OreIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceChest);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
         GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
@@ -619,8 +630,7 @@ public class GameResources
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Debris);
         GameState.ParticleCreationApi.SetName("debris");
         GameState.ParticleCreationApi.SetDecayRate(0.5f);
-        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -5.0f));
-        GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -15.0f));
         GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
@@ -703,4 +713,7 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
     }
+
+
+    
 }

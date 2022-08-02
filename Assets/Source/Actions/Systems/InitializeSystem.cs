@@ -109,6 +109,15 @@ namespace Action
             GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
             GameState.ActionPropertyManager.EndActionPropertyType();
 
+
+            // Create Tool Action Place Chest
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceChest);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceChestCreator());
+            ToolActionPlaceChest.Data placeChestData = new ToolActionPlaceChest.Data();
+            placeChestData.Material = material;
+            GameState.ActionPropertyManager.SetData(placeChestData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
             // Create Tool Action Spawn Enemy
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemySpawn);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemySpawnCreator());

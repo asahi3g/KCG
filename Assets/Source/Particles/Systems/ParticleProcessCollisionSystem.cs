@@ -32,6 +32,8 @@ namespace Particle
                     pos.Position = new Vec2f(pos.Position.X, pos.PreviousPosition.Y);
                     pos.Velocity.Y = 0.0f;
                     pos.Acceleration.Y = 0.0f;
+                    pos.Velocity.X = 0.0f;
+                    pos.Acceleration.X = 0.0f;
 
                 }
                 else if (entityBoxBorders.IsCollidingTop(tileMap, pos.Velocity))

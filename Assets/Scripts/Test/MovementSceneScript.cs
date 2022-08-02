@@ -173,6 +173,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ChestPlacementTool, Planet.EntitasContext);
 
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(3.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(4.0f, 25.0f));

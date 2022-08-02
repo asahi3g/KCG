@@ -41,6 +41,7 @@
         SpawnEnemySlimeTool,
         PipePlacementTool,
         ParticleEmitterPlacementTool,
+        ChestPlacementTool,
         PlanterTool,
         HarvestTool,
     }
