@@ -10,10 +10,10 @@ public partial class ActionEntity {
 
     static readonly Action.InterruptComponent actionInterruptComponent = new Action.InterruptComponent();
 
-    public bool isActionInterrupt {
+    public bool hasActionInterrupt {
         get { return HasComponent(ActionComponentsLookup.ActionInterrupt); }
         set {
-            if (value != isActionInterrupt) {
+            if (value != hasActionInterrupt) {
                 var index = ActionComponentsLookup.ActionInterrupt;
                 if (value) {
                     var componentPool = GetComponentPool(index);
