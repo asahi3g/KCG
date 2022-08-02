@@ -21,7 +21,7 @@ namespace Inventory
         public int   BackGroundSpriteID;
         public Color BackgroundColor;
         public Color SlotColor;
-        public Color SelectedBorder;
+        public Color SelectedColor;
 
         public float TileSize;      // Height in pixels -> Whole tile = Slot + Border + Space between slots.
         public float BorderOffset;  // Horizontal offset from the beggining of the tile.

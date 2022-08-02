@@ -77,14 +77,13 @@ namespace Inventory
 
         public void SetSelectedtSlotColor(Color whenSelected)
         {
-            ProprietiesArray[InventoryID].SlotColor = whenSelected;
-            ProprietiesArray[InventoryID].InventoryFlags |= InventoryProprieties.Flags.HasBackgroundTexture;
+            ProprietiesArray[InventoryID].SelectedColor = whenSelected;
         }
 
         public void SetDefaultSlotColor(Color defaultBorder)
         {
             ProprietiesArray[InventoryID].SlotColor = defaultBorder;
-            ProprietiesArray[InventoryID].InventoryFlags |= InventoryProprieties.Flags.HasBackgroundTexture;
+            ProprietiesArray[InventoryID].InventoryFlags |= InventoryProprieties.Flags.HasBorder;
         }
 
         public void SetToolBar()

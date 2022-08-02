@@ -28,10 +28,10 @@ namespace Inventory
         //    MakeInventoryEntity(entitasContext, width, height);
         //}
 
-        private InventoryEntity CreateInventory(Contexts entitasContext, int width, int height, int InventoryID)
+        private InventoryEntity CreateInventory(Contexts entitasContext, int width, int height, int inventoryProprietiesID)
         {
             InventoryEntity entity = entitasContext.inventory.CreateEntity();
-            entity.AddInventoryID(InventoryID++, InventoryID);
+            entity.AddInventoryID(InventoryID++, inventoryProprietiesID);
             int length = width * height;
             entity.AddInventoryEntity(
                 width,

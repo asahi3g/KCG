@@ -28,12 +28,12 @@ namespace Inventory
 
             InventoryProprieties proprietis = GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID);
 
-            int screenWidth = 1920;
             int screenHeight = 1080;
+            int screenWidth = 1920;
 
-            Vec2f tileSize = new Vec2f(proprietis.TileSize * screenWidth / screenHeight, proprietis.TileSize / screenHeight);
-            Vec2f borderOffset = new Vec2f(proprietis.BorderOffset * screenWidth / screenHeight, proprietis.BorderOffset / screenHeight);
-            Vec2f slotOffset = new Vec2f(proprietis.SlotOffset * screenWidth / screenHeight, proprietis.SlotOffset / screenHeight);
+            Vec2f tileSize =        new Vec2f(proprietis.TileSize     / screenHeight, proprietis.TileSize     / screenHeight * screenWidth / screenHeight);
+            Vec2f borderOffset =    new Vec2f(proprietis.BorderOffset / screenHeight, proprietis.BorderOffset / screenHeight * screenWidth / screenHeight);
+            Vec2f slotOffset =      new Vec2f(proprietis.SlotOffset   / screenHeight, proprietis.SlotOffset   / screenHeight * screenWidth / screenHeight);
 
             // Get Inventory Info.
             int width = inventoryEntity.inventoryEntity.Width;
@@ -66,27 +66,28 @@ namespace Inventory
             for (int i = 0, length = inventoryEntity.inventoryEntity.Slots.Length; i < length; i++)
             {
                 ref Slot slot = ref inventoryEntity.inventoryEntity.Slots[i];
-
-                float tilePosX = x + (i % width) * w;
-                float tilePosY = y + (((length - 1 - i) - height / 2) / width + 1) * h;
-
+            
+                float tilePosX = x + (i % width) * tileSize.X;
+                float tilePosY = y + ((length - 1 - i)  / width) * tileSize.Y;
+            
                 DrawBorder(tilePosX, tilePosY, tileSize, borderOffset, i, ref proprietis, ref inventoryEntity);
+           
+                DrawSlot(entitasContext, tilePosX, tilePosY, tileSize, slotOffset, ref proprietis, ref inventoryEntity.inventoryEntity.Slots[i]);
 
                 // Draw tool bar numbers.
                 if (i < width)
                 {
+                    float offset = (20f / screenHeight);
                     GameState.Renderer.DrawStringGui(
                         tilePosX,
-                        tilePosY + slotOffset.Y,
+                        tilePosY + offset - tileSize.Y,
                         tileSize.X,
                         tileSize.Y,
                         label: (i + 1).ToString(),
-                        fontSize: 16,
+                        fontSize: 25,
                         alignment: TextAnchor.UpperCenter,
                         color: new Color(255, 255, 255, 255));
                 }
-
-                DrawSlot(entitasContext, tilePosX, tilePosY, tileSize, slotOffset, ref proprietis, ref inventoryEntity.inventoryEntity.Slots[i]);
             }
         }
 
@@ -103,7 +104,7 @@ namespace Inventory
             }
             if (inventoryEntity.inventoryEntity.SelectedID == i)
             {
-                GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, proprietis.SelectedBorder);
+                GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, proprietis.SelectedColor);
             }
         }
 

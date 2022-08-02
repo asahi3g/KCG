@@ -73,6 +73,7 @@ namespace Inventory
             int fistEmptySlot = GetFirstEmptySlot(inventory.inventoryEntity.SlotsMask);
             entity.AddItemInventory(inventoryID, fistEmptySlot);
             inventory.inventoryEntity.SlotsMask.Set(fistEmptySlot);
+            inventory.inventoryEntity.Slots[fistEmptySlot].ItemID = entity.itemID.ID;
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -85,6 +86,7 @@ namespace Inventory
         {
             var inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(entity.itemInventory.InventoryID);
             inventoryEntity.inventoryEntity.SlotsMask.UnSet(slot);
+            inventoryEntity.inventoryEntity.Slots[slot].ItemID = -1;
             entity.RemoveItemInventory();
         }
         
