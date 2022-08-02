@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Collisions;
+using CollisionsTest;
 using Enums.Tile;
 using KMath;
 using Planet;
@@ -224,7 +225,9 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         RegenerateMap();
 
         var velocity = new Vec2f(3f, 3f);
+        var square_halfsize = new Vec2f((square.xmax - square.xmin) / 2f, (square.ymax - square.ymin) / 2f);
         var hit = TileCollisions.GetCollisionHitAABB_AABB(Planet.TileMap, square.xmin, square.xmax, square.ymin, square.ymax, velocity);
+        var circleHit = CircleTileMapSweepCollision.GetCollisionHitCircle_AABB(Planet.TileMap, 2.5f, new Vec2f(square.xmin + square_halfsize.X, square.ymin + square_halfsize.Y), velocity);
 
         if (hit.time <= 1)
         {
