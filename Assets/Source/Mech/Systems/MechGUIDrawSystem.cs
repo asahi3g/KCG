@@ -61,7 +61,7 @@ namespace Mech
             GameState.Renderer.DrawQuadColorGui(x, y, w, h, backGround);
         }
 
-
+        /*
         void DrawIcon(Contexts entitasContext, float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, Transform transform, HashSet<ItemInventoryEntity> itemInInventory)
         {
             foreach (ItemInventoryEntity itemEntity in itemInInventory)
@@ -100,7 +100,7 @@ namespace Mech
                 slotY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
                 GameState.Renderer.DrawSpriteGui(slotX, slotY, spriteSize.X, spriteSize.Y, sprite);
             }
-        }
+        }*/
     }
 
 }

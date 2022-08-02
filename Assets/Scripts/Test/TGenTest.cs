@@ -13,13 +13,21 @@ namespace Planet.Unity
     public class TGenTest : MonoBehaviour
     {
 
-        [SerializeField] Material Material;
+        [SerializeField]
+        private Material Material;
 
         public Planet.PlanetState Planet;
 
-        static bool Init = false;
+        private static bool Init = false;
 
-        static bool IntializeTGenGrid = true;
+        [SerializeField]
+        private bool IntializeTGenGrid = true;
+
+        [SerializeField]
+        private bool EnableTileGrid = true;
+
+        [SerializeField]
+        private bool DrawMapBorder = true;
 
         public void Start()
         {
@@ -39,13 +47,7 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        private void OnRenderObject()
-        {
-            //CHANGE TO DRAW MAP
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        }
 
-        // create the sprite atlas for testing purposes
         public void Initialize()
         {
             GameResources.Initialize();
@@ -56,10 +58,15 @@ namespace Planet.Unity
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
 
-            if(IntializeTGenGrid)
-            {
+            if (IntializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);
-            }
+
+            if (EnableTileGrid)
+                GameState.TGenRenderGridOverlay.Initialize(Material, transform, mapSize.X, mapSize.Y, 30);
+
+            if (DrawMapBorder)
+                GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
+            
         }
     }
 }
