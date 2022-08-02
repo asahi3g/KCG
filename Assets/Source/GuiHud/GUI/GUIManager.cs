@@ -28,6 +28,12 @@ namespace KGUI
         // Dirt
         static KGUI.Tiles.Dirt dirtUI = new Tiles.Dirt();
 
+        // Wire
+        static KGUI.Tiles.Wire wireUI = new Tiles.Wire();
+
+        // Pipe
+        static KGUI.Tiles.Pipe pipeUI = new Tiles.Pipe();
+
         // GUI Elements List
         static List<GUIManager> UIList = new List<GUIManager>();
 
@@ -75,6 +81,12 @@ namespace KGUI
 
             // Add Dirt Tile To Draw Array
             UIList.Add(dirtUI);
+
+            // Add Wire Tile To Draw Array
+            UIList.Add(wireUI);
+
+            // Add Pipe Tile To Draw Array
+            UIList.Add(pipeUI);
 
             // Init Elements
             for (int i = 0; i < UIList.Count; i++)
@@ -135,16 +147,13 @@ namespace KGUI
 
         public virtual void OnMouseClick(AgentEntity agentEntity)
         {
-            // If Mosue 0 Button Down
-            if (Input.GetMouseButtonDown(0))
+            // Handle Inputs
+            for (int i = 0; i < UIList.Count; i++)
             {
-                // Handle Inputs
-                for (int i = 0; i < UIList.Count; i++)
+                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
-                    Debug.LogWarning("Cursor X: " + CursorPosition.X + ", Y: " + CursorPosition.Y);
-                    Debug.LogWarning("Object X: " + UIList[i].ObjectPosition.X + ", Y: " + UIList[i].ObjectPosition.Y);
-
-                    if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                    // If Mosue 0 Button Down
+                    if (Input.GetMouseButton(0))
                     {
                         UIList[i].OnMouseClick(agentEntity);
                     }

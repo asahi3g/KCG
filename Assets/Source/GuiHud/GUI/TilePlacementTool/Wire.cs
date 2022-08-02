@@ -7,9 +7,9 @@ using PlanetTileMap;
 
 namespace KGUI.Tiles
 {
-    public class Dirt : GUIManager
+    public class Wire : GUIManager
     {
-        private Image DirtTile;
+        private Image WireTile;
         private Image Background;
 
         private Planet.PlanetState _planet;
@@ -23,17 +23,17 @@ namespace KGUI.Tiles
         {
             _planet = planet;
 
-            Background = new Image("DirtBackground", GameObject.Find("Canvas").transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
+            Background = new Image("WireBackground", GameObject.Find("Canvas").transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
             Background.SetImageType(UnityEngine.UI.Image.Type.Tiled);
-            Background.SetPosition(new Vector3(-200.0f, -80.2f, 0));
+            Background.SetPosition(new Vector3(-120.0f, -80.2f, 0));
             Background.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
             Background.SetImageColor(Color.yellow);
 
-            int width = 16;
-            int height = 16;
-            DirtTile = new Image("DirtTile", Background.GetTransform(), width, height, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png");
-            DirtTile.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
-            DirtTile.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
+            int width = 128;
+            int height = 128;
+            WireTile = new Image("WireTile", Background.GetTransform(), width, height, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png");
+            WireTile.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
+            WireTile.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
         }
 
         public override void Update(AgentEntity agentEntity)
@@ -48,7 +48,7 @@ namespace KGUI.Tiles
             if (item.itemType.Type == Enums.ItemType.PlacementTool)
             {
                 Background.GetGameObject().SetActive(true);
-                if(item.itemCastData.data.TileID == TileID.Moon)
+                if (item.itemCastData.data.TileID == TileID.Wire)
                 {
                     Background.SetImageColor(Color.red);
                 }
@@ -72,7 +72,7 @@ namespace KGUI.Tiles
             item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
             if (item.itemType.Type == Enums.ItemType.PlacementTool)
             {
-                item.itemCastData.data.TileID = TileID.Moon;
+                item.itemCastData.data.TileID = TileID.Wire;
             }
         }
 

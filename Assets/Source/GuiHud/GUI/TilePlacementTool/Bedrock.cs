@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +10,14 @@ namespace KGUI.Tiles
     public class Bedrock : GUIManager
     {
         private Image BedrockTile;
+        private Image Background;
 
         private Planet.PlanetState _planet;
 
-        int toolBarID;
-        InventoryEntity Inventory;
-        int selectedSlot;
-        ItemInventoryEntity item;
+        private int toolBarID;
+        private InventoryEntity Inventory;
+        private int selectedSlot;
+        private ItemInventoryEntity item;
 
         public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
@@ -25,14 +25,21 @@ namespace KGUI.Tiles
 
             int width = 16;
             int height = 16;
-            BedrockTile = new Image("BedrockTile", GameObject.Find("Canvas").transform, width, height, "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png");
-            BedrockTile.SetPosition(new Vector3(-280.0f, -80.2f, 0));
-            BedrockTile.SetScale(new Vector3(0.6f, 0.6f, 0.6f));
+
+            Background = new Image("BedrockBackground", GameObject.Find("Canvas").transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
+            Background.SetImageType(UnityEngine.UI.Image.Type.Tiled);
+            Background.SetPosition(new Vector3(-280.0f, -80.2f, 0));
+            Background.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
+            Background.SetImageColor(Color.yellow);
+
+            BedrockTile = new Image("BedrockTile", Background.GetTransform(), width, height, "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png");
+            BedrockTile.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
+            BedrockTile.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
         }
 
         public override void Update(AgentEntity agentEntity)
         {
-            ObjectPosition = new KMath.Vec2f(BedrockTile.GetTransform().position.x, BedrockTile.GetTransform().position.y);
+            ObjectPosition = new KMath.Vec2f(Background.GetTransform().position.x, Background.GetTransform().position.y);
 
             toolBarID = agentEntity.agentToolBar.ToolBarID;
             Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
@@ -41,11 +48,20 @@ namespace KGUI.Tiles
             item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
             if (item.itemType.Type == Enums.ItemType.PlacementTool)
             {
-                BedrockTile.GetGameObject().SetActive(true);
+                Background.GetGameObject().SetActive(true);
+
+                if (item.itemCastData.data.TileID == TileID.Bedrock)
+                {
+                    Background.SetImageColor(Color.red);
+                }
+                else
+                {
+                    Background.SetImageColor(Color.yellow);
+                }
             }
             else
             {
-                BedrockTile.GetGameObject().SetActive(false);
+                Background.GetGameObject().SetActive(false);
             }
         }
 

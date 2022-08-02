@@ -463,6 +463,7 @@ public class GameResources
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilBackgroundAction);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveTileTool, "RemoveTileTool");
@@ -479,18 +480,18 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionEnemySpawn);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MiningLaserTool, "MiningLaserTool");
-        GameState.ItemCreationApi.SetTexture(MiningLaserToolIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(MiningLaserToolIcon);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMiningLaser);
-        GameState.ItemCreationApi.EndItem();
-
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PipePlacementTool, "PipePlacementTool");
         GameState.ItemCreationApi.SetTexture(PipePlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PipePlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilPipeAction);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MiningLaserTool, "MiningLaserTool");
+        GameState.ItemCreationApi.SetTexture(MiningLaserToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(MiningLaserToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMiningLaser);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");

@@ -135,10 +135,22 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<RectTransform>().localScale = newScale;
         }
 
+        public void SetImageType(UnityEngine.UI.Image.Type newType)
+        {
+            // Set Image Type
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().type = newType;
+        }
+
         public void SetImage(Sprite sprite)
         {
             // Set New Image
             iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+        }
+
+        public void SetImageColor(Color color)
+        {
+            // Set New Image
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().color = color;
         }
 
         public Transform GetTransform()
