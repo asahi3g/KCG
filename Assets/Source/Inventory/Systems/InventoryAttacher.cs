@@ -17,7 +17,7 @@ namespace Inventory
         {
             AgentEntity entity = agentEntity;
             entity.AddAgentInventory(InventoryID);
-            MakeInventoryEntity(entitasContext, width, height);
+            CreateInventory(entitasContext, width, height, GameState.InventoryCreationApi.GetDefaultInventory());
         }
 
         // This is for chest and related items.
@@ -28,23 +28,29 @@ namespace Inventory
         //    MakeInventoryEntity(entitasContext, width, height);
         //}
 
-        public void AttachToolBarToPlayer(Contexts entitasContext, int size, AgentEntity agentEntity)
-        {
-            AgentEntity playerEntity = agentEntity;
-            playerEntity.AddAgentToolBar(InventoryID);
-            InventoryEntity entity = MakeInventoryEntity(entitasContext, size, 1);
-
-            entity.isInventoryToolBar = true;
-            entity.isInventoryDrawable = true;
-        }
-
-        private InventoryEntity MakeInventoryEntity(Contexts entitasContext, int width, int height)
+        private InventoryEntity CreateInventory(Contexts entitasContext, int width, int height, int InventoryID)
         {
             InventoryEntity entity = entitasContext.inventory.CreateEntity();
-            entity.AddInventoryID(InventoryID++);
-            entity.AddInventorySize(width, height);
-            Utility.BitSet bitArray = new Utility.BitSet((UInt32)(width * height));
-            entity.AddInventorySlots(bitArray, 0);
+            entity.AddInventoryID(InventoryID++, InventoryID);
+            int length = width * height;
+            entity.AddInventoryEntity(
+                width,
+                height,
+                new Slot[length],
+                new Utility.BitSet((UInt32)(length)),
+                0 /*Selected slot*/ );
+
+            // Initialize slots
+            for (int i = 0; i < length; i++)
+            {
+                entity.inventoryEntity.Slots[i] = new Slot
+                {
+                    ID = i,
+                    Restriction = Enums.ItemGroups.None,
+                    SlotBorderBackgroundIcon = -1,
+                    ItemID = -1,
+                };
+            }
 
             return entity;
         }

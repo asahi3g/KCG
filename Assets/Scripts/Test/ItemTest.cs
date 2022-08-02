@@ -37,11 +37,11 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
-            int toolBarID = Player.agentToolBar.ToolBarID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-            int selectedSlot = Inventory.inventorySlots.Selected;
+            int inventoryID = Player.agentInventory.InventoryID;
+            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int selectedSlot = Inventory.inventoryEntity.SelectedID;
        
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, inventoryID, selectedSlot);
             if (item != null)
             {
                 ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -70,7 +70,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes
@@ -87,7 +87,7 @@ namespace Planet.Unity
             GenerateMap();
 
             Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
-            int toolBarID = Player.agentToolBar.ToolBarID;
+            int inventoryID = Player.agentInventory.InventoryID;
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
@@ -110,7 +110,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
         }
 
         void GenerateMap()

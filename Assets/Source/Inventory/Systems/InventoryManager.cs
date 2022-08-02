@@ -13,20 +13,20 @@ namespace Inventory
 
         public void OpenInventory(Contexts contexts, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
             inventory.isInventoryDrawable = true;
         }
 
         public void CloseInventory(Contexts entitasContext, int inventoryID)
         {
-            var inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = entitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
 
             inventory.isInventoryDrawable = false;
         }
 
         public void AddItem(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
 
             ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
@@ -70,9 +70,9 @@ namespace Inventory
                 }
             }
 
-            int fistEmptySlot = GetFirstEmptySlot(inventory.inventorySlots.Values);
+            int fistEmptySlot = GetFirstEmptySlot(inventory.inventoryEntity.SlotsMask);
             entity.AddItemInventory(inventoryID, fistEmptySlot);
-            inventory.inventorySlots.Values.Set(fistEmptySlot);
+            inventory.inventoryEntity.SlotsMask.Set(fistEmptySlot);
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -83,24 +83,21 @@ namespace Inventory
 
         public void RemoveItem(Contexts contexts, ItemInventoryEntity entity, int slot)
         {
-            var inventoryEntity = contexts.inventory.GetEntityWithInventoryID(entity.itemInventory.InventoryID);
-            inventoryEntity.inventorySlots.Values.UnSet(slot);
+            var inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(entity.itemInventory.InventoryID);
+            inventoryEntity.inventoryEntity.SlotsMask.UnSet(slot);
             entity.RemoveItemInventory();
         }
         
         public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            BitSet SlotComponent = inventory.inventorySlots.Values;
-
-            inventory.ReplaceInventorySlots(SlotComponent, newSelectedSlot);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            inventory.inventoryEntity.SelectedID = newSelectedSlot;
         }
 
         public bool IsFull(Contexts contexts, int inventoryID)
         {
-            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            BitSet Slots = inventoryEntity.inventorySlots.Values;
-            if (Slots.All()) // Test if all bits are set to one.
+            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            if (inventoryEntity.inventoryEntity.SlotsMask.All()) // Test if all bits are set to one.
                 return true;
 
             return false;
@@ -115,6 +112,7 @@ namespace Inventory
             return false;
         }
 
+        // Update this.
         public ItemInventoryEntity GetItemInSlot(ItemInventoryContext itemContext, int inventoryID, int slot)
         {
             var items = itemContext.GetEntitiesWithItemInventory(inventoryID);

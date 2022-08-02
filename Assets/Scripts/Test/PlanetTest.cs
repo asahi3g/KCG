@@ -20,8 +20,7 @@ namespace Planet.Unity
         int PlayerID;
 
         int CharacterSpriteId;
-        int inventoryID;
-        int toolBarID;
+        int InventoryID;
 
         public static int HumanoidCount = 1;
         GameObject[] HumanoidArray;
@@ -73,11 +72,10 @@ namespace Planet.Unity
                 }
             }
 
-            int toolBarID = Player.agentToolBar.ToolBarID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-            int selectedSlot = Inventory.inventorySlots.Selected;
+            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(InventoryID);
+            int selectedSlot = Inventory.inventoryEntity.SelectedID;
 
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, InventoryID, selectedSlot);
             if (item != null)
             {
                 ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -111,7 +109,7 @@ namespace Planet.Unity
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+            inventoryDrawSystem.Draw(Planet.EntitasContext);
         }
 
         private void OnDrawGizmos()
@@ -221,8 +219,7 @@ namespace Planet.Unity
 
             //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
-            inventoryID = Player.agentInventory.InventoryID;
-            toolBarID = Player.agentToolBar.ToolBarID;
+            InventoryID = Player.agentInventory.InventoryID;
 
             hudManager = new HUDManager(Planet, Player);
 
@@ -231,13 +228,13 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
         }
 
         void GenerateMap()

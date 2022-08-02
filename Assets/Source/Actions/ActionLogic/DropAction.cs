@@ -15,15 +15,19 @@ namespace Action
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
-            if (AgentEntity.hasAgentToolBar)
+            if (!AgentEntity.hasAgentInventory)
+                return;
+
+            InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+
+            // Todo: start playing some animation
+            if (GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                int toolBarID = AgentEntity.agentToolBar.ToolBarID;
-                InventoryEntity toolBarEntity = EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-
-                int selected = toolBarEntity.inventorySlots.Selected;
+                int selected = inventoryEntity.inventoryEntity.SelectedID;
 
 
-                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, toolBarID, selected);
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory,
+                    AgentEntity.agentInventory.InventoryID, selected);
                 if (itemInventory == null)
                 {
                     ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);

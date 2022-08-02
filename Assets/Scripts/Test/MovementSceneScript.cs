@@ -22,7 +22,6 @@ namespace Planet.Unity
 
         int CharacterSpriteId;
         int inventoryID;
-        int toolBarID;
 
         HUDManager hudManager;
 
@@ -58,11 +57,10 @@ namespace Planet.Unity
                 Debug.Log("loaded!");
             }
 
-             int toolBarID = Player.agentToolBar.ToolBarID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-            int selectedSlot = Inventory.inventorySlots.Selected;
+            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int selectedSlot = Inventory.inventoryEntity.SelectedID;
 
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
@@ -76,21 +74,21 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        private void OnRenderObject()
-        {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        }
-
         private void OnGUI()
         {
-            if (Init)
-            {
-                // Draw HUD UI
-                hudManager.Update(Player);
+            if (!Init)
+                return;
 
-                // Draw Statistics
-                KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-            }
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            // Draw HUD UI
+            hudManager.Update(Player);
+
+            // Draw Statistics
+            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+
+            inventoryDrawSystem.Draw(Planet.EntitasContext);
         }
         
 
@@ -160,7 +158,6 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             inventoryID = Player.agentInventory.InventoryID;
-            toolBarID = Player.agentToolBar.ToolBarID;
 
             // Player Status UI Init
             hudManager = new HUDManager(Planet, Player);
@@ -170,12 +167,12 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, toolBarID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
 
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(3.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(4.0f, 25.0f));

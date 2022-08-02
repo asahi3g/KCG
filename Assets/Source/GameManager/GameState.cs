@@ -54,6 +54,7 @@ public class GameState
     #endregion
 
     #region Inventory
+    public static readonly Inventory.InventoryCreationApi InventoryCreationApi;
     public static readonly Inventory.InventoryManager InventoryManager;
     public static readonly Inventory.DrawSystem InventoryDrawSystem;
     #endregion
@@ -118,6 +119,7 @@ public class GameState
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
+        InventoryCreationApi = new Inventory.InventoryCreationApi();
         EnemyAiSystem = new Agent.EnemyAiSystem();
         AnimationManager = new Animation.AnimationManager();
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();

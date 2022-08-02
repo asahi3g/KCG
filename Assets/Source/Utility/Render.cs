@@ -23,10 +23,10 @@ namespace Utility
 
         public void Initialize(Material material)
         {
-            Materials = new Material[256];
+            Materials = new Material[64];
 
             // Initialzie materials.
-            for (int i = 0; i < 256; i++)
+            for (int i = 0; i < 64; i++)
             {
                 Materials[i] = Material.Instantiate(material);
             }
@@ -34,8 +34,8 @@ namespace Utility
         void ExpandArray()
         {
             int currentLegnth = Materials.Length;
-            Array.Resize(ref Materials, Materials.Length + 256);
-            for (int i = 0; i < 256; i++)
+            Array.Resize(ref Materials, Materials.Length + 64);
+            for (int i = 0; i < 64; i++)
             {
                 Materials[currentLegnth + i] = Material.Instantiate(Materials[0]);
             }

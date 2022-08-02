@@ -14,8 +14,7 @@ namespace Item
         public void Update(Contexts contexts)
         {
             // Get agents able to pick an object.
-            var agents = contexts.agent.GetGroup(
-                AgentMatcher.AllOf(AgentMatcher.AgentPosition2D).AnyOf(AgentMatcher.AgentInventory, AgentMatcher.AgentToolBar));
+            var agents = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D, AgentMatcher.AgentInventory));
 
             // Get all pickable items.
             var pickableItems = contexts.itemParticle.GetGroup(

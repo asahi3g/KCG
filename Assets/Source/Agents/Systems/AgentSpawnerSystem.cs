@@ -38,7 +38,6 @@ namespace Agent
             // Add Inventory and toolbar.
             var attacher = Inventory.InventoryAttacher.Instance;
             attacher.AttachInventoryToAgent(entitasContext, 6, 5, entity);
-            attacher.AttachToolBarToPlayer(entitasContext, 10, entity);
             return entity;
         }
 
@@ -70,7 +69,6 @@ namespace Agent
                 // Add Inventory and toolbar.
                 var attacher = Inventory.InventoryAttacher.Instance;
                 attacher.AttachInventoryToAgent(entitasContext, 6, 5, entity);
-                attacher.AttachToolBarToPlayer(entitasContext, 10, entity);
             }
             else if (agentType == Agent.AgentType.Agent)
             {
