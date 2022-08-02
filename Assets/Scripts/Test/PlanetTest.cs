@@ -33,8 +33,6 @@ namespace Planet.Unity
 
         AnimancerComponent[] AnimancerComponentArray;
 
-        HUDManager hudManager;
-
         static bool Init = false;
 
         public void Start()
@@ -106,7 +104,7 @@ namespace Planet.Unity
                 return;
 
             // Draw HUD UI
-            hudManager.Update(Player);
+            HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -217,7 +215,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
             toolBarID = Player.agentToolBar.ToolBarID;
 
-            hudManager = new HUDManager(Planet, Player);
+            HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

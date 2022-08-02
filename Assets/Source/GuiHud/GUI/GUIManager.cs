@@ -8,34 +8,37 @@ namespace KGUI
     public class GUIManager
     {
         // Food Bar
-        static KGUI.PlayerStatus.FoodBarUI foodBarUI = new PlayerStatus.FoodBarUI();
+        public KGUI.PlayerStatus.FoodBarUI foodBarUI;
 
         // Water Bar
-        static KGUI.PlayerStatus.WaterBarUI waterBarUI = new PlayerStatus.WaterBarUI();
+        public KGUI.PlayerStatus.WaterBarUI waterBarUI;
 
         // Oxygen Bar
-        static KGUI.PlayerStatus.OxygenBarUI oxygenBarUI = new PlayerStatus.OxygenBarUI();
+        public KGUI.PlayerStatus.OxygenBarUI oxygenBarUI;
 
         // Fuel Bar
-        static KGUI.PlayerStatus.FuelBarUI fuelBarUI = new PlayerStatus.FuelBarUI();
+        public KGUI.PlayerStatus.FuelBarUI fuelBarUI;
 
         // Health Bar
-        static KGUI.PlayerStatus.HealthBarUI healthBarUI = new PlayerStatus.HealthBarUI();
+        public KGUI.PlayerStatus.HealthBarUI healthBarUI;
 
         // Bedrock
-        static KGUI.Tiles.Bedrock bedrockUI = new Tiles.Bedrock();
+        public KGUI.Tiles.Bedrock bedrockUI;
 
         // Dirt
-        static KGUI.Tiles.Dirt dirtUI = new Tiles.Dirt();
+        public KGUI.Tiles.Dirt dirtUI;
 
         // Wire
-        static KGUI.Tiles.Wire wireUI = new Tiles.Wire();
+        public KGUI.Tiles.Wire wireUI;
 
         // Pipe
-        static KGUI.Tiles.Pipe pipeUI = new Tiles.Pipe();
+        public KGUI.Tiles.Pipe pipeUI;
+
+        // Scanner Tool
+        public KGUI.Tools.ScannerToolGUI scannerToolGUI;
 
         // GUI Elements List
-        static List<GUIManager> UIList = new List<GUIManager>();
+        public List<GUIManager> UIList = new List<GUIManager>();
 
         // Cursor Screen Position from Unity Input Class
         public Vec2f CursorPosition;
@@ -55,6 +58,17 @@ namespace KGUI
         // Initialize
         public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
+            foodBarUI = new PlayerStatus.FoodBarUI();
+            waterBarUI = new PlayerStatus.WaterBarUI();
+            oxygenBarUI = new PlayerStatus.OxygenBarUI();
+            fuelBarUI = new PlayerStatus.FuelBarUI();
+            healthBarUI = new PlayerStatus.HealthBarUI();
+            bedrockUI = new Tiles.Bedrock();
+            dirtUI = new Tiles.Dirt();
+            wireUI = new Tiles.Wire();
+            pipeUI = new Tiles.Pipe();
+            scannerToolGUI = new Tools.ScannerToolGUI();
+
             // Set Canvas
             _Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
@@ -87,6 +101,9 @@ namespace KGUI
 
             // Add Pipe Tile To Draw Array
             UIList.Add(pipeUI);
+
+            // Add Scanner Tool To Draw Array
+            UIList.Add(scannerToolGUI);
 
             // Init Elements
             for (int i = 0; i < UIList.Count; i++)
@@ -141,8 +158,6 @@ namespace KGUI
             {
                 // TODO: Don't show indicator Icon
             }
-
-
         }
 
         public virtual void OnMouseClick(AgentEntity agentEntity)
@@ -155,6 +170,7 @@ namespace KGUI
                     // If Mosue 0 Button Down
                     if (Input.GetMouseButton(0))
                     {
+                        // Call All Click Events
                         UIList[i].OnMouseClick(agentEntity);
                     }
                 }

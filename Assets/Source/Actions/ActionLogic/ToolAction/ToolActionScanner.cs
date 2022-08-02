@@ -53,14 +53,8 @@ namespace Action
                             // Has Planter Component?
                             if (entity.hasMechPlanter)
                             {
-                                planet.AddFloatingText("Got Seed: " + entity.mechPlanter.GotSeed.ToString(), 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X,
-                                entity.mechPosition2D.Value.Y));
-                                planet.AddFloatingText("Light Status: " + entity.mechPlanter.LightLevel, 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X, 
-                                    entity.mechPosition2D.Value.Y - 0.6f));
-                                planet.AddFloatingText("Water Status: " + entity.mechPlanter.WaterLevel, 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X,
-                                    entity.mechPosition2D.Value.Y - 1.2f));
-                                planet.AddFloatingText("Growth Status: " + entity.mechPlanter.PlantGrowth, 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X,
-                                    entity.mechPosition2D.Value.Y - 1.8f));
+                                HUD.HUDManager.guiManager.scannerToolGUI.ActivateGUIOverlay(entity.mechPlanter.GotSeed, entity.mechPlanter.LightLevel, entity.mechPlanter.WaterLevel,
+                                     entity.mechPlanter.PlantGrowth, 3.0f);
                             }
                         }
                     }
