@@ -13,6 +13,7 @@
         Background,
         Wire,
         Bedrock,
-        Platform
+        Platform,
+        Mech
     }
 }

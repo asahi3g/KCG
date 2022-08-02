@@ -175,6 +175,9 @@ namespace Action
             // Create Tool Action Construction
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionConstruction);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionConstructionCreator());
+            ToolActionConstruction.Data constructionToolData = new ToolActionConstruction.Data();
+            constructionToolData.MechID = Mech.MechType.Storage;
+            GameState.ActionPropertyManager.SetData(constructionToolData);
             GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
