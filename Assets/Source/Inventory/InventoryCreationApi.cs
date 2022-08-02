@@ -51,7 +51,7 @@ namespace Inventory
         private void CreateDefaultInventory()
         {
             Create();
-            SetBackgroundColor(Color.black);
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
             SetToolBar();

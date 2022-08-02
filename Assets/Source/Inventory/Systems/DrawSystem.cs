@@ -10,16 +10,25 @@ namespace Inventory
     {
         public void Draw(Contexts contexts)
         {
+            // Draw tool bar.
+            var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
+            foreach (var player in players)
+            {
+                int inventoryID = player.agentInventory.InventoryID;
+                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+                DrawInventory(contexts, inventoryEntity, true);
+            }
+
             var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
             // If empty Draw ToolBar.
 
             foreach (InventoryEntity inventoryEntity in openInventories)
             {
-                DrawInventory(contexts, inventoryEntity);
+                DrawInventory(contexts, inventoryEntity, false);
             }
         }
 
-        private void DrawInventory(Contexts entitasContext, InventoryEntity inventoryEntity)
+        private void DrawInventory(Contexts entitasContext, InventoryEntity inventoryEntity, bool isToolBar)
         {
             // Todo: Change font size with the size of the inventory.
             // Todo: Deals with scaling proprerly.
@@ -47,11 +56,16 @@ namespace Inventory
             float y = 0.5f;
 
             x -= w / 2f;
-            y -= h / 2f;
 
             // If is tool bar draw at the botton of the screen.
-            //if (proprietis.HasTooBar())
-            //    y = tileSize.Y / 2f;
+            if (isToolBar)
+            {
+                height = 1;
+                y = tileSize.Y / 2f;
+                h = tileSize.Y;
+            }
+            else
+                y -= h / 2f;
 
             // Draw Background.
             if (proprietis.HasBackground())
@@ -63,7 +77,7 @@ namespace Inventory
             }
 
             // Draw inventory slots.
-            for (int i = 0, length = inventoryEntity.inventoryEntity.Slots.Length; i < length; i++)
+            for (int i = 0, length = width * height; i < length; i++)
             {
                 ref Slot slot = ref inventoryEntity.inventoryEntity.Slots[i];
             
@@ -134,7 +148,7 @@ namespace Inventory
                         sizeX,
                         sizeY,
                         entity.itemStack.Count.ToString(),
-                        20,
+                        25,
                         TextAnchor.LowerRight,
                         Color.white);
                 }
