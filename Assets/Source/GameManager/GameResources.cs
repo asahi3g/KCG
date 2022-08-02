@@ -10,6 +10,7 @@ public class GameResources
     // sprite sheets ids
     public static int LoadingTilePlaceholderSpriteSheet;
     public static int BackgroundSpriteSheet;
+    public static int ColoredNumberedWangSpriteSheet;
     public static int MoonSpriteSheet;
     public static int OreSpriteSheet;
     public static int Ore2SpriteSheet;
@@ -89,6 +90,7 @@ public class GameResources
             // loading the sprite sheets
             LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
             BackgroundSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\test - Copy.png", 16, 16);
+            ColoredNumberedWangSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\colored-numbered-wang.png", 16, 16);
             MoonSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\Tiles_Moon.png", 16, 16);
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
             Ore2SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Copper\\ore_copper_1.png", 16, 16);
@@ -206,7 +208,7 @@ public class GameResources
         GameState.TileCreationApi.SetTileMaterialType(MaterialType.Background);
         GameState.TileCreationApi.SetTilePropertyName("background");
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
-        GameState.TileCreationApi.SetTilePropertySpriteSheet16(BackgroundSpriteSheet, 0, 0);
+        GameState.TileCreationApi.SetTilePropertySpriteSheet16(ColoredNumberedWangSpriteSheet, 0, 0);
         GameState.TileCreationApi.EndTileProperty();
 
 
