@@ -68,6 +68,9 @@ namespace KMath
         /// <param name="rhs"></param>
         [MethodImpl((MethodImplOptions) 256)]
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
+        
+        [MethodImpl((MethodImplOptions) 256)]
+        public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) => new(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
 
         /// <summary>
         ///   <para>Makes this vector have a magnitude of 1.</para>
@@ -144,6 +147,8 @@ namespace KMath
         public static Vec2f operator -(Vec2f a, Vec2f b) => new(a.X - b.X, a.Y - b.Y);
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator -(Vec2f a, float b) => new(a.X - b, a.Y - b);
+        [MethodImpl((MethodImplOptions) 256)]
+        public static Vec2f operator -(Vec2f a) => new(-a.X, -a.Y);
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator +(Vec2f a, Vec2f b) => new(a.X + b.X, a.Y + b.Y);
         [MethodImpl((MethodImplOptions) 256)]

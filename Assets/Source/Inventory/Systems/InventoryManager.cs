@@ -1,5 +1,6 @@
 ﻿using Item;
 using System.Collections;
+using Utility;
 using UnityEngine;
 
 namespace Inventory
@@ -71,7 +72,7 @@ namespace Inventory
 
             int fistEmptySlot = GetFirstEmptySlot(inventory.inventorySlots.Values);
             entity.AddItemInventory(inventoryID, fistEmptySlot);
-            inventory.inventorySlots.Values.Set(fistEmptySlot, true);
+            inventory.inventorySlots.Values.Set(fistEmptySlot);
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -83,32 +84,31 @@ namespace Inventory
         public void RemoveItem(Contexts contexts, ItemInventoryEntity entity, int slot)
         {
             var inventoryEntity = contexts.inventory.GetEntityWithInventoryID(entity.itemInventory.InventoryID);
-            inventoryEntity.inventorySlots.Values.Set(slot, false);
+            inventoryEntity.inventorySlots.Values.UnSet(slot);
             entity.RemoveItemInventory();
         }
         
         public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)
         {
             var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            var SlotComponent = inventory.inventorySlots;
+            BitSet SlotComponent = inventory.inventorySlots.Values;
 
-            inventory.ReplaceInventorySlots(SlotComponent.Values, newSelectedSlot);
+            inventory.ReplaceInventorySlots(SlotComponent, newSelectedSlot);
         }
 
         public bool IsFull(Contexts contexts, int inventoryID)
         {
             InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            BitArray Slots = inventoryEntity.inventorySlots.Values;
-            if (IsFull(Slots)) // Test if all bits are set to one.
+            BitSet Slots = inventoryEntity.inventorySlots.Values;
+            if (Slots.All()) // Test if all bits are set to one.
                 return true;
 
             return false;
         }
 
-        private bool IsFull(BitArray Slots)
+        private bool IsFull(BitSet Slots)
         {
-            BitArray bits = new BitArray(Slots.Count, true);
-            if (Slots.Equals(bits))
+            if (Slots.All())
             {
                 return true; // Inventory is full.
             }
@@ -121,7 +121,7 @@ namespace Inventory
 
             foreach (var item in items)
             {
-                if (item.itemInventory.SlotNumber == slot)
+                if (item.itemInventory.SlotID == slot)
                 {
                     return item;
                 }
@@ -130,7 +130,7 @@ namespace Inventory
             return null; // No item in selected slot.
         }
 
-        private int GetFirstEmptySlot(BitArray Slots)
+        private int GetFirstEmptySlot(BitSet Slots)
         {
             if (IsFull(Slots))
             {

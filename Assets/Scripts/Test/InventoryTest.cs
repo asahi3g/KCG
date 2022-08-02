@@ -12,6 +12,7 @@ public class InventoryTest : MonoBehaviour
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
     ECSInput.InputProcessSystem  inputProcessSystem;
+    bool Init = false;
 
     [SerializeField] Material material;
 
@@ -24,6 +25,7 @@ public class InventoryTest : MonoBehaviour
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
         inputProcessSystem = new ECSInput.InputProcessSystem();
+        GameState.Renderer.Initialize(material);
         var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
         // Create Agent and inventory.
@@ -56,6 +58,7 @@ public class InventoryTest : MonoBehaviour
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Rock), inventoryID);
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.RockDust), inventoryID);
         }
+        Init = true;
     }
 
     public void Update()
@@ -72,11 +75,26 @@ public class InventoryTest : MonoBehaviour
             GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
         }
 
-       // inputProcessSystem.Update(ref context);
+        //  Open Inventory with Tab.        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            var players = context.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
+            foreach (var player in players)
+            {
+                int inventoryID = player.agentInventory.InventoryID;
+                InventoryEntity inventoryEntity = context.inventory.GetEntityWithInventoryID(inventoryID);
+                inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
+            }
+        }
     }
 
-    private void OnRenderObject()
+    private void OnGUI()
     {
+        if (!Init)
+            return;
+        if (Event.current.type != EventType.Repaint)
+            return;
+
         inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
     }
 

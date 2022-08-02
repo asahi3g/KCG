@@ -53,7 +53,7 @@ namespace Planet.Unity
             bool idle = Input.GetKeyDown(KeyCode.I);
             bool golf = Input.GetKeyDown(KeyCode.G);
 
-            for(int i = 0; i < HumanoidCount; i++)
+            for (int i = 0; i < HumanoidCount; i++)
             {
                 if (run)
                 {
@@ -78,13 +78,16 @@ namespace Planet.Unity
             int selectedSlot = Inventory.inventorySlots.Selected;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-            if (itemProperty.IsTool())
+            if (item != null)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                if (itemProperty.IsTool())
                 {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, 
-                       Player.agentID.ID, item.itemID.ID);
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                            Player.agentID.ID, item.itemID.ID);
+                    }   
                 }
             }
             
@@ -93,22 +96,22 @@ namespace Planet.Unity
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
-        
-        private void OnRenderObject()
-        {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        }
 
         private void OnGUI()
         {
-            if (Init)
-            {
-                // Draw HUD UI
-                hudManager.Update(Player);
+            if (!Init)
+                return;
 
-                // Draw Statistics
-                KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-            }
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            // Draw HUD UI
+            hudManager.Update(Player);
+
+            // Draw Statistics
+            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+
+            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
         private void OnDrawGizmos()

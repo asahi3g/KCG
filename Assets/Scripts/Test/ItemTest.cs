@@ -57,8 +57,19 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        private void OnRenderObject()
+        //private void OnRenderObject()
+        //{
+        //    GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+        //}
+
+        private void OnGUI()
         {
+            if (!Init)
+                return;
+
+            if (Event.current.type != EventType.Repaint)
+                return;
+
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
