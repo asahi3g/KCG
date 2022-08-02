@@ -78,7 +78,7 @@ namespace Particle
             float height = spriteCoords.w;
             
 
-            float velocityValueX = 1.0f;
+            float velocityValueX = 2.0f;
             float velocityValueY = 2.0f;
 
             // the box debris is composed of 
@@ -86,40 +86,24 @@ namespace Particle
             // texture coordinates
 
             // part 1
-            Vec2f[] part1Vertices = new Vec2f[12];
+            Vec2f[] part1Vertices = new Vec2f[6];
             part1Vertices[0] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
             part1Vertices[1] = new Vec2f(0.73f * spriteWidth, 0.0f * spriteHeight);
             part1Vertices[2] = new Vec2f(0.66f * spriteWidth, 0.26f * spriteHeight);
 
             part1Vertices[3] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
             part1Vertices[4] = new Vec2f(0.66f * spriteWidth, 0.26f * spriteHeight);
-            part1Vertices[5] = new Vec2f(0.5f * spriteWidth, 0.4f * spriteHeight);
-
-            part1Vertices[6] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
-            part1Vertices[7] = new Vec2f(0.5f * spriteWidth, 0.4f * spriteHeight);
-            part1Vertices[8] = new Vec2f(0.5f * spriteWidth, 0.5f * spriteHeight);
-
-            part1Vertices[9] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
-            part1Vertices[10] = new Vec2f(0.5f * spriteWidth, 0.5f * spriteHeight);
-            part1Vertices[11] = new Vec2f(0.0f * spriteWidth, 0.4f * spriteHeight);
+            part1Vertices[5] = new Vec2f(0.0f * spriteWidth, 0.26f * spriteHeight);
 
 
-            Vec2f[] part1Coords = new Vec2f[12];
+            Vec2f[] part1Coords = new Vec2f[6];
             part1Coords[0] = new Vec2f(x + 0.0f * width, ((y + height) - 0.0f * height));
             part1Coords[1] = new Vec2f(x + 0.73f * width, ((y + height) - 0.0f * height));
             part1Coords[2] = new Vec2f(x + 0.66f * width, ((y + height) - 0.26f * height));
 
             part1Coords[3] = new Vec2f(x + 0.0f * width, ((y + height) - 0.0f * height));
             part1Coords[4] = new Vec2f(x + 0.66f * width, ((y + height) - 0.26f * height));
-            part1Coords[5] = new Vec2f(x + 0.5f * width, ((y + height) - 0.4f * height));
-
-            part1Coords[6] = new Vec2f(x + 0.0f * width, ((y + height) - 0.0f * height));
-            part1Coords[7] = new Vec2f(x + 0.5f * width, ((y + height) - 0.4f * height));
-            part1Coords[8] = new Vec2f(x + 0.5f * width, ((y + height) - 0.5f * height));
-
-            part1Coords[9] = new Vec2f(x + 0.0f * width, ((y + height) - 0.0f * height));
-            part1Coords[10] = new Vec2f(x + 0.5f * width, ((y + height) - 0.5f * height));
-            part1Coords[11] = new Vec2f(x + 0.0f * width, ((y + height) - 0.4f * height));
+            part1Coords[5] = new Vec2f(x + 0.0f * width, ((y + height) - 0.26f * height));
 
 
 
@@ -174,7 +158,7 @@ namespace Particle
 
             part3Vertices[6] = new Vec2f(0.66f * spriteWidth, 0.0f * spriteHeight);
             part3Vertices[7] = new Vec2f(0.5f * spriteWidth, 0.4f * spriteHeight);
-            part3Vertices[8] = new Vec2f(0.5f * spriteWidth, 0.14f * spriteHeight);
+            part3Vertices[8] = new Vec2f(0.5f * spriteWidth, 0.0f * spriteHeight);
 
 
             Vec2f[] part3Coords = new Vec2f[9];
@@ -188,7 +172,7 @@ namespace Particle
 
             part3Coords[6] = new Vec2f(x + 0.66f * width, ((y + height) - 0.26f * height));
             part3Coords[7] = new Vec2f(x + 0.5f * width, ((y + height) - 0.66f * height));
-            part3Coords[8] = new Vec2f(x + 0.5f * width, ((y + height) - 0.4f * height));
+            part3Coords[8] = new Vec2f(x + 0.5f * width, ((y + height) - 0.26f * height));
 
 
 
@@ -217,7 +201,7 @@ namespace Particle
             // part 5
             Vec2f[] part5Vertices = new Vec2f[6];
             part5Vertices[0] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
-            part5Vertices[1] = new Vec2f(0.5f * spriteWidth, 0.1f * spriteHeight);
+            part5Vertices[1] = new Vec2f(0.5f * spriteWidth, 0.0f * spriteHeight);
             part5Vertices[2] = new Vec2f(0.5f * spriteWidth, 0.26f * spriteHeight);
 
             part5Vertices[3] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
@@ -227,7 +211,7 @@ namespace Particle
 
             Vec2f[] part5Coords = new Vec2f[6];
             part5Coords[0] = new Vec2f(x + 0.0f * width, ((y + height) - 0.4f * height));
-            part5Coords[1] = new Vec2f(x + 0.5f * width, ((y + height) - 0.5f * height));
+            part5Coords[1] = new Vec2f(x + 0.5f * width, ((y + height) - 0.4f * height));
             part5Coords[2] = new Vec2f(x + 0.5f * width, ((y + height) - 0.66f * height));
 
             part5Coords[3] = new Vec2f(x + 0.0f * width, ((y + height) - 0.4f * height));
@@ -236,12 +220,12 @@ namespace Particle
 
 
             // random velocity for each part
-            float rand1 = KMath.Random.Mt19937.genrand_realf();
-            float rand2 = KMath.Random.Mt19937.genrand_realf();
+            float rand1 = KMath.Random.Mt19937.genrand_realf() * 1.5f - 0.5f;
+            float rand2 = KMath.Random.Mt19937.genrand_realf() * 1.5f - 0.5f;
 
             Vec2f velocity;
-            velocity.X = rand1 * velocityValueX;
-            velocity.Y = rand2 * velocityValueY;
+            velocity.X = rand1 * -1 * velocityValueX;
+            velocity.Y = rand2 * -1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
             part1Vertices, part1Coords, velocity, -1));
@@ -250,8 +234,8 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValueX;
-            velocity.Y = rand2 * velocityValueY;
+            velocity.X = rand1 * 1 * velocityValueX;
+            velocity.Y = rand2 * -1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
             part2Vertices, part2Coords, velocity, -1));
@@ -269,7 +253,7 @@ namespace Particle
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
             velocity.X = rand1 * velocityValueX;
-            velocity.Y = rand2 * velocityValueY;
+            velocity.Y = rand2 * 1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
             part4Vertices, part4Coords, velocity, -1));
@@ -278,7 +262,7 @@ namespace Particle
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
 
-            velocity.X = rand1 * velocityValueX;
+            velocity.X = rand1 * -1 * velocityValueX;
             velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.4f), 

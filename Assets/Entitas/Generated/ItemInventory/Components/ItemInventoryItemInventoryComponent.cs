@@ -11,19 +11,19 @@ public partial class ItemInventoryEntity {
     public Item.InventoryComponent itemInventory { get { return (Item.InventoryComponent)GetComponent(ItemInventoryComponentsLookup.ItemInventory); } }
     public bool hasItemInventory { get { return HasComponent(ItemInventoryComponentsLookup.ItemInventory); } }
 
-    public void AddItemInventory(int newInventoryID, int newSlotNumber) {
+    public void AddItemInventory(int newInventoryID, int newSlotID) {
         var index = ItemInventoryComponentsLookup.ItemInventory;
         var component = (Item.InventoryComponent)CreateComponent(index, typeof(Item.InventoryComponent));
         component.InventoryID = newInventoryID;
-        component.SlotNumber = newSlotNumber;
+        component.SlotID = newSlotID;
         AddComponent(index, component);
     }
 
-    public void ReplaceItemInventory(int newInventoryID, int newSlotNumber) {
+    public void ReplaceItemInventory(int newInventoryID, int newSlotID) {
         var index = ItemInventoryComponentsLookup.ItemInventory;
         var component = (Item.InventoryComponent)CreateComponent(index, typeof(Item.InventoryComponent));
         component.InventoryID = newInventoryID;
-        component.SlotNumber = newSlotNumber;
+        component.SlotID = newSlotID;
         ReplaceComponent(index, component);
     }
 

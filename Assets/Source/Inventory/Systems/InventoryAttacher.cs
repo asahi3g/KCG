@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Entitas;
 using UnityEngine;
 
@@ -42,11 +43,9 @@ namespace Inventory
             InventoryEntity entity = entitasContext.inventory.CreateEntity();
             entity.AddInventoryID(InventoryID++);
             entity.AddInventorySize(width, height);
-            BitArray bitArray = new BitArray(width* height, false);
+            Utility.BitSet bitArray = new Utility.BitSet((UInt32)(width * height));
             entity.AddInventorySlots(bitArray, 0);
 
-
-            
             return entity;
         }
     }
