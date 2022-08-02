@@ -75,7 +75,7 @@ namespace Planet.Unity
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(InventoryID);
             int selectedSlot = Inventory.inventoryEntity.SelectedID;
 
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, InventoryID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
             if (item != null)
             {
                 ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);

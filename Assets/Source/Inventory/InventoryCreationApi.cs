@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KMath;
 using UnityEngine;
 
 namespace Inventory
@@ -51,13 +52,14 @@ namespace Inventory
         private void CreateDefaultInventory()
         {
             Create();
+            SetInventoryPos(960f, 540f);
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
             SetToolBar();
-            SetTileSize(54);
-            SetBorderOffset(5);
-            SetSlotOffset(10);
+            SetTileSize(100);
+            SetBorderOffset(10);
+            SetSlotOffset(20);
             End();
         }
 
@@ -91,11 +93,10 @@ namespace Inventory
             ProprietiesArray[InventoryID].InventoryFlags |= InventoryProprieties.Flags.HasTooBar;
         }
 
-        public void SetTileSize(float width) =>
-            ProprietiesArray[InventoryID].TileSize = width;
-        public void SetBorderOffset(float borderOffset)
-            => ProprietiesArray[InventoryID].BorderOffset = borderOffset;
-        public void SetSlotOffset(float SlotOffset)
-            => ProprietiesArray[InventoryID].SlotOffset = SlotOffset;
+        public void SetInventoryPos(Vec2f pos) => ProprietiesArray[InventoryID].DefaultPosition = pos;
+        public void SetInventoryPos(float x, float y) => ProprietiesArray[InventoryID].DefaultPosition = new Vec2f(x,y);
+        public void SetTileSize(float width) => ProprietiesArray[InventoryID].TileSize = width;
+        public void SetBorderOffset(float borderOffset) => ProprietiesArray[InventoryID].BorderOffset = borderOffset;
+        public void SetSlotOffset(float SlotOffset) => ProprietiesArray[InventoryID].SlotOffset = SlotOffset;
     }
 }

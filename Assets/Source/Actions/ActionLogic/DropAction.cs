@@ -26,7 +26,7 @@ namespace Action
                 int selected = inventoryEntity.inventoryEntity.SelectedID;
 
 
-                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory,
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
                     AgentEntity.agentInventory.InventoryID, selected);
                 if (itemInventory == null)
                 {
@@ -34,7 +34,7 @@ namespace Action
                     return;
                 }
 
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, itemInventory, selected);
+                GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryEntity, selected);
 
                 // Create item particle from item inventory.
                 Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;

@@ -40,9 +40,9 @@ namespace Inventory
             int screenHeight = 1080;
             int screenWidth = 1920;
 
-            Vec2f tileSize =        new Vec2f(proprietis.TileSize     / screenHeight, proprietis.TileSize     / screenHeight * screenWidth / screenHeight);
-            Vec2f borderOffset =    new Vec2f(proprietis.BorderOffset / screenHeight, proprietis.BorderOffset / screenHeight * screenWidth / screenHeight);
-            Vec2f slotOffset =      new Vec2f(proprietis.SlotOffset   / screenHeight, proprietis.SlotOffset   / screenHeight * screenWidth / screenHeight);
+            Vec2f tileSize =        new Vec2f(proprietis.TileSize     / screenHeight * screenHeight / screenWidth, proprietis.TileSize     / screenHeight);
+            Vec2f borderOffset =    new Vec2f(proprietis.BorderOffset / screenHeight * screenHeight / screenWidth, proprietis.BorderOffset / screenHeight);
+            Vec2f slotOffset =      new Vec2f(proprietis.SlotOffset   / screenHeight * screenHeight / screenWidth, proprietis.SlotOffset   / screenHeight);
 
             // Get Inventory Info.
             int width = inventoryEntity.inventoryEntity.Width;
@@ -52,8 +52,8 @@ namespace Inventory
             float w = width * tileSize.X;
 
             // Get inventory positon.
-            float x = 0.5f;
-            float y = 0.5f;
+            float x = proprietis.DefaultPosition.X / screenWidth;
+            float y = proprietis.DefaultPosition.Y / screenHeight;
 
             x -= w / 2f;
 
@@ -61,6 +61,7 @@ namespace Inventory
             if (isToolBar)
             {
                 height = 1;
+                x = 960f / screenWidth - w / 2f;
                 y = tileSize.Y / 2f;
                 h = tileSize.Y;
             }

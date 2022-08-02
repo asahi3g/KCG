@@ -30,7 +30,7 @@ namespace Action
                 int selectedSlot = InventoryEntity.inventoryEntity.SelectedID;
 
                 // Set Item Entity
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, 
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, 
                     InventoryEntity.inventoryID.ID, selectedSlot);
 
                 // If Item In Slot Is A Melee Attack Weapon

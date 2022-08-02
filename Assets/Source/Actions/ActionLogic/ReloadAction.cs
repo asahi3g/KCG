@@ -26,7 +26,7 @@ namespace Action
             if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
             {
                 int selectedSlot = InventoryEntity.inventoryEntity.SelectedID;
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory,
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
                     AgentEntity.agentInventory.InventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 

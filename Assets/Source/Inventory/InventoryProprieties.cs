@@ -23,8 +23,9 @@ namespace Inventory
         public Color SlotColor;
         public Color SelectedColor;
 
-        public float TileSize;      // Height in pixels -> Whole tile = Slot + Border + Space between slots.
-        public float BorderOffset;  // Horizontal offset from the beggining of the tile.
+        public Vec2f DefaultPosition;   // (0, 0) is lower left, upper right (1080, 1902) - Default position is Center position.
+        public float TileSize;          // Height in pixels -> Whole tile = Slot + Border + Space between slots.
+        public float BorderOffset;      // Horizontal offset from the beggining of the tile.
         public float SlotOffset;    
 
         public bool HasBackground() { return InventoryFlags.HasFlag(Flags.HasBackground); }
