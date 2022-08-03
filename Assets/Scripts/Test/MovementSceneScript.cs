@@ -24,8 +24,6 @@ namespace Planet.Unity
         int inventoryID;
         int toolBarID;
 
-        HUDManager hudManager;
-
         static bool Init = false;
 
         public void Start()
@@ -86,7 +84,7 @@ namespace Planet.Unity
             if (Init)
             {
                 // Draw HUD UI
-                hudManager.Update(Player);
+                HUDManager.Update(Player);
 
                 // Draw Statistics
                 KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -163,7 +161,7 @@ namespace Planet.Unity
             toolBarID = Player.agentToolBar.ToolBarID;
 
             // Player Status UI Init
-            hudManager = new HUDManager(Planet, Player);
+            HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

@@ -8,22 +8,37 @@ namespace KGUI
     public class GUIManager
     {
         // Food Bar
-        static KGUI.PlayerStatus.FoodBarUI foodBarUI = new PlayerStatus.FoodBarUI();
+        public KGUI.PlayerStatus.FoodBarUI foodBarUI;
 
         // Water Bar
-        static KGUI.PlayerStatus.WaterBarUI waterBarUI = new PlayerStatus.WaterBarUI();
+        public KGUI.PlayerStatus.WaterBarUI waterBarUI;
 
         // Oxygen Bar
-        static KGUI.PlayerStatus.OxygenBarUI oxygenBarUI = new PlayerStatus.OxygenBarUI();
+        public KGUI.PlayerStatus.OxygenBarUI oxygenBarUI;
 
         // Fuel Bar
-        static KGUI.PlayerStatus.FuelBarUI fuelBarUI = new PlayerStatus.FuelBarUI();
+        public KGUI.PlayerStatus.FuelBarUI fuelBarUI;
 
         // Health Bar
-        static KGUI.PlayerStatus.HealthBarUI healthBarUI = new PlayerStatus.HealthBarUI();
+        public KGUI.PlayerStatus.HealthBarUI healthBarUI;
+
+        // Bedrock
+        public KGUI.Tiles.Bedrock bedrockUI;
+
+        // Dirt
+        public KGUI.Tiles.Dirt dirtUI;
+
+        // Wire
+        public KGUI.Tiles.Wire wireUI;
+
+        // Pipe
+        public KGUI.Tiles.Pipe pipeUI;
+
+        // Scanner Tool
+        public KGUI.Tools.ScannerToolGUI scannerToolGUI;
 
         // GUI Elements List
-        static List<GUIManager> UIList = new List<GUIManager>();
+        public List<GUIManager> UIList = new List<GUIManager>();
 
         // Cursor Screen Position from Unity Input Class
         public Vec2f CursorPosition;
@@ -43,6 +58,17 @@ namespace KGUI
         // Initialize
         public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
+            foodBarUI = new PlayerStatus.FoodBarUI();
+            waterBarUI = new PlayerStatus.WaterBarUI();
+            oxygenBarUI = new PlayerStatus.OxygenBarUI();
+            fuelBarUI = new PlayerStatus.FuelBarUI();
+            healthBarUI = new PlayerStatus.HealthBarUI();
+            bedrockUI = new Tiles.Bedrock();
+            dirtUI = new Tiles.Dirt();
+            wireUI = new Tiles.Wire();
+            pipeUI = new Tiles.Pipe();
+            scannerToolGUI = new Tools.ScannerToolGUI();
+
             // Set Canvas
             _Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
@@ -63,6 +89,21 @@ namespace KGUI
 
             // Add Health Bar To Draw Array
             UIList.Add(healthBarUI);
+
+            // Add Bedrock Tile To Draw Array
+            UIList.Add(bedrockUI);
+
+            // Add Dirt Tile To Draw Array
+            UIList.Add(dirtUI);
+
+            // Add Wire Tile To Draw Array
+            UIList.Add(wireUI);
+
+            // Add Pipe Tile To Draw Array
+            UIList.Add(pipeUI);
+
+            // Add Scanner Tool To Draw Array
+            UIList.Add(scannerToolGUI);
 
             // Init Elements
             for (int i = 0; i < UIList.Count; i++)
@@ -121,17 +162,15 @@ namespace KGUI
 
         public virtual void OnMouseClick(AgentEntity agentEntity)
         {
-            // If Mosue 0 Button Down
-            if (Input.GetMouseButtonDown(0))
+            // Handle Inputs
+            for (int i = 0; i < UIList.Count; i++)
             {
-                // Handle Inputs
-                for (int i = 0; i < UIList.Count; i++)
+                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
-                    Debug.LogWarning("Cursor X: " + CursorPosition.X + ", Y: " + CursorPosition.Y);
-                    Debug.LogWarning("Object X: " + UIList[i].ObjectPosition.X + ", Y: " + UIList[i].ObjectPosition.Y);
-
-                    if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                    // If Mosue 0 Button Down
+                    if (Input.GetMouseButton(0))
                     {
+                        // Call All Click Events
                         UIList[i].OnMouseClick(agentEntity);
                     }
                 }

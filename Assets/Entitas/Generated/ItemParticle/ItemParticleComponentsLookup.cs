@@ -8,24 +8,26 @@
 //------------------------------------------------------------------------------
 public static class ItemParticleComponentsLookup {
 
-    public const int ItemDrawPosition2D = 0;
-    public const int ItemFireWeaponCharge = 1;
-    public const int ItemFireWeaponClip = 2;
-    public const int ItemFireWeaponSpread = 3;
-    public const int ItemID = 4;
-    public const int ItemLabel = 5;
-    public const int ItemMovement = 6;
-    public const int ItemPosition2D = 7;
-    public const int ItemPulseWeaponPulse = 8;
-    public const int ItemStack = 9;
-    public const int ItemType = 10;
-    public const int ItemUnpickable = 11;
-    public const int PhysicsBox2DCollider = 12;
-    public const int PhysicsSphere2DCollider = 13;
+    public const int ItemCastData = 0;
+    public const int ItemDrawPosition2D = 1;
+    public const int ItemFireWeaponCharge = 2;
+    public const int ItemFireWeaponClip = 3;
+    public const int ItemFireWeaponSpread = 4;
+    public const int ItemID = 5;
+    public const int ItemLabel = 6;
+    public const int ItemMovement = 7;
+    public const int ItemPosition2D = 8;
+    public const int ItemPulseWeaponPulse = 9;
+    public const int ItemStack = 10;
+    public const int ItemType = 11;
+    public const int ItemUnpickable = 12;
+    public const int PhysicsBox2DCollider = 13;
+    public const int PhysicsSphere2DCollider = 14;
 
-    public const int TotalComponents = 14;
+    public const int TotalComponents = 15;
 
     public static readonly string[] componentNames = {
+        "ItemCastData",
         "ItemDrawPosition2D",
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
@@ -43,6 +45,7 @@ public static class ItemParticleComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(Item.CastDataComponent),
         typeof(Item.DrawPosition2DComponent),
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),

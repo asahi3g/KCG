@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Contexts;
 using UnityEngine;
+using Enums.Tile;
 
 namespace Action
 {
@@ -43,13 +44,6 @@ namespace Action
         public void SetCoolDown(float coolDown)
         {
             ActionPropertyEntity.AddActionPropertyCoolDown(coolDown);
-        }
-
-        public void SetTiles()
-        {
-            ActionPropertyEntity.AddActionPropertyTilePlacement(null, null);
-            ActionPropertyEntity.actionPropertyTilePlacement.Tiles = new List<PlanetTileMap.Tile>();
-            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos = new List<KMath.Vec2i>();
         }
 
         public void SetShieldActive(bool ShieldActive)

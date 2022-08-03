@@ -44,5 +44,6 @@
         ChestPlacementTool,
         PlanterTool,
         HarvestTool,
+        ScannerTool,
     }
 }
