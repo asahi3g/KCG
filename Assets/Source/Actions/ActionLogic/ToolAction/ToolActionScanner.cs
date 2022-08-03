@@ -53,8 +53,8 @@ namespace Action
                             // Has Planter Component?
                             if (entity.hasMechPlanter)
                             {
-                                HUD.HUDManager.guiManager.scannerToolGUI.ActivateGUIOverlay(entity.mechPlanter.GotSeed, entity.mechPlanter.LightLevel, entity.mechPlanter.WaterLevel,
-                                     entity.mechPlanter.PlantGrowth, 3.0f);
+                                HUD.HUDManager.guiManager.AddText("Got Seed: " + entity.mechPlanter.GotSeed + " \n" + "Light Status: " + entity.mechPlanter.LightLevel + " \n" + "Water Status: " + (int)entity.mechPlanter.WaterLevel + " \n" + "Growth Status: " + (int)entity.mechPlanter.PlantGrowth, new Vec2f(-160f, 90.0f),
+                                    new Vec2f(350, 120), 3.0f);
                             }
                         }
                     }
