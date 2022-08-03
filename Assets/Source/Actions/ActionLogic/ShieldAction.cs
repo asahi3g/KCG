@@ -19,20 +19,19 @@ namespace Action
 
         public override void OnEnter(ref PlanetState planet)
         {
-            // Entity Has Agent Tool Bar?
-            if (AgentEntity.hasAgentToolBar)
+            if (!AgentEntity.hasAgentInventory)
+                return;
+
+            InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+
+            if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                // Set Tool Bar ID
-                int toolBarID = AgentEntity.agentToolBar.ToolBarID;
-
-                // Set Inventory Entity
-                InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-
                 // Set Selected Slot
-                int selectedSlot = InventoryEntity.inventorySlots.Selected;
+                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
 
                 // Set Item Entity
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, 
+                    InventoryEntity.inventoryID.ID, selectedSlot);
 
                 // If Item In Slot Is A Melee Attack Weapon
                 if(ItemEntity.itemType.Type== Enums.ItemType.Sword || ItemEntity.itemType.Type == Enums.ItemType.StunBaton)

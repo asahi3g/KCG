@@ -14,11 +14,11 @@ namespace Agent
         public Vec2f CollisionDimensions;
 
 
-        // enemy agent
+        // Enemy agent
         public int EnemyBehaviour;
         public float DetectionRadius;
 
-        // stats
+        // Stats
         public float Health;
         public float AttackCooldown;
     }

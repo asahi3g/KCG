@@ -86,6 +86,12 @@ namespace Item
             ItemTypeLabels[(int)CurrentIndex] = name;
         }
 
+        public void SetGroup(Enums.ItemGroups group)
+        {
+            IsItemTypeValid();
+            PropertiesArray[(int)CurrentIndex].Group = group;
+        }
+
         public void SetSpriteSize(Vec2f size)
         {
             IsItemTypeValid();

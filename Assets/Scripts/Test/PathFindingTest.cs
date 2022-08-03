@@ -23,6 +23,7 @@ namespace Planet.Unity
             if (!Init)
             {
                 Initialize();
+                GameState.Renderer.Initialize(Material);
                 Init = true;
             }
         }
@@ -44,9 +45,15 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        private void OnRenderObject()
+        private void OnGUI()
         {
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+            if (!Init)
+                return;
+
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes

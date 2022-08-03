@@ -15,22 +15,26 @@ namespace Action
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
-            if (AgentEntity.hasAgentToolBar)
+            if (!AgentEntity.hasAgentInventory)
+                return;
+
+            InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+
+            // Todo: start playing some animation
+            if (GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                int toolBarID = AgentEntity.agentToolBar.ToolBarID;
-                InventoryEntity toolBarEntity = EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-
-                int selected = toolBarEntity.inventorySlots.Selected;
+                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
 
 
-                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, toolBarID, selected);
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
+                    AgentEntity.agentInventory.InventoryID, selected);
                 if (itemInventory == null)
                 {
                     ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
                     return;
                 }
 
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, itemInventory, selected);
+                GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryEntity, selected);
 
                 // Create item particle from item inventory.
                 Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;

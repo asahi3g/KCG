@@ -30,6 +30,7 @@ namespace Agent
             if (Id >= 0 && Id < PropertiesArray.Length)
             {
                 return PropertiesArray[Id];
+                Utils.Assert(false);
             }
 
             return new AgentProperties();

@@ -30,21 +30,18 @@ public class InventoryTest : MonoBehaviour
 
         // Create Agent and inventory.
         int agnetID = 0;
-        int inventoryWidth = 6;
-        int inventoryHeight = 5;
-        int toolBarSize = 8;
+        int inventoryWidth = 8;
+        int inventoryHeight = 6;
 
         AgentEntity playerEntity = context.agent.CreateEntity();
         playerEntity.AddAgentID(agnetID);
         playerEntity.isAgentPlayer = true;
         inventoryAttacher.AttachInventoryToAgent(Contexts.sharedInstance, inventoryWidth, inventoryHeight, playerEntity);
-        inventoryAttacher.AttachToolBarToPlayer(Contexts.sharedInstance, toolBarSize, playerEntity);
 
         int inventoryID = playerEntity.agentInventory.InventoryID;
-        int toolBarID = playerEntity.agentToolBar.ToolBarID;
 
         // Add item to tool bar.
-         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol), toolBarID);
+         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol), inventoryID);
 
         // Test not stackable items.
         for (uint i = 0; i < 10; i++)
@@ -82,7 +79,7 @@ public class InventoryTest : MonoBehaviour
             foreach (var player in players)
             {
                 int inventoryID = player.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = context.inventory.GetEntityWithInventoryID(inventoryID);
+                InventoryEntity inventoryEntity = context.inventory.GetEntityWithInventoryIDID(inventoryID);
                 inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
             }
         }
@@ -95,7 +92,7 @@ public class InventoryTest : MonoBehaviour
         if (Event.current.type != EventType.Repaint)
             return;
 
-        inventoryDrawSystem.Draw(Contexts.sharedInstance, transform);
+        inventoryDrawSystem.Draw(Contexts.sharedInstance);
     }
 
     private void Initialize()
