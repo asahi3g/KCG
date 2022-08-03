@@ -24,7 +24,7 @@ namespace KGUI.PlayerStatus
         
         // Fill Amount Value
         private float fillValue;
-
+        
         public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
@@ -141,6 +141,11 @@ namespace KGUI.PlayerStatus
                 else
                     iconCanvas.SetPosition(new Vector3(-363.8f, 75.3f, 4.873917f));
             }
+        }
+
+        public override void Draw()
+        {
+            iconCanvas.Draw();
         }
 
         // Oxygen Bar OnMouseClick Event

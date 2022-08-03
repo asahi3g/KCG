@@ -24,8 +24,6 @@ namespace Planet.Unity
         int inventoryID;
         int toolBarID;
 
-        HUDManager hudManager;
-
         static bool Init = false;
 
         public void Start()
@@ -86,7 +84,7 @@ namespace Planet.Unity
             if (Init)
             {
                 // Draw HUD UI
-                hudManager.Update(Player);
+                HUDManager.Update(Player);
 
                 // Draw Statistics
                 KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -163,7 +161,7 @@ namespace Planet.Unity
             toolBarID = Player.agentToolBar.ToolBarID;
 
             // Player Status UI Init
-            hudManager = new HUDManager(Planet, Player);
+            HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
@@ -218,13 +216,63 @@ namespace Planet.Unity
                 tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
             }
 
-           /* tileMap.SetFrontTile(8, 14, TileID.Platform);
-            tileMap.SetFrontTile(9, 14, TileID.Platform);
-            tileMap.SetFrontTile(10, 14, TileID.Platform);
-            tileMap.SetFrontTile(11, 14, TileID.Platform);
-            tileMap.SetFrontTile(12, 14, TileID.Platform);
-            tileMap.SetFrontTile(13, 14, TileID.Platform);*/
+            tileMap.GetTile(8, 18).FrontTileID = TileID.Platform;
+            tileMap.GetTile(9, 18).FrontTileID = TileID.Platform;
+            tileMap.GetTile(10, 18).FrontTileID = TileID.Platform;
+            tileMap.GetTile(11, 18).FrontTileID = TileID.Platform;
+            tileMap.GetTile(12, 18).FrontTileID = TileID.Platform;
+            tileMap.GetTile(13, 18).FrontTileID = TileID.Platform;
 
+            tileMap.GetTile(12, 21).FrontTileID = TileID.Platform;
+            tileMap.GetTile(13, 21).FrontTileID = TileID.Platform;
+            tileMap.GetTile(14, 21).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(14, 24).FrontTileID = TileID.Platform;
+            tileMap.GetTile(15, 24).FrontTileID = TileID.Platform;
+            tileMap.GetTile(16, 24).FrontTileID = TileID.Platform;
+
+
+            tileMap.GetTile(19, 24).FrontTileID = TileID.Platform;
+            tileMap.GetTile(20, 24).FrontTileID = TileID.Platform;
+            tileMap.GetTile(21, 24).FrontTileID = TileID.Platform;
+
+
+
+            tileMap.GetTile(26, 26).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(29, 26).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(32, 26).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(36, 26).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(40, 26).FrontTileID = TileID.Platform;
+
+
+            tileMap.GetTile(16, 26).FrontTileID = TileID.Platform;
+
+
+            tileMap.GetTile(12, 27).FrontTileID = TileID.Platform;
+
+            tileMap.GetTile(8, 27).FrontTileID = TileID.Platform;
+            tileMap.GetTile(7, 27).FrontTileID = TileID.Platform;
+
+
+            for(int i = 0; i < 5; i++)
+            {
+                tileMap.GetTile(20, i + 16).FrontTileID = TileID.Moon;
+            }
+
+            for(int i = 0; i < 10; i++)
+            {
+                tileMap.GetTile(24, i + 16).FrontTileID = TileID.Moon;
+            }
+
+
+            tileMap.GetTile(26, 21).FrontTileID = TileID.Moon;
+            tileMap.GetTile(27, 21).FrontTileID = TileID.Moon;
+            tileMap.GetTile(26, 22).FrontTileID = TileID.Moon;
+            tileMap.GetTile(27, 22).FrontTileID = TileID.Moon;
         }
 
     }

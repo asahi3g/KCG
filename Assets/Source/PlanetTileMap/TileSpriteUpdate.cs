@@ -36,7 +36,7 @@ namespace PlanetTileMap
                 }
                 else
                 {
-                    tile.BackTileSpriteID = -1;
+                    tile.BackTileSpriteID = tileProperty.BaseSpriteId;
                 }
             }
             else
@@ -75,7 +75,7 @@ namespace PlanetTileMap
                 }
                 else
                 {
-                    tile.MidTileSpriteID = -1;
+                    tile.MidTileSpriteID = tileProperty.BaseSpriteId;
                 }
             }
             else
@@ -116,7 +116,7 @@ namespace PlanetTileMap
                 }
                 else
                 {
-                    tile.FrontTileSpriteID = -1;
+                    tile.FrontTileSpriteID = tileProperty.BaseSpriteId;
                 }
             }
             else
