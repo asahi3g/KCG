@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace KGUI.Elements
 {
-    public class Image
+    public class Image : ElementManager
     {
-        // Image Gameobject
+        // Image GameObject
         private GameObject iconCanvas;
 
         // Constructor
@@ -35,6 +35,8 @@ namespace KGUI.Elements
 
             // Set Pivot
             iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
 
         // Constructor
@@ -63,6 +65,8 @@ namespace KGUI.Elements
 
             // Set Pivot
             iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
 
         // Constructor
@@ -115,6 +119,28 @@ namespace KGUI.Elements
 
             // Set Pivot
             iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+        }
+
+        public override void Update()
+        {
+             
+        }
+
+        public override void Draw()
+        {
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = true;
+        }
+
+        public bool IsMouseOver(KMath.Vec2f cursor)
+        {
+            if(Vector2.Distance(new Vector2(cursor.X, cursor.Y), new Vector2(iconCanvas.transform.position.x, iconCanvas.transform.position.y)) < 20.0f)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void SetPosition(Vector3 newPos)

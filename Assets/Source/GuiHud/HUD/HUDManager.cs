@@ -26,5 +26,10 @@ namespace HUD
             // Update GUI
             guiManager.Update(agentEntity);
         }
+
+        public static void Draw()
+        {
+            guiManager.Draw();
+        }
     }
 }

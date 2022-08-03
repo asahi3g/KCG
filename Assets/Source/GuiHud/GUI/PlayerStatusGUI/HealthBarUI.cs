@@ -332,6 +332,15 @@ namespace KGUI.PlayerStatus
             }
         }
 
+        public override void Draw()
+        {
+            Icon.Draw();
+            BarDiv1.Draw();
+            BarDiv2.Draw();
+            BarDiv3.Draw();
+            Border.Draw();
+        }
+
         // Health Bar OnMouseClick Event
         public override void OnMouseClick(AgentEntity agentEntity)
         {
