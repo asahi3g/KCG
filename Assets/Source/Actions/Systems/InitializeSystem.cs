@@ -141,6 +141,7 @@ namespace Action
             // Create Tool Action Melee Attack
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMeleeAttack);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMeleeAttackCreator());
+            GameState.ActionPropertyManager.SetShieldActive(false);
             GameState.ActionPropertyManager.EndActionPropertyType();
 
             // Create Tool Action Pulse Weapon

@@ -23,26 +23,30 @@ namespace Action
             if(ItemEntity.itemCastData.data.TileID == TileID.Error)
                 ItemEntity.itemCastData.data = (Data)ActionPropertyEntity.actionPropertyData.Data;
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
-
-            if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                    y >= 0 && y < planet.TileMap.MapSize.Y)
+            if(ItemEntity.itemCastData.InputsActive)
             {
-                switch (ItemEntity.itemCastData.data.Layer)
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                int x = (int)worldPosition.x;
+                int y = (int)worldPosition.y;
+
+                if (x >= 0 && x < planet.TileMap.MapSize.X &&
+                        y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    case MapLayerType.Back:
-                        planet.TileMap.SetBackTile(x, y, ItemEntity.itemCastData.data.TileID);
-                        break;
-                    case MapLayerType.Mid:
-                        planet.TileMap.SetMidTile(x, y, ItemEntity.itemCastData.data.TileID);
-                        break;
-                    case MapLayerType.Front:
-                        planet.TileMap.SetFrontTile(x, y, ItemEntity.itemCastData.data.TileID);
-                        break;
+                    switch (ItemEntity.itemCastData.data.Layer)
+                    {
+                        case MapLayerType.Back:
+                            planet.TileMap.SetBackTile(x, y, ItemEntity.itemCastData.data.TileID);
+                            break;
+                        case MapLayerType.Mid:
+                            planet.TileMap.SetMidTile(x, y, ItemEntity.itemCastData.data.TileID);
+                            break;
+                        case MapLayerType.Front:
+                            planet.TileMap.SetFrontTile(x, y, ItemEntity.itemCastData.data.TileID);
+                            break;
+                    }
                 }
             }
+
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

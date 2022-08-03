@@ -311,10 +311,10 @@ namespace ECSInput
             // Show/Hide Statistics
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (KGUI.Statistics.StatisticsDisplay.canDraw)
-                    KGUI.Statistics.StatisticsDisplay.canDraw = false;
-                else if (!KGUI.Statistics.StatisticsDisplay.canDraw)
-                    KGUI.Statistics.StatisticsDisplay.canDraw = true;
+                if (KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
+                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = false;
+                else if (!KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
+                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = true;
 
             }
 

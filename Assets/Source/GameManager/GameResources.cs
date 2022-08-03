@@ -734,7 +734,7 @@ public class GameResources
         GameState.ProjectileCreationApi.SetRamp(false, 1f, 10f, 1.0f);
         GameState.ProjectileCreationApi.SetDragType(Enums.DragType.Linear);
         GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
-        GameState.ProjectileCreationApi.SetAffectedByGravity(true);
+        GameState.ProjectileCreationApi.SetAffectedByGravity(false);
         GameState.ProjectileCreationApi.SetAcceleration(new Vec2f());
         GameState.ProjectileCreationApi.End();
 
@@ -750,7 +750,7 @@ public class GameResources
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Rocket);
         GameState.ProjectileCreationApi.SetName("rocket");
         GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
-        GameState.ProjectileCreationApi.SetAffectedByGravity(true);
+        GameState.ProjectileCreationApi.SetAffectedByGravity(false);
         GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
