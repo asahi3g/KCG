@@ -11,7 +11,7 @@ namespace Agent
             float Gravity = 800.0f;
             float MaxAcceleration = 50.0f;
             // maximum Y velocity
-            float MaxVelocityY = 15.0f;
+            float MaxVelocityY = 12.0f;
 
             if (movable.AffectedByGravity)
             {

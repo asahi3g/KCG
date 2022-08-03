@@ -86,7 +86,8 @@ namespace Planet.Unity
                     }   
                 }
             }
-            
+
+            HUDManager.Draw();
             Planet.Update(Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 

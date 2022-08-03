@@ -40,7 +40,7 @@ public class GameState
     public static readonly Mech.MechCreationApi MechCreationApi;
     public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
     public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
-
+    public static readonly Mech.MechGUIDrawSystem MechGUIDrawSystem;
     #endregion
 
     #region Agent
@@ -154,6 +154,7 @@ public class GameState
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
+        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         Renderer = new Utility.Render();
     }
 }

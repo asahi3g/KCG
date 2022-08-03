@@ -18,23 +18,35 @@ namespace Agent
     {
         private void Update(ref TileMap tileMap, Position2DComponent pos, MovableComponent movable, Box2DColliderComponent box2DCollider, float deltaTime)
         {       
-            var entityBoxBorders = new AABox2D(new Vec2f(pos.PreviousValue.X, pos.Value.Y) + box2DCollider.Offset, box2DCollider.Size);
+            AABox2D entityBoxBorders = new AABox2D(new Vec2f(pos.PreviousValue.X, pos.Value.Y) + box2DCollider.Offset, box2DCollider.Size);
 
+            
             if (entityBoxBorders.IsCollidingBottom(tileMap, movable.Velocity))
             {
-                var tile = tileMap.GetTile((int)pos.Value.X, (int)pos.Value.Y);
-                var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                bool isPlatform = false;
+                for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
+                {
+                    var tile = tileMap.GetTile(i, (int)entityBoxBorders.ymin);
+                    var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+
+                    if (property.IsAPlatform)
+                    {
+                        isPlatform = true;
+                    }
+                }
+
+                
 
                 entityBoxBorders.DrawBox();
 
-                if (!property.IsAPlatform || !movable.Droping)
+                if (!isPlatform || !movable.Droping)
                 {
                     pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
                     movable.Velocity.Y = 0.0f;
                     movable.Acceleration.Y = 0.0f;
                     movable.OnGrounded = true;
                 }
-                else if (property.IsAPlatform && movable.Droping)
+                else if (isPlatform && movable.Droping)
                 {
                     if (!movable.WantToDrop)
                     {
@@ -52,7 +64,10 @@ namespace Agent
             else
             {
                 movable.WantToDrop = false;
+                movable.Droping = false;
             }
+
+
             if (entityBoxBorders.IsCollidingTop(tileMap, movable.Velocity))
             {   
                 pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);

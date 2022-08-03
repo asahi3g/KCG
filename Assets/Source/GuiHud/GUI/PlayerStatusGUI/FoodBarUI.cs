@@ -145,6 +145,11 @@ namespace KGUI.PlayerStatus
             }
         }
 
+        public override void Draw()
+        {
+            Icon.Draw();
+        }
+
         // Food Bar OnMouseClick Event
         public override void OnMouseClick(AgentEntity agentEntity)
         {

@@ -27,8 +27,6 @@ namespace Mech
             {
                 int spriteId = entity.mechSprite2D.SpriteId;
 
-                Debug.Log(spriteId);
-
                 //#397; TEMP ATLAS TYPE AGENT; SHOULD BE MECH
                 Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Mech).TextureCoords;
 

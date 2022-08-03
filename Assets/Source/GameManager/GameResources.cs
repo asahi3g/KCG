@@ -60,6 +60,8 @@ public class GameResources
     public static int RemoveToolIcon;
     public static int MiningLaserToolIcon;
     public static int PipePlacementToolIcon;
+    public static int ConstructionToolIcon;
+
     public static int ChestIcon;
     public static int ChestIconParticle;
 
@@ -124,6 +126,7 @@ public class GameResources
             MajestyPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
+            ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture2\\dev-furniture-2.png", 12, 12);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -150,8 +153,8 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
-            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
-            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
+            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Particle);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
             MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, Enums.AtlasType.Mech);
             MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, Enums.AtlasType.Mech);
@@ -159,7 +162,7 @@ public class GameResources
             MajestyPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmIcon, 0, 0, Enums.AtlasType.Particle);
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
-
+            ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, Enums.AtlasType.Particle);
 
             CreateTiles();
             CreateAnimations();
@@ -561,6 +564,13 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionHarvest);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.ConstructionTool, "ConstructionTool");
+        GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionConstruction);
+        GameState.ItemCreationApi.EndItem();
+                
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.ScannerTool, "ScannerTool");
         GameState.ItemCreationApi.SetTexture(OreSprite);
         GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
