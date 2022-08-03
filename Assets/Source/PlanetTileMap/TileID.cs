@@ -14,6 +14,7 @@
         Wire,
         Bedrock,
         Platform,
-        Mech
+        Mech,
+        Stone
     }
 }

@@ -26,13 +26,15 @@ namespace Item
             Placeable   = 1 << 0,
             Consumable  = 1 << 1,
             Stackable   = 1 << 2,
-            Tool        = 1 << 3
+            Tool        = 1 << 3,
+            PlacementTool = 1 << 4  
         }
 
         public bool IsPlaceable() { return ItemFlags.HasFlag(Flags.Placeable); }
         public bool IsConsumable() { return ItemFlags.HasFlag(Flags.Consumable); }
         public bool IsStackable() { return ItemFlags.HasFlag(Flags.Stackable); }
         public bool IsTool() { return ItemFlags.HasFlag(Flags.Tool); }
+        public bool IsPlacementTool() { return ItemFlags.HasFlag(Flags.PlacementTool); }
     }
 
     public struct FireWeaponPropreties

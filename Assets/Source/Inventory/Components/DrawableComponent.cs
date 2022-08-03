@@ -7,7 +7,7 @@ namespace Inventory
     [Inventory]
     public class DrawableComponent : IComponent
     {
-        // Todo: add position and allow player to move Inventory around.
+        // Todo: add position and allow player to move inventory around.
         // Todo: add size and allow player to Adjust inventory size.
     }
 }

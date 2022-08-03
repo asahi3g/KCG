@@ -23,12 +23,9 @@ namespace Action
 
             // Set Logic Factory
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceTileCreator());
-            
-            // Add Tiles Component
-            GameState.ActionPropertyManager.SetTiles();
 
             // Set Data Struct
-            var data = new ToolActionPlaceTile.Data
+            var data = new Data
             {
                 // Set Tile ID
                 TileID = tileID,
@@ -178,6 +175,11 @@ namespace Action
             ToolActionConstruction.Data constructionToolData = new ToolActionConstruction.Data();
             constructionToolData.MechID = Mech.MechType.Storage;
             GameState.ActionPropertyManager.SetData(constructionToolData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Harvest
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionScanner);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionScannerCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }

@@ -7,60 +7,44 @@ namespace Action
 {
     public class ToolActionPlaceTile : ActionBase
     {
-        public struct Data
-        {
-            public TileID TileID;
-            public MapLayerType Layer;
-        }
-
-        Data data;
+        // Item Entity
+        private ItemInventoryEntity ItemEntity;
 
         public ToolActionPlaceTile(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
-            data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+            
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
+            // Item Entity
+            ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
+
+            if(ItemEntity.itemCastData.data.TileID == TileID.Error)
+                ItemEntity.itemCastData.data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            if(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Contains(new KMath.Vec2i(x, y)))
+            if (x >= 0 && x < planet.TileMap.MapSize.X &&
+                    y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-                if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                y >= 0 && y < planet.TileMap.MapSize.Y)
+                switch (ItemEntity.itemCastData.data.Layer)
                 {
-                    for(int i = 0; i < ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Count; i++)
-                    {
-                        switch (data.Layer)
-                        {
-                            case MapLayerType.Back:
-                                planet.TileMap.SetBackTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
-                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
-                                break;
-                            case MapLayerType.Mid:
-                                planet.TileMap.SetMidTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
-                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
-                                break;
-                            case MapLayerType.Front:
-                                planet.TileMap.SetFrontTile(ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].X,
-                            ActionPropertyEntity.actionPropertyTilePlacement.TilesPos[i].Y, data.TileID);
-                                break;
-                        }
-                    }
+                    case MapLayerType.Back:
+                        planet.TileMap.SetBackTile(x, y, ItemEntity.itemCastData.data.TileID);
+                        break;
+                    case MapLayerType.Mid:
+                        planet.TileMap.SetMidTile(x, y, ItemEntity.itemCastData.data.TileID);
+                        break;
+                    case MapLayerType.Front:
+                        planet.TileMap.SetFrontTile(x, y, ItemEntity.itemCastData.data.TileID);
+                        break;
                 }
+            }
 
-                ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Clear();
-                ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Clear();
-                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-            }
-            else
-            {
-                ActionPropertyEntity.actionPropertyTilePlacement.Tiles.Add(planet.TileMap.GetTile(x, y));
-                ActionPropertyEntity.actionPropertyTilePlacement.TilesPos.Add(new KMath.Vec2i(x, y));
-                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-            }
+            ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }
     }
 

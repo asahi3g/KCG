@@ -11,7 +11,7 @@ public partial class InventoryEntity {
     public Inventory.SlotsComponent inventorySlots { get { return (Inventory.SlotsComponent)GetComponent(InventoryComponentsLookup.InventorySlots); } }
     public bool hasInventorySlots { get { return HasComponent(InventoryComponentsLookup.InventorySlots); } }
 
-    public void AddInventorySlots(System.Collections.BitArray newValues, int newSelected) {
+    public void AddInventorySlots(Utility.BitSet newValues, int newSelected) {
         var index = InventoryComponentsLookup.InventorySlots;
         var component = (Inventory.SlotsComponent)CreateComponent(index, typeof(Inventory.SlotsComponent));
         component.Values = newValues;
@@ -19,7 +19,7 @@ public partial class InventoryEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceInventorySlots(System.Collections.BitArray newValues, int newSelected) {
+    public void ReplaceInventorySlots(Utility.BitSet newValues, int newSelected) {
         var index = InventoryComponentsLookup.InventorySlots;
         var component = (Inventory.SlotsComponent)CreateComponent(index, typeof(Inventory.SlotsComponent));
         component.Values = newValues;

@@ -57,8 +57,19 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        private void OnRenderObject()
+        //private void OnRenderObject()
+        //{
+        //    GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+        //}
+
+        private void OnGUI()
         {
+            if (!Init)
+                return;
+
+            if (Event.current.type != EventType.Repaint)
+                return;
+
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
         }
 
@@ -78,11 +89,6 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int toolBarID = Player.agentToolBar.ToolBarID;
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
@@ -99,7 +105,19 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
+            var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
+            var SpawnPumpShotgun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Shotgun);
+            var SpawnWaterBottle = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.WaterBottle);
+            var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PlanterTool);
+            var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
+            var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, toolBarID);
         }
 
         void GenerateMap()

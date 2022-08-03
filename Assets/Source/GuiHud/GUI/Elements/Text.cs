@@ -100,6 +100,9 @@ namespace KGUI.Elements
 
         public Transform GetTransform()
         {
+            if (textCanvas == null)
+                return null;
+
             // Return Transform
             return textCanvas.transform;
         }

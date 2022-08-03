@@ -277,6 +277,13 @@ namespace Item
             fireWeapon.GrenadeFlags |= flags;
         }
 
+        public void SetFlags(ItemProprieties.Flags flags)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)CurrentIndex].ItemFlags |= flags;
+        }
+
         public void SetBullet(int bulletSpriteID, Vec2f size)
         {
             IsItemTypeValid();

@@ -78,9 +78,10 @@ namespace Collisions
                 var distance = CalculateDistanceAABB_AABB(
                     xmin, xmax, ymin, ymax,
                     tile.xmin, tile.xmax, tile.ymin, tile.ymax, velocity);
-                if (distance / velocity.Y < lowestTime)
+                var newTime = distance / velocity.Y;
+                if (newTime < lowestTime)
                 {
-                    lowestTime = distance / velocity.Y;
+                    lowestTime = newTime;
                     nearestTilePos = R1_tiles[i];
                 }
             }
@@ -119,8 +120,8 @@ namespace Collisions
             }
             else if (velocity.X < 0f)
             {
-                line1.X = box1_xmin;
-                line2.X = box2_xmax;
+                line1.X = box2_xmax;
+                line2.X = box1_xmin;
             }
             
             if (velocity.Y > 0f)
@@ -130,8 +131,8 @@ namespace Collisions
             }
             else if (velocity.Y < 0f)
             {
-                line1.Y = box1_ymin;
-                line2.Y = box2_ymax;
+                line1.Y = box2_ymax;
+                line2.Y = box1_ymin;
             }
 
             return Vec2f.Distance(line1, line2);
