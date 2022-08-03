@@ -66,7 +66,7 @@ namespace Mech
         {
             foreach (ItemInventoryEntity itemEntity in itemInInventory)
             {
-                int slotNumber = itemEntity.itemInventory.SlotNumber;
+                int slotNumber = itemEntity.itemInventory.SlotID;
                 int i = slotNumber % width;
                 int j = (height - 1) - (slotNumber - i) / width;
 
