@@ -20,7 +20,5 @@ namespace Mech
 
         public int XMin, XMax, YMin, YMax;
 
-        public MechType mechType;
-
     }
 }
