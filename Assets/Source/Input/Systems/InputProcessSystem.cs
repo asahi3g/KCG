@@ -356,7 +356,7 @@ namespace ECSInput
                         return;
 
                     var SlotComponent = inventoryEntity.inventoryEntity;
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, SlotComponent.SelectedID);
+                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, SlotComponent.SelectedSlotID);
 
                     if (item.itemType.Type == Enums.ItemType.PulseWeapon)
                     {
@@ -388,7 +388,7 @@ namespace ECSInput
                     KeyCode keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
-                        inventoryEntity.inventoryEntity.SelectedID = i;
+                        inventoryEntity.inventoryEntity.SelectedSlotID = i;
                         var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         
                         planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,

@@ -27,7 +27,7 @@ namespace Action
             if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
             {
                 // Set Selected Slot
-                int selectedSlot = InventoryEntity.inventoryEntity.SelectedID;
+                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
 
                 // Set Item Entity
                 ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, 

@@ -39,7 +39,7 @@ namespace Planet.Unity
 
             int inventoryID = Player.agentInventory.InventoryID;
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedID;
+            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
        
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             if (item != null)
@@ -113,13 +113,13 @@ namespace Planet.Unity
             var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PlanterTool);
             var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
             var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, inventoryID);
         }
 
         void GenerateMap()

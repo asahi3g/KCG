@@ -118,7 +118,7 @@ namespace Inventory
         public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)
         {
             var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
-            inventory.inventoryEntity.SelectedID = newSelectedSlot;
+            inventory.inventoryEntity.SelectedSlotID = newSelectedSlot;
         }
 
         public bool IsFull(Contexts contexts, int inventoryID)

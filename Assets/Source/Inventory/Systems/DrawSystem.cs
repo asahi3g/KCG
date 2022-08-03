@@ -112,11 +112,11 @@ namespace Inventory
             float sizeY = tileSize.Y - 2 * borderOffset.Y;
             float posX = tilePosX + borderOffset.X;
             float posY = tilePosY + borderOffset.Y;
-            if (proprietis.HasBorder() && (inventoryEntity.inventoryEntity.SelectedID != i))
+            if (proprietis.HasBorder() && (inventoryEntity.inventoryEntity.SelectedSlotID != i))
             {
                 GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, proprietis.SlotColor);
             }
-            if (inventoryEntity.inventoryEntity.SelectedID == i)
+            if (inventoryEntity.inventoryEntity.SelectedSlotID == i)
             {
                 GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, proprietis.SelectedColor);
             }

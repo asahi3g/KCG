@@ -31,7 +31,7 @@ namespace Planet.Unity
         public void Update()
         {
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedID;
+            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);

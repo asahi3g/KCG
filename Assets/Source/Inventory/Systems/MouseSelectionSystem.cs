@@ -51,7 +51,7 @@ namespace Inventory
             MouseDown = false;
             if (!MouseHold) // if less than 250ms consider it a click.
             {
-                ClickedInventoryEntity.inventoryEntity.SelectedID = SlotslotID;
+                ClickedInventoryEntity.inventoryEntity.SelectedSlotID = SlotslotID;
                 SlotslotID = -1;
                 ClickedInventoryEntity = null;
                 return;

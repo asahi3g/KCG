@@ -14,6 +14,6 @@ namespace Inventory
         public int Height;
         public Slot[] Slots;
         public BitSet SlotsMask;    // Free slots set to 0/ Fill slots to 1.   
-        public int SelectedID;      // Selected slot.
+        public int SelectedSlotID;      // Selected slot.
     }
 }

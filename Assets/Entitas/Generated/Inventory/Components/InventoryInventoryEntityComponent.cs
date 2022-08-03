@@ -11,25 +11,25 @@ public partial class InventoryEntity {
     public Inventory.EntityComponent inventoryEntity { get { return (Inventory.EntityComponent)GetComponent(InventoryComponentsLookup.InventoryEntity); } }
     public bool hasInventoryEntity { get { return HasComponent(InventoryComponentsLookup.InventoryEntity); } }
 
-    public void AddInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedID) {
+    public void AddInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedSlotID) {
         var index = InventoryComponentsLookup.InventoryEntity;
         var component = (Inventory.EntityComponent)CreateComponent(index, typeof(Inventory.EntityComponent));
         component.Width = newWidth;
         component.Height = newHeight;
         component.Slots = newSlots;
         component.SlotsMask = newSlotsMask;
-        component.SelectedID = newSelectedID;
+        component.SelectedSlotID = newSelectedSlotID;
         AddComponent(index, component);
     }
 
-    public void ReplaceInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedID) {
+    public void ReplaceInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedSlotID) {
         var index = InventoryComponentsLookup.InventoryEntity;
         var component = (Inventory.EntityComponent)CreateComponent(index, typeof(Inventory.EntityComponent));
         component.Width = newWidth;
         component.Height = newHeight;
         component.Slots = newSlots;
         component.SlotsMask = newSlotsMask;
-        component.SelectedID = newSelectedID;
+        component.SelectedSlotID = newSelectedSlotID;
         ReplaceComponent(index, component);
     }
 

@@ -23,7 +23,7 @@ namespace Action
             // Todo: start playing some animation
             if (GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                int selected = inventoryEntity.inventoryEntity.SelectedID;
+                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
 
 
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,

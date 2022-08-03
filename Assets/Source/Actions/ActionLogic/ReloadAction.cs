@@ -25,7 +25,7 @@ namespace Action
             // Todo: start playing some animation
             if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                int selectedSlot = InventoryEntity.inventoryEntity.SelectedID;
+                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
                 ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
                     AgentEntity.agentInventory.InventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
