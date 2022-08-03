@@ -91,6 +91,7 @@ namespace Inventory
                 // Draw tool bar numbers.
                 if (i < width)
                 {
+                    int font = (int)(25f * Screen.height / screenHeight);
                     float offset = (20f / screenHeight);
                     GameState.Renderer.DrawStringGui(
                         tilePosX,
@@ -98,7 +99,7 @@ namespace Inventory
                         tileSize.X,
                         tileSize.Y,
                         label: (i + 1).ToString(),
-                        fontSize: 25,
+                        fontSize: font,
                         alignment: TextAnchor.UpperCenter,
                         color: new Color(255, 255, 255, 255));
                 }
@@ -142,13 +143,14 @@ namespace Inventory
                 // Draw Count if stackable.
                 if (entity.hasItemStack)
                 {
+                    int font = (int)(25f * Screen.height / 1080);
                     GameState.Renderer.DrawStringGui(
                         posX,
                         posY,
                         sizeX,
                         sizeY,
                         entity.itemStack.Count.ToString(),
-                        25,
+                        font,
                         TextAnchor.LowerRight,
                         Color.white);
                 }
