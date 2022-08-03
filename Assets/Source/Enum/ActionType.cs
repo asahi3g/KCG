@@ -41,6 +41,7 @@
         ToolActionPlanter,
         ToolActionWater,
         ToolActionHarvest,
-        ToolActionScanner,
+        ToolActionConstruction,
+        ToolActionScanner
     }
 }
