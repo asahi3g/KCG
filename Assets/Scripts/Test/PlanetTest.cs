@@ -32,8 +32,6 @@ namespace Planet.Unity
 
         AnimancerComponent[] AnimancerComponentArray;
 
-        HUDManager hudManager;
-
         static bool Init = false;
 
         public void Start()
@@ -104,7 +102,7 @@ namespace Planet.Unity
                 return;
 
             // Draw HUD UI
-            hudManager.Update(Player);
+            HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -142,13 +140,6 @@ namespace Planet.Unity
 
             // Draw Chunk Visualizer
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
-
-            // Draw Selected Tiles
-            var entities = Planet.EntitasContext.actionProperties.GetGroup(ActionPropertiesMatcher.AllOf(ActionPropertiesMatcher.ActionPropertyTilePlacement));
-            foreach (var entity in entities)
-            {
-                Admin.AdminAPI.DrawSelectedTiles(entity.actionPropertyTilePlacement.TilesPos, ref Planet);
-            }
         }
 
         // create the sprite atlas for testing purposes
@@ -221,7 +212,7 @@ namespace Planet.Unity
 
             InventoryID = Player.agentInventory.InventoryID;
 
-            hudManager = new HUDManager(Planet, Player);
+            HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

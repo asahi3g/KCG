@@ -15,8 +15,6 @@ namespace Action
         // Light Entities List
         private List<MechEntity> lights = new List<MechEntity>();
 
-        private bool DrawIndicator = true;
-
         // Constructor
         public ToolActionWater(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -88,34 +86,6 @@ namespace Action
                         {
                             ActionEntity.actionExecution.State = Enums.ActionState.Success;
                             break;
-                        }
-
-                        if (DrawIndicator)
-                        {
-                            // Get Cursor Position
-                            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            float x = worldPosition.x;
-                            float y = worldPosition.y;
-                            if (Vector2.Distance(new Vector2(x, y), new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.5f)
-                            {
-                                if (!entity.mechPlanter.GotSeed)
-                                    planet.AddFloatingText("Need Seed", 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y));
-
-                                if (entity.mechPlanter.WaterLevel <= 0.0f)
-                                    planet.AddFloatingText("Need Water", 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y - 0.4f));
-
-                                if (entity.mechPlanter.LightLevel <= 0.0f)
-                                    planet.AddFloatingText("Need Light", 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y - 0.8f));
-
-                                if (entity.mechPlanter.PlantGrowth >= 100)
-                                    planet.AddFloatingText("Ready For Harvest", 3.0f, Vec2f.Zero, new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y - 1.2f));
-
-                                DrawIndicator = false;
-                            }
-                            else
-                            {
-                                DrawIndicator = true;
-                            }
                         }
 
                         // Set Light Level Set Zero
