@@ -81,7 +81,7 @@ namespace Planet.Unity
                 return;
 
             // Draw HUD UI
-            hudManager.Update(Player);
+            HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
