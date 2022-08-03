@@ -20,7 +20,6 @@ namespace Inventory
             }
 
             var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
-            // If empty Draw ToolBar.
 
             foreach (InventoryEntity inventoryEntity in openInventories)
             {

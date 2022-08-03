@@ -72,7 +72,7 @@ namespace Planet.Unity
                 return;
 
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
-            GameState.InventoryMouseSelectionSystem.OnUpdate(Planet.EntitasContext);
+            GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes
