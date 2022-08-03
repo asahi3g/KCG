@@ -143,6 +143,11 @@ namespace KGUI.PlayerStatus
             }
         }
 
+        public override void Draw()
+        {
+            iconCanvas.Draw();
+        }
+
         // Oxygen Bar OnMouseClick Event
         public override void OnMouseClick(AgentEntity agentEntity)
         {
