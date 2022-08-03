@@ -8,7 +8,5 @@ namespace Item
     {
         [EntityIndex]
         public Enums.ItemType Type;
-        [EntityIndex]
-        public Enums.ItemGroups Group;
     }
 }
