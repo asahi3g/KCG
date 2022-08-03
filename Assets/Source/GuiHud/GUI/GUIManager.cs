@@ -434,12 +434,22 @@ namespace KGUI
             }
         }
 
-        public void AddText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
+        public void AddScannerText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
         {
             scannerText.Create("TempText", _text, _Canvas.transform, lifeTime);
             scannerText.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
             scannerText.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
             scannerText.startLifeTime = true;
+        }
+
+        public Text AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
+        {
+            Text text = new Text();
+            text.Create("TempText", _text, _Canvas.transform, 1);
+            text.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
+            text.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
+
+            return text;
         }
     }
 }

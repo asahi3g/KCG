@@ -57,6 +57,11 @@ namespace KGUI.Elements
             SetPosition(Vector3.zero);
         }
 
+        public GameObject GetGameObject()
+        {
+            return textCanvas;
+        }
+
         public void SetPosition(Vector3 newPos)
         {
             // Set Local Rect Position
