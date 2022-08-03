@@ -1,14 +1,10 @@
-using Entitas;
+using Inventory;
 using Planet;
-using UnityEngine;
 
 namespace Action
 {
     public class ShieldAction : ActionBase
     {
-        // Inventory Entity
-        private InventoryEntity InventoryEntity;
-
         // Item Entity
         private ItemInventoryEntity ItemEntity;
 
@@ -22,16 +18,16 @@ namespace Action
             if (!AgentEntity.hasAgentInventory)
                 return;
 
-            InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+            int inventoryID = AgentEntity.agentInventory.InventoryID;
+            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(AgentEntity.agentInventory.InventoryID);
 
-            if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
+            if (inventory.HasTooBar())
             {
                 // Set Selected Slot
-                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
+                int selectedSlot = inventory.SelectedSlotID;
 
                 // Set Item Entity
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, 
-                    InventoryEntity.inventoryID.ID, selectedSlot);
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
 
                 // If Item In Slot Is A Melee Attack Weapon
                 if(ItemEntity.itemType.Type== Enums.ItemType.Sword || ItemEntity.itemType.Type == Enums.ItemType.StunBaton)

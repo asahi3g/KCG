@@ -7,87 +7,57 @@ namespace Inventory
     public class MouseSelectionSystem
     {
         // Todo: Move states to unique component.
-        InventoryEntity ClickedInventoryEntity = null;
+        int             InventoryID = -1;
         int             ItemID = -1;
         int             SlotslotID = -1;
         bool            MouseDown = false;
         bool            MouseHold = false;
         float           StartTime = 0;
 
-        public void InventoryPosCalculation(InventoryEntity inventoryEntity, ref float x, ref float y, ref float w, ref float h, ref Vec2f tileSize, bool isToolBar = false)
-        {
-            InventoryProprieties proprietis = GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID);
-
-            tileSize = new Vec2f(proprietis.TileSize, proprietis.TileSize);
-
-            // Get Inventory Info.
-            int width = inventoryEntity.inventoryEntity.Width;
-            int height = inventoryEntity.inventoryEntity.Height;
-
-            w = width * tileSize.X;
-            h = height * tileSize.Y;
-
-            // Get inventory positon.
-            x = proprietis.DefaultPosition.X;
-            y = proprietis.DefaultPosition.Y;
-
-            x -= w / 2f;
-            if (isToolBar)
-            {
-                x = 960f - w / 2f;
-                y = tileSize.Y / 2f;
-                h = tileSize.Y;
-            }
-            else
-                y -= h / 2f;
-        }
-
         public void OnMouseUP(Contexts contexts)
         {
             // Initialize states.
-            if (ClickedInventoryEntity == null)
+            if (InventoryID < -1)
                 return;
 
             MouseDown = false;
+            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(InventoryID);
+
             if (!MouseHold) // if less than 250ms consider it a click.
             {
-                ClickedInventoryEntity.inventoryEntity.SelectedSlotID = SlotslotID;
+                inventory.SelectedSlotID = SlotslotID;
                 SlotslotID = -1;
-                ClickedInventoryEntity = null;
+                InventoryID = -1;
                 return;
             }
+
             MouseHold = false;
             SlotslotID = -1;
 
             Vector3 mousePos = Input.mousePosition;
-            Vec2f mPos = new Vec2f(mousePos.x, mousePos.y);
+            float scaleFacor = 1080f / Screen.height;
+            Vec2f mPos = new Vec2f(mousePos.x, mousePos.y) * scaleFacor;
 
-            //Slot slot = GameState.InventoryManager.GetSlotInPos(contexts, worldPosition.x, worldPosition.y);
-
-            var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
-
-            foreach (var inventoryEntity in openInventories)
+            for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
-                // Get Inventory Info.
-                float x = 0, y = 0, w = 0, h = 0;
-                int width = inventoryEntity.inventoryEntity.Width;
-                Vec2f tileSize = new Vec2f();
-                InventoryPosCalculation(inventoryEntity, ref x, ref y, ref w, ref h, ref tileSize);
+                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(i);
+                if (!inventory.IsDrawOn())
+                    continue;
+           
+                Window window = openInventory.MainWindow;
+                int width = openInventory.Width;
 
                 // Is mouse inside inventory.
-                if (mPos.X < x ||
-                    mPos.Y < y ||
-                    mPos.X > (x + w) ||
-                    mPos.Y > (y + h))
+                if (!window.IsInsideWindow(mPos))
                     continue;
                 else
                 {
-                    int slotID = (int)((h - (mPos.Y - y)) / tileSize.Y);
-                    slotID = slotID * width + (int)((mPos.X - x) / tileSize.X);
+                    int slotID = (int)((window.H - (mPos.Y - window.Y)) / window.TileSize);
+                    slotID = slotID * width + (int)((mPos.X - window.X) / window.TileSize);
                     GameState.InventoryManager.AddItemAtSlot(
-                        contexts, 
-                        contexts.itemInventory.GetEntityWithItemID(ItemID), 
-                        inventoryEntity.inventoryID.ID, slotID);
+                        contexts,
+                        contexts.itemInventory.GetEntityWithItemID(ItemID),
+                        i, slotID);
                     return;
                 }
             }
@@ -96,28 +66,22 @@ namespace Inventory
             foreach (var player in players)
             {
                 int inventoryID = player.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(inventoryID);
 
-                // Get Inventory Info.
-                float x = 0, y = 0, w = 0, h = 0;
-                int width = inventoryEntity.inventoryEntity.Width;
-                Vec2f tileSize = new Vec2f();
-                InventoryPosCalculation(inventoryEntity, ref x, ref y, ref w, ref h, ref tileSize, true);
+                int width = openInventory.Width;
+                Window window = openInventory.ToolBarWindow;
 
                 // Is mouse inside inventory.
-                if (mPos.X < x ||
-                    mPos.Y < y ||
-                    mPos.X > (x + w) ||
-                    mPos.Y > (y + h))
+                if (!window.IsInsideWindow(mPos))
                     continue;
                 else
                 {
-                    int slotID = (int)((h - (mPos.Y - y)) / tileSize.Y);
-                    slotID = slotID * width + (int)((mPos.X - x) / tileSize.X);
+                    int slotID = (int)((window.H - (mPos.Y - window.Y)) / window.TileSize);
+                    slotID = slotID * width + (int)((mPos.X - window.X) / window.TileSize);
                     GameState.InventoryManager.AddItemAtSlot(
                         contexts,
                         contexts.itemInventory.GetEntityWithItemID(ItemID),
-                        inventoryEntity.inventoryID.ID, slotID);
+                        inventoryID, slotID);
                 }
             }
 
@@ -126,34 +90,31 @@ namespace Inventory
         public void OnMouseDown(Contexts contexts)
         {
             Vector3 mousePos = Input.mousePosition;
-            Vec2f mPos = new Vec2f(mousePos.x, mousePos.y);
+            float scaleFacor = 1080f / Screen.height;
+            Vec2f mPos = new Vec2f(mousePos.x, mousePos.y) * scaleFacor;
 
-            var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
-
-            foreach (var inventoryEntity in openInventories)
+            for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
-                // Get Inventory Info.
-                float x = 0, y = 0, w = 0, h = 0;
-                int width = inventoryEntity.inventoryEntity.Width;
-                Vec2f tileSize = new Vec2f();
-                InventoryPosCalculation(inventoryEntity, ref x, ref y, ref w, ref h, ref tileSize);
-                
+                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(i);
+                if (!openInventory.IsDrawOn())
+                    continue;
+
+                Window window = openInventory.MainWindow;
+                int width = openInventory.Width;
+
                 // Is mouse inside inventory.
-                if (mPos.X < x ||
-                    mPos.Y < y ||
-                    mPos.X > (x + w) ||
-                    mPos.Y > (y + h))
+                 if (!window.IsInsideWindow(mPos))
                     continue;
                 else
                 {
                     MouseDown = true;
                     StartTime = Time.realtimeSinceStartup;
 
-                    int slotID = (int)((h - (mPos.Y - y)) / tileSize.Y);
-                    slotID = slotID * width + (int)((mPos.X - x) / tileSize.X);
+                    int slotID = (int)((window.H - (mPos.Y - window.Y)) / window.TileSize);
+                    slotID = slotID * width + (int)((mPos.X - window.X) / window.TileSize);
                     SlotslotID = slotID;
-                    ClickedInventoryEntity = inventoryEntity;
-                    ItemID = inventoryEntity.inventoryEntity.Slots[slotID].ItemID;
+                    InventoryID = i;
+                    ItemID = openInventory.Slots[slotID].ItemID;
                     return;
                 }
             }
@@ -162,30 +123,24 @@ namespace Inventory
             foreach (var player in players)
             {
                 int inventoryID = player.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
-            
-                // Get Inventory Info.
-                float x = 0, y = 0, w = 0, h = 0;
-                int width = inventoryEntity.inventoryEntity.Width;
-                Vec2f tileSize = new Vec2f();
-                InventoryPosCalculation(inventoryEntity, ref x, ref y, ref w, ref h, ref tileSize, true);
-            
+                ref InventoryModel openToolBar = ref GameState.InventoryCreationApi.Get(inventoryID);
+
+                int width = openToolBar.Width;
+                Window window = openToolBar.ToolBarWindow;
+
                 // Is mouse inside inventory.
-                if (mPos.X < x ||
-                    mPos.Y < y ||
-                    mPos.X > (x + w) ||
-                    mPos.Y > (y + h))
+                if (!window.IsInsideWindow(mPos))
                     continue;
                 else
                 {
                     MouseDown = true;
                     StartTime = Time.realtimeSinceStartup;
-            
-                    int slotID = (int)((h - (mPos.Y - y)) / tileSize.Y);
-                    slotID = slotID * width + (int)((mPos.X - x) / tileSize.X);
+
+                    int slotID = (int)((window.H - (mPos.Y - window.Y)) / window.TileSize);
+                    slotID = slotID * width + (int)((mPos.X - window.X) / window.TileSize);
                     SlotslotID = slotID;
-                    ClickedInventoryEntity = inventoryEntity;
-                    ItemID = inventoryEntity.inventoryEntity.Slots[slotID].ItemID;
+                    InventoryID = inventoryID;
+                    ItemID = openToolBar.Slots[slotID].ItemID;
                 }
             }
 
@@ -207,17 +162,20 @@ namespace Inventory
             if (!MouseHold)
             {
                 MouseHold = true;
-                GameState.InventoryManager.RemoveItem(contexts, ClickedInventoryEntity, SlotslotID);
+                GameState.InventoryManager.RemoveItem(contexts, InventoryID, SlotslotID);
             }
 
-            Vector3 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            Vec2f pos = new Vec2f(mousePos.x, mousePos.y);
+            float scaleFacor = Screen.height / 1080f;
+            Vector3 mousePos = Input.mousePosition;
+            Vec2f pos = new Vec2f(mousePos.x, mousePos.y) * 1f / scaleFacor;
 
             ItemInventoryEntity itemEntity = contexts.itemInventory.GetEntityWithItemID(ItemID);
             int SpriteID = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).InventorSpriteID;
 
             Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle);
-            GameState.Renderer.DrawSpriteGui(pos.X, pos.Y, 60f / 1920f, 60f / 1080, sprite);
+            pos.X = pos.X - 60f * scaleFacor / 2; // Centralize the sprite
+            float size = 60f * scaleFacor;
+            GameState.Renderer.DrawSpriteGui(pos.X, pos.Y, size, size, sprite);
         }
     }
 }

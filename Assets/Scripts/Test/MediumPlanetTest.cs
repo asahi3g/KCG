@@ -30,8 +30,8 @@ namespace Planet.Unity
 
         public void Update()
         {
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            int selectedSlot = inventory.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -78,8 +78,6 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(3.0f, 25));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
-
-            var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
             inventoryID = Player.agentInventory.InventoryID;
 

@@ -11,7 +11,7 @@ public class InventoryTest : MonoBehaviour
     Inventory.InventoryManager inventoryManager;
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
-    ECSInput.InputProcessSystem  inputProcessSystem;
+    Inventory.MouseSelectionSystem  mouseSelectionSystem;
     bool Init = false;
 
     [SerializeField] Material material;
@@ -24,9 +24,7 @@ public class InventoryTest : MonoBehaviour
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
-        inputProcessSystem = new ECSInput.InputProcessSystem();
         GameState.Renderer.Initialize(material);
-        var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
         // Create Agent and inventory.
         int agnetID = 0;
@@ -36,8 +34,8 @@ public class InventoryTest : MonoBehaviour
         AgentEntity playerEntity = context.agent.CreateEntity();
         playerEntity.AddAgentID(agnetID);
         playerEntity.isAgentPlayer = true;
-        inventoryAttacher.AttachInventoryToAgent(Contexts.sharedInstance, inventoryWidth, inventoryHeight, playerEntity);
-
+        playerEntity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
+            GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
         int inventoryID = playerEntity.agentInventory.InventoryID;
 
         // Add item to tool bar.
@@ -79,8 +77,12 @@ public class InventoryTest : MonoBehaviour
             foreach (var player in players)
             {
                 int inventoryID = player.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = context.inventory.GetEntityWithInventoryIDID(inventoryID);
-                inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
+                ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+
+                inventoryID = player.agentInventory.EquipmentInventoryID;
+                ref Inventory.InventoryModel inventoryEquipment = ref GameState.InventoryCreationApi.Get(inventoryID);
+                inventoryEquipment.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
             }
         }
     }
@@ -89,10 +91,18 @@ public class InventoryTest : MonoBehaviour
     {
         if (!Init)
             return;
+
+        if (Event.current.type == EventType.MouseDown)
+            GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance);
+
+        if (Event.current.type == EventType.MouseUp)
+            GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance);
+
         if (Event.current.type != EventType.Repaint)
             return;
 
         inventoryDrawSystem.Draw(Contexts.sharedInstance);
+        GameState.InventoryMouseSelectionSystem.Draw(Contexts.sharedInstance);
     }
 
     private void Initialize()

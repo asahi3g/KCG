@@ -29,7 +29,6 @@ public partial class Contexts : Entitas.IContexts {
     public FloatingTextContext floatingText { get; set; }
     public GameContext game { get; set; }
     public InputContext input { get; set; }
-    public InventoryContext inventory { get; set; }
     public ItemInventoryContext itemInventory { get; set; }
     public ItemParticleContext itemParticle { get; set; }
     public MechContext mech { get; set; }
@@ -37,7 +36,7 @@ public partial class Contexts : Entitas.IContexts {
     public ProjectileContext projectile { get; set; }
     public VehicleContext vehicle { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, actionProperties, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, particle, projectile, vehicle }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, actionProperties, agent, aI, floatingText, game, input, itemInventory, itemParticle, mech, particle, projectile, vehicle }; } }
 
     public Contexts() {
         action = new ActionContext();
@@ -48,7 +47,6 @@ public partial class Contexts : Entitas.IContexts {
         floatingText = new FloatingTextContext();
         game = new GameContext();
         input = new InputContext();
-        inventory = new InventoryContext();
         itemInventory = new ItemInventoryContext();
         itemParticle = new ItemParticleContext();
         mech = new MechContext();
@@ -96,8 +94,6 @@ public partial class Contexts {
     public const string AgentID = "AgentID";
     public const string AIGoal = "AIGoal";
     public const string FloatingTextID = "FloatingTextID";
-    public const string InventoryIDID = "InventoryIDID";
-    public const string InventoryIDTypeID = "InventoryIDTypeID";
     public const string ItemID = "ItemID";
     public const string ItemInventory = "ItemInventory";
     public const string ItemType = "ItemType";
@@ -167,16 +163,6 @@ public partial class Contexts {
             FloatingTextID,
             floatingText.GetGroup(FloatingTextMatcher.FloatingTextID),
             (e, c) => ((FloatingText.IDComponent)c).Index));
-
-        inventory.AddEntityIndex(new Entitas.PrimaryEntityIndex<InventoryEntity, int>(
-            InventoryIDID,
-            inventory.GetGroup(InventoryMatcher.InventoryID),
-            (e, c) => ((Inventory.IDComponent)c).ID));
-
-        inventory.AddEntityIndex(new Entitas.EntityIndex<InventoryEntity, int>(
-            InventoryIDTypeID,
-            inventory.GetGroup(InventoryMatcher.InventoryID),
-            (e, c) => ((Inventory.IDComponent)c).TypeID));
 
         itemInventory.AddEntityIndex(new Entitas.PrimaryEntityIndex<ItemInventoryEntity, int>(
             ItemID,
@@ -273,14 +259,6 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<FloatingTextEntity, int>)context.GetEntityIndex(Contexts.FloatingTextID)).GetEntity(Index);
     }
 
-    public static InventoryEntity GetEntityWithInventoryIDID(this InventoryContext context, int ID) {
-        return ((Entitas.PrimaryEntityIndex<InventoryEntity, int>)context.GetEntityIndex(Contexts.InventoryIDID)).GetEntity(ID);
-    }
-
-    public static System.Collections.Generic.HashSet<InventoryEntity> GetEntitiesWithInventoryIDTypeID(this InventoryContext context, int TypeID) {
-        return ((Entitas.EntityIndex<InventoryEntity, int>)context.GetEntityIndex(Contexts.InventoryIDTypeID)).GetEntities(TypeID);
-    }
-
     public static ItemInventoryEntity GetEntityWithItemID(this ItemInventoryContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<ItemInventoryEntity, int>)context.GetEntityIndex(Contexts.ItemID)).GetEntity(ID);
     }
@@ -340,7 +318,6 @@ public partial class Contexts {
             CreateContextObserver(floatingText);
             CreateContextObserver(game);
             CreateContextObserver(input);
-            CreateContextObserver(inventory);
             CreateContextObserver(itemInventory);
             CreateContextObserver(itemParticle);
             CreateContextObserver(mech);

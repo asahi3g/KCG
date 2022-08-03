@@ -339,8 +339,8 @@ namespace ECSInput
                 foreach (var player in players)
                 {
                     int inventoryID = player.agentInventory.InventoryID;
-                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
-                    inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
+                    ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+                    inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
                 }
             }
 
@@ -351,12 +351,11 @@ namespace ECSInput
                 foreach (var entity in PlayerWithToolBarPulse)
                 {
                     int inventoryID = entity.agentInventory.InventoryID;
-                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
-                    if (!GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
+                    ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+                    if (!inventory.HasTooBar())
                         return;
 
-                    var SlotComponent = inventoryEntity.inventoryEntity;
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, SlotComponent.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.SelectedSlotID);
 
                     if (item.itemType.Type == Enums.ItemType.PulseWeapon)
                     {
@@ -379,16 +378,16 @@ namespace ECSInput
             foreach (var entity in PlayerWithToolBar)
             {
                 int inventoryID = entity.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
-                if (!GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
+                ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+                if (!inventory.HasTooBar())
                     return;
 
-                for (int i = 0; i < inventoryEntity.inventoryEntity.Width; i++)
+                for (int i = 0; i < inventory.Width; i++)
                 {
                     KeyCode keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
-                        inventoryEntity.inventoryEntity.SelectedSlotID = i;
+                        inventory.SelectedSlotID = i;
                         var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         
                         planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,

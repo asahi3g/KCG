@@ -18,12 +18,13 @@ namespace Action
             if (!AgentEntity.hasAgentInventory)
                 return;
 
-            InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+            int inventoryID = AgentEntity.agentInventory.InventoryID;
+            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
 
             // Todo: start playing some animation
-            if (GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
+            if (inventory.HasTooBar())
             {
-                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
+                int selected = inventory.SelectedSlotID;
 
 
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
@@ -34,7 +35,7 @@ namespace Action
                     return;
                 }
 
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryEntity, selected);
+                GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryID, selected);
 
                 // Create item particle from item inventory.
                 Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;

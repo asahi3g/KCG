@@ -57,7 +57,7 @@ namespace Action
                     int inventoryID = AgentEntity.agentInventory.InventoryID;
 
                     // Try ading item to Inventory.
-                    if (!GameState.InventoryManager.IsFull(EntitasContext, inventoryID))
+                    if (!GameState.InventoryManager.IsFull(inventoryID))
                     {
                         GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, inventoryID);
                         ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);

@@ -36,8 +36,8 @@ namespace Agent
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
             //entity.AddAgentInventory(0);
             // Add Inventory and toolbar.
-            var attacher = Inventory.InventoryAttacher.Instance;
-            attacher.AttachInventoryToAgent(entitasContext, 10, 6, entity);
+            entity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
+                GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
             return entity;
         }
 
@@ -65,10 +65,10 @@ namespace Agent
                 entity.isAgentPlayer = true;
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-   
+
                 // Add Inventory and toolbar.
-                var attacher = Inventory.InventoryAttacher.Instance;
-                attacher.AttachInventoryToAgent(entitasContext, 10, 6, entity);
+                entity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
+                    GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
             }
             else if (agentType == Agent.AgentType.Agent)
             {
