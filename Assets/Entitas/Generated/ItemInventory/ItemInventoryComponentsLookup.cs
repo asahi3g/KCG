@@ -8,19 +8,21 @@
 //------------------------------------------------------------------------------
 public static class ItemInventoryComponentsLookup {
 
-    public const int ItemFireWeaponCharge = 0;
-    public const int ItemFireWeaponClip = 1;
-    public const int ItemFireWeaponSpread = 2;
-    public const int ItemID = 3;
-    public const int ItemInventory = 4;
-    public const int ItemLabel = 5;
-    public const int ItemPulseWeaponPulse = 6;
-    public const int ItemStack = 7;
-    public const int ItemType = 8;
+    public const int ItemCastData = 0;
+    public const int ItemFireWeaponCharge = 1;
+    public const int ItemFireWeaponClip = 2;
+    public const int ItemFireWeaponSpread = 3;
+    public const int ItemID = 4;
+    public const int ItemInventory = 5;
+    public const int ItemLabel = 6;
+    public const int ItemPulseWeaponPulse = 7;
+    public const int ItemStack = 8;
+    public const int ItemType = 9;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
+        "ItemCastData",
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
         "ItemFireWeaponSpread",
@@ -33,6 +35,7 @@ public static class ItemInventoryComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(Item.CastDataComponent),
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.FireWeapon.SpreadComponent),

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Enums;
 using KMath;
 using UnityEngine.UIElements;
+using Enums.Tile;
 
 namespace Item
 {
@@ -38,6 +39,12 @@ namespace Item
             if (weaponProperty.IsPulse())
             {
                 entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
+            }
+
+            if (itemProperty.IsPlacementTool())
+            {
+                Data data = new Data();
+                entity.AddItemCastData(data);
             }
 
             ItemID++;
@@ -95,6 +102,12 @@ namespace Item
             if (weaponProperty.IsPulse())
             {
                 entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
+            }
+
+            if (itemProperty.IsPlacementTool())
+            {
+                Data data = new Data();
+                entity.AddItemCastData(data);
             }
 
             ItemID++;

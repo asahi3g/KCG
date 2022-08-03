@@ -65,6 +65,58 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
         }
 
+        // Constructor
+        public Image(string imageName, Transform parent, int width, int height, string path)
+        {
+            // Set Width and Height
+            Vector2Int iconPngSize = new Vector2Int(width, height);
+
+            // Load image from file
+            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID(path, width, height);
+
+            // Set Sprite ID from Sprite Atlas
+            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
+
+            // Set Sprite Data
+            byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
+
+            // Get Sprite Bytes
+            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
+
+            // Set Texture
+            Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
+
+            // Create Sprite
+            Sprite sprite = Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+
+            // Create Gameobject
+            iconCanvas = new GameObject(imageName);
+
+            // Set Object Parent To Canvas
+            iconCanvas.transform.parent = parent;
+
+            // Add Rect Transform to Manage UI Scaling
+            iconCanvas.AddComponent<RectTransform>();
+
+            // Add Image Component to Render the Sprite
+            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+
+            // Set Image Sprite
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+
+            // Set Anchor Max
+            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+
+            // Set Pivot
+            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        }
+
         public void SetPosition(Vector3 newPos)
         {
             // Set Local Rect Position
@@ -83,16 +135,33 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<RectTransform>().localScale = newScale;
         }
 
+        public void SetImageType(UnityEngine.UI.Image.Type newType)
+        {
+            // Set Image Type
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().type = newType;
+        }
+
         public void SetImage(Sprite sprite)
         {
             // Set New Image
             iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
         }
 
+        public void SetImageColor(Color color)
+        {
+            // Set New Image
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().color = color;
+        }
+
         public Transform GetTransform()
         {
             // Return Transform
             return iconCanvas.transform;
+        }
+
+        public GameObject GetGameObject()
+        {
+            return iconCanvas;
         }
     }
 }
