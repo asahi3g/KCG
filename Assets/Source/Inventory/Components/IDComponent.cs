@@ -8,6 +8,8 @@ namespace Inventory
     {
         [PrimaryEntityIndex]
         public int  ID;
+        [EntityIndex]
+        public int TypeID; // Proprieties ID.
     }
 }
 

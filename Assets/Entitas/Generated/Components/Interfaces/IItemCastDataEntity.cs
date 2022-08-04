@@ -11,7 +11,7 @@ public partial interface IItemCastDataEntity {
     Item.CastDataComponent itemCastData { get; }
     bool hasItemCastData { get; }
 
-    void AddItemCastData(Enums.Tile.Data newData);
-    void ReplaceItemCastData(Enums.Tile.Data newData);
+    void AddItemCastData(Enums.Tile.Data newData, bool newInputsActive);
+    void ReplaceItemCastData(Enums.Tile.Data newData, bool newInputsActive);
     void RemoveItemCastData();
 }

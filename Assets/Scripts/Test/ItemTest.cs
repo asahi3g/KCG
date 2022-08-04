@@ -37,11 +37,11 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
-            int toolBarID = Player.agentToolBar.ToolBarID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-            int selectedSlot = Inventory.inventorySlots.Selected;
+            int inventoryID = Player.agentInventory.InventoryID;
+            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
        
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             if (item != null)
             {
                 ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -57,20 +57,22 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
-        //private void OnRenderObject()
-        //{
-        //    GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
-        //}
-
         private void OnGUI()
         {
             if (!Init)
                 return;
 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext);
+
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext);
+
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
+            GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes
@@ -87,22 +89,22 @@ namespace Planet.Unity
             GenerateMap();
 
             Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
-            int toolBarID = Player.agentToolBar.ToolBarID;
+            int inventoryID = Player.agentInventory.InventoryID;
 
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
@@ -111,13 +113,13 @@ namespace Planet.Unity
             var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PlanterTool);
             var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
             var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, toolBarID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, toolBarID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, inventoryID);
         }
 
         void GenerateMap()

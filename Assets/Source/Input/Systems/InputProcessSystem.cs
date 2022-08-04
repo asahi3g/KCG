@@ -311,10 +311,10 @@ namespace ECSInput
             // Show/Hide Statistics
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (KGUI.Statistics.StatisticsDisplay.canDraw)
-                    KGUI.Statistics.StatisticsDisplay.canDraw = false;
-                else if (!KGUI.Statistics.StatisticsDisplay.canDraw)
-                    KGUI.Statistics.StatisticsDisplay.canDraw = true;
+                if (KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
+                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = false;
+                else if (!KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
+                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = true;
 
             }
 
@@ -339,7 +339,7 @@ namespace ECSInput
                 foreach (var player in players)
                 {
                     int inventoryID = player.agentInventory.InventoryID;
-                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
                     inventoryEntity.isInventoryDrawable = !inventoryEntity.isInventoryDrawable;
                 }
             }
@@ -347,14 +347,16 @@ namespace ECSInput
             // Change Pulse Weapon Mode.
             if (Input.GetKeyDown(KeyCode.N))
             {
-                var PlayerWithToolBarPulse = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentToolBar));
+                var PlayerWithToolBarPulse = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var entity in PlayerWithToolBarPulse)
                 {
-                    int inventoryID = entity.agentToolBar.ToolBarID;
-                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    var SlotComponent = inventoryEntity.inventorySlots;
+                    int inventoryID = entity.agentInventory.InventoryID;
+                    InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+                    if (!GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
+                        return;
 
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, SlotComponent.Selected);
+                    var SlotComponent = inventoryEntity.inventoryEntity;
+                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, SlotComponent.SelectedSlotID);
 
                     if (item.itemType.Type == Enums.ItemType.PulseWeapon)
                     {
@@ -373,102 +375,25 @@ namespace ECSInput
             }
 
             // Change Item Selection with nums.
-            var PlayerWithToolBar = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentToolBar));
+            var PlayerWithToolBar = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
             foreach (var entity in PlayerWithToolBar)
             {
-                int inventoryID = entity.agentToolBar.ToolBarID;
-                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                var SlotComponent = inventoryEntity.inventorySlots;
+                int inventoryID = entity.agentInventory.InventoryID;
+                InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+                if (!GameState.InventoryCreationApi.Get(inventoryEntity.inventoryID.TypeID).HasTooBar())
+                    return;
 
-                if (Input.GetKeyDown(KeyCode.Alpha1))
+                for (int i = 0; i < inventoryEntity.inventoryEntity.Width; i++)
                 {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 0);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 0);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha2))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 1);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 1);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha3))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 2);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 2);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha4))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 3);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 3);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                        entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha5))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 4);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 4);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 5);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 5);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha7))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 6);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 6);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha8))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 7);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 7);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha9))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 8);
-
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 8);
-
-                    planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                        entity.agentPosition2D.Value.Y));
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha0))
-                {
-                    inventoryEntity.ReplaceInventorySlots(SlotComponent.Values, 9);
-
-                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, inventoryID, 9);
-
-                     planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                         entity.agentPosition2D.Value.Y));
+                    KeyCode keyCode = KeyCode.Alpha1 + i;
+                    if (Input.GetKeyDown(keyCode))
+                    {
+                        inventoryEntity.inventoryEntity.SelectedSlotID = i;
+                        var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        
+                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
+                                    entity.agentPosition2D.Value.Y));
+                    }
                 }
 
             // Remove Tile Back At Cursor Position.

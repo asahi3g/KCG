@@ -11,17 +11,19 @@ public partial class ItemParticleEntity {
     public Item.CastDataComponent itemCastData { get { return (Item.CastDataComponent)GetComponent(ItemParticleComponentsLookup.ItemCastData); } }
     public bool hasItemCastData { get { return HasComponent(ItemParticleComponentsLookup.ItemCastData); } }
 
-    public void AddItemCastData(Enums.Tile.Data newData) {
+    public void AddItemCastData(Enums.Tile.Data newData, bool newInputsActive) {
         var index = ItemParticleComponentsLookup.ItemCastData;
         var component = (Item.CastDataComponent)CreateComponent(index, typeof(Item.CastDataComponent));
         component.data = newData;
+        component.InputsActive = newInputsActive;
         AddComponent(index, component);
     }
 
-    public void ReplaceItemCastData(Enums.Tile.Data newData) {
+    public void ReplaceItemCastData(Enums.Tile.Data newData, bool newInputsActive) {
         var index = ItemParticleComponentsLookup.ItemCastData;
         var component = (Item.CastDataComponent)CreateComponent(index, typeof(Item.CastDataComponent));
         component.data = newData;
+        component.InputsActive = newInputsActive;
         ReplaceComponent(index, component);
     }
 

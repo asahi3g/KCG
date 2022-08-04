@@ -29,6 +29,14 @@ public class GameState
 
     #endregion
 
+    #region TGen
+
+    public static readonly TGen.Grid TGenGrid;
+    public static readonly TGen.RenderGridOverlay TGenRenderGridOverlay;
+    public static readonly TGen.RenderMapBorder TGenRenderMapBorder;
+
+    #endregion
+
     #region Sprites
 
     public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
@@ -54,8 +62,10 @@ public class GameState
     #endregion
 
     #region Inventory
+    public static readonly Inventory.InventoryCreationApi InventoryCreationApi;
     public static readonly Inventory.InventoryManager InventoryManager;
     public static readonly Inventory.DrawSystem InventoryDrawSystem;
+    public static readonly Inventory.MouseSelectionSystem InventoryMouseSelectionSystem;
     #endregion
 
     #region Item
@@ -118,6 +128,8 @@ public class GameState
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
+        InventoryCreationApi = new Inventory.InventoryCreationApi();
+        InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
         EnemyAiSystem = new Agent.EnemyAiSystem();
         AnimationManager = new Animation.AnimationManager();
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();
@@ -152,5 +164,8 @@ public class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         Renderer = new Utility.Render();
+        TGenGrid = new TGen.Grid();
+        TGenRenderGridOverlay = new TGen.RenderGridOverlay();
+        TGenRenderMapBorder = new TGen.RenderMapBorder();
     }
 }

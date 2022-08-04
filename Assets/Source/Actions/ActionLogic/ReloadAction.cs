@@ -17,13 +17,17 @@ namespace Action
 
         public override void OnEnter(ref PlanetState planet)
         {
+            if (!AgentEntity.hasAgentInventory)
+                return;
+
+            InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+
             // Todo: start playing some animation
-            if (AgentEntity.hasAgentToolBar)
+            if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
             {
-                int toolBarID = AgentEntity.agentToolBar.ToolBarID;
-                InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-                int selectedSlot = InventoryEntity.inventorySlots.Selected;
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
+                    AgentEntity.agentInventory.InventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 
                 bool isReloadable = ItemEntity.hasItemFireWeaponClip | ItemEntity.hasItemPulseWeaponPulse;

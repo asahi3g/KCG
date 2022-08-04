@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Inventory
 {
+    /// <summary>
+    /// Add this component to draw inventory.
+    /// </summary>
     [Inventory]
     public class DrawableComponent : IComponent
     {

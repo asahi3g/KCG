@@ -2,6 +2,7 @@
 using System.Collections;
 using Utility;
 using UnityEngine;
+using KMath;
 
 namespace Inventory
 {
@@ -13,21 +14,46 @@ namespace Inventory
 
         public void OpenInventory(Contexts contexts, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
             inventory.isInventoryDrawable = true;
         }
 
         public void CloseInventory(Contexts entitasContext, int inventoryID)
         {
-            var inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = entitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
 
             inventory.isInventoryDrawable = false;
         }
 
+        public void AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
+        {
+            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            itemEntity.AddItemInventory(inventoryID, slotID);
+
+            if (inventoryEntity.inventoryEntity.SlotsMask[slotID])
+            {
+                // Move to first empty slot:
+                ItemInventoryEntity currentItem = GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, slotID);
+                RemoveItem(contexts, inventoryEntity, slotID);
+                AddItemAtFirstEmptySlot(contexts, currentItem, inventoryID);
+            }
+
+            inventoryEntity.inventoryEntity.SlotsMask.Set(slotID);
+            inventoryEntity.inventoryEntity.Slots[slotID].ItemID = itemEntity.itemID.ID;
+        }
+
+        public void AddItemAtFirstEmptySlot(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
+        {
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int fistEmptySlot = GetFirstEmptySlot(inventory.inventoryEntity.SlotsMask);
+
+            entity.AddItemInventory(inventoryID, fistEmptySlot);
+            inventory.inventoryEntity.SlotsMask.Set(fistEmptySlot);
+            inventory.inventoryEntity.Slots[fistEmptySlot].ItemID = entity.itemID.ID;
+        }
+
         public void AddItem(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
             ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
             // If stackable check if there are any available stack in the inventory.
@@ -70,9 +96,7 @@ namespace Inventory
                 }
             }
 
-            int fistEmptySlot = GetFirstEmptySlot(inventory.inventorySlots.Values);
-            entity.AddItemInventory(inventoryID, fistEmptySlot);
-            inventory.inventorySlots.Values.Set(fistEmptySlot);
+            AddItemAtFirstEmptySlot(contexts, entity, inventoryID);
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -81,26 +105,26 @@ namespace Inventory
                 inventoryID);
         }
 
-        public void RemoveItem(Contexts contexts, ItemInventoryEntity entity, int slot)
+        public void RemoveItem(Contexts contexts, InventoryEntity inventoryEntity, int slotID)
         {
-            var inventoryEntity = contexts.inventory.GetEntityWithInventoryID(entity.itemInventory.InventoryID);
-            inventoryEntity.inventorySlots.Values.UnSet(slot);
-            entity.RemoveItemInventory();
+            if (!inventoryEntity.inventoryEntity.SlotsMask[slotID])
+                return;
+            ItemInventoryEntity itemEntity = GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, slotID);
+            inventoryEntity.inventoryEntity.SlotsMask.UnSet(slotID);
+            inventoryEntity.inventoryEntity.Slots[slotID].ItemID = -1;
+            itemEntity.RemoveItemInventory();
         }
         
         public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)
         {
-            var inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            BitSet SlotComponent = inventory.inventorySlots.Values;
-
-            inventory.ReplaceInventorySlots(SlotComponent, newSelectedSlot);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            inventory.inventoryEntity.SelectedSlotID = newSelectedSlot;
         }
 
         public bool IsFull(Contexts contexts, int inventoryID)
         {
-            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-            BitSet Slots = inventoryEntity.inventorySlots.Values;
-            if (Slots.All()) // Test if all bits are set to one.
+            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            if (inventoryEntity.inventoryEntity.SlotsMask.All()) // Test if all bits are set to one.
                 return true;
 
             return false;
@@ -115,19 +139,21 @@ namespace Inventory
             return false;
         }
 
-        public ItemInventoryEntity GetItemInSlot(ItemInventoryContext itemContext, int inventoryID, int slot)
+        // Update this.
+        public ItemInventoryEntity GetItemInSlot(Contexts contexts, int inventoryID, int slot)
         {
-            var items = itemContext.GetEntitiesWithItemInventory(inventoryID);
+            var inventory = contexts.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int itemID = inventory.inventoryEntity.Slots[slot].ItemID;
 
-            foreach (var item in items)
-            {
-                if (item.itemInventory.SlotID == slot)
-                {
-                    return item;
-                }
-            }
+            // Check if there is an item in the slot.
+            if(itemID >= 0)
+                return contexts.itemInventory.GetEntityWithItemID(itemID);
+            return null;
+        }
 
-            return null; // No item in selected slot.
+        public Slot GetSlotInPos(Contexts contexts, float posX, float posY)
+        {
+            return new Slot();
         }
 
         private int GetFirstEmptySlot(BitSet Slots)

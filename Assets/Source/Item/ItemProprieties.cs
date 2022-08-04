@@ -11,6 +11,7 @@ namespace Item
     public struct ItemProprieties
     {
         public ItemType ItemType;
+        public Enums.ItemGroups Group;
         public Enums.ActionType ToolActionType;
 
         public int InventorSpriteID;

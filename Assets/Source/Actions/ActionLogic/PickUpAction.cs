@@ -26,8 +26,8 @@ namespace Action
                 return;
             }
 
-            // Check if Agent has too bar or an inventory.
-            if (!(AgentEntity.hasAgentToolBar || AgentEntity.hasAgentInventory))
+            // Check if Agent has an inventory.
+            if (!AgentEntity.hasAgentInventory)
             {
                 ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
                 return;
@@ -52,19 +52,6 @@ namespace Action
 
             if ((itemCenterPos - agentCenterPos).Magnitude < 0.1f)
             {
-                if (AgentEntity.hasAgentToolBar)
-                {
-                    int toolBarID = AgentEntity.agentToolBar.ToolBarID;
-
-                    // Try ading item to toolBar.
-                    if (!GameState.InventoryManager.IsFull(EntitasContext, toolBarID))
-                    {
-                        GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, toolBarID);
-                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                        return;
-                    }
-                }
-
                 if (AgentEntity.hasAgentInventory)
                 {
                     int inventoryID = AgentEntity.agentInventory.InventoryID;

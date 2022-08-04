@@ -16,7 +16,6 @@ namespace Planet.Unity
 
         int CharacterSpriteId;
         int inventoryID;
-        int toolBarID;
 
         static bool Init = false;
 
@@ -31,11 +30,10 @@ namespace Planet.Unity
 
         public void Update()
         {
-            int toolBarID = Player.agentToolBar.ToolBarID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(toolBarID);
-            int selectedSlot = Inventory.inventorySlots.Selected;
+            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext.itemInventory, toolBarID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
@@ -51,9 +49,15 @@ namespace Planet.Unity
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
         
-        private void OnRenderObject()
+        private void OnGUI()
         {
-            inventoryDrawSystem.Draw(Planet.EntitasContext, transform);
+            if (!Init)
+                return;
+            
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            inventoryDrawSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes
@@ -78,7 +82,6 @@ namespace Planet.Unity
             var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
             inventoryID = Player.agentInventory.InventoryID;
-            toolBarID = Player.agentToolBar.ToolBarID;
 
             ItemInventoryEntity gun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
             ItemInventoryEntity ore = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Ore);
@@ -90,12 +93,12 @@ namespace Planet.Unity
             ItemInventoryEntity particleEmitterPlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ParticleEmitterPlacementTool);
 
 
-            inventoryManager.AddItem(Planet.EntitasContext, placementTool, toolBarID);
-            inventoryManager.AddItem(Planet.EntitasContext, removeTileTool, toolBarID);
-            inventoryManager.AddItem(Planet.EntitasContext, spawnEnemySlimeTool, toolBarID);
-            inventoryManager.AddItem(Planet.EntitasContext, miningLaserTool, toolBarID);
-            inventoryManager.AddItem(Planet.EntitasContext, pipePlacementTool, toolBarID);
-            inventoryManager.AddItem(Planet.EntitasContext, particleEmitterPlacementTool, toolBarID);
+            inventoryManager.AddItem(Planet.EntitasContext, placementTool, inventoryID);
+            inventoryManager.AddItem(Planet.EntitasContext, removeTileTool, inventoryID);
+            inventoryManager.AddItem(Planet.EntitasContext, spawnEnemySlimeTool, inventoryID);
+            inventoryManager.AddItem(Planet.EntitasContext, miningLaserTool, inventoryID);
+            inventoryManager.AddItem(Planet.EntitasContext, pipePlacementTool, inventoryID);
+            inventoryManager.AddItem(Planet.EntitasContext, particleEmitterPlacementTool, inventoryID);
         }
 
         void GenerateMap()
