@@ -31,6 +31,7 @@
         ToolActionFireWeapon,
         ToolActionPlaceParticle,
         ToolActionPlaceChest,
+        ToolActionPlaceSmahableBox,
         ToolActionEnemySpawn,
         ToolActionMiningLaser,
         ToolActionRemoveTile,
@@ -42,6 +43,7 @@
         ToolActionWater,
         ToolActionHarvest,
         ToolActionConstruction,
-        ToolActionScanner
+        ToolActionScanner,
+
     }
 }

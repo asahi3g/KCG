@@ -1,7 +1,6 @@
 ﻿using Enums;
 using KMath;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,8 +10,8 @@ namespace Item
     public struct ItemProprieties
     {
         public ItemType ItemType;
-        public Enums.ItemGroups Group;
-        public Enums.ActionType ToolActionType;
+        public ItemGroups Group;
+        public ActionType ToolActionType;
 
         public int InventorSpriteID;
         public int SpriteID;

@@ -736,6 +736,11 @@ public class GameResources
         GameState.MechCreationApi.SetTexture(DracaenaTrifasciata);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
         GameState.MechCreationApi.End();
+        
+        GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
+        GameState.MechCreationApi.SetName("smashable box");
+        GameState.MechCreationApi.SetTexture(ChestIcon);
+		GameState.MechCreationApi.End();
     }
 
     private static void CreateParticles()

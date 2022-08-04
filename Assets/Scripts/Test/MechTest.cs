@@ -2,9 +2,6 @@ using UnityEngine;
 using Enums.Tile;
 using KMath;
 using Item;
-using Animancer;
-using HUD;
-using PlanetTileMap;
 using Mech;
 using System.Linq;
 
@@ -12,7 +9,6 @@ namespace Planet.Unity
 {
     public class MechTest : MonoBehaviour
     {
-
         [SerializeField] Material Material;
 
         public Planet.PlanetState Planet;
