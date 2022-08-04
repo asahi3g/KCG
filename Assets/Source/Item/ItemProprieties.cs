@@ -28,7 +28,7 @@ namespace Item
             Consumable  = 1 << 1,
             Stackable   = 1 << 2,
             Tool        = 1 << 3,
-            PlacementTool = 1 << 4  
+            PlacementTool = 1 << 4,
         }
 
         public bool IsPlaceable() { return ItemFlags.HasFlag(Flags.Placeable); }

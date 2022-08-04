@@ -81,77 +81,94 @@ namespace Action
                     // Is Mech Planter?
                     if (entity.mechType.mechType == Mech.MechType.Planter)
                     {
-
-                        if (entity.mechPlanter.PlantGrowth >= 100)
+                        if (entity.mechPlanter.PlantGrowth < 100)
                         {
-                            ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                            break;
-                        }
+                            // Set Light Level Set Zero
+                            entity.mechPlanter.LightLevel = 0;
 
-                        // Set Light Level Set Zero
-                        entity.mechPlanter.LightLevel = 0;
+                            // Check Plant Null or Not, Update Plant Position Relavtive to The Pot
+                            //if(entity.mechPlanter.Plant != null)
+                            //  entity.mechPlanter.Plant.mechPosition2D.Value = new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f);
 
-                        // Check Plant Null or Not, Update Plant Position Relavtive to The Pot
-                        //if(entity.mechPlanter.Plant != null)
-                        //  entity.mechPlanter.Plant.mechPosition2D.Value = new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y + 0.85f);
-
-                        // Iterate All Light Mechs 
-                        for (int i = 0; i < lights.Count; i++)
-                        {
-                            // Get All Lights near the Pot
-                            if (Vector2.Distance(new Vector2(lights[i].mechPosition2D.Value.X, lights[i].mechPosition2D.Value.Y),
-                                new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 10.0f)
+                            // Iterate All Light Mechs 
+                            for (int i = 0; i < lights.Count; i++)
                             {
-                                // Increase Ligth Level
-                                entity.mechPlanter.LightLevel++;
+                                // Get All Lights near the Pot
+                                if (Vector2.Distance(new Vector2(lights[i].mechPosition2D.Value.X, lights[i].mechPosition2D.Value.Y),
+                                    new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 10.0f)
+                                {
+                                    // Increase Ligth Level
+                                    entity.mechPlanter.LightLevel++;
+                                }
+                            }
+
+                            // Has Planter Component?
+                            if (entity.hasMechPlanter)
+                            {
+                                // Check Water Level and Light Level
+                                if (entity.mechPlanter.WaterLevel > 0 && entity.mechPlanter.LightLevel > 0)
+                                {
+                                    // Increase Water Level
+                                    if (entity.mechPlanter.WaterLevel < entity.mechPlanter.MaxWaterLevel)
+                                        entity.mechPlanter.WaterLevel -= Time.deltaTime * 0.4f;
+
+                                    // Increase Plant Growth Related to The Water Level
+                                    if (entity.mechPlanter.PlantGrowth < entity.mechPlanter.GrowthTarget)
+                                        entity.mechPlanter.PlantGrowth += Time.deltaTime * 0.3f;
+
+                                    // Check Plant Growth
+                                    if (entity.mechPlanter.PlantGrowth >= 50 && entity.mechPlanter.PlantGrowth < 100)
+                                    {
+                                        if(entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.MajestyPalm)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
+                                        }
+                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.SagoPalm)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.SagoPalmS1;
+                                        }
+                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS1;
+                                        }
+                                    }
+
+                                    else if (entity.mechPlanter.PlantGrowth >= 100)
+                                    {
+                                        if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.MajestyPalm)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
+                                        }
+                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.SagoPalm)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.SagoPalmS2;
+                                        }
+                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
+                                        {
+                                            // Increase Stage
+                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS2;
+                                        }
+                                    }
+
+                                    if (entity.mechPlanter.WaterLevel <= 0)
+                                    {
+                                        // Return True
+                                        //ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                                    }
+
+                                    if (entity.mechPlanter.PlantGrowth >= 100)
+                                    {
+                                        //ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                                    }
+                                }
                             }
                         }
 
-                        // Has Planter Component?
-                        if (entity.hasMechPlanter)
-                        {
-                            // Check Water Level and Light Level
-                            if (entity.mechPlanter.WaterLevel > 0 && entity.mechPlanter.LightLevel > 0)
-                            {
-                                // Increase Water Level
-                                if (entity.mechPlanter.WaterLevel < entity.mechPlanter.MaxWaterLevel)
-                                    entity.mechPlanter.WaterLevel -= Time.deltaTime * 0.4f;
-
-                                // Increase Plant Growth Related to The Water Level
-                                if (entity.mechPlanter.PlantGrowth < entity.mechPlanter.GrowthTarget)
-                                    entity.mechPlanter.PlantGrowth += Time.deltaTime * 0.3f;
-
-                                // Check Plant Growth
-                                if (entity.mechPlanter.PlantGrowth >= 50 && entity.mechPlanter.PlantGrowth < 100)
-                                {
-                                    // Increase Stage
-                                    entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
-                                }
-
-                                else if (entity.mechPlanter.PlantGrowth >= 100)
-                                {
-                                    // Increase Stage
-                                    entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
-                                }
-
-                                if (entity.mechPlanter.WaterLevel <= 0)
-                                {
-                                    // Return True
-                                    ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                                }
-
-                                if (entity.mechPlanter.PlantGrowth >= 100)
-                                {
-                                    ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                                }
-                            }
-                            else
-                            {
-                                // Return True
-                                ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                            }
-
-                        }
                     }
                 }
             }
