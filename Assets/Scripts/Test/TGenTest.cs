@@ -7,6 +7,7 @@ using HUD;
 using PlanetTileMap;
 using Mech;
 using System.Linq;
+using TGen;
 
 namespace Planet.Unity
 {
@@ -21,13 +22,18 @@ namespace Planet.Unity
         private static bool Init = false;
 
         [SerializeField]
-        private bool IntializeTGenGrid = true;
+        private bool intializeTGenGrid = true;
 
         [SerializeField]
-        private bool EnableTileGrid = true;
+        private bool enableTileGrid = true;
 
         [SerializeField]
-        private bool DrawMapBorder = true;
+        private bool drawMapBorder = true;
+
+        [SerializeField]
+        private bool foregroundToolEnabled = true;
+
+        private ForegroundPlacementTool placementTool;
 
         public void Start()
         {
@@ -39,15 +45,6 @@ namespace Planet.Unity
             }
         }
 
-        public void Update()
-        {
-            ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
-
-            Planet.Update(Time.deltaTime, Material, transform);
-        }
-
-
         public void Initialize()
         {
             GameResources.Initialize();
@@ -58,15 +55,37 @@ namespace Planet.Unity
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
 
-            if (IntializeTGenGrid)
+            if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);
 
-            if (EnableTileGrid)
+            if (enableTileGrid)
                 GameState.TGenRenderGridOverlay.Initialize(Material, transform, mapSize.X, mapSize.Y, 30);
 
-            if (DrawMapBorder)
+            if (drawMapBorder)
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
-            
+
+            if(foregroundToolEnabled)
+            {
+                placementTool = new ForegroundPlacementTool();
+                placementTool.Initialize();
+            }
         }
+
+        private void OnGUI()
+        {
+            if(placementTool != null && foregroundToolEnabled)
+                placementTool.DrawGrid();
+        }
+
+        public void Update()
+        {
+            ref var tileMap = ref Planet.TileMap;
+            Material material = Material;
+
+            Planet.Update(Time.deltaTime, Material, transform);
+
+
+        }
+
     }
 }
