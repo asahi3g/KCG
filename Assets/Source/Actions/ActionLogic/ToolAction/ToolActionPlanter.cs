@@ -77,12 +77,14 @@ namespace Action
                 }
             }
 
-            int random = Random.Range(0, 4);
-            Debug.Log("Random: " + random);
-
             if (PlantToAdd)
             {
-                Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.MajestyPalm);
+                if(ItemEntity.itemType.Type == Enums.ItemType.MajestyPalm)
+                    Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.MajestyPalm);
+                else if(ItemEntity.itemType.Type == Enums.ItemType.SagoPalm)
+                    Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.SagoPalm);
+                else if (ItemEntity.itemType.Type == Enums.ItemType.DracaenaTrifasciata)
+                    Plant = planet.AddMech(new Vec2f(PlanterPosition.X, PlanterPosition.Y + 0.85f), Mech.MechType.DracaenaTrifasciata);
             }
 
             foreach (var entity in entities)
@@ -110,6 +112,7 @@ namespace Action
         {
             if (ItemEntity != null)
             {
+                GameState.InventoryManager.RemoveItem(planet.EntitasContext, planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID), ItemEntity.itemInventory.SlotID);
                 ItemEntity.Destroy();
             }
             base.OnExit(ref planet);

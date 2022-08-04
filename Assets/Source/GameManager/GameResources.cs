@@ -72,6 +72,16 @@ public class GameResources
     public static int MajestyPalmS2;
     public static int MajestyPalmIcon;
 
+    public static int SagoPalm;
+    public static int SagoPalmS1;
+    public static int SagoPalmS2;
+    public static int SagoPalmIcon;
+
+    public static int DracaenaTrifasciata;
+    public static int DracaenaTrifasciataS1;
+    public static int DracaenaTrifasciataS2;
+    public static int DracaenaTrifasciataIcon;
+
     public static int Light2Icon;
 
     public static int WaterIcon;
@@ -120,10 +130,22 @@ public class GameResources
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
             ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
-            MajestyPalm = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
-            MajestyPalmS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3_v1.png", 16, 16);
-            MajestyPalmS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3_v2.png", 16, 32);
-            MajestyPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
+
+            MajestyPalm = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
+            MajestyPalmS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3_v1.png", 16, 16);
+            MajestyPalmS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3_v2.png", 16, 32);
+            MajestyPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
+
+            SagoPalm = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png", 16, 16);
+            SagoPalmS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7_v1.png", 16, 16);
+            SagoPalmS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7_v2.png", 16, 32);
+            SagoPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png", 16, 16);
+
+            DracaenaTrifasciata = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", 16, 16);
+            DracaenaTrifasciataS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6_v1.png", 16, 16);
+            DracaenaTrifasciataS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6_v2.png", 16, 32);
+            DracaenaTrifasciataIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", 16, 16);
+
             Light2Icon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
             ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture2\\dev-furniture-2.png", 12, 12);
@@ -163,6 +185,14 @@ public class GameResources
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
             ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, Enums.AtlasType.Particle);
+            SagoPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalm, 0, 0, Enums.AtlasType.Mech);
+            SagoPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS1, 0, 0, Enums.AtlasType.Mech);
+            SagoPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS2, 0, 0, Enums.AtlasType.Mech);
+            SagoPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmIcon, 0, 0, Enums.AtlasType.Particle);
+            DracaenaTrifasciata = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciata, 0, 0, Enums.AtlasType.Mech);
+            DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
+            DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
+            DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
 
             CreateTiles();
             CreateAnimations();
@@ -534,18 +564,23 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceChest);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.TOOL);
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "MajestyPlant");
         GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "Plant");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.TOOL);
-        GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.SagoPalm, "SagoPlant");
+        GameState.ItemCreationApi.SetTexture(SagoPalmIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(SagoPalmIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
+        GameState.ItemCreationApi.SetTexture(DracaenaTrifasciataIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(DracaenaTrifasciataIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
@@ -630,6 +665,18 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.MajestyPalm);
         GameState.MechCreationApi.SetName("majesty");
         GameState.MechCreationApi.SetTexture(MajestyPalm);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.SagoPalm);
+        GameState.MechCreationApi.SetName("sago");
+        GameState.MechCreationApi.SetTexture(SagoPalm);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+        GameState.MechCreationApi.End();
+
+        GameState.MechCreationApi.Create((int)Mech.MechType.DracaenaTrifasciata);
+        GameState.MechCreationApi.SetName("dracaenatrifasciata");
+        GameState.MechCreationApi.SetTexture(DracaenaTrifasciata);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
         GameState.MechCreationApi.End();
     }

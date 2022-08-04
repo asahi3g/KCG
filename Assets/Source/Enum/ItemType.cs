@@ -29,7 +29,9 @@
         /// Mech's As Item
         /// </summary>
         MajestyPalm,
+        SagoPalm,
         WaterBottle,
+        DracaenaTrifasciata,
 
         /// <summary>
         /// Tools
@@ -42,7 +44,6 @@
         PipePlacementTool,
         ParticleEmitterPlacementTool,
         ChestPlacementTool,
-        PlanterTool,
         HarvestTool,
         ConstructionTool,
         ScannerTool
