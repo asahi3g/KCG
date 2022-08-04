@@ -103,7 +103,7 @@ namespace Planet.Unity
                 return;
 
             // Draw HUD UI
-            HUDManager.Update(Player);
+           // HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -414,8 +414,14 @@ namespace Planet.Unity
                 }
             }
             
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            /*GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            for(int i = 0; i < 100; i++)
+            {
+                GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bone, new Vec2f(10.0f + 0.5f * i, spawnHeight));
+                GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Slime, new Vec2f(10.0f + 0.5f * i, spawnHeight));
+                GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Food, new Vec2f(10.0f + 0.5f * i, spawnHeight));
+            }*/
+            
         }
     }
 }

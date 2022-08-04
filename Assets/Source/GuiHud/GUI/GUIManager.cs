@@ -378,7 +378,7 @@ namespace KGUI
                 }
             }
 
-            if (bedrockUIBackground.IsMouseOver(CursorPosition))
+            /*if (bedrockUIBackground.IsMouseOver(CursorPosition))
             {
                 // Set Inventory Elements
                 int toolBarID = agentEntity.agentToolBar.ToolBarID;
@@ -423,7 +423,7 @@ namespace KGUI
                     // Set Data Tile ID to Pipe
                     item.itemCastData.InputsActive = true;
                 }
-            }
+            }*/
         }
 
         public virtual void OnMouseEnter()
