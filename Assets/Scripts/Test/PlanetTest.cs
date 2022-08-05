@@ -422,7 +422,7 @@ namespace Planet.Unity
                     Planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
                 }
             }
-            
+
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }

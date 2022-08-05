@@ -8,6 +8,7 @@ namespace Item
     public class CastDataComponent : IComponent
     {
         public Data data;
+        public bool InputsActive;
     }
 }
 

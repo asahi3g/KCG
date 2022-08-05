@@ -285,7 +285,12 @@ namespace Planet
             cameraFollow.Update(ref this);
 
             TileMap.UpdateTileSprites();
-            
+
+            if (GameState.TGenGrid != null)
+            {
+                GameState.TGenGrid.Update();
+            }
+
             // Update Meshes.
             GameState.TileMapRenderer.UpdateBackLayerMesh(TileMap);
             GameState.TileMapRenderer.UpdateMidLayerMesh(TileMap);

@@ -44,7 +44,7 @@ namespace Item
             if (itemProperty.IsPlacementTool())
             {
                 Data data = new Data();
-                entity.AddItemCastData(data);
+                entity.AddItemCastData(data, true);
             }
 
             ItemID++;
@@ -107,7 +107,7 @@ namespace Item
             if (itemProperty.IsPlacementTool())
             {
                 Data data = new Data();
-                entity.AddItemCastData(data);
+                entity.AddItemCastData(data, true);
             }
 
             ItemID++;

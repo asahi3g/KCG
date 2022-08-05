@@ -11,17 +11,19 @@ public partial class ItemInventoryEntity {
     public Item.CastDataComponent itemCastData { get { return (Item.CastDataComponent)GetComponent(ItemInventoryComponentsLookup.ItemCastData); } }
     public bool hasItemCastData { get { return HasComponent(ItemInventoryComponentsLookup.ItemCastData); } }
 
-    public void AddItemCastData(Enums.Tile.Data newData) {
+    public void AddItemCastData(Enums.Tile.Data newData, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemCastData;
         var component = (Item.CastDataComponent)CreateComponent(index, typeof(Item.CastDataComponent));
         component.data = newData;
+        component.InputsActive = newInputsActive;
         AddComponent(index, component);
     }
 
-    public void ReplaceItemCastData(Enums.Tile.Data newData) {
+    public void ReplaceItemCastData(Enums.Tile.Data newData, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemCastData;
         var component = (Item.CastDataComponent)CreateComponent(index, typeof(Item.CastDataComponent));
         component.data = newData;
+        component.InputsActive = newInputsActive;
         ReplaceComponent(index, component);
     }
 

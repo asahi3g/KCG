@@ -29,6 +29,14 @@ public class GameState
 
     #endregion
 
+    #region TGen
+
+    public static readonly TGen.Grid TGenGrid;
+    public static readonly TGen.RenderGridOverlay TGenRenderGridOverlay;
+    public static readonly TGen.RenderMapBorder TGenRenderMapBorder;
+
+    #endregion
+
     #region Sprites
 
     public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
@@ -156,5 +164,8 @@ public class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         Renderer = new Utility.Render();
+        TGenGrid = new TGen.Grid();
+        TGenRenderGridOverlay = new TGen.RenderGridOverlay();
+        TGenRenderMapBorder = new TGen.RenderMapBorder();
     }
 }
