@@ -101,15 +101,15 @@ namespace Planet.Unity
                 return;
 
             if (Event.current.type == EventType.MouseDown)
-                GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance);
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext);
 
             if (Event.current.type == EventType.MouseUp)
-                GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance);
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext);
 
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
+            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
 
             // Draw HUD UI
             HUDManager.Update(Player);
