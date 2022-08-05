@@ -595,8 +595,6 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlaceChest);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlanterTool, "PlanterTool");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "MajestyPlant");
         GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
@@ -604,10 +602,6 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPlanter);
         GameState.ItemCreationApi.EndItem();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "Plant");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-        GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.SagoPalm, "SagoPlant");
         GameState.ItemCreationApi.SetTexture(SagoPalmIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SagoPalmIcon);
