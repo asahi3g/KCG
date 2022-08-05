@@ -110,9 +110,16 @@ namespace Action
             // Create Tool Action Place Chest
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceChest);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceChestCreator());
-            ToolActionPlaceChest.Data placeChestData = new ToolActionPlaceChest.Data();
-            placeChestData.Material = material;
+            ToolActionPlaceChest.Data placeChestData = new ToolActionPlaceChest.Data
+            {
+                Material = material
+            };
             GameState.ActionPropertyManager.SetData(placeChestData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+            
+            // Create Tool Action Smashable Box Placement
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceSmahableBox);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionSmashableBoxCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
 
             // Create Tool Action Spawn Enemy

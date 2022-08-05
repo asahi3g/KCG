@@ -73,6 +73,12 @@ namespace Planet.Unity
                     }
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                PlaceSmashableBox();
+            }
+            
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
@@ -187,6 +193,25 @@ namespace Planet.Unity
             float y = worldPosition.y;
 
             planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
+        }
+        
+        private void PlaceSmashableBox()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            var mech = Planet.GetMechFromPosition(new Vec2f(x, y), MechType.SmashableBox);
+            if (mech != null)
+            {
+                Debug.Log("Destroy Smashable Box");
+                Planet.RemoveMech(mech.mechID.ID);
+            }
+            else
+            {
+                Debug.Log("PLACE Smashable Box");
+                Planet.AddMech(new Vec2f(x, y), MechType.SmashableBox);
+            }
         }
     } 
 }

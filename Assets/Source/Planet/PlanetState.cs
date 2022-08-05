@@ -109,6 +109,30 @@ namespace Planet
             MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, position, -1, mechType));
             return newEntity;
         }
+        
+        public void RemoveMech(int mechId)
+        {
+            MechEntity entity = MechList.Get(mechId);
+            Utils.Assert(entity.isEnabled);
+            MechList.Remove(mechId);
+        }
+        
+        public MechEntity GetMechFromPosition(Vec2f position, MechType mechType)
+        {
+            foreach (var mech in MechList.List)
+            {
+                if(mech == null) break;
+                if(mech.mechType.mechType != mechType) continue;
+                
+                var mechBox = new AABox2D(mech.mechPosition2D.Value, mech.mechSprite2D.Size);
+                if (mechBox.OverlapPoint(position))
+                {
+                    return mech;
+                }
+            }
+
+            return null;
+        }
 
         // Note(Mahdi): Deprecated will be removed soon
         public AgentEntity AddEnemy(int spriteId,
