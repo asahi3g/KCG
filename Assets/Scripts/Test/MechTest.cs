@@ -88,8 +88,9 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
+            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
+
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
-            GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
         }
 
         // create the sprite atlas for testing purposes

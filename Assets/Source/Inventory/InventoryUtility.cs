@@ -15,34 +15,20 @@ namespace Inventory
     public struct Window
     {
         public Vec2f Position;
+        public Vec2f GridPosition;
         public Vec2f Size;
+        public Vec2f GridSize;
         public float TileSize;
         public float SlotBorderOffset;
         public float SlotOffset;
 
-        public float X
-        {
-            get => Position.X;
-            set => Position.X = value;
-        }
-
-        public float Y
-        {
-            get => Position.Y;
-            set => Position.Y = value;
-        }
-
-        public float W
-        {
-            get => Size.X;
-            set => Size.X = value;
-        }
-
-        public float H
-        {
-            get => Size.Y;
-            set => Size.Y = value;
-        }
+        /// <summary>
+        /// These define offset from start of background image to start of the grid.
+        /// </summary>
+        public float UpBorderOffSet;
+        public float DownBorderOffSet;
+        public float LeftBorderOffSet;
+        public float RightBorderOffSet;
 
         public void Scale(float scaleFactor)
         {
@@ -55,7 +41,7 @@ namespace Inventory
 
         public bool IsInsideWindow(Vec2f pos)
         {
-            if (pos.X < X || pos.Y < Y || pos.X > (X + W) || pos.Y > (Y + H))
+            if (pos.X < GridPosition.X || pos.Y < GridPosition.Y || pos.X > (GridPosition.X + GridSize.X) || pos.Y > (GridPosition.Y + GridSize.Y))
                 return false;
             return true;
         }

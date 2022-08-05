@@ -79,13 +79,13 @@ namespace KGUI.Elements
             var iconSheet = GameState.SpriteLoader.GetSpriteSheetID(path, width, height);
 
             // Set Sprite ID from Sprite Atlas
-            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
+            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Gui);
 
             // Set Sprite Data
             byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
 
             // Get Sprite Bytes
-            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
+            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Gui);
 
             // Set Texture
             Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);

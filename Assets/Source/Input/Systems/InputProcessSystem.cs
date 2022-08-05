@@ -341,6 +341,10 @@ namespace ECSInput
                     int inventoryID = player.agentInventory.InventoryID;
                     ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
                     inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+
+                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    ref Inventory.InventoryModel equipmentInventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+                    equipmentInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
                 }
             }
 

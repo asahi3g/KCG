@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace Inventory
 {
+
+    /// <summary>
+    /// Exemple on how to use the api in default functions and in InventoryTest script.
+    /// </summary>
     public class CreationApi
     {
         InventoryModel[] Inventories;
@@ -92,17 +96,26 @@ namespace Inventory
             int width = Inventories[ID].Width;
             int height = Inventories[ID].Height;
 
-            window.Size = new Vec2f(width * window.TileSize, height * window.TileSize);
-
-            window.X -= window.W / 2f;
-            window.Y -= window.H / 2f;
+            window.GridSize = new Vec2f(width * window.TileSize, height * window.TileSize);
 
             if (Inventories[ID].HasTooBar())
             {
-                Inventories[ID].ToolBarWindow   = window;
-                Inventories[ID].ToolBarWindow.Y = window.TileSize / 2f;
-                Inventories[ID].ToolBarWindow.H = window.TileSize;
+                // Draw toolbar by default.
+                Inventories[ID].InventoryFlags |= InventoryModel.Flags.DrawToolBar;
+
+                // Set tool bar position at the upmost row of inventory.
+                Inventories[ID].ToolBarWindow = window;
+                Inventories[ID].ToolBarWindow.GridSize.Y = window.TileSize;
+                Inventories[ID].ToolBarWindow.Size = Inventories[ID].ToolBarWindow.GridSize;
+                Inventories[ID].ToolBarWindow.Position.Y = window.TileSize / 2f;
+                Inventories[ID].ToolBarWindow.Position.X = (1920 - window.GridSize.X) / 2f; // Centralize toolbar.
+                Inventories[ID].ToolBarWindow.GridPosition = Inventories[ID].ToolBarWindow.Position;
             }
+
+            window.GridPosition = new Vec2f(window.Position.X + window.RightBorderOffSet, 
+                window.Position.Y + window.DownBorderOffSet);
+            window.Size = new Vec2f(window.GridSize.X + window.RightBorderOffSet + window.LeftBorderOffSet,
+                window.GridSize.Y + window.UpBorderOffSet + window.LeftBorderOffSet);
 
             int length = width * height;
             Inventories[ID].SlotsMask = new BitSet((uint)length);
@@ -132,16 +145,15 @@ namespace Inventory
         public int CreateDefaultInventory()
         {
             int ID = Create();
-            SetInventoryPos(960f, 540f);
+            SetInventoryPos(460f, 240f);
             SetSize(10, 6);
             SetAllSlotsAsActive();
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
-            SetBorder();
             SetToolBar();
             SetTileSize(100);
-            SetBorderOffset(10);
+            SetSlotBorderOffset(10);
             SetSlotOffset(20);
             End();
             return ID;
@@ -150,23 +162,29 @@ namespace Inventory
         public int CreateDefaultRestrictionInventory()
         {
             int ID = Create();
-            SetInventoryPos(1_795f, 540f);
+            SetInventoryPos(1_670f, 240f);
             SetSize(2, 5);
             SetAllSlotsAsActive();
             SetDefaultRestrictionTexture();
+            SetRestriction(0, Enums.ItemGroups.DYE);
+            SetRestriction(2, Enums.ItemGroups.DYE);
+            SetRestriction(4, Enums.ItemGroups.DYE);
+            SetRestriction(6, Enums.ItemGroups.DYE);
+            SetRestriction(8, Enums.ItemGroups.DYE);
+            SetRestriction(1, Enums.ItemGroups.HELMET);
+            SetRestriction(3, Enums.ItemGroups.RING);
+            SetRestriction(4, Enums.ItemGroups.ARMOUR);
+            SetRestriction(5, Enums.ItemGroups.BELT);
+            SetRestriction(7, Enums.ItemGroups.GLOVES);
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
-            SetBorder();
             SetTileSize(100);
-            SetBorderOffset(10);
+            SetSlotBorderOffset(10);
             SetSlotOffset(20);
             End();
             return ID;
         }
-
-        public void SetBorder() 
-            => Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBorder;
 
         public void SetBackgroundTexture(int spriteID)
         {
@@ -197,16 +215,27 @@ namespace Inventory
 
         public void SetDefaultRestrictionTexture()
         {
-            SetTextureRestriction(Enums.ItemGroups.HELMET, 0);
-            SetTextureRestriction(Enums.ItemGroups.ARMOUR, 1);
-            SetTextureRestriction(Enums.ItemGroups.GLOVES, 2);
-            SetTextureRestriction(Enums.ItemGroups.RING, 3);
-            SetTextureRestriction(Enums.ItemGroups.BELT, 4);
-            SetTextureRestriction(Enums.ItemGroups.DYE, 5);
+            SetTextureRestriction(Enums.ItemGroups.HELMET, GameResources.HelmetSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.ARMOUR, GameResources.ArmourSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.GLOVES, GameResources.GlovesSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.RING, GameResources.RingSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.BELT, GameResources.BeltSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.DYE, GameResources.DyeSlotIcon);
         }
 
         public void SetTextureRestriction(Enums.ItemGroups itemGroup, int textureRestriction)
             => RestrictionSlotsTextures[(int)itemGroup] = textureRestriction;
+
+        /// <summary>
+        /// Distance from start of the background texture to grid.
+        /// </summary>
+        public void SetInventoryBoderOffset(float leftBorder, float rightBorder, float upBorder, float downBorder)
+        {
+            Inventories[ID].MainWindow.UpBorderOffSet = upBorder;
+            Inventories[ID].MainWindow.DownBorderOffSet = downBorder;
+            Inventories[ID].MainWindow.LeftBorderOffSet = leftBorder;
+            Inventories[ID].MainWindow.RightBorderOffSet = rightBorder;
+        }
 
         public void SetSize(int width, int height) => SetSize(new Vec2i(width, height));
         public void SetSize(Vec2i size)
@@ -221,7 +250,11 @@ namespace Inventory
         public void SetInventoryPos(Vec2f pos) => Inventories[ID].MainWindow.Position = pos;
         public void SetInventoryPos(float x, float y) => Inventories[ID].MainWindow.Position = new Vec2f(x,y);
         public void SetTileSize(float tileSize) => Inventories[ID].MainWindow.TileSize = tileSize;
-        public void SetBorderOffset(float slotBorderOffset) => Inventories[ID].MainWindow.SlotBorderOffset = slotBorderOffset;
+        public void SetSlotBorderOffset(float slotBorderOffset)
+        { 
+            Inventories[ID].MainWindow.SlotBorderOffset = slotBorderOffset;
+            Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBorder;
+        }
         public void SetSlotOffset(float slotOffset) => Inventories[ID].MainWindow.SlotOffset = slotOffset;
 
         /// <summary>

@@ -26,6 +26,12 @@
         RiotShield,
 
         /// <summary>
+        /// Equipment
+        /// </summary>
+        Helmet,
+        Suit,
+
+        /// <summary>
         /// Mech's As Item
         /// </summary>
         MajestyPalm,

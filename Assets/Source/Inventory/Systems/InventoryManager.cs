@@ -17,34 +17,56 @@ namespace Inventory
             inventory.InventoryFlags |= InventoryModel.Flags.Draw;
         }
 
-        public void AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
+        public bool AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
         {
             ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            if (!inventory.Slots[slotID].IsOn)
+                return false;
+            
             itemEntity.ReplaceItemInventory(inventoryID, slotID);
+
+            // Check restriction.
+            Enums.ItemGroups slotGroup = inventory.Slots[slotID].Restriction;
+            Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
+            if (slotGroup >= 0 && group != slotGroup)
+                return false;
 
             if (inventory.SlotsMask[slotID])
             {
                 // Move to first empty slot:
                 ItemInventoryEntity currentItem = GetItemInSlot(contexts, inventoryID, slotID);
                 RemoveItem(contexts, inventoryID, slotID);
-                AddItemAtFirstEmptySlot(currentItem, inventoryID);
+                if (!AddItemAtFirstEmptySlot(currentItem, inventoryID))
+                    return false;
             }
-
             inventory.SlotsMask.Set(slotID);
             inventory.Slots[slotID].ItemID = itemEntity.itemID.ID;
+
+            return true;
         }
 
-        public void AddItemAtFirstEmptySlot(ItemInventoryEntity entity, int inventoryID)
+        public bool AddItemAtFirstEmptySlot(ItemInventoryEntity itemEntity, int inventoryID)
         {
             ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-            int fistEmptySlot = GetFirstEmptySlot(inventory.SlotsMask);
+            int fistEmptySlot = GetFirstEmptySlot(inventory.SlotsMask, ref inventory);
 
-            entity.ReplaceItemInventory(inventoryID, fistEmptySlot);
+            if (fistEmptySlot < 0)
+                return false;
+
+            // Check restriction.
+            Enums.ItemGroups slotGroup = inventory.Slots[fistEmptySlot].Restriction;
+            Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
+            if (slotGroup >= 0 && group != slotGroup)
+                return false;
+
+            itemEntity.ReplaceItemInventory(inventoryID, fistEmptySlot);
             inventory.SlotsMask.Set(fistEmptySlot);
-            inventory.Slots[fistEmptySlot].ItemID = entity.itemID.ID;
+            inventory.Slots[fistEmptySlot].ItemID = itemEntity.itemID.ID;
+
+            return true;
         }
 
-        public void AddItem(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
+        public bool AddItem(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
         {
             ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
@@ -76,19 +98,19 @@ namespace Inventory
                     {
                         entityIT.AddItemStack(NewEntityCount + EntityITCount);
                         entity.Destroy();
-                        return;
+                        return true;
                     }
                     
                     if (NewEntityCount + EntityITCount <= MaxStackSize)
                     {
                         entityIT.ReplaceItemStack(NewEntityCount + EntityITCount);
                         entity.Destroy();
-                        return;
+                        return true;
                     }
                 }
             }
 
-            AddItemAtFirstEmptySlot(entity, inventoryID);
+            return AddItemAtFirstEmptySlot(entity, inventoryID);
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -146,7 +168,7 @@ namespace Inventory
             return null;
         }
 
-        private int GetFirstEmptySlot(BitSet Slots)
+        private int GetFirstEmptySlot(BitSet Slots, ref InventoryModel inventory)
         {
             if (IsFull(Slots))
             {
@@ -155,6 +177,8 @@ namespace Inventory
 
             for (int i = 0; i < Slots.Length; i++)
             {
+                if (!inventory.Slots[i].IsOn)
+                    continue;
                 if (!Slots[i])
                     return i;
             }

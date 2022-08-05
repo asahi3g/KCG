@@ -12,6 +12,9 @@ public class InventoryTest : MonoBehaviour
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
     Inventory.MouseSelectionSystem  mouseSelectionSystem;
+    int terrariaLikeInventoryID;
+    int customRestrictionInventoryID;
+
     bool Init = false;
 
     [SerializeField] Material material;
@@ -28,8 +31,6 @@ public class InventoryTest : MonoBehaviour
 
         // Create Agent and inventory.
         int agnetID = 0;
-        int inventoryWidth = 8;
-        int inventoryHeight = 6;
 
         AgentEntity playerEntity = context.agent.CreateEntity();
         playerEntity.AddAgentID(agnetID);
@@ -38,22 +39,32 @@ public class InventoryTest : MonoBehaviour
             GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
         int inventoryID = playerEntity.agentInventory.InventoryID;
 
-        // Add item to tool bar.
-         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol), inventoryID);
+        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
+        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);
+
 
         // Test not stackable items.
-        for (uint i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol), inventoryID);
+            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + i), inventoryID);
+            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol+4 + i), terrariaLikeInventoryID);
         }
 
         // Testing stackable items.
-        for (uint i = 0; i < 10; i++)
+        for (uint i = 0; i < 256; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Rock), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.RockDust), inventoryID);
+            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), inventoryID);
         }
         Init = true;
+
+        // Set basic inventory draw to on at the beggining:
+        ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+        inventory.InventoryFlags |= Inventory.InventoryModel.Flags.Draw;
+        inventory.InventoryFlags |= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
+
+        inventoryID = playerEntity.agentInventory.EquipmentInventoryID;
+        ref Inventory.InventoryModel secondInventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+        secondInventory.InventoryFlags |= Inventory.InventoryModel.Flags.Draw;
     }
 
     public void Update()
@@ -78,11 +89,19 @@ public class InventoryTest : MonoBehaviour
             {
                 int inventoryID = player.agentInventory.InventoryID;
                 ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw;        // Toggling the bit
+                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
 
                 inventoryID = player.agentInventory.EquipmentInventoryID;
                 ref Inventory.InventoryModel inventoryEquipment = ref GameState.InventoryCreationApi.Get(inventoryID);
                 inventoryEquipment.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+
+                ref Inventory.InventoryModel terrariaLikeInventory = ref GameState.InventoryCreationApi.Get(terrariaLikeInventoryID);
+                terrariaLikeInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+                terrariaLikeInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
+
+                ref Inventory.InventoryModel cutomEquipmentInventory = ref GameState.InventoryCreationApi.Get(customRestrictionInventoryID);
+                cutomEquipmentInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
             }
         }
     }
@@ -101,38 +120,47 @@ public class InventoryTest : MonoBehaviour
         if (Event.current.type != EventType.Repaint)
             return;
 
+        GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
+
         inventoryDrawSystem.Draw(Contexts.sharedInstance);
-        GameState.InventoryMouseSelectionSystem.Draw(Contexts.sharedInstance);
     }
 
     private void Initialize()
     {
-        int GunSpriteSheet =
-            GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Pistol\\gun-temp.png", 44, 25);
-        int RockSpriteSheet =
-            GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Rock\\rock1.png", 16, 16);
-        int RockDustSpriteSheet =
-            GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Rock\\rock1_dust.png", 16, 16);
+       GameResources.Initialize();
 
-        int GunIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GunSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-        int RockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RockSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-        int RockDustIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RockDustSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+        terrariaLikeInventoryID = GameState.InventoryCreationApi.Create();
+        GameState.InventoryCreationApi.SetAllSlotsAsActive();
+        GameState.InventoryCreationApi.SetToolBar();
+        GameState.InventoryCreationApi.SetSize(10, 5);
+        GameState.InventoryCreationApi.SetInventoryPos(50, 680);
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.29f, 0.31f, 0.59f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetSlotOffset(5);
+        GameState.InventoryCreationApi.SetTileSize(75);
+        GameState.InventoryCreationApi.End();
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pistol, "Pistol");
-        GameState.ItemCreationApi.SetTexture(GunIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(GunIcon);
-        GameState.ItemCreationApi.EndItem();
+        ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(terrariaLikeInventoryID);
+        inventory.InventoryFlags &= ~Inventory.InventoryModel.Flags.DrawToolBar; // Set Draw toolBar to false.
 
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Rock, "Rock");
-        GameState.ItemCreationApi.SetTexture(RockIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(RockIcon);
-        GameState.ItemCreationApi.SetStackable(99);
-        GameState.ItemCreationApi.EndItem();
-
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.RockDust, "RockDust");
-        GameState.ItemCreationApi.SetTexture(RockDustIcon);
-        GameState.ItemCreationApi.SetInventoryTexture(RockDustIcon);
-        GameState.ItemCreationApi.SetStackable(99);
-        GameState.ItemCreationApi.EndItem();
+        customRestrictionInventoryID = GameState.InventoryCreationApi.Create();
+        GameState.InventoryCreationApi.SetActiveSlot(1);
+        GameState.InventoryCreationApi.SetActiveSlot(3);
+        GameState.InventoryCreationApi.SetActiveSlot(4);
+        GameState.InventoryCreationApi.SetActiveSlot(5);
+        GameState.InventoryCreationApi.SetActiveSlot(7);
+        GameState.InventoryCreationApi.SetDefaultRestrictionTexture();
+        GameState.InventoryCreationApi.SetRestriction(1, Enums.ItemGroups.HELMET);
+        GameState.InventoryCreationApi.SetRestriction(3, Enums.ItemGroups.RING);
+        GameState.InventoryCreationApi.SetRestriction(4, Enums.ItemGroups.ARMOUR);
+        GameState.InventoryCreationApi.SetRestriction(5, Enums.ItemGroups.GLOVES);
+        GameState.InventoryCreationApi.SetRestriction(7, Enums.ItemGroups.BELT);
+        GameState.InventoryCreationApi.SetSize(3, 3);
+        GameState.InventoryCreationApi.SetInventoryPos(1_650f, 430f);
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.0f, 0.70f, 0.55f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetSlotOffset(5);
+        GameState.InventoryCreationApi.SetTileSize(75);
+        GameState.InventoryCreationApi.End();
     }
 }
