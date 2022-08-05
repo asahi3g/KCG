@@ -46,9 +46,19 @@ namespace Planet.Unity
             // Generating the map
             var mapSize = new Vec2i(16, 16);
 
+            AgentEntity player = new AgentEntity();
+
+            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D));
+            foreach (var entity in entities)
+            {
+                if (entity.isAgentPlayer)
+                    player = entity;
+
+            }
+
             Planet = new PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeSystems(Material, transform, player);
 
             ref var tileMap = ref Planet.TileMap;
 

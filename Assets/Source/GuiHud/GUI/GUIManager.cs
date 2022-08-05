@@ -526,5 +526,10 @@ namespace KGUI
 
             return text;
         }
+
+        public void Teardown()
+        {
+            
+        }
     }
 }

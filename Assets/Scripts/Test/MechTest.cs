@@ -77,7 +77,7 @@ namespace Planet.Unity
                     }
                 }
             }
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(Time.deltaTime, Material, transform, Player);
         }
 
         private void OnGUI()
@@ -101,7 +101,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeSystems(Material, transform, Player);
 
             GenerateMap();
 

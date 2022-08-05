@@ -87,8 +87,7 @@ class PlanterTest : MonoBehaviour
             }
         }
 
-        HUDManager.Draw();
-        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.Update(Time.deltaTime, Material, transform, Player);
         //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
         // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
@@ -101,9 +100,6 @@ class PlanterTest : MonoBehaviour
 
         if (Event.current.type != EventType.Repaint)
             return;
-
-        // Draw HUD UI
-        HUDManager.Update(Player);
 
         // Draw Statistics
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -200,8 +196,6 @@ class PlanterTest : MonoBehaviour
         Planet = new Planet.PlanetState();
         Planet.Init(mapSize);
 
-        Planet.InitializeSystems(Material, transform);
-
         /*var camera = Camera.main;
         Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
         Planet.TileMap = TileMapManager.Load("map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);*/
@@ -209,11 +203,11 @@ class PlanterTest : MonoBehaviour
         GenerateMap();
         SpawnStuff();
 
+        Planet.InitializeSystems(Material, transform, Player);
+
         //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
         InventoryID = Player.agentInventory.InventoryID;
-
-        HUDManager.Initialize(Planet, Player);
 
         // Admin API Spawn Items
         Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
@@ -291,5 +285,7 @@ class PlanterTest : MonoBehaviour
         Planet.AddMech(new Vec2f(4, 4), Mech.MechType.Light);
         Planet.AddMech(new Vec2f(8, 4), Mech.MechType.Light);
         Planet.AddMech(new Vec2f(12, 4), Mech.MechType.Light);
+
+        Planet.AddUIText("SampleText", new Vec2f(-250.67f, 94.3f), new Vec2f(200, 120));
     }
 }
