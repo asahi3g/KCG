@@ -70,8 +70,8 @@ class PlanterTest : MonoBehaviour
             }
         }
 
-        InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(InventoryID);
-        int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+        Inventory.InventoryModel Inventory = GameState.InventoryCreationApi.Get(InventoryID);
+        int selectedSlot = Inventory.SelectedSlotID;
 
         ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
         if (item != null)
