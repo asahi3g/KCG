@@ -13,5 +13,7 @@ namespace Mech
         Storage,
         Crafting,
         MajestyPalm,
+        SagoPalm,
+        DracaenaTrifasciata,
     }
 }
