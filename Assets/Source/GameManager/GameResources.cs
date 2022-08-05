@@ -612,7 +612,7 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
         GameState.MechCreationApi.SetTexture(ChestIcon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);

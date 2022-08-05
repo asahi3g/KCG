@@ -26,6 +26,10 @@ namespace Planet.Unity
 
         private int totalMechs;
 
+        private Color correctHlColor = Color.green;
+
+        private Color wrongHlColor = Color.red;
+
         public void Start()
         {
 
@@ -91,8 +95,64 @@ namespace Planet.Unity
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
             GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
 
-            if(showMechInventory)
+            if (showMechInventory)
+            {
                 GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform, selectedMechIndex);
+
+                DrawCurrentMechHighlighter();
+            }
+        }
+
+        private void DrawCurrentMechHighlighter()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            int x = (int)worldPosition.x;
+            int y = (int)worldPosition.y;
+
+            var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
+
+            if (x >= 0 && x < Planet.TileMap.MapSize.X &&
+            y >= 0 && y < Planet.TileMap.MapSize.Y)
+            {
+                //TODO: SET TO Get(selectedMechIndex)
+                var mech = GameState.MechCreationApi.Get(2);
+                Debug.Log(mech.Name);
+                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
+                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                
+                Debug.Log(mech.SpriteSize.X);
+                Debug.Log(mech.SpriteSize.Y);
+
+                var allTilesAir = true;
+
+                var w = mech.SpriteSize.X / Screen.width;
+                var h = mech.SpriteSize.Y / Screen.height;
+
+                for (int i = 0; i < xRange; i++)
+                {
+                    for (int j = 0; j < yRange; j++)
+                    {
+                        if (Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                        {
+                            allTilesAir = false;
+                            GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, wrongHlColor);
+                            break;
+                        }
+                        if (Planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
+                        {
+                            allTilesAir = false;
+                            GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, wrongHlColor);
+                            break;
+                        }
+                    }
+                }
+
+                if (allTilesAir)
+                {
+                    GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, correctHlColor);
+                }
+
+            }
         }
 
         // create the sprite atlas for testing purposes
@@ -181,19 +241,6 @@ namespace Planet.Unity
                 }
             }
             //TileMap.BuildLayerTexture(MapLayerType.Front);
-        }
-
-        private void PlaceMech()
-        {
-            Debug.Log("PLACE MECH");
-
-            var planet = FindObjectOfType<ItemTest>().Planet;
-
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
-
-            planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
         }
     } 
 }
