@@ -81,7 +81,8 @@ namespace Planet.Unity
                 {
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                        if (!Inventory.InventorySystemsState.MouseDown)
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
                             Player.agentID.ID, item.itemID.ID);
                     }   
                 }
@@ -99,8 +100,16 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance);
+
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance);
+
             if (Event.current.type != EventType.Repaint)
                 return;
+
+            GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
 
             // Draw HUD UI
             HUDManager.Update(Player);

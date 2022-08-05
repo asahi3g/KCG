@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /* 
-    GLSL CUBE RENDERING TEST SCRIPT
+    GLSL CUBE RENDERing TEST SCRIPT
 */
 
 class GLTestCube : MonoBehaviour

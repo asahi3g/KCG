@@ -33,10 +33,16 @@ namespace Inventory
         public void Scale(float scaleFactor)
         {
             Position *= scaleFactor;
+            GridPosition *= scaleFactor;
             Size *= scaleFactor;
+            GridSize *= scaleFactor;
             TileSize *= scaleFactor;
             SlotBorderOffset *= scaleFactor;
             SlotOffset *= scaleFactor;
+            UpBorderOffSet *= scaleFactor;
+            DownBorderOffSet *= scaleFactor;
+            LeftBorderOffSet *= scaleFactor;
+            RightBorderOffSet *= scaleFactor;
         }
 
         public bool IsInsideWindow(Vec2f pos)

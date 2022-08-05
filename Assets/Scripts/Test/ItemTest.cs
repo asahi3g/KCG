@@ -40,7 +40,7 @@ namespace Planet.Unity
             int inventoryID = Player.agentInventory.InventoryID;
             ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
             int selectedSlot = inventory.SelectedSlotID;
-       
+
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             if (item != null)
             {
@@ -49,8 +49,9 @@ namespace Planet.Unity
                 {
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, 
-                            Player.agentID.ID, item.itemID.ID); 
+                        if (!InventorySystemsState.MouseDown)
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                                Player.agentID.ID, item.itemID.ID);
                     }
                 }
             }
@@ -72,7 +73,6 @@ namespace Planet.Unity
                 return;
 
             GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
-
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
         }
 

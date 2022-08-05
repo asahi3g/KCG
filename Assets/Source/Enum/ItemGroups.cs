@@ -3,12 +3,13 @@
     // Used by inventory system to impose restriction.
     public enum ItemGroups
     {
-        None = -1,           // Does nothing, resources, stackable
-        HELMET,
-        ARMOUR,
-        GLOVES,
-        RING,
-        BELT,
-        DYE
+        Error = -1,
+        None = 0,           // Does nothing, resources, stackable
+        Helmet = 1,
+        Armour,
+        Gloves,
+        Ring,
+        Belt,
+        Dye
     }
 }

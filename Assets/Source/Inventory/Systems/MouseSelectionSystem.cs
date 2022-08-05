@@ -9,7 +9,7 @@ namespace Inventory
         public void OnMouseUP(Contexts contexts)
         {
             // Initialize states.
-            if (InventorySystemsState.ClickedSlotslotID < -1)
+            if (InventorySystemsState.ClickedSlotslotID < 0)
                 return;
 
             InventorySystemsState.MouseDown = false;
@@ -29,14 +29,18 @@ namespace Inventory
             for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(i);
+                if (!openInventory.IsDrawOn())
+                    continue;
                 if (TryAddItemToInv(contexts, ref openInventory, mPos, false))
                     return;
             }
 
             for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
-                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(i);
-                if (TryAddItemToInv(contexts, ref openInventory, mPos, true))
+                ref InventoryModel openToolBar = ref GameState.InventoryCreationApi.Get(i);
+                if (openToolBar.HasTooBar() || !openToolBar.IsDrawToolBarOn())
+                    continue;
+                if (TryAddItemToInv(contexts, ref openToolBar, mPos, true))
                     return;
             }
 
@@ -57,19 +61,20 @@ namespace Inventory
             for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(i);
+                if (!openInventory.IsDrawOn())
+                    continue;
                 if (TryPickingUpItemFromInv(contexts, ref openInventory, mPos, false))
                     return;
             }
 
-            var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
-            foreach (var player in players)
+            for (int i = 0; i < GameState.InventoryCreationApi.GetArrayLength(); i++)
             {
-                int inventoryID = player.agentInventory.InventoryID;
-                ref InventoryModel openToolBar = ref GameState.InventoryCreationApi.Get(inventoryID);
+                ref InventoryModel openToolBar = ref GameState.InventoryCreationApi.Get(i);
+                if (openToolBar.HasTooBar() || !openToolBar.IsDrawToolBarOn())
+                    continue;
                 if (TryPickingUpItemFromInv(contexts, ref openToolBar, mPos, true))
                     return;
             }
-
         }
 
         public void Update(Contexts contexts)

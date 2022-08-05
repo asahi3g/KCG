@@ -610,14 +610,14 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Helmet, "Helmet");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.HELMET);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Helmet);
         GameState.ItemCreationApi.SetTexture(HemeltSprite);
         GameState.ItemCreationApi.SetInventoryTexture(HemeltSprite);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Suit, "Suit");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.ARMOUR);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Armour);
         GameState.ItemCreationApi.SetTexture(SuitSprite);
         GameState.ItemCreationApi.SetInventoryTexture(SuitSprite);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));

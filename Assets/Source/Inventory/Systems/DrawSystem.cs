@@ -36,7 +36,7 @@ namespace Inventory
             {
                 float scaleFacor = Screen.height / 1080f;
                 Vector3 mousePos = Input.mousePosition;
-                Vec2f pos = new Vec2f(mousePos.x, mousePos.y) * 1f / scaleFacor;
+                Vec2f pos = new Vec2f(mousePos.x, mousePos.y);
                 float size = 60f * scaleFacor;
 
                 ItemInventoryEntity itemEntity = contexts.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID);
