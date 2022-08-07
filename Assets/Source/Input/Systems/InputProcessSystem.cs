@@ -371,6 +371,12 @@ namespace ECSInput
                 planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
+            // Enable tile collision isotype rendering.
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                PlanetTileMap.TileMapRenderer.TileCollisionDebugging = !PlanetTileMap.TileMapRenderer.TileCollisionDebugging;
+            }
+
             //  Open Inventory with Tab.        
             if (Input.GetKeyDown(KeyCode.Tab))
             {
