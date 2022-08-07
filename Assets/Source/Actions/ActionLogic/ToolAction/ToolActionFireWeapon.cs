@@ -65,7 +65,7 @@ namespace Action
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
             // Start positiom
-            StartPos = AgentEntity.agentPosition2D.Value;
+            StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.3f;
             StartPos.Y += 0.5f;
 
@@ -137,7 +137,7 @@ namespace Action
             }
 
             // Check if projectile is inside in weapon range.
-            if ((ProjectileEntity.projectilePosition2D.Value - StartPos).Magnitude > range)
+            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
             {
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
             }
@@ -146,8 +146,8 @@ namespace Action
 #if UNITY_EDITOR
             for (int i = 0; i < EndPointList.Count; i++)
             {
-                if (EndPointList[i].hasProjectilePosition2D)
-                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePosition2D.Value.X, EndPointList[i].projectilePosition2D.Value.Y, 0), Color.red, 2.0f, false);
+                if (EndPointList[i].hasProjectilePhysicsState)
+                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePhysicsState.Position.X, EndPointList[i].projectilePhysicsState.Position.Y, 0), Color.red, 2.0f, false);
             }
 #endif
             // Draw Gizmos End (Spread, Fire, Angle, Recoil Cone)
@@ -163,13 +163,13 @@ namespace Action
                     continue;
 
                 //
-                Vec2f entityPos = entity.agentPosition2D.Value;
+                Vec2f entityPos = entity.agentPhysicsState.Position;
 
                 // Get Bullet Position from Projectile Position Component
-                Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
+                Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
 
                 // Get Agent Physics Movable Component
-                var movable = entity.agentMovable;
+                var physiscsState = entity.agentPhysicsState;
 
                 // Difference Calculation
                 Vec2f diff = bulletPos - entityPos;

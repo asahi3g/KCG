@@ -20,13 +20,11 @@ namespace Agent
 
                 foreach (var entity in entities)
                 {
-                    var targetPos = closestPlayer.agentPosition2D;
-                    var targetMovable = closestPlayer.agentMovable;
+                    var targetPhysicsState = closestPlayer.agentPhysicsState;
 
-                    var pos = entity.agentPosition2D;
-                    var movable = entity.agentMovable;
+                    var physicsState = entity.agentPhysicsState;
 
-                    Vec2f direction = targetPos.Value - pos.Value;
+                    Vec2f direction = targetPhysicsState.Position - physicsState.Position;
 
                     float Len = direction.Magnitude;
                     direction.Y = 0;
@@ -37,7 +35,7 @@ namespace Agent
                     // and gets pushed back in the opposite direction
                     // a floating text with the amount of damage dealt on it
                     // will be spawned at that position
-                    if (entity.hasAgentStats && Len <= 0.6f && !targetMovable.Invulnerable)
+                    if (entity.hasAgentStats && Len <= 0.6f && !targetPhysicsState.Invulnerable)
                     {
                         Vector2 oppositeDirection = new Vector2(-direction.X, -direction.Y);
                         var stats = entity.agentStats;
@@ -46,11 +44,11 @@ namespace Agent
                             stats.Fuel, stats.AttackCooldown);
 
                         // spawns a debug floating text for damage 
-                        planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(pos.Value.X, pos.Value.Y + 0.35f));
+                        planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
                         // knockback test
-                        movable.Acceleration.X += 800.0f * oppositeDirection.x;
-                        movable.Velocity.X = 20.0f * oppositeDirection.x;
+                        physicsState.Acceleration.X += 800.0f * oppositeDirection.x;
+                        physicsState.Velocity.X = 20.0f * oppositeDirection.x;
                     }
 
 
@@ -60,26 +58,26 @@ namespace Agent
                     {
                         // if the enemy is stuck
                         // trigger the jump
-                        bool jump = Math.Abs(movable.Acceleration.X) <= 0.01f && 
-                                        movable.Acceleration.Y <= 0.01f && 
-                                        movable.Acceleration.Y >= -0.01f;
+                        bool jump = Math.Abs(physicsState.Acceleration.X) <= 0.01f && 
+                                        physicsState.Acceleration.Y <= 0.01f && 
+                                        physicsState.Acceleration.Y >= -0.01f;
 
                         // to move the enemy we have to add acceleration 
                         // towards the player
-                        movable.Acceleration = direction * movable.Speed * 25.0f;
+                        physicsState.Acceleration = direction * physicsState.Speed * 25.0f;
 
                         // jumping is just an increase in velocity
                         if (jump)
                         {
-                            movable.Acceleration.Y = 0.0f;
-                            movable.Velocity.Y = 7.5f;
+                            physicsState.Acceleration.Y = 0.0f;
+                            physicsState.Velocity.Y = 7.5f;
                         }
 
                     }
                     else
                     {
                         //Idle
-                        movable.Acceleration = new Vec2f();
+                        physicsState.Acceleration = new Vec2f();
                     }
 
 

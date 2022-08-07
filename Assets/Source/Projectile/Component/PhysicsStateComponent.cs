@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Entitas;
 using KMath;
@@ -7,8 +6,17 @@ using KMath;
 namespace Projectile
 {
     [Projectile]
-    public class PhysicsState2DComponent : IComponent
+    public class PhysicsStateComponent : IComponent
     {
+        public Vec2f Position;
+        public Vec2f PreviousPosition;
+        public float Rotation;
+
+        public Vec2f Velocity;
+        public Vec2f Acceleration; // Instantaneous, reset to zero at the end of the frame.
+
+        public bool AffectedByGravity;
+
         [Range(-1.0f, 1.0f)]
         public Vec2f angularVelocity = Vec2f.Zero;
 
@@ -19,3 +27,4 @@ namespace Projectile
         public Vec2f centerOfRotation = Vec2f.One;
     }
 }
+

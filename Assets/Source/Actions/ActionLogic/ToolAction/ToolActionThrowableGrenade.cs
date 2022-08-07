@@ -50,14 +50,14 @@ namespace Action
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
             // Start position
-            StartPos = AgentEntity.agentPosition2D.Value;
+            StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
             if(ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
             {
                 ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
-                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPosition2D.Value.X + 0.5f, AgentEntity.agentPosition2D.Value.Y));
+                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.5f, AgentEntity.agentPhysicsState.Position.Y));
             }
             else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
             {
@@ -82,10 +82,10 @@ namespace Action
             }
 
             // Check if projectile is inside in weapon range.
-            if ((ProjectileEntity.projectilePosition2D.Value - StartPos).Magnitude > range)
+            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
             {
 
-                planet.AddParticleEmitter(ProjectileEntity.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
                 // Check if projectile has hit a enemy.
                 var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
@@ -93,12 +93,12 @@ namespace Action
                 // Todo: Create a agent colision system?
                 foreach (var entity in entities)
                 {
-                    float dist = Vector2.Distance(new Vector2(AgentEntity.agentPosition2D.Value.X, AgentEntity.agentPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
+                    float dist = Vector2.Distance(new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vector2(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
 
                     if (dist < radius)
                     {
-                        Vec2f entityPos = entity.agentPosition2D.Value;
-                        Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
+                        Vec2f entityPos = entity.agentPhysicsState.Position;
+                        Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
                         Vec2f diff = bulletPos - entityPos;
                         diff.Y = 0;
                         diff.Normalize();

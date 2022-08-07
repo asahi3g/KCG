@@ -49,7 +49,7 @@ namespace Planet
         public void InitializeSystems(Material material, Transform transform)
         {
             GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
-
+            GameState.PathFinding.Initialize();
 
             // Mesh builders
             GameState.TileMapRenderer.Initialize(material, transform, 7);
@@ -267,7 +267,8 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-            GameState.AgentMovableSystem.Update(EntitasContext.agent);
+            GameState.AgentMovementSystem.Update(EntitasContext.agent);
+            GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);

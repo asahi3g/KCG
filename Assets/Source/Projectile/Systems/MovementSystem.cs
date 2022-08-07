@@ -22,7 +22,7 @@ namespace Projectile
         public void Update(ProjectileContext gameContext)
         {
             float deltaTime = Time.deltaTime;
-            var projectiles = gameContext.GetGroup(ProjectileMatcher.ProjectileMovable);
+            var projectiles = gameContext.GetGroup(ProjectileMatcher.ProjectilePhysicsState);
             foreach (var projectile in projectiles)
             {
                 // Get Projectile Type
@@ -33,10 +33,10 @@ namespace Projectile
                                     ProjectileCreationApi.GetRef((int)type);
 
                 // Get Projectile Position
-                var pos = projectile.projectilePosition2D;
+                var pos = projectile.projectilePhysicsState;
 
                 // Get Movable Component
-                var movable = projectile.projectileMovable;
+                var movable = projectile.projectilePhysicsState;
 
                 // Set Gravity
                 projectileProperties.GravityScale = 0.1f;
@@ -59,7 +59,7 @@ namespace Projectile
                 Vec2f newVelocity = new Vec2f(0f, 0f);
 
                 if(projectileProperties.AffectedByGravity)
-                    projectile.projectileMovable.Velocity.Y -= Gravity;
+                    projectile.projectilePhysicsState.Velocity.Y -= Gravity;
 
                 // If Ramp is On
                 if(canRamp)
@@ -149,11 +149,10 @@ namespace Projectile
 
                 float newRotation = pos.Rotation + projectileProperties.DeltaRotation * deltaTime;  
 
-                projectile.ReplaceProjectileMovable(newVelocity, movable.Acceleration, movable.AffectedByGravity);
-                projectile.ReplaceProjectilePosition2D(pos.Value + displacement, pos.Value, newRotation);
-                projectile.ReplaceProjectilePhysicsState2D(newVelocity, projectile.projectilePhysicsState2D.angularMass, 
-                    projectile.projectilePhysicsState2D.angularAcceleration, projectile.projectilePhysicsState2D.centerOfGravity, 
-                    projectile.projectilePhysicsState2D.centerOfRotation);
+                projectile.ReplaceProjectilePhysicsState(pos.Position + displacement, pos.Position, newRotation,
+                    newVelocity, movable.Acceleration, movable.AffectedByGravity, newVelocity, projectile.projectilePhysicsState.angularMass,
+                    projectile.projectilePhysicsState.angularAcceleration, projectile.projectilePhysicsState.centerOfGravity,
+                    projectile.projectilePhysicsState.centerOfRotation);
             }
         }
     }

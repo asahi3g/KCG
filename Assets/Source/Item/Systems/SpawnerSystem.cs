@@ -22,9 +22,8 @@ namespace Item
             var entity = entitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID);
             entity.AddItemType(itemType);
-            entity.AddItemPosition2D(position, Vec2f.Zero);
+            entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
-            entity.AddItemMovement(Vec2f.Zero, Vec2f.Zero, false);
 
             if (weaponProperty.HasClip())
             {

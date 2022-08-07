@@ -16,12 +16,12 @@ namespace Agent
     // http://www.cs.yorku.ca/~amana/research/grid.pdf
     public class ProcessCollisionSystem
     {
-        private void Update(ref TileMap tileMap, Position2DComponent pos, MovableComponent movable, Box2DColliderComponent box2DCollider, float deltaTime)
+        private void Update(ref TileMap tileMap, PhysicsStateComponent physicsState, Box2DColliderComponent box2DCollider, float deltaTime)
         {       
-            AABox2D entityBoxBorders = new AABox2D(new Vec2f(pos.PreviousValue.X, pos.Value.Y) + box2DCollider.Offset, box2DCollider.Size);
+            AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
             
-            if (entityBoxBorders.IsCollidingBottom(tileMap, movable.Velocity))
+            if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
             {
                 bool isPlatform = false;
                 for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
@@ -35,64 +35,61 @@ namespace Agent
                     }
                 }
 
-                
-
                 entityBoxBorders.DrawBox();
 
-                if (!isPlatform || !movable.Droping)
+                if (!isPlatform || !physicsState.Droping)
                 {
-                    pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
-                    movable.Velocity.Y = 0.0f;
-                    movable.Acceleration.Y = 0.0f;
-                    movable.OnGrounded = true;
+                    physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
+                    physicsState.Velocity.Y = 0.0f;
+                    physicsState.Acceleration.Y = 0.0f;
+                    physicsState.OnGrounded = true;
                 }
-                else if (isPlatform && movable.Droping)
+                else if (isPlatform && physicsState.Droping)
                 {
-                    if (!movable.WantToDrop)
+                    if (!physicsState.WantToDrop)
                     {
-                        movable.Droping = false;
+                        physicsState.Droping = false;
                     }
                     else
                     {
-                        movable.OnGrounded = false;
-                        movable.Acceleration.Y = -100.0f;
+                        physicsState.OnGrounded = false;
+                        physicsState.Acceleration.Y = -100.0f;
                     }
-                    
                 }
-
             }
             else
             {
-                movable.WantToDrop = false;
-                movable.Droping = false;
+                physicsState.WantToDrop = false;
+                physicsState.Droping = false;
+                physicsState.OnGrounded = false;
             }
 
 
-            if (entityBoxBorders.IsCollidingTop(tileMap, movable.Velocity))
+            if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.Velocity))
             {   
-                pos.Value = new Vec2f(pos.Value.X, pos.PreviousValue.Y);
-                movable.Velocity.Y = 0.0f;
-                movable.Acceleration.Y = 0.0f;
+                physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
+                physicsState.Velocity.Y = 0.0f;
+                physicsState.Acceleration.Y = 0.0f;
             }
 
-            entityBoxBorders = new AABox2D(new Vec2f(pos.Value.X, pos.PreviousValue.Y) + box2DCollider.Offset, box2DCollider.Size);
+            entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-            if (entityBoxBorders.IsCollidingLeft(tileMap, movable.Velocity))
+            if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.Velocity))
             {
-                pos.Value = new Vec2f(pos.PreviousValue.X, pos.Value.Y);
-                movable.Velocity.X = 0.0f;
-                movable.Acceleration.X = 0.0f;
-                movable.SlidingLeft = true;
+                physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
+                physicsState.Velocity.X = 0.0f;
+                physicsState.Acceleration.X = 0.0f;
+                physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
             }
-            else if (entityBoxBorders.IsCollidingRight(tileMap, movable.Velocity))
+            else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
             {
-                pos.Value = new Vec2f(pos.PreviousValue.X, pos.Value.Y);
-                movable.Velocity.X = 0.0f;
-                movable.Acceleration.X = 0.0f;
-                movable.SlidingRight = true;
+                physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
+                physicsState.Velocity.X = 0.0f;
+                physicsState.Acceleration.X = 0.0f;
+                physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
             }
 
-            Vec2f position = pos.Value;
+            Vec2f position = physicsState.Position;
             position.X += box2DCollider.Size.X / 2.0f;
             //position.Y -= box2DCollider.Size.Y / 2.0f;
 
@@ -101,7 +98,8 @@ namespace Agent
             {
                 if (tileMap.GetFrontTileID((int)position.X + 1, (int)position.Y)== TileID.Air)
                 {
-                    movable.SlidingRight = false;
+                    if (physicsState.MovementState == Enums.AgentMovementState.SlidingRight)
+                        physicsState.MovementState = Enums.AgentMovementState.None;
                 }
             }
 
@@ -110,7 +108,8 @@ namespace Agent
             {
                 if (tileMap.GetFrontTileID((int)position.X - 1, (int)position.Y) == TileID.Air)
                 {
-                    movable.SlidingLeft = false;
+                    if (physicsState.MovementState == Enums.AgentMovementState.SlidingLeft)
+                        physicsState.MovementState = Enums.AgentMovementState.None;
                 }
             }
 
@@ -120,15 +119,14 @@ namespace Agent
         public void Update(AgentContext agentContext, ref PlanetTileMap.TileMap tileMap)
         {
             float deltaTime = Time.deltaTime;
-            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPosition2D));
+            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));
 
             foreach (var agentEntity in agentEntitiesWithBox)
             {
-                var pos = agentEntity.agentPosition2D;
-                var movable = agentEntity.agentMovable;
+                var physicsState = agentEntity.agentPhysicsState;
                 var box2DCollider = agentEntity.physicsBox2DCollider;
 
-                Update(ref tileMap, pos, movable, box2DCollider, deltaTime); 
+                Update(ref tileMap, physicsState, box2DCollider, deltaTime); 
             }
         }
     }

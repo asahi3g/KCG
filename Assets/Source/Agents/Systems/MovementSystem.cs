@@ -1,23 +1,26 @@
-﻿using System;
-using Physics;
+using System;
 using KMath;
 using UnityEngine;
 
-namespace  Item
+namespace Agent
 {
     public class MovementSystem
     {
         private void Update(PhysicsStateComponent physicsState, float deltaTime)
         {
-            float Gravity = Physics.PhysicsConstants.Gravity;
+            float Gravity = 800.0f;
             float MaxAcceleration = 50.0f;
-            
-            // Maximum Y velocity
-            float MaxVelocityY = 15.0f;
+            // maximum Y velocity
+            float MaxVelocityY = 12.0f;
 
-            physicsState.Acceleration.Y -= Gravity * deltaTime;
-         
-            // Maximum acceleration in the game
+            if (physicsState.AffectedByGravity)
+            {
+                physicsState.Acceleration.Y -= Gravity * deltaTime;
+            }
+
+            // maximum acceleration in the
+
+            // maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -MaxAcceleration)
             {
                 physicsState.Acceleration.Y = -MaxAcceleration;
@@ -29,7 +32,7 @@ namespace  Item
             }
 
 
-            // Maximum velocity in the game
+            // maximum velocity in the game
             if (physicsState.Velocity.Y > MaxVelocityY)
             {
                 physicsState.Velocity.Y = MaxVelocityY;
@@ -44,16 +47,17 @@ namespace  Item
 
             if (physicsState.OnGrounded)
             {
-                // Ground friction
-                newVelocity.X *= 0.9f;
+                // ground friction
+                newVelocity.X *= 0.7f;
             }
             else
             {
-                // Air friction
-                newVelocity.X *= 0.98f;
+                // air friction
+                newVelocity.X *= 0.7f;
             }
 
-            // Maximum velocity in the game
+
+            // maximum velocity in the game
             if (newVelocity.Y > MaxVelocityY)
             {
                 newVelocity.Y = MaxVelocityY;
@@ -64,20 +68,23 @@ namespace  Item
             }
 
 
-            Vec2f newphysicsStateition = physicsState.Position + displacement;
+            Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
-            physicsState.Position = newphysicsStateition;
+            physicsState.Position = newPosition;
 
             physicsState.Velocity = newVelocity;
         }
 
-        public void Update(ItemParticleContext Context)
+        public void Update(AgentContext agentContext)
         {
+
             float deltaTime = Time.deltaTime;
-            var EntitiesWithPhysicsState = Context.GetGroup(ItemParticleMatcher.ItemPhysicsState);
-            foreach (var entity in EntitiesWithPhysicsState)
+            var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            foreach (var entity in EntitiesWithVelocity)
             {
-                var physicsState = entity.itemPhysicsState;
+
+                var physicsState = entity.agentPhysicsState;
+
                 Update(physicsState, deltaTime);
             }
         }

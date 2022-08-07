@@ -10,6 +10,4 @@ namespace Agent
 
         public float DetectionRadius;
     }
-
-        
 }
