@@ -10,23 +10,18 @@ namespace Projectile
         // array for storing entities
         public ProjectileEntity[] List;
 
-        public int Size;
+        public int Length;
         // used for tracking down an available 
         // index that we can use to insert
         public int LastFreeIndex;
 
         // the capacity is just the length of the list
-        public int Capacity
-        {
-            get
-            {
-                return List.Length;
-            }
-        }
+        public int Capacity;
 
         public ProjectileList()
         {
-            List = new ProjectileEntity[1024];
+            List = new ProjectileEntity[4096];
+            Capacity = List.Length;
         }
 
 
@@ -34,10 +29,7 @@ namespace Projectile
         {
             // if we dont have enough space we expand
             // the capacity
-            if (Size + 1 >= Capacity)
-            {
-                Expand(ExpandFunction(Capacity));
-            }
+            ExpandArray();
 
 
             // trying to find an empty index
@@ -45,7 +37,7 @@ namespace Projectile
             int Found = -1;
             for(int index = LastFreeIndex; index < Capacity; index++)
             {
-                ref ProjectileEntity thisEntity = ref List[index];
+                ProjectileEntity thisEntity = List[index];
 
                 if (thisEntity == null)
                 {
@@ -57,7 +49,7 @@ namespace Projectile
             {
                 for(int index = 0; index < LastFreeIndex; index++)
                 {
-                    ref ProjectileEntity thisEntity = ref List[index];
+                    ProjectileEntity thisEntity = List[index];
 
                     if (thisEntity == null)
                     {
@@ -73,53 +65,47 @@ namespace Projectile
 
             // creating the Entity and initializing it
             entity.ReplaceProjectileID(Found);
-
             List[Found] = entity;
-            Size++;
+            Length++;
 
              return List[Found];
         }
+
 
         public ProjectileEntity Get(int Index)
         {
             return List[Index];
         }
 
+
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int projectileId)
+        public void Remove(int floatingTextId)
         {
-            LastFreeIndex = projectileId;
-            ref ProjectileEntity entity = ref List[projectileId];
+            LastFreeIndex = floatingTextId;
+            ref ProjectileEntity entity = ref List[floatingTextId];
             entity.Destroy();
             entity = null;
-            Size--;
+            Length--;
         }
 
-        // used to grow the list
-        private void Expand(int NewCapacity)
-        {
-            // make sure the new capacity is more than 1
-            if (NewCapacity == 0)
-            {
-                NewCapacity = 1;
-            }
 
-            // make sure the new capacity 
-            // is bigget than the old one
-            if (NewCapacity > Capacity)
+
+
+        // used to grow the list
+        private void ExpandArray()
+        {
+            if (Length >= Capacity)
             {
+                int NewCapacity = Capacity + 4096;
+
+                // make sure the new capacity 
+                // is bigget than the old one
+                Utils.Assert(NewCapacity > Capacity);
+                Capacity = NewCapacity;
                 System.Array.Resize(ref List, Capacity);
             }
         }
-        
 
-        // We use this to determine 
-        // the new size based off the old one.
-        // The new size should allways be bigger 
-        private int ExpandFunction(int oldSize)
-        {
-            return oldSize * 2;
-        }
     }
 }
