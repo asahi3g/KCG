@@ -4,6 +4,9 @@ using KMath;
 
 namespace PlanetTileMap
 {
+    // TODO: go through map chunk implementation and do partial allocation
+    // do partial allocation of chunks, instead of full allocation
+    // remove chunk type
     public class TileMap
     {
         public Vec2i MapSize;
