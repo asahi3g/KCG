@@ -6,27 +6,19 @@ namespace Item
 {
     public class ItemParticleList
     {
-
+        
         // array for storing entities
         public ItemParticleEntity[] List;
 
-        public int Size;
-        // used for tracking down an available 
-        // index that we can use to insert
-        public int LastFreeIndex;
+        public int Length;
 
         // the capacity is just the length of the list
-        public int Capacity
-        {
-            get
-            {
-                return List.Length;
-            }
-        }
+        public int Capacity;
 
         public ItemParticleList()
         {
-            List = new ItemParticleEntity[1024];
+            List = new ItemParticleEntity[4096];
+            Capacity = List.Length;
         }
 
 
@@ -34,50 +26,15 @@ namespace Item
         {
             // if we dont have enough space we expand
             // the capacity
-            if (Size + 1 >= Capacity)
-            {
-                Expand(ExpandFunction(Capacity));
-            }
+            ExpandArray();
 
 
-            // trying to find an empty index
-            // we use LastFreeIndex for a faster insertion
-            int Found = -1;
-            for (int index = LastFreeIndex; index < Capacity; index++)
-            {
-                ref ItemParticleEntity thisEntity = ref List[index];
+            int LastIndex = Length;
+            entity.ReplaceItemID(LastIndex);
+            List[LastIndex] = entity;
+            Length++;
 
-                if (!thisEntity.isEnabled)
-                {
-                    Found = index;
-                    break;
-                }
-            }
-            if (Found == -1)
-            {
-                for (int index = 0; index < LastFreeIndex; index++)
-                {
-                    ref ItemParticleEntity thisEntity = ref List[index];
-
-                    if (!thisEntity.isEnabled)
-                    {
-                        Found = index;
-                        break;
-                    }
-                }
-            }
-
-            // increment the LastFreeIndex
-            LastFreeIndex = (LastFreeIndex + 1) % Capacity;
-
-
-            // creating the Entity and initializing it
-            entity.itemID.ID = Found;
-
-            List[Found] = entity;
-            Size++;
-
-            return List[Found];
+             return List[LastIndex];
         }
 
 
@@ -89,42 +46,38 @@ namespace Item
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int itemParticleId)
+        public void Remove(int id)
         {
-            LastFreeIndex = itemParticleId;
-            ref ItemParticleEntity entity = ref List[itemParticleId];
+            Utils.Assert(id >= 0 && id < Length);
+
+            ref ItemParticleEntity entity = ref List[id];
             entity.Destroy();
-            entity = null;
-            Size--;
+
+            if (id != Length - 1)
+            {
+                entity = List[Length - 1];
+                entity.ReplaceItemID(id);
+            }
+            Length--;
         }
 
 
 
 
         // used to grow the list
-        private void Expand(int NewCapacity)
+        private void ExpandArray()
         {
-            // make sure the new capacity is more than 1
-            if (NewCapacity == 0)
+            if (Length >= Capacity)
             {
-                NewCapacity = 1;
-            }
+                int NewCapacity = Capacity + 4096;
 
-            // make sure the new capacity 
-            // is bigget than the old one
-            if (NewCapacity > Capacity)
-            {
+                // make sure the new capacity 
+                // is bigget than the old one
+                Utils.Assert(NewCapacity > Capacity);
+                Capacity = NewCapacity;
                 System.Array.Resize(ref List, Capacity);
             }
         }
 
-
-        // We use this to determine 
-        // the new size based off the old one.
-        // The new size should allways be bigger 
-        private int ExpandFunction(int oldSize)
-        {
-            return oldSize * 2;
-        }
     }
 }
