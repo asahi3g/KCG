@@ -84,6 +84,44 @@ namespace ECSInput
                 }
             }
 
+            foreach (var entity in AgentsWithXY)
+            {
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    var corpses = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentCorpse));
+                    foreach (var corpse in corpses) 
+                    {
+                        var physicsState = corpse.agentPhysicsState;
+
+                        if (corpse.hasAgentInventory && Vec2f.Distance(physicsState.Position, entity.agentPhysicsState.Position) < 0.5f)
+                        {
+                        
+                            InventoryEntity corpseInventory = contexts.inventory.GetEntityWithInventoryIDID(corpse.agentInventory.InventoryID);
+                            var inventoryEntity = corpseInventory.inventoryEntity;
+                            int width = inventoryEntity.Width;
+                            int height = inventoryEntity.Height;
+                            ref Inventory.Slot[] slots = ref inventoryEntity.Slots;
+
+                            for(int i = 0; i < slots.Length; i++)
+                            {
+                                ref Inventory.Slot slot = ref slots[i];
+                                
+                                int itemID = slot.ItemID;
+                                if (itemID >= 0)
+                                {
+                                    ItemInventoryEntity itemInventoryEntity = contexts.itemInventory.GetEntityWithItemID(itemID);
+                                    for(int stackIndex = 0; stackIndex < itemInventoryEntity.itemStack.Count; stackIndex++)
+                                    {
+                                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventoryEntity.itemType.Type, physicsState.Position);
+                                    }
+                                    slot.ItemID = -1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Recharge Weapon.
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -139,6 +177,12 @@ namespace ECSInput
             {
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
+            }
+
+            // Enable tile collision isotype rendering.
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                PlanetTileMap.TileMapRenderer.TileCollisionDebugging = !PlanetTileMap.TileMapRenderer.TileCollisionDebugging;
             }
 
             //  Open Inventory with Tab.        

@@ -202,19 +202,19 @@ namespace Particle
             Vec2f[] part5Vertices = new Vec2f[6];
             part5Vertices[0] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
             part5Vertices[1] = new Vec2f(0.5f * spriteWidth, 0.0f * spriteHeight);
-            part5Vertices[2] = new Vec2f(0.5f * spriteWidth, 0.26f * spriteHeight);
+            part5Vertices[2] = new Vec2f(0.5f * spriteWidth, 0.4f * spriteHeight);
 
             part5Vertices[3] = new Vec2f(0.0f * spriteWidth, 0.0f * spriteHeight);
-            part5Vertices[4] = new Vec2f(0.5f * spriteWidth, 0.26f * spriteHeight);
-            part5Vertices[5] = new Vec2f(0.0f * spriteWidth, 0.6f * spriteHeight);
+            part5Vertices[4] = new Vec2f(0.5f * spriteWidth, 0.4f * spriteHeight);
+            part5Vertices[5] = new Vec2f(0.0f * spriteWidth, 0.74f * spriteHeight);
 
 
             Vec2f[] part5Coords = new Vec2f[6];
-            part5Coords[0] = new Vec2f(x + 0.0f * width, ((y + height) - 0.4f * height));
-            part5Coords[1] = new Vec2f(x + 0.5f * width, ((y + height) - 0.4f * height));
+            part5Coords[0] = new Vec2f(x + 0.0f * width, ((y + height) - 0.26f * height));
+            part5Coords[1] = new Vec2f(x + 0.5f * width, ((y + height) - 0.26f * height));
             part5Coords[2] = new Vec2f(x + 0.5f * width, ((y + height) - 0.66f * height));
 
-            part5Coords[3] = new Vec2f(x + 0.0f * width, ((y + height) - 0.4f * height));
+            part5Coords[3] = new Vec2f(x + 0.0f * width, ((y + height) - 0.26f * height));
             part5Coords[4] = new Vec2f(x + 0.5f * width, ((y + height) - 0.66f * height));
             part5Coords[5] = new Vec2f(x + 0.0f * width, ((y + height) - 1.0f * height));
 
@@ -265,7 +265,7 @@ namespace Particle
             velocity.X = rand1 * -1 * velocityValueX;
             velocity.Y = rand2 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.4f), 
+            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
             part5Vertices, part5Coords, velocity, -1));
         }
 

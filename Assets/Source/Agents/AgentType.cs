@@ -4,6 +4,6 @@ namespace Agent
 {
     public enum AgentType
     {
-        Player, Agent, Enemy 
+        Player, Agent, Enemy, Corpse
     }
 }

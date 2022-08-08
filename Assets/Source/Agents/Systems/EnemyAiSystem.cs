@@ -83,12 +83,14 @@ namespace Agent
                     {
                         ToRemoveAgents.Add(entity);
                     }
+
+                    
                 }
             }
 
             foreach (var entity in ToRemoveAgents)
             {
-                planetState.RemoveAgent(entity.agentID.ID);
+                planetState.RemoveAgent(entity.agentID.ID);             
             }
             ToRemoveAgents.Clear();
         }

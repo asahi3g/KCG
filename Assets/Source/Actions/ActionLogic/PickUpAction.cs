@@ -35,7 +35,10 @@ namespace Action
 #endif
 
             Vec2f drawPos = ItemEntity.itemPhysicsState.Position;
-            ItemEntity.AddItemDrawPosition2D(drawPos, Vec2f.Zero);
+            if (!ItemEntity.hasItemDrawPosition2D)
+            {
+                ItemEntity.AddItemDrawPosition2D(drawPos, Vec2f.Zero);
+            }
             ItemEntity.isItemUnpickable = true;
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Running);
@@ -46,35 +49,38 @@ namespace Action
             // Update item pos.
 
             // Center position Item.
-            Vec2f itemSize = GameState.ItemCreationApi.Get(ItemEntity.itemType.Type).SpriteSize;
-            Vec2f itemCenterPos = ItemEntity.itemDrawPosition2D.Value + itemSize / 2.0f;
-            Vec2f agentCenterPos = AgentEntity.agentPhysicsState.Position + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
-
-            if ((itemCenterPos - agentCenterPos).Magnitude < 0.1f)
+            if (ItemEntity.hasItemType && ItemEntity.hasItemDrawPosition2D)
             {
-                if (AgentEntity.hasAgentInventory)
-                {
-                    int inventoryID = AgentEntity.agentInventory.InventoryID;
+                Vec2f itemSize = GameState.ItemCreationApi.Get(ItemEntity.itemType.Type).SpriteSize;
+                Vec2f itemCenterPos = ItemEntity.itemDrawPosition2D.Value + itemSize / 2.0f;
+                Vec2f agentCenterPos = AgentEntity.agentPhysicsState.Position + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
 
-                    // Try ading item to Inventory.
-                    if (!GameState.InventoryManager.IsFull(EntitasContext, inventoryID))
+                if ((itemCenterPos - agentCenterPos).Magnitude < 0.1f)
+                {
+                    if (AgentEntity.hasAgentInventory)
                     {
-                        GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, inventoryID);
-                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                        return;
+                        int inventoryID = AgentEntity.agentInventory.InventoryID;
+
+                        // Try ading item to Inventory.
+                        if (!GameState.InventoryManager.IsFull(EntitasContext, inventoryID))
+                        {
+                            GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, inventoryID);
+                            ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                            return;
+                        }
                     }
+
+                    // Inventory and toolbar are full.
+                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
                 }
 
-                // Inventory and toolbar are full.
-                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
+                Speed += aceleration * deltaTime;
+                float speed = Speed * deltaTime;
+
+                // Update Draw Position.
+                Vec2f mov = (agentCenterPos - itemCenterPos).Normalized * speed;
+                ItemEntity.ReplaceItemDrawPosition2D(ItemEntity.itemDrawPosition2D.Value + mov, ItemEntity.itemDrawPosition2D.Value);
             }
-
-            Speed += aceleration * deltaTime;
-            float speed = Speed * deltaTime;
-
-            // Update Draw Position.
-            Vec2f mov = (agentCenterPos - itemCenterPos).Normalized * speed;
-            ItemEntity.ReplaceItemDrawPosition2D(ItemEntity.itemDrawPosition2D.Value + mov, ItemEntity.itemDrawPosition2D.Value);
         }
 
         public override void OnExit(ref Planet.PlanetState planet)

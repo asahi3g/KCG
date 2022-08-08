@@ -38,6 +38,15 @@ namespace KMath
             ymin = y;
             ymax = y + 1f;
         }
+
+        public bool OverlapPoint(Vec2f point)
+        {
+            // is the point inside the rectangle's bounds?
+            return point.X >= xmin &&     // right of the left edge AND
+                   point.X <= xmax &&     // left of the right edge AND
+                   point.Y >= ymin &&     // below the top AND
+                   point.Y <= ymax;       // above the bottom
+        }
     }
 }
 

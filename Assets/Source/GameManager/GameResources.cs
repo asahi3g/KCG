@@ -8,6 +8,8 @@ using PlanetTileMap;
 public class GameResources
 {
     // sprite sheets ids
+    public static int FoodSpriteSheet;
+    public static int BoneSpriteSheet;
     public static int LoadingTilePlaceholderSpriteSheet;
     public static int BackgroundSpriteSheet;
     public static int ColoredNumberedWangSpriteSheet;
@@ -28,6 +30,25 @@ public class GameResources
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
 
+    // Tile CollisionIsotope
+    public static int SB_R0000Sheet;
+    public static int SB_R0001Sheet;
+    public static int SB_R0010Sheet;
+    public static int SB_R0011Sheet;
+    public static int SB_R0100Sheet;
+    public static int SB_R0101Sheet;
+    public static int SB_R0110Sheet;
+    public static int SB_R0111Sheet;
+    public static int SB_R1000Sheet;
+    public static int SB_R1001Sheet;
+    public static int SB_R1010Sheet;
+    public static int SB_R1011Sheet;
+    public static int SB_R1100Sheet;
+    public static int SB_R1101Sheet;
+    public static int SB_R1110Sheet;
+    public static int SB_R1111Sheet;
+    public static int EmptyBlockSheet;
+
     public static int PlatformSpriteSheet;
     public static int StoneSpriteSheet;
 
@@ -37,6 +58,7 @@ public class GameResources
 
     //agent sprite ids
     public static int SlimeMoveLeftBaseSpriteId;
+    public static int DeadSlimeSpriteId;
     public static int CharacterSpriteId;
 
     public static int GrenadeSpriteId;
@@ -56,6 +78,7 @@ public class GameResources
     public static int RPGIcon;
     public static int SMGIcon;
     public static int SlimeIcon;
+    public static int BoneIcon;
     public static int PlacementToolIcon;
     public static int RemoveToolIcon;
     public static int MiningLaserToolIcon;
@@ -63,6 +86,7 @@ public class GameResources
     public static int ConstructionToolIcon;
 
     public static int ChestIcon;
+    public static int FoodIcon;
     public static int ChestIconParticle;
 
     public static int PotIcon;
@@ -101,6 +125,8 @@ public class GameResources
 
             IsInitialized = true;
             // loading the sprite sheets
+            FoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Icons\\Food.png", 60, 60);
+            BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Icons\\Bone.png", 60, 60);
             LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
             BackgroundSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\test - Copy.png", 16, 16);
             ColoredNumberedWangSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\colored-numbered-wang.png", 16, 16);
@@ -126,9 +152,27 @@ public class GameResources
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
 
+            SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
+            SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
+            SB_R0010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0010.png", 32, 32);
+            SB_R0011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0011.png", 32, 32);
+            SB_R0100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0100.png", 32, 32);
+            SB_R0101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0101.png", 32, 32);
+            SB_R0110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0110.png", 32, 32);
+            SB_R0111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0111.png", 32, 32);
+            SB_R1000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1000.png", 32, 32);
+            SB_R1001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1001.png", 32, 32);
+            SB_R1010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1010.png", 32, 32);
+            SB_R1011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1011.png", 32, 32);
+            SB_R1100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1100.png", 32, 32);
+            SB_R1101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1101.png", 32, 32);
+            SB_R1110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1110.png", 32, 32);
+            SB_R1111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1111.png", 32, 32);
+            EmptyBlockSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
+
             StoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Stone\\stone.png", 16, 16);
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png",48,48);
-            ChestIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
+            ChestSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
 
             MajestyPalm = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
@@ -156,11 +200,15 @@ public class GameResources
 
             // agent sprite atlas
             SlimeMoveLeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SlimeSpriteSheet, 0, 0, 3, 0, Enums.AtlasType.Agent);
+            DeadSlimeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SlimeSpriteSheet, 0, 4, Enums.AtlasType.Agent);
             CharacterSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(CharacterSpriteSheet, 0, 0, Enums.AtlasType.Agent);
 
             GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             SwordSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SwordSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             // particle sprite atlas
+
+            FoodIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(FoodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            BoneIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BoneSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PistolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GunSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             ShotgunIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ShotgunIcon, 0, 0, Enums.AtlasType.Particle);
@@ -175,8 +223,8 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
-            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Mech);
-            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIcon, 0, 0, Enums.AtlasType.Particle);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
+            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
             MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, Enums.AtlasType.Mech);
             MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, Enums.AtlasType.Mech);
@@ -185,6 +233,7 @@ public class GameResources
             Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
             ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, Enums.AtlasType.Particle);
+
             SagoPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalm, 0, 0, Enums.AtlasType.Mech);
             SagoPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS1, 0, 0, Enums.AtlasType.Mech);
             SagoPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS2, 0, 0, Enums.AtlasType.Mech);
@@ -193,6 +242,25 @@ public class GameResources
             DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
+
+            // TileIsotypes.
+            SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
+            SB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0001Sheet, 0, 0, 0);
+            SB_R0010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0010Sheet, 0, 0, 0);
+            SB_R0011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0011Sheet, 0, 0, 0);
+            SB_R0100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0100Sheet, 0, 0, 0);
+            SB_R0101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0101Sheet, 0, 0, 0);
+            SB_R0110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0110Sheet, 0, 0, 0);
+            SB_R0111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0111Sheet, 0, 0, 0);
+            SB_R1000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1000Sheet, 0, 0, 0);
+            SB_R1001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1001Sheet, 0, 0, 0);
+            SB_R1010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1010Sheet, 0, 0, 0);
+            SB_R1011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1011Sheet, 0, 0, 0);
+            SB_R1100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1100Sheet, 0, 0, 0);
+            SB_R1101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1101Sheet, 0, 0, 0);
+            SB_R1110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1110Sheet, 0, 0, 0);
+            SB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1111Sheet, 0, 0, 0);
+            EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
             CreateTiles();
             CreateAnimations();
@@ -334,6 +402,8 @@ public class GameResources
 
     public static void CreateItems()
     {
+
+
         // Sniper Rifle Item Creation
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.SniperRifle, "SniperRifle");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.WEAPON);
@@ -488,6 +558,39 @@ public class GameResources
         GameState.ItemCreationApi.SetShield(false);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionShield);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetTexture(OreIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.EndItem();
+
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Slime, "Slime");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetStackable(3);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Food, "Food");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetTexture(FoodIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(FoodIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetStackable(6);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bone, "Bone");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetTexture(BoneIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetStackable(9);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
@@ -679,6 +782,12 @@ public class GameResources
         GameState.MechCreationApi.SetTexture(DracaenaTrifasciata);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
         GameState.MechCreationApi.End();
+        
+        GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
+        GameState.MechCreationApi.SetName("smashableBox");
+        GameState.MechCreationApi.SetTexture(ChestIcon);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+		GameState.MechCreationApi.End();
     }
 
     private static void CreateParticles()
