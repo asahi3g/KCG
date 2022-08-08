@@ -11,7 +11,8 @@ namespace Inventory
     /// </summary>
     public class CreationApi
     {
-        InventoryModel[] Inventories;
+        bool Init = false;
+        InventoryModel[] InventoryModels;
         int ArrayLenth = 0;
         int ID = -1;
 
@@ -40,40 +41,46 @@ namespace Inventory
 
         public CreationApi()
         {
-            Inventories = new InventoryModel[16];
-            for (int i = 0; i < Inventories.Length; i++)
+            InventoryModels = new InventoryModel[16];
+            for (int i = 0; i < InventoryModels.Length; i++)
             {
-                Inventories[i] = new InventoryModel();
-                InitializeInventory(ref Inventories[i]);
+                InventoryModels[i] = new InventoryModel();
+                InitializeInventory(ref InventoryModels[i]);
             }
             const int MAX_SIZE_INVENTORY = 256;
 
             ActiveSlots = new BitSet(MAX_SIZE_INVENTORY);
             Restrictions = new Enums.ItemGroups[MAX_SIZE_INVENTORY];
-            RestrictionSlotsTextures = new int[Enum.GetNames(typeof(Enums.ItemGroups)).Length - 1];
+            RestrictionSlotsTextures = new int[Enum.GetNames(typeof(Enums.ItemGroups)).Length];
 
             RestoreState();
         }
 
         public void Expand()
         {
-            Array.Resize<InventoryModel>(ref Inventories, Inventories.Length * 2);
-            for (int i = ArrayLenth; i < Inventories.Length; i++)
+            Array.Resize<InventoryModel>(ref InventoryModels, InventoryModels.Length * 2);
+            for (int i = ArrayLenth; i < InventoryModels.Length; i++)
             {
-                Inventories[i] = new InventoryModel();
-                InitializeInventory(ref Inventories[i]);
+                InventoryModels[i] = new InventoryModel();
+                InitializeInventory(ref InventoryModels[i]);
             }
+        }
+
+        void Initialize()
+        {
+            CreateDefaultPlayerInventoryModel();
+            CreateDefaultRestrictionInventoryModel();
         }
 
         public ref InventoryModel Get(int id)
         {
-            if (id < 0 || id >= Inventories.Length)
+            if (id < 0 || id >= InventoryModels.Length)
             {
                 throw new ArgumentOutOfRangeException();
                 Utils.Assert(false);
             }
             
-            return ref Inventories[id];
+            return ref InventoryModels[id];
         }
 
         public int GetArrayLength()
@@ -84,32 +91,32 @@ namespace Inventory
         public int Create()
         {
             ID = ArrayLenth;
-            if (ArrayLenth++ >= Inventories.Length)
+            if (ArrayLenth++ >= InventoryModels.Length)
                 Expand();
             return ID;
         }
 
         public void End()
         {
-            Inventories[ID].ID = ID;
-            ref Window window = ref Inventories[ID].MainWindow;
-            int width = Inventories[ID].Width;
-            int height = Inventories[ID].Height;
+            InventoryModels[ID].ID = ID;
+            ref Window window = ref InventoryModels[ID].MainWindow;
+            int width = InventoryModels[ID].Width;
+            int height = InventoryModels[ID].Height;
 
             window.GridSize = new Vec2f(width * window.TileSize, height * window.TileSize);
 
-            if (Inventories[ID].HasTooBar())
+            if (InventoryModels[ID].HasToolBar)
             {
-                // Draw toolbar by default.
-                Inventories[ID].InventoryFlags |= InventoryModel.Flags.DrawToolBar;
+                // Draw toolbar by default.(Note: Move to AttachSystem)
+                //InventoryModels[ID].InventoryFlags |= InventoryModel.Flags.DrawToolBar;
 
                 // Set tool bar position at the upmost row of inventory.
-                Inventories[ID].ToolBarWindow = window;
-                Inventories[ID].ToolBarWindow.GridSize.Y = window.TileSize;
-                Inventories[ID].ToolBarWindow.Size = Inventories[ID].ToolBarWindow.GridSize;
-                Inventories[ID].ToolBarWindow.Position.Y = window.TileSize / 2f;
-                Inventories[ID].ToolBarWindow.Position.X = (1920 - window.GridSize.X) / 2f; // Centralize toolbar.
-                Inventories[ID].ToolBarWindow.GridPosition = Inventories[ID].ToolBarWindow.Position;
+                InventoryModels[ID].ToolBarWindow = window;
+                InventoryModels[ID].ToolBarWindow.GridSize.Y = window.TileSize;
+                InventoryModels[ID].ToolBarWindow.Size = InventoryModels[ID].ToolBarWindow.GridSize;
+                InventoryModels[ID].ToolBarWindow.Position.Y = window.TileSize / 2f;
+                InventoryModels[ID].ToolBarWindow.Position.X = (1920 - window.GridSize.X) / 2f; // Centralize toolbar.
+                InventoryModels[ID].ToolBarWindow.GridPosition = InventoryModels[ID].ToolBarWindow.Position;
             }
 
             window.GridPosition = new Vec2f(window.Position.X + window.RightBorderOffSet, 
@@ -118,33 +125,31 @@ namespace Inventory
                 window.GridSize.Y + window.UpBorderOffSet + window.LeftBorderOffSet);
 
             int length = width * height;
-            Inventories[ID].SlotsMask = new BitSet((uint)length);
-            Inventories[ID].Slots = new Slot[length];
+            InventoryModels[ID].Slots = new GridSlot[length];
 
+            int RealSlotCount = 0;
             for (int i = 0; i < length; i++)
             {
                 Enums.ItemGroups restriction = Restrictions[i];
-                bool isOn = ActiveSlots[i];
                 int slotBackGroundIcon = -1;
                 if ((int)restriction >= 0)
                     slotBackGroundIcon = RestrictionSlotsTextures[(int)restriction];
 
-                Inventories[ID].Slots[i] = new Slot
+                InventoryModels[ID].Slots[i] = new GridSlot
                 {
-                    ID = i,
-                    IsOn = isOn,
-                    ItemID = -1,
+                    SlotID = ActiveSlots[i] ? RealSlotCount++ : -1,
                     Restriction = restriction,
                     SlotBackgroundIcon = slotBackGroundIcon
                 };
             }
+            InventoryModels[ID].SlotCount = RealSlotCount;
 
             RestoreState();
         }
 
-        public int CreateDefaultInventory()
+        private void CreateDefaultPlayerInventoryModel()
         {
-            int ID = Create();
+            Create();
             SetInventoryPos(460f, 240f);
             SetSize(10, 6);
             SetAllSlotsAsActive();
@@ -156,12 +161,11 @@ namespace Inventory
             SetSlotBorderOffset(10);
             SetSlotOffset(20);
             End();
-            return ID;
         }
 
-        public int CreateDefaultRestrictionInventory()
+        private void CreateDefaultRestrictionInventoryModel()
         {
-            int ID = Create();
+            Create();
             SetInventoryPos(1_670f, 240f);
             SetSize(2, 5);
             SetAllSlotsAsActive();
@@ -183,34 +187,46 @@ namespace Inventory
             SetSlotBorderOffset(10);
             SetSlotOffset(20);
             End();
-            return ID;
+        }
+
+        public int GetDefaultPlayerInventoryModelID()
+        {
+            if (!Init)
+                Initialize();
+            return 0;
+        }
+        public int GetDefaultRestrictionInventoryModelID()
+        {
+            if (!Init)
+                Initialize();
+            return 1;
         }
 
         public void SetBackgroundTexture(int spriteID)
         {
-            Inventories[ID].RenderProprieties.BackGroundSpriteID = spriteID;
-            Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackgroundTexture;
+            InventoryModels[ID].RenderProprieties.BackGroundSpriteID = spriteID;
+            InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackgroundTexture;
         }
 
         public void SetBackgroundColor(Color color)
         {
-            Inventories[ID].RenderProprieties.BackgroundColor = color;
-            Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackground;
+            InventoryModels[ID].RenderProprieties.BackgroundColor = color;
+            InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackground;
         }
 
         public void SetSelectedtSlotColor(Color whenSelected)
-            => Inventories[ID].RenderProprieties.SelectedColor = whenSelected;
+            => InventoryModels[ID].RenderProprieties.SelectedColor = whenSelected;
 
         public void SetDefaultSlotColor(Color defaultBorder) 
-            => Inventories[ID].RenderProprieties.SlotColor = defaultBorder;
+            => InventoryModels[ID].RenderProprieties.SlotColor = defaultBorder;
 
         public void SetToolBar()
-            => Inventories[ID].InventoryFlags |= InventoryModel.Flags.HasToolBar;
+            => InventoryModels[ID].HasToolBar = true;
 
         public void SetSlotTexture(int textureID)
         {
-            Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasDefaultSlotTexture;
-            Inventories[ID].RenderProprieties.DefaultSlotTextureID = textureID;
+            InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasDefaultSlotTexture;
+            InventoryModels[ID].RenderProprieties.DefaultSlotTextureID = textureID;
         }
 
         public void SetDefaultRestrictionTexture()
@@ -231,31 +247,30 @@ namespace Inventory
         /// </summary>
         public void SetInventoryBoderOffset(float leftBorder, float rightBorder, float upBorder, float downBorder)
         {
-            Inventories[ID].MainWindow.UpBorderOffSet = upBorder;
-            Inventories[ID].MainWindow.DownBorderOffSet = downBorder;
-            Inventories[ID].MainWindow.LeftBorderOffSet = leftBorder;
-            Inventories[ID].MainWindow.RightBorderOffSet = rightBorder;
+            InventoryModels[ID].MainWindow.UpBorderOffSet = upBorder;
+            InventoryModels[ID].MainWindow.DownBorderOffSet = downBorder;
+            InventoryModels[ID].MainWindow.LeftBorderOffSet = leftBorder;
+            InventoryModels[ID].MainWindow.RightBorderOffSet = rightBorder;
         }
 
         public void SetSize(int width, int height) => SetSize(new Vec2i(width, height));
         public void SetSize(Vec2i size)
         {
-            Inventories[ID].Width = size.X;
-            Inventories[ID].Height = size.Y;
-            Inventories[ID].SlotsMask = new BitSet((uint)(size.X * size.Y));
-            Inventories[ID].Slots = new Slot[size.X * size.Y];
+            InventoryModels[ID].Width = size.X;
+            InventoryModels[ID].Height = size.Y;
+            InventoryModels[ID].Slots = new GridSlot[size.X * size.Y];
 
         }
 
-        public void SetInventoryPos(Vec2f pos) => Inventories[ID].MainWindow.Position = pos;
-        public void SetInventoryPos(float x, float y) => Inventories[ID].MainWindow.Position = new Vec2f(x,y);
-        public void SetTileSize(float tileSize) => Inventories[ID].MainWindow.TileSize = tileSize;
+        public void SetInventoryPos(Vec2f pos) => InventoryModels[ID].MainWindow.Position = pos;
+        public void SetInventoryPos(float x, float y) => InventoryModels[ID].MainWindow.Position = new Vec2f(x,y);
+        public void SetTileSize(float tileSize) => InventoryModels[ID].MainWindow.TileSize = tileSize;
         public void SetSlotBorderOffset(float slotBorderOffset)
         { 
-            Inventories[ID].MainWindow.SlotBorderOffset = slotBorderOffset;
-            Inventories[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBorder;
+            InventoryModels[ID].MainWindow.SlotBorderOffset = slotBorderOffset;
+            InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBorder;
         }
-        public void SetSlotOffset(float slotOffset) => Inventories[ID].MainWindow.SlotOffset = slotOffset;
+        public void SetSlotOffset(float slotOffset) => InventoryModels[ID].MainWindow.SlotOffset = slotOffset;
 
         /// <summary>
         /// These function set which slots on the grid can hold items and will be draw.

@@ -55,7 +55,8 @@ namespace Planet.Unity
                 Debug.Log("loaded!");
             }
 
-            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            Inventory.EntityComponent inventory = Planet.InventoryList.Get(inventoryID).inventoryEntity;
+            
             int selectedSlot = inventory.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
@@ -86,7 +87,7 @@ namespace Planet.Unity
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
         
 

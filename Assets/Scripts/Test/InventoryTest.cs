@@ -12,8 +12,9 @@ public class InventoryTest : MonoBehaviour
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
     Inventory.MouseSelectionSystem  mouseSelectionSystem;
-    int terrariaLikeInventoryID;
-    int customRestrictionInventoryID;
+    Inventory.InventoryList inventoryList;
+    int terrariaLikeInventoryID = 2;
+    int customRestrictionInventoryID = 3;
 
     bool Init = false;
 
@@ -27,17 +28,24 @@ public class InventoryTest : MonoBehaviour
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
+        inventoryList = new Inventory.InventoryList();
         GameState.Renderer.Initialize(material);
 
         // Create Agent and inventory.
         int agnetID = 0;
 
+        int inventoryID = 0;
+        int equipmentInventoryID = 1;
+        GameState.InventoryManager.CreateDefaultInventory(context, inventoryID);
+        GameState.InventoryManager.CreateInventory(context, 
+            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID(), equipmentInventoryID);
+        GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryID, terrariaLikeInventoryID);
+        GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryID, customRestrictionInventoryID);
+
         AgentEntity playerEntity = context.agent.CreateEntity();
         playerEntity.AddAgentID(agnetID);
         playerEntity.isAgentPlayer = true;
-        playerEntity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
-            GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
-        int inventoryID = playerEntity.agentInventory.InventoryID;
+        playerEntity.AddAgentInventory(inventoryID, equipmentInventoryID);
 
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);
@@ -47,7 +55,7 @@ public class InventoryTest : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + i), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol+4 + i), terrariaLikeInventoryID);
+            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + 4 + i), terrariaLikeInventoryID);
         }
 
         // Testing stackable items.
@@ -55,16 +63,16 @@ public class InventoryTest : MonoBehaviour
         {
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), inventoryID);
         }
-        Init = true;
 
         // Set basic inventory draw to on at the beggining:
-        ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-        inventory.InventoryFlags |= Inventory.InventoryModel.Flags.Draw;
-        inventory.InventoryFlags |= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
+        inventoryList.Get(inventoryID).hasInventoryToolBarDraw = true;
+        inventoryList.Get(inventoryID).hasInventoryDraw = true;
+        inventoryList.Get(equipmentInventoryID).hasInventoryDraw = true;
+        // Set Draw to false for custom inventories.
+        inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw = false;
+        inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw = false;
 
-        inventoryID = playerEntity.agentInventory.EquipmentInventoryID;
-        ref Inventory.InventoryModel secondInventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-        secondInventory.InventoryFlags |= Inventory.InventoryModel.Flags.Draw;
+        Init = true;
     }
 
     public void Update()
@@ -88,20 +96,16 @@ public class InventoryTest : MonoBehaviour
             foreach (var player in players)
             {
                 int inventoryID = player.agentInventory.InventoryID;
-                ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw;        // Toggling the bit
-                inventory.InventoryFlags ^= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
+                inventoryList.Get(inventoryID).hasInventoryToolBarDraw = !inventoryList.Get(inventoryID).hasInventoryToolBarDraw;
+                inventoryList.Get(inventoryID).hasInventoryDraw = !inventoryList.Get(inventoryID).hasInventoryDraw;
 
                 inventoryID = player.agentInventory.EquipmentInventoryID;
-                ref Inventory.InventoryModel inventoryEquipment = ref GameState.InventoryCreationApi.Get(inventoryID);
-                inventoryEquipment.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+                inventoryList.Get(inventoryID).hasInventoryDraw = !inventoryList.Get(inventoryID).hasInventoryDraw;
 
-                ref Inventory.InventoryModel terrariaLikeInventory = ref GameState.InventoryCreationApi.Get(terrariaLikeInventoryID);
-                terrariaLikeInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
-                terrariaLikeInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.DrawToolBar; // Toggling the bit
+                inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw = !inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw;
+                inventoryList.Get(terrariaLikeInventoryID).hasInventoryDraw = !inventoryList.Get(terrariaLikeInventoryID).hasInventoryDraw;
 
-                ref Inventory.InventoryModel cutomEquipmentInventory = ref GameState.InventoryCreationApi.Get(customRestrictionInventoryID);
-                cutomEquipmentInventory.InventoryFlags ^= Inventory.InventoryModel.Flags.Draw; // Toggling the bit
+                inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw = !inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw;
             }
         }
     }
@@ -112,24 +116,24 @@ public class InventoryTest : MonoBehaviour
             return;
 
         if (Event.current.type == EventType.MouseDown)
-            GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance);
+            GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance, inventoryList);
 
         if (Event.current.type == EventType.MouseUp)
-            GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance);
+            GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance, inventoryList);
 
         if (Event.current.type != EventType.Repaint)
             return;
 
         GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
 
-        inventoryDrawSystem.Draw(Contexts.sharedInstance);
+        inventoryDrawSystem.Draw(Contexts.sharedInstance, inventoryList);
     }
 
     private void Initialize()
     {
-       GameResources.Initialize();
+        GameResources.Initialize();
 
-        terrariaLikeInventoryID = GameState.InventoryCreationApi.Create();
+        GameState.InventoryCreationApi.Create();
         GameState.InventoryCreationApi.SetAllSlotsAsActive();
         GameState.InventoryCreationApi.SetToolBar();
         GameState.InventoryCreationApi.SetSize(10, 5);
@@ -140,10 +144,7 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();
 
-        ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(terrariaLikeInventoryID);
-        inventory.InventoryFlags &= ~Inventory.InventoryModel.Flags.DrawToolBar; // Set Draw toolBar to false.
-
-        customRestrictionInventoryID = GameState.InventoryCreationApi.Create();
+        GameState.InventoryCreationApi.Create();
         GameState.InventoryCreationApi.SetActiveSlot(1);
         GameState.InventoryCreationApi.SetActiveSlot(3);
         GameState.InventoryCreationApi.SetActiveSlot(4);

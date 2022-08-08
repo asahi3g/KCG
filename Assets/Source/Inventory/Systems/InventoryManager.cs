@@ -5,23 +5,48 @@ namespace Inventory
 {
     public class InventoryManager
     {
-        public void OpenInventory(int inventoryID)
+        public InventoryEntity CreateInventory(Contexts context, int inventoryModelID, int inventoryID)
         {
-            GameState.InventoryCreationApi.Get(inventoryID).InventoryFlags |= InventoryModel.Flags.Draw;
+            Inventory.InventoryModel inventoryModel = GameState.InventoryCreationApi.Get(inventoryModelID);
+            InventoryEntity invetoryEntity = context.inventory.CreateEntity();
+            invetoryEntity.AddInventoryID(inventoryID);
+            if (inventoryModel.HasToolBar)
+                invetoryEntity.hasInventoryToolBarDraw = true;
+            
+            int size = inventoryModel.SlotCount;
+            invetoryEntity.AddInventoryEntity(inventoryModelID, new Slot[size], 0, size, new BitSet((uint)size));
+
+            for (int i = 0; i < size; i++)
+            {
+                int slotID = inventoryModel.Slots[i].SlotID;
+                if (slotID == -1)
+                    continue;
+
+                invetoryEntity.inventoryEntity.Slots[slotID] = new Slot
+                {
+                    ItemID = -1,
+                    GridSlotID = i,
+                    Restriction = inventoryModel.Slots[i].Restriction
+                };
+            }
+
+            return invetoryEntity;
         }
 
-        public void CloseInventory(int inventoryID)
+        public InventoryEntity CreateDefaultInventory(Contexts context, int inventoryID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-
-            inventory.InventoryFlags |= InventoryModel.Flags.Draw;
+            return CreateInventory(context, GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), inventoryID);
         }
+
+        public void OpenInventory(Contexts contexts, int inventoryID)
+            => contexts.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw = true;
+
+        public void CloseInventory(Contexts contexts, int inventoryID)
+            => contexts.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw = false;
 
         public bool AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-            if (!inventory.Slots[slotID].IsOn)
-                return false;
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
             
             itemEntity.ReplaceItemInventory(inventoryID, slotID);
 
@@ -36,7 +61,7 @@ namespace Inventory
                 // Move to first empty slot:
                 ItemInventoryEntity currentItem = GetItemInSlot(contexts, inventoryID, slotID);
                 RemoveItem(contexts, inventoryID, slotID);
-                if (!AddItemAtFirstEmptySlot(currentItem, inventoryID))
+                if (!AddItemAtFirstEmptySlot(contexts, currentItem, inventoryID))
                     return false;
             }
             inventory.SlotsMask.Set(slotID);
@@ -45,10 +70,10 @@ namespace Inventory
             return true;
         }
 
-        public bool AddItemAtFirstEmptySlot(ItemInventoryEntity itemEntity, int inventoryID)
+        public bool AddItemAtFirstEmptySlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-            int fistEmptySlot = GetFirstEmptySlot(inventory.SlotsMask, ref inventory);
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            int fistEmptySlot = GetFirstEmptySlot(inventory.SlotsMask, inventory);
 
             if (fistEmptySlot < 0)
                 return false;
@@ -110,7 +135,7 @@ namespace Inventory
                 }
             }
 
-            return AddItemAtFirstEmptySlot(entity, inventoryID);
+            return AddItemAtFirstEmptySlot(contexts, entity, inventoryID);
         }
 
         public void PickUp(Contexts entitasContext, ItemParticleEntity entity, int inventoryID)
@@ -121,7 +146,7 @@ namespace Inventory
 
         public void RemoveItem(Contexts contexts, int inventoryID, int slotID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
 
             if (!inventory.SlotsMask[slotID])
                 return;
@@ -131,15 +156,15 @@ namespace Inventory
             itemEntity.RemoveItemInventory();
         }
         
-        public void ChangeSlot( int newSelectedSlot, int inventoryID)
+        public void ChangeSlot(Contexts contexts, int newSelectedSlot, int inventoryID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
             inventory.SelectedSlotID = newSelectedSlot;
         }
 
-        public bool IsFull( int inventoryID)
+        public bool IsFull(Contexts contexts, int inventoryID)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
 
             if (inventory.SlotsMask.All()) // Test if all bits are set to one.
                 return true;
@@ -159,7 +184,7 @@ namespace Inventory
         // Update this.
         public ItemInventoryEntity GetItemInSlot(Contexts contexts, int inventoryID, int slot)
         {
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
             int itemID = inventory.Slots[slot].ItemID;
 
             // Check if there is an item in the slot.
@@ -168,7 +193,7 @@ namespace Inventory
             return null;
         }
 
-        private int GetFirstEmptySlot(BitSet Slots, ref InventoryModel inventory)
+        private int GetFirstEmptySlot(BitSet Slots, Inventory.EntityComponent inventory)
         {
             if (IsFull(Slots))
             {
@@ -177,8 +202,6 @@ namespace Inventory
 
             for (int i = 0; i < Slots.Length; i++)
             {
-                if (!inventory.Slots[i].IsOn)
-                    continue;
                 if (!Slots[i])
                     return i;
             }

@@ -14,7 +14,8 @@ namespace Agent
         }
 
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
-        int agentId, int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, int playerFuel, float attackCoolDown)
+        int agentId, int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
+        int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
 
@@ -33,15 +34,15 @@ namespace Agent
             entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
                                              true, true, false, false, false, false, false, false);
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
-            //entity.AddAgentInventory(0);
-            // Add Inventory and toolbar.
-            entity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
-                GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
+
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID);
             return entity;
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int agentId, int spriteId, AgentType agentType)
+        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int agentId, int spriteId, AgentType agentType, 
+            int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
             ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
@@ -55,13 +56,13 @@ namespace Agent
             entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
                                      true, true, false, false, false, false, false, false); // used for physics simulation
 
-            var attacher = Inventory.InventoryAttacher.Instance;
-            attacher.AttachInventoryToAgent(entitasContext, 3, 3, entity);
+            entity.AddAgentInventory(inventoryID, -1);
 
             return entity;
         }
 
-        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, int agentId, AgentType agentType)
+        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, int agentId, AgentType agentType, 
+            int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
 
@@ -84,10 +85,8 @@ namespace Agent
                 entity.isAgentPlayer = true;
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-
-                // Add Inventory and toolbar.
-                entity.AddAgentInventory(GameState.InventoryCreationApi.CreateDefaultInventory(),
-                    GameState.InventoryCreationApi.CreateDefaultRestrictionInventory());
+                if (inventoryID != - 1)
+                    entity.AddAgentInventory(inventoryID, equipmentInventoryID);
             }
             else if (agentType == Agent.AgentType.Agent)
             {

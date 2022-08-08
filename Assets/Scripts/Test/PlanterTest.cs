@@ -71,8 +71,7 @@ class PlanterTest : MonoBehaviour
             }
         }
 
-        Inventory.InventoryModel Inventory = GameState.InventoryCreationApi.Get(InventoryID);
-        int selectedSlot = Inventory.SelectedSlotID;
+        int selectedSlot = Planet.InventoryList.Get(InventoryID).inventoryEntity.SelectedSlotID;
 
         ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
         if (item != null)
@@ -109,7 +108,7 @@ class PlanterTest : MonoBehaviour
         // Draw Statistics
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-        inventoryDrawSystem.Draw(Planet.EntitasContext);
+        inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
     }
 
     private void OnDrawGizmos()

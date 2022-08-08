@@ -30,8 +30,8 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-            int selectedSlot = inventory.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
+
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -57,7 +57,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes

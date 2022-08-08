@@ -70,8 +70,7 @@ namespace Planet.Unity
                 }
             }
 
-            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(InventoryID);
-            int selectedSlot = inventory.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
             if (item != null)
@@ -101,10 +100,10 @@ namespace Planet.Unity
                 return;
 
             if (Event.current.type == EventType.MouseDown)
-                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext);
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext, Planet.InventoryList);
 
             if (Event.current.type == EventType.MouseUp)
-                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext);
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext, Planet.InventoryList);
 
             if (Event.current.type != EventType.Repaint)
                 return;
@@ -117,7 +116,7 @@ namespace Planet.Unity
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         private void OnDrawGizmos()

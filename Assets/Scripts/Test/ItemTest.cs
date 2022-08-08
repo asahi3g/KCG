@@ -38,8 +38,7 @@ namespace Planet.Unity
             }
 
             int inventoryID = Player.agentInventory.InventoryID;
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
-            int selectedSlot = inventory.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             if (item != null)
@@ -64,16 +63,16 @@ namespace Planet.Unity
                 return;
 
             if (Event.current.type == EventType.MouseDown)
-                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext);
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext, Planet.InventoryList);
 
             if (Event.current.type == EventType.MouseUp)
-                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext);
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext, Planet.InventoryList);
 
             if (Event.current.type != EventType.Repaint)
                 return;
 
             GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // Create the sprite atlas for testing purposes

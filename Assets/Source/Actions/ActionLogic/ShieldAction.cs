@@ -19,9 +19,10 @@ namespace Action
                 return;
 
             int inventoryID = AgentEntity.agentInventory.InventoryID;
-            ref InventoryModel inventory = ref GameState.InventoryCreationApi.Get(AgentEntity.agentInventory.InventoryID);
+            Inventory.EntityComponent inventory = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
 
-            if (inventory.HasTooBar())
+            if (inventoryModel.HasToolBar)
             {
                 // Set Selected Slot
                 int selectedSlot = inventory.SelectedSlotID;

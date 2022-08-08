@@ -2,14 +2,11 @@
 
 namespace Inventory
 {
-    public struct Slot
+    public struct GridSlot
     {
-        public int ID;
+        public int SlotID;              // Real Slot Index. If = -1. Grid possition is off -> Doesn't draw.
+        public int SlotBackgroundIcon;  // Sprite icon for ring, armour, etc showing slot type, if -1 ignore/dont render
         public Enums.ItemGroups Restriction;
-        public int SlotBackgroundIcon;          // Sprite icon for ring, armour, etc showing slot type, if -1 ignore/dont render
-        public int ItemID;                      // If -1 slot is empty.
-
-        public bool IsOn;                       // If off can't have item or draw.
     }
 
     public struct Window
@@ -52,5 +49,13 @@ namespace Inventory
             return true;
         }
     }
+
+    public struct Slot
+    {
+        public int GridSlotID;                  // Index of Gui slot.                        
+        public int ItemID;                      // If -1 slot is empty.
+        public Enums.ItemGroups Restriction;
+    }
+
 }
 

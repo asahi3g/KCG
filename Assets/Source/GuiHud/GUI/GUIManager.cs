@@ -67,7 +67,7 @@ namespace KGUI
         Text scannerText = new Text();
 
         int inventoryID;
-        Inventory.InventoryModel Inventory;
+        InventoryEntity Inventory;
         int selectedSlot;
         ItemInventoryEntity item;
 
@@ -199,8 +199,8 @@ namespace KGUI
 
                 // Set Inventory Elements
                 inventoryID = agentEntity.agentInventory.InventoryID;
-                Inventory = GameState.InventoryCreationApi.Get(inventoryID);
-                selectedSlot = Inventory.SelectedSlotID;
+                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                 // Create Item
                 item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
@@ -339,8 +339,8 @@ namespace KGUI
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
-                    Inventory = GameState.InventoryCreationApi.Get(inventoryID);
-                    selectedSlot = Inventory.SelectedSlotID;
+                    Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
@@ -355,8 +355,8 @@ namespace KGUI
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
-                    Inventory = GameState.InventoryCreationApi.Get(inventoryID);
-                    selectedSlot = Inventory.SelectedSlotID;
+                    Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
@@ -371,8 +371,8 @@ namespace KGUI
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
-                    Inventory = GameState.InventoryCreationApi.Get(inventoryID);
-                    selectedSlot = Inventory.SelectedSlotID;
+                    Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
@@ -387,8 +387,8 @@ namespace KGUI
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
-                    Inventory = GameState.InventoryCreationApi.Get(inventoryID);
-                    selectedSlot = Inventory.SelectedSlotID;
+                    Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);

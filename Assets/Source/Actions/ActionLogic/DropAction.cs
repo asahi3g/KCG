@@ -19,12 +19,14 @@ namespace Action
                 return;
 
             int inventoryID = AgentEntity.agentInventory.InventoryID;
-            ref Inventory.InventoryModel inventory = ref GameState.InventoryCreationApi.Get(inventoryID);
+            InventoryEntity inventoryEntity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                inventoryEntity.inventoryEntity.InventoryModelID);
 
             // Todo: start playing some animation
-            if (inventory.HasTooBar())
+            if (inventoryModel.HasToolBar)
             {
-                int selected = inventory.SelectedSlotID;
+                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
 
 
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
