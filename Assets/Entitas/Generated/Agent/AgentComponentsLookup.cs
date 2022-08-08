@@ -9,29 +9,33 @@
 public static class AgentComponentsLookup {
 
     public const int AgentAIController = 0;
-    public const int AgentEnemy = 1;
-    public const int AgentID = 2;
-    public const int AgentInventory = 3;
-    public const int AgentMovable = 4;
-    public const int AgentMovementState = 5;
-    public const int AgentPlayer = 6;
-    public const int AgentPosition2D = 7;
-    public const int AgentPositionDiscrete2D = 8;
-    public const int AgentSprite2D = 9;
-    public const int AgentStats = 10;
-    public const int AnimationState = 11;
-    public const int ECSInput = 12;
-    public const int ECSInputXY = 13;
-    public const int PhysicsBox2DCollider = 14;
-    public const int PhysicsSphere2DCollider = 15;
+    public const int AgentCorpse = 1;
+    public const int AgentEnemy = 2;
+    public const int AgentID = 3;
+    public const int AgentInventory = 4;
+    public const int AgentItemDrop = 5;
+    public const int AgentMovable = 6;
+    public const int AgentMovementState = 7;
+    public const int AgentPlayer = 8;
+    public const int AgentPosition2D = 9;
+    public const int AgentPositionDiscrete2D = 10;
+    public const int AgentSprite2D = 11;
+    public const int AgentStats = 12;
+    public const int AnimationState = 13;
+    public const int ECSInput = 14;
+    public const int ECSInputXY = 15;
+    public const int PhysicsBox2DCollider = 16;
+    public const int PhysicsSphere2DCollider = 17;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "AgentAIController",
+        "AgentCorpse",
         "AgentEnemy",
         "AgentID",
         "AgentInventory",
+        "AgentItemDrop",
         "AgentMovable",
         "AgentMovementState",
         "AgentPlayer",
@@ -48,9 +52,11 @@ public static class AgentComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(Agent.AIController),
+        typeof(Agent.CorpseComponent),
         typeof(Agent.EnemyComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
+        typeof(Agent.ItemDropComponent),
         typeof(Agent.MovableComponent),
         typeof(Agent.MovementStateComponent),
         typeof(Agent.PlayerComponent),
