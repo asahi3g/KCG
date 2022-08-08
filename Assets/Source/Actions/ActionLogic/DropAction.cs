@@ -37,9 +37,9 @@ namespace Action
                 GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryEntity, selected);
 
                 // Create item particle from item inventory.
-                Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;
+                Vec2f pos = AgentEntity.agentPhysicsState.Position + AgentEntity.physicsBox2DCollider.Size / 2f;
                 ItemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
-                ItemParticle.itemMovement.Velocity = new Vec2f(-8.0f, 8.0f);
+                ItemParticle.itemPhysicsState.Velocity = new Vec2f(-8.0f, 8.0f);
                 ItemParticle.isItemUnpickable = true;
 
                 ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Running);

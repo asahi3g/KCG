@@ -90,7 +90,7 @@ class PlanterTest : MonoBehaviour
 
         HUDManager.Draw();
         Planet.Update(Time.deltaTime, Material, transform);
-        //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
+        //   Vector2 playerPosition = Player.Entity.agentPhysicsState.Position;
 
         // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
     }
@@ -123,21 +123,21 @@ class PlanterTest : MonoBehaviour
 
         // Draw lines around player if out of bounds
         if (Player != null)
-            if (Player.agentPosition2D.Value.X - 10.0f >= Planet.TileMap.MapSize.X)
+            if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
             {
                 // Out of bounds
 
                 // X+
-                Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector3(Player.agentPosition2D.Value.X+10.0f,Player.agentPosition2D.Value.Y));
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f,Player.agentPhysicsState.Position.Y));
 
                 // X-
-                Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector2(Player.agentPosition2D.Value.X-10.0f,Player.agentPosition2D.Value.Y));
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X-10.0f,Player.agentPhysicsState.Position.Y));
 
                 // Y+
-                Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector2(Player.agentPosition2D.Value.X,Player.agentPosition2D.Value.Y + 10.0f));
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y + 10.0f));
 
                 // Y-
-                Gizmos.DrawLine(new Vector3(Player.agentPosition2D.Value.X, Player.agentPosition2D.Value.Y, 0.0f), new Vector2(Player.agentPosition2D.Value.X,Player.agentPosition2D.Value.Y - 10.0f));
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y - 10.0f));
             }
 
         // Draw Chunk Visualizer

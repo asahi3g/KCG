@@ -23,9 +23,7 @@ namespace Action
 #endif
             Vec2f goalPosition = ActionEntity.actionMoveTo.GoalPosition;
 
-            AI.Movement.PathFinding pathFinding = new AI.Movement.PathFinding();
-            pathFinding.Initialize();
-            path = pathFinding.getPath(ref planet.TileMap, AgentEntity.agentPosition2D.Value, goalPosition);
+            path = GameState.PathFinding.getPath(ref planet.TileMap, AgentEntity.agentPhysicsState.Position, goalPosition);
 #if DEBUG
             deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
             Debug.Log("Found time in " + deltaTime.ToString() + "ms");
@@ -45,29 +43,27 @@ namespace Action
         {
             Vec2f targetPos = path[pathLength - 1];
 
-            Vec2f direction = targetPos - AgentEntity.agentPosition2D.Value;
+            Vec2f direction = targetPos - AgentEntity.agentPhysicsState.Position;
 
             if (direction.Magnitude < 0.1f)
             {
                 if (--pathLength == 0)
                 {
-                    AgentEntity.agentMovable.Acceleration.X = 0;
                     ActionEntity.actionExecution.State = Enums.ActionState.Success;
                     return;
                 }
             }
 
             // Jumping is just an increase in velocity.
-            if (direction.Y > 0 && AgentEntity.agentMovable.OnGrounded)
+            if (direction.Y > 0 && AgentEntity.agentPhysicsState.OnGrounded)
             {
-                AgentEntity.agentMovable.Acceleration.Y = 0.0f;
-                AgentEntity.agentMovable.Velocity.Y = 7.5f;
+                AgentEntity.agentPhysicsState.Velocity.Y = 14f;
             }
 
             // Todo: deals with flying agents.
             direction.Y = 0;
             direction.Normalize();
-            AgentEntity.agentMovable.Acceleration.X = direction.X * AgentEntity.agentMovable.Speed * 25.0f;
+            AgentEntity.agentPhysicsState.Acceleration.X = direction.X * 2 * AgentEntity.agentPhysicsState.Speed / Physics.Constants.TimeToMax;
         }
 
         public override void OnExit(ref Planet.PlanetState planet)

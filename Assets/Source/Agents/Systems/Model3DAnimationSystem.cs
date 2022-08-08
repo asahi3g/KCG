@@ -1,6 +1,7 @@
 using System;
 using KMath;
 using UnityEngine;
+using Enums;
 
 namespace Agent
 {
@@ -14,52 +15,53 @@ namespace Agent
             foreach (var entity in entities)
             {
 
-                var movementState = entity.agentMovementState;        
+                var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
-                Debug.Log(movementState.MovementState);
+                Debug.Log(physicsState.MovementState);
 
-                switch(movementState.MovementState)
+                switch(physicsState.MovementState)
                 {
-                    case MovementState.Move:
+                    case AgentMovementState.Move:
                     {
-                        if (movementState.Running)
+                        /*if (movementState.Running)
                         {
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
                             model3d.AnimancerComponent.Play(animation, 0.125f);
                         }
                         else
-                        {
+                        {*/
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Jog);
                             model3d.AnimancerComponent.Play(animation, 0.125f);
-                        }
+                      //  }
                         break;
                     }
-                    case MovementState.Idle:
+                    case AgentMovementState.Idle:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
-                    case MovementState.Flying:
+                    case AgentMovementState.JetPackFlying:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
-                    case MovementState.Sliding:
+                    case AgentMovementState.SlidingLeft:
+                    case AgentMovementState.SlidingRight:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
-                    case MovementState.Dashing:
+                    case AgentMovementState.Dashing:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
-                    case MovementState.Falling:
+                    case AgentMovementState.Falling:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.JumpFall);
                         model3d.AnimancerComponent.Play(animation, 0.075f);
@@ -72,14 +74,15 @@ namespace Agent
                         break;
                     }
                 }
-                if (movementState.MovementState != MovementState.Falling)
+
+                if (physicsState.MovementState != AgentMovementState.Falling)
                 {
-                    if (movementState.JumpCounter == 1)
+                    if (physicsState.JumpCounter == 1)
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Jump);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                     }
-                    else if (movementState.JumpCounter == 2)
+                    else if (physicsState.JumpCounter == 2)
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Flip);
                         model3d.AnimancerComponent.Play(animation, 0.125f);

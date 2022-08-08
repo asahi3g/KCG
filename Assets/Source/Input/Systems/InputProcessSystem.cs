@@ -1,6 +1,7 @@
 using KMath;
 using UnityEngine;
 using Agent;
+using Enums;
 
 namespace ECSInput
 {
@@ -10,7 +11,7 @@ namespace ECSInput
 
         private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
         {
-            agentEntity.agentMovable.Invulnerable = false;
+            agentEntity.agentPhysicsState.Invulnerable = false;
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = false;
 
@@ -35,7 +36,7 @@ namespace ECSInput
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
-                agentEntity.agentMovable.Invulnerable = true;
+                agentEntity.agentPhysicsState.Invulnerable = true;
             }
         }
 
@@ -43,76 +44,60 @@ namespace ECSInput
         {
             Contexts contexts = planet.EntitasContext;
 
-            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
-
-            bool jump = Input.GetKeyDown(KeyCode.UpArrow);
-            bool dash = Input.GetKeyDown(KeyCode.Space);
-            bool running = Input.GetKey(KeyCode.LeftAlt);
-            bool flying = Input.GetKey(KeyCode.F);
-            bool downKey = Input.GetKeyDown(KeyCode.DownArrow);
+            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
+                AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
 
             float x = 0.0f;
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                x = 1.0f;
+                x += 1.0f;
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
-                x = -1.0f;
+                x -= 1.0f;
             }
 
-            
-            foreach (var entity in AgentsWithXY)
+            foreach (var player in AgentsWithXY)
             {
-                entity.ReplaceECSInputXY(new Vec2f(x, 0.0f), jump, dash);
 
-                var pos = entity.agentPosition2D;
-                var input = entity.eCSInputXY;
-                var movable = entity.agentMovable;
-                var stats = entity.agentStats;
+                var physicsState = player.agentPhysicsState;
 
-                var movementState = entity.agentMovementState;
-                movementState.Running = running;
-                //if (movable.OnGrounded && movable.Droping)
-                //{
-                //    movable.Droping = false;
-                //}
-                if (downKey)
+                // Jump
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    movable.Droping = true;
-                    movable.OnGrounded = false;
-                    movable.WantToDrop = true;
+                    GameState.AgentProcessPhysicalState.JumpVelocity(player, 16f); // 16f Intial velocity necessary to jump 3.2 tiles. at 40 tiles/seconds gravity
                 }
-                if (movable.OnGrounded)
+                // Dash
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    movable.Droping = false;
+                    GameState.AgentProcessPhysicalState.Dash(player, x);
                 }
-                // handling horizontal movement (left/right)
-                if (movementState.Running)
+
+                // Running
+                if (Input.GetKey(KeyCode.LeftAlt))
                 {
-                    movable.Acceleration.X = input.Value.X * movable.Speed * 100.0f * 2;
+                    GameState.AgentProcessPhysicalState.Run(player, x);
                 }
                 else
                 {
-                    movable.Acceleration.X = input.Value.X * movable.Speed * 100.0f;
-                }         
-
-                // decrease the dash cooldown
-                movementState.DashCooldown -= Time.deltaTime;
-
-                // dash
-                if (dash && movementState.DashCooldown <= 0.0f)
-                {
-                    movable.Acceleration.X += 1000.0f * x;
-                    movable.Velocity.X = 30.0f * x;
-                    movable.Velocity.Y = 0.0f;
-                    movable.Acceleration.Y = 0.0f;
-
-                    movable.Invulnerable = true;
-                    movable.AffectedByGravity = false;
-                    movementState.MovementState = MovementState.Dashing;
-                    movementState.DashCooldown = 1.0f;
+                    GameState.AgentProcessPhysicalState.Walk(player, x);
                 }
+
+                // JetPack
+                if (Input.GetKey(KeyCode.F))
+                {
+                    GameState.AgentProcessPhysicalState.JetPackFlying(player);
+                }
+
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    player.agentPhysicsState.Droping = true;
+                    player.agentPhysicsState.WantToDrop = true;
+                }
+
+
+                /*
+<<<<<<< HEAD
 
                 
 
@@ -308,6 +293,8 @@ namespace ECSInput
                     
 
                 //}
+=======
+>>>>>>> 14d9b3d614e10ed08f93113bb153a5b4c2489826*/
             }
 
             foreach (var entity in AgentsWithXY)
@@ -317,9 +304,9 @@ namespace ECSInput
                     var corpses = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentCorpse));
                     foreach (var corpse in corpses) 
                     {
-                        var pos = corpse.agentPosition2D;
+                        var physicsState = corpse.agentPhysicsState;
 
-                        if (corpse.hasAgentInventory && Vec2f.Distance(pos.Value, entity.agentPosition2D.Value) < 0.5f)
+                        if (corpse.hasAgentInventory && Vec2f.Distance(physicsState.Position, entity.agentPhysicsState.Position) < 0.5f)
                         {
                         
                             InventoryEntity corpseInventory = contexts.inventory.GetEntityWithInventoryIDID(corpse.agentInventory.InventoryID);
@@ -338,7 +325,7 @@ namespace ECSInput
                                     ItemInventoryEntity itemInventoryEntity = contexts.itemInventory.GetEntityWithItemID(itemID);
                                     for(int stackIndex = 0; stackIndex < itemInventoryEntity.itemStack.Count; stackIndex++)
                                     {
-                                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventoryEntity.itemType.Type, pos.Value);
+                                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventoryEntity.itemType.Type, physicsState.Position);
                                     }
                                     slot.ItemID = -1;
                                 }
@@ -442,12 +429,12 @@ namespace ECSInput
                         if (!item.itemPulseWeaponPulse.GrenadeMode)
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = true;
-                            planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.agentPosition2D.Value);
+                            planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
                         }
                         else
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = false;
-                            planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.agentPosition2D.Value);
+                            planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
                         }
                     }
                 }
@@ -470,8 +457,8 @@ namespace ECSInput
                         inventoryEntity.inventoryEntity.SelectedSlotID = i;
                         var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         
-                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                    entity.agentPosition2D.Value.Y));
+                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
+                                    entity.agentPhysicsState.Position.Y));
                     }
                 }
 

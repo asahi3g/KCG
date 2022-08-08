@@ -29,9 +29,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
-
             if (Input.GetKeyDown(KeyCode.T))
             {
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);

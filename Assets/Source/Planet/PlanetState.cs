@@ -49,12 +49,12 @@ namespace Planet
         public void InitializeSystems(Material material, Transform transform)
         {
             GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
-
+            GameState.PathFinding.Initialize();
 
             // Mesh builders
             GameState.TileMapRenderer.Initialize(material, transform, 7);
-            GameState.ItemMeshBuilderSystem.Initialize(material, transform, 11);
-            GameState.AgentMeshBuilderSystem.Initialize(material, transform, 12);
+            GameState.AgentMeshBuilderSystem.Initialize(material, transform, 11);
+            GameState.ItemMeshBuilderSystem.Initialize(material, transform, 12);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
@@ -147,8 +147,8 @@ namespace Planet
             AgentEntity entity = AgentList.Get(agentId);
             Utils.Assert(entity.isEnabled);
 
-            var pos = entity.agentPosition2D;
-            Vec2f agentPosition = pos.Value;
+            var physicsState = entity.agentPhysicsState;
+            Vec2f agentPosition = physicsState.Position;
 
             AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
 
@@ -177,7 +177,7 @@ namespace Planet
                             float randomDrop = KMath.Random.Mt19937.genrand_realf();
                             if (randomDrop <= dropRate)
                             {
-                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, pos.Value + new Vec2f(randXOffset, 0.5f));
+                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, physicsState.Position + new Vec2f(randXOffset, 0.5f));
                                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
                             }
 
@@ -324,7 +324,9 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-            GameState.AgentMovableSystem.Update(EntitasContext.agent);
+            GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
+            GameState.AgentMovementSystem.Update(EntitasContext.agent);
+            
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);

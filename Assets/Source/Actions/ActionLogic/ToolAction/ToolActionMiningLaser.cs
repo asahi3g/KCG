@@ -14,7 +14,7 @@ namespace Action
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
-            Vec2f   agentPosition = AgentEntity.agentPosition2D.Value;
+            Vec2f   agentPosition = AgentEntity.agentPhysicsState.Position;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             int fromX = (int)agentPosition.X;

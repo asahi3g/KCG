@@ -102,7 +102,7 @@ namespace Action
             }
 
             // Start position
-            StartPos = AgentEntity.agentPosition2D.Value;
+            StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.3f;
             StartPos.Y += 0.5f;
 
@@ -155,7 +155,7 @@ namespace Action
             }
 
             // Check if projectile is inside in weapon range.
-            if ((ProjectileEntity.projectilePosition2D.Value - StartPos).Magnitude > range)
+            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
             {
                 
                 // Check if projectile has hit a enemy.
@@ -166,12 +166,12 @@ namespace Action
                 {
                     if (!entity.isAgentPlayer)
                     {
-                        float dist = Vector2.Distance(new Vector2(AgentEntity.agentPosition2D.Value.X, AgentEntity.agentPosition2D.Value.Y), new Vector2(ProjectileEntity.projectilePosition2D.Value.X, ProjectileEntity.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vector2(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
 
                         if (dist < 2.0f)
                         {
-                            Vec2f entityPos = entity.agentPosition2D.Value;
-                            Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
+                            Vec2f entityPos = entity.agentPhysicsState.Position;
+                            Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
                             diff.Normalize();
@@ -184,7 +184,7 @@ namespace Action
                                 entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
                                     stats.Fuel, stats.AttackCooldown);
 
-                                planet.AddParticleEmitter(ProjectileEntity.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                                planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y+0.35f));
@@ -200,8 +200,8 @@ namespace Action
 #if UNITY_EDITOR
             for (int i = 0; i < EndPointList.Count; i++)
             {
-                if (EndPointList[i].hasProjectilePosition2D)
-                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePosition2D.Value.X, EndPointList[i].projectilePosition2D.Value.Y, 0), Color.red, 2.0f, false);
+                if (EndPointList[i].hasProjectilePhysicsState)
+                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePhysicsState.Position.X, EndPointList[i].projectilePhysicsState.Position.Y, 0), Color.red, 2.0f, false);
             }
 #endif
 
@@ -216,9 +216,9 @@ namespace Action
                     if (entity == AgentEntity)
                         continue;
 
-                    Vec2f entityPos = entity.agentPosition2D.Value;
-                    Vec2f bulletPos = ProjectileEntity.projectilePosition2D.Value;
-                    var movable = entity.agentMovable;
+                    Vec2f entityPos = entity.agentPhysicsState.Position;
+                    Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
+                    var physicsState = entity.agentPhysicsState;
 
                     Vec2f diff = bulletPos - entityPos;
 
@@ -233,7 +233,7 @@ namespace Action
                         entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
                             stats.Fuel, stats.AttackCooldown);
 
-                        planet.AddParticleEmitter(ProjectileEntity.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                        planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
                         // spawns a debug floating text for damage 
                         planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
