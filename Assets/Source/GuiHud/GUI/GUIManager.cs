@@ -353,7 +353,7 @@ namespace KGUI
                 }
             }
 
-            if (bedrockUIBackground.IsMouseOver(CursorPosition))
+            /*if (bedrockUIBackground.IsMouseOver(CursorPosition))
             {
                 // Set Inventory Elements
                 inventoryID = agentEntity.agentInventory.InventoryID;
@@ -403,7 +403,7 @@ namespace KGUI
                         item.itemCastData.InputsActive = true;
                     }
                 }
-            }
+            }*/
         }
 
         public virtual void OnMouseEnter()
