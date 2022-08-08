@@ -25,6 +25,16 @@ namespace KGUI.Elements
                     text.GameObject.SetSizeDelta(new Vector2(text.SizeDelta.X, text.SizeDelta.Y));
 
                 }
+
+                if (entity.hasKGUIElementsImage)
+                {
+                    var image = entity.kGUIElementsImage;
+                    var position = entity.kGUIElementsPosition2D;
+
+                    image.Image.Update();
+                    image.Image.SetPosition(new Vector3(position.Value.X, position.Value.Y, 0.0f));
+                    image.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+                }
             }
 
             foreach(var entity in ToRemoveEntities)

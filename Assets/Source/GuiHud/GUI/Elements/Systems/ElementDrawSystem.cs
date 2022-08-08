@@ -17,9 +17,16 @@ namespace KGUI.Elements
                     var position = entity.kGUIElementsPosition2D;
                     var text = entity.kGUIElementsText;
 
-                    entity.kGUIElementsText.GameObject.Draw();
+                    text.GameObject.Draw();
                 }
 
+                if (entity.hasKGUIElementsImage)
+                {
+                    var position = entity.kGUIElementsPosition2D;
+                    var image = entity.kGUIElementsImage;
+
+                    image.Image.Draw();
+                }
             }
         }
     }

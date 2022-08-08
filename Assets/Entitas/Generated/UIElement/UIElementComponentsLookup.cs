@@ -9,8 +9,8 @@
 public static class UIElementComponentsLookup {
 
     public const int KGUIElementsID = 0;
-    public const int KGUIElementsPosition2D = 1;
-    public const int KGUIElementsSprite = 2;
+    public const int KGUIElementsImage = 1;
+    public const int KGUIElementsPosition2D = 2;
     public const int KGUIElementsText = 3;
     public const int KGUIElementsType = 4;
 
@@ -18,16 +18,16 @@ public static class UIElementComponentsLookup {
 
     public static readonly string[] componentNames = {
         "KGUIElementsID",
+        "KGUIElementsImage",
         "KGUIElementsPosition2D",
-        "KGUIElementsSprite",
         "KGUIElementsText",
         "KGUIElementsType"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(KGUI.Elements.IDComponent),
+        typeof(KGUI.Elements.ImageComponent),
         typeof(KGUI.Elements.Position2DComponent),
-        typeof(KGUI.Elements.SpriteComponent),
         typeof(KGUI.Elements.TextComponent),
         typeof(KGUI.Elements.TypeComponent)
     };

@@ -42,8 +42,6 @@ namespace KGUI
 
         // GUI Elements List
         public List<GUIManager> UIList = new List<GUIManager>();
-        public List<ElementManager> ElementDrawList = new List<ElementManager>();
-        public List<ElementManager> ElementUpdateList = new List<ElementManager>();
 
         // Cursor Screen Position from Unity Input Class
         public Vec2f CursorPosition;
@@ -84,71 +82,35 @@ namespace KGUI
             // Set HUD Scale
             _Canvas.scaleFactor = HUDScale;
 
-            ElementDrawList = new List<ElementManager>();
-            ElementUpdateList = new List<ElementManager>();
             foodBarUI = new PlayerStatus.FoodBarUI();
             waterBarUI = new PlayerStatus.WaterBarUI();
             oxygenBarUI = new PlayerStatus.OxygenBarUI();
             fuelBarUI = new PlayerStatus.FuelBarUI();
             healthBarUI = new PlayerStatus.HealthBarUI();
 
-            bedrockUIBackground = new Elements.Image("BedrockBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
-            bedrockUIBackground.SetImageType(UnityEngine.UI.Image.Type.Tiled);
-            bedrockUIBackground.SetPosition(new Vector3(-280.0f, -80.2f, 0));
-            bedrockUIBackground.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
-            bedrockUIBackground.SetImageColor(Color.yellow);
+            bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                new Vec2f(-280.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            bedrockUI = new Elements.Image("Bedrock", bedrockUIBackground.GetTransform(), 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png");
-            bedrockUI.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
-            bedrockUI.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
+            bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            dirtUIBackground = new Elements.Image("DirtBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
-            dirtUIBackground.SetImageType(UnityEngine.UI.Image.Type.Tiled);
-            dirtUIBackground.SetPosition(new Vector3(-200.0f, -80.2f, 0));
-            dirtUIBackground.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
-            dirtUIBackground.SetImageColor(Color.yellow);
+            dirtUIBackground = planet.AddUIImage("DirtBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                new Vec2f(-200.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            dirtUI = new Image("DirtTile", dirtUIBackground.GetTransform(), 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png");
-            dirtUI.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
-            dirtUI.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
+            dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            pipeUIBackground = new Elements.Image("PipeBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
-            pipeUIBackground.SetImageType(UnityEngine.UI.Image.Type.Tiled);
-            pipeUIBackground.SetPosition(new Vector3(-38.0f, -80.2f, 0));
-            pipeUIBackground.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
-            pipeUIBackground.SetImageColor(Color.yellow);
+            pipeUIBackground = planet.AddUIImage("PipeBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                new Vec2f(-38.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            pipeUI = new Image("PipeTile", pipeUIBackground.GetTransform(), 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png");
-            pipeUI.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
-            pipeUI.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
+            pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.GetTransform(), "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            wireUIBackground = new Image("WireBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"));
-            wireUIBackground.SetImageType(UnityEngine.UI.Image.Type.Tiled);
-            wireUIBackground.SetPosition(new Vector3(-120.0f, -80.2f, 0));
-            wireUIBackground.SetScale(new Vector3(0.7f, 0.7f, 0.7f));
-            wireUIBackground.SetImageColor(Color.yellow);
+            wireUIBackground = planet.AddUIImage("WireBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                new Vec2f(-120.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            wireUI = new Image("WireTile", wireUIBackground.GetTransform(), 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png");
-            wireUI.SetPosition(new Vector3(0.0f, 0.0f, 0.0f));
-            wireUI.SetScale(new Vector3(0.8f, 0.8f, 0.8f));
-
-            ElementUpdateList.Add(bedrockUIBackground);
-            ElementUpdateList.Add(bedrockUI);
-            ElementUpdateList.Add(dirtUIBackground);
-            ElementUpdateList.Add(dirtUI);
-            ElementUpdateList.Add(pipeUIBackground);
-            ElementUpdateList.Add(pipeUI);
-            ElementUpdateList.Add(wireUIBackground);
-            ElementUpdateList.Add(wireUI);
-
-            ElementDrawList.Add(bedrockUIBackground);
-            ElementDrawList.Add(bedrockUI);
-            ElementDrawList.Add(dirtUIBackground);
-            ElementDrawList.Add(dirtUI);
-            ElementDrawList.Add(pipeUIBackground);
-            ElementDrawList.Add(pipeUI);
-            ElementDrawList.Add(wireUIBackground);
-            ElementDrawList.Add(wireUI);
+            wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
 
             //// Add Food Bar To Draw Array
             UIList.Add(foodBarUI);
@@ -189,11 +151,6 @@ namespace KGUI
 
                 // Assign New Cursor Position
                 CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
-
-                for(int i = 0; i < ElementUpdateList.Count; i++)
-                {
-                    ElementUpdateList[i].Update();
-                }
 
                 scannerText.Update();
 
@@ -278,11 +235,6 @@ namespace KGUI
                 {
                     UIList[i].Draw();
                 }
-
-                for (int i = 0; i < ElementUpdateList.Count; i++)
-                {
-                    ElementUpdateList[i].Draw();
-                }
             }
         }
 
@@ -363,8 +315,8 @@ namespace KGUI
                     if (item != null)
                         if (item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
-                        // Set Data Tile ID to Pipe
-                        item.itemCastData.data.TileID = TileID.Moon;
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Moon;
                         }
                 }
                 if (pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active)

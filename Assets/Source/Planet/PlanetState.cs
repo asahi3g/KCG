@@ -155,6 +155,36 @@ namespace Planet
             return newEntity;
         }
 
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
+            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
+                position, scale, Type, -1, ElementType.Image));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
+            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type, Color color)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
+                position, scale, Type, color, -1, ElementType.Image));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, string path,
+            Vec2f position, Vec3f scale, int width, int height)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
+                position, scale, width, height, -1, ElementType.Image));
+            return newEntity;
+        }
+
         public void RemoveAgent(int agentId)
         {
             AgentEntity entity = AgentList.Get(agentId);
