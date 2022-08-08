@@ -706,6 +706,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionConstruction);
         GameState.ItemCreationApi.EndItem();
                 

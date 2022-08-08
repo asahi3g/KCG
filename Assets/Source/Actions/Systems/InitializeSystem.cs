@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Enums.Tile;
+using Mech;
 using UnityEngine;
 using PlanetTileMap;
 
@@ -25,7 +26,7 @@ namespace Action
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceTileCreator());
 
             // Set Data Struct
-            var data = new Data
+            var data = new Enums.Tile.Data
             {
                 // Set Tile ID
                 TileID = tileID,
@@ -180,7 +181,7 @@ namespace Action
             // Create Tool Action Construction
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionConstruction);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionConstructionCreator());
-            ToolActionConstruction.Data constructionToolData = new ToolActionConstruction.Data();
+            Mech.Data constructionToolData = new Mech.Data();
             constructionToolData.MechID = Mech.MechType.Storage;
             GameState.ActionPropertyManager.SetData(constructionToolData);
             GameState.ActionPropertyManager.EndActionPropertyType();

@@ -1,26 +1,28 @@
 using System;
 using UnityEngine;
-using Enums.Tile;
 using PlanetTileMap;
+using Mech;
+using Enums.Tile;
 
 namespace Action
 {
     public class ToolActionConstruction : ActionBase
     {
-        public struct Data
-        {
-            public Mech.MechType MechID;
-        }
-
-        Data data;
+        // Item Entity
+        private ItemInventoryEntity ItemEntity;
 
         public ToolActionConstruction(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
-            data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
+            // Item Entity
+            ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
+
+            ItemEntity.itemMechCastData.data = (Mech.Data)ActionPropertyEntity.actionPropertyData.Data;
+
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
@@ -28,7 +30,7 @@ namespace Action
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-                var mech = GameState.MechCreationApi.Get((int)data.MechID);
+                var mech = GameState.MechCreationApi.Get((int)ItemEntity.itemMechCastData.data.MechID);
 
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
@@ -49,7 +51,7 @@ namespace Action
 
                 if (allTilesAir)
                 {
-                    planet.AddMech(new KMath.Vec2f(x, y), data.MechID);
+                    planet.AddMech(new KMath.Vec2f(x, y), ItemEntity.itemMechCastData.data.MechID);
 
                     for (int i = 0; i < xRange; i++)
                     {
