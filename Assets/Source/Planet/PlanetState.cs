@@ -82,23 +82,21 @@ namespace Planet
             return newEntity;
         }
 
-        // Note(Mahdi): Deprecated will be removed soon
-        public AgentEntity AddAgent(int spriteId, int width,
-                     int height, Vec2f position, int startingAnimation)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnAgent(EntitasContext, 
-                spriteId, width, height, position, -1, startingAnimation));
-            return newEntity;
-        }
-
         public AgentEntity AddAgent(Vec2f position)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
                     -1, Agent.AgentType.Agent));
+            return newEntity;
+        }
+
+        public AgentEntity AddCorpse(Vec2f position, int spriteId, Agent.AgentType agentType)
+        {
+            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnCorpse(EntitasContext, position,
+                    -1, spriteId, agentType));
             return newEntity;
         }
 
@@ -109,17 +107,31 @@ namespace Planet
             MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, position, -1, mechType));
             return newEntity;
         }
-
-        // Note(Mahdi): Deprecated will be removed soon
-        public AgentEntity AddEnemy(int spriteId,
-                        int width, int height, Vec2f position, int startingAnimation)
+        
+        public void RemoveMech(int mechId)
         {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnEnemy(spriteId, width, height, 
-                position, -1, startingAnimation));
-            return newEntity;
+            MechEntity entity = MechList.Get(mechId);
+            Utils.Assert(entity.isEnabled);
+            MechList.Remove(mechId);
         }
+        
+        public MechEntity GetMechFromPosition(Vec2f position, MechType mechType)
+        {
+            foreach (var mech in MechList.List)
+            {
+                if(mech == null) break;
+                if(mech.mechType.mechType != mechType) continue;
+                
+                var mechBox = new AABox2D(mech.mechPosition2D.Value, mech.mechSprite2D.Size);
+                if (mechBox.OverlapPoint(position))
+                {
+                    return mech;
+                }
+            }
+
+            return null;
+        }
+
 
         public AgentEntity AddEnemy(Vec2f position)
         {
@@ -134,7 +146,52 @@ namespace Planet
         {
             AgentEntity entity = AgentList.Get(agentId);
             Utils.Assert(entity.isEnabled);
+
+            var pos = entity.agentPosition2D;
+            Vec2f agentPosition = pos.Value;
+
+            AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
+
+            if (entity.hasAgentItemDrop)
+            {
+                var itemDrop = entity.agentItemDrop;
+                int inventoryID = corpse.agentInventory.InventoryID;
+                if (itemDrop.Drops != null)
+                {
+                    
+                    for(int dropIndex = 0; dropIndex < itemDrop.Drops.Length; dropIndex++)
+                    {
+                        Enums.ItemType dropType = itemDrop.Drops[dropIndex];
+                        int maxDropCount = itemDrop.MaxDropCount[dropIndex];
+                        float dropRate = itemDrop.DropRate[dropIndex];
+
+                        
+                        
+                        float randXOffset = KMath.Random.Mt19937.genrand_realf() * 0.5f;
+
+                        
+                        Utils.Assert(maxDropCount < 100 && maxDropCount > 0);
+                        int currentDrop = 0;
+                        while (currentDrop < maxDropCount)
+                        {
+                            float randomDrop = KMath.Random.Mt19937.genrand_realf();
+                            if (randomDrop <= dropRate)
+                            {
+                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, pos.Value + new Vec2f(randXOffset, 0.5f));
+                                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
+                            }
+
+                            currentDrop++;
+                        }
+ 
+                    }
+                    
+                }
+            }
+
             AgentList.Remove(agentId);
+
+            
         }
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)

@@ -2,9 +2,6 @@ using UnityEngine;
 using Enums.Tile;
 using KMath;
 using Item;
-using Animancer;
-using HUD;
-using PlanetTileMap;
 using Mech;
 using System.Linq;
 using System.Collections.Generic;
@@ -13,7 +10,6 @@ namespace Planet.Unity
 {
     public class MechTest : MonoBehaviour
     {
-
         [SerializeField] Material Material;
 
         public Planet.PlanetState Planet;
@@ -84,6 +80,12 @@ namespace Planet.Unity
                     }
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                PlaceSmashableBox();
+            }
+            
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
@@ -287,6 +289,38 @@ namespace Planet.Unity
                 }
             }
             //TileMap.BuildLayerTexture(MapLayerType.Front);
+        }
+
+        private void PlaceMech()
+        {
+            Debug.Log("PLACE MECH");
+
+            var planet = FindObjectOfType<ItemTest>().Planet;
+
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
+        }
+        
+        private void PlaceSmashableBox()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            var mech = Planet.GetMechFromPosition(new Vec2f(x, y), MechType.SmashableBox);
+            if (mech != null)
+            {
+                Debug.Log("Destroy Smashable Box");
+                Planet.RemoveMech(mech.mechID.ID);
+            }
+            else
+            {
+                Debug.Log("PLACE Smashable Box");
+                Planet.AddMech(new Vec2f(x, y), MechType.SmashableBox);
+            }
         }
     } 
 }
