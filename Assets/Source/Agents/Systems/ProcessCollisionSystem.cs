@@ -120,7 +120,7 @@ namespace Agent
         public void Update(AgentContext agentContext, ref PlanetTileMap.TileMap tileMap)
         {
             float deltaTime = Time.deltaTime;
-            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPosition2D));
+            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider));
 
             foreach (var agentEntity in agentEntitiesWithBox)
             {
