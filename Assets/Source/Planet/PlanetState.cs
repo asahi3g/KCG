@@ -147,8 +147,8 @@ namespace Planet
             AgentEntity entity = AgentList.Get(agentId);
             Utils.Assert(entity.isEnabled);
 
-            var pos = entity.agentPosition2D;
-            Vec2f agentPosition = pos.Value;
+            var physicsState = entity.agentPhysicsState;
+            Vec2f agentPosition = physicsState.Position;
 
             AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
 
@@ -177,7 +177,7 @@ namespace Planet
                             float randomDrop = KMath.Random.Mt19937.genrand_realf();
                             if (randomDrop <= dropRate)
                             {
-                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, pos.Value + new Vec2f(randXOffset, 0.5f));
+                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, physicsState.Position + new Vec2f(randXOffset, 0.5f));
                                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
                             }
 

@@ -10,7 +10,7 @@ namespace Agent
         public void Update(ref PlanetState planet, float deltaTime)
         {
             var EntitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
-                AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+                AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
 
             foreach (var entity in EntitiesWithMovementState)
             {
