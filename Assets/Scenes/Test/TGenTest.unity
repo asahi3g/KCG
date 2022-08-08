@@ -383,7 +383,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.796875
+  orthographic size: 4.21875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -424,7 +424,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2085967805}
   - component: {fileID: 2085967806}
-  - component: {fileID: 2085967807}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -464,16 +463,3 @@ MonoBehaviour:
   enableTileGrid: 1
   drawMapBorder: 1
   foregroundToolEnabled: 1
---- !u!114 &2085967807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085967804}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12d1dad23a5134e408d561b8e9297b16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Material: {fileID: 2100000, guid: 4073de6af124b4f40bdce02691603836, type: 2}

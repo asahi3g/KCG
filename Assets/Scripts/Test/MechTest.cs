@@ -7,6 +7,7 @@ using HUD;
 using PlanetTileMap;
 using Mech;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Planet.Unity
 {
@@ -29,6 +30,8 @@ namespace Planet.Unity
         private Color correctHlColor = Color.green;
 
         private Color wrongHlColor = Color.red;
+
+        public Utility.FrameMesh HighliterMesh;
 
         public void Start()
         {
@@ -109,13 +112,13 @@ namespace Planet.Unity
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
+            //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
             if (x >= 0 && x < Planet.TileMap.MapSize.X &&
             y >= 0 && y < Planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get(2);
+                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
                 Debug.Log(mech.Name);
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
@@ -125,8 +128,8 @@ namespace Planet.Unity
 
                 var allTilesAir = true;
 
-                var w = mech.SpriteSize.X / Screen.width;
-                var h = mech.SpriteSize.Y / Screen.height;
+                var w = mech.SpriteSize.X;
+                var h = mech.SpriteSize.Y;
 
                 for (int i = 0; i < xRange; i++)
                 {
@@ -135,24 +138,64 @@ namespace Planet.Unity
                         if (Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
-                            GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, wrongHlColor);
+                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
                             break;
                         }
                         if (Planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
-                            GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, wrongHlColor);
+                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
                             break;
                         }
                     }
+
+                    if (!allTilesAir)
+                        break;
                 }
 
                 if (allTilesAir)
                 {
-                    GameState.Renderer.DrawQuadColorGui(viewportPos.x, viewportPos.y, w, h, correctHlColor);
+                    DrawQuad(HighliterMesh.obj, x, y, w, h, correctHlColor);
                 }
 
             }
+        }
+
+        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        {
+            var mr = gameObject.GetComponent<MeshRenderer>();
+            mr.sharedMaterial.color = color;
+
+            var mf = gameObject.GetComponent<MeshFilter>();
+            var mesh = mf.sharedMesh;
+
+            List<int> triangles = new List<int>();
+            List<Vector3> vertices = new List<Vector3>();
+
+            Vec2f topLeft = new Vec2f(x, y + h);
+            Vec2f BottomLeft = new Vec2f(x, y);
+            Vec2f BottomRight = new Vec2f(x + w, y);
+            Vec2f TopRight = new Vec2f(x + w, y + h);
+
+            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+
+            vertices.Add(p0);
+            vertices.Add(p1);
+            vertices.Add(p2);
+            vertices.Add(p3);
+
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 2);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 1);
+
+            mesh.SetVertices(vertices);
+            mesh.SetTriangles(triangles.ToArray(), 0);
         }
 
         // create the sprite atlas for testing purposes
@@ -174,7 +217,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.MajestyPalm, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
@@ -196,6 +239,9 @@ namespace Planet.Unity
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
+
+            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
+                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
         }
 
         void GenerateMap()
