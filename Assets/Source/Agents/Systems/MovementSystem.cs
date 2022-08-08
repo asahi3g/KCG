@@ -1,3 +1,4 @@
+using Physics;
 using System;
 using KMath;
 using UnityEngine;
@@ -8,63 +9,57 @@ namespace Agent
     {
         private void Update(PhysicsStateComponent physicsState, float deltaTime)
         {
-            float Gravity = 800.0f;
-            float MaxAcceleration = 50.0f;
-            // maximum Y velocity
-            float MaxVelocityY = 12.0f;
+            // Increase gravity and initial velocity for smaller air time during jump. 
 
-            if (physicsState.AffectedByGravity)
-            {
-                physicsState.Acceleration.Y -= Gravity * deltaTime;
-            }
-
+            if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
+                physicsState.Acceleration.Y -= Constants.Gravity;
             // maximum acceleration in the
 
             // maximum acceleration in the game
-            if (physicsState.Acceleration.Y <= -MaxAcceleration)
-            {
-                physicsState.Acceleration.Y = -MaxAcceleration;
-            }
+            if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)
+                physicsState.Acceleration.Y = -Constants.MaxAcceleration;
 
-            if (physicsState.Acceleration.Y >= MaxAcceleration)
-            {
-                physicsState.Acceleration.Y = MaxAcceleration;
-            }
+            if (physicsState.Acceleration.Y >= Constants.MaxAcceleration)
+                physicsState.Acceleration.Y = Constants.MaxAcceleration;
 
 
-            // maximum velocity in the game
-            if (physicsState.Velocity.Y > MaxVelocityY)
+            if (physicsState.OnGrounded)
             {
-                physicsState.Velocity.Y = MaxVelocityY;
+                int sign = Math.Sign(physicsState.Velocity.X);
+                // ground friction at max speed. -> Equal the running acceleration.
+                if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
+                    physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                if (Math.Abs(physicsState.Velocity.X) >= 0.25f)
+                    physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                else
+                    physicsState.Velocity.X = 0;
             }
-            if (physicsState.Velocity.Y < -MaxVelocityY)
+            else
             {
-                physicsState.Velocity.Y = -MaxVelocityY;
+                // For now air friction is equal ground friction.
+                // Air friction at max speed. -> Equal the running acceleration.
+                int sign = Math.Sign(physicsState.Velocity.X);
+
+                if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
+                    physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                if (Math.Abs(physicsState.Velocity.X) >= 0.1f) // Equal half running acceleration.
+                    physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                else
+                    physicsState.Velocity.X = 0;
             }
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
-            if (physicsState.OnGrounded)
-            {
-                // ground friction
-                newVelocity.X *= 0.7f;
-            }
-            else
-            {
-                // air friction
-                newVelocity.X *= 0.7f;
-            }
-
 
             // maximum velocity in the game
-            if (newVelocity.Y > MaxVelocityY)
+            if (physicsState.Velocity.Y > Constants.MaxVelocityY)
             {
-                newVelocity.Y = MaxVelocityY;
+                physicsState.Velocity.Y = Constants.MaxVelocityY;
             }
-            if (newVelocity.Y < -MaxVelocityY)
+            if (physicsState.Velocity.Y < -Constants.MaxVelocityY)
             {
-                newVelocity.Y = -MaxVelocityY;
+                physicsState.Velocity.Y = -Constants.MaxVelocityY;
             }
 
 
@@ -73,6 +68,7 @@ namespace Agent
             physicsState.Position = newPosition;
 
             physicsState.Velocity = newVelocity;
+            physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
         }
 
         public void Update(AgentContext agentContext)

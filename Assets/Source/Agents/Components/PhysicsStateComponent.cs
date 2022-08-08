@@ -10,7 +10,7 @@ namespace Agent
         public Vec2f Position;
         public Vec2f PreviousPosition;
 
-        public float Speed;
+        public float Speed;             // Runing speed in tiles/seconds.
         public Vec2f Velocity;
         public Vec2f Acceleration;      // Instantaneous, reset to zero at the end of the frame.
 

@@ -61,7 +61,7 @@ namespace ECSInput
 
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
-                    GameState.AgentProcessPhysicalState.JumpVelocity(player, 11.5f);
+                    GameState.AgentProcessPhysicalState.JumpVelocity(player, 16f); // 16f Intial velocity necessary to jump 3.2 tiles. at 40 tiles/seconds gravity
 
                 // Dash
                 if (Input.GetKeyDown(KeyCode.Space))

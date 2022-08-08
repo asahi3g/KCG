@@ -3,19 +3,19 @@ using Physics;
 using KMath;
 using UnityEngine;
 
-namespace  Item
+namespace Item
 {
     public class MovementSystem
     {
         private void Update(PhysicsStateComponent physicsState, float deltaTime)
         {
-            float Gravity = Physics.PhysicsConstants.Gravity;
-            float MaxAcceleration = 50.0f;
+            float Gravity = Constants.Gravity;
+            float MaxAcceleration = Constants.MaxAcceleration;
             
             // Maximum Y velocity
-            float MaxVelocityY = 15.0f;
+            float MaxVelocityY = Constants.MaxVelocityY;
 
-            physicsState.Acceleration.Y -= Gravity * deltaTime;
+            physicsState.Acceleration.Y -= Gravity;
          
             // Maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -MaxAcceleration)
@@ -69,6 +69,7 @@ namespace  Item
             physicsState.Position = newphysicsStateition;
 
             physicsState.Velocity = newVelocity;
+            physicsState.Acceleration = Vec2f.Zero;
         }
 
         public void Update(ItemParticleContext Context)

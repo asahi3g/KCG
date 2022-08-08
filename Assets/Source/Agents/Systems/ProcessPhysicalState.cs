@@ -1,4 +1,4 @@
-﻿using Entitas;
+﻿using System;
 using Enums;
 using Planet;
 using KMath;
@@ -36,7 +36,7 @@ namespace Agent
                 {
                     physicsState.MovementState = AgentMovementState.None;
                     physicsState.Invulnerable = false;
-                    physicsState.AffectedByGravity = false;
+                    physicsState.AffectedByGravity = true;
                 }
 
                 // if we are dashing we add some particles
@@ -66,14 +66,13 @@ namespace Agent
                 {
                     // if we are using the jetpack
                     // set the Y velocity to a given value.
-                    physicsState.Acceleration.Y = 0;
                     physicsState.Velocity.Y = 3.5f;
 
                     // Reduce the fuel and spawn particles
                     stats.Fuel -= 1.0f;
                     if (stats.Fuel <= 1.0f)
                     {
-                        stats.Fuel -= 20.0f;
+                        stats.Fuel -= 30.0f;
                     }
                     planet.AddParticleEmitter(physicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
@@ -102,23 +101,19 @@ namespace Agent
 
                 // if we are sticking to a wall 
                 // throw the agent in the opphysicsStateite direction
-                // Todo: Check if this acceleration isn't more than maximum acceleration.
+                // Inpulse so use immediate speed intead of acceleration.
                 if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                 {
                     physicsState.MovementState = AgentMovementState.None;
-                    physicsState.Acceleration.X = 1.0f * physicsState.Speed * 400.0f * 2;
-                    physicsState.Acceleration.Y = -1.0f * physicsState.Speed * 400.0f * 2;
+                    physicsState.Velocity.X = physicsState.Speed / 2;
                 }
-                else if (physicsState.MovementState == AgentMovementState.SlidingLeft)
+                else if (physicsState.MovementState == AgentMovementState.SlidingRight)
                 {
                     physicsState.MovementState = AgentMovementState.None;
-                    physicsState.Acceleration.X = -1.0f * physicsState.Speed * 400.0f * 2;
-                    physicsState.Acceleration.Y = -1.0f * physicsState.Speed * 400.0f * 2;
+                    physicsState.Acceleration.X = - physicsState.Speed / 2;
                 }
 
-                // Todo: This overrides accelerations assigned in the last if and else.
                 // jumping
-                physicsState.Acceleration.Y = 100.0f;
                 physicsState.Velocity.Y = velocity;
                 physicsState.JumpCounter++;
             }
@@ -127,7 +122,6 @@ namespace Agent
                 // double jump
                 if (physicsState.JumpCounter <= 1)
                 {
-                    physicsState.Acceleration.Y = 100.0f;
                     physicsState.Velocity.Y = velocity * 0.75f;
                     physicsState.JumpCounter++;
                 }
@@ -140,10 +134,8 @@ namespace Agent
 
             if (PhysicsState.DashCooldown <= 0.0f)
             {
-                PhysicsState.Acceleration.X += 1000.0f * horizontalDir;
-                PhysicsState.Velocity.X = 30.0f * horizontalDir;
+                PhysicsState.Velocity.X = 2 * PhysicsState.Speed * horizontalDir;
                 PhysicsState.Velocity.Y = 0.0f;
-                PhysicsState.Acceleration.Y = 0.0f; 
 
                 PhysicsState.Invulnerable = true;
                 PhysicsState.AffectedByGravity = false;
@@ -169,7 +161,8 @@ namespace Agent
             var PhysicsState = agentEntity.agentPhysicsState;
 
             // handling horizontal movement (left/right)
-            PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed * 100.0f * 2;
+            if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
+                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
 
             if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
             {
@@ -189,11 +182,14 @@ namespace Agent
         public void Walk(AgentEntity agentEntity, float horizontalDir)
         {
             var PhysicsState = agentEntity.agentPhysicsState;
-
-            PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed * 100.0f;
+            
+            if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
+                PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+            else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
+                PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
 
             if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
-            {
+            {   
                 // if we move to the right
                 // that means we are no longer sliding down on the left
                 PhysicsState.MovementState = AgentMovementState.None;

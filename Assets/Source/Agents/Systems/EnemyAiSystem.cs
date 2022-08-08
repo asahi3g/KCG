@@ -47,8 +47,7 @@ namespace Agent
                         planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
                         // knockback test
-                        physicsState.Acceleration.X += 800.0f * oppositeDirection.x;
-                        physicsState.Velocity.X = 20.0f * oppositeDirection.x;
+                        physicsState.Velocity.X = 10.0f * oppositeDirection.x;
                     }
 
 
@@ -58,13 +57,13 @@ namespace Agent
                     {
                         // if the enemy is stuck
                         // trigger the jump
-                        bool jump = Math.Abs(physicsState.Acceleration.X) <= 0.01f && 
-                                        physicsState.Acceleration.Y <= 0.01f && 
-                                        physicsState.Acceleration.Y >= -0.01f;
+                        bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
+                                        physicsState.Velocity.Y <= 0.05f && 
+                                        physicsState.Velocity.Y >= -0.05f;
 
                         // to move the enemy we have to add acceleration 
                         // towards the player
-                        physicsState.Acceleration = direction * physicsState.Speed * 25.0f;
+                        physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
 
                         // jumping is just an increase in velocity
                         if (jump)
