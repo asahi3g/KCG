@@ -57,7 +57,7 @@ namespace Mech
                     entity.AddMechPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
                     break;
                 case MechType.SmashableBox:
-                    entity.isMechSmahableBox = true;
+                    entity.AddMechSmashableBox(100);
                     break;
             }
 

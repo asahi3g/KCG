@@ -12,7 +12,7 @@ public static class MechComponentsLookup {
     public const int MechPlanter = 1;
     public const int MechPosition2D = 2;
     public const int MechPositionLimits = 3;
-    public const int MechSmahableBox = 4;
+    public const int MechSmashableBox = 4;
     public const int MechSprite2D = 5;
     public const int MechType = 6;
 
@@ -23,7 +23,7 @@ public static class MechComponentsLookup {
         "MechPlanter",
         "MechPosition2D",
         "MechPositionLimits",
-        "MechSmahableBox",
+        "MechSmashableBox",
         "MechSprite2D",
         "MechType"
     };
@@ -33,7 +33,7 @@ public static class MechComponentsLookup {
         typeof(Mech.PlanterComponent),
         typeof(Mech.Position2DComponent),
         typeof(Mech.PositionLimitsComponent),
-        typeof(Mech.SmahableBoxComponent),
+        typeof(Mech.SmashableBoxComponent),
         typeof(Mech.Sprite2DComponent),
         typeof(Mech.TypeComponent)
     };
