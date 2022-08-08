@@ -134,7 +134,7 @@ namespace Agent
 
             if (PhysicsState.DashCooldown <= 0.0f)
             {
-                PhysicsState.Velocity.X = 2 * PhysicsState.Speed * horizontalDir;
+                PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
                 PhysicsState.Velocity.Y = 0.0f;
 
                 PhysicsState.Invulnerable = true;
