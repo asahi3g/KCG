@@ -218,6 +218,10 @@ namespace ECSInput
 
                     movable.SlidingRight = false;
                     movable.SlidingLeft = false;
+                    if (movementState.MovementState == MovementState.None)
+                    {
+                        movementState.MovementState = MovementState.Idle;
+                    }
                 }
 
                 
@@ -265,6 +269,36 @@ namespace ECSInput
                 {
                     planet.AddParticleEmitter(pos.Value, Particle.ParticleEmitterType.DustEmitter);
                 }
+
+
+                float epsilon = 2.0f;
+
+                if (movable.Velocity.Y <= -epsilon)
+                {
+                    movementState.MovementState = MovementState.Falling;
+                }
+                else if (movementState.MovementState != MovementState.Dashing)
+                {
+                    movementState.MovementState = MovementState.None;
+                }
+
+
+                if (movementState.MovementState == MovementState.Idle || 
+                movementState.MovementState == MovementState.None)
+                {
+                    if (movable.Velocity.X >= epsilon ||
+                    movable.Velocity.X <= -epsilon)
+                    {
+                        movementState.MovementState = MovementState.Move;
+                    }
+                    else
+                    {
+                        movementState.MovementState = MovementState.Idle;
+                    }
+                }
+
+
+
                 //if (movable.Droping && movable.OnGrounded)
                 //{
                    

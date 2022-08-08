@@ -270,6 +270,8 @@ namespace Planet
             GameState.AgentMovableSystem.Update(EntitasContext.agent);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
+            GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
+            GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);

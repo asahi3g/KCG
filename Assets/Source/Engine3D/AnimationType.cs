@@ -9,6 +9,9 @@ namespace Engine3D
         Idle,
         Walk,
         Run,
-        Flip
+        Jump,
+        Flip,
+        Jog,
+        JumpFall,
     }
 }

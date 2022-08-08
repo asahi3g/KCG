@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using KMath;
 using UnityEngine;
+using Animancer;
 
 namespace Agent
 {
@@ -53,15 +54,40 @@ namespace Agent
             entity.AddAgentID(agentId); // agent id 
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPosition2D(position, newPreviousValue: default); // 2d position
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+           
             entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
                                      true, true, false, false, false, false, false, false); // used for physics simulation
-            entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
             entity.AddAgentMovementState(0, MovementState.None, false, 0.0f);
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
 
             if (agentType == Agent.AgentType.Player)
             {
+                /*entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});*/
+
+                Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
+
+                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+                GameObject model = GameObject.Instantiate(prefab);
+
+                GameObject manaquin = model.transform.GetChild(1).gameObject;
+                //manaquin.GetComponent<Renderer>().material = pixelMaterial;
+
+
+                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                Vector3 eulers = model.transform.rotation.eulerAngles;
+                model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                // create an animancer object and give it a reference to the Animator component
+                GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                // get the animator component from the game object
+                // this component is used by animancer
+                AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                animancerComponent.Animator = model.GetComponent<Animator>();
+                    
+                entity.AddAgentModel3D(model, animancerComponent);
+
                 entity.isAgentPlayer = true;
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
@@ -72,10 +98,13 @@ namespace Agent
             }
             else if (agentType == Agent.AgentType.Agent)
             {
-                
+                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+            entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
             }
             else if (agentType == Agent.AgentType.Enemy)
             {
+                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius);
                 
             }

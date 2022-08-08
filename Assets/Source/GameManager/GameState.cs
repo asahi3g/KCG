@@ -58,7 +58,8 @@ public class GameState
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
     public static readonly Agent.MovableSystem AgentMovableSystem;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-
+    public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
+    public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     #endregion
 
     #region Inventory
@@ -124,6 +125,8 @@ public class GameState
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
         AgentMovableSystem = new Agent.MovableSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
+        AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
+        AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();

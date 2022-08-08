@@ -12,26 +12,28 @@ public static class AgentComponentsLookup {
     public const int AgentEnemy = 1;
     public const int AgentID = 2;
     public const int AgentInventory = 3;
-    public const int AgentMovable = 4;
-    public const int AgentMovementState = 5;
-    public const int AgentPlayer = 6;
-    public const int AgentPosition2D = 7;
-    public const int AgentPositionDiscrete2D = 8;
-    public const int AgentSprite2D = 9;
-    public const int AgentStats = 10;
-    public const int AnimationState = 11;
-    public const int ECSInput = 12;
-    public const int ECSInputXY = 13;
-    public const int PhysicsBox2DCollider = 14;
-    public const int PhysicsSphere2DCollider = 15;
+    public const int AgentModel3D = 4;
+    public const int AgentMovable = 5;
+    public const int AgentMovementState = 6;
+    public const int AgentPlayer = 7;
+    public const int AgentPosition2D = 8;
+    public const int AgentPositionDiscrete2D = 9;
+    public const int AgentSprite2D = 10;
+    public const int AgentStats = 11;
+    public const int AnimationState = 12;
+    public const int ECSInput = 13;
+    public const int ECSInputXY = 14;
+    public const int PhysicsBox2DCollider = 15;
+    public const int PhysicsSphere2DCollider = 16;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "AgentAIController",
         "AgentEnemy",
         "AgentID",
         "AgentInventory",
+        "AgentModel3D",
         "AgentMovable",
         "AgentMovementState",
         "AgentPlayer",
@@ -51,6 +53,7 @@ public static class AgentComponentsLookup {
         typeof(Agent.EnemyComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
+        typeof(Agent.Model3DComponent),
         typeof(Agent.MovableComponent),
         typeof(Agent.MovementStateComponent),
         typeof(Agent.PlayerComponent),
