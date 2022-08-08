@@ -10,6 +10,7 @@ namespace PlanetTileMap
     {
         FrameMesh[] LayerMeshes;
         public static readonly int LayerCount = Enum.GetNames(typeof(MapLayerType)).Length;
+        public static bool TileCollisionDebugging = false;
 
         public void Initialize(Material material, Transform transform, int drawOrder)
         {
@@ -29,18 +30,24 @@ namespace PlanetTileMap
             var cam = Camera.main;
             if (!cam.orthographic) { Debug.LogError("Camera.main is not Orthographic, failed to create edge colliders"); return; }
 
+            LayerMeshes[(int)MapLayerType.Mid].Clear();
+
+            if (TileCollisionDebugging)
+                return;
+
             var bottomLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
             var topLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
-
-            LayerMeshes[(int)MapLayerType.Mid].Clear();
 
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < tileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
                 for (int x = (int)(bottomLeft.x - 10); x < tileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
+                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                        continue;
+
                     if (x >= 0 && y >= 0)
                     {
                         ref var tile = ref tileMap.GetTile(x, y);
@@ -57,9 +64,6 @@ namespace PlanetTileMap
 
                                     const float width = 1;
                                     const float height = 1;
-
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Mid].UpdateUV(textureCoords, (index) * 4);
@@ -79,15 +83,15 @@ namespace PlanetTileMap
                                         continue;
 
                                     // Update UVs
-                                    LayerMeshes[(int)MapLayerType.Front].UpdateUV(textureCoords, (index) * 4);
+                                    LayerMeshes[(int)MapLayerType.Mid].UpdateUV(textureCoords, (index) * 4);
                                     // Update Vertices
-                                    LayerMeshes[(int)MapLayerType.Front].UpdateVertex((index * 4), x, y, width, height);
+                                    LayerMeshes[(int)MapLayerType.Mid].UpdateVertex((index * 4), x, y, width, height);
                                     index++;
                                 }
                             }
                         }
 
-                        
+
                     }
                 }
             }
@@ -114,6 +118,9 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
+                        if (!Utility.ObjectMesh.isOnScreen(x, y))
+                            continue;
+
                         ref var tile = ref tileMap.GetTile(x, y);
 
                         if (tile.FrontTileSpriteID >= 0)
@@ -125,19 +132,25 @@ namespace PlanetTileMap
                             if (spriteId >= 0)
                             {
                                 {
+#if DEBUG
+                                    if (TileCollisionDebugging)
+                                        spriteId = GetSpriteIDWithCOllisionIsotype(tile.CollisionIsoType2);
+#endif
+
                                     Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(spriteId).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
-
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Front].UpdateUV(textureCoords, (index) * 4);
                                     // Update Vertices
                                     LayerMeshes[(int)MapLayerType.Front].UpdateVertex((index * 4), x, y, width, height);
                                     index++;
+#if DEBUG
+                                    if (TileCollisionDebugging)
+                                        continue;
+#endif
                                 }
 
                                 if (tile.DrawType == TileDrawType.Composited)
@@ -158,13 +171,11 @@ namespace PlanetTileMap
                                 }
                             }
                         }
-
-                        
                     }
                 }
             }
         }
-        
+
         public void UpdateBackLayerMesh(TileMap tileMap)
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
@@ -172,12 +183,15 @@ namespace PlanetTileMap
             var cam = Camera.main;
             if (!cam.orthographic) { Debug.LogError("Camera.main is not Orthographic, failed to create edge colliders"); return; }
 
+            LayerMeshes[(int)MapLayerType.Back].Clear();
+
+            if (TileCollisionDebugging)
+                return;
+
             var bottomLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
             var topLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
-
-            LayerMeshes[(int)MapLayerType.Back].Clear();
 
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < tileMap.MapSize.Y && y <= (topRight.y + 10); y++)
@@ -186,6 +200,9 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
+                        if (!Utility.ObjectMesh.isOnScreen(x, y))
+                            continue;
+
                         ref var tile = ref tileMap.GetTile(x, y);
 
                         if (tile.BackTileSpriteID >= 0)
@@ -201,9 +218,6 @@ namespace PlanetTileMap
 
                                     const float width = 1;
                                     const float height = 1;
-
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);
@@ -223,17 +237,58 @@ namespace PlanetTileMap
                                         continue;
 
                                     // Update UVs
-                                    LayerMeshes[(int)MapLayerType.Front].UpdateUV(textureCoords, (index) * 4);
+                                    LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);
                                     // Update Vertices
-                                    LayerMeshes[(int)MapLayerType.Front].UpdateVertex((index * 4), x, y, width, height);
+                                    LayerMeshes[(int)MapLayerType.Back].UpdateVertex((index * 4), x, y, width, height);
                                     index++;
                                 }
                             }
                         }
 
-                        
+
                     }
                 }
+            }
+        }
+
+        public int GetSpriteIDWithCOllisionIsotype(Collisions.TileAdjacencyType tileIsoType)
+        {
+            switch (tileIsoType)
+            {
+                case Collisions.TileAdjacencyType.FB_R0_A0000:
+                    return GameResources.SB_R0000Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0001:
+                    return GameResources.SB_R0001Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0010:
+                    return GameResources.SB_R0010Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0011:
+                    return GameResources.SB_R0011Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0100:
+                    return GameResources.SB_R0100Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0101:
+                    return GameResources.SB_R0101Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0110:
+                    return GameResources.SB_R0110Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0111:
+                    return GameResources.SB_R0111Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1000:
+                    return GameResources.SB_R1000Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1001:
+                    return GameResources.SB_R1001Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1010:
+                    return GameResources.SB_R1010Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1011:
+                    return GameResources.SB_R1011Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1100:
+                    return GameResources.SB_R1100Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1101:
+                    return GameResources.SB_R1101Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1110:
+                    return GameResources.SB_R1110Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1111:
+                    return GameResources.SB_R1111Sheet;
+                default:
+                    return GameResources.EmptyBlockSheet;
             }
         }
 

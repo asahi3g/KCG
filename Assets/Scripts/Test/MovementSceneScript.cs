@@ -158,7 +158,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
 
             // Player Status UI Init
-            HUDManager.Initialize(Planet, Player);
+             HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
