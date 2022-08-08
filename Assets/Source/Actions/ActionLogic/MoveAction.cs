@@ -49,7 +49,6 @@ namespace Action
             {
                 if (--pathLength == 0)
                 {
-                    AgentEntity.agentPhysicsState.Acceleration.X = 0;
                     ActionEntity.actionExecution.State = Enums.ActionState.Success;
                     return;
                 }
@@ -58,14 +57,13 @@ namespace Action
             // Jumping is just an increase in velocity.
             if (direction.Y > 0 && AgentEntity.agentPhysicsState.OnGrounded)
             {
-                AgentEntity.agentPhysicsState.Acceleration.Y = 0.0f;
-                AgentEntity.agentPhysicsState.Velocity.Y = 20f;
+                AgentEntity.agentPhysicsState.Velocity.Y = 14f;
             }
 
             // Todo: deals with flying agents.
             direction.Y = 0;
             direction.Normalize();
-            AgentEntity.agentPhysicsState.Acceleration.X = direction.X * AgentEntity.agentPhysicsState.Speed * 25.0f;
+            AgentEntity.agentPhysicsState.Acceleration.X = direction.X * 2 * AgentEntity.agentPhysicsState.Speed / Physics.Constants.TimeToMax;
         }
 
         public override void OnExit(ref Planet.PlanetState planet)

@@ -62,13 +62,12 @@ namespace Agent
                                         physicsState.Velocity.Y >= -0.05f;
 
                         // to move the enemy we have to add acceleration 
-                        // towards the player
+                        // towards the player (Equal two time the drag.)
                         physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
 
                         // jumping is just an increase in velocity
                         if (jump)
                         {
-                            physicsState.Acceleration.Y = 0.0f;
                             physicsState.Velocity.Y = 7.5f;
                         }
 
