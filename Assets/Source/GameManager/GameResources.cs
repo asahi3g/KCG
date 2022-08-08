@@ -600,7 +600,7 @@ public class GameResources
 
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Slime, "Slime");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(SlimeIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -608,7 +608,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Food, "Food");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(FoodIcon);
         GameState.ItemCreationApi.SetInventoryTexture(FoodIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -616,7 +616,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bone, "Bone");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(BoneIcon);
         GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -624,7 +624,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.RESOURCE);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(OreIcon);
         GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
