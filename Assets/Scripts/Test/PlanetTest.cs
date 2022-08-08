@@ -112,7 +112,7 @@ namespace Planet.Unity
             GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
 
             // Draw HUD UI
-            HUDManager.Update(Player);
+           // HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -423,8 +423,6 @@ namespace Planet.Unity
                 }
             }
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
     }
 }

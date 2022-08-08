@@ -51,8 +51,15 @@ namespace Mech
             entity.AddMechPosition2D(position);
             entity.AddMechType(mechType);
 
-            if (mechType == MechType.Planter)
-                entity.AddMechPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+            switch (mechType)
+            {
+                case MechType.Planter:
+                    entity.AddMechPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+                    break;
+                case MechType.SmashableBox:
+                    entity.AddMechSmashableBox(100);
+                    break;
+            }
 
             return entity;
         }

@@ -6,6 +6,9 @@
         Rock,
         RockDust,
         Ore,
+        Slime,
+        Food,
+        Bone,
 
         /// <summary>
         /// Weapons

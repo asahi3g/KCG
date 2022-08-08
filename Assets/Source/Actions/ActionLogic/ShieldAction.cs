@@ -30,25 +30,12 @@ namespace Action
                 ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
 
                 // If Item In Slot Is A Melee Attack Weapon
-                if(ItemEntity.itemType.Type== Enums.ItemType.Sword || ItemEntity.itemType.Type == Enums.ItemType.StunBaton)
+                if(ItemEntity.itemType.Type is Enums.ItemType.Sword or Enums.ItemType.StunBaton)
                 {
-                    // If Shield Active Is False
-                    if (!ActionPropertyEntity.actionPropertyShield.ShieldActive)
-                    {
-                        // Set Shield Active True
-                        ActionPropertyEntity.actionPropertyShield.ShieldActive = true;
-
-                        // Set Invulnerable True
-                        AgentEntity.agentMovable.Invulnerable = true;
-                    }
-                    else
-                    {
-                        // Set Shield Active False
-                        ActionPropertyEntity.actionPropertyShield.ShieldActive = false;
-
-                        // Set Invulnerable False
-                        AgentEntity.agentMovable.Invulnerable = false;
-                    }
+                    // Toggle Shield
+                    ActionPropertyEntity.actionPropertyShield.ShieldActive = !ActionPropertyEntity.actionPropertyShield.ShieldActive;
+                    // Toggle Invulnerable
+                    AgentEntity.agentMovable.Invulnerable = !AgentEntity.agentMovable.Invulnerable;
                 }
 
                 // Execute Update

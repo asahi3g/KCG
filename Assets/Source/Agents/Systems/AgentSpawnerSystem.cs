@@ -13,7 +13,6 @@ namespace Agent
             AgentCreationApi = agentCreationApi;
         }
 
-        //NOTE(Mahdi): Deprecated, will be removed soon
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
         int agentId, int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, int playerFuel, float attackCoolDown)
         {
@@ -41,6 +40,26 @@ namespace Agent
             return entity;
         }
 
+
+        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int agentId, int spriteId, AgentType agentType)
+        {
+            var entity = entitasContext.agent.CreateEntity();
+            ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
+            var spriteSize = properties.SpriteSize;
+
+            entity.AddAgentID(agentId); // agent id 
+            entity.isAgentCorpse = true;
+            entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
+            entity.AddAgentPosition2D(position, newPreviousValue: default); // 2d position
+            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+            entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
+                                     true, true, false, false, false, false, false, false); // used for physics simulation
+
+            var attacher = Inventory.InventoryAttacher.Instance;
+            attacher.AttachInventoryToAgent(entitasContext, 3, 3, entity);
+
+            return entity;
+        }
 
         public AgentEntity Spawn(Contexts entitasContext, Vec2f position, int agentId, AgentType agentType)
         {
@@ -77,55 +96,31 @@ namespace Agent
             else if (agentType == Agent.AgentType.Enemy)
             {
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius);
-                
+
+                Enums.ItemType[] Drops = new Enums.ItemType[3];
+                int[] MaxDropCount = new int[3];
+                float[] DropRate = new float[3];
+
+                Drops[0] = Enums.ItemType.Slime;
+                Drops[1] = Enums.ItemType.Food;
+                Drops[2] = Enums.ItemType.Bone;
+
+                MaxDropCount[0] = 1;
+                MaxDropCount[1] = 3;
+                MaxDropCount[2] = 6;
+
+                DropRate[0] = 0.3f;
+                DropRate[1] = 0.6f;
+                DropRate[2] = 0.8f;
+
+                entity.AddAgentItemDrop(Drops, MaxDropCount, DropRate);
             }
-
-            return entity;
-        }
-
-        //NOTE(Mahdi): Deprecated, will be removed soon
-        public AgentEntity SpawnAgent(Contexts contexts, int spriteId, int width, int height, Vec2f position,
-        int agentId, int startingAnimation)
-        {
-            var entity = contexts.agent.CreateEntity();
-
-            var spriteSize = new Vec2f(width / 32f, height / 32f);
-
-            entity.AddAgentID(agentId);
-
-            Vec2f box2dCollider = new Vec2f(0.5f, 1.5f);
-            entity.AddPhysicsBox2DCollider(box2dCollider, new Vec2f(0.25f, 0.0f));
-            entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-            entity.AddAgentPosition2D(position, newPreviousValue: default);
-            entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 
-                                            true, true, false, false, false, false, false, false);
-
-            return entity;
-        }
-
-        //NOTE(Mahdi): Deprecated, will be removed soon
-        public AgentEntity SpawnEnemy(int spriteId, int width, int height, Vec2f position,
-        int agentId, int startingAnimation)
-        {
-            var entity = Contexts.sharedInstance.agent.CreateEntity();
             
-            var spriteSize = new Vec2f(width / 32f, height / 32f);
-            
-            entity.AddAgentID(agentId);
-
-            Vec2f box2dCollider = new Vec2f(0.75f, 0.5f);
-            entity.AddPhysicsBox2DCollider(box2dCollider, new Vec2f(0.125f, 0.0f));
-            entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-            entity.AddAgentPosition2D(position, newPreviousValue: default);
-            entity.AddAgentMovable(newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
-                                        true, true, false, false, false, false, false, false);
-            entity.AddAgentEnemy(0, 4.0f);
-            entity.AddAgentStats(100, 100, 100, 100, 100, 0.8f);
 
             return entity;
         }
+
+    
 
     }
 }
