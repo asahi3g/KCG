@@ -11,17 +11,19 @@ public partial class AgentEntity {
     public Agent.InventoryComponent agentInventory { get { return (Agent.InventoryComponent)GetComponent(AgentComponentsLookup.AgentInventory); } }
     public bool hasAgentInventory { get { return HasComponent(AgentComponentsLookup.AgentInventory); } }
 
-    public void AddAgentInventory(int newInventoryID) {
+    public void AddAgentInventory(int newInventoryID, bool newAutoPick) {
         var index = AgentComponentsLookup.AgentInventory;
         var component = (Agent.InventoryComponent)CreateComponent(index, typeof(Agent.InventoryComponent));
         component.InventoryID = newInventoryID;
+        component.AutoPick = newAutoPick;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentInventory(int newInventoryID) {
+    public void ReplaceAgentInventory(int newInventoryID, bool newAutoPick) {
         var index = AgentComponentsLookup.AgentInventory;
         var component = (Agent.InventoryComponent)CreateComponent(index, typeof(Agent.InventoryComponent));
         component.InventoryID = newInventoryID;
+        component.AutoPick = newAutoPick;
         ReplaceComponent(index, component);
     }
 

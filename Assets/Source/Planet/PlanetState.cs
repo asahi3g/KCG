@@ -53,8 +53,8 @@ namespace Planet
 
             // Mesh builders
             GameState.TileMapRenderer.Initialize(material, transform, 7);
-            GameState.ItemMeshBuilderSystem.Initialize(material, transform, 11);
-            GameState.AgentMeshBuilderSystem.Initialize(material, transform, 12);
+            GameState.AgentMeshBuilderSystem.Initialize(material, transform, 11);
+            GameState.ItemMeshBuilderSystem.Initialize(material, transform, 12);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);

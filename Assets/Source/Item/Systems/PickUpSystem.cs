@@ -27,6 +27,8 @@ namespace Item
                 Vec2f centerPos = item.itemPhysicsState.Position + itemPropreties.SpriteSize / 2.0f;
                 foreach (var agent in agents)
                 {
+                    if (!agent.agentInventory.AutoPick)
+                        continue;
                     // Todo: Use action center Position.
                     if ((agent.agentPhysicsState.Position - centerPos).Magnitude <= 1.25f)
                     {

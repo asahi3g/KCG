@@ -36,6 +36,7 @@ namespace Agent
             // Add Inventory and toolbar.
             var attacher = Inventory.InventoryAttacher.Instance;
             attacher.AttachInventoryToAgent(entitasContext, 10, 6, entity);
+            entity.agentInventory.AutoPick = true;
             return entity;
         }
 
