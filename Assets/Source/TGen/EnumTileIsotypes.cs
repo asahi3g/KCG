@@ -34,8 +34,8 @@ namespace TGen
         // Empty Block
         EmptyBlock,
 
-        // FullBlock
-        FullBlock,
+        // SquareBlock
+        SquareBlock,
 
         // HalfBlock
         HB_R1,

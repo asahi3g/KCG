@@ -6,13 +6,13 @@ using Entitas;
 
 namespace HUD
 {
-    public static class HUDManager
+    public class HUDManager
     {
         // GUI Manager
-        public static GUIManager guiManager;
+        public GUIManager guiManager;
 
         // Constructor
-        public static void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Create GUI Manager
             guiManager = new GUIManager();
@@ -21,13 +21,13 @@ namespace HUD
             guiManager.Initialize(planet, agentEntity);
         }
 
-        public static void Update(AgentEntity agentEntity)
+        public void Update(AgentEntity agentEntity)
         {
             // Update GUI
             guiManager.Update(agentEntity);
         }
 
-        public static void Draw()
+        public void Draw()
         {
             guiManager.Draw();
         }

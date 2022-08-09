@@ -8,17 +8,19 @@
 //------------------------------------------------------------------------------
 public static class MechComponentsLookup {
 
-    public const int MechID = 0;
-    public const int MechPlanter = 1;
-    public const int MechPosition2D = 2;
-    public const int MechPositionLimits = 3;
-    public const int MechSmashableBox = 4;
-    public const int MechSprite2D = 5;
-    public const int MechType = 6;
+    public const int MechCastData = 0;
+    public const int MechID = 1;
+    public const int MechPlanter = 2;
+    public const int MechPosition2D = 3;
+    public const int MechPositionLimits = 4;
+    public const int MechSmashableBox = 5;
+    public const int MechSprite2D = 6;
+    public const int MechType = 7;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
+        "MechCastData",
         "MechID",
         "MechPlanter",
         "MechPosition2D",
@@ -29,6 +31,7 @@ public static class MechComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(Mech.CastDataComponent),
         typeof(Mech.IDComponent),
         typeof(Mech.PlanterComponent),
         typeof(Mech.Position2DComponent),

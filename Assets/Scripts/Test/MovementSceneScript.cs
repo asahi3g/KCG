@@ -81,9 +81,6 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            // Draw HUD UI
-            HUDManager.Update(Player);
-
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
@@ -157,9 +154,6 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             inventoryID = Player.agentInventory.InventoryID;
-
-            // Player Status UI Init
-             HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

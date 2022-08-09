@@ -10,5 +10,6 @@ namespace Planet
         public static readonly int ProjectileLimit = 161024;
         public static readonly int ItemParticlesLimit = 161024;
         public static readonly int ParticleLimit = 256 * 1024;
+        public static readonly int UIElementLimit = 256 * 1024;
     }
 }
