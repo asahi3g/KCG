@@ -82,7 +82,10 @@ namespace Engine3D
 
         private void LoadModels()
         {
+            ModelLoader.Load("DefaultHumanoid", ModelType.DefaultHumanoid);
             ModelLoader.Load("Stander", ModelType.Stander);
+            ModelLoader.Load("Pistol", ModelType.Pistol);
+            ModelLoader.Load("Rapier", ModelType.Rapier);
         }
 
     }

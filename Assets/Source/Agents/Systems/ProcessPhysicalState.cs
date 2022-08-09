@@ -183,7 +183,7 @@ namespace Agent
             }
         }
 
-        public void Dash(AgentEntity agentEntity, float horizontalDir)
+        public void Dash(AgentEntity agentEntity, int horizontalDir)
         {
             var PhysicsState = agentEntity.agentPhysicsState;
 
@@ -232,13 +232,14 @@ namespace Agent
             }
         }
 
-        public void Run(AgentEntity agentEntity, float horizontalDir)
+        public void Run(AgentEntity agentEntity, int horizontalDir)
         {
             var PhysicsState = agentEntity.agentPhysicsState;
 
             if (PhysicsState.MovementState != AgentMovementState.Dashing &&
             PhysicsState.MovementState != AgentMovementState.SwordSlash)
             {
+                PhysicsState.Direction = (int)horizontalDir;
                 // handling horizontal movement (left/right)
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
                 {
@@ -261,16 +262,21 @@ namespace Agent
 
         }
 
-        public void Walk(AgentEntity agentEntity, float horizontalDir)
+        public void Walk(AgentEntity agentEntity, int horizontalDir)
         {
             var PhysicsState = agentEntity.agentPhysicsState;
             if (PhysicsState.MovementState != AgentMovementState.Dashing &&
             PhysicsState.MovementState != AgentMovementState.SwordSlash)
             {
+                PhysicsState.Direction = (int)horizontalDir;
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
+                {
                     PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                }
                 else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
+                {
                     PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                }
 
                 if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
                 {   

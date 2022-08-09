@@ -20,11 +20,11 @@ namespace Agent
 
 
                 Vector3 eulers = model3d.GameObject.transform.rotation.eulerAngles;
-                if (physicsState.Velocity.X > 0.0f)
+                if (physicsState.Direction == 1)
                 {
                     model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
-                else if (physicsState.Velocity.X < 0.0f)
+                else if (physicsState.Direction == -1)
                 {
                     model3d.GameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }

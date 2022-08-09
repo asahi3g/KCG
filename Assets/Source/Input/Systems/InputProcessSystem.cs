@@ -40,6 +40,37 @@ namespace ECSInput
             }
         }
 
+        public void SetAgentWeapon(AgentEntity agentEntity, Model3DWeapon weapon)
+        {
+            var model3d = agentEntity.agentModel3D;
+            if (weapon == Model3DWeapon.Sword)
+            {        
+                if (model3d.CurrentWeapon != Model3DWeapon.Sword)
+                {
+                    GameObject hand = model3d.Hand;
+
+                    GameObject rapierPrefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Rapier);
+                    GameObject rapier = GameObject.Instantiate(rapierPrefab);
+
+                    rapier.transform.parent = hand.transform;
+                    rapier.transform.position = hand.transform.position;
+                    rapier.transform.rotation = hand.transform.rotation;
+                    rapier.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+                    model3d.Weapon = rapier;
+                }
+            }
+            else
+            {
+                if (model3d.Weapon != null)
+                {
+                    GameObject.Destroy(model3d.Weapon);
+                }
+            }
+
+            model3d.CurrentWeapon = weapon;
+        }
+
         public void Update(ref Planet.PlanetState planet)
         {
             Contexts contexts = planet.EntitasContext;
@@ -47,14 +78,14 @@ namespace ECSInput
             var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
 
-            float x = 0.0f;
+            int x = 0;
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                x += 1.0f;
+                x += 1;
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                x -= 1.0f;
+                x -= 1;
             }
 
             foreach (var player in AgentsWithXY)
@@ -77,6 +108,16 @@ namespace ECSInput
                 if (Input.GetKeyDown(KeyCode.K))
                 {
                     GameState.AgentProcessPhysicalState.SwordSlash(player);
+                }
+
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    SetAgentWeapon(player, Model3DWeapon.Sword);
+                }
+
+                if (Input.GetKeyDown(KeyCode.V))
+                {
+                    SetAgentWeapon(player, Model3DWeapon.None);
                 }
 
                 // Running
