@@ -1,4 +1,4 @@
-﻿using Entitas;
+﻿using Inventory;
 using Planet;
 using UnityEngine;
 
@@ -7,7 +7,6 @@ namespace Action
     public class ReloadAction : ActionBase
     {
         private Item.FireWeaponPropreties WeaponPropreties;
-        private InventoryEntity InventoryEntity;
         private ItemInventoryEntity ItemEntity;
         private float runningTime = 0f;
 
@@ -20,12 +19,14 @@ namespace Action
             if (!AgentEntity.hasAgentInventory)
                 return;
 
-            InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+            int inventoryID = AgentEntity.agentInventory.InventoryID;
+            Inventory.EntityComponent inventory = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
 
             // Todo: start playing some animation
-            if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
+            if (inventoryModel.HasToolBar)
             {
-                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
+                int selectedSlot = inventory.SelectedSlotID;
                 ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
                     AgentEntity.agentInventory.InventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);

@@ -98,8 +98,7 @@ public partial class Contexts {
     public const string AgentID = "AgentID";
     public const string AIGoal = "AIGoal";
     public const string FloatingTextID = "FloatingTextID";
-    public const string InventoryIDID = "InventoryIDID";
-    public const string InventoryIDTypeID = "InventoryIDTypeID";
+    public const string InventoryID = "InventoryID";
     public const string ItemID = "ItemID";
     public const string ItemInventory = "ItemInventory";
     public const string ItemType = "ItemType";
@@ -172,14 +171,9 @@ public partial class Contexts {
             (e, c) => ((FloatingText.IDComponent)c).Index));
 
         inventory.AddEntityIndex(new Entitas.PrimaryEntityIndex<InventoryEntity, int>(
-            InventoryIDID,
+            InventoryID,
             inventory.GetGroup(InventoryMatcher.InventoryID),
             (e, c) => ((Inventory.IDComponent)c).ID));
-
-        inventory.AddEntityIndex(new Entitas.EntityIndex<InventoryEntity, int>(
-            InventoryIDTypeID,
-            inventory.GetGroup(InventoryMatcher.InventoryID),
-            (e, c) => ((Inventory.IDComponent)c).TypeID));
 
         itemInventory.AddEntityIndex(new Entitas.PrimaryEntityIndex<ItemInventoryEntity, int>(
             ItemID,
@@ -281,12 +275,8 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<FloatingTextEntity, int>)context.GetEntityIndex(Contexts.FloatingTextID)).GetEntity(Index);
     }
 
-    public static InventoryEntity GetEntityWithInventoryIDID(this InventoryContext context, int ID) {
-        return ((Entitas.PrimaryEntityIndex<InventoryEntity, int>)context.GetEntityIndex(Contexts.InventoryIDID)).GetEntity(ID);
-    }
-
-    public static System.Collections.Generic.HashSet<InventoryEntity> GetEntitiesWithInventoryIDTypeID(this InventoryContext context, int TypeID) {
-        return ((Entitas.EntityIndex<InventoryEntity, int>)context.GetEntityIndex(Contexts.InventoryIDTypeID)).GetEntities(TypeID);
+    public static InventoryEntity GetEntityWithInventoryID(this InventoryContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<InventoryEntity, int>)context.GetEntityIndex(Contexts.InventoryID)).GetEntity(ID);
     }
 
     public static ItemInventoryEntity GetEntityWithItemID(this ItemInventoryContext context, int ID) {

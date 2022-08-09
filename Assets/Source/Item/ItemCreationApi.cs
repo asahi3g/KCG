@@ -89,6 +89,7 @@ namespace Item
         public void SetGroup(Enums.ItemGroups group)
         {
             IsItemTypeValid();
+
             PropertiesArray[(int)CurrentIndex].Group = group;
         }
 

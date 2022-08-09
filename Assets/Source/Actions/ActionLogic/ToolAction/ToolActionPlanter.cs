@@ -112,7 +112,7 @@ namespace Action
         {
             if (ItemEntity != null)
             {
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID), ItemEntity.itemInventory.SlotID);
+                GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
                 ItemEntity.Destroy();
             }
             base.OnExit(ref planet);

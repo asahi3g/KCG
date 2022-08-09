@@ -49,7 +49,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes

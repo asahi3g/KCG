@@ -8,18 +8,18 @@
 //------------------------------------------------------------------------------
 public partial class InventoryEntity {
 
-    static readonly Inventory.DrawableComponent inventoryDrawableComponent = new Inventory.DrawableComponent();
+    static readonly Inventory.DrawComponent inventoryDrawComponent = new Inventory.DrawComponent();
 
-    public bool isInventoryDrawable {
-        get { return HasComponent(InventoryComponentsLookup.InventoryDrawable); }
+    public bool hasInventoryDraw {
+        get { return HasComponent(InventoryComponentsLookup.InventoryDraw); }
         set {
-            if (value != isInventoryDrawable) {
-                var index = InventoryComponentsLookup.InventoryDrawable;
+            if (value != hasInventoryDraw) {
+                var index = InventoryComponentsLookup.InventoryDraw;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
                             ? componentPool.Pop()
-                            : inventoryDrawableComponent;
+                            : inventoryDrawComponent;
 
                     AddComponent(index, component);
                 } else {
@@ -40,17 +40,17 @@ public partial class InventoryEntity {
 //------------------------------------------------------------------------------
 public sealed partial class InventoryMatcher {
 
-    static Entitas.IMatcher<InventoryEntity> _matcherInventoryDrawable;
+    static Entitas.IMatcher<InventoryEntity> _matcherInventoryDraw;
 
-    public static Entitas.IMatcher<InventoryEntity> InventoryDrawable {
+    public static Entitas.IMatcher<InventoryEntity> InventoryDraw {
         get {
-            if (_matcherInventoryDrawable == null) {
-                var matcher = (Entitas.Matcher<InventoryEntity>)Entitas.Matcher<InventoryEntity>.AllOf(InventoryComponentsLookup.InventoryDrawable);
+            if (_matcherInventoryDraw == null) {
+                var matcher = (Entitas.Matcher<InventoryEntity>)Entitas.Matcher<InventoryEntity>.AllOf(InventoryComponentsLookup.InventoryDraw);
                 matcher.componentNames = InventoryComponentsLookup.componentNames;
-                _matcherInventoryDrawable = matcher;
+                _matcherInventoryDraw = matcher;
             }
 
-            return _matcherInventoryDrawable;
+            return _matcherInventoryDraw;
         }
     }
 }

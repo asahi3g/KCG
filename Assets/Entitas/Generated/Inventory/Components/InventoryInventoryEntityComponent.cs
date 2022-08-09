@@ -11,25 +11,25 @@ public partial class InventoryEntity {
     public Inventory.EntityComponent inventoryEntity { get { return (Inventory.EntityComponent)GetComponent(InventoryComponentsLookup.InventoryEntity); } }
     public bool hasInventoryEntity { get { return HasComponent(InventoryComponentsLookup.InventoryEntity); } }
 
-    public void AddInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedSlotID) {
+    public void AddInventoryEntity(int newInventoryModelID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
         var index = InventoryComponentsLookup.InventoryEntity;
         var component = (Inventory.EntityComponent)CreateComponent(index, typeof(Inventory.EntityComponent));
-        component.Width = newWidth;
-        component.Height = newHeight;
+        component.InventoryModelID = newInventoryModelID;
         component.Slots = newSlots;
-        component.SlotsMask = newSlotsMask;
         component.SelectedSlotID = newSelectedSlotID;
+        component.Size = newSize;
+        component.SlotsMask = newSlotsMask;
         AddComponent(index, component);
     }
 
-    public void ReplaceInventoryEntity(int newWidth, int newHeight, Inventory.Slot[] newSlots, Utility.BitSet newSlotsMask, int newSelectedSlotID) {
+    public void ReplaceInventoryEntity(int newInventoryModelID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
         var index = InventoryComponentsLookup.InventoryEntity;
         var component = (Inventory.EntityComponent)CreateComponent(index, typeof(Inventory.EntityComponent));
-        component.Width = newWidth;
-        component.Height = newHeight;
+        component.InventoryModelID = newInventoryModelID;
         component.Slots = newSlots;
-        component.SlotsMask = newSlotsMask;
         component.SelectedSlotID = newSelectedSlotID;
+        component.Size = newSize;
+        component.SlotsMask = newSlotsMask;
         ReplaceComponent(index, component);
     }
 
