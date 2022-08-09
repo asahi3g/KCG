@@ -30,7 +30,7 @@ public class GameResources
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
 
-    public static int TGenBlockSpriteSheet, TGenBlock_0;
+    public static int TGenBlockSpriteSheet, TGenBlock_0, TGenBlock_1, TGenBlock_2, TGenBlock_3, TGenBlock_4;
 
     // Tile CollisionIsotope
     public static int SB_R0000Sheet;
@@ -267,6 +267,11 @@ public class GameResources
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
             TGenBlock_0 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 0, 0, 0);
+            TGenBlock_1 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 0, 0);
+            TGenBlock_2 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 0, 1, 0);
+            TGenBlock_3 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 1, 0);
+            TGenBlock_4 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 2, 1, 0);
+
 
             CreateTiles();
             CreateAnimations();
@@ -712,9 +717,18 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionConstruction);
         GameState.ItemCreationApi.EndItem();
-                
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveMech, "RemoveMech");
+        GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionRemoveMech);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.ScannerTool, "ScannerTool");
         GameState.ItemCreationApi.SetTexture(OreSprite);
         GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
@@ -756,7 +770,7 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
         GameState.MechCreationApi.SetTexture(ChestIcon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);

@@ -4,6 +4,7 @@ using KMath;
 using Item;
 using Mech;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Planet.Unity
 {
@@ -21,6 +22,12 @@ namespace Planet.Unity
         private int selectedMechIndex;
 
         private int totalMechs;
+
+        private Color correctHlColor = Color.green;
+
+        private Color wrongHlColor = Color.red;
+
+        public Utility.FrameMesh HighliterMesh;
 
         public void Start()
         {
@@ -81,7 +88,8 @@ namespace Planet.Unity
                 PlaceSmashableBox();
             }
             
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
         }
 
         private void OnGUI()
@@ -117,7 +125,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.MajestyPalm, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
@@ -135,14 +143,20 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
 
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
+            var RemoveMech = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.RemoveMech);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, RemoveMech, inventoryID);
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
+
+            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
+                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
         }
 
         void GenerateMap()

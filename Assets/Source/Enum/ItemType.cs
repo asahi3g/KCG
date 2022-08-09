@@ -49,6 +49,7 @@
         ChestPlacementTool,
         HarvestTool,
         ConstructionTool,
-        ScannerTool
+        ScannerTool,
+        RemoveMech,
     }
 }

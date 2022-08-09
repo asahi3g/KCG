@@ -50,7 +50,7 @@ namespace Planet
             EntitasContext = new Contexts();
         }
 
-        public void InitializeSystems(Material material, Transform transform, AgentEntity agentEntity)
+        public void InitializeSystems(Material material, Transform transform)
         {
             GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
 
@@ -64,10 +64,13 @@ namespace Planet
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
             GameState.Renderer.Initialize(material);
 
+        }
+
+        public void InitializeHUD(AgentEntity agentEntity)
+        {
             // GUI/HUD
             GameState.HUDManager.Initialize(this, agentEntity);
         }
-
 
         // Note(Mahdi): Deprecated will be removed soon
         public AgentEntity AddPlayer(int spriteId, int width, int height, Vec2f position, int startingAnimation, 
@@ -348,7 +351,7 @@ namespace Planet
         }
 
         // updates the entities, must call the systems and so on ..
-        public void Update(float deltaTime, Material material, Transform transform, AgentEntity agentEntity)
+        public void Update(float deltaTime, Material material, Transform transform)
         {
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
@@ -399,8 +402,6 @@ namespace Planet
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
             cameraFollow.Update(ref this);
 
-            GameState.HUDManager.Update(agentEntity);
-
             TileMap.UpdateTileSprites();
 
             if (GameState.TGenGrid != null)
@@ -417,7 +418,6 @@ namespace Planet
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
             GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
-            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
 
             // Draw Frames.
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);
@@ -428,10 +428,17 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
-            GameState.HUDManager.Draw();
-            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
 
             GameState.FloatingTextDrawSystem.Draw(EntitasContext.floatingText, transform, 10000);
+        }
+
+        public void DrawHUD(AgentEntity agentEntity)
+        {
+            GameState.HUDManager.Update(agentEntity);
+            GameState.HUDManager.Draw();
+
+            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
         }
     }
 }

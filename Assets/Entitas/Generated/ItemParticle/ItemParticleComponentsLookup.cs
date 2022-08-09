@@ -15,16 +15,17 @@ public static class ItemParticleComponentsLookup {
     public const int ItemFireWeaponSpread = 4;
     public const int ItemID = 5;
     public const int ItemLabel = 6;
-    public const int ItemMovement = 7;
-    public const int ItemPosition2D = 8;
-    public const int ItemPulseWeaponPulse = 9;
-    public const int ItemStack = 10;
-    public const int ItemType = 11;
-    public const int ItemUnpickable = 12;
-    public const int PhysicsBox2DCollider = 13;
-    public const int PhysicsSphere2DCollider = 14;
+    public const int ItemMechCastData = 7;
+    public const int ItemMovement = 8;
+    public const int ItemPosition2D = 9;
+    public const int ItemPulseWeaponPulse = 10;
+    public const int ItemStack = 11;
+    public const int ItemType = 12;
+    public const int ItemUnpickable = 13;
+    public const int PhysicsBox2DCollider = 14;
+    public const int PhysicsSphere2DCollider = 15;
 
-    public const int TotalComponents = 15;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "ItemCastData",
@@ -34,6 +35,7 @@ public static class ItemParticleComponentsLookup {
         "ItemFireWeaponSpread",
         "ItemID",
         "ItemLabel",
+        "ItemMechCastData",
         "ItemMovement",
         "ItemPosition2D",
         "ItemPulseWeaponPulse",
@@ -52,6 +54,7 @@ public static class ItemParticleComponentsLookup {
         typeof(Item.FireWeapon.SpreadComponent),
         typeof(Item.IDComponent),
         typeof(Item.LabelComponent),
+        typeof(Item.MechCastDataComponent),
         typeof(Item.MovementComponent),
         typeof(Item.Position2DComponent),
         typeof(Item.PulseWeapon.PulseComponent),
