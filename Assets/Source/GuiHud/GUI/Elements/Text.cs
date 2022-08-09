@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KGUI.Elements
 {
-    public class Text
+    public class Text : ElementManager
     {
         // Image Gameobject
         private GameObject textCanvas;
@@ -14,6 +14,9 @@ namespace KGUI.Elements
 
         // Start Life Time Condition
         public bool startLifeTime;
+
+        // Start Life Time Condition
+        public UIElementEntity entity;
 
         // Constructor
         public void Create(string objectName, string text, Transform parent, float lifeTime)
@@ -53,8 +56,15 @@ namespace KGUI.Elements
             // Set Pivot
             textCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
+            textCanvas.GetComponent<UnityEngine.UI.Text>().enabled = false;
+
             // Reset Transform
             SetPosition(Vector3.zero);
+        }
+
+        public override void Draw()
+        {
+            textCanvas.GetComponent<UnityEngine.UI.Text>().enabled = true;
         }
 
         public GameObject GetGameObject()
@@ -91,7 +101,7 @@ namespace KGUI.Elements
             textCanvas.GetComponent<UnityEngine.UI.Text>().text = newText;
         }
 
-        public void Update()
+        public override void Update()
         {
             if(startLifeTime)
             {
@@ -99,6 +109,8 @@ namespace KGUI.Elements
                 if(timeLeft <= 0)
                 {
                     GameObject.Destroy(textCanvas);
+                    if(entity != null)
+                        entity.Destroy();
                 }
             }
         }

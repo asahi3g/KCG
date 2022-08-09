@@ -59,6 +59,8 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
+            GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
+
             int inventoryID = Player.agentInventory.InventoryID;
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
             int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
@@ -86,7 +88,7 @@ namespace Planet.Unity
                 PlaceSmashableBox();
             }
             
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(Time.deltaTime, Material, transform, Player);
         }
 
         private void OnGUI()
@@ -209,7 +211,6 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
 
@@ -236,6 +237,10 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
+
+            Planet.InitializeSystems(Material, transform, Player);
+
+            GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
