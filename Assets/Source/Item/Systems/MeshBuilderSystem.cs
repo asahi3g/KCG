@@ -38,10 +38,10 @@ namespace Item
                 }
                 else
                 {
-                    if (entity.hasItemPosition2D)
+                    if (entity.hasItemPhysicsState)
                     {
-                        x = entity.itemPosition2D.Value.X;
-                        y = entity.itemPosition2D.Value.Y;
+                        x = entity.itemPhysicsState.Position.X;
+                        y = entity.itemPhysicsState.Position.Y;
                     }
                     else
                     {

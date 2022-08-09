@@ -34,7 +34,7 @@ namespace Action
                 ActionPropertyEntity.actionPropertyShield.ShieldActive = true;
 
                 // Set Invulnerable True
-                AgentEntity.agentMovable.Invulnerable = true;
+                AgentEntity.agentPhysicsState.Invulnerable = true;
             }
             else
             {
@@ -42,7 +42,7 @@ namespace Action
                 ActionPropertyEntity.actionPropertyShield.ShieldActive = false;
 
                 // Set Invulnerable False
-                AgentEntity.agentMovable.Invulnerable = false;
+                AgentEntity.agentPhysicsState.Invulnerable = false;
             }
 
             // Execute Update

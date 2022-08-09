@@ -34,7 +34,7 @@ namespace Action
             }
 #endif
 
-            Vec2f drawPos = ItemEntity.itemPosition2D.Value;
+            Vec2f drawPos = ItemEntity.itemPhysicsState.Position;
             if (!ItemEntity.hasItemDrawPosition2D)
             {
                 ItemEntity.AddItemDrawPosition2D(drawPos, Vec2f.Zero);
@@ -53,7 +53,7 @@ namespace Action
             {
                 Vec2f itemSize = GameState.ItemCreationApi.Get(ItemEntity.itemType.Type).SpriteSize;
                 Vec2f itemCenterPos = ItemEntity.itemDrawPosition2D.Value + itemSize / 2.0f;
-                Vec2f agentCenterPos = AgentEntity.agentPosition2D.Value + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
+                Vec2f agentCenterPos = AgentEntity.agentPhysicsState.Position + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
 
                 if ((itemCenterPos - agentCenterPos).Magnitude < 0.1f)
                 {

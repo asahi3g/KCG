@@ -8,12 +8,12 @@
 //------------------------------------------------------------------------------
 public partial class ParticleEntity {
 
-    public Particle.Position2DComponent particlePosition2D { get { return (Particle.Position2DComponent)GetComponent(ParticleComponentsLookup.ParticlePosition2D); } }
-    public bool hasParticlePosition2D { get { return HasComponent(ParticleComponentsLookup.ParticlePosition2D); } }
+    public Particle.PhysicsStateComponent particlePhysicsState { get { return (Particle.PhysicsStateComponent)GetComponent(ParticleComponentsLookup.ParticlePhysicsState); } }
+    public bool hasParticlePhysicsState { get { return HasComponent(ParticleComponentsLookup.ParticlePhysicsState); } }
 
-    public void AddParticlePosition2D(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
-        var index = ParticleComponentsLookup.ParticlePosition2D;
-        var component = (Particle.Position2DComponent)CreateComponent(index, typeof(Particle.Position2DComponent));
+    public void AddParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
+        var index = ParticleComponentsLookup.ParticlePhysicsState;
+        var component = (Particle.PhysicsStateComponent)CreateComponent(index, typeof(Particle.PhysicsStateComponent));
         component.Position = newPosition;
         component.PreviousPosition = newPreviousPosition;
         component.Acceleration = newAcceleration;
@@ -22,9 +22,9 @@ public partial class ParticleEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceParticlePosition2D(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
-        var index = ParticleComponentsLookup.ParticlePosition2D;
-        var component = (Particle.Position2DComponent)CreateComponent(index, typeof(Particle.Position2DComponent));
+    public void ReplaceParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation) {
+        var index = ParticleComponentsLookup.ParticlePhysicsState;
+        var component = (Particle.PhysicsStateComponent)CreateComponent(index, typeof(Particle.PhysicsStateComponent));
         component.Position = newPosition;
         component.PreviousPosition = newPreviousPosition;
         component.Acceleration = newAcceleration;
@@ -33,8 +33,8 @@ public partial class ParticleEntity {
         ReplaceComponent(index, component);
     }
 
-    public void RemoveParticlePosition2D() {
-        RemoveComponent(ParticleComponentsLookup.ParticlePosition2D);
+    public void RemoveParticlePhysicsState() {
+        RemoveComponent(ParticleComponentsLookup.ParticlePhysicsState);
     }
 }
 
@@ -48,17 +48,17 @@ public partial class ParticleEntity {
 //------------------------------------------------------------------------------
 public sealed partial class ParticleMatcher {
 
-    static Entitas.IMatcher<ParticleEntity> _matcherParticlePosition2D;
+    static Entitas.IMatcher<ParticleEntity> _matcherParticlePhysicsState;
 
-    public static Entitas.IMatcher<ParticleEntity> ParticlePosition2D {
+    public static Entitas.IMatcher<ParticleEntity> ParticlePhysicsState {
         get {
-            if (_matcherParticlePosition2D == null) {
-                var matcher = (Entitas.Matcher<ParticleEntity>)Entitas.Matcher<ParticleEntity>.AllOf(ParticleComponentsLookup.ParticlePosition2D);
+            if (_matcherParticlePhysicsState == null) {
+                var matcher = (Entitas.Matcher<ParticleEntity>)Entitas.Matcher<ParticleEntity>.AllOf(ParticleComponentsLookup.ParticlePhysicsState);
                 matcher.componentNames = ParticleComponentsLookup.componentNames;
-                _matcherParticlePosition2D = matcher;
+                _matcherParticlePhysicsState = matcher;
             }
 
-            return _matcherParticlePosition2D;
+            return _matcherParticlePhysicsState;
         }
     }
 }

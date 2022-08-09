@@ -16,7 +16,7 @@ namespace Projectile
             projectileContext = Contexts.sharedInstance.projectile;
             ProjectilesWithSprite = projectileContext.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileID, ProjectileMatcher.ProjectileSprite2D));
             ProjectilesWithInput = projectileContext.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileID, ProjectileMatcher.ECSInput));
-            ProjectilesWithPhysics = projectileContext.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileID, ProjectileMatcher.ProjectilePhysicsState2D, ProjectileMatcher.ProjectilePhysicsState2D));
+            ProjectilesWithPhysics = projectileContext.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileID, ProjectileMatcher.ProjectilePhysicsState));
         }
     }
 }

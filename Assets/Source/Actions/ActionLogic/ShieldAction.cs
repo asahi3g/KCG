@@ -39,7 +39,7 @@ namespace Action
                     // Toggle Shield
                     ActionPropertyEntity.actionPropertyShield.ShieldActive = !ActionPropertyEntity.actionPropertyShield.ShieldActive;
                     // Toggle Invulnerable
-                    AgentEntity.agentMovable.Invulnerable = !AgentEntity.agentMovable.Invulnerable;
+                    AgentEntity.agentPhysicsState.Invulnerable = !AgentEntity.agentPhysicsState.Invulnerable;
                 }
 
                 // Execute Update

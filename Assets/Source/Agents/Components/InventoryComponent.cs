@@ -6,5 +6,7 @@ namespace Agent
     public class InventoryComponent : IComponent
     {
         public int InventoryID;
+
+        public bool AutoPick;
     }
 }
