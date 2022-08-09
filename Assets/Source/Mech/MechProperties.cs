@@ -19,6 +19,5 @@ namespace Mech
         public Vec2f SpriteSize;
 
         public int XMin, XMax, YMin, YMax;
-
     }
 }

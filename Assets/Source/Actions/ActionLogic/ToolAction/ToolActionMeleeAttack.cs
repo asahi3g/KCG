@@ -20,7 +20,7 @@ namespace Action
 
         public bool IsInRange(Vector2 currentTarget)
         {
-            Vector2 yourPos = new Vector2(AgentEntity.agentPosition2D.Value.X, AgentEntity.agentPosition2D.Value.Y);
+            Vector2 yourPos = new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y);
             return WeaponProperty.Range >= Vector2.Distance(yourPos, currentTarget);
         }
 
@@ -38,22 +38,22 @@ namespace Action
             // Check if projectile has hit a enemy.
             var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
-            planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPosition2D.Value.X + 0.2f, AgentEntity.agentPosition2D.Value.Y));
+            planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.2f, AgentEntity.agentPhysicsState.Position.Y));
 
             // Todo: Create a agent colision system?
             foreach (var entity in entities)
             {
                 if (!entity.isAgentPlayer)
                 {
-                    if (IsInRange(new Vector2(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y)))
+                    if (IsInRange(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y)))
                     {
                         if(ActionPropertyEntity.actionPropertyShield.ShieldActive)
                         {
-                            planet.AddFloatingText("Shield", 0.5f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y + 0.35f));
+                            planet.AddFloatingText("Shield", 0.5f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
                         }
                         else
                         {
-                            Vec2f entityPos = entity.agentPosition2D.Value;
+                            Vec2f entityPos = entity.agentPhysicsState.Position;
                             Vec2f bulletPos = new Vec2f(x, y);
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
@@ -69,7 +69,7 @@ namespace Action
                                 entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
                                     stats.Fuel, stats.AttackCooldown);
 
-                                entity.agentMovable.Velocity = Vec2f.Zero;
+                                entity.agentPhysicsState.Velocity = Vec2f.Zero;
                                 CanStun = true;
 
                                 // spawns a debug floating text for damage 
@@ -92,7 +92,7 @@ namespace Action
             {
                 for (int i = 0; i < Enemies.Count; i++)
                 {
-                    Enemies[i].agentMovable.Velocity = Vec2f.Zero;
+                    Enemies[i].agentPhysicsState.Velocity = Vec2f.Zero;  
                 }
                 elapsed += Time.deltaTime;
                 

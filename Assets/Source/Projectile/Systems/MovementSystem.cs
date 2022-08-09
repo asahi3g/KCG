@@ -22,7 +22,7 @@ namespace Projectile
         public void Update(ProjectileContext gameContext)
         {
             float deltaTime = Time.deltaTime;
-            var projectiles = gameContext.GetGroup(ProjectileMatcher.ProjectileMovable);
+            var projectiles = gameContext.GetGroup(ProjectileMatcher.ProjectilePhysicsState);
             foreach (var projectile in projectiles)
             {
                 // Get Projectile Type
@@ -33,10 +33,10 @@ namespace Projectile
                                     ProjectileCreationApi.GetRef((int)type);
 
                 // Get Projectile Position
-                var pos = projectile.projectilePosition2D;
+                var pos = projectile.projectilePhysicsState;
 
-                // Get Movable Component
-                var movable = projectile.projectileMovable;
+                // Get physicsState Component
+                var physicsState = projectile.projectilePhysicsState;
 
                 // Set Gravity
                 projectileProperties.GravityScale = 0.1f;
@@ -53,13 +53,13 @@ namespace Projectile
 
                 // Calculate Displacement
                 Vec2f displacement =
-                    0.5f * movable.Acceleration * (deltaTime * deltaTime) + movable.Velocity * deltaTime;
+                    0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
 
                 // New Calculated Velocity
                 Vec2f newVelocity = new Vec2f(0f, 0f);
 
                 if(projectileProperties.AffectedByGravity)
-                    projectile.projectileMovable.Velocity.Y -= Gravity;
+                    projectile.projectilePhysicsState.Velocity.Y -= Gravity;
 
                 // If Ramp is On
                 if(canRamp)
@@ -92,13 +92,13 @@ namespace Projectile
                                 projectileProperties.Speed = (1 - projectileProperties.Speed / (linearDrag + linearCutoff));
 
                                 // Calculate Drag Force Magnitude
-                                var dragForceMag = movable.Velocity.Magnitude / 2 * linearDrag;
+                                var dragForceMag = physicsState.Velocity.Magnitude / 2 * linearDrag;
 
                                 // Calculate Force Vector
-                                var dragForceVector = dragForceMag *  new Vec2f(-movable.Velocity.Normalized.X, -movable.Velocity.Normalized.Y);
+                                var dragForceVector = dragForceMag *  new Vec2f(-physicsState.Velocity.Normalized.X, -physicsState.Velocity.Normalized.Y);
 
                                 // Calculate New Velocity
-                                newVelocity = movable.Acceleration * deltaTime + (movable.Velocity * projectileProperties.Speed);
+                                newVelocity = physicsState.Acceleration * deltaTime + (physicsState.Velocity * projectileProperties.Speed);
 
                                 // Add drag force to velocity vector
                                 newVelocity += dragForceVector;
@@ -106,7 +106,7 @@ namespace Projectile
                             else if (projectileProperties.dragType == Enums.DragType.Off) // If linear drag is off
                             {
                                 // Set New velocity without adding any drag
-                                newVelocity = movable.Acceleration * deltaTime + (movable.Velocity * projectileProperties.Speed);
+                                newVelocity = physicsState.Acceleration * deltaTime + (physicsState.Velocity * projectileProperties.Speed);
                             }
                             
                             // Increase Time
@@ -126,15 +126,15 @@ namespace Projectile
 
 
                         // Calculate Drag Force Magnitude
-                        var dragForceMag = movable.Velocity.Magnitude / 2 * linearDrag;
+                        var dragForceMag = physicsState.Velocity.Magnitude / 2 * linearDrag;
 
 
                         // Calculate Drag Force Vector
-                        var dragForceVector = dragForceMag * new Vec2f(-movable.Velocity.Normalized.X, -movable.Velocity.Normalized.Y);
+                        var dragForceVector = dragForceMag * new Vec2f(-physicsState.Velocity.Normalized.X, -physicsState.Velocity.Normalized.Y);
 
 
                         // Calculate New Velocity
-                        newVelocity = movable.Acceleration * deltaTime + movable.Velocity / linearDrag;
+                        newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity / linearDrag;
 
                         // Add drag force to new velocity
                         newVelocity += dragForceVector;
@@ -143,17 +143,16 @@ namespace Projectile
                     }
                     else if (projectileProperties.dragType == Enums.DragType.Off)
                     {
-                        newVelocity = movable.Acceleration * deltaTime + movable.Velocity;
+                        newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
                     }
                 }
 
                 float newRotation = pos.Rotation + projectileProperties.DeltaRotation * deltaTime;  
 
-                projectile.ReplaceProjectileMovable(newVelocity, movable.Acceleration, movable.AffectedByGravity);
-                projectile.ReplaceProjectilePosition2D(pos.Value + displacement, pos.Value, newRotation);
-                projectile.ReplaceProjectilePhysicsState2D(newVelocity, projectile.projectilePhysicsState2D.angularMass, 
-                    projectile.projectilePhysicsState2D.angularAcceleration, projectile.projectilePhysicsState2D.centerOfGravity, 
-                    projectile.projectilePhysicsState2D.centerOfRotation);
+                projectile.ReplaceProjectilePhysicsState(pos.Position + displacement, pos.Position, newRotation,
+                    newVelocity, physicsState.Acceleration, physicsState.AffectedByGravity, newVelocity, projectile.projectilePhysicsState.angularMass,
+                    projectile.projectilePhysicsState.angularAcceleration, projectile.projectilePhysicsState.centerOfGravity,
+                    projectile.projectilePhysicsState.centerOfRotation);
             }
         }
     }

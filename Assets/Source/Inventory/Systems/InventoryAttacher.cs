@@ -16,7 +16,7 @@ namespace Inventory
         public void AttachInventoryToAgent(Contexts entitasContext, int width, int height, AgentEntity agentEntity)
         {
             AgentEntity entity = agentEntity;
-            entity.AddAgentInventory(InventoryID);
+            entity.AddAgentInventory(InventoryID, false);
             CreateInventory(entitasContext, width, height, GameState.InventoryCreationApi.GetDefaultInventory());
         }
 

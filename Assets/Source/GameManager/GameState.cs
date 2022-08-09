@@ -13,6 +13,10 @@ public class GameState
     public static readonly Animation.UpdateSystem AnimationUpdateSystem;
     #endregion
 
+    #region AI
+    public static readonly AI.Movement.PathFinding PathFinding;
+    #endregion
+
     #region Action
     public static readonly Action.ActionPropertyManager     ActionPropertyManager;
     public static readonly Action.ActionCreationSystem      ActionCreationSystem;
@@ -56,7 +60,8 @@ public class GameState
     public static readonly Agent.AgentSpawnerSystem AgentSpawnerSystem;
     public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
-    public static readonly Agent.MovableSystem AgentMovableSystem;
+    public static readonly Agent.MovementSystem AgentMovementSystem;
+    public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
 
     #endregion
@@ -119,6 +124,7 @@ public class GameState
 
     static GameState()
     {
+        PathFinding = new AI.Movement.PathFinding();
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager(SpriteLoader);
         SpriteAtlasManager = new Sprites.SpriteAtlasManager(SpriteLoader);
@@ -129,7 +135,8 @@ public class GameState
         AgentCreationApi = new Agent.AgentCreationApi();
         AgentSpawnerSystem = new Agent.AgentSpawnerSystem(AgentCreationApi);
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
-        AgentMovableSystem = new Agent.MovableSystem();
+        AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
+        AgentMovementSystem = new Agent.MovementSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);

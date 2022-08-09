@@ -14,7 +14,7 @@ public static class ParticleComponentsLookup {
     public const int ParticleEmitterID = 3;
     public const int ParticleEmitterState = 4;
     public const int ParticleID = 5;
-    public const int ParticlePosition2D = 6;
+    public const int ParticlePhysicsState = 6;
     public const int ParticleSprite2D = 7;
     public const int ParticleState = 8;
 
@@ -27,7 +27,7 @@ public static class ParticleComponentsLookup {
         "ParticleEmitterID",
         "ParticleEmitterState",
         "ParticleID",
-        "ParticlePosition2D",
+        "ParticlePhysicsState",
         "ParticleSprite2D",
         "ParticleState"
     };
@@ -39,7 +39,7 @@ public static class ParticleComponentsLookup {
         typeof(Particle.EmitterIDComponent),
         typeof(Particle.EmitterStateComponent),
         typeof(Particle.IDComponent),
-        typeof(Particle.Position2DComponent),
+        typeof(Particle.PhysicsStateComponent),
         typeof(Particle.Sprite2DComponent),
         typeof(Particle.StateComponent)
     };

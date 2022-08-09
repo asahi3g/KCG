@@ -16,16 +16,15 @@ namespace Projectile
             float deltaTime = Time.deltaTime;
 
             // Get Vehicle Physics Entity
-            var entities = Contexts.sharedInstance.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState2D));
+            var entities = Contexts.sharedInstance.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
 
             foreach (var entity in entities)
             {
                 // Set Vehicle Physics to variable
-                var pos = entity.projectilePosition2D;
-                var physicsState = entity.projectilePhysicsState2D;
+                var physicsState = entity.projectilePhysicsState;
 
                 // Create Box Borders
-                var entityBoxBorders = new AABox2D(new Vec2f(pos.PreviousValue.X, pos.Value.Y), entity.projectileSprite2D.Size);
+                var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
 
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
@@ -34,7 +33,7 @@ namespace Projectile
                     {
                         if(entity.projectileType.Type == Enums.ProjectileType.Arrow)
                         {
-                            entity.projectilePhysicsState2D.angularVelocity = Vec2f.Zero;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -49,7 +48,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
                         {
-                            entity.projectilePhysicsState2D.angularVelocity = Vec2f.Zero;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -59,7 +58,7 @@ namespace Projectile
                     }
                 }
 
-                entityBoxBorders = new AABox2D(new Vec2f(pos.Value.X, pos.PreviousValue.Y), entity.projectileSprite2D.Size);
+                entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
 
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
@@ -68,7 +67,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
                         {
-                            entity.projectilePhysicsState2D.angularVelocity = Vec2f.Zero;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -83,7 +82,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
                         {
-                            entity.projectilePhysicsState2D.angularVelocity = Vec2f.Zero;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -109,16 +108,15 @@ namespace Projectile
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
             // Get Vehicle Physics Entity
-            var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState2D));
+            var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
 
             foreach (var entity in entities)
             {
                 // Set Vehicle Physics to variable
-                var pos = entity.projectilePosition2D;
-                var physicsState = entity.projectilePhysicsState2D;
+                var physicsState = entity.projectilePhysicsState;
 
                 // Create Box Borders
-                var entityBoxBorders = new AABox2D(new Vec2f(pos.PreviousValue.X, pos.Value.Y), entity.projectileSprite2D.Size);
+                var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
 
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
@@ -140,7 +138,7 @@ namespace Projectile
                     }
                 }
 
-                entityBoxBorders = new AABox2D(new Vec2f(pos.Value.X, pos.PreviousValue.Y), entity.projectileSprite2D.Size);
+                entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
 
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
@@ -167,21 +165,21 @@ namespace Projectile
             {
                 if(entityP.projectileType.Type == Enums.ProjectileType.Grenade)
                 {
-                    planet.AddParticleEmitter(entityP.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
                     // Check if projectile has hit a enemy.
                     var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {   
-                        float dist = Vector2.Distance(new Vector2(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 2.0f;
 
                         if (dist < radius)
                         {
-                            Vec2f entityPos = entity.agentPosition2D.Value;
-                            Vec2f bulletPos = entityP.projectilePosition2D.Value;
+                            Vec2f entityPos = entity.agentPhysicsState.Position;
+                            Vec2f bulletPos = entityP.projectilePhysicsState.Position;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
                             diff.Normalize();
@@ -195,7 +193,8 @@ namespace Projectile
                                     stats.Fuel, stats.AttackCooldown);
 
                                 // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 25, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X,entityPos.Y + 0.35f));
+                                planet.AddFloatingText("" + 25, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
+                                    new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
                             }
                         }
                     }
@@ -203,21 +202,21 @@ namespace Projectile
                 }
                 else if (entityP.projectileType.Type == Enums.ProjectileType.Rocket)
                 {
-                    planet.AddParticleEmitter(entityP.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
                     // Check if projectile has hit a enemy.
                     var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {
-                        float dist = Vector2.Distance(new Vector2(entity.agentPosition2D.Value.X, entity.agentPosition2D.Value.Y), new Vector2(entityP.projectilePosition2D.Value.X, entityP.projectilePosition2D.Value.Y));
+                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 4.0f;
 
                         if (dist < radius)
                         {
-                            Vec2f entityPos = entity.agentPosition2D.Value;
-                            Vec2f bulletPos = entityP.projectilePosition2D.Value;
+                            Vec2f entityPos = entity.agentPhysicsState.Position;
+                            Vec2f bulletPos = entityP.projectilePhysicsState.Position;
                             Vec2f diff = bulletPos - entityPos;
                             diff.Y = 0;
                             diff.Normalize();
@@ -231,7 +230,8 @@ namespace Projectile
                                     stats.Fuel, stats.AttackCooldown);
 
                                 // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 100, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
+                                planet.AddFloatingText("" + 100, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
+                                    new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
                             }
                         }
                     }
@@ -239,9 +239,9 @@ namespace Projectile
                 }
                 else if (entityP.projectileType.Type == Enums.ProjectileType.Arrow)
                 {
-                    planet.AddParticleEmitter(entityP.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
-                    entityP.projectileMovable.Velocity = Vec2f.Zero;
+                    entityP.projectilePhysicsState.Velocity = Vec2f.Zero;
 
                     DeleteArrow(entityP);
 
@@ -249,7 +249,7 @@ namespace Projectile
                 }
                 else if (entityP.projectileType.Type == Enums.ProjectileType.Bullet)
                 {
-                    planet.AddParticleEmitter(entityP.projectilePosition2D.Value, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
                     planet.RemoveProjectile(entityP.projectileID.ID);
                 }
