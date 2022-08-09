@@ -43,8 +43,8 @@ namespace Planet.Unity
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform);
-            //   Vector2 playerPosition = Player.Entity.agentPhysicsState.Position;
+            Planet.Update(Time.deltaTime, Material, transform, Player);
+            //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
@@ -72,7 +72,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(6400, 24);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeSystems(Material, transform, Player);
 
             GenerateMap();
             Player = Planet.AddPlayer(new Vec2f(3.0f, 25));

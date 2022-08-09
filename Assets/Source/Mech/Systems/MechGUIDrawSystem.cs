@@ -4,103 +4,128 @@ using KMath;
 using Entitas;
 using Item;
 using System.Linq;
+using KGUI.Elements;
 
 namespace Mech
 {
 
     public class MechGUIDrawSystem
     {
-        public void Draw(Contexts contexts, Transform transform, int selectedIndex)
+        private Image Chest;
+        private Image ChestBackground;
+
+        private Image Planter;
+        private Image PlanterBackground;
+
+        private Image Light;
+        private Image LightBackground;
+
+        private Image MajestyPalm;
+        private Image MajestyPalmBackground;
+
+        private Image SagoPalm;
+        private Image SagoPalmBackground;
+
+        private Image DracaenaTrifasciata;
+        private Image DracaenaTrifasciataBackground;
+
+        private Image SmashableBox;
+        private Image SmashableBoxBackground;
+
+        int inventoryID;
+        InventoryEntity Inventory;
+        int selectedSlot;
+        ItemInventoryEntity item;
+
+        public void Initialize(ref Planet.PlanetState planet)
         {
-            /*var openInventories = contexts.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryDrawable, InventoryMatcher.InventoryID));
-            // If empty Draw ToolBar.
+            ChestBackground = planet.AddUIImage("ChestBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(-280.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            foreach (InventoryEntity inventoryEntity in openInventories)
-            {
-                DrawInventory(contexts, transform, inventoryEntity);
-            }*/
-            // Get Initial Positon.
+            Chest = planet.AddUIImage("Chest", ChestBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 32).kGUIElementsImage.Image;
 
-            Vec2f tileSize = new Vec2f(1f / 16f, 1f / 16f * Screen.width / Screen.height);
-            Vec2f slotSize = tileSize * 0.9f;
+            PlanterBackground = planet.AddUIImage("PlanterBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(-200.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            // Get Inventory Info.
-            int width = 1;
-            int height = 1;
+            Planter = planet.AddUIImage("Planter", PlanterBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 16).kGUIElementsImage.Image;
 
-            float h = height * tileSize.Y;
-            float w = width * tileSize.X;
-            float x = 0.5f;
-            float y = 0.3f;
+            LightBackground = planet.AddUIImage("LightBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(-120.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            x -= w / 2f;
-            y -= h / 2f;
+            Light = planet.AddUIImage("Light", LightBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 48, 16).kGUIElementsImage.Image;
 
-            // var mechs = contexts.mech.GetGroup(MechMatcher.MechSprite2D);
-            var mechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).ToArray();
+            MajestyPalmBackground = planet.AddUIImage("MajestyPalmBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(-38.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-            for (int i = 0; i < mechs.Length; i++)
-            {
-                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(mechs[i].SpriteID, Enums.AtlasType.Mech);
+            MajestyPalm = planet.AddUIImage("MajestyPalm", MajestyPalmBackground.GetTransform(),
+                "Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-                var thisX = x + w * (i - mechs.Length / 2);
+            SagoPalmBackground = planet.AddUIImage("SagoPalmBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(40.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
-                if(i == selectedIndex)
-                    GameState.Renderer.DrawQuadColorGui(thisX, y, w, h, Color.yellow);
-                else 
-                    DrawBackGround(thisX, y, w, h);
+            SagoPalm = planet.AddUIImage("SagoPalm", SagoPalmBackground.GetTransform(),
+                "Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-                GameState.Renderer.DrawSpriteGui(thisX, y, w * 0.8F, h * 0.8F, sprite);
-            }
+            DracaenaTrifasciataBackground = planet.AddUIImage("DracaenaTrifasciataBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(120.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
+            DracaenaTrifasciata = planet.AddUIImage("DracaenaTrifasciata", DracaenaTrifasciataBackground.GetTransform(),
+                "Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
+
+            SmashableBoxBackground = planet.AddUIImage("SmashableBoxBackground", GameObject.Find("Canvas").transform,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                    new Vec2f(200.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+
+            SmashableBox = planet.AddUIImage("SmashableBox", SmashableBoxBackground.GetTransform(),
+                "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 32).kGUIElementsImage.Image;
         }
 
-        private void DrawBackGround(float x, float y, float w, float h)
+        public void Draw(ref Planet.PlanetState planet, AgentEntity agentEntity)
         {
-            Color backGround = new Color(0.2f, 0.2f, 0.2f, 1.0f);
-            GameState.Renderer.DrawQuadColorGui(x, y, w, h, backGround);
-        }
+            // Set Inventory Elements
+            inventoryID = agentEntity.agentInventory.InventoryID;
+            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
-        /*
-        void DrawIcon(Contexts entitasContext, float x, float y, int width, int height, Vec2f tileSize, Vec2f slotSize, Transform transform, HashSet<ItemInventoryEntity> itemInInventory)
-        {
-            foreach (ItemInventoryEntity itemEntity in itemInInventory)
+            // Create Item
+            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+            if (item != null)
             {
-                int slotNumber = itemEntity.itemInventory.SlotID;
-                int i = slotNumber % width;
-                int j = (height - 1) - (slotNumber - i) / width;
-
-                // Calculate Slot Border positon.
-                float slotX = x + i * tileSize.X;
-                float slotY = y + j * tileSize.Y;
-
-                // Draw Count if stackable.
-                if (itemEntity.hasItemStack)
+                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                 {
-                    //int fontSize = 50;
+                    ChestBackground.GetGameObject().SetActive(true);
+                    PlanterBackground.GetGameObject().SetActive(true);
+                    LightBackground.GetGameObject().SetActive(true);
+                    MajestyPalmBackground.GetGameObject().SetActive(true);
+                    SagoPalmBackground.GetGameObject().SetActive(true);
+                    DracaenaTrifasciataBackground.GetGameObject().SetActive(true);
+                    SmashableBoxBackground.GetGameObject().SetActive(true);
 
-                    // these Change with Camera size. Find better soluiton. AutoSize? MeshPro?
-                    float characterSize = 0.05f * Camera.main.pixelWidth / 1024.0f;
-                    float posOffset = 0.04f;
-
-                    var rect = new Rect(600 * Random.value, 450 * Random.value, 200, 150);
-
-                    // Todo: Implement or import librart to draw string on screen immediately. 
-                    //GameState.Renderer.DrawString(slotX + posOffset, slotY + posOffset, characterSize, itemEntity.itemStack.Count.ToString(), fontSize, Color.white, transform, drawOrder + 4);
                 }
-
-                // Draw sprites.
-                Item.ItemProprieties itemProprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
-                int SpriteID = itemProprieties.SpriteID;
-
-                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle);
-
-                Vec2f spriteSize = slotSize * 0.8f;
-                slotX = slotX + (tileSize.X - spriteSize.X) / 2.0f;
-                slotY = slotY + (tileSize.Y - spriteSize.Y) / 2.0f;
-                GameState.Renderer.DrawSpriteGui(slotX, slotY, spriteSize.X, spriteSize.Y, sprite);
+                else
+                {
+                    ChestBackground.GetGameObject().SetActive(false);
+                    PlanterBackground.GetGameObject().SetActive(false);
+                    LightBackground.GetGameObject().SetActive(false);
+                    MajestyPalmBackground.GetGameObject().SetActive(false);
+                    SagoPalmBackground.GetGameObject().SetActive(false);
+                    DracaenaTrifasciataBackground.GetGameObject().SetActive(false);
+                    SmashableBoxBackground.GetGameObject().SetActive(false);
+                }
             }
-        }*/
+        }
     }
-
 }
