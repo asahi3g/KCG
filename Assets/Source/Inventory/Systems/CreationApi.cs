@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Utility;
 using KMath;
 using UnityEngine;
@@ -66,10 +67,13 @@ namespace Inventory
             }
         }
 
-        void Initialize()
+        public void Initialize()
         {
+            Init = true;
             CreateDefaultPlayerInventoryModel();
             CreateDefaultRestrictionInventoryModel();
+            CreateDefaultChestInventoryModel();
+            CreateDefaultCorpseInventoryModel();
         }
 
         public ref InventoryModel Get(int id)
@@ -107,9 +111,6 @@ namespace Inventory
 
             if (InventoryModels[ID].HasToolBar)
             {
-                // Draw toolbar by default.(Note: Move to AttachSystem)
-                //InventoryModels[ID].InventoryFlags |= InventoryModel.Flags.DrawToolBar;
-
                 // Set tool bar position at the upmost row of inventory.
                 InventoryModels[ID].ToolBarWindow = window;
                 InventoryModels[ID].ToolBarWindow.GridSize.Y = window.TileSize;
@@ -151,7 +152,7 @@ namespace Inventory
         {
             Create();
             SetInventoryPos(460f, 240f);
-            SetSize(10, 6);
+            SetSize(10, 5);
             SetAllSlotsAsActive();
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
@@ -160,6 +161,8 @@ namespace Inventory
             SetTileSize(100);
             SetSlotBorderOffset(10);
             SetSlotOffset(20);
+            SetInventoryBoderOffset(0, 0, 30, 0);
+            AddText("Bag",new Vec2f(20f, 502.5f));
             End();
         }
 
@@ -189,6 +192,38 @@ namespace Inventory
             End();
         }
 
+        private void CreateDefaultChestInventoryModel()
+        {
+            Create();
+            SetInventoryPos(460f, 240f);
+            SetSize(10, 5);
+            SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(100);
+            SetSlotBorderOffset(10);
+            SetSlotOffset(20);
+            End();
+        }
+
+        private void CreateDefaultCorpseInventoryModel()
+        {
+            Create();
+            SetInventoryPos(460f, 810f);
+            SetSize(10, 2);
+            SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(100);
+            SetSlotOffset(20);
+            SetSlotBorderOffset(10);
+            SetInventoryBoderOffset(0, 0, 30, 0);
+            AddText("Corpse", new Vec2f(20f, 202.5f));
+            End();
+        }
+
         public int GetDefaultPlayerInventoryModelID()
         {
             if (!Init)
@@ -202,6 +237,28 @@ namespace Inventory
             return 1;
         }
 
+        public int GetDefaultChestInventoryModelID()
+        {
+            if (!Init)
+                Initialize();
+            return 2;
+        }
+        public int GetDefaultCorpseInventoryModelID()
+        {
+            if (!Init)
+                Initialize();
+            return 3;
+        }
+        public void AddText(string str, Vec2f posOffset)
+        {
+            if (InventoryModels[ID].RenderProprieties.Strings == null)
+            {
+                InventoryModels[ID].RenderProprieties.Strings = new List<string>();
+                InventoryModels[ID].RenderProprieties.StringPosOffsets = new List<Vec2f>();
+            }
+            InventoryModels[ID].RenderProprieties.Strings.Add(str);
+            InventoryModels[ID].RenderProprieties.StringPosOffsets.Add(posOffset);
+        }
         public void SetBackgroundTexture(int spriteID)
         {
             InventoryModels[ID].RenderProprieties.BackGroundSpriteID = spriteID;

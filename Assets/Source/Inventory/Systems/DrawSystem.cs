@@ -30,7 +30,8 @@ namespace Inventory
                 InventoryEntity inventoryEntity = inventoryList.Get(i);
                 if (!inventoryEntity.hasInventoryDraw)
                     continue;
-                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(i);
+                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                    inventoryEntity.inventoryEntity.InventoryModelID);
                 DrawInventory(contexts, inventoryEntity, ref inventoryModel, false);
             }
 
@@ -116,7 +117,7 @@ namespace Inventory
             {
                 if (inventoryEntity.inventoryEntity.SelectedSlotID == i
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If inventoryModel is open doesn't draw selected border in tool bar.
-                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryModel.ID) // Only draw selection to one inventoryModel at time.
+                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one inventoryModel at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
                 {
                     GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, inventoryModel.RenderProprieties.SelectedColor);
@@ -146,7 +147,7 @@ namespace Inventory
                 if (gridSlot.SlotID == inventoryEntity.inventoryEntity.SelectedSlotID
                     && !inventoryModel.RenderProprieties.HasBorder() // If there is no border slot will have selected slot color.
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If inventoryModel is open doesn't draw slot with selected color in tool bar.
-                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryModel.ID) // Only draw selection to one inventoryModel at time.
+                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one inventoryModel at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
                 {
                     slotColor = inventoryModel.RenderProprieties.SelectedColor;

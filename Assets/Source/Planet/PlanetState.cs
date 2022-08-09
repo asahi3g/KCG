@@ -107,7 +107,7 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID()).inventoryID.ID;
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnCorpse(EntitasContext, position,
                     -1, spriteId, agentType, inventoryID));
             return newEntity;

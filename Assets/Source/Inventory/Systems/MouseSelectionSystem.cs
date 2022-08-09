@@ -128,8 +128,8 @@ namespace Inventory
                 if (slotID == -1)
                     return false;
 
-                if (GameState.InventoryManager.AddItemAtSlot(
-                    contexts, contexts.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID), inventoryEntity.inventoryID.ID, slotID))
+                if (GameState.InventoryManager.AddItemAtSlot(contexts, contexts.itemInventory.GetEntityWithItemID(
+                    InventorySystemsState.GrabbedItemID), inventoryEntity.inventoryID.ID, slotID))
                 {
                     inventoryEntity.inventoryEntity.SelectedSlotID = slotID;
                     InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;

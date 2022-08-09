@@ -301,12 +301,9 @@ public class GameResources
             CreateProjectiles();
             CreateMechs();
 
-
-
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
     }
-
 
     private static void CreateTiles()
     {

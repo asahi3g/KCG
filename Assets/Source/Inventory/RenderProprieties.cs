@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using KMath;
 
 namespace Inventory
 {
@@ -21,6 +23,8 @@ namespace Inventory
         public Color BackgroundColor;
         public Color SlotColor;
         public Color SelectedColor;
+        public List<string> Strings;
+        public List<Vec2f> StringPosOffsets;
 
         public bool HasBackground() { return InventoryFlags.HasFlag(Flags.HasBackground); }
         public bool HasBackgroundTexture() { return InventoryFlags.HasFlag(Flags.HasBackgroundTexture); }

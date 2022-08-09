@@ -276,44 +276,43 @@ namespace ECSInput
                 //}
             }
 
-            foreach (var entity in AgentsWithXY)
+
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.P))
+                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+
+                foreach (var player in players)
                 {
                     var corpses = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentCorpse));
-                    foreach (var corpse in corpses) 
+                    foreach (var corpse in corpses)
                     {
                         var pos = corpse.agentPosition2D;
 
-                        if (corpse.hasAgentInventory && Vec2f.Distance(pos.Value, entity.agentPosition2D.Value) < 0.5f)
-                        {
+                        if (!corpse.hasAgentInventory || !(Vec2f.Distance(pos.Value, player.agentPosition2D.Value) < 0.5f))
+                            continue;
                         
-                            InventoryEntity corpseInventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
-                            var inventoryEntity = corpseInventory.inventoryEntity;
-                            ref Inventory.Slot[] slots = ref inventoryEntity.Slots;
+                        // Todo: move this code inside an actions.
+                        // Todo: Make sure no inventory overlap with another inventory.
 
-                            for(int i = 0; i < slots.Length; i++)
-                            {
-                                ref Inventory.Slot slot = ref slots[i];
-                                
-                                int itemID = slot.ItemID;
-                                if (itemID >= 0)
-                                {
-                                    ItemInventoryEntity itemInventoryEntity = contexts.itemInventory.GetEntityWithItemID(itemID);
-                                    for(int stackIndex = 0; stackIndex < itemInventoryEntity.itemStack.Count; stackIndex++)
-                                    {
-                                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventoryEntity.itemType.Type, pos.Value);
-                                    }
-                                    slot.ItemID = -1;
-                                }
-                            }
-                        }
+                        InventoryEntity corpseInventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                        corpseInventory.hasInventoryDraw = true;
+
+                        int inventoryID = player.agentInventory.InventoryID;
+                        InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                        inventory.hasInventoryDraw = !inventory.hasInventoryDraw; // Toggling the bit
+
+                        inventoryID = player.agentInventory.EquipmentInventoryID;
+                        InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                        equipmentInventory.hasInventoryDraw = !equipmentInventory.hasInventoryDraw;
+
+                        break;
                     }
                 }
             }
 
             // Recharge Weapon.
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
@@ -427,7 +426,8 @@ namespace ECSInput
             {
                 int inventoryID = entity.agentInventory.InventoryID;
                 InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryEntity.InventoryModelID);
+                ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                    inventory.inventoryEntity.InventoryModelID);
                 if (!inventoryModel.HasToolBar)
                     return;
 
@@ -439,8 +439,8 @@ namespace ECSInput
                         inventory.inventoryEntity.SelectedSlotID = i;
                         var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         
-                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPosition2D.Value.X + 0.4f,
-                                    entity.agentPosition2D.Value.Y));
+                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, 
+                            new Vec2f(entity.agentPosition2D.Value.X + 0.4f, entity.agentPosition2D.Value.Y));
                     }
                 }
 

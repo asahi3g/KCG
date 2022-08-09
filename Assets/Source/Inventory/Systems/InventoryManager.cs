@@ -16,7 +16,7 @@ namespace Inventory
             int size = inventoryModel.SlotCount;
             invetoryEntity.AddInventoryEntity(inventoryModelID, new Slot[size], 0, size, new BitSet((uint)size));
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < inventoryModel.Slots.Length; i++)
             {
                 int slotID = inventoryModel.Slots[i].SlotID;
                 if (slotID == -1)
@@ -53,7 +53,7 @@ namespace Inventory
             // Check restriction.
             Enums.ItemGroups slotGroup = inventory.Slots[slotID].Restriction;
             Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
-            if (slotGroup >= 0 && group != slotGroup)
+            if (slotGroup > 0 && group != slotGroup)
                 return false;
 
             if (inventory.SlotsMask[slotID])
@@ -81,7 +81,7 @@ namespace Inventory
             // Check restriction.
             Enums.ItemGroups slotGroup = inventory.Slots[fistEmptySlot].Restriction;
             Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
-            if (slotGroup >= 0 && group != slotGroup)
+            if (slotGroup > 0 && group != slotGroup)
                 return false;
 
             itemEntity.ReplaceItemInventory(inventoryID, fistEmptySlot);

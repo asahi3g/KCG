@@ -14,7 +14,9 @@ public class InventoryTest : MonoBehaviour
     Inventory.MouseSelectionSystem  mouseSelectionSystem;
     Inventory.InventoryList inventoryList;
     int terrariaLikeInventoryID = 2;
+    int terrariaLikeInventoryModelID;
     int customRestrictionInventoryID = 3;
+    int customRestrictionInventoryModelID;
 
     bool Init = false;
 
@@ -36,11 +38,11 @@ public class InventoryTest : MonoBehaviour
 
         int inventoryID = 0;
         int equipmentInventoryID = 1;
-        GameState.InventoryManager.CreateDefaultInventory(context, inventoryID);
-        GameState.InventoryManager.CreateInventory(context, 
-            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID(), equipmentInventoryID);
-        GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryID, terrariaLikeInventoryID);
-        GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryID, customRestrictionInventoryID);
+        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context, inventoryID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, 
+            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID(), equipmentInventoryID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID, terrariaLikeInventoryID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID, customRestrictionInventoryID));
 
         AgentEntity playerEntity = context.agent.CreateEntity();
         playerEntity.AddAgentID(agnetID);
@@ -132,8 +134,9 @@ public class InventoryTest : MonoBehaviour
     private void Initialize()
     {
         GameResources.Initialize();
+        GameState.InventoryCreationApi.Initialize();
 
-        GameState.InventoryCreationApi.Create();
+        terrariaLikeInventoryModelID = GameState.InventoryCreationApi.Create();
         GameState.InventoryCreationApi.SetAllSlotsAsActive();
         GameState.InventoryCreationApi.SetToolBar();
         GameState.InventoryCreationApi.SetSize(10, 5);
@@ -144,7 +147,7 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();
 
-        GameState.InventoryCreationApi.Create();
+        customRestrictionInventoryModelID = GameState.InventoryCreationApi.Create();
         GameState.InventoryCreationApi.SetActiveSlot(1);
         GameState.InventoryCreationApi.SetActiveSlot(3);
         GameState.InventoryCreationApi.SetActiveSlot(4);
