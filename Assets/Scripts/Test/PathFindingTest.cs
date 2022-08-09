@@ -42,7 +42,7 @@ namespace Planet.Unity
                    Agent.agentID.ID, goalPos);
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Agent);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -83,7 +83,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(12, 12);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, Agent);
+            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
 
