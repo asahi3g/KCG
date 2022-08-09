@@ -74,6 +74,13 @@ namespace Agent
                         model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }
+                    case AgentMovementState.FireGun:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.FireGun);
+                        Debug.Log(animation);
+                        model3d.AnimancerComponent.Play(animation, 0.075f);
+                        break;
+                    }
                     default:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);

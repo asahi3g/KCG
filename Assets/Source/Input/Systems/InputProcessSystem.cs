@@ -47,7 +47,12 @@ namespace ECSInput
             {        
                 if (model3d.CurrentWeapon != Model3DWeapon.Sword)
                 {
-                    GameObject hand = model3d.Hand;
+                    if (model3d.Weapon != null)
+                    {
+                        GameObject.Destroy(model3d.Weapon);
+                    }
+
+                    GameObject hand = model3d.LeftHand;
 
                     GameObject rapierPrefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Rapier);
                     GameObject rapier = GameObject.Instantiate(rapierPrefab);
@@ -58,6 +63,28 @@ namespace ECSInput
                     rapier.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
                     model3d.Weapon = rapier;
+                }
+            }
+            else if (weapon == Model3DWeapon.Gun)
+            {        
+                if (model3d.CurrentWeapon != Model3DWeapon.Gun)
+                {
+                    if (model3d.Weapon != null)
+                    {
+                        GameObject.Destroy(model3d.Weapon);
+                    }
+
+                    GameObject hand = model3d.RightHand;
+
+                    GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
+                    GameObject gun = GameObject.Instantiate(prefab);
+
+                    gun.transform.parent = hand.transform;
+                    gun.transform.position = hand.transform.position;
+                    gun.transform.rotation = hand.transform.rotation;
+                    gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+                    model3d.Weapon = gun;
                 }
             }
             else
@@ -110,9 +137,19 @@ namespace ECSInput
                     GameState.AgentProcessPhysicalState.SwordSlash(player);
                 }
 
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    GameState.AgentProcessPhysicalState.FireGun(player);
+                }
+
                 if (Input.GetKeyDown(KeyCode.C))
                 {
                     SetAgentWeapon(player, Model3DWeapon.Sword);
+                }
+
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    SetAgentWeapon(player, Model3DWeapon.Gun);
                 }
 
                 if (Input.GetKeyDown(KeyCode.V))

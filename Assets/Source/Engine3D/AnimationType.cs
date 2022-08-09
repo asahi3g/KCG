@@ -14,5 +14,6 @@ namespace Engine3D
         Jog,
         JumpFall,
         SwordSlash,
+        FireGun,
     }
 }

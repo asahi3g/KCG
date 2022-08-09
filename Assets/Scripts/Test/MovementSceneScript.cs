@@ -135,6 +135,9 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+            PlayerID = Player.agentID.ID;
+
             Planet.InitializeSystems(Material, transform, Player);
             //GenerateMap();
             var camera = Camera.main;
@@ -149,8 +152,7 @@ namespace Planet.Unity
             Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
-            PlayerID = Player.agentID.ID;
+
 
             inventoryID = Player.agentInventory.InventoryID;
 

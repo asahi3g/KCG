@@ -27,6 +27,7 @@ namespace Agent
         public int JumpCounter;
         public float DashCooldown;
         public float SlashCooldown;
+        public float FireGunCooldown;
 
         //[Flags]
         //public enum Flags : byte

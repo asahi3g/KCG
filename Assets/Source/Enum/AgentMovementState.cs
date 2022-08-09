@@ -11,5 +11,6 @@ namespace Enums
         SlidingLeft,    // Wall sliding down
         SlidingRight,    // Wall sliding down
         SwordSlash,
+        FireGun
     }
 }

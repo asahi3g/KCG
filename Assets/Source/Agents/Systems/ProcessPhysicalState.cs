@@ -27,7 +27,8 @@ namespace Agent
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
                     else if (physicsState.MovementState != AgentMovementState.Dashing &&
-                    physicsState.MovementState != AgentMovementState.SwordSlash)
+                    physicsState.MovementState != AgentMovementState.SwordSlash &&
+                    physicsState.MovementState != AgentMovementState.FireGun)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -51,13 +52,26 @@ namespace Agent
                     }
                 }
 
+                if (physicsState.FireGunCooldown > 0)
+                {
+                    physicsState.FireGunCooldown -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.FireGun)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
                 // if we are on the ground we reset the jump counter.
                 if (physicsState.OnGrounded && physicsState.Velocity.Y < 0.5f)
                 {
                     physicsState.JumpCounter = 0;
                     /*if (physicsState.MovementState == AgentMovementState.SlidingRight || physicsState.MovementState == AgentMovementState.SlidingLeft)
                     {*/
-                    if (physicsState.MovementState != AgentMovementState.SwordSlash)
+                    if (physicsState.MovementState != AgentMovementState.SwordSlash &&
+                    physicsState.MovementState != AgentMovementState.FireGun)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -144,7 +158,8 @@ namespace Agent
         {
             var physicsState = agentEntity.agentPhysicsState;
             if (physicsState.MovementState != AgentMovementState.Dashing &&
-            physicsState.MovementState != AgentMovementState.SwordSlash)
+            physicsState.MovementState != AgentMovementState.SwordSlash && 
+            physicsState.MovementState != AgentMovementState.FireGun)
             {
                 // we can start jumping only if the jump counter is 0
                 if (physicsState.JumpCounter == 0)
@@ -188,7 +203,8 @@ namespace Agent
             var PhysicsState = agentEntity.agentPhysicsState;
 
             if (PhysicsState.DashCooldown <= 0.0f &&
-            PhysicsState.MovementState != AgentMovementState.SwordSlash)
+            PhysicsState.MovementState != AgentMovementState.SwordSlash &&
+            PhysicsState.MovementState != AgentMovementState.FireGun)
             {
                 PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
                 PhysicsState.Velocity.Y = 0.0f;
@@ -205,7 +221,8 @@ namespace Agent
             var PhysicsState = agentEntity.agentPhysicsState;
 
             if (PhysicsState.SlashCooldown <= 0.0f && 
-            PhysicsState.MovementState != AgentMovementState.Dashing)
+            PhysicsState.MovementState != AgentMovementState.Dashing &&
+            PhysicsState.MovementState != AgentMovementState.FireGun)
             {
                 //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
                 //PhysicsState.Velocity.Y = 0.0f;
@@ -214,6 +231,19 @@ namespace Agent
                 //PhysicsState.AffectedByGravity = true;
                 PhysicsState.MovementState = AgentMovementState.SwordSlash;
                 PhysicsState.SlashCooldown = 0.6f;
+            }
+        }
+
+        public void FireGun(AgentEntity agentEntity)
+        {
+            var PhysicsState = agentEntity.agentPhysicsState;
+
+            if (PhysicsState.SlashCooldown <= 0.0f && 
+            PhysicsState.MovementState != AgentMovementState.Dashing && 
+            PhysicsState.MovementState != AgentMovementState.SwordSlash)
+            {
+                PhysicsState.MovementState = AgentMovementState.FireGun;
+                PhysicsState.FireGunCooldown = 0.6f;
             }
         }
 
@@ -226,7 +256,8 @@ namespace Agent
             // if the fly button is pressed
             if (stats.Fuel > 0.0f && 
             PhysicsState.MovementState != AgentMovementState.Dashing &&
-            PhysicsState.MovementState != AgentMovementState.SwordSlash)
+            PhysicsState.MovementState != AgentMovementState.SwordSlash &&
+            PhysicsState.MovementState != AgentMovementState.FireGun)
             {
                 PhysicsState.MovementState = AgentMovementState.JetPackFlying;
             }
@@ -237,7 +268,8 @@ namespace Agent
             var PhysicsState = agentEntity.agentPhysicsState;
 
             if (PhysicsState.MovementState != AgentMovementState.Dashing &&
-            PhysicsState.MovementState != AgentMovementState.SwordSlash)
+            PhysicsState.MovementState != AgentMovementState.SwordSlash &&
+            PhysicsState.MovementState != AgentMovementState.FireGun)
             {
                 PhysicsState.Direction = (int)horizontalDir;
                 // handling horizontal movement (left/right)
@@ -266,7 +298,8 @@ namespace Agent
         {
             var PhysicsState = agentEntity.agentPhysicsState;
             if (PhysicsState.MovementState != AgentMovementState.Dashing &&
-            PhysicsState.MovementState != AgentMovementState.SwordSlash)
+            PhysicsState.MovementState != AgentMovementState.SwordSlash &&
+            PhysicsState.MovementState != AgentMovementState.FireGun)
             {
                 PhysicsState.Direction = (int)horizontalDir;
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
