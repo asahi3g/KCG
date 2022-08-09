@@ -151,9 +151,9 @@ namespace Planet.Unity
             Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
-            PlayerID = Player.agentID.ID;
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
 
+            PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
             // Admin API Spawn Items

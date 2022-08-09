@@ -56,6 +56,7 @@
         HarvestTool,
         ConstructionTool,
         ScannerTool,
-        PlanterTool
+        PlanterTool,
+        RemoveMech
     }
 }

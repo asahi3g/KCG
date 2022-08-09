@@ -35,8 +35,7 @@ namespace Agent
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
 
             if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID);
-            entity.agentInventory.AutoPick = true;
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
             return entity;
         }
 
@@ -56,7 +55,7 @@ namespace Agent
                 true, false, false, false, false, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
-            entity.AddAgentInventory(inventoryID, -1);
+            entity.AddAgentInventory(inventoryID, -1, false);
 
             return entity;
         }
@@ -86,8 +85,7 @@ namespace Agent
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
                 if (inventoryID != - 1)
-                    entity.AddAgentInventory(inventoryID, equipmentInventoryID);
-                entity.agentInventory.AutoPick = true;
+                    entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
 
             }
             else if (agentType == Agent.AgentType.Agent)

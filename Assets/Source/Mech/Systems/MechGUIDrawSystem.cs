@@ -97,7 +97,7 @@ namespace Mech
         {
             // Set Inventory Elements
             inventoryID = agentEntity.agentInventory.InventoryID;
-            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
             // Create Item
@@ -217,7 +217,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -234,7 +234,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -251,7 +251,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -269,7 +269,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -286,7 +286,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -303,7 +303,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
@@ -320,7 +320,7 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item

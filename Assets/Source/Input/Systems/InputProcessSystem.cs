@@ -97,7 +97,7 @@ namespace ECSInput
                     {
                         var physicsState = corpse.agentPhysicsState;
 
-                        if (!corpse.hasAgentInventory || !(Vec2f.Distance(pos.Value, player.agentPosition2D.Value) < 0.5f))
+                        if (!corpse.hasAgentInventory || !(Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position) < 0.5f))
                             continue;
                         
                         // Todo: move this code inside an actions.
