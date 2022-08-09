@@ -12,6 +12,7 @@ namespace Planet.Unity
 
         Planet.PlanetState Planet;
         AgentEntity Agent;
+        AgentEntity Player;
 
         static bool Init = false;
 
@@ -38,7 +39,7 @@ namespace Planet.Unity
                    Agent.agentID.ID, goalPos);
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Agent);
+            Planet.Update(Time.deltaTime, Material, transform, Player);
         }
 
         private void OnGUI()
@@ -83,11 +84,12 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, Agent);
+            Player = Planet.AddPlayer(new Vec2f(8.0f, 4.0f));
+            Planet.InitializeSystems(Material, transform, Player);
+            
+            Agent = Planet.AddEnemy(new Vec2f(0.0f, 4.0f));
 
             GenerateMap();
-
-            Agent = Planet.AddEnemy(new Vec2f(0.0f, 4.0f));
         }
 
         void GenerateMap()

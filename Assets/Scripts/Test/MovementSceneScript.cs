@@ -134,8 +134,6 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(128, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-
-            Planet.InitializeSystems(Material, transform, Player);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -151,6 +149,7 @@ namespace Planet.Unity
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
+            Planet.InitializeSystems(Material, transform, Player);
 
             inventoryID = Player.agentInventory.InventoryID;
 

@@ -56,7 +56,7 @@ namespace Planet.Unity
 
             player = new AgentEntity();
 
-            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D));
+            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in entities)
             {
                 if (entity.isAgentPlayer)
