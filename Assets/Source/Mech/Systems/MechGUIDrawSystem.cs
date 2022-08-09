@@ -114,6 +114,226 @@ namespace Mech
                     DracaenaTrifasciataBackground.GetGameObject().SetActive(true);
                     SmashableBoxBackground.GetGameObject().SetActive(true);
 
+                    if(item.itemMechCastData.data.MechID == MechType.Storage)
+                    {
+                        ChestBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        ChestBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.Planter)
+                    {
+                        PlanterBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        PlanterBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.Light)
+                    {
+                        LightBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        LightBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.MajestyPalm)
+                    {
+                        MajestyPalmBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        MajestyPalmBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.SagoPalm)
+                    {
+                        SagoPalmBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        SagoPalmBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.DracaenaTrifasciata)
+                    {
+                        DracaenaTrifasciataBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        DracaenaTrifasciataBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (item.itemMechCastData.data.MechID == MechType.SmashableBox)
+                    {
+                        SmashableBoxBackground.SetImageColor(Color.red);
+                    }
+                    else
+                    {
+                        SmashableBoxBackground.SetImageColor(Color.yellow);
+                    }
+
+                    if (ChestBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && ChestBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (PlanterBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && PlanterBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (LightBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && LightBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (MajestyPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && MajestyPalmBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (SagoPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SagoPalmBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (DracaenaTrifasciataBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && DracaenaTrifasciataBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (SmashableBoxBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SmashableBoxBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else
+                    {
+                        item.itemMechCastData.InputsActive = true;
+
+                    }
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        if(ChestBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && ChestBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.Storage;
+                                }
+                        }
+                        
+                        if (PlanterBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && PlanterBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.Planter;
+                                }
+                        }
+
+                        if (LightBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && LightBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.Light;
+                                }
+
+                        }
+
+                        if (MajestyPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && MajestyPalmBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.MajestyPalm;
+                                }
+                        }
+
+                        if (SagoPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SagoPalmBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.SagoPalm;
+                                }
+                        }
+
+                        if (DracaenaTrifasciataBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && DracaenaTrifasciataBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.DracaenaTrifasciata;
+                                }
+                        }
+
+                        if (SmashableBoxBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SmashableBoxBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.SmashableBox;
+                                }
+                        }
+                    }
+
                 }
                 else
                 {

@@ -352,58 +352,6 @@ namespace KGUI
                         }
                 }
             }
-
-            /*if (bedrockUIBackground.IsMouseOver(CursorPosition))
-            {
-                // Set Inventory Elements
-                inventoryID = agentEntity.agentInventory.InventoryID;
-                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
-
-                // Create Item
-                item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
-                if (item != null)
-                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
-                    {
-                    // Set Data Tile ID to Pipe
-                    item.itemCastData.data.TileID = TileID.Bedrock;
-                    }
-            }
-            if (dirtUIBackground.IsMouseOver(CursorPosition) || bedrockUIBackground.IsMouseOver(CursorPosition) || pipeUIBackground.IsMouseOver(CursorPosition) ||
-                 wireUIBackground.IsMouseOver(CursorPosition))
-            {
-                // Set Inventory Elements
-                inventoryID = agentEntity.agentInventory.InventoryID;
-                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
-
-                // Create Item
-                item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
-                if (item != null)
-                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
-                    {
-                        // Set Data Tile ID to Pipe
-                        item.itemCastData.InputsActive = false;
-                    }
-            }
-            else
-            {
-                // Set Inventory Elements
-                inventoryID = agentEntity.agentInventory.InventoryID;
-                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
-
-                // Create Item
-                item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
-                if(item != null)
-                {
-                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
-                    {
-                        // Set Data Tile ID to Pipe
-                        item.itemCastData.InputsActive = true;
-                    }
-                }
-            }*/
         }
 
         public virtual void OnMouseEnter()

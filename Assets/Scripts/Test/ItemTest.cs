@@ -51,7 +51,7 @@ namespace Planet.Unity
                     }
                 }
             }
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -81,9 +81,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
-            int inventoryID = Player.agentInventory.InventoryID;
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
 

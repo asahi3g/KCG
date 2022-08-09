@@ -58,7 +58,7 @@ namespace Planet.Unity
 
             Planet = new PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, player);
+            Planet.InitializeSystems(Material, transform);
 
             ref var tileMap = ref Planet.TileMap;
 

@@ -1,65 +1,71 @@
 using System;
 using UnityEngine;
-using Enums.Tile;
 using PlanetTileMap;
+using Mech;
+using Enums.Tile;
 
 namespace Action
 {
     public class ToolActionConstruction : ActionBase
     {
-        public struct Data
-        {
-            public Mech.MechType MechID;
-        }
-
-        Data data;
+        // Item Entity
+        private ItemInventoryEntity ItemEntity;
 
         public ToolActionConstruction(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
-            data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
+            // Item Entity
+            ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
+
+            if(ItemEntity.itemMechCastData.data.MechID == null)
+                ItemEntity.itemMechCastData.data = (Mech.Data)ActionPropertyEntity.actionPropertyData.Data;
+
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            if (x >= 0 && x < planet.TileMap.MapSize.X &&
-            y >= 0 && y < planet.TileMap.MapSize.Y)
+            if(ItemEntity.itemMechCastData.InputsActive)
             {
-                var mech = GameState.MechCreationApi.Get((int)data.MechID);
-
-                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
-
-                var allTilesAir = true;
-
-                for (int i = 0; i < xRange; i++)
+                if (x >= 0 && x < planet.TileMap.MapSize.X &&
+                y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    for (int j = 0; j < yRange; j++)
-                    {
-                        if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
-                        {
-                            allTilesAir = false;
-                            break;
-                        }
-                    }
-                }
+                    var mech = GameState.MechCreationApi.Get((int)ItemEntity.itemMechCastData.data.MechID);
 
-                if (allTilesAir)
-                {
-                    planet.AddMech(new KMath.Vec2f(x, y), data.MechID);
+                    var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
+                    var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+
+                    var allTilesAir = true;
 
                     for (int i = 0; i < xRange; i++)
                     {
                         for (int j = 0; j < yRange; j++)
                         {
-                            planet.TileMap.SetMidTile(x + i, y + j, TileID.Mech);
+                            if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                            {
+                                allTilesAir = false;
+                                break;
+                            }
                         }
                     }
-                }
 
+                    if (allTilesAir)
+                    {
+                        planet.AddMech(new KMath.Vec2f(x, y), ItemEntity.itemMechCastData.data.MechID);
+
+                        for (int i = 0; i < xRange; i++)
+                        {
+                            for (int j = 0; j < yRange; j++)
+                            {
+                                planet.TileMap.SetMidTile(x + i, y + j, TileID.Mech);
+                            }
+                        }
+                    }
+
+                }
             }
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);

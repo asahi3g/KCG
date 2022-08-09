@@ -706,9 +706,18 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionConstruction);
         GameState.ItemCreationApi.EndItem();
-                
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveMech, "RemoveMech");
+        GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionRemoveMech);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.ScannerTool, "ScannerTool");
         GameState.ItemCreationApi.SetTexture(OreSprite);
         GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
@@ -750,7 +759,7 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
         GameState.MechCreationApi.SetTexture(ChestIcon);
-        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);

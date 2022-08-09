@@ -135,8 +135,8 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
 
         }
 
-        Planet.InitializeSystems(Material, transform, player);
-        
+        Planet.InitializeSystems(Material, transform);
+
         GenerateMap();
     }
 
@@ -252,6 +252,6 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
             Debug.Log("False");
         }
 
-        Planet.Update(Time.deltaTime, Material, transform, player);
+        Planet.Update(Time.deltaTime, Material, transform);
     }
 }

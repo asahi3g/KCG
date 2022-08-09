@@ -69,7 +69,7 @@ namespace Planet.Unity
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -134,6 +134,8 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(128, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
+
+            Planet.InitializeSystems(Material, transform);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
