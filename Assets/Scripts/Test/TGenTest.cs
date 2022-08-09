@@ -52,7 +52,7 @@ namespace Planet.Unity
             ref var tileMap = ref Planet.TileMap;
             Material material = Material;
 
-            Planet.Update(Time.deltaTime, Material, transform, player);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
         
         public void Initialize()
@@ -73,7 +73,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, player);
+            Planet.InitializeSystems(Material, transform);
 
             if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);

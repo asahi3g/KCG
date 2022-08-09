@@ -88,7 +88,8 @@ namespace Planet.Unity
                 PlaceSmashableBox();
             }
             
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
         }
 
         private void OnGUI()
@@ -104,7 +105,6 @@ namespace Planet.Unity
 
             if (showMechInventory)
             {
-                GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform, selectedMechIndex);
 
                 DrawCurrentMechHighlighter();
             }
@@ -238,7 +238,8 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
 
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
