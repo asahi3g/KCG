@@ -30,6 +30,8 @@ public class GameResources
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
 
+    public static int TGenBlockSpriteSheet, TGenBlock_0;
+
     // Tile CollisionIsotope
     public static int SB_R0000Sheet;
     public static int SB_R0001Sheet;
@@ -152,6 +154,8 @@ public class GameResources
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
 
+            TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
+
             SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
             SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
             SB_R0010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0010.png", 32, 32);
@@ -261,6 +265,8 @@ public class GameResources
             SB_R1110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1110Sheet, 0, 0, 0);
             SB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1111Sheet, 0, 0, 0);
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
+
+            TGenBlock_0 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 0, 0, 0);
 
             CreateTiles();
             CreateAnimations();

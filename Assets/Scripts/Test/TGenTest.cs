@@ -33,6 +33,8 @@ namespace Planet.Unity
         [SerializeField]
         private bool foregroundToolEnabled = true;
 
+        private AgentEntity player;
+
         private ForegroundPlacementTool placementTool;
 
         public void Start()
@@ -50,15 +52,21 @@ namespace Planet.Unity
             ref var tileMap = ref Planet.TileMap;
             Material material = Material;
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(Time.deltaTime, Material, transform, player);
         }
 
 
         public void Initialize()
         {
             GameResources.Initialize();
-
+           
             player = new AgentEntity();
+
+            // Generating the map
+            Vec2i mapSize = new Vec2i(32, 32);
+            Planet = new Planet.PlanetState();
+            Planet.Init(mapSize);
+            Planet.InitializeSystems(Material, transform, player);
 
             var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D));
             foreach (var entity in entities)
@@ -67,12 +75,6 @@ namespace Planet.Unity
                     player = entity;
 
             }
-
-            // Generating the map
-            Vec2i mapSize = new Vec2i(32, 32);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, player);
 
             if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);
@@ -94,16 +96,6 @@ namespace Planet.Unity
         {
             if(placementTool != null && foregroundToolEnabled)
                 placementTool.DrawGrid();
-        }
-
-        public void Update()
-        {
-            ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
-
-            Planet.Update(Time.deltaTime, Material, transform);
-
-
         }
 
     }

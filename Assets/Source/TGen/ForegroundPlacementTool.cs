@@ -51,7 +51,10 @@ namespace TGen
             rowIndex--;
 
             //SQUARE
-            GameState.Renderer.DrawQuadColorGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
+            Sprites.Sprite sprite = GameState.TileSpriteAtlasManager.GetSprite(GameResources.TGenBlock_0);
+
+            GameState.Renderer.DrawSpriteGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, sprite);
+            //GameState.Renderer.DrawQuadColorGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
 
             //EMPTY
             GameState.Renderer.DrawQuadColorGui(0.5F + w + xInterval, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);

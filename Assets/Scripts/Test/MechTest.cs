@@ -96,7 +96,7 @@ namespace Planet.Unity
             GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
 
             if(showMechInventory)
-                GameState.MechGUIDrawSystem.Draw(Planet.EntitasContext, transform, selectedMechIndex);
+                GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
         }
 
         // create the sprite atlas for testing purposes
