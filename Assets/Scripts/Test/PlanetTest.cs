@@ -87,9 +87,8 @@ namespace Planet.Unity
                 }
             }
 
-            HUDManager.Draw();
-            Planet.Update(Time.deltaTime, Material, transform);
-            //   Vector2 playerPosition = Player.Entity.agentPhysicsState.Position;
+            Planet.Update(Time.deltaTime, Material, transform, Player);
+            //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
         }
@@ -101,9 +100,6 @@ namespace Planet.Unity
 
             if (Event.current.type != EventType.Repaint)
                 return;
-
-            // Draw HUD UI
-           // HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -199,8 +195,6 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-
-            Planet.InitializeSystems(Material, transform);
             
             /*var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -209,11 +203,11 @@ namespace Planet.Unity
             GenerateMap();
             SpawnStuff();
 
+            Planet.InitializeSystems(Material, transform, Player);
+
             //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
             InventoryID = Player.agentInventory.InventoryID;
-
-            HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
@@ -414,6 +408,10 @@ namespace Planet.Unity
                 }
             }
 
+            Planet.AddUIText("SampleText", new Vec2f(-250.67f, 94.3f), new Vec2f(200, 120));
+
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
     }
 }

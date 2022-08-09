@@ -114,6 +114,13 @@ public class GameState
     public static Utility.Render Renderer;
     #endregion
 
+    #region GUI/HUD
+    public static HUD.HUDManager HUDManager;
+    public static KGUI.Elements.ElementSpawnerSystem ElementSpawnerSystem;
+    public static KGUI.Elements.ElementDrawSystem ElementDrawSystem;
+    public static KGUI.Elements.ElementUpdateSystem ElementUpdateSystem;
+    #endregion
+
 
     static GameState()
     {
@@ -174,5 +181,9 @@ public class GameState
         TGenGrid = new TGen.Grid();
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();
         TGenRenderMapBorder = new TGen.RenderMapBorder();
+        HUDManager = new HUD.HUDManager();
+        ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
+        ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
+        ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
     }
 }

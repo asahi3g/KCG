@@ -69,7 +69,7 @@ namespace Planet.Unity
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(Time.deltaTime, Material, transform, Player);
         }
 
         private void OnGUI()
@@ -79,9 +79,6 @@ namespace Planet.Unity
 
             if (Event.current.type != EventType.Repaint)
                 return;
-
-            // Draw HUD UI
-            HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -138,7 +135,7 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
-            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeSystems(Material, transform, Player);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -156,9 +153,6 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             inventoryID = Player.agentInventory.InventoryID;
-
-            // Player Status UI Init
-             HUDManager.Initialize(Planet, Player);
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);

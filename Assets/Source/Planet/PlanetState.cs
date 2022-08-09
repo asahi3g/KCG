@@ -9,6 +9,8 @@ using Enums;
 using Item;
 using KMath;
 using UnityEngine;
+using HUD;
+using KGUI.Elements;
 
 namespace Planet
 {
@@ -26,6 +28,7 @@ namespace Planet
         public ParticleEmitterList ParticleEmitterList;
         public ParticleList ParticleList;
         public ItemParticleList ItemParticleList;
+        public UIElementList UIElementList;
         public CameraFollow cameraFollow;
 
         public Contexts EntitasContext;
@@ -41,12 +44,13 @@ namespace Planet
             ParticleEmitterList = new ParticleEmitterList();
             ParticleList = new ParticleList();
             ItemParticleList = new ItemParticleList();
+            UIElementList = new UIElementList();
             cameraFollow = new CameraFollow();
 
             EntitasContext = new Contexts();
         }
 
-        public void InitializeSystems(Material material, Transform transform)
+        public void InitializeSystems(Material material, Transform transform, AgentEntity agentEntity)
         {
             GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
             GameState.PathFinding.Initialize();
@@ -59,6 +63,9 @@ namespace Planet
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
             GameState.Renderer.Initialize(material);
+
+            // GUI/HUD
+            GameState.HUDManager.Initialize(this, agentEntity);
         }
 
 
@@ -139,6 +146,54 @@ namespace Planet
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
                     -1, Agent.AgentType.Enemy));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIText(string text, float timeToLive, Vec2f position, Vec2f areaSize)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnText(EntitasContext.uIElement, text, timeToLive, position,
+                    areaSize, -1, ElementType.Text));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIText(string text, Vec2f position, Vec2f areaSize)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnText(EntitasContext.uIElement, text, position,
+                    areaSize, -1, ElementType.Text));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
+            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
+                position, scale, Type, -1, ElementType.Image));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
+            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type, Color color)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
+                position, scale, Type, color, -1, ElementType.Image));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, string path,
+            Vec2f position, Vec3f scale, int width, int height)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
+                position, scale, width, height, -1, ElementType.Image));
             return newEntity;
         }
 
@@ -287,10 +342,13 @@ namespace Planet
 
         }
 
-
+        public void RemoveUIElement(int elementID)
+        {
+            UIElementList.Remove(elementID);
+        }
 
         // updates the entities, must call the systems and so on ..
-        public void Update(float deltaTime, Material material, Transform transform)
+        public void Update(float deltaTime, Material material, Transform transform, AgentEntity agentEntity)
         {
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
@@ -342,6 +400,8 @@ namespace Planet
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
             cameraFollow.Update(ref this);
 
+            GameState.HUDManager.Update(agentEntity);
+
             TileMap.UpdateTileSprites();
 
             if (GameState.TGenGrid != null)
@@ -358,6 +418,7 @@ namespace Planet
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
             GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
+            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
 
             // Draw Frames.
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);
@@ -368,6 +429,8 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
+            GameState.HUDManager.Draw();
+            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
 
             GameState.FloatingTextDrawSystem.Draw(EntitasContext.floatingText, transform, 10000);
         }
