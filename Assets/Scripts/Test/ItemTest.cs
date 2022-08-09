@@ -29,9 +29,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
-
             if (Input.GetKeyDown(KeyCode.T))
             {
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
@@ -87,9 +84,6 @@ namespace Planet.Unity
             Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-
-            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(6.0f, 4.0f), 0, 100, 100, 100, 100, 100);
-            int inventoryID = Player.agentInventory.InventoryID;
 
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));

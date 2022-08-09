@@ -3,45 +3,46 @@ using Physics;
 using KMath;
 using UnityEngine;
 
-namespace  Item
+namespace Item
 {
     public class MovementSystem
     {
-        private void Update(Position2DComponent pos, MovementComponent movable, float deltaTime)
+        private void Update(PhysicsStateComponent physicsState, float deltaTime)
         {
-            float Gravity = 800.0f;
-            float MaxAcceleration = 50.0f;
+            float Gravity = Constants.Gravity;
+            float MaxAcceleration = Constants.MaxAcceleration;
+            
             // Maximum Y velocity
-            float MaxVelocityY = 15.0f;
+            float MaxVelocityY = Constants.MaxVelocityY;
 
-            movable.Acceleration.Y -= Gravity * deltaTime;
+            physicsState.Acceleration.Y -= Gravity;
          
             // Maximum acceleration in the game
-            if (movable.Acceleration.Y <= -MaxAcceleration)
+            if (physicsState.Acceleration.Y <= -MaxAcceleration)
             {
-                movable.Acceleration.Y = -MaxAcceleration;
+                physicsState.Acceleration.Y = -MaxAcceleration;
             }
 
-            if (movable.Acceleration.Y >= MaxAcceleration)
+            if (physicsState.Acceleration.Y >= MaxAcceleration)
             {
-                movable.Acceleration.Y = MaxAcceleration;
+                physicsState.Acceleration.Y = MaxAcceleration;
             }
 
 
             // Maximum velocity in the game
-            if (movable.Velocity.Y > MaxVelocityY)
+            if (physicsState.Velocity.Y > MaxVelocityY)
             {
-                movable.Velocity.Y = MaxVelocityY;
+                physicsState.Velocity.Y = MaxVelocityY;
             }
-            if (movable.Velocity.Y < -MaxVelocityY)
+            if (physicsState.Velocity.Y < -MaxVelocityY)
             {
-                movable.Velocity.Y = -MaxVelocityY;
+                physicsState.Velocity.Y = -MaxVelocityY;
             }
 
-            Vec2f displacement = 0.5f * movable.Acceleration * (deltaTime * deltaTime) + movable.Velocity * deltaTime;
-            Vec2f newVelocity = movable.Acceleration * deltaTime + movable.Velocity;
+            Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
+            Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
-            if (movable.OnGrounded)
+            if (physicsState.OnGrounded)
             {
                 // Ground friction
                 newVelocity.X *= 0.9f;
@@ -63,24 +64,22 @@ namespace  Item
             }
 
 
-            Vec2f newPosition = pos.Value + displacement;
-            pos.PreviousValue = pos.Value;
-            pos.Value = newPosition;
+            Vec2f newphysicsStateition = physicsState.Position + displacement;
+            physicsState.PreviousPosition = physicsState.Position;
+            physicsState.Position = newphysicsStateition;
 
-            movable.Velocity = newVelocity;
+            physicsState.Velocity = newVelocity;
+            physicsState.Acceleration = Vec2f.Zero;
         }
 
         public void Update(ItemParticleContext Context)
         {
             float deltaTime = Time.deltaTime;
-            var EntitiesWithVelocity = Context.GetGroup(ItemParticleMatcher.AllOf(
-                ItemParticleMatcher.ItemMovement, ItemParticleMatcher.ItemPosition2D));
-            foreach (var entity in EntitiesWithVelocity)
+            var EntitiesWithPhysicsState = Context.GetGroup(ItemParticleMatcher.ItemPhysicsState);
+            foreach (var entity in EntitiesWithPhysicsState)
             {
-                var pos = entity.itemPosition2D;
-                var movable = entity.itemMovement;
-
-                Update(pos, movable, deltaTime);
+                var physicsState = entity.itemPhysicsState;
+                Update(physicsState, deltaTime);
             }
         }
     }

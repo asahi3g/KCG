@@ -7,5 +7,7 @@ namespace Agent
     {
         public int InventoryID;
         public int EquipmentInventoryID;
+
+        public bool AutoPick;
     }
 }

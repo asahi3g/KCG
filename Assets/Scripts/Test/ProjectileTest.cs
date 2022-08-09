@@ -84,14 +84,14 @@ public class ProjectileTest : MonoBehaviour
             var test = Contexts.sharedInstance.agent.GetGroup(AgentMatcher.AgentPlayer);
             foreach (var entity in test)
             {
-                startPos = entity.agentPosition2D.Value;
+                startPos = entity.agentPhysicsState.Position;
             }
 
             IGroup<AgentEntity> Playerentities =
-            Contexts.sharedInstance.agent.GetGroup(AgentMatcher.AgentPosition2D);
+            Contexts.sharedInstance.agent.GetGroup(AgentMatcher.AgentPhysicsState);
             foreach (var entity in Playerentities)
             {
-                startPos = entity.agentPosition2D.Value;
+                startPos = entity.agentPhysicsState.Position;
             }
 
             start = new Cell

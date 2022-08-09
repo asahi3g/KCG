@@ -14,20 +14,17 @@ public static class AgentComponentsLookup {
     public const int AgentID = 3;
     public const int AgentInventory = 4;
     public const int AgentItemDrop = 5;
-    public const int AgentMovable = 6;
-    public const int AgentMovementState = 7;
-    public const int AgentPlayer = 8;
-    public const int AgentPosition2D = 9;
-    public const int AgentPositionDiscrete2D = 10;
-    public const int AgentSprite2D = 11;
-    public const int AgentStats = 12;
-    public const int AnimationState = 13;
-    public const int ECSInput = 14;
-    public const int ECSInputXY = 15;
-    public const int PhysicsBox2DCollider = 16;
-    public const int PhysicsSphere2DCollider = 17;
+    public const int AgentPhysicsState = 6;
+    public const int AgentPlayer = 7;
+    public const int AgentSprite2D = 8;
+    public const int AgentStats = 9;
+    public const int AnimationState = 10;
+    public const int ECSInput = 11;
+    public const int ECSInputXY = 12;
+    public const int PhysicsBox2DCollider = 13;
+    public const int PhysicsSphere2DCollider = 14;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 15;
 
     public static readonly string[] componentNames = {
         "AgentAIController",
@@ -36,11 +33,8 @@ public static class AgentComponentsLookup {
         "AgentID",
         "AgentInventory",
         "AgentItemDrop",
-        "AgentMovable",
-        "AgentMovementState",
+        "AgentPhysicsState",
         "AgentPlayer",
-        "AgentPosition2D",
-        "AgentPositionDiscrete2D",
         "AgentSprite2D",
         "AgentStats",
         "AnimationState",
@@ -57,11 +51,8 @@ public static class AgentComponentsLookup {
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
         typeof(Agent.ItemDropComponent),
-        typeof(Agent.MovableComponent),
-        typeof(Agent.MovementStateComponent),
+        typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
-        typeof(Agent.Position2DComponent),
-        typeof(Agent.PositionDiscrete2DComponent),
         typeof(Agent.Sprite2DComponent),
         typeof(Agent.StatsComponent),
         typeof(Animation.StateComponent),

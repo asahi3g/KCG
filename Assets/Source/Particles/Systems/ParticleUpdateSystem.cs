@@ -32,16 +32,16 @@ namespace Particle
                 float newHealth = state.Health - state.DecayRate * deltaTime;
                 gameEntity.ReplaceParticleState(newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale);
 
-                var pos = gameEntity.particlePosition2D;
+                var physicsState = gameEntity.particlePhysicsState;
                 Vec2f displacement = 
-                        0.5f * pos.Acceleration * (deltaTime * deltaTime) + pos.Velocity * deltaTime;
-                Vec2f newVelocity = pos.Acceleration * deltaTime + pos.Velocity;
+                        0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
+                Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
-                Vec2f newPosition = pos.Position + displacement;
+                Vec2f newPosition = physicsState.Position + displacement;
 
-                float newRotation = pos.Rotation + state.DeltaRotation * deltaTime;
+                float newRotation = physicsState.Rotation + state.DeltaRotation * deltaTime;
                 
-                gameEntity.ReplaceParticlePosition2D(newPosition, pos.Position, pos.Acceleration, newVelocity, newRotation);
+                gameEntity.ReplaceParticlePhysicsState(newPosition, physicsState.Position, physicsState.Acceleration, newVelocity, newRotation);
 
                 /*state.GameObject.transform.position = new Vector3(newPosition.x, newPosition.y, 0.0f);
                 state.GameObject.transform.Rotate(0.0f, 0.0f, state.DeltaRotation, Space.Self);*/

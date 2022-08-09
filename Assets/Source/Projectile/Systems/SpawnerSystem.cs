@@ -40,18 +40,15 @@ namespace Projectile
             // Add Sprite Component
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
             // Add Position Component
-            entity.AddProjectilePosition2D(position, position, 0.0f);
-            // Add Movement Component
-            entity.AddProjectileMovable(direction.Normalized * projectileProperties.Speed, projectileProperties.Acceleration, 
-                projectileProperties.AffectedByGravity);
+            entity.AddProjectilePhysicsState(position, position, 0.0f,
+                direction.Normalized * projectileProperties.Speed, projectileProperties.Acceleration,
+                projectileProperties.AffectedByGravity, Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
             
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
 
             // Add Physics Collider Component
             entity.AddProjectileCollider(true, true);
-
-            entity.AddProjectilePhysicsState2D(Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
 
             // Add Projectile Type
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);
@@ -83,17 +80,15 @@ namespace Projectile
             // Add Sprite Component
             entity.AddProjectileSprite2D(spriteID, spriteSize);
 
-            // Add Position Component
-            entity.AddProjectilePosition2D(startPos, startPos, 0.0f);
             // Add Moviment Component
-            entity.AddProjectileMovable(velocity, acceleration, false);
+            entity.AddProjectilePhysicsState(startPos, startPos, 0.0f, velocity, acceleration, 
+                false, Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(spriteSize, Vec2f.Zero);
 
             // Add Physics Collider Component
             entity.AddProjectileCollider(true, true);
-            entity.AddProjectilePhysicsState2D(Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
 
             // Add Projectile Type
             entity.AddProjectileType(projectileType, projectileDrawType);
@@ -126,9 +121,8 @@ namespace Projectile
             entity.AddProjectileSprite2D(spriteId, spriteSize);
 
             // Add Physics State 2D Component
-            entity.AddProjectilePosition2D(startPos, startPos, 0.0f);
-            entity.AddProjectilePhysicsState2D(Vec2f.Zero, 1.0f, 1.0f, 0.5f,
-                Vec2f.Zero);
+            entity.AddProjectilePhysicsState(startPos, startPos, 0.0f, Vec2f.Zero, Vec2f.Zero, false, 
+                Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(spriteSize, Vec2f.Zero);

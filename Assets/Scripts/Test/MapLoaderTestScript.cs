@@ -33,7 +33,7 @@ namespace Planet.Unity
         
         ECSInput.InputProcessSystem InputProcessSystems;
         Agent.AgentSpawnerSystem AgentSpawnerSystem;
-        Agent.MovableSystem PhysicsMovableSystem;
+        Agent.MovementSystem PhysicsMovableSystem;
         Agent.MeshBuilderSystem AgentMeshBuilderSystem;
         Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
 
@@ -57,7 +57,7 @@ namespace Planet.Unity
 
 
             InputProcessSystems = new ECSInput.InputProcessSystem();
-            PhysicsMovableSystem = new Agent.MovableSystem();
+            PhysicsMovableSystem = new Agent.MovementSystem();
             AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
             AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
 
