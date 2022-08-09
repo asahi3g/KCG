@@ -24,16 +24,16 @@ namespace Agent
                 {
                     case AgentMovementState.Move:
                     {
-                        /*if (movementState.Running)
+                        if (System.Math.Abs(physicsState.Velocity.X) > 7.0f)
                         {
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
                             model3d.AnimancerComponent.Play(animation, 0.125f);
                         }
                         else
-                        {*/
+                        {
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Jog);
                             model3d.AnimancerComponent.Play(animation, 0.125f);
-                      //  }
+                        }
                         break;
                     }
                     case AgentMovementState.Idle:
@@ -64,6 +64,13 @@ namespace Agent
                     case AgentMovementState.Falling:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.JumpFall);
+                        model3d.AnimancerComponent.Play(animation, 0.075f);
+                        break;
+                    }
+                    case AgentMovementState.SwordSlash:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SwordSlash);
+                        Debug.Log(animation);
                         model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }

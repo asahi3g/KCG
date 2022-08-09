@@ -13,5 +13,6 @@ namespace Engine3D
         Flip,
         Jog,
         JumpFall,
+        SwordSlash,
     }
 }

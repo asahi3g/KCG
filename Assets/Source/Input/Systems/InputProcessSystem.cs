@@ -73,6 +73,12 @@ namespace ECSInput
                     GameState.AgentProcessPhysicalState.Dash(player, x);
                 }
 
+                // Attack
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    GameState.AgentProcessPhysicalState.SwordSlash(player);
+                }
+
                 // Running
                 if (Input.GetKey(KeyCode.LeftAlt))
                 {

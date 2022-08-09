@@ -53,9 +53,13 @@ namespace Agent
                 int sign = Math.Sign(physicsState.Velocity.X);
 
                 if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
+                {
                     physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 if (Math.Abs(physicsState.Velocity.X) >= 0.1f) // Equal half running acceleration.
+                {
                     physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 else
                     physicsState.Velocity.X = 0;
             }

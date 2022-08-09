@@ -4,11 +4,12 @@ namespace Enums
     {
         None,
         Idle,
-        Move,
-        Falling,
+        Move, // moving left or right
+        Falling, // falling from the sky
         JetPackFlying,  // Using the jetpack
         Dashing,        // Dashing
         SlidingLeft,    // Wall sliding down
-        SlidingRight    // Wall sliding down
+        SlidingRight,    // Wall sliding down
+        SwordSlash,
     }
 }

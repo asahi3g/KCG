@@ -13,6 +13,7 @@ namespace Agent
         public float Speed;             // Runing speed in tiles/seconds.
         public Vec2f Velocity;
         public Vec2f Acceleration;      // Instantaneous, reset to zero at the end of the frame.
+        public int Direction; // 1 or -1 last direction the player was looking at
 
         public Enums.AgentMovementState MovementState;
 
@@ -25,6 +26,7 @@ namespace Agent
 
         public int JumpCounter;
         public float DashCooldown;
+        public float SlashCooldown;
 
         //[Flags]
         //public enum Flags : byte

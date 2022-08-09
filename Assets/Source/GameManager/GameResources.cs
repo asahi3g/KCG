@@ -722,7 +722,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Player);
         GameState.AgentCreationApi.SetName("player");
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.0f, 0.0f), new Vec2f(0.5f, 2.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.CharacterMoveLeft);
         GameState.AgentCreationApi.End();
 

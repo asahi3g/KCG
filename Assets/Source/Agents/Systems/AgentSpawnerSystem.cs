@@ -28,8 +28,8 @@ namespace Agent
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
-                newSpeed: 10f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
-                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0);
+                newSpeed: 10f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
+                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0);
             var size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
@@ -52,8 +52,9 @@ namespace Agent
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
-                newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, Enums.AgentMovementState.None,
-                true, false, false, false, false, 0, 0); // used for physics simulation
+                newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1, 
+                Enums.AgentMovementState.None,
+                true, false, false, false, false, 0, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
             var attacher = Inventory.InventoryAttacher.Instance;
@@ -73,8 +74,8 @@ namespace Agent
             entity.AddAgentID(agentId); // agent id 
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
-                newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero,
-                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0); // used for physics simulation
+                newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
+                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0); // used for physics simulation
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
 
             if (agentType == Agent.AgentType.Player)
