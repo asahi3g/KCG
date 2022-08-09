@@ -27,6 +27,8 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
     public TestSquare R1;
     public TestSquare R2;
 
+    AgentEntity player;
+
     // Colors for primary test squares
     public Color square_color = new(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -123,8 +125,17 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         // Generating the map
         Planet = new PlanetState();
         Planet.Init(mapSize);
+        player = new AgentEntity();
 
-        Planet.InitializeSystems(Material, transform);
+        var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D));
+        foreach (var entity in entities)
+        {
+            if (entity.isAgentPlayer)
+                player = entity;
+
+        }
+
+        Planet.InitializeSystems(Material, transform, player);
         
         GenerateMap();
     }
@@ -241,6 +252,6 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
             Debug.Log("False");
         }
 
-        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.Update(Time.deltaTime, Material, transform, player);
     }
 }
