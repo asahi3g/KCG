@@ -1,9 +1,3 @@
-using Enums;
-using KMath;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Mech
 {
     public enum MechType
@@ -13,5 +7,8 @@ namespace Mech
         Storage,
         Crafting,
         MajestyPalm,
+        SagoPalm,
+        DracaenaTrifasciata,
+        SmashableBox
     }
 }

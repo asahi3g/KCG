@@ -2,9 +2,6 @@ using UnityEngine;
 using Enums.Tile;
 using KMath;
 using Item;
-using Animancer;
-using HUD;
-using PlanetTileMap;
 using Mech;
 using System.Linq;
 
@@ -12,7 +9,6 @@ namespace Planet.Unity
 {
     public class MechTest : MonoBehaviour
     {
-
         [SerializeField] Material Material;
 
         public Planet.PlanetState Planet;
@@ -56,6 +52,8 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
+            GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
+
             int inventoryID = Player.agentInventory.InventoryID;
             InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
             int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
@@ -77,7 +75,13 @@ namespace Planet.Unity
                     }
                 }
             }
-            Planet.Update(Time.deltaTime, Material, transform);
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                PlaceSmashableBox();
+            }
+            
+            Planet.Update(Time.deltaTime, Material, transform, Player);
         }
 
         private void OnGUI()
@@ -104,7 +108,6 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
 
@@ -114,7 +117,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.MajestyPalm, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
@@ -131,6 +134,10 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
+
+            Planet.InitializeSystems(Material, transform, Player);
+
+            GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
@@ -194,6 +201,25 @@ namespace Planet.Unity
             float y = worldPosition.y;
 
             planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
+        }
+        
+        private void PlaceSmashableBox()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+
+            var mech = Planet.GetMechFromPosition(new Vec2f(x, y), MechType.SmashableBox);
+            if (mech != null)
+            {
+                Debug.Log("Destroy Smashable Box");
+                Planet.RemoveMech(mech.mechID.ID);
+            }
+            else
+            {
+                Debug.Log("PLACE Smashable Box");
+                Planet.AddMech(new Vec2f(x, y), MechType.SmashableBox);
+            }
         }
     } 
 }

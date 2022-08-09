@@ -45,15 +45,34 @@ namespace Planet.Unity
             }
         }
 
+        public void Update()
+        {
+            ref var tileMap = ref Planet.TileMap;
+            Material material = Material;
+
+            Planet.Update(Time.deltaTime, Material, transform);
+        }
+
+
         public void Initialize()
         {
             GameResources.Initialize();
+
+            player = new AgentEntity();
+
+            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPosition2D));
+            foreach (var entity in entities)
+            {
+                if (entity.isAgentPlayer)
+                    player = entity;
+
+            }
 
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeSystems(Material, transform, player);
 
             if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);

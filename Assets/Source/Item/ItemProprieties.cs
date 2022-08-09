@@ -1,7 +1,6 @@
 ﻿using Enums;
 using KMath;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,8 +10,8 @@ namespace Item
     public struct ItemProprieties
     {
         public ItemType ItemType;
-        public Enums.ItemGroups Group;
-        public Enums.ActionType ToolActionType;
+        public ItemGroups Group;
+        public ActionType ToolActionType;
 
         public int InventorSpriteID;
         public int SpriteID;
@@ -28,7 +27,7 @@ namespace Item
             Consumable  = 1 << 1,
             Stackable   = 1 << 2,
             Tool        = 1 << 3,
-            PlacementTool = 1 << 4  
+            PlacementTool = 1 << 4,
         }
 
         public bool IsPlaceable() { return ItemFlags.HasFlag(Flags.Placeable); }
