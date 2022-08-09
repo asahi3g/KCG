@@ -54,6 +54,12 @@ namespace Item
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
+
+                if (entity.itemType.Type == ItemType.RemoveMech)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
             }
 
             ItemID++;
