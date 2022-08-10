@@ -70,8 +70,7 @@ namespace Planet.Unity
                 }
             }
 
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(InventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
             if (item != null)
@@ -81,7 +80,8 @@ namespace Planet.Unity
                 {
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                        if (!Inventory.InventorySystemsState.MouseDown)
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
                             Player.agentID.ID, item.itemID.ID);
                     }   
                 }
@@ -99,13 +99,24 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext, Planet.InventoryList);
+
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext, Planet.InventoryList);
+
             if (Event.current.type != EventType.Repaint)
                 return;
+
+            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
+
+            // Draw HUD UI
+           // HUDManager.Update(Player);
 
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         private void OnDrawGizmos()

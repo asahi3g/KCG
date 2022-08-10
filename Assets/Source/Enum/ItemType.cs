@@ -29,6 +29,12 @@
         RiotShield,
 
         /// <summary>
+        /// Equipment
+        /// </summary>
+        Helmet,
+        Suit,
+
+        /// <summary>
         /// Mech's As Item
         /// </summary>
         MajestyPalm,
@@ -50,6 +56,7 @@
         HarvestTool,
         ConstructionTool,
         ScannerTool,
-        RemoveMech,
+        PlanterTool,
+        RemoveMech
     }
 }

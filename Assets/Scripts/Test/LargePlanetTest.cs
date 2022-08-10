@@ -31,8 +31,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -59,7 +58,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes
@@ -80,8 +79,6 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(3.0f, 1600));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
-
-            var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
             inventoryID = Player.agentInventory.InventoryID;
 

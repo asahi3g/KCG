@@ -157,14 +157,12 @@ namespace Utility
         /// These functions draw immediately on screen. 
         /// It doesn't work inside OnUpdate, because camera clear screen before drawing.
         /// </summary>
-        public void DrawSpriteNow(float x, float y, float w, float h,
-            Sprites.Sprite sprite)
+        public void DrawSpriteNow(float x, float y, float w, float h, Sprites.Sprite sprite)
         {
             DrawGlSprite(x, y, w, h, sprite);
         }
 
-        public void DrawQuadColorNow(float x, float y, float w, float h,
-            Color color)
+        public void DrawQuadColorNow(float x, float y, float w, float h, Color color)
         {
             DrawGlQuad(x, y, w, h, color);
         }
@@ -173,16 +171,12 @@ namespace Utility
         /// These functions should only be used inside OnGUI
         /// We use GUI functions because of bugs with GL.Push and GL.Pop functions.
         /// [x, y] = (0, 0) is lower left coner of the screen.
-        /// [x, y] = (1, 1) is upper right coner of the screen.
+        /// [x, y] = (Screen.Width, ScreenHeight) is upper right coner of the screen.
         /// </summary>
-        public void DrawSpriteGui(float x, float y, float w, float h,
-            Sprites.Sprite sprite)
+        public void DrawSpriteGui(float x, float y, float w, float h, Sprites.Sprite sprite)
         {
             y += h;
-            x *= Screen.width;
-            y = Screen.height - y * Screen.height;
-            w *= Screen.width;
-            h *= Screen.height;
+            y = Screen.height - y;
             Rect pos = new Rect(x, y, w, h);
 
             Vector4 texCoord = sprite.TextureCoords;
@@ -194,10 +188,7 @@ namespace Utility
         public void DrawQuadColorGui(float x, float y, float w, float h, Color color)
         {
             y += h;
-            x *= Screen.width;
-            y = Screen.height - y * Screen.height;
-            w *= Screen.width;
-            h *= Screen.height;
+            y = Screen.height - y;
 
             Rect pos = new Rect(x, y, w, h);
 
@@ -208,14 +199,11 @@ namespace Utility
             GUI.DrawTexture(pos , texture);
         }
 
-        public void DrawStringGui(float x, float y, float w, float h, string label, 
-            int fontSize = 16, TextAnchor alignment = TextAnchor.UpperLeft, Color color = default(Color))
+        public void DrawStringGui(float x, float y, float w, float h, string label, int fontSize = 16,
+            TextAnchor alignment = TextAnchor.UpperLeft, Color color = default(Color))
         {
             y += h;
-            x *= Screen.width;
-            y = Screen.height - y * Screen.height;
-            w *= Screen.width;
-            h *= Screen.height;
+            y = Screen.height - y;
 
             Rect pos = new Rect(x, y, w, h);
 

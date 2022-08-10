@@ -9,6 +9,6 @@ namespace Enums
         Particle = 4,
         BackGround = 5,
         Mech = 6,
-        TGenBlock = 7
+        Gui
     }
 }

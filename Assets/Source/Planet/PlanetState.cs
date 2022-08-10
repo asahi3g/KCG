@@ -7,6 +7,7 @@ using FloatingText;
 using Particle;
 using Enums;
 using Item;
+using Inventory;
 using KMath;
 using UnityEngine;
 using HUD;
@@ -28,6 +29,7 @@ namespace Planet
         public ParticleEmitterList ParticleEmitterList;
         public ParticleList ParticleList;
         public ItemParticleList ItemParticleList;
+        public InventoryList InventoryList;
         public UIElementList UIElementList;
         public CameraFollow cameraFollow;
 
@@ -44,6 +46,7 @@ namespace Planet
             ParticleEmitterList = new ParticleEmitterList();
             ParticleList = new ParticleList();
             ItemParticleList = new ItemParticleList();
+            InventoryList = new InventoryList();
             UIElementList = new UIElementList();
             cameraFollow = new CameraFollow();
 
@@ -78,8 +81,13 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
+            int equipmentInventoryID =
+                AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
+
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnPlayer(EntitasContext, spriteId, 
-                width, height, position, -1, startingAnimation, health, food, water, oxygen, fuel, 0.2f));
+                width, height, position, -1, startingAnimation, health, food, water, oxygen, fuel, 0.2f, inventoryID,
+                equipmentInventoryID));
             return newEntity;
         }
 
@@ -87,8 +95,12 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
+            int equipmentInventoryID =
+                AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
+
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
-                    -1, Agent.AgentType.Player));
+                    -1, Agent.AgentType.Player, inventoryID, equipmentInventoryID));
             return newEntity;
         }
 
@@ -105,8 +117,9 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID()).inventoryID.ID;
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnCorpse(EntitasContext, position,
-                    -1, spriteId, agentType));
+                    -1, spriteId, agentType, inventoryID));
             return newEntity;
         }
 
@@ -124,7 +137,36 @@ namespace Planet
             Utils.Assert(entity.isEnabled);
             MechList.Remove(mechId);
         }
-        
+
+        public InventoryEntity AddInventory(int inventoryModelID)
+        {
+            Utils.Assert(InventoryList.Length < PlanetEntityLimits.InventoryLimits);
+
+            InventoryEntity inventoryEntity = InventoryList.Add(
+                GameState.InventoryManager.CreateInventory(EntitasContext, inventoryModelID, -1));
+            return inventoryEntity;
+        }
+
+        public void RemoveInventory(int inventoryID)
+        {
+            // Spawn itemsInventory inside as item particles.
+            InventoryEntity entity = InventoryList.Get(inventoryID);
+
+            for (int i = 0; i < entity.inventoryEntity.Size; i++)
+            {
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(EntitasContext, inventoryID, i);
+                if (itemInventory == null)
+                    continue;
+
+                GameState.InventoryManager.RemoveItem(EntitasContext, inventoryID, i);
+                //Vec2f pos = AgentEntity.agentPosition2D.Value + AgentEntity.physicsBox2DCollider.Size / 2f;
+                //ItemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
+            }
+
+            Utils.Assert(entity.isEnabled);
+            InventoryList.Remove(inventoryID);
+        }
+
         public MechEntity GetMechFromPosition(Vec2f position, MechType mechType)
         {
             foreach (var mech in MechList.List)

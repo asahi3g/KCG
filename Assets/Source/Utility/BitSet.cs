@@ -45,7 +45,7 @@ namespace Utility
         public void UnSet(int pos)
         {
             int offset = pos >> 6;
-            Bits[offset] &= ~ 1uL << pos;
+            Bits[offset] &= ~(1uL << pos);
         }
 
         public bool Get(int pos)
@@ -54,6 +54,11 @@ namespace Utility
             if (offset >= Bits.Length)
                 return false;
             return (Bits[offset] & (1uL << pos)) != 0;
+        }
+
+        public void SetAll()
+        {
+            Array.Fill<UInt64>(Bits, UInt64.MaxValue);
         }
 
         /// <summary>

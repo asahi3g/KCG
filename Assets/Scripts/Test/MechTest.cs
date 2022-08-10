@@ -62,8 +62,8 @@ namespace Planet.Unity
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
 
             int inventoryID = Player.agentInventory.InventoryID;
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            InventoryEntity inventoryEntity = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            int selectedSlot = inventoryEntity.inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
 
@@ -100,8 +100,9 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
-            GameState.InventoryMouseSelectionSystem.Draw(Planet.EntitasContext);
+            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
+
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);;
 
             if(showMechInventory)
                 GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
