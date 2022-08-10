@@ -184,6 +184,21 @@ namespace Planet
             return null;
         }
 
+        public MechEntity GetMechFromPosition(Vec2f position)
+        {
+            foreach (var mech in MechList.List)
+            {
+                if (mech == null) break;
+
+                var mechBox = new AABox2D(mech.mechPosition2D.Value, mech.mechSprite2D.Size);
+                if (mechBox.OverlapPoint(position))
+                {
+                    return mech;
+                }
+            }
+
+            return null;
+        }
 
         public AgentEntity AddEnemy(Vec2f position)
         {

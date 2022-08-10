@@ -195,6 +195,11 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionRemoveMech);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionRemoveMechCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Remove Mech
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMechPlacement);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMechPlacementCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }

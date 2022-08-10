@@ -59,6 +59,30 @@ namespace Item
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
+
+                if (entity.itemType.Type == ItemType.Chest)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.Planter)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.Light)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.SmashableBox)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
             }
 
             ItemID++;
@@ -127,6 +151,36 @@ namespace Item
                 }
 
                 if (entity.itemType.Type == ItemType.ConstructionTool)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.RemoveMech)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.Chest)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.Planter)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.Light)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.SmashableBox)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
