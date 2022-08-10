@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 namespace KMath
 {
     // Vector 2D Floating-Point
+    [Serializable]
     public struct Vec2f
     {
         /// <summary>

@@ -17,7 +17,7 @@ using KMath;
 
 namespace Collisions
 {
-    public static class RayTileCollisionCheck
+    public static class RayCastCheck
     {
         private static Vec2i[] PlotLineLow(Vec2i start, Vec2i end)
         {
@@ -35,7 +35,7 @@ namespace Collisions
             var D = 2 * delta.Y - delta.X;
             var y = start.Y;
             
-            var outputCount = end.X - start.X;
+            var outputCount = end.X - start.X + 1;
             var output = new Vec2i[outputCount];
             var outputIndex = 0;
 
@@ -72,7 +72,7 @@ namespace Collisions
             var D = 2 * delta.X - delta.Y;
             var x = start.X;
 
-            var outputCount = end.Y - start.Y;
+            var outputCount = (end.Y - start.Y) + 1;
             var output = new Vec2i[outputCount];
             var outputIndex = 0;
 
