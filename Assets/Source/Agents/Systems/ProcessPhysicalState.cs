@@ -271,7 +271,10 @@ namespace Agent
             PhysicsState.MovementState != AgentMovementState.SwordSlash &&
             PhysicsState.MovementState != AgentMovementState.FireGun)
             {
-                PhysicsState.Direction = (int)horizontalDir;
+                if (horizontalDir != 0)
+                {
+                 PhysicsState.Direction = (int)horizontalDir;
+                }
                 // handling horizontal movement (left/right)
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
                 {
@@ -301,7 +304,10 @@ namespace Agent
             PhysicsState.MovementState != AgentMovementState.SwordSlash &&
             PhysicsState.MovementState != AgentMovementState.FireGun)
             {
-                PhysicsState.Direction = (int)horizontalDir;
+                if (horizontalDir != 0)
+                {
+                    PhysicsState.Direction = (int)horizontalDir;
+                }
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                 {
                     PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;

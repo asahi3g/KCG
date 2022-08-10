@@ -123,6 +123,7 @@ public class GameState
     #endregion
 
 
+
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();

@@ -53,7 +53,7 @@ namespace Agent
                     else
                     {
                         physicsState.OnGrounded = false;
-                        physicsState.Acceleration.Y = -100.0f;
+                        physicsState.Velocity.Y = -10.0f;
                     }
                 }
             }

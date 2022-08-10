@@ -549,7 +549,27 @@ namespace ECSInput
                     if (Input.GetKeyDown(keyCode))
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
-                        var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+                        switch(itemProperty.Group)
+                        {
+                            case Enums.ItemGroups.Gun:
+                            {
+                                SetAgentWeapon(entity, Model3DWeapon.Gun);
+                                break;
+                            }
+                            case Enums.ItemGroups.Weapon:
+                            {
+                                SetAgentWeapon(entity, Model3DWeapon.Sword);
+                                break;
+                            }
+                            default:
+                            {
+                                SetAgentWeapon(entity, Model3DWeapon.None);
+                                break;
+                            }
+                        }
                         
                         planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
                                     entity.agentPhysicsState.Position.Y));
