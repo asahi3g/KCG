@@ -15,7 +15,6 @@ namespace Agent
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
-                physicsState.Acceleration.Y -= Constants.Gravity;
             // maximum acceleration in the
 
             // maximum acceleration in the game
