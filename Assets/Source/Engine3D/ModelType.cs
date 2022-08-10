@@ -4,6 +4,9 @@ namespace Engine3D
 
     public enum ModelType
     {
-        Stander
+        DefaultHumanoid,
+        Stander,
+        Pistol,
+        Rapier
     }
 }

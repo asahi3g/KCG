@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Entitas/Generated/Agent/Components/AgentAgentPhysicsStateComponent.cs.meta
 guid: ea373b94d7243c141acc789da0e7bb36
+========
+guid: e05f791e2462a0c4eb844dcdd7cf6523
+>>>>>>>> a756962cfab08d59dbc3053955232c403a22e155:Assets/Entitas/Generated/ItemParticle/Components/ItemParticleItemMechCastDataComponent.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

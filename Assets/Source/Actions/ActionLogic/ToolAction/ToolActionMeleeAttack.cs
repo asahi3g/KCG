@@ -39,6 +39,10 @@ namespace Action
             var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.2f, AgentEntity.agentPhysicsState.Position.Y));
+            if (planet.Player != null)
+            {
+                GameState.AgentProcessPhysicalState.SwordSlash(planet.Player);
+            }
 
             // Todo: Create a agent colision system?
             foreach (var entity in entities)

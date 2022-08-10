@@ -10,6 +10,8 @@
         Gloves,
         Ring,
         Belt,
-        Dye
+        Dye,
+        Gun,
+        Weapon
     }
 }

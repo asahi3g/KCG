@@ -82,7 +82,7 @@ namespace Planet.Unity
                 return;
 
             // Draw Statistics
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+            //KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
             inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
@@ -136,6 +136,9 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+            PlayerID = Player.agentID.ID;
+
             Planet.InitializeSystems(Material, transform);
             //GenerateMap();
             var camera = Camera.main;
@@ -150,8 +153,6 @@ namespace Planet.Unity
             Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
-            Planet.InitializeSystems(Material, transform);
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
@@ -169,11 +170,11 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ChestPlacementTool, Planet.EntitasContext);
 
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(3.0f, 25.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(3.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(4.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(5.0f, 25.0f));
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(6.0f, 25.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(7.0f, 25.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(7.0f, 25.0f));
 
         }
 

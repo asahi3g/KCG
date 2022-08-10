@@ -12,15 +12,21 @@ namespace Agent
             // Increase gravity and initial velocity for smaller air time during jump. 
 
             if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
+            {
                 physicsState.Acceleration.Y -= Constants.Gravity;
+            }
             // maximum acceleration in the
 
             // maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)
+            {
                 physicsState.Acceleration.Y = -Constants.MaxAcceleration;
+            }
 
             if (physicsState.Acceleration.Y >= Constants.MaxAcceleration)
+            {
                 physicsState.Acceleration.Y = Constants.MaxAcceleration;
+            }
 
 
             if (physicsState.OnGrounded)
@@ -28,11 +34,17 @@ namespace Agent
                 int sign = Math.Sign(physicsState.Velocity.X);
                 // ground friction at max speed. -> Equal the running acceleration.
                 if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
+                {
                     physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 if (Math.Abs(physicsState.Velocity.X) >= 0.25f)
+                {
                     physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 else
+                {
                     physicsState.Velocity.X = 0;
+                }
             }
             else
             {
@@ -41,9 +53,13 @@ namespace Agent
                 int sign = Math.Sign(physicsState.Velocity.X);
 
                 if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
+                {
                     physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 if (Math.Abs(physicsState.Velocity.X) >= 0.1f) // Equal half running acceleration.
+                {
                     physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                }
                 else
                     physicsState.Velocity.X = 0;
             }

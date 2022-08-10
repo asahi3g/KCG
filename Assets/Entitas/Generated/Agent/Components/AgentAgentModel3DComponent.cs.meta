@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Entitas/Generated/Agent/Components/AgentAgentModel3DComponent.cs.meta
+guid: a4c6fe6f898af114e975e9ef530c6f63
+========
+guid: ea373b94d7243c141acc789da0e7bb36
+>>>>>>>> a756962cfab08d59dbc3053955232c403a22e155:Assets/Entitas/Generated/Agent/Components/AgentAgentPhysicsStateComponent.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

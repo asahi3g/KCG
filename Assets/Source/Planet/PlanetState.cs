@@ -33,6 +33,8 @@ namespace Planet
         public UIElementList UIElementList;
         public CameraFollow cameraFollow;
 
+        public AgentEntity Player;
+
         public Contexts EntitasContext;
 
         public void Init(Vec2i mapSize)
@@ -88,6 +90,9 @@ namespace Planet
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnPlayer(EntitasContext, spriteId, 
                 width, height, position, -1, startingAnimation, health, food, water, oxygen, fuel, 0.2f, inventoryID,
                 equipmentInventoryID));
+
+            Player = newEntity;
+
             return newEntity;
         }
 
@@ -101,6 +106,9 @@ namespace Planet
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
                     -1, Agent.AgentType.Player, inventoryID, equipmentInventoryID));
+
+            Player = newEntity;
+
             return newEntity;
         }
 
@@ -427,10 +435,12 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-            GameState.AgentMovementSystem.Update(EntitasContext.agent);
             GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
+            GameState.AgentMovementSystem.Update(EntitasContext.agent);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
+            GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
+            GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);

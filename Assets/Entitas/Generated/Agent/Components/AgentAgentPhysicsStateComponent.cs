@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.PhysicsStateComponent agentPhysicsState { get { return (Agent.PhysicsStateComponent)GetComponent(AgentComponentsLookup.AgentPhysicsState); } }
     public bool hasAgentPhysicsState { get { return HasComponent(AgentComponentsLookup.AgentPhysicsState); } }
 
-    public void AddAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, Enums.AgentMovementState newMovementState, bool newAffectedByGravity, bool newInvulnerable, bool newOnGrounded, bool newDroping, bool newWantToDrop, int newJumpCounter, float newDashCooldown) {
+    public void AddAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newDirection, Enums.AgentMovementState newMovementState, bool newAffectedByGravity, bool newInvulnerable, bool newOnGrounded, bool newDroping, bool newWantToDrop, int newJumpCounter, float newDashCooldown, float newSlashCooldown, float newFireGunCooldown) {
         var index = AgentComponentsLookup.AgentPhysicsState;
         var component = (Agent.PhysicsStateComponent)CreateComponent(index, typeof(Agent.PhysicsStateComponent));
         component.Position = newPosition;
@@ -19,6 +19,7 @@ public partial class AgentEntity {
         component.Speed = newSpeed;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
+        component.Direction = newDirection;
         component.MovementState = newMovementState;
         component.AffectedByGravity = newAffectedByGravity;
         component.Invulnerable = newInvulnerable;
@@ -27,10 +28,12 @@ public partial class AgentEntity {
         component.WantToDrop = newWantToDrop;
         component.JumpCounter = newJumpCounter;
         component.DashCooldown = newDashCooldown;
+        component.SlashCooldown = newSlashCooldown;
+        component.FireGunCooldown = newFireGunCooldown;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, Enums.AgentMovementState newMovementState, bool newAffectedByGravity, bool newInvulnerable, bool newOnGrounded, bool newDroping, bool newWantToDrop, int newJumpCounter, float newDashCooldown) {
+    public void ReplaceAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newDirection, Enums.AgentMovementState newMovementState, bool newAffectedByGravity, bool newInvulnerable, bool newOnGrounded, bool newDroping, bool newWantToDrop, int newJumpCounter, float newDashCooldown, float newSlashCooldown, float newFireGunCooldown) {
         var index = AgentComponentsLookup.AgentPhysicsState;
         var component = (Agent.PhysicsStateComponent)CreateComponent(index, typeof(Agent.PhysicsStateComponent));
         component.Position = newPosition;
@@ -38,6 +41,7 @@ public partial class AgentEntity {
         component.Speed = newSpeed;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
+        component.Direction = newDirection;
         component.MovementState = newMovementState;
         component.AffectedByGravity = newAffectedByGravity;
         component.Invulnerable = newInvulnerable;
@@ -46,6 +50,8 @@ public partial class AgentEntity {
         component.WantToDrop = newWantToDrop;
         component.JumpCounter = newJumpCounter;
         component.DashCooldown = newDashCooldown;
+        component.SlashCooldown = newSlashCooldown;
+        component.FireGunCooldown = newFireGunCooldown;
         ReplaceComponent(index, component);
     }
 
