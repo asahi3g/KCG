@@ -9,6 +9,7 @@ namespace Mech
 {
     public class MechSpawnSystem
     {
+        static private int UniqueID;
         MechCreationApi MechCreationApi;
 
         public MechSpawnSystem(MechCreationApi mechCreationApi)
@@ -16,27 +17,32 @@ namespace Mech
             MechCreationApi = mechCreationApi;
         }
         
-        public MechEntity Spawn(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
-            int mechID, MechType mechType)
+        public MechEntity Spawn(Contexts entitasContext, int spriteId, int width, int height, Vec2f position, MechType mechType)
         {
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
             ref MechProperties mechProperties = ref MechCreationApi.GetRef((int)mechType);
 
             var entity = entitasContext.mech.CreateEntity();
-            entity.AddMechID(mechID);
+            entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
             entity.AddMechPosition2D(position);
             entity.AddMechType(mechType);
 
             if (mechType == MechType.Planter)
-                entity.AddMechPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+                entity.AddMechPlanter(false, -1, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+
+            if (mechProperties.HasInventory())
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(entitasContext, mechProperties.InventoryModelID).inventoryID.ID);
+
+            if (mechProperties.IsBreakable())
+                entity.AddMechDurability(mechProperties.MechID);
 
             return entity;
         }
 
-        public MechEntity Spawn(Contexts entitasContext, Vec2f position, int mechID, MechType mechType)
+        public MechEntity Spawn(Contexts entitasContext, Vec2f position, MechType mechType)
         {
             ref MechProperties mechProperties = ref MechCreationApi.GetRef((int)mechType);
 
@@ -45,21 +51,20 @@ namespace Mech
             var spriteId = mechProperties.SpriteID;
 
             var entity = entitasContext.mech.CreateEntity();
-            entity.AddMechID(mechID);
+            entity.AddMechID(UniqueID, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
             entity.AddMechPosition2D(position);
             entity.AddMechType(mechType);
 
-            switch (mechType)
-            {
-                case MechType.Planter:
-                    entity.AddMechPlanter(false, null, 0.0f, 100.0f, 0.0f, 100.0f, 0);
-                    break;
-                case MechType.SmashableBox:
-                    entity.AddMechSmashableBox(100);
-                    break;
-            }
+            if (mechType == MechType.Planter)
+                entity.AddMechPlanter(false, -1, 0.0f, 100.0f, 0.0f, 100.0f, 0);
+
+            if (mechProperties.HasInventory())
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(entitasContext, mechProperties.InventoryModelID, "Chest").inventoryID.ID);
+
+            if (mechProperties.IsBreakable())
+                entity.AddMechDurability(mechProperties.MechID);
 
             return entity;
         }

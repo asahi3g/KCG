@@ -3,6 +3,7 @@
     // Todo: Procedural generate enums and Intialize functions.
     public enum ActionType
     {
+        None,
         /// <summary>
         /// General Actions
         /// </summary>
@@ -12,6 +13,11 @@
         ChargeAction,
         ShieldAction,
         MoveAction,
+
+        /// <summary>
+        /// Mech Actions
+        /// </summary>
+        OpenChestAction,
 
         /// <summary>
         /// PlaceTileTool

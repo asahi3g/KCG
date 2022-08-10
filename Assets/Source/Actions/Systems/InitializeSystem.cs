@@ -62,6 +62,10 @@ namespace Action
             GameState.ActionPropertyManager.Movement();
             GameState.ActionPropertyManager.EndActionPropertyType();
 
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.OpenChestAction);
+            GameState.ActionPropertyManager.SetLogicFactory(new ChestActionCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
             // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Ore1, MapLayerType.Front);
 

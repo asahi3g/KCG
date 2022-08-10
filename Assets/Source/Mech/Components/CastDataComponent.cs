@@ -1,6 +1,4 @@
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
-using Enums.Tile;
 
 namespace Mech
 {
@@ -11,4 +9,3 @@ namespace Mech
         public bool InputsActive;
     }
 }
-

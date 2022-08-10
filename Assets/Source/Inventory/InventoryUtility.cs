@@ -48,6 +48,13 @@ namespace Inventory
                 return false;
             return true;
         }
+
+        public bool IsInsideScreen()
+        {
+            if (Position.X >= 0 && Position.Y >= 0 && Position.X + Size.X <= 1920 && Position.Y + Size.Y <= 1080)
+                return true;
+            return false;
+        }
     }
 
     public struct Slot

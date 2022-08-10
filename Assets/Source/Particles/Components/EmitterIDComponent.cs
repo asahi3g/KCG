@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Particle
 {
-
     [Particle]
     public class EmitterIDComponent : IComponent
     {
         [PrimaryEntityIndex]
-        public int ParticleEmitterId;
+        // This is not the index of ParticleEmitterList. It should never reuse values.
+        public int ID;
+        public int Index;
     }
 }

@@ -30,8 +30,8 @@ namespace Vehicle
 
 
             int LastIndex = Length;
-            entity.ReplaceVehicleID(LastIndex);
             List[LastIndex] = entity;
+            entity.vehicleID.Index = LastIndex;
             Length++;
 
              return List[LastIndex];
@@ -46,17 +46,17 @@ namespace Vehicle
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int id)
+        public void Remove(int index)
         {
-            Utils.Assert(id >= 0 && id < Length);
+            Utils.Assert(index >= 0 && index < Length);
 
-            ref VehicleEntity entity = ref List[id];
+            ref VehicleEntity entity = ref List[index];
             entity.Destroy();
 
-            if (id != Length - 1)
+            if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.ReplaceVehicleID(id);
+                entity.vehicleID.Index = index;
             }
             Length--;
         }

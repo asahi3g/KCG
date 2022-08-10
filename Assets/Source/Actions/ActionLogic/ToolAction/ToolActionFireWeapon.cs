@@ -202,7 +202,7 @@ namespace Action
                 if (ProjectileEntity.isEnabled)
                 {
                     // Release the projectile before executing exit
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.ID);
+                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
                 } 
             }
             base.OnExit(ref planet);

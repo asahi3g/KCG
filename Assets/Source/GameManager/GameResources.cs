@@ -801,6 +801,7 @@ public class GameResources
         GameState.MechCreationApi.SetName("chest");
         GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
+        GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
@@ -836,6 +837,9 @@ public class GameResources
         GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
         GameState.MechCreationApi.SetName("smashableBox");
         GameState.MechCreationApi.SetTexture(ChestIcon);
+        GameState.MechCreationApi.SetAction(Enums.ActionType.OpenChestAction);
+        GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
+        GameState.MechCreationApi.SetDurability(100);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
 		GameState.MechCreationApi.End();
     }

@@ -3,13 +3,14 @@ using UnityEngine;
 public class Utils
 {
 
-    public static void Assert(bool condition)
+    public static void Assert(bool condition, string message = "")
     {
         UnityEngine.Assertions.Assert.IsTrue(condition);
 
         if (!condition)
         {
-             Application.Quit();
+            Debug.LogError(message);
+            Application.Quit();
         }
     }
 }

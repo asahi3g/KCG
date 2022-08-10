@@ -97,6 +97,32 @@ namespace Mech
             }
         }
 
+        public void SetAction(Enums.ActionType actionType)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Action = actionType;
+            }
+        }
+
+        public void SetInventory(int inventoryModelID)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].InventoryModelID = inventoryModelID;
+                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.HasInventory;
+            }
+        }
+
+        public void SetDurability(int durability)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Durability = durability;
+                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;

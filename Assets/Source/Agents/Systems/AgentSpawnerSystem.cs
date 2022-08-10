@@ -6,6 +6,7 @@ namespace Agent
 {
     public class AgentSpawnerSystem
     {
+        private static int UniqueID = 0;
 
         AgentCreationApi AgentCreationApi;
         public AgentSpawnerSystem(AgentCreationApi agentCreationApi)
@@ -14,8 +15,8 @@ namespace Agent
         }
 
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
-        int agentId, int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
-        int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
+            int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
+            int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
 
@@ -24,7 +25,7 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(agentId);
+            entity.AddAgentID(UniqueID++, -1);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
@@ -40,14 +41,14 @@ namespace Agent
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int agentId, int spriteId, AgentType agentType, 
+        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, AgentType agentType, 
             int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
             ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(agentId); // agent id 
+            entity.AddAgentID(UniqueID++, -1);
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
@@ -60,7 +61,7 @@ namespace Agent
             return entity;
         }
 
-        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, int agentId, AgentType agentType, 
+        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, AgentType agentType, 
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
@@ -69,7 +70,7 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(agentId); // agent id 
+            entity.AddAgentID(UniqueID++, -1); // agent id 
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,

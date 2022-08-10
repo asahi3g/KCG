@@ -116,42 +116,44 @@ namespace Action
                                     if (entity.mechPlanter.PlantGrowth < entity.mechPlanter.GrowthTarget)
                                         entity.mechPlanter.PlantGrowth += Time.deltaTime * 0.3f;
 
+                                    MechEntity plant = planet.EntitasContext.mech.GetEntityWithMechID(entity.mechPlanter.PlantMechID);
+
                                     // Check Plant Growth
                                     if (entity.mechPlanter.PlantGrowth >= 50 && entity.mechPlanter.PlantGrowth < 100)
                                     {
-                                        if(entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.MajestyPalm)
+                                        if (plant.mechType.mechType == Mech.MechType.MajestyPalm)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
+                                            plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
                                         }
-                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.SagoPalm)
+                                        else if (plant.mechType.mechType == Mech.MechType.SagoPalm)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.SagoPalmS1;
+                                            plant.mechSprite2D.SpriteId = GameResources.SagoPalmS1;
                                         }
-                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
+                                        else if (plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS1;
+                                            plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS1;
                                         }
                                     }
 
                                     else if (entity.mechPlanter.PlantGrowth >= 100)
                                     {
-                                        if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.MajestyPalm)
+                                        if (plant.mechType.mechType == Mech.MechType.MajestyPalm)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
+                                            plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
                                         }
-                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.SagoPalm)
+                                        else if (plant.mechType.mechType == Mech.MechType.SagoPalm)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.SagoPalmS2;
+                                            plant.mechSprite2D.SpriteId = GameResources.SagoPalmS2;
                                         }
-                                        else if (entity.mechPlanter.Plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
+                                        else if (plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
                                         {
                                             // Increase Stage
-                                            entity.mechPlanter.Plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS2;
+                                            plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS2;
                                         }
                                     }
 

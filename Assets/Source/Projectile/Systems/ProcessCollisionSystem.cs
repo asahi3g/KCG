@@ -198,7 +198,7 @@ namespace Projectile
                             }
                         }
                     }
-                    planet.RemoveProjectile(entityP.projectileID.ID);
+                    planet.RemoveProjectile(entityP.projectileID.Index);
                 }
                 else if (entityP.projectileType.Type == Enums.ProjectileType.Rocket)
                 {
@@ -235,7 +235,7 @@ namespace Projectile
                             }
                         }
                     }
-                    planet.RemoveProjectile(entityP.projectileID.ID);
+                    planet.RemoveProjectile(entityP.projectileID.Index);
                 }
                 else if (entityP.projectileType.Type == Enums.ProjectileType.Arrow)
                 {
@@ -251,7 +251,7 @@ namespace Projectile
                 {
                     planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
-                    planet.RemoveProjectile(entityP.projectileID.ID);
+                    planet.RemoveProjectile(entityP.projectileID.Index);
                 }
             }
 
