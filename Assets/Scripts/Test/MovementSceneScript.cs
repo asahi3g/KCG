@@ -71,6 +71,7 @@ namespace Planet.Unity
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
         }
 
         private void OnGUI()
@@ -140,6 +141,7 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
