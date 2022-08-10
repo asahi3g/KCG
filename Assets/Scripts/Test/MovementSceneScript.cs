@@ -55,8 +55,9 @@ namespace Planet.Unity
                 Debug.Log("loaded!");
             }
 
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            Inventory.EntityComponent inventory = Planet.InventoryList.Get(inventoryID).inventoryEntity;
+            
+            int selectedSlot = inventory.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -69,7 +70,7 @@ namespace Planet.Unity
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -81,9 +82,9 @@ namespace Planet.Unity
                 return;
 
             // Draw Statistics
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+            //KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
         
 
@@ -138,7 +139,7 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
 
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -153,7 +154,7 @@ namespace Planet.Unity
             Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
 
-
+            PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
             // Admin API Spawn Items

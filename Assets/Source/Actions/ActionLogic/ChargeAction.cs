@@ -1,5 +1,6 @@
 using Entitas;
 using Planet;
+using Inventory;
 using UnityEngine;
 
 namespace Action
@@ -7,7 +8,6 @@ namespace Action
     public class ChargeAction : ActionBase
     {
         private Item.FireWeaponPropreties WeaponPropreties;
-        private InventoryEntity InventoryEntity;
         private ItemInventoryEntity ItemEntity;
         private float tempCharge;
 
@@ -20,14 +20,15 @@ namespace Action
             if (!AgentEntity.hasAgentInventory)
                 return;
 
-            InventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryIDID(AgentEntity.agentInventory.InventoryID);
+            int inventoryID = AgentEntity.agentInventory.InventoryID;
+            Inventory.EntityComponent inventory = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
 
             // Todo: start playing some animation
-            if (GameState.InventoryCreationApi.Get(InventoryEntity.inventoryID.TypeID).HasTooBar())
+            if (inventoryModel.HasToolBar)
             {
-                int selectedSlot = InventoryEntity.inventoryEntity.SelectedSlotID;
-                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
-                    InventoryEntity.inventoryID.ID, selectedSlot);
+                int selectedSlot = inventory.SelectedSlotID;
+                ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 
                 // Get Is the item weapon chargable or not

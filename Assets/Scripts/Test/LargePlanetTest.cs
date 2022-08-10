@@ -31,8 +31,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(inventoryID);
-            int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -45,7 +44,7 @@ namespace Planet.Unity
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Player);
+            Planet.Update(Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
@@ -59,7 +58,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext);
+            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes
@@ -74,14 +73,12 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(6400, 1600);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, Player);
+            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
             Player = Planet.AddPlayer(new Vec2f(3.0f, 1600));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
-
-            var inventoryAttacher = Inventory.InventoryAttacher.Instance;
 
             inventoryID = Player.agentInventory.InventoryID;
 

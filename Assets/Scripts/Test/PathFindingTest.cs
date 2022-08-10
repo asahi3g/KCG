@@ -38,7 +38,7 @@ namespace Planet.Unity
                    Agent.agentID.ID, goalPos);
             }
 
-            Planet.Update(Time.deltaTime, Material, transform, Agent);
+            Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -49,7 +49,7 @@ namespace Planet.Unity
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext);
+            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes
@@ -83,11 +83,9 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(16, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform, Agent);
+            Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-
-            Agent = Planet.AddEnemy(new Vec2f(0.0f, 4.0f));
         }
 
         void GenerateMap()

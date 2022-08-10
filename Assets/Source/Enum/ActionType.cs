@@ -44,5 +44,6 @@
         ToolActionHarvest,
         ToolActionConstruction,
         ToolActionScanner,
+        ToolActionRemoveMech,
     }
 }

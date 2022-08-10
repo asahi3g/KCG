@@ -42,8 +42,23 @@ namespace Item
 
             if (itemProperty.IsPlacementTool())
             {
-                Data data = new Data();
-                entity.AddItemCastData(data, true);
+                if(entity.itemType.Type == ItemType.PlacementTool)
+                {
+                    Enums.Tile.Data data = new Data();
+                    entity.AddItemCastData(data, true);
+                }
+
+                if(entity.itemType.Type == ItemType.ConstructionTool)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.RemoveMech)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
             }
 
             ItemID++;
@@ -105,8 +120,17 @@ namespace Item
 
             if (itemProperty.IsPlacementTool())
             {
-                Data data = new Data();
-                entity.AddItemCastData(data, true);
+                if (entity.itemType.Type == ItemType.PlacementTool)
+                {
+                    Enums.Tile.Data data = new Data();
+                    entity.AddItemCastData(data, true);
+                }
+
+                if (entity.itemType.Type == ItemType.ConstructionTool)
+                {
+                    Mech.Data data = new Mech.Data();
+                    entity.AddItemMechCastData(data, true);
+                }
             }
 
             ItemID++;

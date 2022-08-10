@@ -71,8 +71,7 @@ class PlanterTest : MonoBehaviour
             }
         }
 
-        InventoryEntity Inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryIDID(InventoryID);
-        int selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+        int selectedSlot = Planet.InventoryList.Get(InventoryID).inventoryEntity.SelectedSlotID;
 
         ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
         if (item != null)
@@ -88,7 +87,8 @@ class PlanterTest : MonoBehaviour
             }
         }
 
-        Planet.Update(Time.deltaTime, Material, transform, Player);
+        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.DrawHUD(Player);
 
         // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
     }
@@ -104,7 +104,7 @@ class PlanterTest : MonoBehaviour
         // Draw Statistics
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
 
-        inventoryDrawSystem.Draw(Planet.EntitasContext);
+        inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
     }
 
     private void OnDrawGizmos()
@@ -203,7 +203,8 @@ class PlanterTest : MonoBehaviour
         GenerateMap();
         SpawnStuff();
 
-        Planet.InitializeSystems(Material, transform, Player);
+        Planet.InitializeSystems(Material, transform);
+        Planet.InitializeHUD(Player);
 
         //TileMapManager.Save(Planet.TileMap, "map.kmap");
 

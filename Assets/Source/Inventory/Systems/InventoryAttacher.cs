@@ -15,9 +15,10 @@ namespace Inventory
 
         public void AttachInventoryToAgent(Contexts entitasContext, int width, int height, AgentEntity agentEntity)
         {
-            AgentEntity entity = agentEntity;
+            //TODO(): Fix this
+           /* AgentEntity entity = agentEntity;
             entity.AddAgentInventory(InventoryID, false);
-            CreateInventory(entitasContext, width, height, GameState.InventoryCreationApi.GetDefaultInventory());
+            CreateInventory(entitasContext, width, height, GameState.InventoryCreationApi.GetDefaultInventory());*/
         }
 
         // This is for chest and related items.
@@ -31,14 +32,15 @@ namespace Inventory
         private InventoryEntity CreateInventory(Contexts entitasContext, int width, int height, int inventoryProprietiesID)
         {
             InventoryEntity entity = entitasContext.inventory.CreateEntity();
-            entity.AddInventoryID(InventoryID++, inventoryProprietiesID);
+            // TODO(): Fix This
+            /*entity.AddInventoryID(InventoryID++, inventoryProprietiesID);
             int length = width * height;
             entity.AddInventoryEntity(
                 width,
                 height,
                 new Slot[length],
                 new Utility.BitSet((UInt32)(length)),
-                0 /*Selected slot*/ );
+                0 );
 
             // Initialize slots
             for (int i = 0; i < length; i++)
@@ -50,7 +52,7 @@ namespace Inventory
                     SlotBorderBackgroundIcon = -1,
                     ItemID = -1,
                 };
-            }
+            }*/
 
             return entity;
         }
