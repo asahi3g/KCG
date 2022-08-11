@@ -41,6 +41,11 @@
         SagoPalm,
         WaterBottle,
         DracaenaTrifasciata,
+        Chest,
+        Planter,
+        Light,
+        SmashableBox,
+
 
         /// <summary>
         /// Tools

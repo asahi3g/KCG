@@ -3,6 +3,7 @@ using UnityEngine;
 using PlanetTileMap;
 using Mech;
 using Enums.Tile;
+using KMath;
 
 namespace Action
 {
@@ -21,52 +22,38 @@ namespace Action
             // Item Entity
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
 
-            if (ItemEntity.itemMechCastData.data.MechID == null)
-                ItemEntity.itemMechCastData.data = (Mech.Data)ActionPropertyEntity.actionPropertyData.Data;
-
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            if (ItemEntity.itemMechCastData.InputsActive)
+            var mech = planet.GetMechFromPosition(new KMath.Vec2f(x, y));
+
+            switch (mech.mechType.mechType)
             {
-                if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                y >= 0 && y < planet.TileMap.MapSize.Y)
-                {
-                    var mech = GameState.MechCreationApi.Get((int)ItemEntity.itemMechCastData.data.MechID);
+                case MechType.Storage:
+                    var item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Chest, mech.mechPosition2D.Value);
+                    item.itemMechCastData.data.MechID = MechType.Storage;
+                    break;
+                case MechType.Planter:
+                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Planter, mech.mechPosition2D.Value);
+                    item.itemMechCastData.data.MechID = MechType.Planter;
 
-                    var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                    var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                    break;
+                case MechType.Light:
+                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Light, mech.mechPosition2D.Value);
+                    item.itemMechCastData.data.MechID = MechType.Light;
 
-                    var allTilesAir = true;
+                    break;
+                case MechType.SmashableBox:
+                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.SmashableBox, mech.mechPosition2D.Value);
+                    item.itemMechCastData.data.MechID = MechType.SmashableBox;
 
-                    for (int i = 0; i < xRange; i++)
-                    {
-                        for (int j = 0; j < yRange; j++)
-                        {
-                            if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
-                            {
-                                allTilesAir = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (allTilesAir)
-                    {
-                        planet.AddMech(new KMath.Vec2f(x, y), ItemEntity.itemMechCastData.data.MechID);
-
-                        for (int i = 0; i < xRange; i++)
-                        {
-                            for (int j = 0; j < yRange; j++)
-                            {
-                                planet.TileMap.RemoveMidTile(x + i, y + j);
-                            }
-                        }
-                    }
-
-                }
+                    break;
             }
+
+            planet.RemoveMech(mech.mechID.ID);
+
+
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

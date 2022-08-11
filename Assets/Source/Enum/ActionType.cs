@@ -51,5 +51,6 @@
         ToolActionConstruction,
         ToolActionScanner,
         ToolActionRemoveMech,
+        ToolActionMechPlacement,
     }
 }

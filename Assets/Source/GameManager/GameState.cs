@@ -63,7 +63,8 @@ public class GameState
     public static readonly Agent.MovementSystem AgentMovementSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-
+    public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
+    public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     #endregion
 
     #region Inventory
@@ -127,6 +128,7 @@ public class GameState
     #endregion
 
 
+
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
@@ -143,6 +145,8 @@ public class GameState
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
+        AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
+        AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();

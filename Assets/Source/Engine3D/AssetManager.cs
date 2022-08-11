@@ -31,6 +31,7 @@ namespace Engine3D
 
         AnimationLoader AnimationLoader;
         ModelLoader ModelLoader;
+        MaterialLoader MaterialLoader;
 
         
 
@@ -38,7 +39,10 @@ namespace Engine3D
         {
             AnimationLoader = new AnimationLoader();
             ModelLoader = new ModelLoader();
+            MaterialLoader = new MaterialLoader();
+
             long beginTime = DateTime.Now.Ticks;
+            LoadMaterials();
             LoadAnimations();
             LoadModels();
             Debug.Log("3d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
@@ -54,17 +58,35 @@ namespace Engine3D
             return ref ModelLoader.GetModel(modelType);
         }
 
+        public ref Material GetMaterial(MaterialType materialType)
+        {
+            return ref MaterialLoader.GetMaterial(materialType);
+        }
+
+        private void LoadMaterials()
+        {
+
+        }
+
         private void LoadAnimations()
         {
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Idle", AnimationType.Idle);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Run", AnimationType.Run);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Walk_F", AnimationType.Walk);
+            AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Jump", AnimationType.Jump);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Jump_Roll", AnimationType.Flip);
+            AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Jog", AnimationType.Jog);
+            AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@JumpFall", AnimationType.JumpFall);
+            AnimationLoader.Load("Shinabro/Platform_Animation/Animation/10_Rapier/Stander@Rapier_Attack1", AnimationType.SwordSlash);
+            AnimationLoader.Load("Shinabro/Platform_Animation/Animation/05_Pistol/Stander@Pistol_Attack1", AnimationType.FireGun);
         }
 
         private void LoadModels()
         {
+            ModelLoader.Load("DefaultHumanoid", ModelType.DefaultHumanoid);
             ModelLoader.Load("Stander", ModelType.Stander);
+            ModelLoader.Load("Pistol", ModelType.Pistol);
+            ModelLoader.Load("Rapier", ModelType.Rapier);
         }
 
     }
