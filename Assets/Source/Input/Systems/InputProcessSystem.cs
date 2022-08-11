@@ -2,6 +2,7 @@ using KMath;
 using UnityEngine;
 using Agent;
 using Enums;
+using UnityEngine.Animations.Rigging;
 
 namespace ECSInput
 {
@@ -78,11 +79,12 @@ namespace ECSInput
 
                     GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
                     GameObject gun = GameObject.Instantiate(prefab);
+                    gun.AddComponent<RigTransform>();
 
                     gun.transform.parent = hand.transform;
                     gun.transform.position = hand.transform.position;
                     gun.transform.rotation = hand.transform.rotation;
-                    gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    gun.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
                     model3d.Weapon = gun;
                 }

@@ -117,7 +117,6 @@ namespace Agent
 
                 model.GetComponent<BoneRenderer>().transforms = new Transform[52];
 
-
                 model.GetComponent<BoneRenderer>().transforms[0] = model.transform.GetChild(0).GetChild(0); // Bip001 Pelvis
 
                 model.GetComponent<BoneRenderer>().transforms[1] = model.transform.GetChild(0).GetChild(0).GetChild(0); // Bip001 L Thigh
@@ -258,6 +257,20 @@ namespace Agent
                 model.GetComponent<BoneRenderer>().transforms[50] = model.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0); // Bip001 L Toe0
 
                 model.GetComponent<BoneRenderer>().transforms[51] = model.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0); // Bip001 L Calf
+
+                model.GetComponent<RigBuilder>().Build();
+
+                GameObject Aim = new GameObject("RightHandIK");
+                Aim.transform.parent = Rig.transform;
+                Aim.AddComponent<TwoBoneIKConstraint>();
+                Aim.GetComponent<TwoBoneIKConstraint>().weight = 1.0f;
+                Aim.GetComponent<TwoBoneIKConstraint>().data.root = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0);
+                Aim.GetComponent<TwoBoneIKConstraint>().data.mid = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0);
+                Aim.GetComponent<TwoBoneIKConstraint>().data.tip = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0);
+
 
                 //model.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = pixelMaterial;
 
