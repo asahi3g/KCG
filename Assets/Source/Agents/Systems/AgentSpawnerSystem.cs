@@ -270,6 +270,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
@@ -313,6 +314,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
@@ -341,6 +343,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
