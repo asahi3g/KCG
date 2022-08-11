@@ -30,7 +30,7 @@ namespace Agent
 
 
             int LastIndex = Length;
-            entity.ReplaceAgentID(LastIndex, entity.agentID.Type, LastIndex);
+            entity.ReplaceAgentID(entity.agentID.ID, entity.agentID.Type, LastIndex);
             List[LastIndex] = entity;
             Length++;
 
@@ -60,7 +60,7 @@ namespace Agent
             if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.ReplaceAgentID(index, entity.agentID.Type, index);
+                entity.ReplaceAgentID(entity.agentID.ID, entity.agentID.Type, index);
             }
             Length--;
         }
