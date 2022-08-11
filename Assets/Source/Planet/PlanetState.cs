@@ -281,40 +281,13 @@ namespace Planet
             Vec2f agentPosition = physicsState.Position;
 
             AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
+            AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
 
-            if (entity.hasAgentItemDrop)
-            {
-                var itemDrop = entity.agentItemDrop;
-                int inventoryID = corpse.agentInventory.InventoryID;
-                if (itemDrop.Drops != null)
-                {
-                    
-                    for(int dropIndex = 0; dropIndex < itemDrop.Drops.Length; dropIndex++)
-                    {
-                        Enums.ItemType dropType = itemDrop.Drops[dropIndex];
-                        int maxDropCount = itemDrop.MaxDropCount[dropIndex];
-                        float dropRate = itemDrop.DropRate[dropIndex];
+            int inventoryID = corpse.agentInventory.InventoryID;
 
-                        
-                        
-                        float randXOffset = KMath.Random.Mt19937.genrand_realf() * 0.5f;
+            GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
+            GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
 
-                        
-                        Utils.Assert(maxDropCount < 100 && maxDropCount > 0);
-                        int currentDrop = 0;
-                        while (currentDrop < maxDropCount)
-                        {
-                            float randomDrop = KMath.Random.Mt19937.genrand_realf();
-                            if (randomDrop <= dropRate)
-                            {
-                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, physicsState.Position + new Vec2f(randXOffset, 0.5f));
-                                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
-                            }
-                            currentDrop++;
-                        }
-                    }
-                }
-            }
             AgentList.Remove(agentIndex);
         }
 
@@ -364,9 +337,9 @@ namespace Planet
             GameState.ParticleSpawnerSystem.SpawnSpriteDebris(this, position, spriteId, spriteWidth, spriteHeight);
         }
 
-        public void RemoveParticle(int particleId)
+        public void RemoveParticle(int index)
         {
-            ParticleList.Remove(particleId);
+            ParticleList.Remove(index);
         }
 
         public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType)
@@ -456,6 +429,7 @@ namespace Planet
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
+            GameState.LootDropSystem.Update(EntitasContext);
             GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);

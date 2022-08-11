@@ -96,24 +96,6 @@ namespace Agent
             else if (agentType == Agent.AgentType.Enemy)
             {
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius);
-
-                Enums.ItemType[] Drops = new Enums.ItemType[3];
-                int[] MaxDropCount = new int[3];
-                float[] DropRate = new float[3];
-
-                Drops[0] = Enums.ItemType.Slime;
-                Drops[1] = Enums.ItemType.Food;
-                Drops[2] = Enums.ItemType.Bone;
-
-                MaxDropCount[0] = 1;
-                MaxDropCount[1] = 3;
-                MaxDropCount[2] = 6;
-
-                DropRate[0] = 0.3f;
-                DropRate[1] = 0.6f;
-                DropRate[2] = 0.8f;
-
-                entity.AddAgentItemDrop(Drops, MaxDropCount, DropRate);
             }
             
             return entity;

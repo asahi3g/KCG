@@ -30,7 +30,7 @@ namespace Particle
 
 
             int LastIndex = Length;
-            entity.particleID.Index = LastIndex;
+            entity.particleEmitterID.Index = LastIndex;
             List[LastIndex] = entity;
             Length++;
 
@@ -56,7 +56,7 @@ namespace Particle
             if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.particleID.Index = index;
+                entity.particleEmitterID.Index = index;
             }
             Length--;
         }

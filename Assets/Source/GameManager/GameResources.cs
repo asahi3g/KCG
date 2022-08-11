@@ -292,6 +292,7 @@ public class GameResources
             SB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1111Sheet, 0, 0, 0);
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
+            CreateDropTables();
             CreateTiles();
             CreateAnimations();
             CreateItems();
@@ -303,6 +304,27 @@ public class GameResources
 
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
+    }
+
+    private static void CreateDropTables()
+    {
+        GameState.LootTableCreationAPI.Create("Empty table");
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create("Slime Enemy");
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Slime, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 30);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Food, 4);
+        GameState.LootTableCreationAPI.SetEntry(1, 25);
+        GameState.LootTableCreationAPI.SetEntry(2, 40);
+        GameState.LootTableCreationAPI.SetEntry(3, 25);
+        GameState.LootTableCreationAPI.SetEntry(4, 5);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Bone, 4);
+        GameState.LootTableCreationAPI.SetEntry(3, 50);
+        GameState.LootTableCreationAPI.SetEntry(4, 25);
+        GameState.LootTableCreationAPI.SetEntry(5, 15);
+        GameState.LootTableCreationAPI.SetEntry(6, 10);
+        GameState.LootTableCreationAPI.End();
     }
 
     private static void CreateTiles()
@@ -429,8 +451,6 @@ public class GameResources
 
     public static void CreateItems()
     {
-
-
         // Sniper Rifle Item Creation
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.SniperRifle, "SniperRifle");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
@@ -785,6 +805,7 @@ public class GameResources
 
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Enemy);
         GameState.AgentCreationApi.SetName("enemy");
+        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
@@ -975,7 +996,5 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
     }
-
-
-    
+ 
 }
