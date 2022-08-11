@@ -79,6 +79,15 @@ namespace Agent
             PropertiesArray[CurrentIndex].Name = name;
         }
 
+        public void SetDropTableID(int dropTableID, int inventoryDropTableID)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].DropTableID = dropTableID;
+                PropertiesArray[CurrentIndex].InventoryDropTableID = inventoryDropTableID;
+            }
+        }
+
         public void SetSpriteSize(Vec2f size)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)

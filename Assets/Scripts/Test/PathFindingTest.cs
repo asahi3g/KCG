@@ -85,6 +85,8 @@ namespace Planet.Unity
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
 
+            Agent = Planet.AddEnemy(new Vec2f(0f, 2f));
+
             GenerateMap();
         }
 

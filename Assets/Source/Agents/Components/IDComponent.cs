@@ -8,8 +8,10 @@ namespace Agent
     public class IDComponent : IComponent
     {
         [PrimaryEntityIndex]
+        // This is not the index of AgentList. It should never reuse values. It should never be changed.
         public int ID;
 
         public AgentType Type;
+        public int Index;
     }
 }

@@ -60,8 +60,8 @@ namespace Agent
 
                             
                             // knockback test
-                            GameState.AgentProcessPhysicalState.Knockback(entity, 20.0f, -KnockbackDir);
-                            GameState.AgentProcessPhysicalState.Knockback(closestPlayer, 20.0f, KnockbackDir);
+                            GameState.AgentProcessPhysicalState.Knockback(entity, 10.0f, -KnockbackDir);
+                            GameState.AgentProcessPhysicalState.Knockback(closestPlayer, 10.0f, KnockbackDir);
                         }
 
 
@@ -227,7 +227,7 @@ namespace Agent
 
             foreach (var entity in ToRemoveAgents)
             {
-                planetState.RemoveAgent(entity.agentID.ID);             
+                planetState.RemoveAgent(entity.agentID.Index);             
             }
             ToRemoveAgents.Clear();
         }

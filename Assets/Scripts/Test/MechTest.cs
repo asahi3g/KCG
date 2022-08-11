@@ -56,7 +56,7 @@ namespace Planet.Unity
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
@@ -124,12 +124,8 @@ namespace Planet.Unity
             {
                 //TODO: SET TO Get(selectedMechIndex)
                 var mech = GameState.MechCreationApi.Get(selectedMechIndex);
-                Debug.Log(mech.Name);
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
-                
-                Debug.Log(mech.SpriteSize.X);
-                Debug.Log(mech.SpriteSize.Y);
 
                 var allTilesAir = true;
 
@@ -323,7 +319,7 @@ namespace Planet.Unity
             if (mech != null)
             {
                 Debug.Log("Destroy Smashable Box");
-                Planet.RemoveMech(mech.mechID.ID);
+                Planet.RemoveMech(mech.mechID.Index);
             }
             else
             {

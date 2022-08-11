@@ -11,17 +11,19 @@ public partial class ParticleEntity {
     public Particle.IDComponent particleID { get { return (Particle.IDComponent)GetComponent(ParticleComponentsLookup.ParticleID); } }
     public bool hasParticleID { get { return HasComponent(ParticleComponentsLookup.ParticleID); } }
 
-    public void AddParticleID(int newID) {
+    public void AddParticleID(int newID, int newIndex) {
         var index = ParticleComponentsLookup.ParticleID;
         var component = (Particle.IDComponent)CreateComponent(index, typeof(Particle.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticleID(int newID) {
+    public void ReplaceParticleID(int newID, int newIndex) {
         var index = ParticleComponentsLookup.ParticleID;
         var component = (Particle.IDComponent)CreateComponent(index, typeof(Particle.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         ReplaceComponent(index, component);
     }
 

@@ -103,6 +103,22 @@ namespace Inventory
                         color: new Color(255, 255, 255, 255));
                 }
             }
+
+            // Draw tile.
+            if (inventoryEntity.hasInventoryName && !isDrawingToolBar)
+            {
+                int font = (int)(32f * scaleFactor);
+                Vec2f pos = new Vec2f(window.Position.X, window.Position.Y + window.Size.Y - font - 8);
+                GameState.Renderer.DrawStringGui(
+                    pos.X,
+                    pos.Y,
+                    window.Size.X,
+                    font + 4,
+                    inventoryEntity.inventoryName.Name,
+                    fontSize: font,
+                    alignment: TextAnchor.LowerCenter,
+                    color: new Color(255, 255, 255, 255));
+            }
         }
 
         void DrawBorder(float tilePosX, float tilePosY, float tileSize, float borderOffset, 

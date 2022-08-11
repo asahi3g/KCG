@@ -11,17 +11,19 @@ public partial class MechEntity {
     public Mech.IDComponent mechID { get { return (Mech.IDComponent)GetComponent(MechComponentsLookup.MechID); } }
     public bool hasMechID { get { return HasComponent(MechComponentsLookup.MechID); } }
 
-    public void AddMechID(int newID) {
+    public void AddMechID(int newID, int newIndex) {
         var index = MechComponentsLookup.MechID;
         var component = (Mech.IDComponent)CreateComponent(index, typeof(Mech.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         AddComponent(index, component);
     }
 
-    public void ReplaceMechID(int newID) {
+    public void ReplaceMechID(int newID, int newIndex) {
         var index = MechComponentsLookup.MechID;
         var component = (Mech.IDComponent)CreateComponent(index, typeof(Mech.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         ReplaceComponent(index, component);
     }
 

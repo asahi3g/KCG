@@ -1,5 +1,3 @@
-
-
 namespace Agent
 {
     public enum AgentType

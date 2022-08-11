@@ -8,6 +8,7 @@ namespace Agent
 {
     public class AgentSpawnerSystem
     {
+        private static int UniqueID = 0;
 
         AgentCreationApi AgentCreationApi;
         public AgentSpawnerSystem(AgentCreationApi agentCreationApi)
@@ -16,8 +17,8 @@ namespace Agent
         }
 
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
-        int agentId, int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
-        int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
+            int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
+            int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
 
@@ -26,7 +27,7 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(agentId, AgentType.Player);
+            entity.AddAgentID(UniqueID++, AgentType.Player, -1);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
@@ -49,14 +50,14 @@ namespace Agent
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int agentId, int spriteId, AgentType agentType, 
+        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, AgentType agentType, 
             int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
             ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(agentId, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, agentType, -1); // agent id 
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
@@ -70,7 +71,7 @@ namespace Agent
             return entity;
         }
 
-        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, int agentId, AgentType agentType, 
+        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, AgentType agentType, 
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
@@ -79,7 +80,7 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(agentId, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, agentType, -1); // agent id 
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
@@ -295,23 +296,6 @@ namespace Agent
                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
-                Enums.ItemType[] Drops = new Enums.ItemType[3];
-                int[] MaxDropCount = new int[3];
-                float[] DropRate = new float[3];
-
-                Drops[0] = Enums.ItemType.Slime;
-                Drops[1] = Enums.ItemType.Food;
-                Drops[2] = Enums.ItemType.Bone;
-
-                MaxDropCount[0] = 1;
-                MaxDropCount[1] = 3;
-                MaxDropCount[2] = 6;
-
-                DropRate[0] = 0.3f;
-                DropRate[1] = 0.6f;
-                DropRate[2] = 0.8f;
-
-                entity.AddAgentItemDrop(Drops, MaxDropCount, DropRate);
             }
             else if (agentType == Agent.AgentType.EnemyGunner)
             {
