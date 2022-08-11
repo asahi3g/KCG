@@ -30,7 +30,7 @@ namespace Agent
 
 
             int LastIndex = Length;
-            entity.agentID.Index = LastIndex;
+            entity.ReplaceAgentID(entity.agentID.ID, entity.agentID.Type, LastIndex);
             List[LastIndex] = entity;
             Length++;
 
@@ -51,12 +51,16 @@ namespace Agent
             Utils.Assert(index >= 0 && index < Length);
 
             ref AgentEntity entity = ref List[index];
+            if (entity.hasAgentModel3D)
+            {
+                GameObject.Destroy(entity.agentModel3D.GameObject);
+            }
             entity.Destroy();
 
             if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.agentID.Index = index;
+                entity.ReplaceAgentID(entity.agentID.ID, entity.agentID.Type, index);
             }
             Length--;
         }

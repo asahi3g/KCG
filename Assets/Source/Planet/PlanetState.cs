@@ -120,6 +120,15 @@ namespace Planet
             return newEntity;
         }
 
+        public AgentEntity AddAgent(Vec2f position, Agent.AgentType type)
+        {
+            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
+                    type));
+            return newEntity;
+        }
+
         public AgentEntity AddCorpse(Vec2f position, int spriteId, Agent.AgentType agentType)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
@@ -303,15 +312,21 @@ namespace Planet
             var physicsState = entity.agentPhysicsState;
             Vec2f agentPosition = physicsState.Position;
 
-            AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
-            AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
 
-            int inventoryID = corpse.agentInventory.InventoryID;
+            if (entity.agentID.Type == Agent.AgentType.Enemy)
+            {
+                AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
+                AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
 
-            GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
-            GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
+                int inventoryID = corpse.agentInventory.InventoryID;
+
+                GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
+                GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
+
+            }
 
             AgentList.Remove(agentIndex);
+
         }
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
@@ -454,8 +469,8 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
+            GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.LootDropSystem.Update(EntitasContext);
-            GameState.EnemyAiSystem.Update(ref this);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);

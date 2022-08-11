@@ -18,7 +18,7 @@ namespace Agent
                                             // (Note: Should we use items inside agent inventory while alive)
 
         // Enemy agent
-        public int EnemyBehaviour;
+        public EnemyBehaviour EnemyBehaviour;
         public float DetectionRadius;
 
         // Stats
