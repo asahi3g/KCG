@@ -337,18 +337,22 @@ public class GameResources
 
         GameState.LootTableCreationAPI.Create("Chest");
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Chest, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
         GameState.LootTableCreationAPI.Create("Planter");
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Planter, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
         GameState.LootTableCreationAPI.Create("Light");
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Light, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
         GameState.LootTableCreationAPI.Create("SmashableBox");
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
     }
 
