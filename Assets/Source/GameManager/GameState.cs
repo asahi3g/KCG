@@ -83,6 +83,11 @@ public class GameState
     public static readonly Item.ItemCreationApi ItemCreationApi;
     #endregion
 
+    #region Loot
+    public static readonly LootDrop.CreationApi LootTableCreationAPI;
+    public static readonly LootDrop.LootDropSystem LootDropSystem;
+    #endregion
+
     #region Projectile
     public static readonly Projectile.ProjectileCreationApi ProjectileCreationApi;
     public static readonly Projectile.ProcessCollisionSystem ProjectileCollisionSystem;
@@ -161,6 +166,8 @@ public class GameState
         ItemMeshBuilderSystem = new Item.MeshBuilderSystem();
         ItemMovableSystem = new Item.MovementSystem();
         ItemProcessCollisionSystem = new Item.ProcessCollisionSystem();
+        LootTableCreationAPI = new LootDrop.CreationApi();
+        LootDropSystem = new LootDrop.LootDropSystem();
         ActionPropertyManager = new Action.ActionPropertyManager();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();

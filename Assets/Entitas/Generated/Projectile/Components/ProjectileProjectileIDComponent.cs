@@ -11,17 +11,19 @@ public partial class ProjectileEntity {
     public Projectile.IDComponent projectileID { get { return (Projectile.IDComponent)GetComponent(ProjectileComponentsLookup.ProjectileID); } }
     public bool hasProjectileID { get { return HasComponent(ProjectileComponentsLookup.ProjectileID); } }
 
-    public void AddProjectileID(int newID) {
+    public void AddProjectileID(int newID, int newIndex) {
         var index = ProjectileComponentsLookup.ProjectileID;
         var component = (Projectile.IDComponent)CreateComponent(index, typeof(Projectile.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         AddComponent(index, component);
     }
 
-    public void ReplaceProjectileID(int newID) {
+    public void ReplaceProjectileID(int newID, int newIndex) {
         var index = ProjectileComponentsLookup.ProjectileID;
         var component = (Projectile.IDComponent)CreateComponent(index, typeof(Projectile.IDComponent));
         component.ID = newID;
+        component.Index = newIndex;
         ReplaceComponent(index, component);
     }
 

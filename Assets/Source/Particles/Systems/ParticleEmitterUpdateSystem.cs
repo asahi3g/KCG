@@ -84,7 +84,7 @@ namespace Particle
 
             foreach(var entity in ToDestroy)
             {
-                planetState.RemoveParticleEmitter(entity.particleEmitterID.ParticleEmitterId);
+                planetState.RemoveParticleEmitter(entity.particleEmitterID.Index);
             }
         }
     }

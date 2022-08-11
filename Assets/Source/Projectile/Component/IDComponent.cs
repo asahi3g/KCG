@@ -7,6 +7,8 @@ namespace Projectile
     public class IDComponent : IComponent
     {
         [PrimaryEntityIndex]
+        // This is not the index of ProjectileList. It should never reuse values.
         public int ID;
+        public int Index;
     }
 }

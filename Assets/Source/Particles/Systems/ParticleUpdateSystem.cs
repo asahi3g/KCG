@@ -56,7 +56,7 @@ namespace Particle
             {
                 //Object.Destroy(gameEntity.particleState.GameObject);
                 //gameEntity.Destroy();
-                planetState.RemoveParticle(gameEntity.particleID.ID);
+                planetState.RemoveParticle(gameEntity.particleID.Index);
             }
         }
     }

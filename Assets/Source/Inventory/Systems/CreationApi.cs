@@ -162,7 +162,6 @@ namespace Inventory
             SetSlotBorderOffset(10);
             SetSlotOffset(20);
             SetInventoryBoderOffset(0, 0, 30, 0);
-            AddText("Bag",new Vec2f(20f, 502.5f));
             End();
         }
 
@@ -220,7 +219,6 @@ namespace Inventory
             SetSlotOffset(20);
             SetSlotBorderOffset(10);
             SetInventoryBoderOffset(0, 0, 30, 0);
-            AddText("Corpse", new Vec2f(20f, 202.5f));
             End();
         }
 
@@ -249,16 +247,7 @@ namespace Inventory
                 Initialize();
             return 3;
         }
-        public void AddText(string str, Vec2f posOffset)
-        {
-            if (InventoryModels[ID].RenderProprieties.Strings == null)
-            {
-                InventoryModels[ID].RenderProprieties.Strings = new List<string>();
-                InventoryModels[ID].RenderProprieties.StringPosOffsets = new List<Vec2f>();
-            }
-            InventoryModels[ID].RenderProprieties.Strings.Add(str);
-            InventoryModels[ID].RenderProprieties.StringPosOffsets.Add(posOffset);
-        }
+
         public void SetBackgroundTexture(int spriteID)
         {
             InventoryModels[ID].RenderProprieties.BackGroundSpriteID = spriteID;

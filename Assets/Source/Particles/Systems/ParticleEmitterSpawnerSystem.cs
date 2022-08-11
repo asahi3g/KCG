@@ -10,6 +10,7 @@ namespace Particle
 
         ParticleEmitterCreationApi ParticleEmitterCreationApi;
         ParticleCreationApi ParticleCreationApi;
+        int uniqueID = 0;
         public ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi particleEmitterCreationApi,
                                             ParticleCreationApi particleCreationApi)
         {
@@ -19,33 +20,32 @@ namespace Particle
 
         //Note(Mahdi): Deprecated will be removed later
         public ParticleEntity Spawn(ParticleContext context, Material material, Vec2f position, Vec2f size,
-                                     int spriteId, int particleEmitterId)
+                                     int spriteId)
         {
             // use an api to create different emitter entities
             ParticleEntity entity = CreateParticleEmitterEntity(context, Particle.ParticleEmitterType.OreFountain, 
-                                            position,
-                                            particleEmitterId);
+                                            position);
 
             return entity;
         }
 
         public ParticleEntity Spawn(ParticleContext context, Particle.ParticleEmitterType type, 
-                                        Vec2f position, int particleEmitterId)
+                                        Vec2f position)
         {
-            ParticleEntity entity = CreateParticleEmitterEntity(context, type, position, particleEmitterId);
+            ParticleEntity entity = CreateParticleEmitterEntity(context, type, position);
 
             return entity;
         }
 
         private ParticleEntity CreateParticleEmitterEntity(ParticleContext context, 
-                                Particle.ParticleEmitterType type, Vec2f position, int particleEmitterId)
+                                Particle.ParticleEmitterType type, Vec2f position)
         {
             ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)type);
             ParticleProperties particleProperties = 
                         ParticleCreationApi.Get((int)emitterProperties.ParticleType);
             var e = context.CreateEntity();
-            e.AddParticleEmitterID(particleEmitterId);
+            e.AddParticleEmitterID(uniqueID++, -1);
             e.AddParticleEmitter2dPosition(new Vector2(position.X, position.Y), new Vector2(), new Vector2());
             e.AddParticleEmitterState(emitterProperties.ParticleType, type, emitterProperties.Duration, 0.0f);
 
