@@ -62,7 +62,7 @@ namespace Planet.Unity
             AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
 
             AgentMeshBuilderSystem.Initialize(Material, transform, 12);
-            GameState.AgentSpawnerSystem.SpawnPlayer(Contexts.sharedInstance, CharacterSpriteId, 32, 48, new Vec2f(3.0f, 2.0f), 0, 0, 100, 100, 100, 100, 100, 0.2f);
+            GameState.AgentSpawnerSystem.SpawnPlayer(Contexts.sharedInstance, CharacterSpriteId, 32, 48, new Vec2f(3.0f, 2.0f), 0, 100, 100, 100, 100, 100, 0.2f);
             GameState.TileMapRenderer.Initialize(Material, transform, 7);
 
         }

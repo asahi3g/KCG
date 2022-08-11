@@ -11,16 +11,18 @@ public partial class FloatingTextEntity {
     public FloatingText.IDComponent floatingTextID { get { return (FloatingText.IDComponent)GetComponent(FloatingTextComponentsLookup.FloatingTextID); } }
     public bool hasFloatingTextID { get { return HasComponent(FloatingTextComponentsLookup.FloatingTextID); } }
 
-    public void AddFloatingTextID(int newIndex) {
+    public void AddFloatingTextID(int newID, int newIndex) {
         var index = FloatingTextComponentsLookup.FloatingTextID;
         var component = (FloatingText.IDComponent)CreateComponent(index, typeof(FloatingText.IDComponent));
+        component.ID = newID;
         component.Index = newIndex;
         AddComponent(index, component);
     }
 
-    public void ReplaceFloatingTextID(int newIndex) {
+    public void ReplaceFloatingTextID(int newID, int newIndex) {
         var index = FloatingTextComponentsLookup.FloatingTextID;
         var component = (FloatingText.IDComponent)CreateComponent(index, typeof(FloatingText.IDComponent));
+        component.ID = newID;
         component.Index = newIndex;
         ReplaceComponent(index, component);
     }

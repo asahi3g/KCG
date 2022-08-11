@@ -30,8 +30,8 @@ namespace Particle
 
 
             int LastIndex = Length;
-            entity.ReplaceParticleID(LastIndex);
             List[LastIndex] = entity;
+            entity.particleID.Index = Length;
             Length++;
 
              return List[LastIndex];
@@ -46,17 +46,17 @@ namespace Particle
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int particleId)
+        public void Remove(int particleIndex)
         {
-            Utils.Assert(particleId >= 0 && particleId < Length);
+            Utils.Assert(particleIndex >= 0 && particleIndex < Length);
 
-            ref ParticleEntity entity = ref List[particleId];
+            ref ParticleEntity entity = ref List[particleIndex];
             entity.Destroy();
 
-            if (particleId != Length - 1)
+            if (particleIndex != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.ReplaceParticleID(particleId);
+                entity.particleID.Index = particleIndex;
             }
             Length--;
         }

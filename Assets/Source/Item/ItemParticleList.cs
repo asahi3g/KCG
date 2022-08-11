@@ -30,7 +30,6 @@ namespace Item
 
 
             int LastIndex = Length;
-            entity.ReplaceItemID(LastIndex);
             List[LastIndex] = entity;
             Length++;
 
@@ -56,7 +55,6 @@ namespace Item
             if (id != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.ReplaceItemID(id);
             }
             Length--;
         }

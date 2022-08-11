@@ -30,8 +30,8 @@ namespace FloatingText
 
 
             int LastIndex = Length;
-            entity.ReplaceFloatingTextID(LastIndex);
             List[LastIndex] = entity;
+            entity.floatingTextID.Index = LastIndex;
             Length++;
 
              return List[LastIndex];
@@ -46,17 +46,17 @@ namespace FloatingText
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int id)
+        public void Remove(int index)
         {
-            Utils.Assert(id >= 0 && id < Length);
+            Utils.Assert(index >= 0 && index < Length);
 
-            ref FloatingTextEntity entity = ref List[id];
+            ref FloatingTextEntity entity = ref List[index];
             entity.Destroy();
 
-            if (id != Length - 1)
+            if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.ReplaceFloatingTextID(id);
+                entity.floatingTextID.Index = index;
             }
             Length--;
         }

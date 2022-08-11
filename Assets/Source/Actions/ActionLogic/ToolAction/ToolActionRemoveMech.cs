@@ -51,7 +51,7 @@ namespace Action
                     break;
             }
 
-            planet.RemoveMech(mech.mechID.ID);
+            planet.RemoveMech(mech.mechID.Index);
 
 
 
