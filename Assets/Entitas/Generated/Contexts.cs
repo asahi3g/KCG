@@ -105,6 +105,7 @@ public partial class Contexts {
     public const string KGUIElementsID = "KGUIElementsID";
     public const string MechID = "MechID";
     public const string ParticleEmitterID = "ParticleEmitterID";
+    public const string ParticleID = "ParticleID";
     public const string ProjectileID = "ProjectileID";
     public const string VehicleID = "VehicleID";
 
@@ -168,7 +169,7 @@ public partial class Contexts {
         floatingText.AddEntityIndex(new Entitas.PrimaryEntityIndex<FloatingTextEntity, int>(
             FloatingTextID,
             floatingText.GetGroup(FloatingTextMatcher.FloatingTextID),
-            (e, c) => ((FloatingText.IDComponent)c).Index));
+            (e, c) => ((FloatingText.IDComponent)c).ID));
 
         inventory.AddEntityIndex(new Entitas.PrimaryEntityIndex<InventoryEntity, int>(
             InventoryID,
@@ -211,7 +212,12 @@ public partial class Contexts {
         particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, int>(
             ParticleEmitterID,
             particle.GetGroup(ParticleMatcher.ParticleEmitterID),
-            (e, c) => ((Particle.EmitterIDComponent)c).ParticleEmitterId));
+            (e, c) => ((Particle.EmitterIDComponent)c).ID));
+
+        particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, int>(
+            ParticleID,
+            particle.GetGroup(ParticleMatcher.ParticleID),
+            (e, c) => ((Particle.IDComponent)c).ID));
 
         projectile.AddEntityIndex(new Entitas.PrimaryEntityIndex<ProjectileEntity, int>(
             ProjectileID,
@@ -271,8 +277,8 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<AIEntity, int>)context.GetEntityIndex(Contexts.AIGoal)).GetEntity(GoalID);
     }
 
-    public static FloatingTextEntity GetEntityWithFloatingTextID(this FloatingTextContext context, int Index) {
-        return ((Entitas.PrimaryEntityIndex<FloatingTextEntity, int>)context.GetEntityIndex(Contexts.FloatingTextID)).GetEntity(Index);
+    public static FloatingTextEntity GetEntityWithFloatingTextID(this FloatingTextContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<FloatingTextEntity, int>)context.GetEntityIndex(Contexts.FloatingTextID)).GetEntity(ID);
     }
 
     public static InventoryEntity GetEntityWithInventoryID(this InventoryContext context, int ID) {
@@ -307,8 +313,12 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<MechEntity, int>)context.GetEntityIndex(Contexts.MechID)).GetEntity(ID);
     }
 
-    public static ParticleEntity GetEntityWithParticleEmitterID(this ParticleContext context, int ParticleEmitterId) {
-        return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleEmitterID)).GetEntity(ParticleEmitterId);
+    public static ParticleEntity GetEntityWithParticleEmitterID(this ParticleContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleEmitterID)).GetEntity(ID);
+    }
+
+    public static ParticleEntity GetEntityWithParticleID(this ParticleContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleID)).GetEntity(ID);
     }
 
     public static ProjectileEntity GetEntityWithProjectileID(this ProjectileContext context, int ID) {

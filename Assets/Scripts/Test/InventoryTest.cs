@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class InventoryTest : MonoBehaviour
 {
@@ -17,15 +14,18 @@ public class InventoryTest : MonoBehaviour
     int terrariaLikeInventoryModelID;
     int customRestrictionInventoryID = 3;
     int customRestrictionInventoryModelID;
+    int defaultInventoryID = 0;
+    int defaultEquipmentID = 1;
 
     bool Init = false;
+
+    Func<int, InventoryEntity> GetInventory = Contexts.sharedInstance.inventory.GetEntityWithInventoryID;
 
     [SerializeField] Material material;
 
     public void Start()
     {
         Initialize();
-
         context = Contexts.sharedInstance;
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
@@ -33,21 +33,13 @@ public class InventoryTest : MonoBehaviour
         inventoryList = new Inventory.InventoryList();
         GameState.Renderer.Initialize(material);
 
-        // Create Agent and inventory.
-        int agnetID = 0;
-
         int inventoryID = 0;
         int equipmentInventoryID = 1;
-        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context, inventoryID));
+        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, 
-            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID(), equipmentInventoryID));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID, terrariaLikeInventoryID));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID, customRestrictionInventoryID));
-
-        AgentEntity playerEntity = context.agent.CreateEntity();
-        playerEntity.AddAgentID(agnetID);
-        playerEntity.isAgentPlayer = true;
-        playerEntity.AddAgentInventory(inventoryID, equipmentInventoryID, false);
+            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID));
 
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);
@@ -67,12 +59,12 @@ public class InventoryTest : MonoBehaviour
         }
 
         // Set basic inventory draw to on at the beggining:
-        inventoryList.Get(inventoryID).hasInventoryToolBarDraw = true;
-        inventoryList.Get(inventoryID).hasInventoryDraw = true;
-        inventoryList.Get(equipmentInventoryID).hasInventoryDraw = true;
+        GetInventory(inventoryID).hasInventoryToolBarDraw = true;
+        GetInventory(inventoryID).hasInventoryDraw = true;
+        GetInventory(equipmentInventoryID).hasInventoryDraw = true;
         // Set Draw to false for custom inventories.
-        inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw = false;
-        inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw = false;
+        GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw = false;
+        GetInventory(customRestrictionInventoryID).hasInventoryDraw = false;
 
         Init = true;
     }
@@ -94,21 +86,15 @@ public class InventoryTest : MonoBehaviour
         //  Open Inventory with Tab.        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            var players = context.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
-            foreach (var player in players)
-            {
-                int inventoryID = player.agentInventory.InventoryID;
-                inventoryList.Get(inventoryID).hasInventoryToolBarDraw = !inventoryList.Get(inventoryID).hasInventoryToolBarDraw;
-                inventoryList.Get(inventoryID).hasInventoryDraw = !inventoryList.Get(inventoryID).hasInventoryDraw;
+            GetInventory(defaultInventoryID).hasInventoryToolBarDraw = !GetInventory(defaultInventoryID).hasInventoryToolBarDraw;
+            GetInventory(defaultInventoryID).hasInventoryDraw = !GetInventory(defaultInventoryID).hasInventoryDraw;
 
-                inventoryID = player.agentInventory.EquipmentInventoryID;
-                inventoryList.Get(inventoryID).hasInventoryDraw = !inventoryList.Get(inventoryID).hasInventoryDraw;
+            GetInventory(defaultEquipmentID).hasInventoryDraw = !GetInventory(defaultEquipmentID).hasInventoryDraw;
 
-                inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw = !inventoryList.Get(terrariaLikeInventoryID).hasInventoryToolBarDraw;
-                inventoryList.Get(terrariaLikeInventoryID).hasInventoryDraw = !inventoryList.Get(terrariaLikeInventoryID).hasInventoryDraw;
+            GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw = !GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw;
+            GetInventory(terrariaLikeInventoryID).hasInventoryDraw = !GetInventory(terrariaLikeInventoryID).hasInventoryDraw;
 
-                inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw = !inventoryList.Get(customRestrictionInventoryID).hasInventoryDraw;
-            }
+            GetInventory(customRestrictionInventoryID).hasInventoryDraw = !GetInventory(customRestrictionInventoryID).hasInventoryDraw;
         }
     }
 

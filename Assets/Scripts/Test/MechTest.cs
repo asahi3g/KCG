@@ -56,7 +56,7 @@ namespace Planet.Unity
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, (int)Enums.ActionType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
             }
 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
@@ -104,8 +104,99 @@ namespace Planet.Unity
 
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);;
 
-            if(showMechInventory)
-                GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
+            if (showMechInventory)
+            {
+
+                DrawCurrentMechHighlighter();
+            }
+        }
+
+        private void DrawCurrentMechHighlighter()
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            int x = (int)worldPosition.x;
+            int y = (int)worldPosition.y;
+
+            //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
+
+            if (x >= 0 && x < Planet.TileMap.MapSize.X &&
+            y >= 0 && y < Planet.TileMap.MapSize.Y)
+            {
+                //TODO: SET TO Get(selectedMechIndex)
+                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
+                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
+                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+
+                var allTilesAir = true;
+
+                var w = mech.SpriteSize.X;
+                var h = mech.SpriteSize.Y;
+
+                for (int i = 0; i < xRange; i++)
+                {
+                    for (int j = 0; j < yRange; j++)
+                    {
+                        if (Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                        {
+                            allTilesAir = false;
+                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
+                            break;
+                        }
+                        if (Planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
+                        {
+                            allTilesAir = false;
+                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
+                            break;
+                        }
+                    }
+
+                    if (!allTilesAir)
+                        break;
+                }
+
+                if (allTilesAir)
+                {
+                    DrawQuad(HighliterMesh.obj, x, y, w, h, correctHlColor);
+                }
+
+            }
+        }
+
+        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        {
+            var mr = gameObject.GetComponent<MeshRenderer>();
+            mr.sharedMaterial.color = color;
+
+            var mf = gameObject.GetComponent<MeshFilter>();
+            var mesh = mf.sharedMesh;
+
+            List<int> triangles = new List<int>();
+            List<Vector3> vertices = new List<Vector3>();
+
+            Vec2f topLeft = new Vec2f(x, y + h);
+            Vec2f BottomLeft = new Vec2f(x, y);
+            Vec2f BottomRight = new Vec2f(x + w, y);
+            Vec2f TopRight = new Vec2f(x + w, y + h);
+
+            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+
+            vertices.Add(p0);
+            vertices.Add(p1);
+            vertices.Add(p2);
+            vertices.Add(p3);
+
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 2);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 1);
+
+            mesh.SetVertices(vertices);
+            mesh.SetTriangles(triangles.ToArray(), 0);
         }
 
         // create the sprite atlas for testing purposes
@@ -228,7 +319,7 @@ namespace Planet.Unity
             if (mech != null)
             {
                 Debug.Log("Destroy Smashable Box");
-                Planet.RemoveMech(mech.mechID.ID);
+                Planet.RemoveMech(mech.mechID.Index);
             }
             else
             {

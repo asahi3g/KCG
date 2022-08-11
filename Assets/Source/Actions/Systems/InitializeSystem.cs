@@ -62,6 +62,10 @@ namespace Action
             GameState.ActionPropertyManager.Movement();
             GameState.ActionPropertyManager.EndActionPropertyType();
 
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.OpenChestAction);
+            GameState.ActionPropertyManager.SetLogicFactory(new ChestActionCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
             // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Ore1, MapLayerType.Front);
 
@@ -194,6 +198,11 @@ namespace Action
             // Create Tool Action Remove Mech
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionRemoveMech);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionRemoveMechCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Remove Mech
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMechPlacement);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMechPlacementCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }

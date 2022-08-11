@@ -14,9 +14,6 @@ namespace Vehicle
             // Create Entity
             var entity = Contexts.sharedInstance.vehicle.CreateEntity();
 
-            // Increase ID per object statically
-            vehicleID++;
-
             // Set Png Size
             var pngSize = new Vec2i(width, height);
 
@@ -27,7 +24,7 @@ namespace Vehicle
             var spriteSize = new Vec2f(pngSize.X / 32f, pngSize.Y / 32f);
 
             // Add ID Component
-            entity.AddVehicleID(vehicleID);
+            entity.AddVehicleID(vehicleID, -1);
 
             // Add Sprite Component
             entity.AddVehicleSprite2D(spriteId, spriteSize);
@@ -38,6 +35,10 @@ namespace Vehicle
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(spriteSize, Vec2f.Zero);
+
+
+            // Increase ID per object statically
+            vehicleID++;
 
             // Return projectile entity
             return entity;

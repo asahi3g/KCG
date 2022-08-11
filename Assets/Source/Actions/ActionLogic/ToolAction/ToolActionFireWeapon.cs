@@ -66,8 +66,32 @@ namespace Action
 
             // Start positiom
             StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 0.3f;
-            StartPos.Y += 0.5f;
+
+            if (planet.Player != null)
+            {
+                GameState.AgentProcessPhysicalState.FireGun(planet.Player);
+                if (planet.Player.agentPhysicsState.Direction == 1)
+                {
+                    StartPos.X += 0.3f;
+                    StartPos.Y += 1.75f;
+            
+                    if (x < StartPos.X)
+                    {
+                        x = StartPos.X + 0.5f;
+                    }
+                }
+                else if (planet.Player.agentPhysicsState.Direction == -1)
+                {
+                    StartPos.X -= 0.3f;
+                    StartPos.Y += 1.75f;
+
+                    if (x > StartPos.X ) 
+                    {
+                        x = StartPos.X - 0.5f;
+                    }
+                }
+            }
+
 
             // Check if entity has spread component
             if (ItemEntity.hasItemFireWeaponSpread)
@@ -110,6 +134,7 @@ namespace Action
                     ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Bullet);
                 }
             }
+
 
             // Add to List
             EndPointList.Add(ProjectileEntity);
@@ -202,7 +227,7 @@ namespace Action
                 if (ProjectileEntity.isEnabled)
                 {
                     // Release the projectile before executing exit
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.ID);
+                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
                 } 
             }
             base.OnExit(ref planet);

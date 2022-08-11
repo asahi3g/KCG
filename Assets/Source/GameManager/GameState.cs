@@ -63,7 +63,8 @@ public class GameState
     public static readonly Agent.MovementSystem AgentMovementSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-
+    public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
+    public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     #endregion
 
     #region Inventory
@@ -80,6 +81,11 @@ public class GameState
     public static readonly Item.MovementSystem ItemMovableSystem;
     public static readonly Item.ProcessCollisionSystem ItemProcessCollisionSystem;
     public static readonly Item.ItemCreationApi ItemCreationApi;
+    #endregion
+
+    #region Loot
+    public static readonly LootDrop.CreationApi LootTableCreationAPI;
+    public static readonly LootDrop.LootDropSystem LootDropSystem;
     #endregion
 
     #region Projectile
@@ -122,6 +128,7 @@ public class GameState
     #endregion
 
 
+
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
@@ -138,6 +145,8 @@ public class GameState
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
+        AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
+        AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();
@@ -157,6 +166,8 @@ public class GameState
         ItemMeshBuilderSystem = new Item.MeshBuilderSystem();
         ItemMovableSystem = new Item.MovementSystem();
         ItemProcessCollisionSystem = new Item.ProcessCollisionSystem();
+        LootTableCreationAPI = new LootDrop.CreationApi();
+        LootDropSystem = new LootDrop.LootDropSystem();
         ActionPropertyManager = new Action.ActionPropertyManager();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();

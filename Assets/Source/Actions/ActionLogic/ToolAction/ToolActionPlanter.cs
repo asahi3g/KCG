@@ -65,7 +65,7 @@ namespace Action
                                     if (!entity.mechPlanter.GotSeed)
                                     {
                                         PlantToAdd = true;
-                                        entity.mechPlanter.Plant = Plant;
+                                        entity.mechPlanter.PlantMechID = Plant.mechID.ID;
 
                                         // Mech Property
                                         entity.mechPlanter.GotSeed = true;
@@ -98,7 +98,7 @@ namespace Action
                         // Is Mech Planter?
                         if (entity.mechType.mechType == Mech.MechType.Planter)
                         {
-                            entity.mechPlanter.Plant = Plant;
+                            entity.mechPlanter.PlantMechID = Plant.mechID.ID;
                         }
                     }
                 }

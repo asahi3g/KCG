@@ -249,7 +249,7 @@ namespace Action
             {
                 if (ProjectileEntity.isEnabled)
                 {
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.ID);
+                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
                 }
             }
             base.OnExit(ref planet);

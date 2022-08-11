@@ -8,7 +8,7 @@ namespace Particle
 {
     public class ParticleSpawnerSystem
     {
-
+        public static int UniqueID = 0;
         ParticleCreationApi ParticleCreationApi;
         public ParticleSpawnerSystem(ParticleCreationApi particleCreationApi)
         {
@@ -16,13 +16,13 @@ namespace Particle
         }
 
         public ParticleEntity Spawn(ParticleContext context, Particle.ParticleType particleType, 
-                                        Vec2f position, Vec2f velocity, int particleId)
+                                        Vec2f position, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
                         ParticleCreationApi.Get((int)particleType);
 
             var entity = context.CreateEntity();
-            entity.AddParticleID(particleId);
+            entity.AddParticleID(UniqueID++, -1);
             entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0);
@@ -43,13 +43,13 @@ namespace Particle
         }
 
 
-        public ParticleEntity SpawnDebrisParticle(ParticleContext context, Vec2f position, Vec2f[] triangles, Vec2f[] textureCoords, Vec2f velocity, int particleId)
+        public ParticleEntity SpawnDebrisParticle(ParticleContext context, Vec2f position, Vec2f[] triangles, Vec2f[] textureCoords, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
                         ParticleCreationApi.Get((int)Particle.ParticleType.Debris);
 
             var entity = context.CreateEntity();
-            entity.AddParticleID(particleId);
+            entity.AddParticleID(UniqueID, -1);
             entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0);
@@ -228,7 +228,7 @@ namespace Particle
             velocity.Y = rand2 * -1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
-            part1Vertices, part1Coords, velocity, -1));
+            part1Vertices, part1Coords, velocity));
 
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
@@ -238,7 +238,7 @@ namespace Particle
             velocity.Y = rand2 * -1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
-            part2Vertices, part2Coords, velocity, -1));
+            part2Vertices, part2Coords, velocity));
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
@@ -247,7 +247,7 @@ namespace Particle
             velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
-            part3Vertices, part3Coords, velocity, -1));
+            part3Vertices, part3Coords, velocity));
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
             rand2 = KMath.Random.Mt19937.genrand_realf();
@@ -256,7 +256,7 @@ namespace Particle
             velocity.Y = rand2 * 1 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
-            part4Vertices, part4Coords, velocity, -1));
+            part4Vertices, part4Coords, velocity));
 
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
@@ -266,7 +266,7 @@ namespace Particle
             velocity.Y = rand2 * velocityValueY;
 
             planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
-            part5Vertices, part5Coords, velocity, -1));
+            part5Vertices, part5Coords, velocity));
         }
 
     }

@@ -11,9 +11,6 @@ namespace Projectile
         public ProjectileEntity[] List;
 
         public int Length;
-        // used for tracking down an available 
-        // index that we can use to insert
-        public int LastFreeIndex;
 
         // the capacity is just the length of the list
         public int Capacity;
@@ -31,44 +28,12 @@ namespace Projectile
             // the capacity
             ExpandArray();
 
-
-            // trying to find an empty index
-            // we use LastFreeIndex for a faster insertion
-            int Found = -1;
-            for(int index = LastFreeIndex; index < Capacity; index++)
-            {
-                ProjectileEntity thisEntity = List[index];
-
-                if (thisEntity == null)
-                {
-                    Found = index;
-                    break;
-                }
-            }
-            if (Found == -1)
-            {
-                for(int index = 0; index < LastFreeIndex; index++)
-                {
-                    ProjectileEntity thisEntity = List[index];
-
-                    if (thisEntity == null)
-                    {
-                        Found = index;
-                        break;
-                    }
-                }
-            }
-
-            // increment the LastFreeIndex
-            LastFreeIndex = (LastFreeIndex + 1) % Capacity;
-
-
-            // creating the Entity and initializing it
-            entity.ReplaceProjectileID(Found);
-            List[Found] = entity;
+            int LastIndex = Length;
+            List[LastIndex] = entity;
+            entity.projectileID.Index = LastIndex;
             Length++;
 
-             return List[Found];
+            return List[LastIndex];
         }
 
 
@@ -80,16 +45,20 @@ namespace Projectile
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int floatingTextId)
+        public void Remove(int index)
         {
-            LastFreeIndex = floatingTextId;
-            ref ProjectileEntity entity = ref List[floatingTextId];
+            Utils.Assert(index >= 0 && index < Length);
+
+            ref ProjectileEntity entity = ref List[index];
             entity.Destroy();
-            entity = null;
+
+            if (index != Length - 1)
+            {
+                entity = List[Length - 1];
+                entity.projectileID.Index = index;
+            }
             Length--;
         }
-
-
 
 
         // used to grow the list

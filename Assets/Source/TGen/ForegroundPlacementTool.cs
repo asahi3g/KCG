@@ -14,35 +14,38 @@ namespace TGen
     public class ForegroundPlacementTool
     {
 
-        private Color backgroundColor = Color.grey;
+        private float initialX = 0.5F, initialY = 0.8F;
 
-        private int isotypeCount = 41;
-
-        private float cellSize = 32F;
+        private int cellSize = 32;
 
         private float interval = 4F;
-
-        private float w, h, xInterval, yInterval;
 
         private Image[] PlaceBlockButtons;
 
         public void Initialize(ref Planet.PlanetState Planet)
         {
-            w = cellSize / Screen.width;
+            var xInterval = interval / Screen.width;
 
-            h = cellSize / Screen.height;
-
-            xInterval = interval / Screen.width;
-
-            yInterval = interval / Screen.height;
+            var yInterval = -interval / Screen.height;
 
             PlaceBlockButtons = new Image[GameResources.TGenIsotypeSprites.Length];
+
+            var row = 0;
+            var column = 0;
 
             for (int i = 0; i < GameResources.TGenIsotypeSprites.Length; i++)
             {
                 PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
                     GameObject.Find("Canvas").transform, GameResources.TGenIsotypeSprites[i],
-                    new Vec2f(0.5f + i, 0.5f + i), new Vec3f(1f, 1f, 1f), 32, 32).kGUIElementsImage.Image;
+                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(1f, 1f, 1f), cellSize, cellSize).kGUIElementsImage.Image;
+
+                column++;
+
+                if(column == 4)
+                {
+                    column = 0;
+                    row++;
+                }
             }
         }
 

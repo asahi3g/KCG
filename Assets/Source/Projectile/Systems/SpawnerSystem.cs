@@ -12,7 +12,7 @@ namespace Projectile
     public class SpawnerSystem
     {
         // Projectile ID
-        private static int projectileID;
+        private static int UniqueID;
         ProjectileCreationApi ProjectileCreationApi;
 
         public SpawnerSystem(ProjectileCreationApi projectileCreationApi)
@@ -21,15 +21,14 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-                                Enums.ProjectileType projectileType, 
-                                int projectileId)
+                                Enums.ProjectileType projectileType)
         {
             ProjectileProperties projectileProperties = 
                                     ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
             // Add ID Component
-            entity.AddProjectileID(projectileId);
+            entity.AddProjectileID(UniqueID++, -1);
 
             // Add Ramp Component
             entity.AddProjectileRamp(projectileProperties.canRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.rampTime);
@@ -67,15 +66,13 @@ namespace Projectile
             ProjectileDrawType projectileDrawType)
         {
             ProjectileEntity entity = entitasContext.projectile.CreateEntity();
-            // Increase ID per object statically
-            projectileID++;
 
             // Set Png Size
             var pngSize = new Vector2Int(width, height);
             var spriteSize = new Vec2f(pngSize.x / 32f, pngSize.y / 32f);
             
             // Add ID Component
-            entity.AddProjectileID(projectileID);
+            entity.AddProjectileID(UniqueID++, -1);
 
             // Add Sprite Component
             entity.AddProjectileSprite2D(spriteID, spriteSize);
@@ -102,9 +99,6 @@ namespace Projectile
             // Create Entity
             var entity = entitasContext.projectile.CreateEntity();
 
-            // Increase ID per object statically
-            projectileID++;
-
             // Set Png Size
             var pngSize = new Vector2Int(width, height);
 
@@ -115,7 +109,7 @@ namespace Projectile
             var spriteSize = new Vec2f(pngSize.x / 32f, pngSize.y / 32f);
 
             // Add ID Component
-            entity.AddProjectileID(projectileID);
+            entity.AddProjectileID(UniqueID++, -1);
 
             // Add Sprite Component
             entity.AddProjectileSprite2D(spriteId, spriteSize);
