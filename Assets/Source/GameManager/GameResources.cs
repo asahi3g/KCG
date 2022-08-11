@@ -29,11 +29,9 @@ public class GameResources
     public static int DustSpriteSheet;
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
-
-    public static int TGenBlockSpriteSheet, TGenBlock_0, TGenBlock_1, TGenBlock_2, TGenBlock_3, TGenBlock_4;
-
     public static int HelmetsSpriteSheet;
     public static int SuitsSpriteSheet;
+
     // Tile CollisionIsotope
     public static int SB_R0000Sheet;
     public static int SB_R0001Sheet;
@@ -52,6 +50,66 @@ public class GameResources
     public static int SB_R1110Sheet;
     public static int SB_R1111Sheet;
     public static int EmptyBlockSheet;
+
+    //TGen
+    public static int TGenBlockSpriteSheet;
+    public static int[] TGenIsotypeSprites;
+    /*public static int TGen_SB_R0,
+
+        // HalfBlock
+        TGen_HB_R0,
+        TGen_HB_R1,
+        TGen_HB_R2,
+        TGen_HB_R3,
+
+        //TriangleBlock
+        TGen_TB_R0,
+        TGen_TB_R1,
+        TGen_TB_R2,
+        TGen_TB_R3,
+        TGen_TB_R4,
+        TGen_TB_R5,
+        TGen_TB_R6,
+        TGen_TB_R7,
+
+        //LBlock
+        TGen_LB_R0,
+        TGen_LB_R1,
+        TGen_LB_R2,
+        TGen_LB_R3,
+        TGen_LB_R4,
+        TGen_LB_R5,
+        TGen_LB_R6,
+        TGen_LB_R7,
+
+        //HalfTriangleBlock
+        TGen_HTB_R0,
+        TGen_HTB_R1,
+        TGen_HTB_R2,
+        TGen_HTB_R3,
+        TGen_HTB_R4,
+        TGen_HTB_R5,
+        TGen_HTB_R6,
+        TGen_HTB_R7,
+
+        //QuarterPlatform
+        TGen_QP_R0,
+        TGen_QP_R1,
+        TGen_QP_R2,
+        TGen_QP_R3,
+
+        //HalfPlatform
+        TGen_HP_R0,
+        TGen_HP_R1,
+        TGen_HP_R2,
+        TGen_HP_R3,
+
+        //FullPlatform
+        TGen_FP_R0,
+        TGen_FP_R1,
+        TGen_FP_R2,
+        TGen_FP_R3;*/
+
 
     public static int PlatformSpriteSheet;
     public static int StoneSpriteSheet;
@@ -167,8 +225,6 @@ public class GameResources
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
             HelmetsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Helmets\\character-helmets.png", 64, 64);
             SuitsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Suits\\character-suits.png", 64, 96);
-
-            TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
 
             SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
             SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
@@ -295,12 +351,7 @@ public class GameResources
             SB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1111Sheet, 0, 0, 0);
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
-            TGenBlock_0 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 0, 0, 0);
-            TGenBlock_1 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 0, 0);
-            TGenBlock_2 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 0, 1, 0);
-            TGenBlock_3 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 1, 0);
-            TGenBlock_4 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 2, 1, 0);
-
+            InitializeTGenTiles();
 
             CreateTiles();
             CreateAnimations();
@@ -312,6 +363,35 @@ public class GameResources
             CreateMechs();
 
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+        }
+    }
+
+    private static void InitializeTGenTiles()
+    {
+        TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
+
+        int tileCount = 41;
+
+        TGenIsotypeSprites = new int[tileCount];
+
+        TGenIsotypeSprites[0] = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 1, 0);
+
+        int i = 1;
+
+        for (int x = 0; x < 4; x++)
+        {
+            var column = x * 2 + 1;
+
+            for (int y = 1; y < 11; y++)
+            {
+                var row = y * 2 + 1;
+
+                Debug.Log(i);
+
+                TGenIsotypeSprites[i] = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, row, column, 0);
+
+                i++;
+            }
         }
     }
 

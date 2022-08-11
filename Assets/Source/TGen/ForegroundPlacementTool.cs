@@ -7,6 +7,7 @@ using HUD;
 using PlanetTileMap;
 using Mech;
 using System.Linq;
+using KGUI.Elements;
 
 namespace TGen
 {
@@ -15,13 +16,17 @@ namespace TGen
 
         private Color backgroundColor = Color.grey;
 
+        private int isotypeCount = 41;
+
         private float cellSize = 32F;
 
         private float interval = 4F;
 
         private float w, h, xInterval, yInterval;
 
-        public void Initialize()
+        private Image[] PlaceBlockButtons;
+
+        public void Initialize(ref Planet.PlanetState Planet)
         {
             w = cellSize / Screen.width;
 
@@ -30,65 +35,14 @@ namespace TGen
             xInterval = interval / Screen.width;
 
             yInterval = interval / Screen.height;
-        }
 
-        public void DrawGrid()
-        {
-            var rowIndex = 0;
+            PlaceBlockButtons = new Image[GameResources.TGenIsotypeSprites.Length];
 
-            //Tile Number
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < GameResources.TGenIsotypeSprites.Length; i++)
             {
-                var currentX = 0.5F + (w + xInterval) * i;
-
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
-
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (i + 1).ToString(), 24, TextAnchor.UpperCenter, Color.white);
-            }
-
-            rowIndex--;
-
-            //SQUARE
-            Sprites.Sprite sprite = GameState.TileSpriteAtlasManager.GetSprite(GameResources.TGenBlock_3);
-
-            GameState.Renderer.DrawSpriteGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, sprite);
-            //GameState.Renderer.DrawQuadColorGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
-
-            //EMPTY
-            GameState.Renderer.DrawQuadColorGui(0.5F + w + xInterval, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
-
-            rowIndex--;
-
-            //HALF
-            for (int i = 0; i < 4; i++)
-            {
-                var blockTypeAndRotation = (BlockTypeAndRotation)(i + 3);
-
-                var currentX = 0.5F + (w + xInterval) * i;
-
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
-
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (blockTypeAndRotation).ToString(), 24, TextAnchor.UpperCenter, Color.white);
-            }
-
-            rowIndex--;
-
-            //TRIANGLE 1
-            for (int i = 0; i < 4; i++)
-            {
-                var blockTypeAndRotation = (BlockTypeAndRotation)(i + 7);
-
-                var currentX = 0.5F + (w + xInterval) * i;
-
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
-
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (blockTypeAndRotation).ToString(), 24, TextAnchor.UpperCenter, Color.white);
+                PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
+                    GameObject.Find("Canvas").transform, GameResources.TGenIsotypeSprites[i],
+                    new Vec2f(0.5f + i, 0.5f + i), new Vec3f(1f, 1f, 1f), 32, 32).kGUIElementsImage.Image;
             }
         }
 

@@ -152,6 +152,55 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
 
+        public Image(string imageName, Transform parent, int width, int height, int tileSpriteID)
+        {
+            // Set Width and Height
+            Vector2Int iconPngSize = new Vector2Int(width, height);
+
+            // Set Sprite Data
+            byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
+
+            // Get Sprite Bytes
+            //GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Gui);
+
+            GameState.TileSpriteAtlasManager.GetSpriteBytes(tileSpriteID, iconSpriteData);
+
+            // Set Texture
+            Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
+
+            // Create Sprite
+            Sprite sprite = Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+
+            // Create Gameobject
+            iconCanvas = new GameObject(imageName);
+
+            // Set Object Parent To Canvas
+            iconCanvas.transform.parent = parent;
+
+            // Add Rect Transform to Manage UI Scaling
+            iconCanvas.AddComponent<RectTransform>();
+
+            // Add Image Component to Render the Sprite
+            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+
+            // Set Image Sprite
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+
+            // Set Anchor Max
+            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+
+            // Set Pivot
+            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+        }
+
         public override void Update()
         {
              
