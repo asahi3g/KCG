@@ -1,6 +1,6 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
-using UnityEngine;
+using System;
 
 namespace Particle
 {
@@ -9,7 +9,7 @@ namespace Particle
     {
         [PrimaryEntityIndex]
         // This is not the index of ParticleList. It should never reuse values.
-        public int ID;
+        public Int64 ID;
         public int Index;
     }
 }

@@ -148,6 +148,7 @@ namespace Planet
         {
             MechEntity entity = MechList.Get(index);
             Utils.Assert(entity.isEnabled);
+            GameState.LootDropSystem.Add(GameState.MechCreationApi.Get((int)entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
             MechList.Remove(index);
         }
 

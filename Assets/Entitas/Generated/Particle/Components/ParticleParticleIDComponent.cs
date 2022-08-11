@@ -11,7 +11,7 @@ public partial class ParticleEntity {
     public Particle.IDComponent particleID { get { return (Particle.IDComponent)GetComponent(ParticleComponentsLookup.ParticleID); } }
     public bool hasParticleID { get { return HasComponent(ParticleComponentsLookup.ParticleID); } }
 
-    public void AddParticleID(int newID, int newIndex) {
+    public void AddParticleID(long newID, int newIndex) {
         var index = ParticleComponentsLookup.ParticleID;
         var component = (Particle.IDComponent)CreateComponent(index, typeof(Particle.IDComponent));
         component.ID = newID;
@@ -19,7 +19,7 @@ public partial class ParticleEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceParticleID(int newID, int newIndex) {
+    public void ReplaceParticleID(long newID, int newIndex) {
         var index = ParticleComponentsLookup.ParticleID;
         var component = (Particle.IDComponent)CreateComponent(index, typeof(Particle.IDComponent));
         component.ID = newID;

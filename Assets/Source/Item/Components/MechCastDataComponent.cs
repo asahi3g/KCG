@@ -4,7 +4,7 @@ using Mech;
 
 namespace Item
 {
-    [ItemParticle, ItemInventory]
+    [ItemInventory]
     public class MechCastDataComponent : IComponent
     {
         public Data data;

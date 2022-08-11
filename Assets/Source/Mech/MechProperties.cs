@@ -1,10 +1,6 @@
 using Enums;
 using KMath;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Entitas.Unity;
-using PlanetTileMap;
 namespace Mech
 {
     public struct MechProperties
@@ -23,9 +19,9 @@ namespace Mech
         public ActionType Action;
         public Flags MechFlags;
 
-        public int InventoryModelID;
-
-        public int Durability;      // Mech "health" Use only if Mech is breakable.
+        public int DropTableID;
+        public int InventoryModelID; // Only used if has inventory.
+        public int Durability;       // Mech "health" Use only if Mech is breakable.
 
         [Flags]
         public enum Flags : byte

@@ -84,6 +84,14 @@ namespace Mech
             PropertiesArray[CurrentIndex].Name = name;
         }
 
+        public void SetDropTableID(int dropTableID)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].DropTableID = dropTableID;
+            }
+        }
+
         public void SetTexture(int spriteId)
         {
             PropertiesArray[CurrentIndex].SpriteID = spriteId;
