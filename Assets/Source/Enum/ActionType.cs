@@ -33,6 +33,8 @@
         ToolActionPlaceChest,
         ToolActionPlaceSmahableBox,
         ToolActionEnemySpawn,
+        ToolActionEnemyGunnerSpawn,
+        ToolActionEnemySwordmanSpawn,
         ToolActionMiningLaser,
         ToolActionRemoveTile,
         ToolActionThrowGrenade,

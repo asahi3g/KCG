@@ -55,6 +55,8 @@
         RemoveTileTool,
         MiningLaserTool,
         SpawnEnemySlimeTool,
+        SpawnEnemyGunnerTool,
+        SpawnEnemySwordmanTool,
         PipePlacementTool,
         ParticleEmitterPlacementTool,
         ChestPlacementTool,

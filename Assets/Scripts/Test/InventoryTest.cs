@@ -45,9 +45,10 @@ public class InventoryTest : MonoBehaviour
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID, customRestrictionInventoryID));
 
         AgentEntity playerEntity = context.agent.CreateEntity();
-        playerEntity.AddAgentID(agnetID);
+        playerEntity.AddAgentID(agnetID, Agent.AgentType.Player);
         playerEntity.isAgentPlayer = true;
         playerEntity.AddAgentInventory(inventoryID, equipmentInventoryID, false);
+        
 
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);

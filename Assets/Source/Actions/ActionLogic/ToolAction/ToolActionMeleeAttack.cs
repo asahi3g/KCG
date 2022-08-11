@@ -39,12 +39,46 @@ namespace Action
             var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.2f, AgentEntity.agentPhysicsState.Position.Y));
-            if (planet.Player != null)
+            var player = planet.Player;
+            if (player != null)
             {
-                GameState.AgentProcessPhysicalState.SwordSlash(planet.Player);
+                var physicsState = player.agentPhysicsState;
+                GameState.AgentProcessPhysicalState.SwordSlash(player);
+                foreach (var entity in entities)
+                {
+                    if (entity != player)
+                    {
+                        var testPhysicsState = entity.agentPhysicsState;
+
+                        //TODO(): not good we need collision checks
+                        if (Vec2f.Distance(testPhysicsState.Position, physicsState.Position) <= WeaponProperty.Range)
+                        {
+                            Vec2f direction = physicsState.Position - testPhysicsState.Position;
+                            int KnockbackDir = 0;
+                            if (direction.X > 0)
+                            {
+                                KnockbackDir = 1;
+                            }
+                            else if (direction.X < 0)
+                            {
+                                KnockbackDir = -1;
+                            }
+                            direction.Y = 0;
+                            direction.Normalize();
+
+                            GameState.AgentProcessPhysicalState.Knockback(entity, 7.0f, -KnockbackDir);
+
+                            // spawns a debug floating text for damage 
+                            planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
+                            new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
+
+                            entity.agentStats.Health -= (int)damage;
+                        }
+                    }
+                }
             }
 
-            // Todo: Create a agent colision system?
+            /*// Todo: Create a agent colision system?
             foreach (var entity in entities)
             {
                 if (!entity.isAgentPlayer)
@@ -83,7 +117,7 @@ namespace Action
                         }
                     }
                 }
-            }
+            }*/
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
 
@@ -92,7 +126,7 @@ namespace Action
 
         public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
         {
-            if (CanStun)
+            /*if (CanStun)
             {
                 for (int i = 0; i < Enemies.Count; i++)
                 {
@@ -107,7 +141,7 @@ namespace Action
                 }
             }
 
-            if(!CanStun)
+            if(!CanStun)*/
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
         }
 

@@ -26,12 +26,12 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(agentId);
+            entity.AddAgentID(agentId, AgentType.Player);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 10f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0);
+                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0);
             var size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
@@ -56,13 +56,13 @@ namespace Agent
             ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(agentId); // agent id 
+            entity.AddAgentID(agentId, agentType); // agent id 
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
                 newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1, 
                 Enums.AgentMovementState.None,
-                true, false, false, false, false, 0, 0, 0, 0); // used for physics simulation
+                true, false, false, false, false, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
             entity.AddAgentInventory(inventoryID, -1, false);
@@ -79,11 +79,11 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(agentId); // agent id 
+            entity.AddAgentID(agentId, agentType); // agent id 
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0); // used for physics simulation
+                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
 
             if (agentType == Agent.AgentType.Player)
@@ -293,7 +293,7 @@ namespace Agent
             {
                 entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius);
+                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                 Enums.ItemType[] Drops = new Enums.ItemType[3];
                 int[] MaxDropCount = new int[3];
@@ -312,6 +312,62 @@ namespace Agent
                 DropRate[2] = 0.8f;
 
                 entity.AddAgentItemDrop(Drops, MaxDropCount, DropRate);
+            }
+            else if (agentType == Agent.AgentType.EnemyGunner)
+            {
+                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+                GameObject model = GameObject.Instantiate(prefab);
+
+                GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+
+                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                Vector3 eulers = model.transform.rotation.eulerAngles;
+                model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+
+                // create an animancer object and give it a reference to the Animator component
+                GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                // get the animator component from the game object
+                // this component is used by animancer
+                AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                animancerComponent.Animator = model.GetComponent<Animator>();
+                entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                entity.agentPhysicsState.Speed = 3.0f;
+
+                entity.SetAgentWeapon(Model3DWeapon.Gun);
+
+            }
+            else if (agentType == Agent.AgentType.EnemySwordman)
+            {
+                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+                GameObject model = GameObject.Instantiate(prefab);
+
+                GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+
+                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                Vector3 eulers = model.transform.rotation.eulerAngles;
+                model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+
+                // create an animancer object and give it a reference to the Animator component
+                GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                // get the animator component from the game object
+                // this component is used by animancer
+                AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                animancerComponent.Animator = model.GetComponent<Animator>();
+                entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                entity.agentPhysicsState.Speed = 3.0f;
+
+                entity.SetAgentWeapon(Model3DWeapon.Sword);
+
             }
             
             return entity;

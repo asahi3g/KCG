@@ -9,5 +9,7 @@ namespace Agent
     {
         [PrimaryEntityIndex]
         public int ID;
+
+        public AgentType Type;
     }
 }

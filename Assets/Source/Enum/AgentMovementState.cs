@@ -8,6 +8,7 @@ namespace Enums
         Falling, // falling from the sky
         JetPackFlying,  // Using the jetpack
         Dashing,        // Dashing
+        Stagger,        // Stagger
         SlidingLeft,    // Wall sliding down
         SlidingRight,    // Wall sliding down
         SwordSlash,

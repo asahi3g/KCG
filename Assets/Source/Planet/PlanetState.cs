@@ -121,6 +121,15 @@ namespace Planet
             return newEntity;
         }
 
+        public AgentEntity AddAgent(Vec2f position, Agent.AgentType type)
+        {
+            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
+                    -1, type));
+            return newEntity;
+        }
+
         public AgentEntity AddCorpse(Vec2f position, int spriteId, Agent.AgentType agentType)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
@@ -273,42 +282,45 @@ namespace Planet
             var physicsState = entity.agentPhysicsState;
             Vec2f agentPosition = physicsState.Position;
 
-            AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
-
-            if (entity.hasAgentItemDrop)
+            if (entity.agentID.Type == Agent.AgentType.Enemy)
             {
-                var itemDrop = entity.agentItemDrop;
-                int inventoryID = corpse.agentInventory.InventoryID;
-                if (itemDrop.Drops != null)
+                AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
+
+                if (entity.hasAgentItemDrop)
                 {
-                    
-                    for(int dropIndex = 0; dropIndex < itemDrop.Drops.Length; dropIndex++)
+                    var itemDrop = entity.agentItemDrop;
+                    int inventoryID = corpse.agentInventory.InventoryID;
+                    if (itemDrop.Drops != null)
                     {
-                        Enums.ItemType dropType = itemDrop.Drops[dropIndex];
-                        int maxDropCount = itemDrop.MaxDropCount[dropIndex];
-                        float dropRate = itemDrop.DropRate[dropIndex];
-
                         
-                        
-                        float randXOffset = KMath.Random.Mt19937.genrand_realf() * 0.5f;
-
-                        
-                        Utils.Assert(maxDropCount < 100 && maxDropCount > 0);
-                        int currentDrop = 0;
-                        while (currentDrop < maxDropCount)
+                        for(int dropIndex = 0; dropIndex < itemDrop.Drops.Length; dropIndex++)
                         {
-                            float randomDrop = KMath.Random.Mt19937.genrand_realf();
-                            if (randomDrop <= dropRate)
-                            {
-                                GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, physicsState.Position + new Vec2f(randXOffset, 0.5f));
-                                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
-                            }
+                            Enums.ItemType dropType = itemDrop.Drops[dropIndex];
+                            int maxDropCount = itemDrop.MaxDropCount[dropIndex];
+                            float dropRate = itemDrop.DropRate[dropIndex];
 
-                            currentDrop++;
+                            
+                            
+                            float randXOffset = KMath.Random.Mt19937.genrand_realf() * 0.5f;
+
+                            
+                            Utils.Assert(maxDropCount < 100 && maxDropCount > 0);
+                            int currentDrop = 0;
+                            while (currentDrop < maxDropCount)
+                            {
+                                float randomDrop = KMath.Random.Mt19937.genrand_realf();
+                                if (randomDrop <= dropRate)
+                                {
+                                    GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, dropType, physicsState.Position + new Vec2f(randXOffset, 0.5f));
+                                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, dropType, EntitasContext);
+                                }
+
+                                currentDrop++;
+                            }
+    
                         }
- 
+                        
                     }
-                    
                 }
             }
 
@@ -457,7 +469,7 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
-            GameState.EnemyAiSystem.Update(ref this);
+            GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);
