@@ -260,17 +260,58 @@ namespace Agent
 
                 model.GetComponent<RigBuilder>().Build();
 
-                GameObject Aim = new GameObject("RightHandIK");
+                GameObject BodyAim = new GameObject("BodyAim");
+                BodyAim.transform.parent = Rig.transform;
+                BodyAim.AddComponent<MultiAimConstraint>();
+                BodyAim.GetComponent<MultiAimConstraint>().weight = 1.0f;
+                BodyAim.GetComponent<MultiAimConstraint>().data.constrainedObject = model.transform.GetChild(0).GetChild(0).GetChild(2);
+                BodyAim.GetComponent<MultiAimConstraint>().data.aimAxis = MultiAimConstraintData.Axis.Y;
+                BodyAim.GetComponent<MultiAimConstraint>().data.upAxis = MultiAimConstraintData.Axis.X_NEG;
+                GameObject emptyGO = new GameObject("Target");
+                Transform Target = emptyGO.transform;
+                Target.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+                WeightedTransform TargetTransform = new WeightedTransform(Target, 1.0f);
+                BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects = new WeightedTransformArray(1);
+                BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects.Add(TargetTransform);
+
+                GameObject Aim = new GameObject("Aim");
                 Aim.transform.parent = Rig.transform;
-                Aim.AddComponent<TwoBoneIKConstraint>();
-                Aim.GetComponent<TwoBoneIKConstraint>().weight = 1.0f;
-                Aim.GetComponent<TwoBoneIKConstraint>().data.root = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
-                    GetChild(0);
-                Aim.GetComponent<TwoBoneIKConstraint>().data.mid = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                Aim.AddComponent<MultiAimConstraint>();
+                Aim.GetComponent<MultiAimConstraint>().data.constrainedObject = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0);
+                Aim.GetComponent<MultiAimConstraint>().data.aimAxis = MultiAimConstraintData.Axis.X_NEG;
+                Aim.GetComponent<MultiAimConstraint>().data.upAxis = MultiAimConstraintData.Axis.Y_NEG;
+                Aim.GetComponent<MultiAimConstraint>().data.sourceObjects = new WeightedTransformArray(1);
+                Aim.GetComponent<MultiAimConstraint>().data.sourceObjects.Add(TargetTransform);
+
+                GameObject SecondHandGrabWeapon = new GameObject("SecondHandGrabWeapon");
+                SecondHandGrabWeapon.transform.parent = Rig.transform;
+                SecondHandGrabWeapon.AddComponent<TwoBoneIKConstraint>();
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().weight = 1.0f;
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.root = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.mid = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).
                     GetChild(0).GetChild(0);
-                Aim.GetComponent<TwoBoneIKConstraint>().data.tip = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.tip = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).
                     GetChild(0).GetChild(0).GetChild(0);
 
+                GameObject grabTarget = new GameObject("SecondHandGrabWeapon_target");
+                grabTarget.transform.parent = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0);
+                grabTarget.transform.position = new Vector3(-0.141000003f, 0.349000007f, 0.0270000007f);
+                grabTarget.transform.eulerAngles = new Vector3(3.25567222f, 170.530273f, 158.903412f);
+                grabTarget.transform.localScale = new Vector3(0.0999999791f, 0.0999999791f, 0.0999999866f);
+
+                GameObject hintTarget = new GameObject("SecondHandGrabWeapon_hint");
+                hintTarget.transform.parent = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0);
+                hintTarget.transform.position = new Vector3(-9.09439087f, 12.3656187f, -7.37642956f);
+                hintTarget.transform.eulerAngles = new Vector3(312.55481f, 65.0677643f, 187.059296f);
+                hintTarget.transform.localScale = new Vector3(0.0999999791f, 0.0999999791f, 0.0999999866f);
+
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.target = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0).GetChild(5);
+                SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.hint = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                    GetChild(0).GetChild(0).GetChild(0).GetChild(6);
 
                 //model.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = pixelMaterial;
 
