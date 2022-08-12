@@ -37,9 +37,11 @@ public class InventoryTest : MonoBehaviour
         int equipmentInventoryID = 1;
         inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, 
+
             GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID));
+
 
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
         inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);

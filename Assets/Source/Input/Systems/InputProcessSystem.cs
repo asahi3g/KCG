@@ -145,17 +145,17 @@ namespace ECSInput
 
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.Sword);
+                    player.SetAgentWeapon(Model3DWeapon.Sword);
                 }
 
                 if (Input.GetKeyDown(KeyCode.B))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.Gun);
+                    player.SetAgentWeapon(Model3DWeapon.Gun);
                 }
 
                 if (Input.GetKeyDown(KeyCode.V))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.None);
+                    player.SetAgentWeapon(Model3DWeapon.None);
                 }
 
                 // Running
@@ -585,17 +585,17 @@ namespace ECSInput
                         {
                             case Enums.ItemGroups.Gun:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.Gun);
+                                entity.SetAgentWeapon(Model3DWeapon.Gun);
                                 break;
                             }
                             case Enums.ItemGroups.Weapon:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.Sword);
+                                entity.SetAgentWeapon(Model3DWeapon.Sword);
                                 break;
                             }
                             default:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.None);
+                                entity.SetAgentWeapon(Model3DWeapon.None);
                                 break;
                             }
                         }

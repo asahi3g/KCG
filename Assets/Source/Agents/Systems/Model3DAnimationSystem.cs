@@ -18,7 +18,10 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
-                Debug.Log(physicsState.MovementState);
+                /*if (entity.isAgentPlayer)
+                {
+                    Debug.Log(physicsState.MovementState);
+                }*/
 
                 switch(physicsState.MovementState)
                 {
@@ -44,14 +47,14 @@ namespace Agent
                     }
                     case AgentMovementState.JetPackFlying:
                     {
-                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.JetPack);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
                     case AgentMovementState.SlidingLeft:
                     case AgentMovementState.SlidingRight:
                     {
-                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Sliding);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
@@ -59,6 +62,12 @@ namespace Agent
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.Stagger:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Stagger);
+                        model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }
                     case AgentMovementState.Falling:
@@ -70,14 +79,12 @@ namespace Agent
                     case AgentMovementState.SwordSlash:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SwordSlash);
-                        Debug.Log(animation);
                         model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }
                     case AgentMovementState.FireGun:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.FireGun);
-                        Debug.Log(animation);
                         model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }

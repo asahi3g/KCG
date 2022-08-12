@@ -2,6 +2,7 @@ using Physics;
 using System;
 using KMath;
 using UnityEngine;
+using Enums;
 
 namespace Agent
 {
@@ -66,6 +67,19 @@ namespace Agent
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
+
+            if (System.Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
+            physicsState.MovementState != AgentMovementState.Stagger)
+            {
+                if (newVelocity.X > 0)
+                {
+                    physicsState.Direction = 1;
+                }
+                else if (newVelocity.X < 0)
+                {
+                    physicsState.Direction = -1;
+                }
+            }
 
 
             // maximum velocity in the game
