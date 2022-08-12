@@ -28,6 +28,7 @@ namespace Agent
         public float DashCooldown;
         public float SlashCooldown;
         public float FireGunCooldown;
+        public float StaggerDuration;
 
         //[Flags]
         //public enum Flags : byte

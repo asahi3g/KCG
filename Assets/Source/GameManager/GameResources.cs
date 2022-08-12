@@ -779,6 +779,22 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionEnemySpawn);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionEnemyGunnerSpawn);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionEnemySwordmanSpawn);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PipePlacementTool, "PipePlacementTool");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(PipePlacementToolIcon);
@@ -922,7 +938,6 @@ public class GameResources
         GameState.AgentCreationApi.SetName("player");
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
-        GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.CharacterMoveLeft);
         GameState.AgentCreationApi.End();
 
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Agent);
@@ -938,10 +953,28 @@ public class GameResources
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
-        GameState.AgentCreationApi.SetEnemyBehaviour(0);
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Slime);
         GameState.AgentCreationApi.SetDetectionRadius(4.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.SetAttackCooldown(0.8f);
+        GameState.AgentCreationApi.End();
+
+        GameState.AgentCreationApi.Create((int)Agent.AgentType.EnemySwordman);
+        GameState.AgentCreationApi.SetName("enemy-swordman");
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Swordman);
+        GameState.AgentCreationApi.SetDetectionRadius(8.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
+
+        GameState.AgentCreationApi.Create((int)Agent.AgentType.EnemyGunner);
+        GameState.AgentCreationApi.SetName("enemy-gunner");
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
     }
 

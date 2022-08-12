@@ -6,8 +6,11 @@ namespace Agent
     [Agent]
     public class EnemyComponent : IComponent
     {
-        public int Behaviour;
+        public EnemyBehaviour Behaviour;
 
         public float DetectionRadius;
+
+
+        public float EnemyCooldown;
     }
 }
