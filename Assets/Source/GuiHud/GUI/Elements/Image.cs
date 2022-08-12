@@ -161,9 +161,7 @@ namespace KGUI.Elements
             byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
 
             // Get Sprite Bytes
-            //GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Gui);
-
-            GameState.TileSpriteAtlasManager.GetSpriteBytes(tileSpriteID, iconSpriteData);
+            GameState.SpriteAtlasManager.GetSpriteBytes(tileSpriteID, iconSpriteData, Enums.AtlasType.TGen);
 
             // Set Texture
             Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);

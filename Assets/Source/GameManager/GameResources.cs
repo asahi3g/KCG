@@ -405,23 +405,21 @@ public class GameResources
 
         TGenIsotypeSprites = new int[tileCount];
 
-        TGenIsotypeSprites[0] = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, 1, 1, 0);
+        TGenIsotypeSprites[0] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, 1, 1, Enums.AtlasType.TGen);
 
-        int i = 1;
+        var row = 3;
+        var column = 1;
 
-        for (int x = 0; x < 4; x++)
+        for (int i = 1; i < tileCount; i++)
         {
-            var column = x * 2 + 1;
+            TGenIsotypeSprites[i] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, column, row, Enums.AtlasType.TGen);
 
-            for (int y = 1; y < 11; y++)
+            column += 2;
+
+            if (column > 8)
             {
-                var row = y * 2 + 1;
-
-                Debug.Log(i);
-
-                TGenIsotypeSprites[i] = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TGenBlockSpriteSheet, row, column, 0);
-
-                i++;
+                column = 1;
+                row += 2;
             }
         }
     }

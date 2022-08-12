@@ -54,6 +54,11 @@ namespace Planet.Unity
 
             Planet.Update(Time.deltaTime, Material, transform);
             Planet.DrawHUD(Player);
+
+            if(foregroundToolEnabled)
+            {
+                placementTool.UpdateToolGrid();
+            }
         }
 
         public void Initialize()
