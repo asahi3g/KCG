@@ -102,10 +102,13 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            fillValue = agentEntity.agentStats.Fuel;
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Fuel;
+            else
+                fillValue = 0.0f;
 
             // Fuel Bar Initializon
-            progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
+            progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
 
             // Fuel Bar Set Position
             progressBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
@@ -128,21 +131,17 @@ namespace KGUI.PlayerStatus
                 infoText.Update();
 
                 // Check Fuel,           // Update Fill Amount
-                fillValue = agentEntity.agentStats.Fuel;
+                if(agentEntity != null)
+                    fillValue = agentEntity.agentStats.Fuel;
+                else
+                    fillValue = 0.0f;
+
                 if (fillValue <= 0)
                 {
                     fillValue = 0;
                 }
                 // Water Bar Update Fill Amount
                 progressBar.Update(fillValue / 100);
-
-                // Set Icon Position Based On Aspect Ratio
-                if (Camera.main.aspect >= 1.7f)
-                    iconCanvas.SetPosition(new Vector3(-377.3f, -52.6f, 4.873917f));
-                else if (Camera.main.aspect >= 1.5f)
-                    iconCanvas.SetPosition(new Vector3(-335.6f, -49.2f, 4.873917f));
-                else
-                    iconCanvas.SetPosition(new Vector3(-363.8f, 16.6f, 4.873917f));
             }
         }
 

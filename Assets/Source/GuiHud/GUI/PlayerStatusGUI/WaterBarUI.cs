@@ -102,10 +102,13 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            fillValue = agentEntity.agentStats.Water;
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Water;
+            else
+                fillValue = 0.0f;
 
             // Water Bar Initializon
-            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
+            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
 
             // Water Bar Set Position
             waterBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
@@ -125,21 +128,16 @@ namespace KGUI.PlayerStatus
                 ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x, iconCanvas.GetTransform().position.y);
 
                 // Update Fill Amount
-                fillValue = agentEntity.agentStats.Water;
+                if(agentEntity != null)
+                    fillValue = agentEntity.agentStats.Water;
+                else
+                    fillValue = 0.0f;
 
                 // Water Bar Update Fill Amount
                 waterBar.Update(fillValue / 100);
 
                 // Info Text Update
                 infoText.Update();
-
-                // Set Icon Position Based On Aspect Ratio
-                if (Camera.main.aspect >= 1.7f)
-                    iconCanvas.SetPosition(new Vector3(-377.3f, 64.9f, 4.873917f));
-                else if (Camera.main.aspect >= 1.5f)
-                    iconCanvas.SetPosition(new Vector3(-335.6f, 67f, 4.873917f));
-                else
-                    iconCanvas.SetPosition(new Vector3(-363.8f, 134.2f, 4.873917f));
             }
         }
 

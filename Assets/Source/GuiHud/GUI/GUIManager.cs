@@ -155,7 +155,6 @@ namespace KGUI
                 scannerText.Update();
 
                 // Set Inventory Elements
-                inventoryID = agentEntity.agentInventory.InventoryID;
                 Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                 selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
@@ -163,6 +162,25 @@ namespace KGUI
                 item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                 if(item != null)
                 {
+                    if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active || dirtUIBackground.IsMouseOver(CursorPosition) &&
+                        dirtUIBackground.GetGameObject().active || pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active ||
+                            wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GetGameObject().active)
+                    {
+                        if (item != null)
+                        {
+                            if (item.itemType.Type == Enums.ItemType.PlacementTool)
+                            {
+                                item.itemCastData.InputsActive = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (item.itemType.Type == Enums.ItemType.PlacementTool)
+                        {
+                            item.itemCastData.InputsActive = true;
+                        }
+                    }
 
                     if (item.itemType.Type == Enums.ItemType.PlacementTool)
                     {
