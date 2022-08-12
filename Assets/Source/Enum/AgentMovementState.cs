@@ -15,5 +15,7 @@ namespace Enums
         FireGun,
         KnockedDownFront, // the death animation front version
         LyingFront, // dead state front version
+        KnockedDownBack, // the death animation back version
+        LyingBack, // dead state back version
     }
 }

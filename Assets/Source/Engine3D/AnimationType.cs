@@ -19,6 +19,8 @@ namespace Engine3D
         Sliding,
         JetPack,
         KnockedDownFront,
-        LyingFront
+        LyingFront,
+        KnockedDownBack,
+        LyingBack,
     }
 }

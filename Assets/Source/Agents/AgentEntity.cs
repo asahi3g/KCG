@@ -28,6 +28,16 @@ public partial class AgentEntity
         physicsState.DyingDuration = 1.5f;
     }
 
+    public void DieKnockBack()
+    {                
+        var state = agentState;
+        state.State = AgentState.Dead;
+        
+        var physicsState = agentPhysicsState;
+        physicsState.MovementState = AgentMovementState.KnockedDownBack;
+
+        physicsState.DyingDuration = 1.5f;
+    }
 
     public void SetAgentWeapon(Model3DWeapon weapon)
     {

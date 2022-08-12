@@ -76,10 +76,16 @@ namespace Agent
                 if (physicsState.DyingDuration > 0)
                 {
                     physicsState.DyingDuration -= deltaTime;
-                    if (physicsState.DyingDuration <= 0 &&
-                    physicsState.MovementState == AgentMovementState.KnockedDownFront)
+                    if (physicsState.DyingDuration <= 0)
                     {
-                        physicsState.MovementState = AgentMovementState.LyingFront;
+                        if (physicsState.MovementState == AgentMovementState.KnockedDownFront)
+                        {
+                            physicsState.MovementState = AgentMovementState.LyingFront;
+                        }
+                        else if (physicsState.MovementState == AgentMovementState.KnockedDownBack)
+                        {
+                            physicsState.MovementState = AgentMovementState.LyingBack;
+                        }
                     }
                 }
 

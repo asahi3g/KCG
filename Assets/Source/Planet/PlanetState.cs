@@ -317,6 +317,7 @@ namespace Planet
             GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
             GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
         }
+        
 
         /*public void RemoveAgent(int agentIndex)
         {
