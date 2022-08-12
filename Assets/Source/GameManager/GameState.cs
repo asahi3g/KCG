@@ -72,6 +72,7 @@ public class GameState
     public static readonly Inventory.InventoryManager InventoryManager;
     public static readonly Inventory.DrawSystem InventoryDrawSystem;
     public static readonly Inventory.MouseSelectionSystem InventoryMouseSelectionSystem;
+    public static readonly Inventory.WindowScaleSystem InventoryWindowScaleSystem;
     #endregion
 
     #region Item
@@ -153,6 +154,7 @@ public class GameState
         InventoryDrawSystem = new Inventory.DrawSystem();
         InventoryCreationApi = new Inventory.CreationApi();
         InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
+        InventoryWindowScaleSystem = new Inventory.WindowScaleSystem();
         EnemyAiSystem = new Agent.EnemyAiSystem();
         AnimationManager = new Animation.AnimationManager();
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();

@@ -97,11 +97,16 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext, Planet.InventoryList);
+
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext, Planet.InventoryList);
+
             if (Event.current.type != EventType.Repaint)
                 return;
 
             GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
-
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);;
 
             if (showMechInventory)

@@ -44,11 +44,14 @@ namespace Inventory
             return CreateInventory(context, GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), name);
         }
 
-        public void OpenInventory(Contexts contexts, int inventoryID)
-            => contexts.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw = true;
+        public void OpenInventory(InventoryList inventoryList, InventoryEntity inventoryEntity)
+        {
+            inventoryEntity.hasInventoryDraw = true;
+            GameState.InventoryWindowScaleSystem.OnOpenWindow(inventoryEntity, inventoryList);
+        }
 
-        public void CloseInventory(Contexts contexts, int inventoryID)
-            => contexts.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw = false;
+        public void CloseInventory(InventoryList inventoryList, InventoryEntity inventoryEntity)
+            => inventoryEntity.hasInventoryDraw = false;
 
         public bool AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
         {

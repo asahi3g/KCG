@@ -799,7 +799,7 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
         GameState.ItemCreationApi.SetTexture(ChestIconItem);
         GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMechPlacement);
         GameState.ItemCreationApi.EndItem();

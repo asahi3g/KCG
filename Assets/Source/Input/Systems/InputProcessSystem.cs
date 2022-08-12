@@ -234,16 +234,26 @@ namespace ECSInput
 
                     if (Inventory == null)
                         continue;
-                    
-                    Inventory.hasInventoryDraw = !Inventory.hasInventoryDraw;
 
                     int inventoryID = player.agentInventory.InventoryID;
                     InventoryEntity playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    playerInventory.hasInventoryDraw = !playerInventory.hasInventoryDraw;
 
                     inventoryID = player.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    equipmentInventory.hasInventoryDraw = !equipmentInventory.hasInventoryDraw;
+
+                    if (!Inventory.hasInventoryDraw)
+                    {
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                    }
+                    else 
+                    {
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                    }
+
                 }
             }
 
@@ -318,18 +328,26 @@ namespace ECSInput
                 {
                     int inventoryID = player.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    inventory.hasInventoryDraw = !inventory.hasInventoryDraw;
 
                     inventoryID = player.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    equipmentInventory.hasInventoryDraw = !equipmentInventory.hasInventoryDraw;
 
-                    if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
+                    if (!inventory.hasInventoryDraw)
                     {
-                        var inventories = contexts.inventory.GetGroup(InventoryMatcher.InventoryDraw);
-                        foreach (var openInventory in inventories)
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, inventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                    }
+                    else
+                    {
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                        if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
                         {
-                            openInventory.hasInventoryDraw = false;
+                            var inventories = contexts.inventory.GetGroup(InventoryMatcher.InventoryDraw);
+                            foreach (var openInventory in inventories)
+                            {
+                                GameState.InventoryManager.CloseInventory(planet.InventoryList, openInventory);
+                            }
                         }
                     }
                 }
@@ -383,6 +401,8 @@ namespace ECSInput
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
                         ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        if (item == null)
+                            return;
                         Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                         switch(itemProperty.Group)

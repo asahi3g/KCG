@@ -19,14 +19,6 @@ namespace Inventory
         public float SlotBorderOffset;
         public float SlotOffset;
 
-        /// <summary>
-        /// These define offset from start of background image to start of the grid.
-        /// </summary>
-        public float UpBorderOffSet;
-        public float DownBorderOffSet;
-        public float LeftBorderOffSet;
-        public float RightBorderOffSet;
-
         public void Scale(float scaleFactor)
         {
             Position *= scaleFactor;
@@ -36,10 +28,6 @@ namespace Inventory
             TileSize *= scaleFactor;
             SlotBorderOffset *= scaleFactor;
             SlotOffset *= scaleFactor;
-            UpBorderOffSet *= scaleFactor;
-            DownBorderOffSet *= scaleFactor;
-            LeftBorderOffSet *= scaleFactor;
-            RightBorderOffSet *= scaleFactor;
         }
 
         public bool IsInsideWindow(Vec2f pos)
@@ -53,6 +41,48 @@ namespace Inventory
         {
             if (Position.X >= 0 && Position.Y >= 0 && Position.X + Size.X <= 1920 && Position.Y + Size.Y <= 1080)
                 return true;
+            return false;
+        }
+
+        public bool IsAbove(ref Window other)
+        {
+            float yMin = Position.Y;
+            float yMax = Position.Y + Size.Y;
+            float xMin = Position.X;
+            float xMax = Position.X + Size.X;
+
+            float yMinOther = other.Position.Y;
+            float yMaxOther = other.Position.Y + other.Size.Y;
+            float xMinOther = other.Position.X;
+            float XMaxOther = other.Position.X + other.Size.X;
+
+            bool horizontalOverlap = false;
+
+            if (xMin > xMinOther)
+            {
+                if (xMin <= XMaxOther)                 // other is at left.
+                    horizontalOverlap = true;
+            }
+            else
+            {
+                if (xMax < xMinOther)
+                    horizontalOverlap = true;
+            }
+
+            if (horizontalOverlap)
+            {
+                if (yMin > yMinOther)                   // other is at lower.
+                {
+                    if (yMin <= yMaxOther)
+                        return true;
+                }
+                else
+                {
+                    if (yMax < yMinOther)
+                        return true;
+                }
+            }
+
             return false;
         }
     }

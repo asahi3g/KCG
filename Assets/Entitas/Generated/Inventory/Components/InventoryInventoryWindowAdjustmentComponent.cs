@@ -11,19 +11,17 @@ public partial class InventoryEntity {
     public Inventory.WindowAdjustmentComponent inventoryWindowAdjustment { get { return (Inventory.WindowAdjustmentComponent)GetComponent(InventoryComponentsLookup.InventoryWindowAdjustment); } }
     public bool hasInventoryWindowAdjustment { get { return HasComponent(InventoryComponentsLookup.InventoryWindowAdjustment); } }
 
-    public void AddInventoryWindowAdjustment(KMath.Vec2f newPositionOffset, float newScale) {
+    public void AddInventoryWindowAdjustment(Inventory.Window newWindow) {
         var index = InventoryComponentsLookup.InventoryWindowAdjustment;
         var component = (Inventory.WindowAdjustmentComponent)CreateComponent(index, typeof(Inventory.WindowAdjustmentComponent));
-        component.PositionOffset = newPositionOffset;
-        component.Scale = newScale;
+        component.window = newWindow;
         AddComponent(index, component);
     }
 
-    public void ReplaceInventoryWindowAdjustment(KMath.Vec2f newPositionOffset, float newScale) {
+    public void ReplaceInventoryWindowAdjustment(Inventory.Window newWindow) {
         var index = InventoryComponentsLookup.InventoryWindowAdjustment;
         var component = (Inventory.WindowAdjustmentComponent)CreateComponent(index, typeof(Inventory.WindowAdjustmentComponent));
-        component.PositionOffset = newPositionOffset;
-        component.Scale = newScale;
+        component.window = newWindow;
         ReplaceComponent(index, component);
     }
 
