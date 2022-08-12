@@ -17,6 +17,8 @@ namespace Engine3D
         SwordSlash,
         FireGun,
         Sliding,
-        JetPack
+        JetPack,
+        KnockedDownFront,
+        LyingFront
     }
 }

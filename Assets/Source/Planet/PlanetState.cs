@@ -304,7 +304,21 @@ namespace Planet
             return newEntity;
         }
 
-        public void RemoveAgent(int agentIndex)
+        public void KillAgent(int agentIndex)
+        {
+            AgentEntity entity = AgentList.Get(agentIndex);
+            Utils.Assert(entity.isEnabled);
+
+            entity.DieInPlace();
+            AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
+
+            int inventoryID = entity.agentInventory.InventoryID;
+
+            GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
+            GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
+        }
+
+        /*public void RemoveAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);
             Utils.Assert(entity.isEnabled);
@@ -322,12 +336,11 @@ namespace Planet
 
                 GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
                 GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
-
             }
 
             AgentList.Remove(agentIndex);
 
-        }
+        }*/
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
         {

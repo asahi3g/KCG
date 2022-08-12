@@ -8,11 +8,24 @@ public partial class AgentEntity
     public bool IsStateFree()
     {
         var physicsState = agentPhysicsState;
+        var state = agentState;
 
-        return physicsState.MovementState != AgentMovementState.Dashing &&
+        return state.State == AgentState.Alive &&
+        physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger;
+    }
+
+    public void DieInPlace()
+    {                
+        var state = agentState;
+        state.State = AgentState.Dead;
+        
+        var physicsState = agentPhysicsState;
+        physicsState.MovementState = AgentMovementState.KnockedDownFront;
+
+        physicsState.DyingDuration = 1.5f;
     }
 
 

@@ -73,6 +73,16 @@ namespace Agent
                     }
                 }
 
+                if (physicsState.DyingDuration > 0)
+                {
+                    physicsState.DyingDuration -= deltaTime;
+                    if (physicsState.DyingDuration <= 0 &&
+                    physicsState.MovementState == AgentMovementState.KnockedDownFront)
+                    {
+                        physicsState.MovementState = AgentMovementState.LyingFront;
+                    }
+                }
+
                 // if we are on the ground we reset the jump counter.
                 if (physicsState.OnGrounded && physicsState.Velocity.Y < 0.5f)
                 {
@@ -328,6 +338,11 @@ namespace Agent
                     PhysicsState.MovementState = AgentMovementState.None;
                 }
             }
+        }
+
+        public void DieInPlace(AgentEntity agentEntity)
+        {
+
         }
     }
 }
