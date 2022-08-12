@@ -348,9 +348,6 @@ namespace ECSInput
                             
                             var physicsState = corpse.agentPhysicsState;
                             float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
-                            Debug.Log("Dead " + distance);
-
-                            Debug.Log("Dead " + corpse.hasAgentInventory);
 
                             if (!corpse.hasAgentInventory || !(distance < smallestDistance))
                                 continue;
@@ -358,7 +355,6 @@ namespace ECSInput
                             smallestDistance = distance;
 
                             Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
-                            Debug.Log("Dead " + Inventory);
                         }
                      }
 
