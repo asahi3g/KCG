@@ -105,13 +105,21 @@ namespace Agent
                 // GameObject dummy = model.transform.GetChild(0).gameObject;      
                 // GameObject.Destroy(dummy);    
 
+                //model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                Vector3 eulers = model.transform.rotation.eulerAngles;
+                model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                model.AddComponent<RigBuilder>();
+
                 GameObject Rig = new GameObject("Rig 1");
                 Rig.transform.parent = model.transform;
                 Rig.AddComponent<Rig>();
 
-                RigLayer rigLayer = new RigLayer(Rig.GetComponent<Rig>());
+                RigLayer rigLayer = new RigLayer(Rig.GetComponent<Rig>(), true);
 
-                model.AddComponent<RigBuilder>();
+                
+
                 model.GetComponent<RigBuilder>().layers.Add(rigLayer);
 
                 model.AddComponent<BoneRenderer>();
@@ -259,8 +267,6 @@ namespace Agent
 
                 model.GetComponent<BoneRenderer>().transforms[51] = model.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0); // Bip001 L Calf
 
-                model.GetComponent<RigBuilder>().Build();
-
                 GameObject BodyAim = new GameObject("BodyAim");
                 BodyAim.transform.parent = Rig.transform;
                 BodyAim.AddComponent<MultiAimConstraint>();
@@ -271,9 +277,13 @@ namespace Agent
                 GameObject emptyGO = new GameObject("Target");
                 Transform Target = emptyGO.transform;
                 Target.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-                WeightedTransform TargetTransform = new WeightedTransform(Target, 1.0f);
-                BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects = new WeightedTransformArray(1);
-                BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects.Add(TargetTransform);
+                var Bodydata = BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects;
+                Bodydata = new WeightedTransformArray(1);
+                Bodydata.SetWeight(0, 1.0f);
+                Bodydata.SetTransform(0, Target);
+                BodyAim.GetComponent<MultiAimConstraint>().data.sourceObjects = Bodydata;
+
+                model.GetComponent<RigBuilder>().Build();
 
                 GameObject Aim = new GameObject("Aim");
                 Aim.transform.parent = Rig.transform;
@@ -282,8 +292,13 @@ namespace Agent
                     GetChild(0).GetChild(0).GetChild(0);
                 Aim.GetComponent<MultiAimConstraint>().data.aimAxis = MultiAimConstraintData.Axis.X_NEG;
                 Aim.GetComponent<MultiAimConstraint>().data.upAxis = MultiAimConstraintData.Axis.Y_NEG;
-                Aim.GetComponent<MultiAimConstraint>().data.sourceObjects = new WeightedTransformArray(1);
-                Aim.GetComponent<MultiAimConstraint>().data.sourceObjects.Add(TargetTransform);
+                var Aimdata = Aim.GetComponent<MultiAimConstraint>().data.sourceObjects;
+                Aimdata = new WeightedTransformArray(1);
+                Aimdata.SetWeight(0, 1.0f);
+                Aimdata.SetTransform(0, Target);
+                Aim.GetComponent<MultiAimConstraint>().data.sourceObjects = Aimdata;
+
+                model.GetComponent<RigBuilder>().Build();
 
                 GameObject SecondHandGrabWeapon = new GameObject("SecondHandGrabWeapon");
                 SecondHandGrabWeapon.transform.parent = Rig.transform;
@@ -313,13 +328,9 @@ namespace Agent
                     GetChild(0).GetChild(0).GetChild(0).GetChild(5);
                 SecondHandGrabWeapon.GetComponent<TwoBoneIKConstraint>().data.hint = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
                     GetChild(0).GetChild(0).GetChild(0).GetChild(6);
+                
 
                 //model.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = pixelMaterial;
-
-                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
-
-                Vector3 eulers = model.transform.rotation.eulerAngles;
-                model.transform.rotation = Quaternion.Euler(0, 90, 0);
 
 
                 // create an animancer object and give it a reference to the Animator component
