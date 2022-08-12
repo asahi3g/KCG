@@ -79,7 +79,6 @@ namespace ECSInput
 
                     GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
                     GameObject gun = GameObject.Instantiate(prefab);
-                    gun.AddComponent<RigTransform>();
 
                     gun.transform.parent = hand.transform;
                     gun.transform.position = hand.transform.position;
@@ -190,9 +189,6 @@ namespace ECSInput
 
 
                 /*
-<<<<<<< HEAD
-
-                
 
                 // we can start jumping only if the jump counter is 0
                 if (movementState.JumpCounter == 0)
@@ -386,8 +382,8 @@ namespace ECSInput
                     
 
                 //}
-=======
->>>>>>> 14d9b3d614e10ed08f93113bb153a5b4c2489826*/
+
+                */
             }
 
             if (Input.GetKeyDown(KeyCode.E))
