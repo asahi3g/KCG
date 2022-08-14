@@ -46,10 +46,10 @@ namespace TGen
         //TriangleBlock
         TB_R0,
         TB_R1,
-        TB_R2,
-        TB_R3,
         TB_R4,
         TB_R5,
+        TB_R2,
+        TB_R3,
         TB_R6,
         TB_R7,
 

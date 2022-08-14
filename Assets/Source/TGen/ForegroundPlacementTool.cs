@@ -18,9 +18,11 @@ namespace TGen
 
         private int cellSize = 32;
 
-        private float interval = 4F;
+        private float interval = 2F;
 
         private Image[] PlaceBlockButtons;
+
+        private int selectedTileIsotype;
 
         public void Initialize(ref Planet.PlanetState Planet)
         {
@@ -28,9 +30,11 @@ namespace TGen
 
             var yInterval = -cellSize * interval;
 
-            initialX = 0;
+            var size = 0.6F;
 
-            initialY = 1;
+            initialX = 600;
+
+            initialY = 300;
 
             PlaceBlockButtons = new Image[GameResources.TGenIsotypeSprites.Length];
 
@@ -41,11 +45,7 @@ namespace TGen
             {
                 PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
                     GameObject.Find("Canvas").transform, GameResources.TGenIsotypeSprites[i],
-                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(1f, -1f, 1f), cellSize, cellSize).kGUIElementsImage.Image;
-
-                Debug.Log("column: " + column.ToString());
-
-                Debug.Log("row: " + row.ToString());
+                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.Image;
 
                 column++;
 
@@ -65,7 +65,11 @@ namespace TGen
                 {
                     if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        Debug.Log(string.Format("Place {0}", ((BlockTypeAndRotation)i).ToString()));
+                        selectedTileIsotype = i + 1;
+
+                        var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
+
+                        Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
                     }
                 }
             }
