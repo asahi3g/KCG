@@ -243,6 +243,31 @@ namespace KGUI.Elements
             iconCanvas.GetComponent<UnityEngine.UI.Image>().type = newType;
         }
 
+        public void SetImageTopLeft()
+        {
+            // Set Image Anchor
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+
+            // Set Anchor Max
+            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+
+            // Set Pivot
+            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        }
+
+        public void SetImageMidBottom()
+        {
+            // Set Image Anchor
+            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
+
+            // Set Anchor Max
+            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
+
+            // Set Pivot
+            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        }
+
         public void SetImage(Sprite sprite)
         {
             // Set New Image

@@ -47,38 +47,32 @@ namespace Item
                     Enums.Tile.Data data = new Data();
                     entity.AddItemCastData(data, true);
                 }
-
-                if(entity.itemType.Type == ItemType.ConstructionTool)
+                else if (entity.itemType.Type == ItemType.ConstructionTool)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
-
-                if (entity.itemType.Type == ItemType.RemoveMech)
+                else if (entity.itemType.Type == ItemType.RemoveMech)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
-
-                if (entity.itemType.Type == ItemType.Chest)
+                else if (entity.itemType.Type == ItemType.Chest)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
-
-                if (entity.itemType.Type == ItemType.Planter)
+                else if (entity.itemType.Type == ItemType.Planter)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
-
-                if (entity.itemType.Type == ItemType.Light)
+                else if (entity.itemType.Type == ItemType.Light)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
                 }
-
-                if (entity.itemType.Type == ItemType.SmashableBox)
+                else if (entity.itemType.Type == ItemType.SmashableBox)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
