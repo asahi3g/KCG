@@ -671,8 +671,8 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilBackgroundAction);
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilBackgroundAction);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveTileTool, "RemoveTileTool");
