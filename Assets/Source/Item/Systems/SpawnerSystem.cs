@@ -88,9 +88,7 @@ namespace Item
 
             if (itemProperty.IsPlacementTool())
             {
-                if (entity.itemType.Type == ItemType.ConstructionTool ||
-                    entity.itemType.Type == ItemType.RemoveMech ||
-                    itemProperty.Group == ItemGroups.Mech)
+                if (entity.itemType.Type == ItemType.PlacementTool)
                 {
                     Enums.Tile.Data data = new Data();
                     entity.AddItemCastData(data, true);
