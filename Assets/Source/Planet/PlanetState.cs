@@ -312,10 +312,19 @@ namespace Planet
             entity.DieInPlace();
             AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
 
-            int inventoryID = entity.agentInventory.InventoryID;
+            if (!entity.hasAgentInventory)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.AddAgentInventory(inventoryEntity.inventoryID.ID, -1, false);
+            }
+            else if (entity.agentInventory.InventoryID == -1)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.agentInventory.InventoryID = inventoryEntity.inventoryID.ID;
+            }
 
             GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
-            GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
+            GameState.LootDropSystem.Add(properties.InventoryDropTableID, entity.agentInventory.InventoryID);
         }
         
 

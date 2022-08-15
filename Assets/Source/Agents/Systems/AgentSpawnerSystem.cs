@@ -67,7 +67,8 @@ namespace Agent
                 true, false, false, false, false, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
-            entity.AddAgentInventory(inventoryID, -1, false);
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, -1, false);
 
             return entity;
         }
@@ -127,22 +128,18 @@ namespace Agent
                 entity.isAgentPlayer = true;
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-                if (inventoryID != - 1)
-                    entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
 
             }
             else if (agentType == Agent.AgentType.Agent)
             {
                 entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-                entity.AddAgentInventory(inventoryID, -1, false);
             }
             else if (agentType == Agent.AgentType.Enemy)
             {
                 entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-                entity.AddAgentInventory(inventoryID, -1, false);
 
             }
             else if (agentType == Agent.AgentType.EnemyGunner)
@@ -168,7 +165,6 @@ namespace Agent
                 animancerComponent.Animator = model.GetComponent<Animator>();
                 entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-                entity.AddAgentInventory(inventoryID, -1, false);
 
                 entity.agentPhysicsState.Speed = 3.0f;
 
@@ -198,14 +194,15 @@ namespace Agent
                 animancerComponent.Animator = model.GetComponent<Animator>();
                 entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
                 entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-                entity.AddAgentInventory(inventoryID, -1, false);
 
                 entity.agentPhysicsState.Speed = 3.0f;
 
                 entity.SetAgentWeapon(Model3DWeapon.Sword);
-
             }
-            
+
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Agent.AgentType.Player) ? true : false);
+
             return entity;
         }
 
