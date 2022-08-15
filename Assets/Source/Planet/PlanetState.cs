@@ -304,8 +304,35 @@ namespace Planet
             return newEntity;
         }
 
+        public void KillAgent(int agentIndex)
+        {
+            AgentEntity entity = AgentList.Get(agentIndex);
+            Utils.Assert(entity.isEnabled);
+
+            entity.DieInPlace();
+            AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
+
+            if (!entity.hasAgentInventory)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.AddAgentInventory(inventoryEntity.inventoryID.ID, -1, false);
+            }
+            else if (entity.agentInventory.InventoryID == -1)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.agentInventory.InventoryID = inventoryEntity.inventoryID.ID;
+            }
+
+            GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
+            GameState.LootDropSystem.Add(properties.InventoryDropTableID, entity.agentInventory.InventoryID);
+        }
+        
+
+        /*public void RemoveAgent(int agentIndex)
+=======
         public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID,
     Vec2f position, Vec3f scale, int width, int height)
+>>>>>>> 9c351b67fac5c622abd4a72b183f8535d1419ec9
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
@@ -333,12 +360,11 @@ namespace Planet
 
                 GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
                 GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
-
             }
 
             AgentList.Remove(agentId);
 
-        }
+        }*/
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
         {
