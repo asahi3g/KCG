@@ -59,7 +59,7 @@ namespace TGen
 
         public void UpdateToolGrid()
         {
-            if(Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonUp(0))
             {
                 for (int i = 0; i < PlaceBlockButtons.Length; i++)
                 {
@@ -69,9 +69,20 @@ namespace TGen
 
                         var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
 
+          
+
                         Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
                     }
                 }
+            }
+            else if(Input.GetMouseButtonUp(2))
+            {
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                int x = (int)worldPosition.x;
+                int y = (int)worldPosition.y;
+
+                GameState.TGenGrid.SetTile(x, y, selectedTileIsotype);
             }
         }
 

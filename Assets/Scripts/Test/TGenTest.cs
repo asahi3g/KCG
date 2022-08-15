@@ -75,6 +75,8 @@ namespace Planet.Unity
             Planet.InitializeSystems(Material, transform);
             Planet.InitializeHUD(Player);
 
+            Planet.InitializeTGen(Material, transform);
+
             if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);
 

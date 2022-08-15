@@ -38,6 +38,7 @@ public class GameState
     public static readonly TGen.Grid TGenGrid;
     public static readonly TGen.RenderGridOverlay TGenRenderGridOverlay;
     public static readonly TGen.RenderMapBorder TGenRenderMapBorder;
+    public static readonly TGen.RenderMapMesh TGenRenderMapMesh;
 
     #endregion
 
@@ -197,6 +198,7 @@ public class GameState
         TGenGrid = new TGen.Grid();
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();
         TGenRenderMapBorder = new TGen.RenderMapBorder();
+        TGenRenderMapMesh = new TGen.RenderMapMesh();
         ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
         ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
         ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
