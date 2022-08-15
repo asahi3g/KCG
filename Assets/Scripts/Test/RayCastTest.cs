@@ -1,4 +1,5 @@
 using System;
+using Collisions;
 using Enums.Tile;
 using KMath;
 using Planet;
@@ -75,73 +76,12 @@ public class SquareWithRenderer : MonoBehaviour
     }
 }
 
-public class LineWithRenderer : MonoBehaviour
-{
-    public Line2D Line;
-    
-    // Renderer
-    public LineRenderer lineRenderer;
-    public Shader       shader;
-    public Material     material;
-    
-    // Current color of square
-    public Color color;
-    
-    // Used by renderer
-    public Vector3[] corners   = new Vector3[2];
-    public const float LineThickness = 0.1f;
-
-    void Start() 
-    {
-        // Initialize test shader, material, and renderer
-        shader                 = Shader.Find("Hidden/Internal-Colored");
-        material               = new Material(shader)
-        {
-            hideFlags = HideFlags.HideAndDontSave
-        };
-        lineRenderer               = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material      = material;
-        lineRenderer.useWorldSpace = true;
-        lineRenderer.loop          = true;
-
-        lineRenderer.startWidth    = lineRenderer.endWidth = LineThickness;
-
-        lineRenderer.sortingOrder = 10;
-
-        corners[0]             = new Vector3();
-        corners[1]             = new Vector3();
-
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        material.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-        material.SetInt("_ZWrite", 0);
-        material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
-    }
-    
-    void Update()
-    {
-        corners[0].x = Line.A.X + LineThickness;
-        corners[1].x = Line.B.X + LineThickness;
-
-        corners[0].y = Line.A.Y;
-        corners[1].y = Line.B.Y + LineThickness;
-
-        corners[0].z = -0.1f;
-        corners[1].z = -0.1f;
-
-        lineRenderer.SetPositions(corners);
-        lineRenderer.positionCount = 2;
-
-        lineRenderer.startColor = lineRenderer.endColor = color;
-    }
-}
-
 public class RayCastTest : MonoBehaviour
 {
     public GameObject Grid;
     public SquareWithRenderer squareWithRenderer;
-    public LineWithRenderer lineWithRenderer;
-    
+    public RayRendererDebug rayRenderer;
+
     public PlanetState Planet;
     public Material Material;
     public Vec2i mapSize = new(32, 32);
@@ -153,11 +93,12 @@ public class RayCastTest : MonoBehaviour
         Camera.main.gameObject.transform.position = new Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
         
         squareWithRenderer = CreateSquare(new Vec2f(2f, 2f), new Vec2f(2f, 4f), Color.green, true);
-
-        var ray = new GameObject("Ray");
-        lineWithRenderer = ray.AddComponent<LineWithRenderer>();
-        lineWithRenderer.color = Color.red;
+        squareWithRenderer.lineRenderer.sortingOrder = 12;
         
+        var ray = new GameObject("Ray");
+        rayRenderer = ray.AddComponent<RayRendererDebug>();
+        rayRenderer.Init(new Line2D(squareWithRenderer.Box.center, new Vec2f(0f, 0f)));
+
         GameResources.Initialize();
         Planet = new PlanetState();
         Planet.Init(mapSize);
@@ -177,6 +118,7 @@ public class RayCastTest : MonoBehaviour
             {
                 squareWithRenderer.isDraggableStarted = true;
                 squareWithRenderer.Box = new AABox2D(new Vec2f(mouse.x - 1f, mouse.y - 2f), new Vec2f(2f, 4f));
+                rayRenderer.Line.A = squareWithRenderer.Box.center;
             }
             
             if (!Input.GetMouseButton(0))
@@ -191,11 +133,9 @@ public class RayCastTest : MonoBehaviour
             
             Debug.Log($"{(int)mouse.x}, {(int)mouse.y}");
         }
-
-        lineWithRenderer.Line.A = squareWithRenderer.Box.center;
-
-        var coordinates = Collisions.RayCastCheck.GetRayCoordinates((Vec2i) lineWithRenderer.Line.A, (Vec2i) lineWithRenderer.Line.B);
         
+        rayRenderer.RayTileCollisionCheck(Planet.TileMap);
+
         RegenerateMap();
         
         Planet.Update(Time.deltaTime, Material, transform);
