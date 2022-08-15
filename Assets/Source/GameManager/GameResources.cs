@@ -29,9 +29,9 @@ public class GameResources
     public static int DustSpriteSheet;
     public static int GrenadeSpriteSheet;
     public static int SwordSpriteSheet;
-
     public static int HelmetsSpriteSheet;
     public static int SuitsSpriteSheet;
+
     // Tile CollisionIsotope
     public static int SB_R0000Sheet;
     public static int SB_R0001Sheet;
@@ -50,6 +50,66 @@ public class GameResources
     public static int SB_R1110Sheet;
     public static int SB_R1111Sheet;
     public static int EmptyBlockSheet;
+
+    //TGen
+    public static int TGenBlockSpriteSheet;
+    public static int[] TGenIsotypeSprites;
+    /*public static int TGen_SB_R0,
+
+        // HalfBlock
+        TGen_HB_R0,
+        TGen_HB_R1,
+        TGen_HB_R2,
+        TGen_HB_R3,
+
+        //TriangleBlock
+        TGen_TB_R0,
+        TGen_TB_R1,
+        TGen_TB_R2,
+        TGen_TB_R3,
+        TGen_TB_R4,
+        TGen_TB_R5,
+        TGen_TB_R6,
+        TGen_TB_R7,
+
+        //LBlock
+        TGen_LB_R0,
+        TGen_LB_R1,
+        TGen_LB_R2,
+        TGen_LB_R3,
+        TGen_LB_R4,
+        TGen_LB_R5,
+        TGen_LB_R6,
+        TGen_LB_R7,
+
+        //HalfTriangleBlock
+        TGen_HTB_R0,
+        TGen_HTB_R1,
+        TGen_HTB_R2,
+        TGen_HTB_R3,
+        TGen_HTB_R4,
+        TGen_HTB_R5,
+        TGen_HTB_R6,
+        TGen_HTB_R7,
+
+        //QuarterPlatform
+        TGen_QP_R0,
+        TGen_QP_R1,
+        TGen_QP_R2,
+        TGen_QP_R3,
+
+        //HalfPlatform
+        TGen_HP_R0,
+        TGen_HP_R1,
+        TGen_HP_R2,
+        TGen_HP_R3,
+
+        //FullPlatform
+        TGen_FP_R0,
+        TGen_FP_R1,
+        TGen_FP_R2,
+        TGen_FP_R3;*/
+
 
     public static int PlatformSpriteSheet;
     public static int StoneSpriteSheet;
@@ -168,7 +228,6 @@ public class GameResources
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
             HelmetsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Helmets\\character-helmets.png", 64, 64);
             SuitsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Suits\\character-suits.png", 64, 96);
-
 
             SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
             SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
@@ -302,6 +361,8 @@ public class GameResources
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
             CreateDropTables();
+            InitializeTGenTiles();
+
             CreateTiles();
             CreateAnimations();
             CreateItems();
@@ -334,6 +395,37 @@ public class GameResources
         GameState.LootTableCreationAPI.SetEntry(5, 15);
         GameState.LootTableCreationAPI.SetEntry(6, 10);
         GameState.LootTableCreationAPI.End();
+    }
+
+    private static void InitializeTGenTiles()
+    {
+        TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
+
+        var emptySprite = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
+
+        int tileCount = 42;
+
+        TGenIsotypeSprites = new int[tileCount];
+
+        TGenIsotypeSprites[0] = GameState.SpriteAtlasManager.CopySpriteToAtlas(emptySprite, 0, 0, Enums.AtlasType.TGen);
+
+        TGenIsotypeSprites[1] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, 1, 1, Enums.AtlasType.TGen);
+
+        var row = 3;
+        var column = 1;
+
+        for (int i = 2; i < tileCount; i++)
+        {
+            TGenIsotypeSprites[i] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, column, row, Enums.AtlasType.TGen);
+
+            column += 2;
+
+            if (column > 8)
+            {
+                column = 1;
+                row += 2;
+            }
+        }
     }
 
     private static void CreateTiles()
