@@ -136,6 +136,14 @@ namespace Action
             GameState.ActionPropertyManager.SetData(data);
             GameState.ActionPropertyManager.EndActionPropertyType();
 
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemyGunnerSpawn);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemyGunnerSpawnCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemySwordmanSpawn);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemySwordmanSpawnCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
             // Create Tool Action Mining Laser
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMiningLaser);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMiningLaserCreator());

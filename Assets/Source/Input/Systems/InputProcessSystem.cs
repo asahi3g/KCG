@@ -2,6 +2,7 @@ using KMath;
 using UnityEngine;
 using Agent;
 using Enums;
+using UnityEngine.Animations.Rigging;
 
 namespace ECSInput
 {
@@ -85,7 +86,7 @@ namespace ECSInput
                     gun.transform.parent = hand.transform;
                     gun.transform.position = hand.transform.position;
                     gun.transform.rotation = hand.transform.rotation;
-                    gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    gun.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
                     model3d.Weapon = gun;
                 }
@@ -147,17 +148,17 @@ namespace ECSInput
 
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.Sword);
+                    player.SetAgentWeapon(Model3DWeapon.Sword);
                 }
 
                 if (Input.GetKeyDown(KeyCode.B))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.Gun);
+                    player.SetAgentWeapon(Model3DWeapon.Gun);
                 }
 
                 if (Input.GetKeyDown(KeyCode.V))
                 {
-                    SetAgentWeapon(player, Model3DWeapon.None);
+                    player.SetAgentWeapon(Model3DWeapon.None);
                 }
 
                 // Running
@@ -198,18 +199,23 @@ namespace ECSInput
                 {
                     InventoryEntity Inventory = null;
                     float smallestDistance = 2.0f;
-                    var corpses = contexts.agent.GetGroup(AgentMatcher.AgentCorpse);
+                    var corpses = planet.agnetList;
                     foreach (var corpse in corpses)
                     {
-                        var physicsState = corpse.agentPhysicsState;
-                        float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
+                        var state = corpse.agentState;
+                        if (state.State == AgentState.Dead)
+                        {
+                            
+                            var physicsState = corpse.agentPhysicsState;
+                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
 
-                        if (!corpse.hasAgentInventory || !(distance < smallestDistance))
-                            continue;
+                            if (!corpse.hasAgentInventory || !(distance < smallestDistance))
+                                continue;
 
-                        smallestDistance = distance;
+                            smallestDistance = distance;
 
-                        Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                            Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                        }
                      }
 
 
@@ -409,17 +415,17 @@ namespace ECSInput
                         {
                             case Enums.ItemGroups.Gun:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.Gun);
+                                entity.SetAgentWeapon(Model3DWeapon.Gun);
                                 break;
                             }
                             case Enums.ItemGroups.Weapon:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.Sword);
+                                entity.SetAgentWeapon(Model3DWeapon.Sword);
                                 break;
                             }
                             default:
                             {
-                                SetAgentWeapon(entity, Model3DWeapon.None);
+                                entity.SetAgentWeapon(Model3DWeapon.None);
                                 break;
                             }
                         }

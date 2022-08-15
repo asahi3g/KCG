@@ -88,14 +88,10 @@ namespace KGUI.PlayerStatus
 
             // Food Bar Initializon
             Icon = new Image("Food Icon", iconBar);
+            Icon.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            if (Camera.main.aspect >= 1.7f)
-                Icon.SetPosition(new Vector3(-377.3f, 123.8f, 4.873917f));
-            else if (Camera.main.aspect >= 1.5f)
-                Icon.SetPosition(new Vector3(-335.6f, 125.4f, 4.873917f));
-            else
-                Icon.SetPosition(new Vector3(-363.8f, 193.4f, 4.873917f));
+            Icon.SetPosition(new Vector3(-370.3f, 115.8f, 4.873917f));
 
             // Set Icon Scale
             Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
@@ -104,10 +100,13 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            fillValue = agentEntity.agentStats.Food;
+            if (agentEntity != null)
+                fillValue = agentEntity.agentStats.Food;
+            else
+                fillValue = 0.0f;
 
             // Food Bar Initializon
-            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, fillValue / 100, agentEntity);
+            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, fillValue / 100);
 
             // Oxygen Bar Set Position
             foodBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
@@ -127,27 +126,23 @@ namespace KGUI.PlayerStatus
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
 
                 // Update Fill Amount
-                fillValue = agentEntity.agentStats.Food;
+                if (agentEntity != null)
+                    fillValue = agentEntity.agentStats.Food;
+                else
+                    fillValue = 0.0f;
 
                 // Food Bar Update Fill Amount
                 foodBar.Update(fillValue / 100);
 
                 // Info Text Update
                 infoText.Update();
-
-                // Set Icon Position Based On Aspect Ratio
-                if (Camera.main.aspect >= 1.7f)
-                    Icon.SetPosition(new Vector3(-377.3f, 123.8f, 4.873917f));
-                else if (Camera.main.aspect >= 1.5f)
-                    Icon.SetPosition(new Vector3(-335.6f, 125.4f, 4.873917f));
-                else
-                    Icon.SetPosition(new Vector3(-363.8f, 193.4f, 4.873917f));
             }
         }
 
         public override void Draw()
         {
             Icon.Draw();
+            foodBar.Draw();
         }
 
         // Food Bar OnMouseClick Event

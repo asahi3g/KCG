@@ -2,14 +2,17 @@ using Physics;
 using System;
 using KMath;
 using UnityEngine;
+using Enums;
 
 namespace Agent
 {
     public class MovementSystem
     {
-        private void Update(PhysicsStateComponent physicsState, float deltaTime)
+        private void Update(AgentEntity entity, float deltaTime)
         {
             // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
+            var state = entity.agentState;
+            var physicsState = entity.agentPhysicsState;
 
             if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
             {
@@ -66,6 +69,20 @@ namespace Agent
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
+            if (state.State == AgentState.Alive &&
+            System.Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
+            physicsState.MovementState != AgentMovementState.Stagger)
+            {
+                if (newVelocity.X > 0)
+                {
+                    physicsState.Direction = 1;
+                }
+                else if (newVelocity.X < 0)
+                {
+                    physicsState.Direction = -1;
+                }
+            }
+
 
             // maximum velocity in the game
             if (physicsState.Velocity.Y > Constants.MaxVelocityY)
@@ -93,10 +110,7 @@ namespace Agent
             var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in EntitiesWithVelocity)
             {
-
-                var physicsState = entity.agentPhysicsState;
-
-                Update(physicsState, deltaTime);
+                Update(entity, deltaTime);
             }
         }
     }

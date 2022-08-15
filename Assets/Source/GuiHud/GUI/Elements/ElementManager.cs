@@ -16,6 +16,11 @@ namespace KGUI
 
         }
 
+        public virtual void Update(float fillValue)
+        {
+
+        }
+
         public virtual void Draw()
         {
 

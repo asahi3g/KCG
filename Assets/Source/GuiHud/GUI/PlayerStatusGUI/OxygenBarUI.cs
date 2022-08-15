@@ -86,14 +86,10 @@ namespace KGUI.PlayerStatus
 
             // Oxygen Bar Initializon
             iconCanvas = new Image("Oxygen Icon", iconBar);
+            iconCanvas.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            if (Camera.main.aspect >= 1.7f)
-                iconCanvas.SetPosition(new Vector3(-377.3f, 5.9f, 4.873917f));
-            else if (Camera.main.aspect >= 1.5f)
-                iconCanvas.SetPosition(new Vector3(-335.6f, 9.6f, 4.873917f));
-            else
-                iconCanvas.SetPosition(new Vector3(-363.8f, 75.3f, 4.873917f));
+            iconCanvas.SetPosition(new Vector3(-370.3f, -5f, 4.873917f));
 
             // Set Icon Scale
             iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
@@ -102,10 +98,13 @@ namespace KGUI.PlayerStatus
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            fillValue = agentEntity.agentStats.Oxygen;
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Oxygen;
+            else
+                fillValue = 0.0f;
 
             // Oxygen Bar Initializon
-            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100, agentEntity);
+            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
 
             // Oxygen Bar Set Position
             oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
@@ -125,27 +124,23 @@ namespace KGUI.PlayerStatus
                 ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x, iconCanvas.GetTransform().position.y);
 
                 // Update Fill Amount Value
-                fillValue = agentEntity.agentStats.Oxygen;
+                if(agentEntity != null)
+                    fillValue = agentEntity.agentStats.Oxygen;
+                else
+                    fillValue = 0.0f;
 
                 // Oxygen Bar Update Fill Amount
                 oxygenBar.Update(fillValue / 100);
 
                 // Info Text Update
                 infoText.Update();
-
-                // Set Icon Position Based On Aspect Ratio
-                if (Camera.main.aspect >= 1.7f)
-                    iconCanvas.SetPosition(new Vector3(-377.3f, 5.9f, 4.873917f));
-                else if (Camera.main.aspect >= 1.5f)
-                    iconCanvas.SetPosition(new Vector3(-335.6f, 9.6f, 4.873917f));
-                else
-                    iconCanvas.SetPosition(new Vector3(-363.8f, 75.3f, 4.873917f));
             }
         }
 
         public override void Draw()
         {
             iconCanvas.Draw();
+            oxygenBar.Draw();
         }
 
         // Oxygen Bar OnMouseClick Event

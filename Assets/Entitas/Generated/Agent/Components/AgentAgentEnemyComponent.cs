@@ -11,19 +11,21 @@ public partial class AgentEntity {
     public Agent.EnemyComponent agentEnemy { get { return (Agent.EnemyComponent)GetComponent(AgentComponentsLookup.AgentEnemy); } }
     public bool hasAgentEnemy { get { return HasComponent(AgentComponentsLookup.AgentEnemy); } }
 
-    public void AddAgentEnemy(int newBehaviour, float newDetectionRadius) {
+    public void AddAgentEnemy(Agent.EnemyBehaviour newBehaviour, float newDetectionRadius, float newEnemyCooldown) {
         var index = AgentComponentsLookup.AgentEnemy;
         var component = (Agent.EnemyComponent)CreateComponent(index, typeof(Agent.EnemyComponent));
         component.Behaviour = newBehaviour;
         component.DetectionRadius = newDetectionRadius;
+        component.EnemyCooldown = newEnemyCooldown;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentEnemy(int newBehaviour, float newDetectionRadius) {
+    public void ReplaceAgentEnemy(Agent.EnemyBehaviour newBehaviour, float newDetectionRadius, float newEnemyCooldown) {
         var index = AgentComponentsLookup.AgentEnemy;
         var component = (Agent.EnemyComponent)CreateComponent(index, typeof(Agent.EnemyComponent));
         component.Behaviour = newBehaviour;
         component.DetectionRadius = newDetectionRadius;
+        component.EnemyCooldown = newEnemyCooldown;
         ReplaceComponent(index, component);
     }
 

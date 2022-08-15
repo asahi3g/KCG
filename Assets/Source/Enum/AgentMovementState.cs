@@ -8,9 +8,14 @@ namespace Enums
         Falling, // falling from the sky
         JetPackFlying,  // Using the jetpack
         Dashing,        // Dashing
+        Stagger,        // Stagger
         SlidingLeft,    // Wall sliding down
         SlidingRight,    // Wall sliding down
         SwordSlash,
-        FireGun
+        FireGun,
+        KnockedDownFront, // the death animation front version
+        LyingFront, // dead state front version
+        KnockedDownBack, // the death animation back version
+        LyingBack, // dead state back version
     }
 }

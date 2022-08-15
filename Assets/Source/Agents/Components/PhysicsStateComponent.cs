@@ -25,8 +25,10 @@ namespace Agent
         public bool WantToDrop;         // dropKey is pressed or not
 
         public int JumpCounter;
+        public float DyingDuration;
         public float DashCooldown;
         public float SlashCooldown;
         public float FireGunCooldown;
+        public float StaggerDuration;
     }
 }

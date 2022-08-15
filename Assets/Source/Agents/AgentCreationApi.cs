@@ -104,7 +104,7 @@ namespace Agent
             }
         }
 
-        public void SetEnemyBehaviour(int enemyBehaviour)
+        public void SetEnemyBehaviour(EnemyBehaviour enemyBehaviour)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {

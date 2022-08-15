@@ -186,9 +186,13 @@ namespace KGUI.PlayerStatus
 
             // Create Icon
             Icon = new Image("Health Bar", iconBar);
+            Icon.SetImageTopLeft();
 
             // Create Fill Value
-            fillValue = agentEntity.agentStats.Health;
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Health;
+            else
+                fillValue = 0.0f;
 
             // Create Border
             Border = new Image("Border", Icon.GetTransform(), borderSprite);
@@ -206,33 +210,12 @@ namespace KGUI.PlayerStatus
             BarDiv3 = new Image("BarDiv3", Icon.GetTransform(), barDiv1Sprite);
 
             // Set Icon Position Based On Aspect Ratio
-            if (Camera.main.aspect >= 1.7f)
-            {
-                Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
-                Border.SetPosition(new Vector3(287f, 7f, 0));
-                Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
-            }
-            else if (Camera.main.aspect >= 1.5f)
-            {
-                Icon.SetPosition(new Vector3(-335.6f, 180.6f, 4.873917f));
-                Border.SetPosition(new Vector3(287f, 7f, 0));
-                Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
-            }
-            else
-            {
-                Icon.SetPosition(new Vector3(-362.8f, 254.3f, 4.873917f));
-                Border.SetPosition(new Vector3(287f, 7f, 0));
-                Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
-            }
+            Icon.SetPosition(new Vector3(-370.3f, 180.8f, 4.873917f));
+            Border.SetPosition(new Vector3(287f, 7f, 0));
+            Bar.SetPosition(new Vector3(287f, 7f, 0f));
+            BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
+            BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
+            BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
 
             // Set Icon Scale
             Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
@@ -263,7 +246,10 @@ namespace KGUI.PlayerStatus
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
 
                 // Update Fill Amount
-                fillValue = agentEntity.agentStats.Health;
+                if(agentEntity != null)
+                    fillValue = agentEntity.agentStats.Health;
+                else
+                    fillValue = 0.0f;
 
                 // Water Bar Update Fill Amount
                 Bar.Update(fillValue / 100);
@@ -304,7 +290,6 @@ namespace KGUI.PlayerStatus
                 // Set Icon Position Based On Aspect Ratio
                 if (Camera.main.aspect >= 1.7f)
                 {
-                    Icon.SetPosition(new Vector3(-377.3f, 183.0f, 4.873917f));
                     Border.SetPosition(new Vector3(287f, 7f, 0));
                     Bar.SetPosition(new Vector3(287f, 7f, 0f));
                     BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
@@ -313,7 +298,6 @@ namespace KGUI.PlayerStatus
                 }
                 else if (Camera.main.aspect >= 1.5f)
                 {
-                    Icon.SetPosition(new Vector3(-335.6f, 180.6f, 4.873917f));
                     Border.SetPosition(new Vector3(287f, 7f, 0));
                     Bar.SetPosition(new Vector3(287f, 7f, 0f));
                     BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
@@ -322,7 +306,6 @@ namespace KGUI.PlayerStatus
                 }
                 else
                 {
-                    Icon.SetPosition(new Vector3(-362.8f, 254.3f, 4.873917f));
                     Border.SetPosition(new Vector3(287f, 7f, 0));
                     Bar.SetPosition(new Vector3(287f, 7f, 0f));
                     BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));

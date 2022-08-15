@@ -63,7 +63,7 @@ namespace Planet.Unity
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (Input.GetKeyDown(KeyCode.Mouse0) && Player.IsStateFree())
                 {
                     GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, 
                        Player.agentID.ID, item.itemID.ID);
@@ -160,8 +160,8 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.MiningLaserTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.ChestPlacementTool, Planet.EntitasContext);
 

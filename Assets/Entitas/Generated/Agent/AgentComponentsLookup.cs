@@ -17,8 +17,8 @@ public static class AgentComponentsLookup {
     public const int AgentPhysicsState = 6;
     public const int AgentPlayer = 7;
     public const int AgentSprite2D = 8;
-    public const int AgentStats = 9;
-    public const int AgentType = 10;
+    public const int AgentState = 9;
+    public const int AgentStats = 10;
     public const int AnimationState = 11;
     public const int ECSInput = 12;
     public const int ECSInputXY = 13;
@@ -37,8 +37,8 @@ public static class AgentComponentsLookup {
         "AgentPhysicsState",
         "AgentPlayer",
         "AgentSprite2D",
+        "AgentState",
         "AgentStats",
-        "AgentType",
         "AnimationState",
         "ECSInput",
         "ECSInputXY",
@@ -56,8 +56,8 @@ public static class AgentComponentsLookup {
         typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
         typeof(Agent.Sprite2DComponent),
+        typeof(Agent.StateComponent),
         typeof(Agent.StatsComponent),
-        typeof(Agent.TypeComponent),
         typeof(Animation.StateComponent),
         typeof(ECSInput.Component),
         typeof(ECSInput.XYComponent),

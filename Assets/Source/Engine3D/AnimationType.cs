@@ -12,8 +12,15 @@ namespace Engine3D
         Jump,
         Flip,
         Jog,
+        Stagger,
         JumpFall,
         SwordSlash,
         FireGun,
+        Sliding,
+        JetPack,
+        KnockedDownFront,
+        LyingFront,
+        KnockedDownBack,
+        LyingBack,
     }
 }

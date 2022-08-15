@@ -188,7 +188,6 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
             }
         }
     }
-
     void RegenerateMap()
     {
         for (int x = 0; x < mapSize.X; x++)
