@@ -521,5 +521,11 @@ namespace Planet
             GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
             GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
         }
+
+        public void DrawHUD()
+        {
+            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+        }
     }
 }
