@@ -199,9 +199,10 @@ namespace ECSInput
                 {
                     InventoryEntity Inventory = null;
                     float smallestDistance = 2.0f;
-                    var corpses = planet.agnetList;
-                    foreach (var corpse in corpses)
+                    var agents = planet.AgentList;
+                    for (int i =0; i < agents.Length; i++)
                     {
+                        AgentEntity corpse = agents.Get(i);
                         var state = corpse.agentState;
                         if (state.State == AgentState.Dead)
                         {

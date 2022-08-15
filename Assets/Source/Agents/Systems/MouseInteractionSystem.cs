@@ -20,7 +20,7 @@ namespace Agent
                 
                 Vec2f pos = agentEntity.agentPhysicsState.Position;
                 Vec2f size = agentEntity.agentSprite2D.Size;
-                AgentProperties properties = GameState.AgentCreationApi.Get((int)agentEntity.agentType.Type);
+                AgentProperties properties = GameState.AgentCreationApi.Get((int)agentEntity.agentID.Type);
 
                 // Is mouse over it?
                 if (mousePos.X < pos.X || mousePos.Y < pos.Y)

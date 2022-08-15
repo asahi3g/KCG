@@ -96,7 +96,6 @@ public partial class Contexts {
     public const string ActionTool = "ActionTool";
     public const string AgentAIController = "AgentAIController";
     public const string AgentID = "AgentID";
-    public const string AgentType = "AgentType";
     public const string AIGoal = "AIGoal";
     public const string FloatingTextID = "FloatingTextID";
     public const string InventoryID = "InventoryID";
@@ -161,11 +160,6 @@ public partial class Contexts {
             AgentID,
             agent.GetGroup(AgentMatcher.AgentID),
             (e, c) => ((Agent.IDComponent)c).ID));
-
-        agent.AddEntityIndex(new Entitas.EntityIndex<AgentEntity, Agent.AgentType>(
-            AgentType,
-            agent.GetGroup(AgentMatcher.AgentType),
-            (e, c) => ((Agent.TypeComponent)c).Type));
 
         aI.AddEntityIndex(new Entitas.PrimaryEntityIndex<AIEntity, int>(
             AIGoal,
@@ -277,10 +271,6 @@ public static class ContextsExtensions {
 
     public static AgentEntity GetEntityWithAgentID(this AgentContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<AgentEntity, int>)context.GetEntityIndex(Contexts.AgentID)).GetEntity(ID);
-    }
-
-    public static System.Collections.Generic.HashSet<AgentEntity> GetEntitiesWithAgentType(this AgentContext context, Agent.AgentType Type) {
-        return ((Entitas.EntityIndex<AgentEntity, Agent.AgentType>)context.GetEntityIndex(Contexts.AgentType)).GetEntities(Type);
     }
 
     public static AIEntity GetEntityWithAIGoal(this AIContext context, int GoalID) {

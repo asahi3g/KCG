@@ -74,7 +74,7 @@ namespace Planet
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
-            GameState.HUDManager.Initialize(this, agentEntity);
+            HUDManager.Initialize(this, agentEntity);
         }
 
         // Note(Mahdi): Deprecated will be removed soon
@@ -112,21 +112,11 @@ namespace Planet
             return newEntity;
         }
 
-        public AgentEntity AddAgent(Vec2f position)
+        public AgentEntity AddAgent(Vec2f position, Agent.AgentType agentType = Agent.AgentType.Agent)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Agent.AgentType.Agent));
-            return newEntity;
-        }
-
-        public AgentEntity AddCorpse(Vec2f position, int spriteId, Agent.AgentType agentType)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag").inventoryID.ID;
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnCorpse(EntitasContext, position,
-                    spriteId, agentType, inventoryID));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType));
             return newEntity;
         }
 
@@ -296,23 +286,27 @@ namespace Planet
             return newEntity;
         }
 
-        public void RemoveAgent(int agentIndex)
+        public void KillAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);
             Utils.Assert(entity.isEnabled);
 
-            var physicsState = entity.agentPhysicsState;
-            Vec2f agentPosition = physicsState.Position;
-
-            AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
+            entity.DieInPlace();
             AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
 
-            int inventoryID = corpse.agentInventory.InventoryID;
+            if (!entity.hasAgentInventory)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.AddAgentInventory(inventoryEntity.inventoryID.ID, -1, false);
+            }
+            else if (entity.agentInventory.InventoryID == -1)
+            {
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                entity.agentInventory.InventoryID = inventoryEntity.inventoryID.ID;
+            }
 
-            GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
-            GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
-
-            AgentList.Remove(agentIndex);
+            GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
+            GameState.LootDropSystem.Add(properties.InventoryDropTableID, entity.agentInventory.InventoryID);
         }
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position, Color color, int fontSize)
@@ -470,7 +464,7 @@ namespace Planet
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.LootDropSystem.Update(EntitasContext);
-            GameState.EnemyAiSystem.Update(ref this);
+            GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);
@@ -531,13 +525,13 @@ namespace Planet
             GameState.MechMouseInteractionSystem.Update(ref this);
             GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
 
-            if (agentEntity != null)
+            if (agentEntity != null && HUDManager.ShowGUI)
             {
-                GameState.HUDManager.Update(agentEntity);
-                GameState.HUDManager.Draw();
+                HUDManager.Update(agentEntity);
+                HUDManager.Draw();
+                GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+                GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
             }
-            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
-            GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
         }
     }
 }

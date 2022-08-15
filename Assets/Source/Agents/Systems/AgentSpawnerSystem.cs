@@ -27,7 +27,7 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(UniqueID++, AgentType.Player, -1);
+            entity.AddAgentID(UniqueID++, -1, AgentType.Player);
             entity.AddAgentState(AgentState.Alive);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
@@ -53,7 +53,7 @@ namespace Agent
             ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(UniqueID++, agentType, -1); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
@@ -78,7 +78,7 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(UniqueID++, agentType, -1); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
             entity.AddAgentState(AgentState.Alive);
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
