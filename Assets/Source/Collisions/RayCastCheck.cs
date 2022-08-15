@@ -1,4 +1,7 @@
+using Enums.Tile;
 using KMath;
+using PlanetTileMap;
+using UnityEngine;
 
 // Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
@@ -17,7 +20,7 @@ using KMath;
 
 namespace Collisions
 {
-    public static class RayTileCollisionCheck
+    public static class RayCastCheck
     {
         private static Vec2i[] PlotLineLow(Vec2i start, Vec2i end)
         {
@@ -35,7 +38,7 @@ namespace Collisions
             var D = 2 * delta.Y - delta.X;
             var y = start.Y;
             
-            var outputCount = end.X - start.X;
+            var outputCount = end.X - start.X + 1;
             var output = new Vec2i[outputCount];
             var outputIndex = 0;
 
@@ -72,7 +75,7 @@ namespace Collisions
             var D = 2 * delta.X - delta.Y;
             var x = start.X;
 
-            var outputCount = end.Y - start.Y;
+            var outputCount = (end.Y - start.Y) + 1;
             var output = new Vec2i[outputCount];
             var outputIndex = 0;
 
@@ -104,6 +107,24 @@ namespace Collisions
             }
 
             return start.Y > end.Y ? PlotLineHigh(end, start) : PlotLineHigh(start, end);
+        }
+        
+        // Function for ray casting tile grid, that only returns the first coordinate of not empty tile
+        // Works with front tiles
+        public static Vec2i RayTileCollisionCheck(TileMap tileMap, Vec2i start, Vec2i end)
+        {
+            var rayCoordinates = RayCastCheck.GetRayCoordinates(start, end);
+
+            foreach (var coordinate in rayCoordinates)
+            {
+                ref var tile = ref tileMap.GetTile(coordinate.X, coordinate.Y);
+                if (tile.FrontTileID != TileID.Air)
+                {
+                    return coordinate;
+                }
+            }
+
+            return default;
         }
     }
 }
