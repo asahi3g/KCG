@@ -51,7 +51,10 @@ namespace Inventory
         }
 
         public void CloseInventory(InventoryList inventoryList, InventoryEntity inventoryEntity)
-            => inventoryEntity.hasInventoryDraw = false;
+        {
+            inventoryEntity.hasInventoryDraw = false;
+            GameState.InventoryWindowScaleSystem.OnCloseWindow(inventoryList);
+        }
 
         public bool AddItemAtSlot(Contexts contexts, ItemInventoryEntity itemEntity, int inventoryID, int slotID)
         {

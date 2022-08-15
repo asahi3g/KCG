@@ -112,7 +112,8 @@ namespace Inventory
         /// </summary>
         private bool TryAddItemToInv(Contexts contexts, ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
-            Window window = isToolBar ? inventoryModel.ToolBarWindow : inventoryModel.MainWindow;
+            Window window = isToolBar ? inventoryModel.ToolBarWindow :
+                (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
             int width = inventoryModel.Width;
 
             // Is mouse inside inventory.
@@ -144,7 +145,8 @@ namespace Inventory
 
         public bool TryPickingUpItemFromInv(Contexts contexts, ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
-            Window window = isToolBar ? inventoryModel.ToolBarWindow : inventoryModel.MainWindow;
+            Window window = isToolBar ? inventoryModel.ToolBarWindow :
+                (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
             int width = inventoryModel.Width;
 
             // Is mouse inside inventory.

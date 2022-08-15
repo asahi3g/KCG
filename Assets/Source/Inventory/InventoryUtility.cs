@@ -65,7 +65,7 @@ namespace Inventory
             }
             else
             {
-                if (xMax < xMinOther)
+                if (xMax > xMinOther || xMin == xMinOther)
                     horizontalOverlap = true;
             }
 
@@ -78,7 +78,7 @@ namespace Inventory
                 }
                 else
                 {
-                    if (yMax < yMinOther)
+                    if (yMax > yMinOther || yMin == yMinOther)
                         return true;
                 }
             }
