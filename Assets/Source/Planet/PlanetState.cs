@@ -539,9 +539,12 @@ namespace Planet
 
             if (GameState.TGenGrid != null)
             {
-                GameState.TGenGrid.Update();
-                GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
-                GameState.TGenRenderMapMesh.Draw();
+                if (GameState.TGenGrid.Initialized)
+                {
+                    GameState.TGenGrid.Update();
+                    GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
+                    GameState.TGenRenderMapMesh.Draw();
+                }
             }
 
             // Update Meshes.
