@@ -1,7 +1,9 @@
+using System;
 using Enums.Tile;
 
 namespace KMath
 {
+    [Serializable]
     public struct Line2D
     {
         public Vec2f A;

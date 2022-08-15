@@ -393,19 +393,24 @@ namespace ECSInput
                 foreach (var player in players)
                 {
                     InventoryEntity Inventory = null;
-                    float smallestDistance = 0.5f;
-                    var corpses = contexts.agent.GetGroup(AgentMatcher.AgentCorpse);
+                    float smallestDistance = 1.5f;
+                    var corpses = contexts.agent.GetGroup(AgentMatcher.AgentID);
                     foreach (var corpse in corpses)
                     {
-                        var physicsState = corpse.agentPhysicsState;
-                        float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
+                        var state = corpse.agentState;
+                        if (state.State == AgentState.Dead)
+                        {
+                            
+                            var physicsState = corpse.agentPhysicsState;
+                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
 
-                        if (!corpse.hasAgentInventory || !(distance < smallestDistance))
-                            continue;
+                            if (!corpse.hasAgentInventory || !(distance < smallestDistance))
+                                continue;
 
-                        smallestDistance = distance;
+                            smallestDistance = distance;
 
-                        Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                            Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                        }
                      }
 
 

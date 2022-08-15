@@ -88,6 +88,30 @@ namespace Agent
                         model3d.AnimancerComponent.Play(animation, 0.075f);
                         break;
                     }
+                    case AgentMovementState.KnockedDownFront:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.KnockedDownFront);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.LyingFront:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.LyingFront);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.KnockedDownBack:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.KnockedDownBack);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.LyingBack:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.LyingBack);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
                     default:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
