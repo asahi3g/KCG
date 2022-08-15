@@ -71,6 +71,11 @@ namespace Planet
 
         }
 
+        public void InitializeTGen(Material material, Transform transform)
+        {
+            GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
+        }
+
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
@@ -304,6 +309,16 @@ namespace Planet
             return newEntity;
         }
 
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID,
+    Vec2f position, Vec3f scale, int width, int height)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, tileSpriteID,
+                position, scale, width, height, -1, ElementType.Image));
+            return newEntity;
+        }
+
         public void KillAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);
@@ -524,7 +539,12 @@ namespace Planet
 
             if (GameState.TGenGrid != null)
             {
-                GameState.TGenGrid.Update();
+                if (GameState.TGenGrid.Initialized)
+                {
+                    GameState.TGenGrid.Update();
+                    GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
+                    GameState.TGenRenderMapMesh.Draw();
+                }
             }
 
             // Update Meshes.
