@@ -10,30 +10,32 @@ namespace FloatingText
 
         public void Update(ref Planet.PlanetState planetState, float deltaTime)
         {
-            var entities = planetState.EntitasContext.floatingText.GetGroup(FloatingTextMatcher.AllOf(FloatingTextMatcher.FloatingTextState));
+            FloatingTextEntity[] entities = planetState.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {
-                var state = entity.floatingTextState;
+                var text = entity.floatingTextText;
 
-                // reduce the time to live of the floating text
-                float NewTimeToLive = state.TimeToLive - deltaTime;
-                entity.ReplaceFloatingTextState(NewTimeToLive, state.Text);
-
-                // maybe move this to its own system for movement
-                if (entity.hasFloatingTextMovable)
+                if (entity.hasFloatingTextTimeToLive)
                 {
-                    var movable = entity.floatingTextMovable;
-
-                    Vec2f newPosition = new Vec2f(movable.Position.X + movable.Velocity.X,
-                                                    movable.Position.Y + movable.Velocity.Y);
-                    entity.ReplaceFloatingTextMovable(movable.Velocity, newPosition);
+                    // reduce the time to live of the floating text
+                    entity.floatingTextTimeToLive.TimeToLive = entity.floatingTextTimeToLive.TimeToLive - deltaTime;
+                    entity.floatingTextText.Text = text.Text;
+                    // if time to live hits zero we remove the entity
+                    if (entity.floatingTextTimeToLive.TimeToLive <= 0.0f)
+                    {
+                        ToRemoveEntities.Add(entity);
+                    }
                 }
 
-                // if time to live hits zero we remove the entity
-                if (NewTimeToLive <= 0.0f)
-                {
-                    ToRemoveEntities.Add(entity);
+                // maybe move this to its own system for movement
+                if (entity.hasFloatingTextMovement)
+                { 
+                    var movement = entity.floatingTextMovement;
+
+                    Vec2f newPosition = new Vec2f(movement.Position.X + movement.Velocity.X,
+                                                    movement.Position.Y + movement.Velocity.Y);
+                    entity.floatingTextMovement.Position = newPosition;
                 }
             }
 

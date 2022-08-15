@@ -26,9 +26,14 @@ namespace Action
         }
 
         public Enums.ActionType GetTypeID(Contexts contexts, string name)
-{
+        {
             ActionPropertiesEntity entity = contexts.actionProperties.GetEntityWithActionPropertyName(name);
             return entity.actionProperty.TypeID;
+        }
+
+        public void SetDescription(string str)
+        {
+            ActionPropertyEntity.AddActionPropertyDescription(str);
         }
 
         public void SetLogicFactory(Action.ActionCreator actionFactory)

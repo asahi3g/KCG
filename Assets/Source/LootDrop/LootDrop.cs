@@ -9,7 +9,7 @@ namespace LootDrop
         public int[] DropProbability;
     }
 
-    public struct LootDropTable
+    public struct LootDropEntry
     {
         public int ID;
         public LootDrop[] ItemDrops;

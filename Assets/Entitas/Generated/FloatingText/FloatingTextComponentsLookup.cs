@@ -8,26 +8,26 @@
 //------------------------------------------------------------------------------
 public static class FloatingTextComponentsLookup {
 
-    public const int FloatingTextID = 0;
-    public const int FloatingTextMovable = 1;
-    public const int FloatingTextSprite = 2;
+    public const int FloatingTextGameObject = 0;
+    public const int FloatingTextID = 1;
+    public const int FloatingTextMovement = 2;
     public const int FloatingTextText = 3;
     public const int FloatingTextTimeToLive = 4;
 
     public const int TotalComponents = 5;
 
     public static readonly string[] componentNames = {
+        "FloatingTextGameObject",
         "FloatingTextID",
-        "FloatingTextMovable",
-        "FloatingTextSprite",
+        "FloatingTextMovement",
         "FloatingTextText",
         "FloatingTextTimeToLive"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(FloatingText.GameObjectComponent),
         typeof(FloatingText.IDComponent),
-        typeof(FloatingText.MovableComponent),
-        typeof(FloatingText.SpriteComponent),
+        typeof(FloatingText.MovementComponent),
         typeof(FloatingText.TextComponent),
         typeof(FloatingText.TimeToLiveComponent)
     };

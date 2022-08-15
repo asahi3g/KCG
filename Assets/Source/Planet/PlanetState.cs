@@ -315,10 +315,24 @@ namespace Planet
             AgentList.Remove(agentIndex);
         }
 
-        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
+        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position, Color color, int fontSize)
         {
             FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText
-                (EntitasContext.floatingText, text, timeToLive, velocity, position));
+                (EntitasContext.floatingText, text, timeToLive, velocity, position, color, fontSize));
+            return newEntity;
+        }
+
+        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
+        {
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText(
+                EntitasContext.floatingText, text, timeToLive, velocity, position, Color.red, 18));
+            return newEntity;
+        }
+
+        public FloatingTextEntity AddFixedFloatingText(string text, Vec2f position, Color color, int fontSize)
+        {
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFixedFloatingText(
+                EntitasContext.floatingText, text, position, color, fontSize));
             return newEntity;
         }
 
@@ -326,7 +340,7 @@ namespace Planet
         {
             FloatingTextEntity entity = FloatingTextList.Get(index);
             Utils.Assert(entity.isEnabled);
-            GameObject.Destroy(entity.floatingTextSprite.GameObject);
+            GameObject.Destroy(entity.floatingTextGameObject.GameObject);
             FloatingTextList.Remove(index);
         }
 
@@ -500,12 +514,30 @@ namespace Planet
         }
 
         public void DrawHUD(AgentEntity agentEntity)
-        {
-            GameState.HUDManager.Update(agentEntity);
-            GameState.HUDManager.Draw();
+        { 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
+
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
+
+            if (Event.current.type != EventType.Repaint)
+                return;
 
             GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+
+            // Mouse Interactions with objects.
+            GameState.AgentMouseInteractionSystem.Update(ref this);
+            GameState.MechMouseInteractionSystem.Update(ref this);
+            GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
+
+            if (agentEntity != null)
+            {
+                GameState.HUDManager.Update(agentEntity);
+                GameState.HUDManager.Draw();
+            }
             GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+            GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
         }
     }
 }

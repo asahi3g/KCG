@@ -2,7 +2,7 @@
 using UnityEngine;
 using KMath;
 
-namespace Mech
+namespace Agent
 {
     public class MouseInteractionSystem
     {
@@ -12,10 +12,15 @@ namespace Mech
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;
 
-            for (int i = 0; i < planet.MechList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                Vec2f pos = planet.MechList.Get(i).mechPosition2D.Value;
-                Vec2f size = planet.MechList.Get(i).mechSprite2D.Size;
+                AgentEntity agentEntity = planet.AgentList.Get(i);
+                if (agentEntity.isAgentPlayer)
+                    continue;
+                
+                Vec2f pos = agentEntity.agentPhysicsState.Position;
+                Vec2f size = agentEntity.agentSprite2D.Size;
+                AgentProperties properties = GameState.AgentCreationApi.Get((int)agentEntity.agentType.Type);
 
                 // Is mouse over it?
                 if (mousePos.X < pos.X || mousePos.Y < pos.Y)
@@ -24,22 +29,24 @@ namespace Mech
                 if (mousePos.X > pos.X + size.X || mousePos.Y > pos.Y + size.Y)
                     continue;
 
-                var proprieties = GameState.MechCreationApi.Get((int)planet.MechList.Get(i).mechType.mechType);
                 string str;
 
-                if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.ActionType.None)
+                if (Vec2f.Distance(pos, playerPos) < 2.0f && agentEntity.isAgentCorpse)
                 {
-                    var actionProprieties = planet.EntitasContext.actionProperties.GetEntityWithActionProperty(proprieties.Action);
-                    str = "Press E to " + (actionProprieties.hasActionPropertyDescription ? 
-                        actionProprieties.actionPropertyDescription.str : "interact");
+                    str = "Press E to open corpse inventory";
                 }
                 else
                 {
-                    str = proprieties.Name;
+                    str = properties.Name;
+                    if (agentEntity.isAgentCorpse)
+                    {
+                        str += " corpse";
+                    }
                 }
+
                     
                 float h = 30;
-                float w = 256;
+                float w = 512;
                 int fontSize = 22;
 
                 float scale = Screen.height / 1080f;

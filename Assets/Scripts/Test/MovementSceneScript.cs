@@ -71,7 +71,6 @@ namespace Planet.Unity
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
-            Planet.DrawHUD(Player);
         }
 
         private void OnGUI()
@@ -79,15 +78,9 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            if (Event.current.type != EventType.Repaint)
-                return;
-
-            // Draw Statistics
-            //KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
+            Planet.DrawHUD(Player);      
         }
-        
+
 
         private void OnDrawGizmos()
         {

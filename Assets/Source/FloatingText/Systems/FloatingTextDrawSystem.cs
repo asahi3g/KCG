@@ -8,16 +8,16 @@ namespace FloatingText
     {
         public void Draw(FloatingTextContext FloatingTextContext, Transform transform, int drawOrder)
         {
-            var entities = FloatingTextContext.GetGroup(FloatingTextMatcher.AllOf(FloatingTextMatcher.FloatingTextState));
+            var entities = FloatingTextContext.GetEntities();
 
             foreach (var entity in entities)
             {
-                var movable = entity.floatingTextMovable;
-                var state = entity.floatingTextState;
-                var sprite = entity.floatingTextSprite;
+                var movement = entity.floatingTextMovement;
+                var go = entity.floatingTextGameObject;
+                var text = entity.floatingTextText;
 
-                GameState.Renderer.DrawString(sprite.GameObject, movable.Position.X, movable.Position.Y,
-                     0.35f, state.Text, 18, new Color(255, 0, 0, 255), drawOrder);
+                GameState.Renderer.DrawString(go.GameObject, movement.Position.X, movement.Position.Y,
+                     0.35f, text.Text, text.fontSize, text.color, drawOrder);
             }
         }
     }

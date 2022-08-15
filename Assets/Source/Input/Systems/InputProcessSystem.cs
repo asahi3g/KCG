@@ -197,7 +197,7 @@ namespace ECSInput
                 foreach (var player in players)
                 {
                     InventoryEntity Inventory = null;
-                    float smallestDistance = 0.5f;
+                    float smallestDistance = 2.0f;
                     var corpses = contexts.agent.GetGroup(AgentMatcher.AgentCorpse);
                     foreach (var corpse in corpses)
                     {

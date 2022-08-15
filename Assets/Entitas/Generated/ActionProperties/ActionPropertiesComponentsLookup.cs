@@ -12,20 +12,22 @@ public static class ActionPropertiesComponentsLookup {
     public const int ActionProperty = 1;
     public const int ActionPropertyCoolDown = 2;
     public const int ActionPropertyData = 3;
-    public const int ActionPropertyFactory = 4;
-    public const int ActionPropertyGoap = 5;
-    public const int ActionPropertyMovement = 6;
-    public const int ActionPropertyName = 7;
-    public const int ActionPropertyShield = 8;
-    public const int ActionPropertyTime = 9;
+    public const int ActionPropertyDescription = 4;
+    public const int ActionPropertyFactory = 5;
+    public const int ActionPropertyGoap = 6;
+    public const int ActionPropertyMovement = 7;
+    public const int ActionPropertyName = 8;
+    public const int ActionPropertyShield = 9;
+    public const int ActionPropertyTime = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "ActionPropertyAnimation",
         "ActionProperty",
         "ActionPropertyCoolDown",
         "ActionPropertyData",
+        "ActionPropertyDescription",
         "ActionPropertyFactory",
         "ActionPropertyGoap",
         "ActionPropertyMovement",
@@ -39,6 +41,7 @@ public static class ActionPropertiesComponentsLookup {
         typeof(Action.Property.Component),
         typeof(Action.Property.CoolDownComponent),
         typeof(Action.Property.DataComponent),
+        typeof(Action.Property.DescriptionComponent),
         typeof(Action.Property.FactoryComponent),
         typeof(Action.Property.GoapComponent),
         typeof(Action.Property.MovementComponent),

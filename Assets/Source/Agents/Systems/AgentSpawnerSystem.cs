@@ -28,6 +28,7 @@ namespace Agent
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, -1);
+            entity.AddAgentType(AgentType.Player);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
@@ -36,11 +37,6 @@ namespace Agent
             var size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
-            //entity.AddAgentInventory(0);
-            // Add Inventory and toolbar.
-           /* var attacher = Inventory.InventoryAttacher.Instance;
-            attacher.AttachInventoryToAgent(entitasContext, 10, 6, entity);
-            entity.agentInventory.AutoPick = true;*/
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
@@ -58,6 +54,7 @@ namespace Agent
             var spriteSize = properties.SpriteSize;
 
             entity.AddAgentID(UniqueID++, -1);
+            entity.AddAgentType(agentType);
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
@@ -71,6 +68,7 @@ namespace Agent
             return entity;
         }
 
+
         public AgentEntity Spawn(Contexts entitasContext, Vec2f position, AgentType agentType, 
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
@@ -80,7 +78,8 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(UniqueID++, -1); // agent id 
+            entity.AddAgentID(UniqueID++, -1);
+            entity.AddAgentType(agentType);
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
@@ -299,8 +298,5 @@ namespace Agent
             
             return entity;
         }
-
-    
-
     }
 }
