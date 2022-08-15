@@ -14,9 +14,12 @@ namespace TGen
     {
         public GridTile[,] GridTiles;
 
+        public bool Initialized;
+
         public void InitStage1(Vec2i mapSize)
         {
             GridTiles = new GridTile[mapSize.X, mapSize.Y];
+            Initialized = true;
         }
 
         public void SetTile(int x, int y, int isotype)
