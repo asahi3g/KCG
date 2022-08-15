@@ -55,7 +55,7 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "");
+            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", -1);
             var image = entity.kGUIElementsImage;
             entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
 
@@ -76,7 +76,7 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "");
+            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", - 1);
             var image = entity.kGUIElementsImage;
             entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
 
@@ -98,7 +98,7 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "");
+            entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", -1);
             var image = entity.kGUIElementsImage;
             entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
 
@@ -118,7 +118,7 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            entity.AddKGUIElementsImage(Name, null, null, scale, width, height, path);
+            entity.AddKGUIElementsImage(Name, null, null, scale, width, height, path, -1);
             var image = entity.kGUIElementsImage;
             entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, image.Path);
 
@@ -129,6 +129,27 @@ namespace KGUI.Elements
 
             return entity;
         }
+
+        public UIElementEntity SpawnImage(UIElementContext UIElementContext, string Name, Transform parent,
+            int tileSpriteID, Vec2f position, Vec3f scale, int width, int height, int Index, Enums.ElementType elementType)
+        {
+            var entity = UIElementContext.CreateEntity();
+
+            entity.AddKGUIElementsID(Index);
+            entity.AddKGUIElementsPosition2D(position, position);
+
+            entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
+            var image = entity.kGUIElementsImage;
+            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID);
+
+            entity.AddKGUIElementsType(elementType);
+
+            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+
+            return entity;
+        }
+
     }
 }
 

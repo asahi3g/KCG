@@ -7,85 +7,71 @@ using HUD;
 using PlanetTileMap;
 using Mech;
 using System.Linq;
+using KGUI.Elements;
 
 namespace TGen
 {
     public class ForegroundPlacementTool
     {
 
-        private Color backgroundColor = Color.grey;
+        private int initialX, initialY;
 
-        private float cellSize = 32F;
+        private int cellSize = 32;
 
-        private float interval = 4F;
+        private float interval = 2F;
 
-        private float w, h, xInterval, yInterval;
+        private Image[] PlaceBlockButtons;
 
-        public void Initialize()
+        private int selectedTileIsotype;
+
+        public void Initialize(ref Planet.PlanetState Planet)
         {
-            w = cellSize / Screen.width;
+            var xInterval = cellSize * interval;
 
-            h = cellSize / Screen.height;
+            var yInterval = -cellSize * interval;
 
-            xInterval = interval / Screen.width;
+            var size = 0.6F;
 
-            yInterval = interval / Screen.height;
+            initialX = 600;
+
+            initialY = 300;
+
+            PlaceBlockButtons = new Image[GameResources.TGenIsotypeSprites.Length];
+
+            var row = 0;
+            var column = 0;
+
+            for (int i = 0; i < GameResources.TGenIsotypeSprites.Length; i++)
+            {
+                PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
+                    GameObject.Find("Canvas").transform, GameResources.TGenIsotypeSprites[i],
+                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.Image;
+
+                column++;
+
+                if(column == 4)
+                {
+                    column = 0;
+                    row++;
+                }
+            }
         }
 
-        public void DrawGrid()
+        public void UpdateToolGrid()
         {
-            var rowIndex = 0;
-
-            //Tile Number
-            for (int i = 0; i < 4; i++)
+            if(Input.GetMouseButtonDown(0))
             {
-                var currentX = 0.5F + (w + xInterval) * i;
+                for (int i = 0; i < PlaceBlockButtons.Length; i++)
+                {
+                    if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
+                    {
+                        selectedTileIsotype = i + 1;
 
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
+                        var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
 
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (i + 1).ToString(), 24, TextAnchor.UpperCenter, Color.white);
-            }
-
-            rowIndex--;
-
-            //SQUARE
-            GameState.Renderer.DrawQuadColorGui(0.5F, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
-
-            //EMPTY
-            GameState.Renderer.DrawQuadColorGui(0.5F + w + xInterval, 0.8F + (h + yInterval) * rowIndex, w, h, backgroundColor);
-
-            rowIndex--;
-
-            //HALF
-            for (int i = 0; i < 4; i++)
-            {
-                var blockTypeAndRotation = (BlockTypeAndRotation)(i + 3);
-
-                var currentX = 0.5F + (w + xInterval) * i;
-
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
-
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (blockTypeAndRotation).ToString(), 24, TextAnchor.UpperCenter, Color.white);
-            }
-
-            rowIndex--;
-
-            //TRIANGLE 1
-            for (int i = 0; i < 4; i++)
-            {
-                var blockTypeAndRotation = (BlockTypeAndRotation)(i + 7);
-
-                var currentX = 0.5F + (w + xInterval) * i;
-
-                var currentY = 0.8F + (h + yInterval) * rowIndex;
-
-                GameState.Renderer.DrawQuadColorGui(currentX, currentY, w, h, backgroundColor);
-
-                GameState.Renderer.DrawStringGui(currentX, currentY, w, h, (blockTypeAndRotation).ToString(), 24, TextAnchor.UpperCenter, Color.white);
+                        Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
+                    }
+                }
             }
         }
 

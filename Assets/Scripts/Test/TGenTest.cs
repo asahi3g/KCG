@@ -33,9 +33,9 @@ namespace Planet.Unity
         [SerializeField]
         private bool foregroundToolEnabled = true;
 
-        private ForegroundPlacementTool placementTool;
+        private AgentEntity Player;
 
-        AgentEntity player;
+        private ForegroundPlacementTool placementTool;
 
         public void Start()
         {
@@ -53,27 +53,27 @@ namespace Planet.Unity
             Material material = Material;
 
             Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
+
+            if(foregroundToolEnabled)
+            {
+                placementTool.UpdateToolGrid();
+            }
         }
-        
+
         public void Initialize()
         {
             GameResources.Initialize();
-
-            player = new AgentEntity();
-
-            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
-            foreach (var entity in entities)
-            {
-                if (entity.isAgentPlayer)
-                    player = entity;
-
-            }
-
+           
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
+
+            Player = Planet.AddPlayer(GameResources.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+
             Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
 
             if (intializeTGenGrid)
                 GameState.TGenGrid.InitStage1(mapSize);
@@ -87,14 +87,8 @@ namespace Planet.Unity
             if(foregroundToolEnabled)
             {
                 placementTool = new ForegroundPlacementTool();
-                placementTool.Initialize();
+                placementTool.Initialize(ref Planet);
             }
-        }
-
-        private void OnGUI()
-        {
-            if(placementTool != null && foregroundToolEnabled)
-                placementTool.DrawGrid();
         }
 
     }
