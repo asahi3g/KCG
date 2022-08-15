@@ -320,8 +320,22 @@ namespace Planet
         
 
         /*public void RemoveAgent(int agentIndex)
+=======
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID,
+    Vec2f position, Vec3f scale, int width, int height)
+>>>>>>> 9c351b67fac5c622abd4a72b183f8535d1419ec9
         {
-            AgentEntity entity = AgentList.Get(agentIndex);
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, tileSpriteID,
+                position, scale, width, height, -1, ElementType.Image));
+            return newEntity;
+        }
+
+
+        public void RemoveAgent(int agentId)
+        {
+            AgentEntity entity = AgentList.Get(agentId);
             Utils.Assert(entity.isEnabled);
 
             var physicsState = entity.agentPhysicsState;
@@ -339,7 +353,7 @@ namespace Planet
                 GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
             }
 
-            AgentList.Remove(agentIndex);
+            AgentList.Remove(agentId);
 
         }*/
 
@@ -532,6 +546,12 @@ namespace Planet
             GameState.HUDManager.Update(agentEntity);
             GameState.HUDManager.Draw();
 
+            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+        }
+
+        public void DrawHUD()
+        {
             GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
             GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
         }

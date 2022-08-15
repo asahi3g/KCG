@@ -16,5 +16,6 @@ namespace KGUI.Elements
         public int Width;
         public int Height;
         public string Path;
+        public int tileSpriteID;
     }
 }

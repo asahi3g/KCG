@@ -13,7 +13,7 @@ namespace KGUI.Elements
         public float _fillValue;
 
         // Constructor
-        public CircleProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue, AgentEntity agentEntity)
+        public CircleProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue)
         {
             // Set Fill Value
             _fillValue = fillValue;
