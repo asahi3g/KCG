@@ -3,6 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using System.Collections.Generic;
+using Agent;
 
 namespace Action
 {
@@ -46,7 +47,8 @@ namespace Action
                 GameState.AgentProcessPhysicalState.SwordSlash(player);
                 foreach (var entity in entities)
                 {
-                    if (entity != player)
+                    var testState = entity.agentState;
+                    if (entity != player && testState.State == AgentState.Alive)
                     {
                         var testPhysicsState = entity.agentPhysicsState;
 

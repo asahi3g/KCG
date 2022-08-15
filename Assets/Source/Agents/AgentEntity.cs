@@ -8,17 +8,44 @@ public partial class AgentEntity
     public bool IsStateFree()
     {
         var physicsState = agentPhysicsState;
+        var state = agentState;
 
-        return physicsState.MovementState != AgentMovementState.Dashing &&
+        return state.State == AgentState.Alive &&
+        physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger;
     }
 
+    public void DieInPlace()
+    {                
+        var state = agentState;
+        state.State = AgentState.Dead;
+        
+        var physicsState = agentPhysicsState;
+        physicsState.MovementState = AgentMovementState.KnockedDownFront;
+
+        physicsState.DyingDuration = 1.5f;
+    }
+
+    public void DieKnockBack()
+    {                
+        var state = agentState;
+        state.State = AgentState.Dead;
+        
+        var physicsState = agentPhysicsState;
+        physicsState.MovementState = AgentMovementState.KnockedDownBack;
+
+        physicsState.DyingDuration = 1.5f;
+    }
 
     public void SetAgentWeapon(Model3DWeapon weapon)
     {
-        var model3d = agentModel3D;
+        Model3DComponent model3d = null;
+        if(hasAgentModel3D)
+        {
+            model3d = agentModel3D;
+        }
         if (weapon == Model3DWeapon.Sword)
         {        
             if (model3d.CurrentWeapon != Model3DWeapon.Sword)
@@ -65,6 +92,9 @@ public partial class AgentEntity
         }
         else
         {
+            if (model3d == null)
+                return;
+
             if (model3d.Weapon != null)
             {
                 GameObject.Destroy(model3d.Weapon);

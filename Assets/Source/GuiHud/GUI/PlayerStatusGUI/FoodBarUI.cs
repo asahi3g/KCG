@@ -88,14 +88,10 @@ namespace KGUI.PlayerStatus
 
             // Food Bar Initializon
             Icon = new Image("Food Icon", iconBar);
+            Icon.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            if (Camera.main.aspect >= 1.7f)
-                Icon.SetPosition(new Vector3(-377.3f, 123.8f, 4.873917f));
-            else if (Camera.main.aspect >= 1.5f)
-                Icon.SetPosition(new Vector3(-335.6f, 125.4f, 4.873917f));
-            else
-                Icon.SetPosition(new Vector3(-363.8f, 193.4f, 4.873917f));
+            Icon.SetPosition(new Vector3(-370.3f, 115.8f, 4.873917f));
 
             // Set Icon Scale
             Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
@@ -146,6 +142,7 @@ namespace KGUI.PlayerStatus
         public override void Draw()
         {
             Icon.Draw();
+            foodBar.Draw();
         }
 
         // Food Bar OnMouseClick Event

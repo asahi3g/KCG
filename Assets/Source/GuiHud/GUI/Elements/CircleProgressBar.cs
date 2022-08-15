@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KGUI.Elements
 {
-    public class CircleProgressBar
+    public class CircleProgressBar : ElementManager
     {
         // Bar Gameobject
         private GameObject Bar;
@@ -62,6 +62,10 @@ namespace KGUI.Elements
 
             // Set Fil Clockwise
             Bar.GetComponent<UnityEngine.UI.Image>().fillClockwise = true;
+
+
+            Bar.GetComponent<UnityEngine.UI.Image>().enabled = false;
+
         }
 
         public void SetPosition(Vector3 newPos)
@@ -82,13 +86,18 @@ namespace KGUI.Elements
             Bar.GetComponent<RectTransform>().localScale = newScale;
         }
 
-        public void Update(float fillValue)
+        public override void Update(float fillValue)
         {
             // Update Fill Value
             _fillValue = fillValue;
 
             // Update Fill Value
             Bar.GetComponent<UnityEngine.UI.Image>().fillAmount = fillValue;
+        }
+
+        public override void Draw()
+        {
+            Bar.GetComponent<UnityEngine.UI.Image>().enabled = true;
         }
     }
 }

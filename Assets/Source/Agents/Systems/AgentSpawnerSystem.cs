@@ -28,11 +28,12 @@ namespace Agent
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, AgentType.Player, -1);
+            entity.AddAgentState(AgentState.Alive);
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 10f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0);
+                Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0, 0);
             var size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
@@ -63,10 +64,11 @@ namespace Agent
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
                 newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1, 
                 Enums.AgentMovementState.None,
-                true, false, false, false, false, 0, 0, 0, 0, 0); // used for physics simulation
+                true, false, false, false, false, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
-            entity.AddAgentInventory(inventoryID, -1, false);
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, -1, false);
 
             return entity;
         }
@@ -81,11 +83,13 @@ namespace Agent
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
             entity.AddAgentID(UniqueID++, agentType, -1); // agent id 
+            entity.AddAgentState(AgentState.Alive);
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0); // used for physics simulation
+                 Enums.AgentMovementState.None, true, false, false, false, false, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
+            
 
             if (agentType == Agent.AgentType.Player)
             {
@@ -112,6 +116,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
@@ -123,8 +128,6 @@ namespace Agent
                 entity.isAgentPlayer = true;
                 entity.isECSInput = true;
                 entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-                if (inventoryID != - 1)
-                    entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
 
             }
             else if (agentType == Agent.AgentType.Agent)
@@ -155,6 +158,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
@@ -183,6 +187,7 @@ namespace Agent
 
                 // create an animancer object and give it a reference to the Animator component
                 GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
                 // get the animator component from the game object
                 // this component is used by animancer
                 AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
@@ -193,9 +198,11 @@ namespace Agent
                 entity.agentPhysicsState.Speed = 3.0f;
 
                 entity.SetAgentWeapon(Model3DWeapon.Sword);
-
             }
-            
+
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Agent.AgentType.Player) ? true : false);
+
             return entity;
         }
 
