@@ -71,6 +71,11 @@ namespace Planet
 
         }
 
+        public void InitializeTGen(Material material, Transform transform)
+        {
+            GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
+        }
+
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
@@ -499,6 +504,8 @@ namespace Planet
             if (GameState.TGenGrid != null)
             {
                 GameState.TGenGrid.Update();
+                GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
+                GameState.TGenRenderMapMesh.Draw();
             }
 
             // Update Meshes.
