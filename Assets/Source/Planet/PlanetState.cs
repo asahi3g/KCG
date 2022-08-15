@@ -74,7 +74,7 @@ namespace Planet
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
-            GameState.HUDManager.Initialize(this, agentEntity);
+            HUDManager.Initialize(this, agentEntity);
         }
 
         // Note(Mahdi): Deprecated will be removed soon
@@ -526,17 +526,29 @@ namespace Planet
 
         public void DrawHUD(AgentEntity agentEntity)
         {
-            GameState.HUDManager.Update(agentEntity);
-            GameState.HUDManager.Draw();
+            if(HUDManager.ShowGUI != null)
+            {
+                if(HUDManager.ShowGUI)
+                {
+                    HUDManager.Update(agentEntity);
+                    HUDManager.Draw();
 
-            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+                    GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+                    GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+                }
+            }
         }
 
         public void DrawHUD()
         {
-            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-            GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+            if (HUDManager.ShowGUI != null)
+            {
+                if (HUDManager.ShowGUI)
+                {
+                    GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+                    GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+                }
+            }
         }
     }
 }

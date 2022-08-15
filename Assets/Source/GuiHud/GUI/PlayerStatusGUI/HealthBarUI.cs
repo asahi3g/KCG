@@ -210,8 +210,7 @@ namespace KGUI.PlayerStatus
             BarDiv3 = new Image("BarDiv3", Icon.GetTransform(), barDiv1Sprite);
 
             // Set Icon Position Based On Aspect Ratio
-            //Icon.SetPosition(new Vector3(0, 0.0f, 0));
-            Icon.GetTransform().position = new Vector3(35, 420, 0);
+            Icon.SetPosition(new Vector3(-370.3f, 180.8f, 4.873917f));
             Border.SetPosition(new Vector3(287f, 7f, 0));
             Bar.SetPosition(new Vector3(287f, 7f, 0f));
             BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));

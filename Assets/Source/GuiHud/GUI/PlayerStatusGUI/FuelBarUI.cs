@@ -86,14 +86,10 @@ namespace KGUI.PlayerStatus
 
             // Fuel Bar Initializon
             iconCanvas = new Image("Fuel Icon", iconBar);
+            iconCanvas.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            if (Camera.main.aspect >= 1.7f)
-                iconCanvas.SetPosition(new Vector3(-377.3f, -52.6f, 4.873917f));
-            else if (Camera.main.aspect >= 1.5f)
-                iconCanvas.SetPosition(new Vector3(-335.6f, -49.2f, 4.873917f));
-            else
-                iconCanvas.SetPosition(new Vector3(-363.8f, 16.6f, 4.873917f));
+            iconCanvas.SetPosition(new Vector3(-370.3f, -65.8f, 4.873917f));
 
             // Set Icon Scale
             iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
@@ -148,6 +144,7 @@ namespace KGUI.PlayerStatus
         public override void Draw()
         {
             iconCanvas.Draw();
+            progressBar.Draw();
         }
 
         // Food Bar OnMouseClick Event
