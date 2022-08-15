@@ -55,7 +55,8 @@ namespace Inventory
             // Get Inventory Info.
             int width = inventoryModel.Width;
             int height = isDrawingToolBar ? 1 : inventoryModel.Height;
-            Window window = isDrawingToolBar ? inventoryModel.ToolBarWindow : inventoryModel.MainWindow;
+            Window window = isDrawingToolBar ? inventoryModel.ToolBarWindow : 
+                (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
                    
             float scaleFactor = (float)Screen.height / DEFAULT_SCREEN_HIGHT;
             window.Scale(scaleFactor);

@@ -8,33 +8,29 @@
 //------------------------------------------------------------------------------
 public static class ItemParticleComponentsLookup {
 
-    public const int ItemCastData = 0;
-    public const int ItemDrawPosition2D = 1;
-    public const int ItemFireWeaponCharge = 2;
-    public const int ItemFireWeaponClip = 3;
-    public const int ItemFireWeaponSpread = 4;
-    public const int ItemID = 5;
-    public const int ItemLabel = 6;
-    public const int ItemMechCastData = 7;
-    public const int ItemPhysicsState = 8;
-    public const int ItemPulseWeaponPulse = 9;
-    public const int ItemStack = 10;
-    public const int ItemType = 11;
-    public const int ItemUnpickable = 12;
-    public const int PhysicsBox2DCollider = 13;
-    public const int PhysicsSphere2DCollider = 14;
+    public const int ItemDrawPosition2D = 0;
+    public const int ItemFireWeaponCharge = 1;
+    public const int ItemFireWeaponClip = 2;
+    public const int ItemFireWeaponSpread = 3;
+    public const int ItemID = 4;
+    public const int ItemLabel = 5;
+    public const int ItemPhysicsState = 6;
+    public const int ItemPulseWeaponPulse = 7;
+    public const int ItemStack = 8;
+    public const int ItemType = 9;
+    public const int ItemUnpickable = 10;
+    public const int PhysicsBox2DCollider = 11;
+    public const int PhysicsSphere2DCollider = 12;
 
-    public const int TotalComponents = 15;
+    public const int TotalComponents = 13;
 
     public static readonly string[] componentNames = {
-        "ItemCastData",
         "ItemDrawPosition2D",
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
         "ItemFireWeaponSpread",
         "ItemID",
         "ItemLabel",
-        "ItemMechCastData",
         "ItemPhysicsState",
         "ItemPulseWeaponPulse",
         "ItemStack",
@@ -45,14 +41,12 @@ public static class ItemParticleComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Item.CastDataComponent),
         typeof(Item.DrawPosition2DComponent),
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.FireWeapon.SpreadComponent),
         typeof(Item.IDComponent),
         typeof(Item.LabelComponent),
-        typeof(Item.MechCastDataComponent),
         typeof(Item.PhysicsStateComponent),
         typeof(Item.PulseWeapon.PulseComponent),
         typeof(Item.StackComponent),

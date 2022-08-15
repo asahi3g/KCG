@@ -54,6 +54,7 @@ public class GameState
     public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
     public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
     public static readonly Mech.MechGUIDrawSystem MechGUIDrawSystem;
+    public static readonly Mech.MouseInteractionSystem MechMouseInteractionSystem;
     #endregion
 
     #region Agent
@@ -66,6 +67,7 @@ public class GameState
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
     public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
+    public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
     #endregion
 
     #region Inventory
@@ -73,6 +75,7 @@ public class GameState
     public static readonly Inventory.InventoryManager InventoryManager;
     public static readonly Inventory.DrawSystem InventoryDrawSystem;
     public static readonly Inventory.MouseSelectionSystem InventoryMouseSelectionSystem;
+    public static readonly Inventory.WindowScaleSystem InventoryWindowScaleSystem;
     #endregion
 
     #region Item
@@ -147,12 +150,14 @@ public class GameState
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
+        AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
         InventoryCreationApi = new Inventory.CreationApi();
         InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
+        InventoryWindowScaleSystem = new Inventory.WindowScaleSystem();
         EnemyAiSystem = new Agent.EnemyAiSystem();
         AnimationManager = new Animation.AnimationManager();
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();
@@ -188,6 +193,7 @@ public class GameState
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
+        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         Renderer = new Utility.Render();
         TGenGrid = new TGen.Grid();
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();

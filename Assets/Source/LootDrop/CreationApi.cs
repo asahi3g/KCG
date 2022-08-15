@@ -7,33 +7,33 @@ namespace LootDrop
     public class CreationApi
     {
         public int Length;
-        LootDropTable[] DropTables;
+        LootDropEntry[] DropTableEntries;
         public Dictionary<string, int> NameToID = new Dictionary<string, int>();
 
         // Auxiliar data.
-        LootDrop[] Drops;
-        int ItemDropsLength;
+        LootDrop[] DropTable;
+        int ItemDropTableLength;
         int CurrentEntry;
 
         public CreationApi()
         {
-            DropTables = new LootDropTable[256];
+            DropTableEntries = new LootDropEntry[256];
             NameToID.EnsureCapacity(256);
-            Drops = new LootDrop[Enum.GetNames(typeof(Enums.ItemType)).Length];
+            DropTable = new LootDrop[Enum.GetNames(typeof(Enums.ItemType)).Length];
 
-            ItemDropsLength = 0;
+            ItemDropTableLength = 0;
             CurrentEntry = 0;
             Length = 0;
         }
 
-        public LootDropTable Get(int ID)
+        public LootDropEntry Get(int ID)
         { 
-            return DropTables[ID];
+            return DropTableEntries[ID];
         }
 
-        public LootDropTable Get(string name)
+        public LootDropEntry Get(string name)
         {
-            return DropTables[NameToID[name]];
+            return DropTableEntries[NameToID[name]];
         }
 
         public int GetID(string name)
@@ -44,47 +44,47 @@ namespace LootDrop
 
         public void Create(string name)
         {
-            if (Length >= DropTables.Length)
+            if (Length >= DropTableEntries.Length)
                 Expand();
-            DropTables[Length].ID = Length;
+            DropTableEntries[Length].ID = Length;
             Utils.Assert(NameToID.TryAdd(name, Length), "Failed to create Drop table with existing name");
         }
 
         public void Expand()
         {
-            Array.Resize<LootDropTable>(ref DropTables, DropTables.Length + 256);
-            NameToID.EnsureCapacity(DropTables.Length);
+            Array.Resize<LootDropEntry>(ref DropTableEntries, DropTableEntries.Length + 256);
+            NameToID.EnsureCapacity(DropTableEntries.Length);
         }
 
         public void AddItem(ItemType itemType, int numEntries)
         {
-            Drops[ItemDropsLength].Type = itemType;
-            Drops[ItemDropsLength].DropNum = new int[numEntries];
-            Drops[ItemDropsLength].DropProbability = new int[numEntries];
+            DropTable[ItemDropTableLength].Type = itemType;
+            DropTable[ItemDropTableLength].DropNum = new int[numEntries];
+            DropTable[ItemDropTableLength].DropProbability = new int[numEntries];
 
-            ItemDropsLength++;
+            ItemDropTableLength++;
             CurrentEntry = 0;
         }
 
         public void SetEntry(int num, int probability)
         {
-            if (CurrentEntry >= Drops[ItemDropsLength - 1].DropNum.Length)
+            if (CurrentEntry >= DropTable[ItemDropTableLength - 1].DropNum.Length)
                 Utils.Assert(false, "More entries than specified were given for this drop item.");
 
-            probability = CurrentEntry < 1 ? probability : Drops[ItemDropsLength - 1].DropProbability[CurrentEntry - 1] + probability;
+            probability = CurrentEntry < 1 ? probability : DropTable[ItemDropTableLength - 1].DropProbability[CurrentEntry - 1] + probability;
             
             Utils.Assert(probability <= 100, "Compound probability bigger than 100.");
 
-            Drops[ItemDropsLength - 1].DropNum[CurrentEntry] = num;
-            Drops[ItemDropsLength - 1].DropProbability[CurrentEntry] = probability;
+            DropTable[ItemDropTableLength - 1].DropNum[CurrentEntry] = num;
+            DropTable[ItemDropTableLength - 1].DropProbability[CurrentEntry] = probability;
             CurrentEntry++;
         }
 
         public void End()
         {
-            DropTables[Length].ItemDrops = new LootDrop[ItemDropsLength];
-            Array.Copy(Drops, DropTables[Length].ItemDrops, ItemDropsLength);
-            ItemDropsLength = 0;
+            DropTableEntries[Length].ItemDrops = new LootDrop[ItemDropTableLength];
+            Array.Copy(DropTable, DropTableEntries[Length].ItemDrops, ItemDropTableLength);
+            ItemDropTableLength = 0;
             CurrentEntry = 0;
             Length++;
         }

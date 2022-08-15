@@ -6,7 +6,6 @@ namespace Enums
     public enum CircleQuarter
     {
         Error = 0,
-
         Top,
         Left,
         Right = 4,

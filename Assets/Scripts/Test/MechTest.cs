@@ -89,7 +89,6 @@ namespace Planet.Unity
             }
             
             Planet.Update(Time.deltaTime, Material, transform);
-            Planet.DrawHUD(Player);
         }
 
         private void OnGUI()
@@ -97,16 +96,10 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            if (Event.current.type != EventType.Repaint)
-                return;
-
-            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
-
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);;
+            Planet.DrawHUD(Player);
 
             if (showMechInventory)
             {
-
                 DrawCurrentMechHighlighter();
             }
         }

@@ -117,30 +117,11 @@ namespace Planet
             return newEntity;
         }
 
-        public AgentEntity AddAgent(Vec2f position)
+        public AgentEntity AddAgent(Vec2f position, Agent.AgentType agentType = Agent.AgentType.Agent)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Agent.AgentType.Agent));
-            return newEntity;
-        }
-
-        public AgentEntity AddAgent(Vec2f position, Agent.AgentType type)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
-                    type));
-            return newEntity;
-        }
-
-        public AgentEntity AddCorpse(Vec2f position, int spriteId, Agent.AgentType agentType)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag").inventoryID.ID;
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnCorpse(EntitasContext, position,
-                    spriteId, agentType, inventoryID));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType));
             return newEntity;
         }
 
@@ -162,6 +143,7 @@ namespace Planet
         {
             MechEntity entity = MechList.Get(index);
             Utils.Assert(entity.isEnabled);
+            GameState.LootDropSystem.Add(GameState.MechCreationApi.Get((int)entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
             MechList.Remove(index);
         }
 
@@ -341,50 +323,25 @@ namespace Planet
             GameState.LootDropSystem.Add(properties.DropTableID, entity.agentPhysicsState.Position);
             GameState.LootDropSystem.Add(properties.InventoryDropTableID, entity.agentInventory.InventoryID);
         }
-        
 
-        /*public void RemoveAgent(int agentIndex)
-=======
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID,
-    Vec2f position, Vec3f scale, int width, int height)
->>>>>>> 9c351b67fac5c622abd4a72b183f8535d1419ec9
+        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position, Color color, int fontSize)
         {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, tileSpriteID,
-                position, scale, width, height, -1, ElementType.Image));
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText
+                (EntitasContext.floatingText, text, timeToLive, velocity, position, color, fontSize));
             return newEntity;
         }
 
-
-        public void RemoveAgent(int agentId)
-        {
-            AgentEntity entity = AgentList.Get(agentId);
-            Utils.Assert(entity.isEnabled);
-
-            var physicsState = entity.agentPhysicsState;
-            Vec2f agentPosition = physicsState.Position;
-
-
-            if (entity.agentID.Type == Agent.AgentType.Enemy)
-            {
-                AgentEntity corpse = AddCorpse(agentPosition, GameResources.DeadSlimeSpriteId, Agent.AgentType.Enemy);
-                AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
-
-                int inventoryID = corpse.agentInventory.InventoryID;
-
-                GameState.LootDropSystem.Add(properties.DropTableID, corpse.agentPhysicsState.Position);
-                GameState.LootDropSystem.Add(properties.InventoryDropTableID, inventoryID);
-            }
-
-            AgentList.Remove(agentId);
-
-        }*/
-
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
         {
-            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText
-                (EntitasContext.floatingText, text, timeToLive, velocity, position));
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText(
+                EntitasContext.floatingText, text, timeToLive, velocity, position, Color.red, 18));
+            return newEntity;
+        }
+
+        public FloatingTextEntity AddFixedFloatingText(string text, Vec2f position, Color color, int fontSize)
+        {
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFixedFloatingText(
+                EntitasContext.floatingText, text, position, color, fontSize));
             return newEntity;
         }
 
@@ -392,7 +349,7 @@ namespace Planet
         {
             FloatingTextEntity entity = FloatingTextList.Get(index);
             Utils.Assert(entity.isEnabled);
-            GameObject.Destroy(entity.floatingTextSprite.GameObject);
+            GameObject.Destroy(entity.floatingTextGameObject.GameObject);
             FloatingTextList.Remove(index);
         }
 
@@ -521,8 +478,8 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
-            GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.LootDropSystem.Update(EntitasContext);
+            GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);
@@ -571,29 +528,29 @@ namespace Planet
         }
 
         public void DrawHUD(AgentEntity agentEntity)
-        {
-            if(HUDManager.ShowGUI != null)
-            {
-                if(HUDManager.ShowGUI)
-                {
-                    HUDManager.Update(agentEntity);
-                    HUDManager.Draw();
+        { 
+            if (Event.current.type == EventType.MouseDown)
+                GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
 
-                    GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-                    GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
-                }
-            }
-        }
+            if (Event.current.type == EventType.MouseUp)
+                GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
 
-        public void DrawHUD()
-        {
-            if (HUDManager.ShowGUI != null)
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
+
+            // Mouse Interactions with objects.
+            GameState.AgentMouseInteractionSystem.Update(ref this);
+            GameState.MechMouseInteractionSystem.Update(ref this);
+            GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
+
+            if (agentEntity != null && HUDManager.ShowGUI)
             {
-                if (HUDManager.ShowGUI)
-                {
-                    GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-                    GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
-                }
+                HUDManager.Update(agentEntity);
+                HUDManager.Draw();
+                GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
+                GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
             }
         }
     }

@@ -6,10 +6,9 @@ using KMath;
 namespace FloatingText
 {
     [FloatingText]
-    public class MovableComponent : IComponent
+    public class MovementComponent : IComponent
     {
         public Vec2f Velocity;
         public Vec2f Position;
     }
-        
 }

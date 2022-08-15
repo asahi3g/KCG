@@ -10,7 +10,6 @@ namespace Inventory
     [Inventory]
     public class WindowAdjustmentComponent : IComponent
     {
-        public Vec2f PositionOffset;
-        public float Scale;
+        public Window window;
     }
 }

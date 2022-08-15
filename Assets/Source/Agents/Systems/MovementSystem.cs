@@ -10,15 +10,14 @@ namespace Agent
     {
         private void Update(AgentEntity entity, float deltaTime)
         {
+            // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
             var state = entity.agentState;
             var physicsState = entity.agentPhysicsState;
-            // Increase gravity and initial velocity for smaller air time during jump. 
 
             if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
-            // maximum acceleration in the
 
             // maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)

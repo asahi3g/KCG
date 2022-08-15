@@ -9,12 +9,15 @@ namespace LootDrop
         public int[] DropProbability;
     }
 
-    public struct LootDropTable
+    public struct LootDropEntry
     {
         public int ID;
         public LootDrop[] ItemDrops;
     }
 
+    /// <summary>
+    /// Used by loot drop system to specify where to drop and which table entry to use.
+    /// </summary>
     public struct LootDropEntity
     {
         public int TableID;

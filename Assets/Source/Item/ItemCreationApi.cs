@@ -76,6 +76,7 @@ namespace Item
             CurrentIndex = itemType;
 
             PropertiesArray[(int)itemType].ItemType = itemType;
+            PropertiesArray[(int)itemType].MechType = Mech.MechType.Error;
             ItemTypeLabels[(int)itemType] = name;
         }
 
@@ -91,6 +92,13 @@ namespace Item
             IsItemTypeValid();
 
             PropertiesArray[(int)CurrentIndex].Group = group;
+        }
+
+        public void SetMech(Mech.MechType mech)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)CurrentIndex].MechType = mech;
         }
 
         public void SetSpriteSize(Vec2f size)

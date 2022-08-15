@@ -12,6 +12,7 @@
         Belt,
         Dye,
         Gun,
-        Weapon
+        Weapon,
+        Mech
     }
 }

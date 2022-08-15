@@ -63,6 +63,7 @@ namespace Action
             GameState.ActionPropertyManager.EndActionPropertyType();
 
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.OpenChestAction);
+            GameState.ActionPropertyManager.SetDescription("open chest.");
             GameState.ActionPropertyManager.SetLogicFactory(new ChestActionCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
 

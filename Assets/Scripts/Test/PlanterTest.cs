@@ -88,8 +88,6 @@ class PlanterTest : MonoBehaviour
         }
 
         Planet.Update(Time.deltaTime, Material, transform);
-        Planet.DrawHUD(Player);
-
         // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
     }
 
@@ -98,13 +96,13 @@ class PlanterTest : MonoBehaviour
         if (!Init)
             return;
 
+        Planet.DrawHUD(Player);
+
         if (Event.current.type != EventType.Repaint)
             return;
 
         // Draw Statistics
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-
-        inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
     }
 
     private void OnDrawGizmos()

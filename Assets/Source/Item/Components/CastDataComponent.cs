@@ -4,7 +4,7 @@ using Enums.Tile;
 
 namespace Item
 {
-    [ItemParticle, ItemInventory]
+    [ItemInventory]
     public class CastDataComponent : IComponent
     {
         public Data data;

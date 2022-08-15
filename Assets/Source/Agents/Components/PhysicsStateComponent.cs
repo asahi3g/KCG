@@ -18,11 +18,11 @@ namespace Agent
         public Enums.AgentMovementState MovementState;
 
         //public Flags MovementFlags; 
-        public bool AffectedByGravity;
-        public bool Invulnerable;
-        public bool OnGrounded;
-        public bool Droping;
-        public bool WantToDrop;
+        public bool AffectedByGravity;  // is used to know whether the agent is affected by the gravity
+        public bool Invulnerable;       // used for dashing
+        public bool OnGrounded;         // are we standing on a block or not // Updated by collision system.
+        public bool Droping;            // dropping
+        public bool WantToDrop;         // dropKey is pressed or not
 
         public int JumpCounter;
         public float DyingDuration;
@@ -30,16 +30,5 @@ namespace Agent
         public float SlashCooldown;
         public float FireGunCooldown;
         public float StaggerDuration;
-
-        //[Flags]
-        //public enum Flags : byte
-        //{
-        //    Running = 1 << 0,
-        //    AffectedByGravity = 1 << 1,     // is used to know whether the agent is affected by the gravity
-        //    Invulnerable = 1 << 2,          // used for dashing
-        //    OnGrounded = 1 << 3,            // are we standing on a block or not // Updated by collision system.
-        //    Droping = 1 << 4,               // dropping
-        //    WantToDrop = 1 << 5,            // dropKey is pressed or not
-        //}
     }
 }

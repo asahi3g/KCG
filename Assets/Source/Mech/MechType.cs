@@ -2,6 +2,7 @@ namespace Mech
 {
     public enum MechType
     {
+        Error = -1,
         Planter,
         Light,
         Storage,

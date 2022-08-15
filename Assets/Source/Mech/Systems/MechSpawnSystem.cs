@@ -51,7 +51,7 @@ namespace Mech
             var spriteId = mechProperties.SpriteID;
 
             var entity = entitasContext.mech.CreateEntity();
-            entity.AddMechID(UniqueID, -1);
+            entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
             entity.AddMechPosition2D(position);

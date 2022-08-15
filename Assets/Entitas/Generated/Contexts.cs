@@ -214,7 +214,7 @@ public partial class Contexts {
             particle.GetGroup(ParticleMatcher.ParticleEmitterID),
             (e, c) => ((Particle.EmitterIDComponent)c).ID));
 
-        particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, int>(
+        particle.AddEntityIndex(new Entitas.PrimaryEntityIndex<ParticleEntity, long>(
             ParticleID,
             particle.GetGroup(ParticleMatcher.ParticleID),
             (e, c) => ((Particle.IDComponent)c).ID));
@@ -317,8 +317,8 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleEmitterID)).GetEntity(ID);
     }
 
-    public static ParticleEntity GetEntityWithParticleID(this ParticleContext context, int ID) {
-        return ((Entitas.PrimaryEntityIndex<ParticleEntity, int>)context.GetEntityIndex(Contexts.ParticleID)).GetEntity(ID);
+    public static ParticleEntity GetEntityWithParticleID(this ParticleContext context, long ID) {
+        return ((Entitas.PrimaryEntityIndex<ParticleEntity, long>)context.GetEntityIndex(Contexts.ParticleID)).GetEntity(ID);
     }
 
     public static ProjectileEntity GetEntityWithProjectileID(this ProjectileContext context, int ID) {

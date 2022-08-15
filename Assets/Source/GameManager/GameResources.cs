@@ -395,6 +395,26 @@ public class GameResources
         GameState.LootTableCreationAPI.SetEntry(5, 15);
         GameState.LootTableCreationAPI.SetEntry(6, 10);
         GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create("Chest");
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Chest, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create("Planter");
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Planter, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create("Light");
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Light, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create("SmashableBox");
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
     }
 
     private static void InitializeTGenTiles()
@@ -875,6 +895,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Chest, "Chest");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
         GameState.ItemCreationApi.SetTexture(ChestIconItem);
         GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -883,14 +904,16 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.SmashableBox, "SmashableBox");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
         GameState.ItemCreationApi.SetTexture(ChestIconItem);
         GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMechPlacement);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Planter, "Planter");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
         GameState.ItemCreationApi.SetTexture(PotIconItem);
         GameState.ItemCreationApi.SetInventoryTexture(PotIconItem);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -899,6 +922,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Light, "Light");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
         GameState.ItemCreationApi.SetTexture(Light2IconItem);
         GameState.ItemCreationApi.SetInventoryTexture(Light2IconItem);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -988,6 +1012,7 @@ public class GameResources
     {
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
+        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Chest"));
         GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
         GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
@@ -995,12 +1020,14 @@ public class GameResources
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
         GameState.MechCreationApi.SetName("planter");
+        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Planter"));
         GameState.MechCreationApi.SetTexture(PotIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Light);
         GameState.MechCreationApi.SetName("light");
+        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Light"));
         GameState.MechCreationApi.SetTexture(Light2Icon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
@@ -1025,6 +1052,7 @@ public class GameResources
         
         GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
         GameState.MechCreationApi.SetName("smashableBox");
+        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("SmashableBox"));
         GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetAction(Enums.ActionType.OpenChestAction);
         GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());

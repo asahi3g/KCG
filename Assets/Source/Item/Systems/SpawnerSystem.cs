@@ -26,58 +26,13 @@ namespace Item
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
 
             if (weaponProperty.HasClip())
-            {
                 entity.AddItemFireWeaponClip(weaponProperty.ClipSize, weaponProperty.BulletsPerShot);
-            }
 
             if (weaponProperty.ShouldSpread())
-            {
                 entity.AddItemFireWeaponSpread(weaponProperty.SpreadAngle);
-            }
 
             if (weaponProperty.IsPulse())
-            {
                 entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
-            }
-
-            if (itemProperty.IsPlacementTool())
-            {
-                if(entity.itemType.Type == ItemType.PlacementTool)
-                {
-                    Enums.Tile.Data data = new Data();
-                    entity.AddItemCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.ConstructionTool)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.RemoveMech)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.Chest)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.Planter)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.Light)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-                else if (entity.itemType.Type == ItemType.SmashableBox)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-            }
 
             ItemID++;
             return entity;
@@ -94,10 +49,13 @@ namespace Item
 
             if(itemInventoryEntity.hasItemLabel)
                 entity.AddItemLabel(itemInventoryEntity.itemLabel.ItemName);
+
             if(itemInventoryEntity.hasItemStack)
                 entity.AddItemStack(itemInventoryEntity.itemStack.Count);
+
             if(itemInventoryEntity.hasItemFireWeaponClip)
                 entity.ReplaceItemFireWeaponClip(itemInventoryEntity.itemFireWeaponClip.NumOfBullets, itemInventoryEntity.itemFireWeaponClip.BulletsPerShot);
+
             if (itemInventoryEntity.hasItemFireWeaponSpread)
                 entity.ReplaceItemFireWeaponSpread(itemInventoryEntity.itemFireWeaponSpread.SpreadAngle);
 
@@ -116,25 +74,17 @@ namespace Item
             entity.AddItemType(itemType);
 
             if (weaponProperty.HasClip())
-            {
                 entity.AddItemFireWeaponClip(weaponProperty.ClipSize, weaponProperty.BulletsPerShot);
-            }
 
             if (weaponProperty.HasCharge())
-            {
                 entity.AddItemFireWeaponCharge(weaponProperty.CanCharge, weaponProperty.ChargeMin, weaponProperty.ChargeRatio, weaponProperty.ChargePerShot, weaponProperty.ChargeMin,
                     weaponProperty.ChargeMax);
-            }
 
             if (weaponProperty.ShouldSpread())
-            {
                 entity.AddItemFireWeaponSpread(weaponProperty.SpreadAngle);
-            }
 
             if (weaponProperty.IsPulse())
-            {
                 entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
-            }
 
             if (itemProperty.IsPlacementTool())
             {
@@ -144,40 +94,15 @@ namespace Item
                     entity.AddItemCastData(data, true);
                 }
 
-                if (entity.itemType.Type == ItemType.ConstructionTool)
+                if (entity.itemType.Type == ItemType.ConstructionTool ||
+                    entity.itemType.Type == ItemType.RemoveMech ||
+                    itemProperty.Group == ItemGroups.Mech)
                 {
                     Mech.Data data = new Mech.Data();
                     entity.AddItemMechCastData(data, true);
-                }
 
-                if (entity.itemType.Type == ItemType.RemoveMech)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-
-                if (entity.itemType.Type == ItemType.Chest)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-
-                if (entity.itemType.Type == ItemType.Planter)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-
-                if (entity.itemType.Type == ItemType.Light)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-                }
-
-                if (entity.itemType.Type == ItemType.SmashableBox)
-                {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
+                    if(itemProperty.MechType != Mech.MechType.Error)
+                        entity.itemMechCastData.data.MechID = itemProperty.MechType;
                 }
             }
 
@@ -191,10 +116,13 @@ namespace Item
 
             if (itemParticleEntity.hasItemLabel)
                 entity.AddItemLabel(itemParticleEntity.itemLabel.ItemName);
+
             if (itemParticleEntity.hasItemStack)
                 entity.AddItemStack(itemParticleEntity.itemStack.Count);
+
             if (itemParticleEntity.hasItemFireWeaponClip)
                 entity.ReplaceItemFireWeaponClip(itemParticleEntity.itemFireWeaponClip.NumOfBullets, itemParticleEntity.itemFireWeaponClip.BulletsPerShot);
+
             if (itemParticleEntity.hasItemFireWeaponSpread)
                 entity.ReplaceItemFireWeaponSpread(itemParticleEntity.itemFireWeaponSpread.SpreadAngle);
 

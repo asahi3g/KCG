@@ -15,11 +15,16 @@ namespace Inventory
         bool Init = false;
         InventoryModel[] InventoryModels;
         int ArrayLenth = 0;
-        int ID = -1;
 
+        // Current Inventory info.
+        int ID = -1;
         BitSet ActiveSlots;
         Enums.ItemGroups[] Restrictions;
         int[] RestrictionSlotsTextures;       // One for each restriction.
+        float UpBorderOffSet; 
+        float DownBorderOffSet;
+        float LeftBorderOffSet;
+        float RightBorderOffSet;
 
         private void InitializeInventory(ref InventoryModel inventory)
         {
@@ -38,6 +43,11 @@ namespace Inventory
 
             for (int i = 0; i < RestrictionSlotsTextures.Length; i++)
                 RestrictionSlotsTextures[i] = -1;
+
+            UpBorderOffSet = 0;
+            DownBorderOffSet = 0;
+            LeftBorderOffSet = 0;
+            RightBorderOffSet = 0;
         }
 
         public CreationApi()
@@ -120,10 +130,10 @@ namespace Inventory
                 InventoryModels[ID].ToolBarWindow.GridPosition = InventoryModels[ID].ToolBarWindow.Position;
             }
 
-            window.GridPosition = new Vec2f(window.Position.X + window.RightBorderOffSet, 
-                window.Position.Y + window.DownBorderOffSet);
-            window.Size = new Vec2f(window.GridSize.X + window.RightBorderOffSet + window.LeftBorderOffSet,
-                window.GridSize.Y + window.UpBorderOffSet + window.LeftBorderOffSet);
+            window.GridPosition = new Vec2f(window.Position.X + RightBorderOffSet, 
+                window.Position.Y + DownBorderOffSet);
+            window.Size = new Vec2f(window.GridSize.X + RightBorderOffSet + LeftBorderOffSet,
+                window.GridSize.Y + UpBorderOffSet + LeftBorderOffSet);
 
             int length = width * height;
             InventoryModels[ID].Slots = new GridSlot[length];
@@ -151,16 +161,16 @@ namespace Inventory
         private void CreateDefaultPlayerInventoryModel()
         {
             Create();
-            SetInventoryPos(460f, 240f);
+            SetInventoryPos(560f, 340f);
             SetSize(10, 5);
             SetAllSlotsAsActive();
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
             SetToolBar();
-            SetTileSize(100);
-            SetSlotBorderOffset(10);
-            SetSlotOffset(20);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
             SetInventoryBoderOffset(0, 0, 30, 0);
             End();
         }
@@ -168,7 +178,7 @@ namespace Inventory
         private void CreateDefaultRestrictionInventoryModel()
         {
             Create();
-            SetInventoryPos(1_670f, 240f);
+            SetInventoryPos(1_730f, 355f);
             SetSize(2, 5);
             SetAllSlotsAsActive();
             SetDefaultRestrictionTexture();
@@ -185,39 +195,40 @@ namespace Inventory
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
-            SetTileSize(100);
-            SetSlotBorderOffset(10);
-            SetSlotOffset(20);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
             End();
         }
 
         private void CreateDefaultChestInventoryModel()
         {
             Create();
-            SetInventoryPos(460f, 240f);
-            SetSize(10, 5);
+            SetInventoryPos(560f, 630f);
+            SetSize(10, 4);
             SetAllSlotsAsActive();
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
-            SetTileSize(100);
-            SetSlotBorderOffset(10);
-            SetSlotOffset(20);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
+            SetInventoryBoderOffset(0, 0, 30, 0);
             End();
         }
 
         private void CreateDefaultCorpseInventoryModel()
         {
             Create();
-            SetInventoryPos(460f, 810f);
+            SetInventoryPos(560f, 810f);
             SetSize(10, 2);
             SetAllSlotsAsActive();
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
-            SetTileSize(100);
-            SetSlotOffset(20);
-            SetSlotBorderOffset(10);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
             SetInventoryBoderOffset(0, 0, 30, 0);
             End();
         }
@@ -293,10 +304,10 @@ namespace Inventory
         /// </summary>
         public void SetInventoryBoderOffset(float leftBorder, float rightBorder, float upBorder, float downBorder)
         {
-            InventoryModels[ID].MainWindow.UpBorderOffSet = upBorder;
-            InventoryModels[ID].MainWindow.DownBorderOffSet = downBorder;
-            InventoryModels[ID].MainWindow.LeftBorderOffSet = leftBorder;
-            InventoryModels[ID].MainWindow.RightBorderOffSet = rightBorder;
+            UpBorderOffSet = upBorder;
+            DownBorderOffSet = downBorder;
+            LeftBorderOffSet = leftBorder;
+            RightBorderOffSet = rightBorder;
         }
 
         public void SetSize(int width, int height) => SetSize(new Vec2i(width, height));

@@ -28,32 +28,7 @@ namespace Action
 
             var mech = planet.GetMechFromPosition(new KMath.Vec2f(x, y));
 
-            switch (mech.mechType.mechType)
-            {
-                case MechType.Storage:
-                    var item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Chest, mech.mechPosition2D.Value);
-                    item.itemMechCastData.data.MechID = MechType.Storage;
-                    break;
-                case MechType.Planter:
-                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Planter, mech.mechPosition2D.Value);
-                    item.itemMechCastData.data.MechID = MechType.Planter;
-
-                    break;
-                case MechType.Light:
-                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Light, mech.mechPosition2D.Value);
-                    item.itemMechCastData.data.MechID = MechType.Light;
-
-                    break;
-                case MechType.SmashableBox:
-                    item = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.SmashableBox, mech.mechPosition2D.Value);
-                    item.itemMechCastData.data.MechID = MechType.SmashableBox;
-
-                    break;
-            }
-
             planet.RemoveMech(mech.mechID.Index);
-
-
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

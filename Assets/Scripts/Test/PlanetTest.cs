@@ -55,7 +55,6 @@ namespace Planet.Unity
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
-            Planet.DrawHUD(Player);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
         }
 
@@ -64,24 +63,12 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            if (Event.current.type == EventType.MouseDown)
-                GameState.InventoryMouseSelectionSystem.OnMouseDown(Planet.EntitasContext, Planet.InventoryList);
-
-            if (Event.current.type == EventType.MouseUp)
-                GameState.InventoryMouseSelectionSystem.OnMouseUP(Planet.EntitasContext, Planet.InventoryList);
+            Planet.DrawHUD(Player);
 
             if (Event.current.type != EventType.Repaint)
                 return;
-
-            GameState.InventoryMouseSelectionSystem.Update(Planet.EntitasContext);
-
-            // Draw HUD UI
-           // HUDManager.Update(Player);
-
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
-
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
         private void OnDrawGizmos()

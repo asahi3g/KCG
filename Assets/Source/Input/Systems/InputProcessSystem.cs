@@ -43,6 +43,9 @@ namespace ECSInput
 
         public void SetAgentWeapon(AgentEntity agentEntity, Model3DWeapon weapon)
         {
+            if (!agentEntity.hasAgentModel3D)
+                return;
+
             var model3d = agentEntity.agentModel3D;
             if (weapon == Model3DWeapon.Sword)
             {        
@@ -186,204 +189,6 @@ namespace ECSInput
                     player.agentPhysicsState.Droping = true;
                     player.agentPhysicsState.WantToDrop = true;
                 }
-
-
-                /*
-
-                // we can start jumping only if the jump counter is 0
-                if (movementState.JumpCounter == 0)
-                {
-    
-                    // first jump
-                    if (jump && movementState.MovementState != MovementState.Dashing)
-                    {
-                        // if we are sticking to a wall 
-                        // throw the agent in the opposite direction
-                        if (movable.SlidingLeft)
-                        {
-                            movable.SlidingLeft = false;
-                            movable.Acceleration.X = 1.0f * movable.Speed * 400.0f * 2;
-                            movable.Acceleration.Y = -1.0f * movable.Speed * 400.0f * 2;
-                        }
-                        else if (movable.SlidingRight)
-                        {
-                            movable.SlidingRight = false;
-                            movable.Acceleration.X = -1.0f * movable.Speed * 400.0f * 2;
-                            movable.Acceleration.Y = -1.0f * movable.Speed * 400.0f * 2;
-                        }
-
-
-                        // jumping
-                        movable.OnGrounded = false;
-                        movable.Acceleration.Y = 100.0f;
-                        movable.Velocity.Y = 11.5f;
-                        movable.AffectedByGroundFriction = false;
-                        movementState.JumpCounter++;
-                    }
-
-                }
-                else
-                {
-                    // double jump
-                    if (jump && movementState.JumpCounter <= 1)
-                    {
-                        movable.Acceleration.Y = 100.0f;
-                        movable.Velocity.Y = 8.5f;
-                        movementState.JumpCounter++;
-                    }
-                }
-
-                // if the fly button is pressed
-                if (flying && stats.Fuel > 0.0f)
-                {
-                    movementState.MovementState = MovementState.Flying;
-                }
-                else if (movementState.MovementState == MovementState.Flying)
-                {
-                    // if no fuel is left we change to movement state to none
-                    movementState.MovementState = MovementState.None;
-                }
-
-                // if we are using the jetpack
-                // set the Y velocity to a given value
-                if (movementState.MovementState == MovementState.Flying)
-                {
-                    movable.Acceleration.Y = 0;
-                    movable.Velocity.Y = 3.5f;
-                }
-
-
-                // the end of dashing
-                // we can do this using a fixed amount of time
-                if (System.Math.Abs(movable.Velocity.X) <= 6.0f && 
-                movementState.MovementState == MovementState.Dashing)
-                {
-                    movementState.MovementState = MovementState.None;
-
-                    // if the agent is dashing it becomes invulnerable to damage
-                    movable.Invulnerable = movementState.MovementState == MovementState.Dashing;
-                    
-                    movementState.MovementState = MovementState.None;   
-                    movable.Invulnerable = false; 
-                }
-
-                // if the agent is dashing the gravity will not affect him
-                movable.AffectedByGravity = !(movementState.MovementState == MovementState.Dashing);
-
-
-                if (x == 1.0f)
-                {
-                    // if we move to the right
-                    // that means we are no longer sliding down on the left
-                    movable.SlidingLeft = false;
-                }
-                else if (x == -1.0f)
-                {
-                    // if we move to the left
-                    // that means we are no longer sliding down on the right
-                    movable.SlidingRight = false;
-                }
-
-
-                // if we are on the ground we reset the jump counter
-                if (movable.OnGrounded)
-                {
-                    movementState.JumpCounter = 0;
-                    movable.AffectedByGroundFriction = true;
-
-                    movable.SlidingRight = false;
-                    movable.SlidingLeft = false;
-                    if (movementState.MovementState == MovementState.None)
-                    {
-                        movementState.MovementState = MovementState.Idle;
-                    }
-                }
-
-                
-                // if we are sliding
-                // spawn some particles and limit vertical movement
-                if (movable.SlidingLeft)
-                {
-                    movementState.JumpCounter = 0;
-                    movable.Acceleration.Y = 0.0f;
-                    movable.Velocity.Y = -1.75f;
-                    planet.AddParticleEmitter(pos.Value + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
-                }
-                else if (movable.SlidingRight)
-                {
-                    movementState.JumpCounter = 0;
-                    movable.Acceleration.Y = 0.0f;
-                    movable.Velocity.Y = -1.75f;
-                    planet.AddParticleEmitter(pos.Value + new Vec2f(0.5f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
-                }
-
-                // if we are flying, reduce the fuel and spawn particles
-                if (movementState.MovementState == MovementState.Flying)
-                {
-                    stats.Fuel -= 1.0f;
-                    if (stats.Fuel <= 1.0f)
-                    {
-                        stats.Fuel -= 20.0f;
-                    }
-                    planet.AddParticleEmitter(pos.Value, Particle.ParticleEmitterType.DustEmitter);
-                }
-                else
-                {
-                    // if we are not flying, add fuel to the tank
-                    stats.Fuel += 1.0f;
-                }
-
-                // make sure the fuel never goes up more than it should
-                if (stats.Fuel > 100) 
-                {
-                    stats.Fuel = 100;
-                }
-
-                // if we are dashing we add some particles
-                if (movementState.MovementState == MovementState.Dashing)
-                {
-                    planet.AddParticleEmitter(pos.Value, Particle.ParticleEmitterType.DustEmitter);
-                }
-
-
-                float epsilon = 2.0f;
-
-                if (movable.Velocity.Y <= -epsilon)
-                {
-                    movementState.MovementState = MovementState.Falling;
-                }
-                else if (movementState.MovementState != MovementState.Dashing)
-                {
-                    movementState.MovementState = MovementState.None;
-                }
-
-
-                if (movementState.MovementState == MovementState.Idle || 
-                movementState.MovementState == MovementState.None)
-                {
-                    if (movable.Velocity.X >= epsilon ||
-                    movable.Velocity.X <= -epsilon)
-                    {
-                        movementState.MovementState = MovementState.Move;
-                    }
-                    else
-                    {
-                        movementState.MovementState = MovementState.Idle;
-                    }
-                }
-
-
-
-                //if (movable.Droping && movable.OnGrounded)
-                //{
-                   
-                //        movable.OnGrounded = false;
-                //        movable.Acceleration.Y = 100.0f;
-                    
-
-                //}
-
-                */
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -393,10 +198,11 @@ namespace ECSInput
                 foreach (var player in players)
                 {
                     InventoryEntity Inventory = null;
-                    float smallestDistance = 1.5f;
-                    var corpses = contexts.agent.GetGroup(AgentMatcher.AgentID);
-                    foreach (var corpse in corpses)
+                    float smallestDistance = 2.0f;
+                    var agents = planet.AgentList;
+                    for (int i =0; i < agents.Length; i++)
                     {
+                        AgentEntity corpse = agents.Get(i);
                         var state = corpse.agentState;
                         if (state.State == AgentState.Dead)
                         {
@@ -435,16 +241,26 @@ namespace ECSInput
 
                     if (Inventory == null)
                         continue;
-                    
-                    Inventory.hasInventoryDraw = !Inventory.hasInventoryDraw;
 
                     int inventoryID = player.agentInventory.InventoryID;
                     InventoryEntity playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    playerInventory.hasInventoryDraw = !playerInventory.hasInventoryDraw;
 
                     inventoryID = player.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    equipmentInventory.hasInventoryDraw = !equipmentInventory.hasInventoryDraw;
+
+                    if (!Inventory.hasInventoryDraw)
+                    {
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                    }
+                    else 
+                    {
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                    }
+
                 }
             }
 
@@ -519,18 +335,26 @@ namespace ECSInput
                 {
                     int inventoryID = player.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    inventory.hasInventoryDraw = !inventory.hasInventoryDraw;
 
                     inventoryID = player.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    equipmentInventory.hasInventoryDraw = !equipmentInventory.hasInventoryDraw;
 
-                    if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
+                    if (!inventory.hasInventoryDraw)
                     {
-                        var inventories = contexts.inventory.GetGroup(InventoryMatcher.InventoryDraw);
-                        foreach (var openInventory in inventories)
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, inventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                    }
+                    else
+                    {
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                        if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
                         {
-                            openInventory.hasInventoryDraw = false;
+                            var inventories = contexts.inventory.GetGroup(InventoryMatcher.InventoryDraw);
+                            foreach (var openInventory in inventories)
+                            {
+                                GameState.InventoryManager.CloseInventory(planet.InventoryList, openInventory);
+                            }
                         }
                     }
                 }
@@ -584,6 +408,8 @@ namespace ECSInput
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
                         ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        if (item == null)
+                            return;
                         Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                         switch(itemProperty.Group)
