@@ -14,6 +14,7 @@ public class InventoryTest : MonoBehaviour
     int terrariaLikeInventoryModelID;
     int customRestrictionInventoryID = 3;
     int customRestrictionInventoryModelID;
+    InventoryEntity materialBag;
     int defaultInventoryID = 0;
     int defaultEquipmentID = 1;
 
@@ -36,9 +37,8 @@ public class InventoryTest : MonoBehaviour
         int inventoryID = 0;
         int equipmentInventoryID = 1;
         inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, 
-
-            GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
+        materialBag = inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID()));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID));
         inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID));
 
@@ -58,6 +58,7 @@ public class InventoryTest : MonoBehaviour
         for (uint i = 0; i < 256; i++)
         {
             inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), inventoryID);
+            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), materialBag.inventoryID.ID);
         }
 
         // Set basic inventory draw to on at the beggining:
@@ -67,6 +68,7 @@ public class InventoryTest : MonoBehaviour
         // Set Draw to false for custom inventories.
         GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw = false;
         GetInventory(customRestrictionInventoryID).hasInventoryDraw = false;
+        GetInventory(materialBag.inventoryID.ID).hasInventoryDraw = false;
 
         Init = true;
     }
@@ -97,6 +99,7 @@ public class InventoryTest : MonoBehaviour
             GetInventory(terrariaLikeInventoryID).hasInventoryDraw = !GetInventory(terrariaLikeInventoryID).hasInventoryDraw;
 
             GetInventory(customRestrictionInventoryID).hasInventoryDraw = !GetInventory(customRestrictionInventoryID).hasInventoryDraw;
+            GetInventory(materialBag.inventoryID.ID).hasInventoryDraw = !GetInventory(materialBag.inventoryID.ID).hasInventoryDraw;
         }
     }
 

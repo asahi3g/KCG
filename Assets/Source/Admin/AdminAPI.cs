@@ -30,14 +30,15 @@ namespace Admin
             manager.AddItem(contexts, SpawnItem(itemID, contexts), inventoryID);
         }
 
-        public static void AddItemStackable(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, int itemCount, Contexts contexts)
+        public static void AddItemStackable(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, int count, Contexts contexts)
         {
             if (contexts == null)
                 return;
 
-            for(int i = 0; i < itemCount; i++)
+            // Testing stackable items.
+            for (uint i = 0; i < count; i++)
             {
-                manager.AddItem(contexts, SpawnItem(itemID, contexts), inventoryID);
+                manager.AddItem(contexts, GameState.ItemSpawnSystem.SpawnInventoryItem(contexts, itemID), inventoryID);
             }
 
         }

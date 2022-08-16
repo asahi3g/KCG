@@ -20,6 +20,13 @@ namespace Action
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
             {
+                switch(planet.TileMap.GetFrontTileID(x, y))
+                {
+                    case TileID.Moon:
+                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Dirt, new Vec2f(x, y));
+                        break;
+                }
+
                 planet.TileMap.RemoveFrontTile(x, y);
             }
             

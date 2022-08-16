@@ -82,9 +82,9 @@ namespace Inventory
             Init = true;
             CreateDefaultPlayerInventoryModel();
             CreateDefaultRestrictionInventoryModel();
-            CreateMaterialBagInventoryModel();
             CreateDefaultChestInventoryModel();
             CreateDefaultCorpseInventoryModel();
+            CreateDefaultMaterialBagInventoryModel();
         }
 
         public ref InventoryModel Get(int id)
@@ -202,22 +202,6 @@ namespace Inventory
             End();
         }
 
-        private void CreateMaterialBagInventoryModel()
-        {
-            Create();
-            SetInventoryPos(560f, 630f);
-            SetSize(10, 4);
-            SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
-            SetTileSize(80);
-            SetSlotBorderOffset(8);
-            SetSlotOffset(16);
-            SetInventoryBoderOffset(0, 0, 30, 0);
-            End();
-        }
-
         private void CreateDefaultChestInventoryModel()
         {
             Create();
@@ -240,6 +224,23 @@ namespace Inventory
             SetInventoryPos(560f, 810f);
             SetSize(10, 2);
             SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
+            SetInventoryBoderOffset(0, 0, 30, 0);
+            End();
+        }
+
+        private void CreateDefaultMaterialBagInventoryModel()
+        {
+            Create();
+            SetInventoryPos(100f, 750f);
+            SetSize(10, 4);
+            SetAllSlotsAsActive();
+            SetRestriction(0, Enums.ItemGroups.Mech);
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
@@ -274,6 +275,13 @@ namespace Inventory
             if (!Init)
                 Initialize();
             return 3;
+        }
+
+        public int GetDefaultMaterialBagInventoryModelID()
+        {
+            if (!Init)
+                Initialize();
+            return 4;
         }
 
         public void SetBackgroundTexture(int spriteID)
