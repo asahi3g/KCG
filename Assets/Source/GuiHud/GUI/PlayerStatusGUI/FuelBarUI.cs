@@ -89,7 +89,7 @@ namespace KGUI.PlayerStatus
             iconCanvas.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            iconCanvas.SetPosition(new Vector3(-370.3f, -65.8f, 4.873917f));
+            iconCanvas.SetPosition(new Vector3(-425.5f, -40.8f, 4.873917f));
 
             // Set Icon Scale
             iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));

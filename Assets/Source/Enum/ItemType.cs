@@ -46,6 +46,10 @@
         Light,
         SmashableBox,
 
+        /// <summary>
+        /// Materials
+        /// </summary>
+        Dirt,
 
         /// <summary>
         /// Tools

@@ -21,6 +21,7 @@ namespace Planet.Unity
 
         int CharacterSpriteId;
         int InventoryID;
+        InventoryEntity MaterialBag;
 
 
         static bool Init = false;
@@ -107,7 +108,6 @@ namespace Planet.Unity
         public void Initialize()
         {
           
-
             Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
@@ -131,6 +131,8 @@ namespace Planet.Unity
             Planet.InitializeHUD(Player);
 
             //TileMapManager.Save(Planet.TileMap, "map.kmap");
+
+            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
             InventoryID = Player.agentInventory.InventoryID;
 
@@ -324,7 +326,6 @@ namespace Planet.Unity
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
-
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));

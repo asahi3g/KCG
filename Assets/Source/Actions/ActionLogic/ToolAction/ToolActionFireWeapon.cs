@@ -69,6 +69,14 @@ namespace Action
 
             if (planet.Player != null)
             {
+                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == -1)
+                {
+                    planet.Player.agentPhysicsState.Direction = 1;
+                }
+                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == 1)
+                {
+                    planet.Player.agentPhysicsState.Direction = -1;
+                }
                 GameState.AgentProcessPhysicalState.FireGun(planet.Player);
                 if (planet.Player.agentPhysicsState.Direction == 1)
                 {
