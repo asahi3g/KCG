@@ -12,16 +12,11 @@ namespace Agent
             
             float deltaTime = Time.deltaTime;
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
-            foreach (var entity in entities)
+            if (entities.count > 0)
             {
-
+                var entity = entities.GetEntities()[0];
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
-
-                /*if (entity.isAgentPlayer)
-                {
-                    Debug.Log(physicsState.MovementState);
-                }*/
 
                 switch(physicsState.MovementState)
                 {
@@ -60,8 +55,20 @@ namespace Agent
                     }
                     case AgentMovementState.Dashing:
                     {
-                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Dash);
+                        model3d.AnimancerComponent.Play(animation, 0.075f);
+                        break;
+                    }
+                    case AgentMovementState.Rolling:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Roll);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.StandingUpAfterRolling:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                        model3d.AnimancerComponent.Play(animation, 1.425f);
                         break;
                     }
                     case AgentMovementState.Stagger:
@@ -120,7 +127,8 @@ namespace Agent
                     }
                 }
 
-                if (physicsState.MovementState != AgentMovementState.Falling)
+                if (physicsState.MovementState != AgentMovementState.Falling && 
+                physicsState.MovementState != AgentMovementState.Dashing)
                 {
                     if (physicsState.JumpCounter == 1)
                     {

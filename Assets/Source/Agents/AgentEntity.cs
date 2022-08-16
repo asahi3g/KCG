@@ -14,7 +14,9 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
         physicsState.MovementState != AgentMovementState.FireGun &&
-        physicsState.MovementState != AgentMovementState.Stagger;
+        physicsState.MovementState != AgentMovementState.Stagger &&
+        physicsState.MovementState != AgentMovementState.Rolling &&
+        physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
     }
 
     public void DieInPlace()
@@ -102,5 +104,44 @@ public partial class AgentEntity
         }
 
         model3d.CurrentWeapon = weapon;
+    }
+
+
+    public void Dash(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+
+        if (PhysicsState.DashCooldown <= 0.0f &&
+        IsStateFree())
+        {
+            PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
+            PhysicsState.Velocity.Y = 0.0f;
+
+            PhysicsState.Invulnerable = true;
+            PhysicsState.AffectedByGravity = false;
+            PhysicsState.MovementState = AgentMovementState.Dashing;
+            PhysicsState.DashCooldown = 1.0f;
+        }
+    }
+
+
+    public void Roll(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+
+        if (PhysicsState.RollDuration <= 0.0f &&
+        PhysicsState.RollCooldown <= 0.0f &&
+        IsStateFree() && PhysicsState.OnGrounded)
+        {
+            PhysicsState.Velocity.X = 1.35f * PhysicsState.Speed * horizontalDir;
+            PhysicsState.Velocity.Y = 0.0f;
+
+            PhysicsState.Invulnerable = true;
+            PhysicsState.AffectedByGravity = true;
+            PhysicsState.AffectedByFriction = false;
+            PhysicsState.MovementState = AgentMovementState.Rolling;
+            PhysicsState.RollDuration = 0.5f;
+            PhysicsState.RollCooldown = 1.75f;
+        }
     }
 }

@@ -39,6 +39,12 @@ namespace Agent
                     physicsState.DashCooldown -= deltaTime;
                 }
 
+                // decrease the dash cooldown
+                if (physicsState.RollCooldown > 0)
+                {
+                    physicsState.RollCooldown -= deltaTime;
+                }
+
                 if (physicsState.SlashCooldown > 0)
                 {
                     physicsState.SlashCooldown -= deltaTime;
@@ -46,6 +52,32 @@ namespace Agent
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.SwordSlash)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
+                if (physicsState.RollDuration > 0)
+                {
+                    physicsState.RollDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.Rolling)
+                    {
+                        physicsState.MovementState = AgentMovementState.StandingUpAfterRolling;
+                        physicsState.AffectedByFriction = true;
+                        physicsState.RollImpactDuration = 0.8f;
+                    }
+                }
+
+                if (physicsState.RollImpactDuration > 0)
+                {
+                    physicsState.RollImpactDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.StandingUpAfterRolling)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -115,7 +147,7 @@ namespace Agent
                 // if we are dashing we add some particles
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
-                    planet.AddParticleEmitter(physicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, 0.5f), Particle.ParticleEmitterType.DustEmitter);
                 }
 
                 // if we are sliding
@@ -124,15 +156,17 @@ namespace Agent
                 {
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    physicsState.Velocity.Y = -1.75f;
+                    physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    physicsState.AffectedByGravity = false;
                     planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
                 }
                 else if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                 {
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    physicsState.Velocity.Y = -1.75f;
-                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.75f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                    physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    physicsState.AffectedByGravity = false;
+                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
                 }
 
                 if (physicsState.MovementState == AgentMovementState.JetPackFlying)
@@ -175,6 +209,14 @@ namespace Agent
                         physicsState.MovementState = AgentMovementState.Idle;
                     }
                 }
+
+                if (physicsState.MovementState == AgentMovementState.Idle ||
+                physicsState.MovementState == AgentMovementState.None ||
+                physicsState.MovementState == AgentMovementState.Move ||
+                physicsState.MovementState == AgentMovementState.JetPackFlying)
+                {
+                    physicsState.AffectedByGravity = true;
+                }
             }
         }
 
@@ -204,12 +246,12 @@ namespace Agent
                         if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                         {
                             physicsState.MovementState = AgentMovementState.None;
-                            physicsState.Velocity.X = physicsState.Speed * 1.5f;
+                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
                         }
                         else if (physicsState.MovementState == AgentMovementState.SlidingRight)
                         {
                             physicsState.MovementState = AgentMovementState.None;
-                            physicsState.Velocity.X = - physicsState.Speed * 1.5f;
+                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
                         }
 
                         // jumping
@@ -226,23 +268,6 @@ namespace Agent
                         physicsState.JumpCounter++;
                     }
                 }
-            }
-        }
-
-        public void Dash(AgentEntity agentEntity, int horizontalDir)
-        {
-            var PhysicsState = agentEntity.agentPhysicsState;
-
-            if (PhysicsState.DashCooldown <= 0.0f &&
-            agentEntity.IsStateFree())
-            {
-                PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
-                PhysicsState.Velocity.Y = 0.0f;
-
-                PhysicsState.Invulnerable = true;
-                PhysicsState.AffectedByGravity = false;
-                PhysicsState.MovementState = AgentMovementState.Dashing;
-                PhysicsState.DashCooldown = 1.0f;
             }
         }
 
@@ -337,7 +362,7 @@ namespace Agent
                     // that means we are no longer sliding down on the left
                     PhysicsState.MovementState = AgentMovementState.None;
                 }
-                else if (horizontalDir < -1.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
+                else if (horizontalDir < -0.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
                 {
                     // if we move to the left
                     // that means we are no longer sliding down on the right

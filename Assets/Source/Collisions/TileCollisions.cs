@@ -207,7 +207,7 @@ namespace Collisions
                     if (x >= 0 && x < tileMap.MapSize.X)
                     {
                         var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air )
+                        if (frontTileID != TileID.Air)
                         {
                             
                             var tileBorders = new AABox2D(x, y);

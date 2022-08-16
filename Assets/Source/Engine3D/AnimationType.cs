@@ -12,6 +12,8 @@ namespace Engine3D
         Jump,
         Flip,
         Jog,
+        Dash,
+        Roll,
         Stagger,
         JumpFall,
         SwordSlash,

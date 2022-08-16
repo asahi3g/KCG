@@ -151,6 +151,29 @@ namespace PlanetTileMap
                 TilePropertyArray[(int)CurrentTileIndex].BaseSpriteId = baseId;
                 TilePropertyArray[(int)CurrentTileIndex].IsAutoMapping = true;
             }
+            else
+            {
+                int baseId = 0;
+                for(int x = column; x < column + 1; x++)
+                {
+                    for(int y = row; y < row + 1; y++)
+                    {
+                        //FIX: Dont import GameState, make a method?
+                        //TileAtlas is imported by GameState, so TileAtlas should not import GameState
+                        int atlasSpriteId = 
+                            GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(spriteSheetId, y, x, 0);
+
+                        // the first sprite id is the baseId
+                        if (x == column && y == row)
+                        {
+                            baseId = atlasSpriteId;
+                        }
+                    }
+                }
+   
+                TilePropertyArray[(int)CurrentTileIndex].BaseSpriteId = baseId;
+                TilePropertyArray[(int)CurrentTileIndex].IsAutoMapping = true;
+            }
         }
 
         public void SetTilePropertySpriteSheet(int spriteSheetId, int row, int column)
