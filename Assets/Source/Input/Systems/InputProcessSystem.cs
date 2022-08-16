@@ -132,34 +132,15 @@ namespace ECSInput
                 // Dash
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    GameState.AgentProcessPhysicalState.Dash(player, x);
+                    player.Dash(x);
                 }
 
                 // Attack
                 if (Input.GetKeyDown(KeyCode.K))
                 {
-                    GameState.AgentProcessPhysicalState.SwordSlash(player);
+                    player.Roll(x);
                 }
 
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    GameState.AgentProcessPhysicalState.FireGun(player);
-                }
-
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    player.SetAgentWeapon(Model3DWeapon.Sword);
-                }
-
-                if (Input.GetKeyDown(KeyCode.B))
-                {
-                    player.SetAgentWeapon(Model3DWeapon.Gun);
-                }
-
-                if (Input.GetKeyDown(KeyCode.V))
-                {
-                    player.SetAgentWeapon(Model3DWeapon.None);
-                }
 
                 // Running
                 if (Input.GetKey(KeyCode.LeftAlt))

@@ -16,8 +16,10 @@ namespace Agent
     // http://www.cs.yorku.ca/~amana/research/grid.pdf
     public class ProcessCollisionSystem
     {
-        private void Update(ref TileMap tileMap, PhysicsStateComponent physicsState, Box2DColliderComponent box2DCollider, float deltaTime)
+        private void Update(ref TileMap tileMap, AgentEntity entity, float deltaTime)
         {       
+            PhysicsStateComponent physicsState = entity.agentPhysicsState;
+            Box2DColliderComponent box2DCollider = entity.physicsBox2DCollider;
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
             
@@ -59,9 +61,12 @@ namespace Agent
             }
             else
             {
-                physicsState.WantToDrop = false;
-                physicsState.Droping = false;
-                physicsState.OnGrounded = false;
+                if (physicsState.Velocity.Y >= 0.0f)
+                {
+                    physicsState.WantToDrop = false;
+                    physicsState.Droping = false;
+                    physicsState.OnGrounded = false;
+                }
             }
 
 
@@ -79,14 +84,20 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
+                if (entity.IsStateFree())
+                {
+                    physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
+                }
             }
             else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
+                if (entity.IsStateFree())
+                {
+                    physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
+                }
             }
 
             Vec2f position = physicsState.Position;
@@ -123,10 +134,7 @@ namespace Agent
 
             foreach (var agentEntity in agentEntitiesWithBox)
             {
-                var physicsState = agentEntity.agentPhysicsState;
-                var box2DCollider = agentEntity.physicsBox2DCollider;
-
-                Update(ref tileMap, physicsState, box2DCollider, deltaTime); 
+                Update(ref tileMap, agentEntity, deltaTime); 
             }
         }
     }

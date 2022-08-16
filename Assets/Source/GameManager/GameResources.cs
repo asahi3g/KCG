@@ -965,7 +965,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Player);
         GameState.AgentCreationApi.SetName("player");
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 1.8f));
         GameState.AgentCreationApi.End();
 
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Agent);
@@ -1098,7 +1098,7 @@ public class GameResources
         GameState.ParticleCreationApi.SetDeltaRotation(0);
         GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
         GameState.ParticleCreationApi.SetAnimationType(Animation.AnimationType.Dust);
-        GameState.ParticleCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+        GameState.ParticleCreationApi.SetSize(new Vec2f(0.35f, 0.35f));
         GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
