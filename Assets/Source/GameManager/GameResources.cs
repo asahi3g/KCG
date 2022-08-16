@@ -185,6 +185,8 @@ public class GameResources
     public static int RingSlotIcon;
     public static int BeltSlotIcon;
 
+    public static int DirtIcon;
+
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
 
@@ -279,6 +281,7 @@ public class GameResources
             GlovesSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Gloves.png", 64, 64);
             RingSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Ring.png", 64, 64);
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
+            DirtIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", 16, 16);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -340,6 +343,8 @@ public class GameResources
             DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
+            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
+
 
             // TileIsotypes.
             SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
@@ -956,6 +961,15 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Armour);
         GameState.ItemCreationApi.SetTexture(SuitSprite);
         GameState.ItemCreationApi.SetInventoryTexture(SuitSprite);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Dirt, "Dirt");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(DirtIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(DirtIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(64);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
     }

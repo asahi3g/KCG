@@ -21,6 +21,7 @@ namespace Planet.Unity
 
         int CharacterSpriteId;
         int InventoryID;
+        int MaterialBagID;
 
 
         static bool Init = false;
@@ -107,7 +108,6 @@ namespace Planet.Unity
         public void Initialize()
         {
           
-
             Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
@@ -148,6 +148,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemySwordmanTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBagID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
         }
 
         void GenerateMap()
@@ -325,6 +326,7 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
 
+            MaterialBagID = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID(), "MaterialBag").inventoryID.ID;
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));

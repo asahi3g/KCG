@@ -82,6 +82,7 @@ namespace Inventory
             Init = true;
             CreateDefaultPlayerInventoryModel();
             CreateDefaultRestrictionInventoryModel();
+            CreateMaterialBagInventoryModel();
             CreateDefaultChestInventoryModel();
             CreateDefaultCorpseInventoryModel();
         }
@@ -198,6 +199,22 @@ namespace Inventory
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
+            End();
+        }
+
+        private void CreateMaterialBagInventoryModel()
+        {
+            Create();
+            SetInventoryPos(560f, 630f);
+            SetSize(10, 4);
+            SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
+            SetInventoryBoderOffset(0, 0, 30, 0);
             End();
         }
 

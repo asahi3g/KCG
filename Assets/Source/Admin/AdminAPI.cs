@@ -30,6 +30,18 @@ namespace Admin
             manager.AddItem(contexts, SpawnItem(itemID, contexts), inventoryID);
         }
 
+        public static void AddItemStackable(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, int itemCount, Contexts contexts)
+        {
+            if (contexts == null)
+                return;
+
+            for(int i = 0; i < itemCount; i++)
+            {
+                manager.AddItem(contexts, SpawnItem(itemID, contexts), inventoryID);
+            }
+
+        }
+
         // Give Item to Agent Function
         public static void AddItem(Inventory.InventoryManager manager, AgentEntity agentID, Enums.ItemType itemID, Contexts contexts)
         {
