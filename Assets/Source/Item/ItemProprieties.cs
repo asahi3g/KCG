@@ -17,6 +17,7 @@ namespace Item
         public int InventorSpriteID;
         public int SpriteID;
         public Vec2f SpriteSize;
+        public int MaxStackCount;              // Used only if stackable.
 
         public int FireWeaponID;
 

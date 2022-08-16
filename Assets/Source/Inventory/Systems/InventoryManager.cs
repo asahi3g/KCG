@@ -70,9 +70,18 @@ namespace Inventory
 
             if (inventory.SlotsMask[slotID])
             {
-                // Move to first empty slot:
+                ItemProprieties proprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
                 ItemInventoryEntity currentItem = GetItemInSlot(contexts, inventoryID, slotID);
-                RemoveItem(contexts, inventoryID, slotID);
+
+                // If stackable check if there are any available stack in the inventory.
+                if (proprieties.IsStackable())
+                {
+                    if (TryAddToStack(contexts, itemEntity, currentItem, proprieties.MaxStackCount))
+                        return true;
+                }
+
+                // Move to first empty slot:
+                itemEntity.RemoveItemInventory();
                 if (!AddItemAtFirstEmptySlot(contexts, currentItem, inventoryID))
                     return false;
             }
@@ -103,6 +112,36 @@ namespace Inventory
             return true;
         }
 
+        public bool TryAddToStack(Contexts contexts, ItemInventoryEntity newEntity, ItemInventoryEntity inventoryEntity, int maxStackCount)
+        {
+
+            if (inventoryEntity.itemType.Type != newEntity.itemType.Type)
+                return false;
+
+            int count = newEntity.hasItemStack ? newEntity.itemStack.Count : 1;
+
+            if (inventoryEntity.hasItemStack)
+            {
+                if (count == maxStackCount)
+                    return false;
+
+                if (count + inventoryEntity.itemStack.Count <= maxStackCount)
+                {
+                    inventoryEntity.itemStack.Count += count;
+                    newEntity.Destroy();
+                    return true;
+                }
+            }
+            else
+            {
+                inventoryEntity.AddItemStack(count + 1);
+                newEntity.Destroy();
+                return true;
+            }
+
+            return false;
+        }
+
         public bool AddItem(Contexts contexts, ItemInventoryEntity entity, int inventoryID)
         {
             ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
@@ -112,38 +151,10 @@ namespace Inventory
             {
                 var Group = contexts.itemInventory.GetEntitiesWithItemInventory(inventoryID); // Todo: Use multiple Entity Index. To narrow down the search with item type.
 
-                int NewEntityCount = 1;
-                if (entity.hasItemStack)
-                    NewEntityCount = entity.itemStack.Count;
-
                 foreach (ItemInventoryEntity entityIT in Group)
                 {
-                    if (entityIT.itemType.Type != entity.itemType.Type)
-                    {
-                        continue;
-                    }
-                    
-                    int EntityITCount = 1;
-                    int MaxStackSize = 64;
-                    if (entityIT.hasItemStack)
-                    {
-                        EntityITCount = entityIT.itemStack.Count;
-                        if (EntityITCount == MaxStackSize)
-                            continue;
-                    }
-                    else
-                    {
-                        entityIT.AddItemStack(NewEntityCount + EntityITCount);
-                        entity.Destroy();
+                    if (TryAddToStack(contexts, entity, entityIT, proprieties.MaxStackCount))
                         return true;
-                    }
-                    
-                    if (NewEntityCount + EntityITCount <= MaxStackSize)
-                    {
-                        entityIT.ReplaceItemStack(NewEntityCount + EntityITCount);
-                        entity.Destroy();
-                        return true;
-                    }
                 }
             }
 

@@ -18,7 +18,7 @@ namespace Inventory
 
             for (int i = 0; i < inventoryList.Length; i++)
             {
-                if (inventoryList.Get(i).hasInventoryEntity)
+                if (inventoryList.Get(i).hasInventoryDraw)
                 {
                     Utils.Assert(length < MAX_OPEN_INVENTORY_COUNT);
 
@@ -26,7 +26,7 @@ namespace Inventory
                     length++;
                 }
             }
-
+                
 
             Window[] openWindows = new Window[length];
 
@@ -82,17 +82,18 @@ namespace Inventory
                     // todo: ajust accumulatedY value to new scale
                 }
 
+                float relativePosition = 0; // Vertical position relative to lowest inventory Y position.
                 while (hiddenWindowLength > 0)
                 {
-                    int index = hiddenWindowsIndex[0];
-                    float relativePosition = 0; // Vertical position relative to lowest inventory Y position.
+                    int j = 0;
+                    int index = hiddenWindowsIndex[j];
 
-                    int i = 0;
-                    for (i = 0; i < hiddenWindowLength; i++)
+                    for (int i = 1; i < hiddenWindowLength; i++)
                     {
                         if (openWindows[index].Position.Y > openWindows[hiddenWindowsIndex[i]].Position.Y)
                         {
                             index = hiddenWindowsIndex[i];
+                            j = i;
                         }
                     }
 
@@ -107,7 +108,7 @@ namespace Inventory
                     else
                         inventoryList.Get(openInventoryIndices[index]).inventoryWindowAdjustment.window = openWindows[index];
 
-                    hiddenWindowsIndex[i] = hiddenWindowsIndex[--hiddenWindowLength]; // Decrease hiddenWindowsLength and remove ajusted window.
+                    hiddenWindowsIndex[j] = hiddenWindowsIndex[--hiddenWindowLength]; // Decrease hiddenWindowsLength and remove ajusted window.
                 }
             }
         }

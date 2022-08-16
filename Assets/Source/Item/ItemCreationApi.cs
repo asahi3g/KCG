@@ -131,17 +131,17 @@ namespace Item
             PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Tool;
         }
 
-        public void SetConsumable(int maxStackCount)
+        public void SetConsumable()
         {
             IsItemTypeValid();
 
             PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Consumable;
         }
 
-        public void SetStackable(int maxStackCount)
+        public void SetStackable(int maxStackCount = 99)
         {
             IsItemTypeValid();
-
+            PropertiesArray[(int)CurrentIndex].MaxStackCount = maxStackCount;
             PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
         }
 

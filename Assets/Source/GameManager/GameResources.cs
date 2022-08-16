@@ -747,7 +747,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(SlimeIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetStackable(3);
+        GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Food, "Food");
@@ -755,7 +755,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(FoodIcon);
         GameState.ItemCreationApi.SetInventoryTexture(FoodIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetStackable(6);
+        GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bone, "Bone");
@@ -763,7 +763,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(BoneIcon);
         GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetStackable(9);
+        GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
@@ -969,7 +969,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(DirtIcon);
         GameState.ItemCreationApi.SetInventoryTexture(DirtIcon);
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-        GameState.ItemCreationApi.SetStackable(64);
+        GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
     }
