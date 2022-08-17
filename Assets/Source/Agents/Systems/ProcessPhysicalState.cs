@@ -22,7 +22,7 @@ namespace Agent
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
                 {
-                    if (physicsState.Velocity.Y <= -epsilon)
+                    if (physicsState.Velocity.Y <= -epsilon && entity.IsStateFree())
                     {
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
