@@ -166,73 +166,31 @@ namespace KGUI
                 item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                 if(item != null)
                 {
-                    if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active || dirtUIBackground.IsMouseOver(CursorPosition) &&
-                        dirtUIBackground.GetGameObject().active || pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active ||
-                            wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GetGameObject().active)
+                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
                     {
-                        if (item != null)
+                        if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active ||
+                            dirtUIBackground.IsMouseOver(CursorPosition)    && dirtUIBackground.GetGameObject().active || 
+                            pipeUIBackground.IsMouseOver(CursorPosition)    && pipeUIBackground.GetGameObject().active ||
+                            wireUIBackground.IsMouseOver(CursorPosition)    && wireUIBackground.GetGameObject().active)
                         {
-                            if (item.itemType.Type == Enums.ItemType.PlacementTool)
-                            {
-                                item.itemCastData.InputsActive = false;
-                            }
+                            item.itemCastData.InputsActive = false;
                         }
-                    }
-                    else
-                    {
-                        if (item.itemType.Type == Enums.ItemType.PlacementTool)
+                        else
                         {
                             item.itemCastData.InputsActive = true;
                         }
-                    }
-
-                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
-                    {
+                        
                         dirtUIBackground.GetGameObject().SetActive(true);
                         bedrockUIBackground.GetGameObject().SetActive(true);
                         wireUIBackground.GetGameObject().SetActive(true);
                         pipeUIBackground.GetGameObject().SetActive(true);
 
-                        if (item.itemCastData.data.TileID == TileID.Bedrock)
-                        {
-                            // Set Red After Selected
-                            bedrockUIBackground.SetImageColor(Color.red);
-                        }
-                        else
-                        {
-                            // Set Yellow After Unselected
-                            bedrockUIBackground.SetImageColor(Color.yellow);
-                        }
-                        if (item.itemCastData.data.TileID == TileID.Moon)
-                        {
-                            // Set Red After Selected
-                            dirtUIBackground.SetImageColor(Color.red);
-                        }
-                        else
-                        {
-                            // Set Yellow After Unselected
-                            dirtUIBackground.SetImageColor(Color.yellow);
-                        }
-                        if (item.itemCastData.data.TileID == TileID.Pipe)
-                        {
-                            // Set Red After Selected
-                            pipeUIBackground.SetImageColor(Color.red);
-                        }
-                        else
-                        {
-                            // Set Yellow After Unselected
-                            pipeUIBackground.SetImageColor(Color.yellow);
-                        }
-                        if (item.itemCastData.data.TileID == TileID.Wire)
-                        {
-                            // Set Red After Selected
-                            wireUIBackground.SetImageColor(Color.red);
-                        }
-                        else
-                        {
-                            // Set Yellow After Unselected
-                            wireUIBackground.SetImageColor(Color.yellow);
-                        }
+                        // If Selected     = Red
+                        // If Not Selected = Yellow
+                        bedrockUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Bedrock ? Color.red : Color.yellow);
+                        dirtUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Moon       ? Color.red : Color.yellow);
+                        pipeUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Pipe       ? Color.red : Color.yellow);
+                        wireUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Wire       ? Color.red : Color.yellow);
                     }
                     else
                     {

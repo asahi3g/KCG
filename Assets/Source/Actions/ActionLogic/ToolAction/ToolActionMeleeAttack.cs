@@ -4,13 +4,15 @@ using Planet;
 using UnityEngine;
 using System.Collections.Generic;
 using Agent;
+using Enums;
 
 namespace Action
 {
     public class ToolActionMeleeAttack : ActionBase
     {
         private Item.FireWeaponPropreties WeaponProperty;
-        private List<AgentEntity> Enemies = new List<AgentEntity>();
+        private List<AgentEntity> Enemies = new();
+        private List<MechEntity> ToRemoveMechs = new();
         private ItemInventoryEntity ItemEntity;
         private bool CanStun;
         private float elapsed;
@@ -37,7 +39,7 @@ namespace Action
             float y = worldPosition.y;
 
             // Check if projectile has hit a enemy.
-            var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            var agents = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.2f, AgentEntity.agentPhysicsState.Position.Y));
             var player = planet.Player;
@@ -45,12 +47,12 @@ namespace Action
             {
                 var physicsState = player.agentPhysicsState;
                 GameState.AgentProcessPhysicalState.SwordSlash(player);
-                foreach (var entity in entities)
+                foreach (var agent in agents)
                 {
-                    var testState = entity.agentState;
-                    if (entity != player && testState.State == AgentState.Alive)
+                    var testState = agent.agentState;
+                    if (agent != player && testState.State == AgentState.Alive)
                     {
-                        var testPhysicsState = entity.agentPhysicsState;
+                        var testPhysicsState = agent.agentPhysicsState;
 
                         //TODO(): not good we need collision checks
                         if (Vec2f.Distance(testPhysicsState.Position, physicsState.Position) <= WeaponProperty.Range)
@@ -68,17 +70,42 @@ namespace Action
                             direction.Y = 0;
                             direction.Normalize();
 
-                            GameState.AgentProcessPhysicalState.Knockback(entity, 7.0f, -KnockbackDir);
+                            GameState.AgentProcessPhysicalState.Knockback(agent, 7.0f, -KnockbackDir);
 
                             // spawns a debug floating text for damage 
                             planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
                             new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
 
-                            entity.agentStats.Health -= (int)damage;
+                            agent.agentStats.Health -= (int)damage;
+                        }
+                    }
+                }
+                
+                var destructableMechs = EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechDurability));
+
+                foreach (var mech in destructableMechs)
+                {
+                    var testMechPosition = mech.mechPosition2D;
+
+                    if (Vec2f.Distance(testMechPosition.Value, physicsState.Position) <= WeaponProperty.Range)
+                    {
+                        mech.mechDurability.Durability -= 20;
+
+                        if (mech.mechDurability.Durability <= 0)
+                        {
+                            ToRemoveMechs.Add(mech);
                         }
                     }
                 }
             }
+
+            foreach (var mech in ToRemoveMechs)
+            {
+                planet.AddDebris(mech.mechPosition2D.Value, GameResources.ChestIconParticle, 1.5f, 1.0f);
+                planet.RemoveMech(mech.mechID.Index);
+            }
+            
+            ToRemoveMechs.Clear();
 
             /*// Todo: Create a agent colision system?
             foreach (var entity in entities)
