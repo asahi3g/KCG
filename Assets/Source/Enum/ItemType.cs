@@ -55,6 +55,7 @@
         /// Tools
         /// </summary>
         PlacementTool,
+        PlacementMaterialTool,
         PlacementToolBack,
         RemoveTileTool,
         MiningLaserTool,

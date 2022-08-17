@@ -213,6 +213,25 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMechPlacement);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMechPlacementCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Material Placement
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMaterialPlacement);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceMaterialCreator());
+
+            // Set Data Struct
+            var MaterialData = new Enums.Tile.Data
+            {
+                // Set Tile ID
+                TileID = TileID.Error,
+
+                // Set Layer
+                Layer = MapLayerType.Front
+            };
+
+            // Set Data
+            GameState.ActionPropertyManager.SetData(MaterialData);
+
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }
