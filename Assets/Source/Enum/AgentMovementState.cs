@@ -9,6 +9,8 @@ namespace Enums
         JetPackFlying,  // Using the jetpack
         Dashing,        // Dashing
         Rolling, //Rolling
+        Crouch,
+        Crouch_Move,
         StandingUpAfterRolling,  // standing up after rolling
         Stagger,        // Stagger
         SlidingLeft,    // Wall sliding down

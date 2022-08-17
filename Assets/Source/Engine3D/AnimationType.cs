@@ -14,6 +14,8 @@ namespace Engine3D
         Jog,
         Dash,
         Roll,
+        Crouch,
+        Crouch_Walk,
         Stagger,
         JumpFall,
         SwordSlash,

@@ -33,7 +33,7 @@ namespace Agent
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 10f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0);
+                Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             var size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
@@ -59,7 +59,7 @@ namespace Agent
             entity.AddAgentPhysicsState(position, newPreviousPosition: default, 
                 newSpeed: 1f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1, 
                 Enums.AgentMovementState.None,
-                true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
+                true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
 
             if (inventoryID != -1)
@@ -83,7 +83,7 @@ namespace Agent
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
                 newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                 Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
+                 Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
             
 
