@@ -22,12 +22,14 @@ namespace Agent
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
                 {
-                    if (physicsState.Velocity.Y <= -epsilon)
+                    if (physicsState.Velocity.Y <= -epsilon && entity.IsStateFree())
                     {
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
                     else if (entity.IsStateFree() &&
-                    physicsState.MovementState != AgentMovementState.JetPackFlying)
+                    physicsState.MovementState != AgentMovementState.JetPackFlying &&
+                    physicsState.MovementState != AgentMovementState.Crouch &&
+                    physicsState.MovementState != AgentMovementState.Crouch_Move)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -127,10 +129,10 @@ namespace Agent
                     physicsState.JumpCounter = 0;
                     /*if (physicsState.MovementState == AgentMovementState.SlidingRight || physicsState.MovementState == AgentMovementState.SlidingLeft)
                     {*/
-                    if (entity.IsStateFree())
+                    /*if (entity.IsStateFree())
                     {
                         physicsState.MovementState = AgentMovementState.None;
-                    }
+                    }*/
                  //   }
                 }
 
@@ -154,19 +156,41 @@ namespace Agent
                 // spawn some particles and limit vertical movement
                 if (physicsState.MovementState == AgentMovementState.SlidingRight)
                 {
+                    physicsState.SlidingTime += deltaTime;
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    if (physicsState.SlidingTime < 0.75f)
+                    {
+                        physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    }
+                    else
+                    {
+                        physicsState.Velocity.Y = -1.75f;
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                    }
                     physicsState.AffectedByGravity = false;
-                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                    
                 }
                 else if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                 {
+                    physicsState.SlidingTime += deltaTime;
+
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    if (physicsState.SlidingTime < 0.75f)
+                    {
+                        physicsState.Velocity.Y = 0.0f;//-1.75f;
+                    }
+                    else
+                    {
+                        physicsState.Velocity.Y = -1.75f;
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                    }
                     physicsState.AffectedByGravity = false;
-                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                }
+                else
+                {
+                    physicsState.SlidingTime = 0.0f;
                 }
 
                 if (physicsState.MovementState == AgentMovementState.JetPackFlying)
@@ -194,6 +218,7 @@ namespace Agent
                     else
                         stats.Fuel = 100;
                 }
+                
 
 
                 if (physicsState.MovementState == AgentMovementState.Idle || 
@@ -210,12 +235,48 @@ namespace Agent
                     }
                 }
 
+                if (physicsState.MovementState == AgentMovementState.Crouch ||
+                physicsState.MovementState == AgentMovementState.Crouch_Move)
+                {
+                    if (physicsState.Velocity.X >= physicsState.Speed * 0.1f ||
+                    physicsState.Velocity.X <= -physicsState.Speed * 0.1f)
+                    {
+                        physicsState.MovementState = AgentMovementState.Crouch_Move;
+                    }
+                    else
+                    {
+                        physicsState.MovementState = AgentMovementState.Crouch;
+                    }
+                }
+
                 if (physicsState.MovementState == AgentMovementState.Idle ||
                 physicsState.MovementState == AgentMovementState.None ||
                 physicsState.MovementState == AgentMovementState.Move ||
                 physicsState.MovementState == AgentMovementState.JetPackFlying)
                 {
                     physicsState.AffectedByGravity = true;
+                }
+
+
+
+
+                var IDComponent = entity.agentID;
+                var box2DComponent = entity.physicsBox2DCollider;
+
+                AgentProperties properties = GameState.AgentCreationApi.Get((int)IDComponent.Type);
+
+                if (physicsState.MovementState == AgentMovementState.Crouch ||
+                physicsState.MovementState == AgentMovementState.Crouch_Move)
+                {
+                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * 0.75f;
+                }
+                else if (physicsState.MovementState == AgentMovementState.Rolling)
+                {
+                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * 0.5f;
+                }
+                else
+                {
+                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * 1.0f;
                 }
             }
         }
@@ -347,13 +408,28 @@ namespace Agent
             var PhysicsState = agentEntity.agentPhysicsState;
             if (agentEntity.IsStateFree())
             {
-                if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
+                if (PhysicsState.MovementState == AgentMovementState.Crouch ||
+                PhysicsState.MovementState == AgentMovementState.Crouch_Move)
                 {
-                    PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
+                    {
+                        PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
+                    {
+                        PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
                 }
-                else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
+                else
                 {
-                    PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
+                    {
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
+                    {
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
                 }
 
                 if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)

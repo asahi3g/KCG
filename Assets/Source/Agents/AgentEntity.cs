@@ -144,4 +144,45 @@ public partial class AgentEntity
             PhysicsState.RollCooldown = 1.75f;
         }
     }
+
+    public void Crouch(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+
+        if (IsStateFree() && PhysicsState.OnGrounded && 
+        PhysicsState.MovementState != AgentMovementState.Crouch &&
+        PhysicsState.MovementState != AgentMovementState.Crouch_Move)
+        {
+            
+            PhysicsState.Invulnerable = false;
+            PhysicsState.AffectedByGravity = true;
+            PhysicsState.AffectedByFriction = true;
+            if (horizontalDir == 0)
+            {
+                PhysicsState.MovementState = AgentMovementState.Crouch;
+            } 
+            else
+            {
+                PhysicsState.MovementState = AgentMovementState.Crouch_Move;
+            }
+        }
+    }
+
+    public void UnCrouch(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+
+        if (PhysicsState.MovementState == AgentMovementState.Crouch ||
+        PhysicsState.MovementState == AgentMovementState.Crouch_Move)
+        {
+            if (horizontalDir == 0)
+            {
+                PhysicsState.MovementState = AgentMovementState.Idle;
+            }
+            else
+            {
+                PhysicsState.MovementState = AgentMovementState.Move;
+            }
+        }
+    }
 }
