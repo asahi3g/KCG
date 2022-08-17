@@ -49,7 +49,7 @@ namespace Particle
                         ParticleCreationApi.Get((int)Particle.ParticleType.Debris);
 
             var entity = context.CreateEntity();
-            entity.AddParticleID(UniqueID, -1);
+            entity.AddParticleID(UniqueID++, -1);
             entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0);

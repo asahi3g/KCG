@@ -12,16 +12,15 @@ namespace Agent
             
             float deltaTime = Time.deltaTime;
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
-            if (entities.count > 0)
+            foreach (var entity in entities)
             {
-                var entity = entities.GetEntities()[0];
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
-                if (entity.isAgentPlayer)
+                /*if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
-                }
+                }*/
 
                 switch(physicsState.MovementState)
                 {
