@@ -52,6 +52,11 @@ namespace Planet.Unity
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
         }
 
+        private void OnDrawGizmos()
+        {
+            GameState.PathFindingDebugSystem.Draw();
+        }
+
         // create the sprite atlas for testing purposes
         public void Initialize()
         {

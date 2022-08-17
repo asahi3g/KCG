@@ -24,5 +24,15 @@ namespace Agent
         // Stats
         public float Health;
         public float AttackCooldown;
+
+        public MovementProperties MovProperties;
+    }
+
+    public struct MovementProperties
+    {
+        public Enums.AgentMovementType MovType;
+        public float MaxNumOfJumps;
+        public float JumpHeight;
+        public float DefaultSpeed;
     }
 }

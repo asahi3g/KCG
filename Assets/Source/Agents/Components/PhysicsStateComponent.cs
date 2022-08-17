@@ -25,7 +25,7 @@ namespace Agent
         public bool Droping;            // dropping
         public bool WantToDrop;         // dropKey is pressed or not
 
-        public int JumpCounter;
+        public int   JumpCounter;
         public float SlidingTime;
         public float DyingDuration;
         public float DashCooldown;

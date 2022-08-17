@@ -9,7 +9,7 @@ namespace AI.Movement
 {
     public class PathFinding
     {
-        const int MAX_NUM_NODES = 256; // Maximum size of open/closed Map.
+        public const int MAX_NUM_NODES = 256; // Maximum size of open/closed Map.
 
         // Todo: use only Up down, left right for pathfinding: Then filtering. 
         readonly PathAdjacency[] directions = new PathAdjacency[8]
@@ -47,7 +47,7 @@ namespace AI.Movement
         /// Path is the shortest possible path.
         /// Vec2f[] has closest node at the end of the list.
         /// </summary>
-        public Vec2f[] getPath(ref TileMap tileMap, Vec2f start, Vec2f end)
+        public Vec2f[] getPath(ref TileMap tileMap, Vec2f start, Vec2f end, Enums.AgentMovementType movType)
         {
             if (tileMap.GetFrontTileID((int)end.X, (int)end.Y) != TileID.Air)
             {
@@ -60,6 +60,14 @@ namespace AI.Movement
             // Check max distance here.
             SetFirstNode(startPos, endPos);
             SetFirstNodeJumpValue(startPos, ref tileMap);
+
+            switch (movType)
+            {
+                case Enums.AgentMovementType.FlyingMovemnt:
+                    break;
+                default:
+                    break;
+            }
 
             // Todo: Profile sorting against searching, Gnomescroll sort the nodes. I am not sure its the fatest way.
             // It's possible that 
@@ -167,46 +175,28 @@ namespace AI.Movement
             return path;
         }
 
-        // todo: Deals with non square blocks.
-        /*
-        bool PassableFly(ref TileMap tileMap, ref Node current, int indDir)
+        bool EmptySpace(ref TileMap tileMap, ref Node current)
         {
-            // TODO -- parameterized
-            Vec2i CHARACTER_SIZE = new Vec2i(1, 1); // How many blocks character takes.
-
-            Vec2i exitPos = current.pos + directions[indDir].dir;
-
-            // Check if character can move to this tile
-            Vec2i tilePos =
-                new Vec2i((int)(exitPos.X - 0.5f) + (CHARACTER_SIZE.X - 1),
-                    (int)(exitPos.Y - 0.5f) + (CHARACTER_SIZE.Y - 1)); // Get block character wasn't occupying before.
-
-            // If solid return false.
-            if (tileMap.GetFrontTileID(tilePos.X, tilePos.Y) != TileID.Air)
+            // Check if tile is inside the map.
+            if (current.pos.X < 0 || current.pos.X > tileMap.MapSize.X ||
+                current.pos.Y < 0 || current.pos.Y > tileMap.MapSize.Y)
                 return false;
 
-            // if Diagonal directions.
-            if (indDir > 3)
-            {
-                // Adjacent blocks needs to be free to go in a diagonal directions. 
-                // (This is a simplification) This should not be true for small agents.
-                Vec2i verTilePos = tilePos;
-                verTilePos.X -= (int)directions[indDir].dir.X;
+            // If solid return false.
+            if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y) != TileID.Air)
+                return false;
 
-                if (tileMap.GetFrontTileID(verTilePos.X, verTilePos.Y) != TileID.Air)
-                    return false;
-
-                Vec2i horTilePos = tilePos;
-                horTilePos.Y -= (int)directions[indDir].dir.Y;
-
-                if (tileMap.GetFrontTileID(horTilePos.X, horTilePos.Y) != TileID.Air)
-                    return false;
-            }
-
-            current.pos = exitPos;
-            current.pathCost += directions[indDir].cost;
             return true;
-        }*/
+        }
+
+
+        bool PassableFly(ref TileMap tileMap, ref Node current, int indDir)
+        {
+            current.pos = current.pos + directions[indDir].dir;
+            current.pathCost += directions[indDir].cost;
+
+            return EmptySpace(ref tileMap, ref current);
+        }
 
         /// <summary>
         /// Check if player can reach the space. 
@@ -227,13 +217,7 @@ namespace AI.Movement
             current.pos = current.pos + directions[indDir].dir;
             current.pathCost += directions[indDir].cost;
 
-            // Check if tile is inside the map.
-            if (current.pos.X < 0 || current.pos.X > tileMap.MapSize.X ||
-                current.pos.Y < 0 || current.pos.Y > tileMap.MapSize.Y)
-                return false;
-
-            // If solid return false.
-            if (tileMap.GetFrontTileID(current.pos.X, current.pos.Y) != TileID.Air)
+            if (!EmptySpace(ref tileMap, ref current))
                 return false;
 
             // Jump and falling paths:

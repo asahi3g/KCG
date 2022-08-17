@@ -21,9 +21,11 @@ namespace Action
 #if DEBUG
             float deltaTime = Time.realtimeSinceStartup;
 #endif
-            Vec2f goalPosition = ActionEntity.actionMoveTo.GoalPosition;
 
-            path = GameState.PathFinding.getPath(ref planet.TileMap, AgentEntity.agentPhysicsState.Position, goalPosition);
+            Vec2f goalPosition = ActionEntity.actionMoveTo.GoalPosition;
+            Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)AgentEntity.agentID.Type);
+            path = GameState.PathFinding.getPath(ref planet.TileMap, AgentEntity.agentPhysicsState.Position, goalPosition, movProperties.MovType);
+
 #if DEBUG
             deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
             Debug.Log("Found time in " + deltaTime.ToString() + "ms");
@@ -42,6 +44,8 @@ namespace Action
         public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
         {
             Vec2f targetPos = path[pathLength - 1];
+
+            GameState.PathFindingDebugSystem.AddPath(ref path, pathLength);
 
             Vec2f direction = targetPos - AgentEntity.agentPhysicsState.Position;
 

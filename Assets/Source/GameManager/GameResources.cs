@@ -976,21 +976,21 @@ public class GameResources
 
     private static void CreateAgents()
     {
-        GameState.AgentCreationApi.Create((int)Agent.AgentType.Player);
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
         GameState.AgentCreationApi.SetName("player");
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 1.8f));
         GameState.AgentCreationApi.End();
 
-        GameState.AgentCreationApi.Create((int)Agent.AgentType.Agent);
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.Agent);
         GameState.AgentCreationApi.SetName("agent");
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.25f, 0.0f), new Vec2f(0.5f, 1.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.CharacterMoveLeft);
         GameState.AgentCreationApi.End();
 
-        GameState.AgentCreationApi.Create((int)Agent.AgentType.Enemy);
-        GameState.AgentCreationApi.SetName("enemy");
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.Slime);
+        GameState.AgentCreationApi.SetName("Slime");
         GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
@@ -1001,7 +1001,19 @@ public class GameResources
         GameState.AgentCreationApi.SetAttackCooldown(0.8f);
         GameState.AgentCreationApi.End();
 
-        GameState.AgentCreationApi.Create((int)Agent.AgentType.EnemySwordman);
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.FlyingSlime);
+        GameState.AgentCreationApi.SetName("Flying Slime");
+        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
+        GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Slime);
+        GameState.AgentCreationApi.SetDetectionRadius(4.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.SetAttackCooldown(0.8f);
+        GameState.AgentCreationApi.End();
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemySwordman);
         GameState.AgentCreationApi.SetName("enemy-swordman");
         GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
@@ -1011,7 +1023,7 @@ public class GameResources
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
 
-        GameState.AgentCreationApi.Create((int)Agent.AgentType.EnemyGunner);
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyGunner);
         GameState.AgentCreationApi.SetName("enemy-gunner");
         GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
