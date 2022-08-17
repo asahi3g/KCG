@@ -331,10 +331,10 @@ namespace ECSInput
                         GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
                         if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
                         {
-                            var inventories = contexts.inventory.GetGroup(InventoryMatcher.InventoryDraw);
-                            foreach (var openInventory in inventories)
+                            for (int i = 0; i < planet.InventoryList.Length; i++)
                             {
-                                GameState.InventoryManager.CloseInventory(planet.InventoryList, openInventory);
+                                if (planet.InventoryList.Get(i).hasInventoryDraw)
+                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, planet.InventoryList.Get(i));
                             }
                         }
                     }

@@ -144,6 +144,8 @@ namespace Planet
             MechEntity entity = MechList.Get(index);
             Utils.Assert(entity.isEnabled);
             GameState.LootDropSystem.Add(GameState.MechCreationApi.Get((int)entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
+            
+            RemoveInventory(entity.mechInventory.InventoryID, entity.mechPosition2D.Value);
             MechList.Remove(index);
         }
 
@@ -163,7 +165,7 @@ namespace Planet
         public void RemoveInventory(int inventoryID)
         {
             // Spawn itemsInventory inside as item particles.
-            InventoryEntity entity = InventoryList.Get(inventoryID);
+            InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
             for (int i = 0; i < entity.inventoryEntity.Size; i++)
             {
@@ -181,11 +183,12 @@ namespace Planet
 
         /// <summary>
         /// Remove Items and Spawn itemsParticles.
+        /// InventoryID is not the index.
         /// </summary>
         public void RemoveInventory(int inventoryID, Vec2f pos)
         {
             // Spawn itemsInventory inside as item particles.
-            InventoryEntity entity = InventoryList.Get(inventoryID);
+            InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
             for (int i = 0; i < entity.inventoryEntity.Size; i++)
             {
@@ -193,7 +196,9 @@ namespace Planet
                 if (itemInventory == null)
                     continue;
 
+                int rand = UnityEngine.Random.Range(0, 100);
                 GameState.InventoryManager.RemoveItem(EntitasContext, inventoryID, i);
+                pos.X += rand / 100f;
                 GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, itemInventory, pos);
             }
 

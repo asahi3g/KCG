@@ -44,10 +44,13 @@ public partial class AgentEntity
     public void SetAgentWeapon(Model3DWeapon weapon)
     {
         Model3DComponent model3d = null;
-        if(hasAgentModel3D)
+        if (hasAgentModel3D)
         {
             model3d = agentModel3D;
         }
+        else
+            return;
+
         if (weapon == Model3DWeapon.Sword)
         {        
             if (model3d.CurrentWeapon != Model3DWeapon.Sword)
@@ -94,9 +97,6 @@ public partial class AgentEntity
         }
         else
         {
-            if (model3d == null)
-                return;
-
             if (model3d.Weapon != null)
             {
                 GameObject.Destroy(model3d.Weapon);
