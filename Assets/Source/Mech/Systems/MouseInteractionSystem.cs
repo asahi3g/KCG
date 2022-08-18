@@ -14,8 +14,14 @@ namespace Mech
 
             for (int i = 0; i < planet.MechList.Length; i++)
             {
-                Vec2f pos = planet.MechList.Get(i).mechPosition2D.Value;
-                Vec2f size = planet.MechList.Get(i).mechSprite2D.Size;
+                Vec2f pos = Vec2f.Zero;
+                Vec2f size = Vec2f.Zero;
+
+                if (planet.MechList.Get(i).hasMechPosition2D)
+                {
+                    pos = planet.MechList.Get(i).mechPosition2D.Value;
+                    size = planet.MechList.Get(i).mechSprite2D.Size;
+                }
 
                 // Is mouse over it?
                 if (mousePos.X < pos.X || mousePos.Y < pos.Y)
