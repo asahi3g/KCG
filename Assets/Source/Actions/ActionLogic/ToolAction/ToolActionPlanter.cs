@@ -65,6 +65,7 @@ namespace Action
                                     if (!entity.mechPlanter.GotSeed)
                                     {
                                         PlantToAdd = true;
+                                        if(Plant != null)
                                         entity.mechPlanter.PlantMechID = Plant.mechID.ID;
 
                                         // Mech Property
