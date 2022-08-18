@@ -148,7 +148,18 @@ namespace ECSInput
                     GameState.AgentProcessPhysicalState.Run(player, x);
                 }
                 else
+                {
                     GameState.AgentProcessPhysicalState.Walk(player, x);
+                }
+
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    player.Crouch(x);
+                }
+                else
+                {
+                    player.UnCrouch(x);
+                }
 
                 // JetPack
                 if (Input.GetKey(KeyCode.F))

@@ -12,11 +12,15 @@ namespace Agent
             
             float deltaTime = Time.deltaTime;
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
-            if (entities.count > 0)
+            foreach (var entity in entities)
             {
-                var entity = entities.GetEntities()[0];
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
+
+                /*if (entity.isAgentPlayer)
+                {
+                    Debug.Log(physicsState.MovementState);
+                }*/
 
                 switch(physicsState.MovementState)
                 {
@@ -62,6 +66,18 @@ namespace Agent
                     case AgentMovementState.Rolling:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Roll);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.Crouch:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Crouch);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.Crouch_Move:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Crouch_Walk);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }

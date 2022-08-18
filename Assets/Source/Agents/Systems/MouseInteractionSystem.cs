@@ -17,9 +17,10 @@ namespace Agent
                 AgentEntity agentEntity = planet.AgentList.Get(i);
                 if (agentEntity.isAgentPlayer)
                     continue;
+                    
                 
                 Vec2f pos = agentEntity.agentPhysicsState.Position;
-                Vec2f size = agentEntity.agentSprite2D.Size;
+                Vec2f size = agentEntity.physicsBox2DCollider.Size;
                 AgentProperties properties = GameState.AgentCreationApi.Get((int)agentEntity.agentID.Type);
 
                 // Is mouse over it?

@@ -84,7 +84,7 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree())
+                if (entity.IsStateFree() && !physicsState.OnGrounded)
                 {
                     physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
                 }
@@ -94,7 +94,7 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree())
+                if (entity.IsStateFree() && !physicsState.OnGrounded)
                 {
                     physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
                 }
