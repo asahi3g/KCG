@@ -50,6 +50,9 @@
         /// Materials
         /// </summary>
         Dirt,
+        Bedrock,
+        Pipe,
+        Wire,
 
         /// <summary>
         /// Tools
