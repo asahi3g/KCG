@@ -1,9 +1,23 @@
 using UnityEngine;
 using Agent;
 using Enums;
+using System;
+using KMath;
 
 public partial class AgentEntity 
 {
+
+    public void Destroy()
+    {
+        if (hasAgentModel3D)
+        {
+            var model3D = agentModel3D;
+            if (model3D.GameObject != null)
+            {
+                GameObject.Destroy(model3D.GameObject);
+            }
+        }
+    }
 
     public bool IsStateFree()
     {
@@ -16,7 +30,8 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
-        physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
+        physicsState.MovementState != AgentMovementState.StandingUpAfterRolling &&
+        physicsState.MovementState != AgentMovementState.UseTool ;
     }
 
     public void DieInPlace()
@@ -106,6 +121,32 @@ public partial class AgentEntity
         model3d.CurrentWeapon = weapon;
     }
 
+    public void FireGun(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.FireGun;
+
+            physicsState.GunDuration = cooldown;
+            physicsState.GunCooldown = cooldown;
+        }
+    }
+
+    public void UseTool(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.UseTool;
+
+            physicsState.ToolDuration = cooldown;
+            physicsState.ToolCooldown = cooldown;
+        }
+    }
+
 
     public void Dash(int horizontalDir)
     {
@@ -182,6 +223,97 @@ public partial class AgentEntity
             else
             {
                 PhysicsState.MovementState = AgentMovementState.Move;
+            }
+        }
+    }
+
+
+
+    public void Run(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+        var stats = agentStats;
+
+        if (IsStateFree() && !stats.IsLimping)
+        {
+            // handling horizontal movement (left/right)
+            if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
+            {
+                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
+            }
+
+            if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
+            {
+                // if we move to the right
+                // that means we are no longer sliding down on the left
+                PhysicsState.MovementState = AgentMovementState.None;
+            }
+            else if (horizontalDir < -1.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
+            {
+                // if we move to the left
+                // that means we are no longer sliding down on the right
+                PhysicsState.MovementState = AgentMovementState.None;
+            }
+        }
+
+    }
+
+    public void Walk(int horizontalDir)
+    {
+        var PhysicsState = agentPhysicsState;
+        var stats = agentStats;
+        
+        if (IsStateFree())
+        {
+            if (PhysicsState.MovementState == AgentMovementState.Crouch ||
+            PhysicsState.MovementState == AgentMovementState.Crouch_Move)
+            {
+                if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
+                {
+                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                }
+                else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
+                {
+                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                }
+            }
+            else
+            {
+                if (stats.IsLimping)
+                {
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
+                    {
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
+                    {
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                }
+                else
+                {
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
+                    {
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
+                    {
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    }
+                }
+            }
+
+            if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
+            {   
+                // if we move to the right
+                // that means we are no longer sliding down on the left
+                PhysicsState.MovementState = AgentMovementState.None;
+            }
+            else if (horizontalDir < -0.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
+            {
+                // if we move to the left
+                // that means we are no longer sliding down on the right
+                PhysicsState.MovementState = AgentMovementState.None;
             }
         }
     }

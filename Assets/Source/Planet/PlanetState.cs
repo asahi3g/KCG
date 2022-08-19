@@ -55,6 +55,16 @@ namespace Planet
             EntitasContext = new Contexts();
         }
 
+        public void Destroy()
+        {
+            for(int agentId = 0; agentId < AgentList.Length; agentId++)
+            {
+                AgentEntity entity = AgentList.Get(agentId);
+
+                entity.Destroy();
+            }
+        }
+
         public void InitializeSystems(Material material, Transform transform)
         {
             GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
@@ -144,8 +154,11 @@ namespace Planet
             MechEntity entity = MechList.Get(index);
             Utils.Assert(entity.isEnabled);
             GameState.LootDropSystem.Add(GameState.MechCreationApi.Get((int)entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
-            
-            RemoveInventory(entity.mechInventory.InventoryID, entity.mechPosition2D.Value);
+
+            if (entity.hasMechInventory)
+            {            
+                RemoveInventory(entity.mechInventory.InventoryID, entity.mechPosition2D.Value);
+            }
             MechList.Remove(index);
         }
 
@@ -226,10 +239,9 @@ namespace Planet
 
         public MechEntity GetMechFromPosition(Vec2f position)
         {
-            foreach (var mech in MechList.List)
+            for(int mechIndex = 0; mechIndex < MechList.Length; mechIndex++)
             {
-                if (mech == null) break;
-
+                var mech = MechList.Get(mechIndex);
                 var mechBox = new AABox2D(mech.mechPosition2D.Value, mech.mechSprite2D.Size);
                 if (mechBox.OverlapPoint(position))
                 {

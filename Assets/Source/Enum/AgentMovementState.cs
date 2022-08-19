@@ -10,6 +10,7 @@ namespace Enums
         Dashing,        // Dashing
         Rolling, //Rolling
         Crouch,
+        Limp,
         Crouch_Move,
         StandingUpAfterRolling,  // standing up after rolling
         Stagger,        // Stagger
@@ -17,6 +18,7 @@ namespace Enums
         SlidingRight,    // Wall sliding down
         SwordSlash,
         FireGun,
+        UseTool,
         KnockedDownFront, // the death animation front version
         LyingFront, // dead state front version
         KnockedDownBack, // the death animation back version
