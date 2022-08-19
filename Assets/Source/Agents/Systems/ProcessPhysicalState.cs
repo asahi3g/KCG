@@ -17,6 +17,8 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
+                stats.IsLimping = stats.Health <= 50.0f;
+
                 float epsilon = 4.0f;
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
@@ -85,13 +87,25 @@ namespace Agent
                     }
                 }
 
-                if (physicsState.FireGunCooldown > 0)
+                if (physicsState.GunDuration > 0)
                 {
-                    physicsState.FireGunCooldown -= deltaTime;
+                    physicsState.GunDuration -= deltaTime;
                 }
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.FireGun)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
+                if (physicsState.ToolDuration > 0)
+                {
+                    physicsState.ToolDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.UseTool)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -224,10 +238,17 @@ namespace Agent
                 if (physicsState.MovementState == AgentMovementState.Idle || 
                 physicsState.MovementState == AgentMovementState.None)
                 {
-                    if (physicsState.Velocity.X >= physicsState.Speed * 0.3f ||
-                    physicsState.Velocity.X <= -physicsState.Speed * 0.3f)
+                    if (physicsState.Velocity.X >= physicsState.Speed * 0.1f ||
+                    physicsState.Velocity.X <= -physicsState.Speed * 0.1f)
                     {
-                        physicsState.MovementState = AgentMovementState.Move;
+                        if (stats.IsLimping)
+                        {
+                            physicsState.MovementState = AgentMovementState.Limp;
+                        }
+                        else
+                        {
+                            physicsState.MovementState = AgentMovementState.Move;
+                        }
                     }
                     else
                     {
@@ -349,19 +370,6 @@ namespace Agent
             }
         }
 
-        public void FireGun(AgentEntity agentEntity)
-        {
-            var PhysicsState = agentEntity.agentPhysicsState;
-
-            if (PhysicsState.SlashCooldown <= 0.0f && 
-            agentEntity.IsStateFree())
-            {
-                PhysicsState.MovementState = AgentMovementState.FireGun;
-                PhysicsState.FireGunCooldown = 0.6f;
-            }
-        }
-
-
         public void JetPackFlying(AgentEntity agentEntity)
         {
             var stats = agentEntity.agentStats;
@@ -375,77 +383,7 @@ namespace Agent
             }
         }
 
-        public void Run(AgentEntity agentEntity, int horizontalDir)
-        {
-            var PhysicsState = agentEntity.agentPhysicsState;
-
-            if (agentEntity.IsStateFree())
-            {
-                // handling horizontal movement (left/right)
-                if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
-                {
-                    PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
-                }
-
-                if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
-                {
-                    // if we move to the right
-                    // that means we are no longer sliding down on the left
-                    PhysicsState.MovementState = AgentMovementState.None;
-                }
-                else if (horizontalDir < -1.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
-                {
-                    // if we move to the left
-                    // that means we are no longer sliding down on the right
-                    PhysicsState.MovementState = AgentMovementState.None;
-                }
-            }
-
-        }
-
-        public void Walk(AgentEntity agentEntity, int horizontalDir)
-        {
-            var PhysicsState = agentEntity.agentPhysicsState;
-            if (agentEntity.IsStateFree())
-            {
-                if (PhysicsState.MovementState == AgentMovementState.Crouch ||
-                PhysicsState.MovementState == AgentMovementState.Crouch_Move)
-                {
-                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
-                    {
-                        PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
-                    }
-                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
-                    {
-                        PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
-                    }
-                }
-                else
-                {
-                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
-                    {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
-                    }
-                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
-                    {
-                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
-                    }
-                }
-
-                if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
-                {   
-                    // if we move to the right
-                    // that means we are no longer sliding down on the left
-                    PhysicsState.MovementState = AgentMovementState.None;
-                }
-                else if (horizontalDir < -0.0f && PhysicsState.MovementState == AgentMovementState.SlidingRight)
-                {
-                    // if we move to the left
-                    // that means we are no longer sliding down on the right
-                    PhysicsState.MovementState = AgentMovementState.None;
-                }
-            }
-        }
+        
 
         public void DieInPlace(AgentEntity agentEntity)
         {

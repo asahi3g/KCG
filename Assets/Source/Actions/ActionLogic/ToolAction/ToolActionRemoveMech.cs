@@ -28,7 +28,12 @@ namespace Action
 
             var mech = planet.GetMechFromPosition(new KMath.Vec2f(x, y));
 
-            planet.RemoveMech(mech.mechID.Index);
+            if (mech != null)
+            {
+                planet.Player.UseTool(0.2f);
+
+                planet.RemoveMech(mech.mechID.Index);
+            }
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

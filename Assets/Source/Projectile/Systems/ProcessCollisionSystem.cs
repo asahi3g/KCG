@@ -189,8 +189,8 @@ namespace Projectile
                             if (entity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - 25, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= 25;
+                            
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + 25, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
@@ -226,8 +226,8 @@ namespace Projectile
                             if (entity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - 100, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= 100;
+                               
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + 100, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 

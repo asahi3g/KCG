@@ -22,5 +22,6 @@ namespace Agent
         public float Fuel;
 
         public float AttackCooldown;
+        public bool IsLimping; // damaged and his movements are slowed
     }
 }

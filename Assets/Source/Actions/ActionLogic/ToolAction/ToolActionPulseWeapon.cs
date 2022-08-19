@@ -181,8 +181,8 @@ namespace Action
                             if (AgentEntity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= (int)damage;
+                                
 
                                 planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
@@ -230,8 +230,7 @@ namespace Action
                     {
                         Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
                         var stats = entity.agentStats;
-                        entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                            stats.Fuel, stats.AttackCooldown);
+                        stats.Health -= (int)damage;
 
                         planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
