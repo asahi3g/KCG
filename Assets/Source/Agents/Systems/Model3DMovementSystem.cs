@@ -29,6 +29,7 @@ namespace Agent
                 {
                     entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight = Mathf.Lerp(
                         entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                    entity.agentAgentAction.Action = AgentAction.Aiming;
                 }
                 else
                 {

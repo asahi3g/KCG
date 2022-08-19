@@ -302,6 +302,16 @@ namespace Planet
             return newEntity;
         }
 
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, Vec2f position, Vec3f scale, 
+            AtlasType atlasType)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
+                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image));
+            return newEntity;
+        }
+
         public void KillAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);

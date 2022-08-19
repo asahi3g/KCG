@@ -10,35 +10,44 @@ namespace KGUI
     public class GUIManager
     {
         // Food Bar
-        public KGUI.PlayerStatus.FoodBarUI foodBarUI;
+        public PlayerStatus.FoodBarUI foodBarUI;
 
         // Water Bar
-        public KGUI.PlayerStatus.WaterBarUI waterBarUI;
+        public PlayerStatus.WaterBarUI waterBarUI;
 
         // Oxygen Bar
-        public KGUI.PlayerStatus.OxygenBarUI oxygenBarUI;
+        public PlayerStatus.OxygenBarUI oxygenBarUI;
 
         // Fuel Bar
-        public KGUI.PlayerStatus.FuelBarUI fuelBarUI;
+        public PlayerStatus.FuelBarUI fuelBarUI;
 
         // Health Bar
-        public KGUI.PlayerStatus.HealthBarUI healthBarUI;
+        public PlayerStatus.HealthBarUI healthBarUI;
 
         // Bedrock
-        public KGUI.Elements.Image bedrockUI;
-        public KGUI.Elements.Image bedrockUIBackground;
+        public Image bedrockUI;
+        public Image bedrockUIBackground;
 
         // Dirt
-        public KGUI.Elements.Image dirtUI;
-        public KGUI.Elements.Image dirtUIBackground;
+        public Image dirtUI;
+        public Image dirtUIBackground;
 
         // Wire
-        public KGUI.Elements.Image wireUI;
-        public KGUI.Elements.Image wireUIBackground;
+        public Image wireUI;
+        public Image wireUIBackground;
 
         // Pipe
-        public KGUI.Elements.Image pipeUI;
-        public KGUI.Elements.Image pipeUIBackground;
+        public Image pipeUI;
+        public Image pipeUIBackground;
+
+        // Default Cursors
+        public Image DefaultCursor;
+
+        // Aim Cursor
+        public Image AimCursor;
+
+        // Aim Cursor
+        public Image BuildCursor;
 
         // GUI Elements List
         public List<GUIManager> UIList = new List<GUIManager>();
@@ -64,17 +73,29 @@ namespace KGUI
         // Scanner Tool Text
         Text scannerText = new Text();
 
+        // Inventory ID
         int inventoryID;
+
+        // Inventory Entity
         InventoryEntity Inventory;
+
+        // Selected Slot
         int selectedSlot;
+
+        // Item Entity
         ItemInventoryEntity item;
 
+        // Initializon Condition
         static bool Init = false;
 
         // Initialize
         public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
+            // Set Planet
             _planet = planet;
+
+            // Hide Cursor
+            Cursor.visible = false;
 
             // Set Canvas
             _Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -82,12 +103,22 @@ namespace KGUI
             // Set HUD Scale
             _Canvas.scaleFactor = HUDScale;
 
+            // Initialize Food Bar UI
             foodBarUI = new PlayerStatus.FoodBarUI();
+
+            // Initialize Water Bar UI
             waterBarUI = new PlayerStatus.WaterBarUI();
+
+            // Initialize Oxygen Bar UI
             oxygenBarUI = new PlayerStatus.OxygenBarUI();
+
+            // Initialize Fuel Bar UI
             fuelBarUI = new PlayerStatus.FuelBarUI();
+
+            // Initialize Health Bar UI
             healthBarUI = new PlayerStatus.HealthBarUI();
 
+            // Initialize Bedrock Widget
             bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                 new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             bedrockUIBackground.SetImageMidBottom();
@@ -95,6 +126,7 @@ namespace KGUI
             bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
+            // Initialize Dirt Widget
             dirtUIBackground = planet.AddUIImage("DirtBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                 new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             dirtUIBackground.SetImageMidBottom();
@@ -102,6 +134,7 @@ namespace KGUI
             dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
+            // Initialize Pipe Widget
             pipeUIBackground = planet.AddUIImage("PipeBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                 new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             pipeUIBackground.SetImageMidBottom();
@@ -109,12 +142,23 @@ namespace KGUI
             pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.GetTransform(), "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
+            // Initialize Wire Widget
             wireUIBackground = planet.AddUIImage("WireBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                 new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             wireUIBackground.SetImageMidBottom();
 
             wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
+
+            // Initialize Default Cursor
+            DefaultCursor = planet.AddUIImage("DefaultCursor", _Canvas.transform, 16, 16, GameResources.DefaultCursor, new Vec2f(0, 0), 
+                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
+
+            AimCursor = planet.AddUIImage("AimCursor", _Canvas.transform, 16, 16, GameResources.AimCursor, new Vec2f(0, 0),
+                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
+
+            BuildCursor = planet.AddUIImage("BuildCursor", _Canvas.transform, 16, 16, GameResources.BuildCursor, new Vec2f(0, 0),
+                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
 
             // Add Food Bar To Draw Array
             UIList.Add(foodBarUI);
@@ -137,6 +181,7 @@ namespace KGUI
                 UIList[i].Initialize(planet, agentEntity);
             }
 
+            // Init Done
             Init = true;
         }
 
@@ -156,34 +201,66 @@ namespace KGUI
                 // Assign New Cursor Position
                 CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
 
+                // Default Cursor
+                DefaultCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+
+                // Aim Cursor
+                AimCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+
+                // Build Cursor
+                BuildCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+
+                // Update Scanner Text
                 scannerText.Update();
 
                 // Set Inventory Elements
                 Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+
+                // Set Selected Slot
                 selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                 // Create Item
                 item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
+
                 if(item != null)
                 {
+                    // Set Cursor Depend On Item
+                    if(GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.Gun)
+                    {
+                        DefaultCursor.GetGameObject().SetActive(false);
+                        AimCursor.GetGameObject().SetActive(true);
+                        BuildCursor.GetGameObject().SetActive(false);
+                    }
+                    else if (GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.None)
+                    {
+                        DefaultCursor.GetGameObject().SetActive(true);
+                        AimCursor.GetGameObject().SetActive(false);
+                        BuildCursor.GetGameObject().SetActive(false);
+                    }
+
                     if (item.itemType.Type == Enums.ItemType.PlacementTool)
                     {
+                        // If Mouse Over On Widgets
                         if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active ||
                             dirtUIBackground.IsMouseOver(CursorPosition)    && dirtUIBackground.GetGameObject().active || 
                             pipeUIBackground.IsMouseOver(CursorPosition)    && pipeUIBackground.GetGameObject().active ||
                             wireUIBackground.IsMouseOver(CursorPosition)    && wireUIBackground.GetGameObject().active)
                         {
+                            // If Item Is Placement Tool
                             if (item.itemType.Type == Enums.ItemType.PlacementTool)
                             {
+                                // DeActivate Inputs
                                 item.itemCastData.InputsActive = false;
                             }
-                            else if(item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                            else if(item.itemType.Type == Enums.ItemType.PlacementMaterialTool)  // If Item Is Material Tool
                             {
+                                // Activate Inputs
                                 item.itemCastData.InputsActive = false;
                             }
                         }
                         else
                         {
+                            // If not, DeActivate Inputs
                             item.itemCastData.InputsActive = true;
                         }
                     }
@@ -548,6 +625,7 @@ namespace KGUI
                     // Set Condition to True
                     UIList[i].CanRun = true;
 
+                    // Run On Mouse Exit
                     OnMouseExit();
                 }
             }
@@ -565,6 +643,7 @@ namespace KGUI
 
         public void AddScannerText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
         {
+            // Create Scanner Text
             scannerText.Create("TempText", _text, _Canvas.transform, lifeTime);
             scannerText.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
             scannerText.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
@@ -573,6 +652,7 @@ namespace KGUI
 
         public Text AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
+            // Add Temporary text
             Text text = new Text();
             text.Create("TempText", _text, _Canvas.transform, 1);
             text.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
@@ -581,6 +661,7 @@ namespace KGUI
             return text;
         }
 
+        // Kill
         public void Teardown()
         {
             
