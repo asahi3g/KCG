@@ -211,7 +211,7 @@ namespace KGUI.Elements
 
         public bool IsMouseOver(KMath.Vec2f cursor)
         {
-            if(Vector2.Distance(new Vector2(cursor.X, cursor.Y), new Vector2(iconCanvas.transform.position.x, iconCanvas.transform.position.y)) < 20.0f)
+            if(KMath.Vec2f.Distance(new KMath.Vec2f(cursor.X, cursor.Y), new KMath.Vec2f(iconCanvas.transform.position.x, iconCanvas.transform.position.y)) < 20.0f)
             {
                 return true;
             }
@@ -251,6 +251,19 @@ namespace KGUI.Elements
 
             // Set Anchor Max
             iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+
+            // Set Pivot
+            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        }
+
+        public void SetImageBottomRight()
+        {
+            // Set Image Anchor
+            // Set Anchor Min
+            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
+
+            // Set Anchor Max
+            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
 
             // Set Pivot
             iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);

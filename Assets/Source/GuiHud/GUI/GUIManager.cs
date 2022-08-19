@@ -89,46 +89,46 @@ namespace KGUI
             healthBarUI = new PlayerStatus.HealthBarUI();
 
             bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-650.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             bedrockUIBackground.SetImageMidBottom();
 
             bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             dirtUIBackground = planet.AddUIImage("DirtBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-550.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             dirtUIBackground.SetImageMidBottom();
 
             dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             pipeUIBackground = planet.AddUIImage("PipeBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-450.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             pipeUIBackground.SetImageMidBottom();
 
             pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.GetTransform(), "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             wireUIBackground = planet.AddUIImage("WireBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-350.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
             wireUIBackground.SetImageMidBottom();
 
             wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
 
-            //// Add Food Bar To Draw Array
+            // Add Food Bar To Draw Array
             UIList.Add(foodBarUI);
 
-            //// Add Water Bar To Draw Array
+            // Add Water Bar To Draw Array
             UIList.Add(waterBarUI);
 
-            //// Add Oxygen Bar To Draw Array
+            // Add Oxygen Bar To Draw Array
             UIList.Add(oxygenBarUI);
 
-            //// Add Fuel Bar To Draw Array
+            // Add Fuel Bar To Draw Array
             UIList.Add(fuelBarUI);
 
-            //// Add Health Bar To Draw Array
+            // Add Health Bar To Draw Array
             UIList.Add(healthBarUI);
 
             // Init Elements
@@ -173,13 +173,24 @@ namespace KGUI
                             pipeUIBackground.IsMouseOver(CursorPosition)    && pipeUIBackground.GetGameObject().active ||
                             wireUIBackground.IsMouseOver(CursorPosition)    && wireUIBackground.GetGameObject().active)
                         {
-                            item.itemCastData.InputsActive = false;
+                            if (item.itemType.Type == Enums.ItemType.PlacementTool)
+                            {
+                                item.itemCastData.InputsActive = false;
+                            }
+                            else if(item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                            {
+                                item.itemCastData.InputsActive = false;
+                            }
                         }
                         else
                         {
                             item.itemCastData.InputsActive = true;
                         }
-                        
+                    }
+
+                    if (item.itemType.Type == Enums.ItemType.PlacementTool)
+                    {
+                        // Set All tiles Active
                         dirtUIBackground.GetGameObject().SetActive(true);
                         bedrockUIBackground.GetGameObject().SetActive(true);
                         wireUIBackground.GetGameObject().SetActive(true);
@@ -192,8 +203,142 @@ namespace KGUI
                         pipeUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Pipe       ? Color.red : Color.yellow);
                         wireUIBackground.SetImageColor(item.itemCastData.data.TileID == TileID.Wire       ? Color.red : Color.yellow);
                     }
+                    else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                    {
+                        // Set All Tiles Active To False
+                        dirtUIBackground.GetGameObject().SetActive(false);
+                        bedrockUIBackground.GetGameObject().SetActive(false);
+                        wireUIBackground.GetGameObject().SetActive(false);
+                        pipeUIBackground.GetGameObject().SetActive(false);
+
+                        // Get Inventories
+                        var entities = _planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+
+                        // Iterate All Inventories
+                        foreach (var entity in entities)
+                        {
+                            // Check Component Availble
+                            if (entity.hasInventoryName)
+                            {
+                                // Check Entity Name Is Equals To Material Bag
+                                if (entity.inventoryName.Name == "MaterialBag")
+                                {
+                                    // Get All Slots
+                                    var Slots = _planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+
+                                    // Iterate All Slots
+                                    for(int i = 0; i < Slots.Length; i++)
+                                    {
+                                        // Get Item
+                                        ItemInventoryEntity MaterialBag = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, entity.inventoryID.ID, i);
+
+                                        // Check Item Is Available
+                                        if (MaterialBag != null)
+                                        {
+                                            // Item Equals To Dirt?
+                                            if (MaterialBag.itemType.Type == Enums.ItemType.Dirt)
+                                            {
+                                                // Entity Has Item Stack?
+                                                if(MaterialBag.hasItemStack)
+                                                {
+                                                    // Check Count Of The Item
+                                                    if(MaterialBag.itemStack.Count >= 1)
+                                                    {
+                                                        // Set Active True
+                                                        dirtUIBackground.GetGameObject().SetActive(true);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Active False
+                                                        dirtUIBackground.GetGameObject().SetActive(false);
+                                                    }
+                                                }
+                                            }
+                                            else if (MaterialBag.itemType.Type == Enums.ItemType.Bedrock)
+                                            {
+                                                // If Item Equals To Bedrock, Set Bedrock Active True
+                                                bedrockUIBackground.GetGameObject().SetActive(true);
+                                            }
+                                            else if (MaterialBag.itemType.Type == Enums.ItemType.Pipe)
+                                            {
+                                                // If Item Equals To Pipe, Set Pipe Active True
+                                                pipeUIBackground.GetGameObject().SetActive(true);
+                                            }
+                                            else if (MaterialBag.itemType.Type == Enums.ItemType.Wire)
+                                            {
+                                                // If Item Equals To Wire, Set Wire Active True
+                                                wireUIBackground.GetGameObject().SetActive(true);
+                                            }
+
+                                            // Check Item Has Stack
+                                            if (MaterialBag.hasItemStack)
+                                            {
+                                                // Set Inventory Elements
+                                                inventoryID = agentEntity.agentInventory.InventoryID;
+                                                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                                                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                                                // Create Item
+                                                item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
+
+                                                // Check If Item Is Available
+                                                if (item != null)
+                                                {
+                                                    if (item.itemCastData.data.TileID == TileID.Bedrock)
+                                                    {
+                                                        // Set Red After Selected
+                                                        bedrockUIBackground.SetImageColor(Color.red);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Yellow After Unselected
+                                                        bedrockUIBackground.SetImageColor(Color.yellow);
+                                                    }
+
+                                                    if (item.itemCastData.data.TileID == TileID.Moon)
+                                                    {
+                                                        // Set Red After Selected
+                                                        dirtUIBackground.SetImageColor(Color.red);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Yellow After Unselected
+                                                        dirtUIBackground.SetImageColor(Color.yellow);
+                                                    }
+
+                                                    if (item.itemCastData.data.TileID == TileID.Pipe)
+                                                    {
+                                                        // Set Red After Selected
+                                                        pipeUIBackground.SetImageColor(Color.red);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Yellow After Unselected
+                                                        pipeUIBackground.SetImageColor(Color.yellow);
+                                                    }
+
+                                                    if (item.itemCastData.data.TileID == TileID.Wire)
+                                                    {
+                                                        // Set Red After Selected
+                                                        wireUIBackground.SetImageColor(Color.red);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Yellow After Unselected
+                                                        wireUIBackground.SetImageColor(Color.yellow);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else
                     {
+                        // If Item Is not equal to any placement tool,
+                        // hide all of the widget tiles
                         dirtUIBackground.GetGameObject().SetActive(false);
                         bedrockUIBackground.GetGameObject().SetActive(false);
                         wireUIBackground.GetGameObject().SetActive(false);
@@ -253,7 +398,8 @@ namespace KGUI
             // Handle Inputs
             for (int i = 0; i < UIList.Count; i++)
             {
-                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                // Check The Distance Betweeen Cursor And Object
+                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
                     // If Mosue 0 Button Down
                     if (Input.GetMouseButton(0))
@@ -277,11 +423,18 @@ namespace KGUI
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                     if(item != null)
+                    {
                         if (item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
                             item.itemCastData.data.TileID = TileID.Bedrock;
                         }
+                        else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        {
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Bedrock;
+                        }
+                    }
                 }
                 if (dirtUIBackground.IsMouseOver(CursorPosition) && dirtUIBackground.GetGameObject().active)
                 {
@@ -293,11 +446,18 @@ namespace KGUI
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                     if (item != null)
+                    {
                         if (item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
                             item.itemCastData.data.TileID = TileID.Moon;
                         }
+                        else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        {
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Moon;
+                        }
+                    }
                 }
                 if (pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active)
                 {
@@ -309,11 +469,18 @@ namespace KGUI
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                     if (item != null)
+                    {
                         if (item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
-                        // Set Data Tile ID to Pipe
-                        item.itemCastData.data.TileID = TileID.Pipe;
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Pipe;
                         }
+                        else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        {
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Pipe;
+                        }
+                    }
                 }
                 if (wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GetGameObject().active)
                 {
@@ -325,11 +492,18 @@ namespace KGUI
                     // Create Item
                     item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
                     if (item != null)
+                    {
                         if (item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
-                        // Set Data Tile ID to Pipe
-                        item.itemCastData.data.TileID = TileID.Wire;
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Wire;
                         }
+                        else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        {
+                            // Set Data Tile ID to Pipe
+                            item.itemCastData.data.TileID = TileID.Wire;
+                        }
+                    }
                 }
             }
         }
@@ -346,7 +520,7 @@ namespace KGUI
                     UIList[i].CanRun = false;
 
                     // If Cursor Is In UI Element
-                    if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                    if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                     {
                         // Run Mouse Enter Event
                         UIList[i].OnMouseEnter();
@@ -361,7 +535,7 @@ namespace KGUI
             for (int i = 0; i < UIList.Count; i++)
             {
                 // Check If Cursor Is On UI Element
-                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
                     // Run Mouse Enter Event
                     OnMouseEnter();

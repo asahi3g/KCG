@@ -186,6 +186,9 @@ public class GameResources
     public static int BeltSlotIcon;
 
     public static int DirtIcon;
+    public static int BedrockIcon;
+    public static int PipeIcon;
+    public static int WireIcon;
 
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
@@ -282,6 +285,9 @@ public class GameResources
             RingSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Ring.png", 64, 64);
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
             DirtIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", 16, 16);
+            BedrockIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png", 16, 16);
+            WireIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", 128, 128);
+            PipeIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -344,6 +350,9 @@ public class GameResources
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
             DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
+            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, Enums.AtlasType.Particle);
+            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, Enums.AtlasType.Particle);
+            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, Enums.AtlasType.Particle);
 
 
             // TileIsotypes.
@@ -783,6 +792,15 @@ public class GameResources
         GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilMoonAction);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementMaterialTool, "PlaceMaterial");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMaterialPlacement);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementToolBack, "BackgroundPlacementTool");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
@@ -968,6 +986,33 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(DirtIcon);
         GameState.ItemCreationApi.SetInventoryTexture(DirtIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bedrock, "Bedrock");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pipe, "Pipe");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(PipeIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(PipeIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wire, "Wire");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(WireIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(WireIcon);
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
