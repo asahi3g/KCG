@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.StatsComponent agentStats { get { return (Agent.StatsComponent)GetComponent(AgentComponentsLookup.AgentStats); } }
     public bool hasAgentStats { get { return HasComponent(AgentComponentsLookup.AgentStats); } }
 
-    public void AddAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel, float newAttackCooldown) {
+    public void AddAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel, float newAttackCooldown, bool newIsLimping) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
         component.Health = newHealth;
@@ -20,10 +20,11 @@ public partial class AgentEntity {
         component.Oxygen = newOxygen;
         component.Fuel = newFuel;
         component.AttackCooldown = newAttackCooldown;
+        component.IsLimping = newIsLimping;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel, float newAttackCooldown) {
+    public void ReplaceAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel, float newAttackCooldown, bool newIsLimping) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
         component.Health = newHealth;
@@ -32,6 +33,7 @@ public partial class AgentEntity {
         component.Oxygen = newOxygen;
         component.Fuel = newFuel;
         component.AttackCooldown = newAttackCooldown;
+        component.IsLimping = newIsLimping;
         ReplaceComponent(index, component);
     }
 
