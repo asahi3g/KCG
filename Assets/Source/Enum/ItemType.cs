@@ -50,11 +50,15 @@
         /// Materials
         /// </summary>
         Dirt,
+        Bedrock,
+        Pipe,
+        Wire,
 
         /// <summary>
         /// Tools
         /// </summary>
         PlacementTool,
+        PlacementMaterialTool,
         PlacementToolBack,
         RemoveTileTool,
         MiningLaserTool,

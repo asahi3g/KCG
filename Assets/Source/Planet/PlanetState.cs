@@ -278,8 +278,7 @@ namespace Planet
             return newEntity;
         }
 
-        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
-            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type)
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
@@ -288,8 +287,7 @@ namespace Planet
             return newEntity;
         }
 
-        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite,
-            Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type, Color color)
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type, Color color)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
@@ -298,8 +296,7 @@ namespace Planet
             return newEntity;
         }
 
-        public UIElementEntity AddUIImage(string Name, Transform Parent, string path,
-            Vec2f position, Vec3f scale, int width, int height)
+        public UIElementEntity AddUIImage(string Name, Transform Parent, string path, Vec2f position, Vec3f scale, int width, int height)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
@@ -308,8 +305,7 @@ namespace Planet
             return newEntity;
         }
 
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID,
-    Vec2f position, Vec3f scale, int width, int height)
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID, Vec2f position, Vec3f scale, int width, int height)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 

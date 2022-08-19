@@ -172,7 +172,7 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {   
-                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
+                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 2.0f;
 
@@ -209,7 +209,7 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {
-                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
+                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 4.0f;
 

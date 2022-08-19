@@ -237,10 +237,9 @@ namespace Inventory
         private void CreateDefaultMaterialBagInventoryModel()
         {
             Create();
-            SetInventoryPos(100f, 750f);
-            SetSize(10, 4);
+            SetInventoryPos(250f, 330f);
+            SetSize(3, 5);
             SetAllSlotsAsActive();
-            SetRestriction(0, Enums.ItemGroups.Mech);
             SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(Color.yellow);
             SetDefaultSlotColor(Color.gray);
