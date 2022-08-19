@@ -83,10 +83,9 @@ namespace Agent
             entity.AddAgentState(AgentState.Alive);
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentPhysicsState(position, newPreviousPosition: default,
-                newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
-                 Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
+                            newSpeed: 2.5f, newVelocity: Vec2f.Zero, newAcceleration: Vec2f.Zero, 1,
+                             Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
 
-                 Enums.AgentMovementState.None, true, true, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // used for physics simulation
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
 
             if (agentType == Agent.AgentType.Player)
