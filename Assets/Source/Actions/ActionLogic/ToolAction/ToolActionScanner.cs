@@ -40,7 +40,7 @@ namespace Action
             foreach (var entity in entities)
             {
                 // Mesure to Understand Cursor Inside the Mech
-                if (Vector2.Distance(new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.0f)
+                if (Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.0f)
                 {
                     // Has Mech Type Component?
                     if (entity.hasMechType)

@@ -190,6 +190,7 @@ namespace KGUI
 
                     if (item.itemType.Type == Enums.ItemType.PlacementTool)
                     {
+                        // Set All tiles Active
                         dirtUIBackground.GetGameObject().SetActive(true);
                         bedrockUIBackground.GetGameObject().SetActive(true);
                         wireUIBackground.GetGameObject().SetActive(true);
@@ -204,54 +205,72 @@ namespace KGUI
                     }
                     else if (item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                     {
+                        // Set All Tiles Active To False
                         dirtUIBackground.GetGameObject().SetActive(false);
                         bedrockUIBackground.GetGameObject().SetActive(false);
                         wireUIBackground.GetGameObject().SetActive(false);
                         pipeUIBackground.GetGameObject().SetActive(false);
+
+                        // Get Inventories
                         var entities = _planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+
+                        // Iterate All Inventories
                         foreach (var entity in entities)
                         {
+                            // Check Component Availble
                             if (entity.hasInventoryName)
                             {
+                                // Check Entity Name Is Equals To Material Bag
                                 if (entity.inventoryName.Name == "MaterialBag")
                                 {
+                                    // Get All Slots
                                     var Slots = _planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
 
+                                    // Iterate All Slots
                                     for(int i = 0; i < Slots.Length; i++)
                                     {
+                                        // Get Item
                                         ItemInventoryEntity MaterialBag = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, entity.inventoryID.ID, i);
 
+                                        // Check Item Is Available
                                         if (MaterialBag != null)
                                         {
+                                            // Item Equals To Dirt?
                                             if (MaterialBag.itemType.Type == Enums.ItemType.Dirt)
                                             {
+                                                // Entity Has Item Stack?
                                                 if(MaterialBag.hasItemStack)
                                                 {
+                                                    // Check Count Of The Item
                                                     if(MaterialBag.itemStack.Count >= 1)
                                                     {
+                                                        // Set Active True
                                                         dirtUIBackground.GetGameObject().SetActive(true);
                                                     }
                                                     else
                                                     {
+                                                        // Set Active False
                                                         dirtUIBackground.GetGameObject().SetActive(false);
                                                     }
                                                 }
                                             }
                                             else if (MaterialBag.itemType.Type == Enums.ItemType.Bedrock)
                                             {
+                                                // If Item Equals To Bedrock, Set Bedrock Active True
                                                 bedrockUIBackground.GetGameObject().SetActive(true);
-
-
                                             }
                                             else if (MaterialBag.itemType.Type == Enums.ItemType.Pipe)
                                             {
+                                                // If Item Equals To Pipe, Set Pipe Active True
                                                 pipeUIBackground.GetGameObject().SetActive(true);
                                             }
                                             else if (MaterialBag.itemType.Type == Enums.ItemType.Wire)
                                             {
+                                                // If Item Equals To Wire, Set Wire Active True
                                                 wireUIBackground.GetGameObject().SetActive(true);
                                             }
 
+                                            // Check Item Has Stack
                                             if (MaterialBag.hasItemStack)
                                             {
                                                 // Set Inventory Elements
@@ -261,6 +280,8 @@ namespace KGUI
 
                                                 // Create Item
                                                 item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
+
+                                                // Check If Item Is Available
                                                 if (item != null)
                                                 {
                                                     if (item.itemCastData.data.TileID == TileID.Bedrock)
@@ -316,6 +337,8 @@ namespace KGUI
                     }
                     else
                     {
+                        // If Item Is not equal to any placement tool,
+                        // hide all of the widget tiles
                         dirtUIBackground.GetGameObject().SetActive(false);
                         bedrockUIBackground.GetGameObject().SetActive(false);
                         wireUIBackground.GetGameObject().SetActive(false);
@@ -375,7 +398,8 @@ namespace KGUI
             // Handle Inputs
             for (int i = 0; i < UIList.Count; i++)
             {
-                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                // Check The Distance Betweeen Cursor And Object
+                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
                     // If Mosue 0 Button Down
                     if (Input.GetMouseButton(0))
@@ -496,7 +520,7 @@ namespace KGUI
                     UIList[i].CanRun = false;
 
                     // If Cursor Is In UI Element
-                    if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                    if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                     {
                         // Run Mouse Enter Event
                         UIList[i].OnMouseEnter();
@@ -511,7 +535,7 @@ namespace KGUI
             for (int i = 0; i < UIList.Count; i++)
             {
                 // Check If Cursor Is On UI Element
-                if (Vector2.Distance(new Vector2(CursorPosition.X, CursorPosition.Y), new Vector2(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
                 {
                     // Run Mouse Enter Event
                     OnMouseEnter();

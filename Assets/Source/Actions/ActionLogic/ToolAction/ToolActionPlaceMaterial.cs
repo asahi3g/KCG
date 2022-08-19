@@ -43,192 +43,202 @@ namespace Action
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
                             // Get Selected Slot
-                            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.SelectedSlotID;
+                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
 
-                            // Get Item From Selected Slot
-                            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, entity.inventoryID.ID, selectedSlot);
-
-                            // Check Item Is Available
-                            if (item != null)
+                            for(int i = 0; i < Slots.Length; i++)
                             {
-                                // Check If Component Is Available
-                                if (item.hasItemStack)
+                                // Get Item From Selected Slot
+                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, entity.inventoryID.ID, i);
+
+                                // Check Item Is Available
+                                if (item != null)
                                 {
-                                    // Check Tile ID Equals To Any Material
-                                    if (ItemEntity.itemCastData.data.TileID == TileID.Error ||
-                                                    ItemEntity.itemCastData.data.TileID == TileID.Air ||
-                                                    ItemEntity.itemCastData.data.Layer != MapLayerType.Front)
+                                    // Check If Component Is Available
+                                    if (item.hasItemStack)
                                     {
-                                        // Return True
-                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                        return;
-                                    }
+                                        // Check Tile ID Equals To Any Material
+                                        if (ItemEntity.itemCastData.data.TileID == TileID.Error ||
+                                                        ItemEntity.itemCastData.data.TileID == TileID.Air ||
+                                                        ItemEntity.itemCastData.data.Layer != MapLayerType.Front)
+                                        {
+                                            // Return True
+                                            ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                            return;
+                                        }
 
-                                    // Switch TileID
-                                    switch (ItemEntity.itemCastData.data.TileID)
-                                    {
-                                        // If Case Is Dirt
-                                        case TileID.Moon:
-                                            if (item.itemType.Type == Enums.ItemType.Dirt)
-                                            {
-                                                // Get Cursor Position
-                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                int x = (int)worldPosition.x;
-                                                int y = (int)worldPosition.y;
-
-                                                // If Selected Tile Already Have Same Tile
-                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Moon)
+                                        // Switch TileID
+                                        switch (ItemEntity.itemCastData.data.TileID)
+                                        {
+                                            // If Case Is Dirt
+                                            case TileID.Moon:
+                                                if (item.itemType.Type == Enums.ItemType.Dirt)
                                                 {
-                                                    // Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
+                                                    // Get Cursor Position
+                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    int x = (int)worldPosition.x;
+                                                    int y = (int)worldPosition.y;
+
+                                                    // If Selected Tile Already Have Same Tile
+                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Moon)
+                                                    {
+                                                        // Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
+
+                                                    // Decrease 1 Count Of Item
+                                                    item.itemStack.Count--;
+
+                                                    // If Item Stack Less Than 1
+                                                    if (item.itemStack.Count < 1)
+                                                    {
+                                                        // Can Place False
+                                                        CanPlace = false;
+
+                                                        // Remove Item From Material Bag
+                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+
+                                                        // Destroy Item Entity
+                                                        item.Destroy();
+
+                                                        // Reset TileID
+                                                        ItemEntity.itemCastData.data.TileID = TileID.Error;
+
+                                                        // Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
                                                 }
+                                                break;
 
-                                                // Decrease 1 Count Of Item
-                                                item.itemStack.Count--;
-
-                                                // If Item Stack Less Than 1
-                                                if (item.itemStack.Count < 1)
+                                            // If Case Is Bedrock
+                                            case TileID.Bedrock:
+                                                if (item.itemType.Type == Enums.ItemType.Bedrock)
                                                 {
-                                                    // Can Place False
-                                                    CanPlace = false;
+                                                    // Get Cursor Position        
+                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    int x = (int)worldPosition.x;
+                                                    int y = (int)worldPosition.y;
 
-                                                    // Remove Item From Material Bag
-                                                    GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    // If Selected Tile Already Have Same Tile
+                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Bedrock)
+                                                    {
+                                                        //Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
 
-                                                    // Destroy Item Entity
-                                                    item.Destroy();
+                                                    // Decrease 1 Count Of Item
+                                                    item.itemStack.Count--;
 
-                                                    // Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
+                                                    // If Item Stack Less Than 1
+                                                    if (item.itemStack.Count < 1)
+                                                    {
+                                                        // Can Place False
+                                                        CanPlace = false;
+
+                                                        // Remove Item From Material Bag
+                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+
+                                                        // Destroy Item
+                                                        item.Destroy();
+
+                                                        // Reset TileID
+                                                        ItemEntity.itemCastData.data.TileID = TileID.Error;
+
+                                                        // Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
                                                 }
-                                            }
-                                            break;
+                                                break;
 
-                                        // If Case Is Bedrock
-                                        case TileID.Bedrock:
-                                            if (item.itemType.Type == Enums.ItemType.Bedrock)
-                                            {
-                                                // Get Cursor Position        
-                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                int x = (int)worldPosition.x;
-                                                int y = (int)worldPosition.y;
-
-                                                // If Selected Tile Already Have Same Tile
-                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Bedrock)
+                                            // If Case Is Pipe
+                                            case TileID.Pipe:
+                                                if (item.itemType.Type == Enums.ItemType.Pipe)
                                                 {
-                                                    //Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
+                                                    // Get Cursor Position  
+                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    int x = (int)worldPosition.x;
+                                                    int y = (int)worldPosition.y;
+
+                                                    // If Selected Tile Already Have Same Tile
+                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Pipe)
+                                                    {
+                                                        //Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
+
+                                                    // Decrease 1 Count Of Item
+                                                    item.itemStack.Count--;
+
+                                                    // If Item Stack Less Than 1
+                                                    if (item.itemStack.Count < 1)
+                                                    {
+                                                        // Can Place False
+                                                        CanPlace = false;
+
+                                                        // Remove Item From Material Bag
+                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+
+                                                        // Destroy Item
+                                                        item.Destroy();
+
+                                                        // Reset TileID
+                                                        ItemEntity.itemCastData.data.TileID = TileID.Error;
+
+                                                        // Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
                                                 }
+                                                break;
 
-                                                // Decrease 1 Count Of Item
-                                                item.itemStack.Count--;
-
-                                                // If Item Stack Less Than 1
-                                                if (item.itemStack.Count < 1)
+                                            // If Case Is Wire
+                                            case TileID.Wire:
+                                                if (item.itemType.Type == Enums.ItemType.Wire)
                                                 {
-                                                    // Can Place False
-                                                    CanPlace = false;
+                                                    // Get Cursor Position   
+                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    int x = (int)worldPosition.x;
+                                                    int y = (int)worldPosition.y;
 
-                                                    // Remove Item From Material Bag
-                                                    GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    // If Selected Tile Already Have Same Tile
+                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Wire)
+                                                    {
+                                                        //Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
 
-                                                    // Destroy Item
-                                                    item.Destroy();
+                                                    // Decrease 1 Count Of Item
+                                                    item.itemStack.Count--;
 
-                                                    // Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
+                                                    // If Item Stack Less Than 1
+                                                    if (item.itemStack.Count < 1)
+                                                    {
+                                                        // Can Place False
+                                                        CanPlace = false;
+
+                                                        // Remove Item From Material Bag
+                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+
+                                                        // Destroy Item
+                                                        item.Destroy();
+
+                                                        // Reset TileID
+                                                        ItemEntity.itemCastData.data.TileID = TileID.Error;
+
+                                                        // Return;
+                                                        ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                        return;
+                                                    }
                                                 }
-                                            }
-                                            break;
-
-                                        // If Case Is Pipe
-                                        case TileID.Pipe:
-                                            if (item.itemType.Type == Enums.ItemType.Pipe)
-                                            {
-                                                // Get Cursor Position  
-                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                int x = (int)worldPosition.x;
-                                                int y = (int)worldPosition.y;
-
-                                                // If Selected Tile Already Have Same Tile
-                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Pipe)
-                                                {
-                                                    //Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
-                                                }
-
-                                                // Decrease 1 Count Of Item
-                                                item.itemStack.Count--;
-
-                                                // If Item Stack Less Than 1
-                                                if (item.itemStack.Count < 1)
-                                                {
-                                                    // Can Place False
-                                                    CanPlace = false;
-
-                                                    // Remove Item From Material Bag
-                                                    GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
-
-                                                    // Destroy Item
-                                                    item.Destroy();
-
-                                                    // Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
-                                                }
-                                            }
-                                            break;
-
-                                        // If Case Is Wire
-                                        case TileID.Wire:
-                                            if (item.itemType.Type == Enums.ItemType.Wire)
-                                            {
-                                                // Get Cursor Position   
-                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                int x = (int)worldPosition.x;
-                                                int y = (int)worldPosition.y;
-
-                                                // If Selected Tile Already Have Same Tile
-                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Wire)
-                                                {
-                                                    //Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
-                                                }
-
-                                                // Decrease 1 Count Of Item
-                                                item.itemStack.Count--;
-
-                                                // If Item Stack Less Than 1
-                                                if (item.itemStack.Count < 1)
-                                                {
-                                                    // Can Place False
-                                                    CanPlace = false;
-
-                                                    // Remove Item From Material Bag
-                                                    GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
-
-                                                    // Destroy Item
-                                                    item.Destroy();
-
-                                                    // Return;
-                                                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
-                                                    return;
-                                                }
-                                            }
-                                            break;
+                                                break;
+                                        }
                                     }
                                 }
-                            }
-                            else 
-                            {
-                                // Set Can Place False
-                                CanPlace = false;
                             }
                         }
                     }

@@ -21,10 +21,10 @@ namespace Action
         {
         }
 
-        public bool IsInRange(Vector2 currentTarget)
+        public bool IsInRange(Vec2f currentTarget)
         {
-            Vector2 yourPos = new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y);
-            return WeaponProperty.Range >= Vector2.Distance(yourPos, currentTarget);
+            Vec2f yourPos = new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y);
+            return WeaponProperty.Range >= Vec2f.Distance(yourPos, currentTarget);
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)

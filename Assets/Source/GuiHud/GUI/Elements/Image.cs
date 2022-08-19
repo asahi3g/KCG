@@ -211,7 +211,7 @@ namespace KGUI.Elements
 
         public bool IsMouseOver(KMath.Vec2f cursor)
         {
-            if(Vector2.Distance(new Vector2(cursor.X, cursor.Y), new Vector2(iconCanvas.transform.position.x, iconCanvas.transform.position.y)) < 20.0f)
+            if(KMath.Vec2f.Distance(new KMath.Vec2f(cursor.X, cursor.Y), new KMath.Vec2f(iconCanvas.transform.position.x, iconCanvas.transform.position.y)) < 20.0f)
             {
                 return true;
             }
