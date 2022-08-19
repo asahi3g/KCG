@@ -145,11 +145,11 @@ namespace ECSInput
                 // Running
                 if (Input.GetKey(KeyCode.LeftAlt))
                 {
-                    GameState.AgentProcessPhysicalState.Run(player, x);
+                    player.Run(x);
                 }
                 else
                 {
-                    GameState.AgentProcessPhysicalState.Walk(player, x);
+                    player.Walk(x);
                 }
 
                 if (Input.GetKey(KeyCode.LeftControl))
@@ -167,7 +167,7 @@ namespace ECSInput
 
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    GameState.AgentProcessPhysicalState.Walk(player, x);
+                    player.Walk(x);
                 }
 
                 // JetPack

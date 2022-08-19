@@ -108,8 +108,7 @@ namespace Action
                         if (AgentEntity.hasAgentStats)
                         {
                             var stats = entity.agentStats;
-                            entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                stats.Fuel, stats.AttackCooldown);
+                            stats.Health -= (int)damage;
 
                             // spawns a debug floating text for damage 
                             planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));

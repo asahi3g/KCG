@@ -144,6 +144,8 @@ namespace KGUI
         {
             if(Init) 
             {
+                inventoryID = agentEntity.agentInventory.InventoryID;
+                
                 // Update HUD Scale
                 _Canvas.scaleFactor = HUDScale;
 

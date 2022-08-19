@@ -672,7 +672,7 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(PistolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 10.0f, 25.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.4f, 10.0f, 25.0f);
         GameState.ItemCreationApi.SetRangedWeaponClip(8, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
@@ -1023,6 +1023,7 @@ public class GameResources
     {
         GameState.AgentCreationApi.Create((int)Agent.AgentType.Player);
         GameState.AgentCreationApi.SetName("player");
+        GameState.AgentCreationApi.SetHealth(300.0f);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 1.8f));
         GameState.AgentCreationApi.End();
@@ -1052,7 +1053,7 @@ public class GameResources
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Swordman);
-        GameState.AgentCreationApi.SetDetectionRadius(8.0f);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
 
@@ -1062,7 +1063,7 @@ public class GameResources
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
-        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetDetectionRadius(24.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
     }
