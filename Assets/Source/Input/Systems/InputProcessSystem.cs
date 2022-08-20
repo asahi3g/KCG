@@ -393,16 +393,39 @@ namespace ECSInput
                 if (!inventoryModel.HasToolBar)
                     return;
 
+                // Get Inventory
+                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                if (item == null)
+                    return;
+                Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+                // Set Agent Action
+                if(itemProperty.Group == ItemGroups.Gun || itemProperty.Group == ItemGroups.Weapon)
+                {
+                    if(entity.hasAgentAgentAction)
+                    {
+                        entity.agentAgentAction.Action = AgentAction.Alert;
+                    }
+                }
+                else
+                {
+                    if (entity.hasAgentAgentAction)
+                    {
+                        entity.agentAgentAction.Action = AgentAction.UnAlert;
+                    }
+                }
+                
+
                 for (int i = 0; i < inventoryModel.Width; i++)
                 {
                     KeyCode keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
-                        ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         if (item == null)
                             return;
-                        Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                        itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                         switch(itemProperty.Group)
                         {
