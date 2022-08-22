@@ -59,7 +59,10 @@ namespace Agent
                  newDyingDuration: 0,
                  newDashCooldown: 0,
                  newSlashCooldown: 0,
-                 newFireGunCooldown: 0,
+                 newGunDuration: 0,
+                 newGunCooldown: 0,
+                 newToolDuration: 0,
+                 newToolCooldown: 0,
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
                  newRollDuration: 0,
@@ -104,7 +107,10 @@ namespace Agent
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newFireGunCooldown: 0,
+                newGunDuration: 0,
+                newGunCooldown: 0,
+                newToolDuration: 0,
+                newToolCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
                 newRollDuration: 0,
@@ -126,7 +132,7 @@ namespace Agent
             entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
             entity.AddAgentState(AgentState.Alive);
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
-            entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown);
+            entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
             // used for physics simulation
             entity.AddAgentPhysicsState(
                 position, 
@@ -147,7 +153,10 @@ namespace Agent
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newFireGunCooldown: 0,
+                newGunDuration: 0,
+                newGunCooldown: 0,
+                newToolDuration: 0,
+                newToolCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
                 newRollDuration: 0,
@@ -178,64 +187,34 @@ namespace Agent
                         //model.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = pixelMaterial;
 
 
-                // create an animancer object and give it a reference to the Animator component
-                GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                animancerComponentGO.transform.parent = model.transform;
-                // get the animator component from the game object
-                // this component is used by animancer
-                AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                animancerComponent.Animator = model.GetComponent<Animator>();
-                entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
-                
-
-                entity.agentPhysicsState.Speed = 10.0f;
-                entity.isAgentPlayer = true;
-                entity.isECSInput = true;
-                entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-                entity.AddAgentAgentAction(AgentAction.UnAlert);
-
-            }
-            else if (agentType == Agent.AgentType.Agent)
-            {
-                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-            }
-            else if (agentType == Agent.AgentType.Enemy)
-            {
-                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-
-            }
-            else if (agentType == Agent.AgentType.EnemyGunner)
-            {
-                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
-                GameObject model = GameObject.Instantiate(prefab);
-
-                GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
-
-                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
-
-                Vector3 eulers = model.transform.rotation.eulerAngles;
-                model.transform.rotation = Quaternion.Euler(0, 90, 0);
+                        // create an animancer object and give it a reference to the Animator component
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+                        // get the animator component from the game object
+                        // this component is used by animancer
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
 
 
+                        entity.agentPhysicsState.Speed = 10.0f;
                         entity.isAgentPlayer = true;
                         entity.isECSInput = true;
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);
+                        entity.AddAgentAgentAction(AgentAction.UnAlert);
+
                         break;
                     }
-                case Enums.AgentType.Agent:
+            case Enums.AgentType.Agent:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation { Type = properties.StartingAnimation });
+                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
-                case Enums.AgentType.Slime:
+            case Enums.AgentType.Slime:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation { Type = properties.StartingAnimation });
+                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
                         break;
                     }
@@ -250,6 +229,8 @@ namespace Agent
                         GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
                         GameObject model = GameObject.Instantiate(prefab);
 
+                        GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
 
                         model.transform.position = new Vector3(position.X, position.Y, -1.0f);
 
@@ -266,6 +247,8 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                        entity.agentPhysicsState.Speed = 6.0f;
 
                         entity.SetAgentWeapon(Model3DWeapon.Gun);
                         break;

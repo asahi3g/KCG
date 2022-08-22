@@ -20,21 +20,8 @@ namespace Action
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-                switch(planet.TileMap.GetFrontTileID(x, y))
-                {
-                    case TileID.Moon:
-                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Dirt, new Vec2f(x, y));
-                        break;
-                    case TileID.Bedrock:
-                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Bedrock, new Vec2f(x, y));
-                        break;
-                    case TileID.Wire:
-                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Wire, new Vec2f(x, y));
-                        break;
-                    case TileID.Pipe:
-                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Pipe, new Vec2f(x, y));
-                        break;
-                }
+                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(planet.TileMap.GetFrontTileID(x, y));
+                GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(x, y));
 
                 planet.TileMap.RemoveFrontTile(x, y);
             }

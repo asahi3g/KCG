@@ -8,6 +8,10 @@
         PlanterDrop,
         LightDrop,
         SmashableBoxDrop,
-        MoonTileDrop,
+        DirtTileDrop,
+        BedrockTileDrop,
+        PipeTileDrop,
+        WireTileDrop,
+        MoonTileDrop
     }
 }

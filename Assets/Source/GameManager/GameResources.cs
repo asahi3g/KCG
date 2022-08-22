@@ -442,6 +442,36 @@ public class GameResources
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.MoonTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Moon, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.DirtTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Dirt, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.DirtTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Dirt, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.BedrockTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Bedrock, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.PipeTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Pipe, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
+
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.WireTileDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Wire, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
     }
 
     private static void InitializeTGenTiles()
@@ -508,6 +538,7 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 0);
+        GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Background);
@@ -539,6 +570,7 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 0, 0);
+        GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PipeTileDrop);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Wire);
@@ -546,6 +578,7 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertyName("wire");
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 4, 12);
+        GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.WireTileDrop);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Bedrock);
@@ -555,6 +588,7 @@ public class GameResources
         GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
         GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
         GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 10);
+        GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.BedrockTileDrop);
         GameState.TileCreationApi.EndTileProperty();
 
         GameState.TileCreationApi.CreateTileProperty(TileID.Platform);
@@ -992,6 +1026,16 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Armour);
         GameState.ItemCreationApi.SetTexture(SuitSprite);
         GameState.ItemCreationApi.SetInventoryTexture(SuitSprite);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Moon, "Moon");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
 

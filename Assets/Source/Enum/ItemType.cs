@@ -49,6 +49,7 @@
         /// <summary>
         /// Materials
         /// </summary>
+        Moon,
         Dirt,
         Bedrock,
         Pipe,

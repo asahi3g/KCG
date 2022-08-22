@@ -22,6 +22,9 @@ namespace LootDrop
             ItemDropTableLength = 0;
             CurrentEntry = 0;
             CurrentID = (int)LootTableType.None;
+
+            Create(LootTableType.None);
+            End();
         }
 
         public LootDropEntry Get(LootTableType ID)
