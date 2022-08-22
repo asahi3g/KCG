@@ -31,6 +31,9 @@ namespace Mech
 
         private Image SmashableBox;
         private Image SmashableBoxBackground;
+        
+        private Image SmashableEgg;
+        private Image SmashableEggBackground;
 
         int inventoryID;
         InventoryEntity Inventory;
@@ -39,28 +42,30 @@ namespace Mech
 
         public void Initialize(ref Planet.PlanetState planet)
         {
-            ChestBackground = planet.AddUIImage("ChestBackground", GameObject.Find("Canvas").transform,
+            var canvas = GameObject.Find("Canvas").transform;
+            
+            ChestBackground = planet.AddUIImage("ChestBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(-280.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
             Chest = planet.AddUIImage("Chest", ChestBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 32).kGUIElementsImage.Image;
 
-            PlanterBackground = planet.AddUIImage("PlanterBackground", GameObject.Find("Canvas").transform,
+            PlanterBackground = planet.AddUIImage("PlanterBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(-200.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
             Planter = planet.AddUIImage("Planter", PlanterBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 16).kGUIElementsImage.Image;
 
-            LightBackground = planet.AddUIImage("LightBackground", GameObject.Find("Canvas").transform,
+            LightBackground = planet.AddUIImage("LightBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(-120.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
             Light = planet.AddUIImage("Light", LightBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 48, 16).kGUIElementsImage.Image;
 
-            MajestyPalmBackground = planet.AddUIImage("MajestyPalmBackground", GameObject.Find("Canvas").transform,
+            MajestyPalmBackground = planet.AddUIImage("MajestyPalmBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(-38.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
@@ -68,7 +73,7 @@ namespace Mech
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            SagoPalmBackground = planet.AddUIImage("SagoPalmBackground", GameObject.Find("Canvas").transform,
+            SagoPalmBackground = planet.AddUIImage("SagoPalmBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(40.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
@@ -76,7 +81,7 @@ namespace Mech
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            DracaenaTrifasciataBackground = planet.AddUIImage("DracaenaTrifasciataBackground", GameObject.Find("Canvas").transform,
+            DracaenaTrifasciataBackground = planet.AddUIImage("DracaenaTrifasciataBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(120.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
@@ -84,13 +89,21 @@ namespace Mech
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
-            SmashableBoxBackground = planet.AddUIImage("SmashableBoxBackground", GameObject.Find("Canvas").transform,
+            SmashableBoxBackground = planet.AddUIImage("SmashableBoxBackground", canvas,
                 UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
                     new Vec2f(200.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
 
             SmashableBox = planet.AddUIImage("SmashableBox", SmashableBoxBackground.GetTransform(),
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 32).kGUIElementsImage.Image;
+            
+            SmashableEggBackground = planet.AddUIImage("SmashableEggBackground", canvas,
+                UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
+                new Vec2f(280.0f, -80.2f), new Vec3f(0.7f, 0.7f, 0.7f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+            
+            SmashableEgg = planet.AddUIImage("SmashableEgg", SmashableEggBackground.GetTransform(),
+                "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 32, 32).kGUIElementsImage.Image;
         }
 
         public void Draw(ref Planet.PlanetState planet, AgentEntity agentEntity)
@@ -113,69 +126,24 @@ namespace Mech
                     SagoPalmBackground.GetGameObject().SetActive(true);
                     DracaenaTrifasciataBackground.GetGameObject().SetActive(true);
                     SmashableBoxBackground.GetGameObject().SetActive(true);
+                    SmashableEggBackground.GetGameObject().SetActive(true);
 
-                    if(item.itemMechCastData.data.MechID == MechType.Storage)
-                    {
-                        ChestBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        ChestBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.Planter)
-                    {
-                        PlanterBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        PlanterBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.Light)
-                    {
-                        LightBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        LightBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.MajestyPalm)
-                    {
-                        MajestyPalmBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        MajestyPalmBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.SagoPalm)
-                    {
-                        SagoPalmBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        SagoPalmBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.DracaenaTrifasciata)
-                    {
-                        DracaenaTrifasciataBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        DracaenaTrifasciataBackground.SetImageColor(Color.yellow);
-                    }
-
-                    if (item.itemMechCastData.data.MechID == MechType.SmashableBox)
-                    {
-                        SmashableBoxBackground.SetImageColor(Color.red);
-                    }
-                    else
-                    {
-                        SmashableBoxBackground.SetImageColor(Color.yellow);
-                    }
+                    ChestBackground.SetImageColor(item.itemMechCastData.data.MechID 
+                                                                == MechType.Storage ? Color.red : Color.yellow);
+                    PlanterBackground.SetImageColor(item.itemMechCastData.data.MechID 
+                                                                == MechType.Planter ? Color.red : Color.yellow);
+                    LightBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.Light ? Color.red : Color.yellow);
+                    MajestyPalmBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.MajestyPalm ? Color.red : Color.yellow);
+                    SagoPalmBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.SagoPalm ? Color.red : Color.yellow);
+                    DracaenaTrifasciataBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.DracaenaTrifasciata ? Color.red : Color.yellow);
+                    SmashableBoxBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.SmashableBox ? Color.red : Color.yellow);
+                    SmashableEggBackground.SetImageColor(item.itemMechCastData.data.MechID
+                                                                == MechType.SmashableEgg ? Color.red : Color.yellow);
 
                     if (ChestBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && ChestBackground.GetGameObject().active)
                     {
@@ -202,6 +170,10 @@ namespace Mech
                         item.itemMechCastData.InputsActive = false;
                     }
                     else if (SmashableBoxBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SmashableBoxBackground.GetGameObject().active)
+                    {
+                        item.itemMechCastData.InputsActive = false;
+                    }
+                    else if (SmashableEggBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SmashableEggBackground.GetGameObject().active)
                     {
                         item.itemMechCastData.InputsActive = false;
                     }
@@ -326,11 +298,32 @@ namespace Mech
                             // Create Item
                             item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
+                            {
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMechCastData.data.MechID = MechType.SmashableBox;
                                 }
+                            }
+                        }
+                        
+                        if (SmashableEggBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)) && SmashableEggBackground.GetGameObject().active)
+                        {
+                            // Set Inventory Elements
+                            inventoryID = agentEntity.agentInventory.InventoryID;
+                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                            // Create Item
+                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            if (item != null)
+                            {
+                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                {
+                                    // Set Data Tile ID to Pipe
+                                    item.itemMechCastData.data.MechID = MechType.SmashableEgg;
+                                }
+                            }
                         }
                     }
 
@@ -344,6 +337,7 @@ namespace Mech
                     SagoPalmBackground.GetGameObject().SetActive(false);
                     DracaenaTrifasciataBackground.GetGameObject().SetActive(false);
                     SmashableBoxBackground.GetGameObject().SetActive(false);
+                    SmashableEggBackground.GetGameObject().SetActive(false);
                 }
             }
         }

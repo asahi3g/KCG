@@ -442,6 +442,11 @@ public class GameResources
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
+        
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.SmashableEggDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableEgg, 1);
+        GameState.LootTableCreationAPI.SetEntry(1, 100);
+        GameState.LootTableCreationAPI.End();
 
         GameState.LootTableCreationAPI.Create(Enums.LootTableType.MoonTileDrop);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Moon, 1);
@@ -981,6 +986,15 @@ public class GameResources
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMechPlacement);
         GameState.ItemCreationApi.EndItem();
+        
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.SmashableEgg, "SmashableEgg");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
+        GameState.ItemCreationApi.SetTexture(ChestIconItem);
+        GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMechPlacement);
+        GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Planter, "Planter");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
@@ -1194,6 +1208,14 @@ public class GameResources
         GameState.MechCreationApi.SetDurability(100);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
 		GameState.MechCreationApi.End();
+        
+        GameState.MechCreationApi.Create((int)Mech.MechType.SmashableEgg);
+        GameState.MechCreationApi.SetName("smashableEgg");
+        GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableEggDrop);
+        GameState.MechCreationApi.SetTexture(ChestIcon);
+        GameState.MechCreationApi.SetDurability(100);
+        GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+        GameState.MechCreationApi.End();
     }
 
     private static void CreateParticles()

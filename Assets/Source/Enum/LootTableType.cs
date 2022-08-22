@@ -8,6 +8,7 @@
         PlanterDrop,
         LightDrop,
         SmashableBoxDrop,
+        SmashableEggDrop,
         DirtTileDrop,
         BedrockTileDrop,
         PipeTileDrop,
