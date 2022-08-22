@@ -383,10 +383,8 @@ public class GameResources
 
     private static void CreateDropTables()
     {
-        GameState.LootTableCreationAPI.Create("Empty table");
-        GameState.LootTableCreationAPI.End();
-
-        GameState.LootTableCreationAPI.Create("Slime Enemy");
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.SlimeEnemyDrop);
+        GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Slime, 1);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Slime, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 30);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Food, 4);
@@ -401,22 +399,22 @@ public class GameResources
         GameState.LootTableCreationAPI.SetEntry(6, 10);
         GameState.LootTableCreationAPI.End();
 
-        GameState.LootTableCreationAPI.Create("Chest");
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.ChestDrop);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Chest, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
-        GameState.LootTableCreationAPI.Create("Planter");
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.PlanterDrop);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Planter, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
-        GameState.LootTableCreationAPI.Create("Light");
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.LightDrop);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Light, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
 
-        GameState.LootTableCreationAPI.Create("SmashableBox");
+        GameState.LootTableCreationAPI.Create(Enums.LootTableType.SmashableBoxDrop);
         GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
         GameState.LootTableCreationAPI.SetEntry(1, 100);
         GameState.LootTableCreationAPI.End();
@@ -994,7 +992,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Enums.AgentType.Slime);
         GameState.AgentCreationApi.SetName("Slime");
         GameState.AgentCreationApi.SetMovement(5f, 3.5f, 1);
-        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
@@ -1007,7 +1005,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Enums.AgentType.FlyingSlime);
         GameState.AgentCreationApi.SetName("Flying Slime");
         GameState.AgentCreationApi.SetFlyingMovement(3.0f);
-        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
         GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
@@ -1020,7 +1018,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemySwordman);
         GameState.AgentCreationApi.SetName("enemy-swordman");
         GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
-        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Swordman);
@@ -1031,7 +1029,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyGunner);
         GameState.AgentCreationApi.SetName("enemy-gunner");
         GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
-        GameState.AgentCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Slime Enemy"), GameState.LootTableCreationAPI.GetID("Slime Enemy"));
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
@@ -1044,7 +1042,7 @@ public class GameResources
     {
         GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
         GameState.MechCreationApi.SetName("chest");
-        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Chest"));
+        GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.ChestDrop);
         GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
         GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
@@ -1052,14 +1050,14 @@ public class GameResources
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
         GameState.MechCreationApi.SetName("planter");
-        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Planter"));
+        GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.PlanterDrop);
         GameState.MechCreationApi.SetTexture(PotIcon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
 
         GameState.MechCreationApi.Create((int)Mech.MechType.Light);
         GameState.MechCreationApi.SetName("light");
-        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("Light"));
+        GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.LightDrop);
         GameState.MechCreationApi.SetTexture(Light2Icon);
         GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
         GameState.MechCreationApi.End();
@@ -1084,7 +1082,7 @@ public class GameResources
         
         GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
         GameState.MechCreationApi.SetName("smashableBox");
-        GameState.MechCreationApi.SetDropTableID(GameState.LootTableCreationAPI.GetID("SmashableBox"));
+        GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableBoxDrop);
         GameState.MechCreationApi.SetTexture(ChestIcon);
         GameState.MechCreationApi.SetAction(Enums.ActionType.OpenChestAction);
         GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());

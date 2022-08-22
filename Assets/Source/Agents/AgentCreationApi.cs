@@ -106,7 +106,7 @@ namespace Agent
             }
         }
 
-        public void SetDropTableID(int dropTableID, int inventoryDropTableID)
+        public void SetDropTableID(Enums.LootTableType dropTableID, Enums.LootTableType inventoryDropTableID)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {

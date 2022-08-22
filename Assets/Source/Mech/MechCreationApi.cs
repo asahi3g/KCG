@@ -84,7 +84,7 @@ namespace Mech
             PropertiesArray[CurrentIndex].Name = name;
         }
 
-        public void SetDropTableID(int dropTableID)
+        public void SetDropTableID(Enums.LootTableType dropTableID)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {

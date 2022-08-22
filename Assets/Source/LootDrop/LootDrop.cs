@@ -11,7 +11,7 @@ namespace LootDrop
 
     public struct LootDropEntry
     {
-        public int ID;
+        public Enums.LootTableType ID;
         public LootDrop[] ItemDrops;
     }
 
@@ -20,7 +20,7 @@ namespace LootDrop
     /// </summary>
     public struct LootDropEntity
     {
-        public int TableID;
+        public Enums.LootTableType TableID;
         public Vec2f DropPos;       // Position to Drop items. 
         // If -1 create items in specified position if != -1 create items inside inventory.
         public int InventoryID;
