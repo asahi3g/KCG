@@ -120,20 +120,29 @@ namespace Planet
                 AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
-                    Agent.AgentType.Player, inventoryID, equipmentInventoryID));
+                    Enums.AgentType.Player, inventoryID, equipmentInventoryID));
 
             Player = newEntity;
 
             return newEntity;
         }
 
-        public AgentEntity AddAgent(Vec2f position, Agent.AgentType agentType = Agent.AgentType.Agent)
+        public AgentEntity AddAgent(Vec2f position, Enums.AgentType agentType = Enums.AgentType.Agent)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType));
             return newEntity;
         }
+
+        public AgentEntity AddEnemy(Vec2f position)
+        {
+            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Enums.AgentType.Slime));
+            return newEntity;
+        }
+
 
         public MechEntity AddMech(Vec2f position, MechType mechType)
         {
@@ -148,7 +157,7 @@ namespace Planet
 
             return newEntity;
         }
-        
+
         public void RemoveMech(int index)
         {
             MechEntity entity = MechList.Get(index);
@@ -251,15 +260,6 @@ namespace Planet
 
             return null;
         }
-
-        public AgentEntity AddEnemy(Vec2f position)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Agent.AgentType.Enemy));
-            return newEntity;
-        }
-
         public UIElementEntity AddUIText(string text, float timeToLive, Vec2f position, Vec2f areaSize)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
@@ -330,7 +330,7 @@ namespace Planet
             Utils.Assert(entity.isEnabled);
 
             entity.DieInPlace();
-            AgentProperties properties = GameState.AgentCreationApi.Get((int)Agent.AgentType.Enemy);
+            AgentProperties properties = GameState.AgentCreationApi.Get((int)entity.agentID.Type);
 
             if (!entity.hasAgentInventory)
             {
@@ -561,19 +561,18 @@ namespace Planet
             if (Event.current.type != EventType.Repaint)
                 return;
 
-            GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-
             // Mouse Interactions with objects.
             GameState.AgentMouseInteractionSystem.Update(ref this);
             GameState.MechMouseInteractionSystem.Update(ref this);
             GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
+            GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
 
-            if (agentEntity != null && HUDManager.ShowGUI)
+            if (agentEntity != null && HUDManager.ShowGUI && HUDManager.guiManager != null)
             {
                 HUDManager.Update(agentEntity);
                 HUDManager.Draw();
+                GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
                 GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
-                GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
             }
         }
     }

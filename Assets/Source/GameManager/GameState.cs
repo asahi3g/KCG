@@ -15,6 +15,7 @@ public class GameState
 
     #region AI
     public static readonly AI.Movement.PathFinding PathFinding;
+    public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
     #endregion
 
     #region Action
@@ -135,6 +136,7 @@ public class GameState
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
+        PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager(SpriteLoader);
         SpriteAtlasManager = new Sprites.SpriteAtlasManager(SpriteLoader);

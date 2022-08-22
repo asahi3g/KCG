@@ -39,6 +39,9 @@ namespace Action
             // Log places drawed line go through
             foreach (var cell in start.LineTo(end))
             {
+                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(planet.TileMap.GetFrontTileID(cell.x, cell.y));
+                GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(cell.x, cell.y));
+
                 planet.TileMap.RemoveFrontTile(cell.x, cell.y);
                 Debug.DrawLine(new Vector3(agentPosition.X, agentPosition.Y, 0.0f), new Vector3(worldPosition.x, worldPosition.y, 0.0f), Color.red);
             }

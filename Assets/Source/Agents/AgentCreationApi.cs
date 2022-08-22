@@ -30,17 +30,25 @@ namespace Agent
             if (Id >= 0 && Id < PropertiesArray.Length)
             {
                 return PropertiesArray[Id];
-                Utils.Assert(false);
             }
 
             return new AgentProperties();
+        }
+
+        public MovementProperties GetMovementProperties(int Id)
+        {
+            if (Id >= 0 && Id < PropertiesArray.Length)
+            {
+                return PropertiesArray[Id].MovProperties;
+            }
+
+            return new MovementProperties();
         }
 
         public ref AgentProperties GetRef(int Id)
         {      
             return ref PropertiesArray[Id];
         }
-
         public AgentProperties Get(string name)
         {
             int value;
@@ -52,7 +60,6 @@ namespace Agent
 
             return new AgentProperties();
         }
-
         public void Create(int Id)
         {
             while (Id >= PropertiesArray.Length)
@@ -79,7 +86,27 @@ namespace Agent
             PropertiesArray[CurrentIndex].Name = name;
         }
 
-        public void SetDropTableID(int dropTableID, int inventoryDropTableID)
+        public void SetMovement(float defaultSpeed, float jumHegiht, int numOfJumps)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].MovProperties.DefaultSpeed = defaultSpeed;
+                PropertiesArray[CurrentIndex].MovProperties.JumpHeight = jumHegiht;
+                PropertiesArray[CurrentIndex].MovProperties.MaxNumOfJumps = jumHegiht;
+                PropertiesArray[CurrentIndex].MovProperties.MovType = Enums.AgentMovementType.DefaultMovement;
+            }
+        }
+
+        public void SetFlyingMovement(float defaultSpeed)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].MovProperties.DefaultSpeed = defaultSpeed;
+                PropertiesArray[CurrentIndex].MovProperties.MovType = Enums.AgentMovementType.FlyingMovemnt;
+            }
+        }
+
+        public void SetDropTableID(Enums.LootTableType dropTableID, Enums.LootTableType inventoryDropTableID)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {

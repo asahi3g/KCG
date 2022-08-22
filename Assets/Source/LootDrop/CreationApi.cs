@@ -6,9 +6,8 @@ namespace LootDrop
 {
     public class CreationApi
     {
-        public int Length;
+        public int CurrentID;
         LootDropEntry[] DropTableEntries;
-        public Dictionary<string, int> NameToID = new Dictionary<string, int>();
 
         // Auxiliar data.
         LootDrop[] DropTable;
@@ -17,43 +16,30 @@ namespace LootDrop
 
         public CreationApi()
         {
-            DropTableEntries = new LootDropEntry[256];
-            NameToID.EnsureCapacity(256);
+            DropTableEntries = new LootDropEntry[Enum.GetNames(typeof(Enums.LootTableType)).Length];
             DropTable = new LootDrop[Enum.GetNames(typeof(Enums.ItemType)).Length];
 
             ItemDropTableLength = 0;
             CurrentEntry = 0;
-            Length = 0;
+            CurrentID = (int)LootTableType.None;
+
+            Create(LootTableType.None);
+            End();
         }
 
-        public LootDropEntry Get(int ID)
+        public LootDropEntry Get(LootTableType ID)
         { 
-            return DropTableEntries[ID];
+            return DropTableEntries[(int)ID];
         }
 
-        public LootDropEntry Get(string name)
+        public void Create(LootTableType type)
         {
-            return DropTableEntries[NameToID[name]];
-        }
-
-        public int GetID(string name)
-        {
-            return NameToID[name];
-        }
-
-
-        public void Create(string name)
-        {
-            if (Length >= DropTableEntries.Length)
-                Expand();
-            DropTableEntries[Length].ID = Length;
-            Utils.Assert(NameToID.TryAdd(name, Length), "Failed to create Drop table with existing name");
-        }
-
-        public void Expand()
-        {
-            Array.Resize<LootDropEntry>(ref DropTableEntries, DropTableEntries.Length + 256);
-            NameToID.EnsureCapacity(DropTableEntries.Length);
+            if (type == LootTableType.None)
+            {
+                
+                return;
+            }
+            CurrentID = (int)type;
         }
 
         public void AddItem(ItemType itemType, int numEntries)
@@ -82,11 +68,11 @@ namespace LootDrop
 
         public void End()
         {
-            DropTableEntries[Length].ItemDrops = new LootDrop[ItemDropTableLength];
-            Array.Copy(DropTable, DropTableEntries[Length].ItemDrops, ItemDropTableLength);
+            DropTableEntries[CurrentID].ItemDrops = new LootDrop[ItemDropTableLength];
+            Array.Copy(DropTable, DropTableEntries[CurrentID].ItemDrops, ItemDropTableLength);
             ItemDropTableLength = 0;
             CurrentEntry = 0;
-            Length++;
+            CurrentID = (int)LootTableType.None;
         }
     }
 }
