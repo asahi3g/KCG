@@ -8,6 +8,8 @@ namespace KGUI.Elements
     {
         // Image GameObject
         private GameObject iconCanvas;
+        RectTransform rectTransform;
+        UnityEngine.UI.Image imageComponent;
 
         // Constructor
         public Image(string imageName, Sprite image)
@@ -19,24 +21,24 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = GameObject.Find("Canvas").transform;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = image;
+            imageComponent.sprite = image;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         // Constructor
@@ -49,24 +51,24 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = parent;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = image;
+            imageComponent.sprite = image;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         public void Init(string imageName, Transform parent, Sprite image)
@@ -78,24 +80,24 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = parent;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = image;
+            imageComponent.sprite = image;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         // Constructor
@@ -129,27 +131,27 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = parent;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            imageComponent.sprite = sprite;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+            rectTransform.position = new Vector3(0, 0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         public Image(string imageName, Transform parent, int width, int height, int tileSpriteID)
@@ -176,27 +178,27 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = parent;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            imageComponent.sprite = sprite;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+            rectTransform.position = new Vector3(0, 0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         public Image(string imageName, Transform parent, int width, int height, int tileSpriteID, Enums.AtlasType atlasType)
@@ -223,27 +225,27 @@ namespace KGUI.Elements
             iconCanvas.transform.parent = parent;
 
             // Add Rect Transform to Manage UI Scaling
-            iconCanvas.AddComponent<RectTransform>();
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            iconCanvas.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = iconCanvas.AddComponent<UnityEngine.UI.Image>();
 
             // Set Image Sprite
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            imageComponent.sprite = sprite;
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+            rectTransform.position = new Vector3(0, 0, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            imageComponent.enabled = false;
         }
 
         public override void Update()
@@ -253,7 +255,7 @@ namespace KGUI.Elements
 
         public override void Draw()
         {
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().enabled = true;
+            imageComponent.enabled = true;
         }
 
         public bool IsMouseOver(KMath.Vec2f cursor)
@@ -269,75 +271,80 @@ namespace KGUI.Elements
         public void SetPosition(Vector3 newPos)
         {
             // Set Local Rect Position
-            iconCanvas.GetComponent<RectTransform>().localPosition = newPos;
+            rectTransform.localPosition = newPos;
         }
 
         public void SetRotation(Quaternion newRot)
         {
             // Set Local Rect Rotation
-            iconCanvas.GetComponent<RectTransform>().localRotation = newRot;
+            rectTransform.localRotation = newRot;
         }
 
         public void SetScale(Vector3 newScale)
         {
             // Set Local Rect Scale
-            iconCanvas.GetComponent<RectTransform>().localScale = newScale;
+            rectTransform.localScale = newScale;
         }
 
         public void SetImageType(UnityEngine.UI.Image.Type newType)
         {
             // Set Image Type
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().type = newType;
+            imageComponent.type = newType;
         }
 
         public void SetImageTopLeft()
         {
             // Set Image Anchor
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
+            rectTransform.anchorMin = new Vector2(0, 1);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
+            rectTransform.anchorMax = new Vector2(0, 1);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
         }
 
         public void SetImageBottomRight()
         {
             // Set Image Anchor
             // Set Anchor Min
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
+            rectTransform.anchorMin = new Vector2(1, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
+            rectTransform.anchorMax = new Vector2(1, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
         }
 
         public void SetImageMidBottom()
         {
             // Set Image Anchor
-            iconCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
+            rectTransform.anchorMin = new Vector2(0.5f, 0);
 
             // Set Anchor Max
-            iconCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
+            rectTransform.anchorMax = new Vector2(0.5f, 0);
 
             // Set Pivot
-            iconCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
         }
 
         public void SetImage(Sprite sprite)
         {
             // Set New Image
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            imageComponent.sprite = sprite;
         }
 
         public void SetImageColor(Color color)
         {
             // Set New Image
-            iconCanvas.GetComponent<UnityEngine.UI.Image>().color = color;
+            imageComponent.color = color;
+        }
+
+        public Texture2D GetTexture()
+        {
+            return imageComponent.sprite.texture;
         }
 
         public Transform GetTransform()

@@ -95,7 +95,7 @@ namespace KGUI
             _planet = planet;
 
             // Hide Cursor
-            Cursor.visible = false;
+            Cursor.visible = true;
 
             // Set Canvas
             _Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -150,15 +150,15 @@ namespace KGUI
             wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
 
-            // Initialize Default Cursor
-            DefaultCursor = planet.AddUIImage("DefaultCursor", _Canvas.transform, 16, 16, GameResources.DefaultCursor, new Vec2f(0, 0), 
-                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
+            //// Initialize Default Cursor
+            //DefaultCursor = planet.AddUIImage("DefaultCursor", _Canvas.transform, 16, 16, GameResources.DefaultCursor, new Vec2f(0, 0), 
+            //    new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
 
-            AimCursor = planet.AddUIImage("AimCursor", _Canvas.transform, 16, 16, GameResources.AimCursor, new Vec2f(0, 0),
-                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
+            //AimCursor = planet.AddUIImage("AimCursor", _Canvas.transform, 16, 16, GameResources.AimCursor, new Vec2f(0, 0),
+            //    new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
 
-            BuildCursor = planet.AddUIImage("BuildCursor", _Canvas.transform, 16, 16, GameResources.BuildCursor, new Vec2f(0, 0),
-                new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
+            //BuildCursor = planet.AddUIImage("BuildCursor", _Canvas.transform, 16, 16, GameResources.BuildCursor, new Vec2f(0, 0),
+            //    new Vec3f(0.5f, -.5f, .5f), Enums.AtlasType.Particle).kGUIElementsImage.Image;
 
             // Add Food Bar To Draw Array
             UIList.Add(foodBarUI);
@@ -203,14 +203,14 @@ namespace KGUI
                 // Assign New Cursor Position
                 CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
 
-                // Default Cursor
-                DefaultCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+                //// Default Cursor
+                //DefaultCursor.SetPosition(new Vector3(CursorPosition.X, CursorPosition.Y - 220.0f, 0.0f));
 
-                // Aim Cursor
-                AimCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+                //// Aim Cursor
+                //AimCursor.SetPosition(new Vector3(CursorPosition.X, CursorPosition.Y, 0.0f));
 
-                // Build Cursor
-                BuildCursor.SetPosition(new Vector3(CursorPosition.X - 435.0f, CursorPosition.Y - 220.0f, 0.0f));
+                //// Build Cursor
+                //BuildCursor.SetPosition(new Vector3(CursorPosition.X, CursorPosition.Y - 220.0f, 0.0f));
 
                 // Update Scanner Text
                 scannerText.Update();
@@ -227,27 +227,27 @@ namespace KGUI
                 if(item != null)
                 {
                     // Set Cursor Depend On Item
-                    if(agentEntity.agentAgentAction.Action == Agent.AgentAction.Alert || 
-                        agentEntity.agentAgentAction.Action == Agent.AgentAction.Aiming)
-                    {
-                        DefaultCursor.GetGameObject().SetActive(false);
-                        AimCursor.GetGameObject().SetActive(true);
-                        BuildCursor.GetGameObject().SetActive(false);
-                    }
-                    else if (agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert &&
-                        GameState.ItemCreationApi.Get(item.itemType.Type).Group != Enums.ItemGroups.BuildTools)
-                    {
-                        DefaultCursor.GetGameObject().SetActive(true);
-                        AimCursor.GetGameObject().SetActive(false);
-                        BuildCursor.GetGameObject().SetActive(false);
-                    }
-                    else if (GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.BuildTools &&
-                        agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert)
-                    {
-                        DefaultCursor.GetGameObject().SetActive(false);
-                        AimCursor.GetGameObject().SetActive(false);
-                        BuildCursor.GetGameObject().SetActive(true);
-                    }
+                    //if(agentEntity.agentAgentAction.Action == Agent.AgentAction.Alert || 
+                    //    agentEntity.agentAgentAction.Action == Agent.AgentAction.Aiming)
+                    //{
+                    //    DefaultCursor.GetGameObject().SetActive(false);
+                    //    AimCursor.GetGameObject().SetActive(true);
+                    //    BuildCursor.GetGameObject().SetActive(false);
+                    //}
+                    //else if (agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert &&
+                    //    GameState.ItemCreationApi.Get(item.itemType.Type).Group != Enums.ItemGroups.BuildTools)
+                    //{
+                    //    DefaultCursor.GetGameObject().SetActive(true);
+                    //    AimCursor.GetGameObject().SetActive(false);
+                    //    BuildCursor.GetGameObject().SetActive(false);
+                    //}
+                    //else if (GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.BuildTools &&
+                    //    agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert)
+                    //{
+                    //    DefaultCursor.GetGameObject().SetActive(false);
+                    //    AimCursor.GetGameObject().SetActive(false);
+                    //    BuildCursor.GetGameObject().SetActive(true);
+                    //}
 
                     if (item.itemType.Type == Enums.ItemType.PlacementTool)
                     {
