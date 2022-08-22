@@ -227,17 +227,26 @@ namespace KGUI
                 if(item != null)
                 {
                     // Set Cursor Depend On Item
-                    if(GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.Gun)
+                    if(agentEntity.agentAgentAction.Action == Agent.AgentAction.Alert || 
+                        agentEntity.agentAgentAction.Action == Agent.AgentAction.Aiming)
                     {
                         DefaultCursor.GetGameObject().SetActive(false);
                         AimCursor.GetGameObject().SetActive(true);
                         BuildCursor.GetGameObject().SetActive(false);
                     }
-                    else if (GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.None)
+                    else if (agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert &&
+                        GameState.ItemCreationApi.Get(item.itemType.Type).Group != Enums.ItemGroups.BuildTools)
                     {
                         DefaultCursor.GetGameObject().SetActive(true);
                         AimCursor.GetGameObject().SetActive(false);
                         BuildCursor.GetGameObject().SetActive(false);
+                    }
+                    else if (GameState.ItemCreationApi.Get(item.itemType.Type).Group == Enums.ItemGroups.BuildTools &&
+                        agentEntity.agentAgentAction.Action == Agent.AgentAction.UnAlert)
+                    {
+                        DefaultCursor.GetGameObject().SetActive(false);
+                        AimCursor.GetGameObject().SetActive(false);
+                        BuildCursor.GetGameObject().SetActive(true);
                     }
 
                     if (item.itemType.Type == Enums.ItemType.PlacementTool)

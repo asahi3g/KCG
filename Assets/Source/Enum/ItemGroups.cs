@@ -13,6 +13,7 @@
         Dye,
         Gun,
         Weapon,
-        Mech
+        Mech,
+        BuildTools
     }
 }

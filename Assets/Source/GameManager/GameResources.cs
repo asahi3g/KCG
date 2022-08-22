@@ -799,7 +799,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementTool, "PlacementTool");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -808,7 +808,7 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementMaterialTool, "PlaceMaterial");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));

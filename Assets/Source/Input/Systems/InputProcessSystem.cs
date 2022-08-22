@@ -399,18 +399,22 @@ namespace ECSInput
                     return;
                 Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
-                // Set Agent Action
+                // If, Item is a weapon or gun.
                 if(itemProperty.Group == ItemGroups.Gun || itemProperty.Group == ItemGroups.Weapon)
                 {
+                    // Has Action Component?
                     if(entity.hasAgentAgentAction)
                     {
+                        // Set Action Mode To Alert
                         entity.agentAgentAction.Action = AgentAction.Alert;
                     }
                 }
                 else
                 {
+                    // Has Action Component?
                     if (entity.hasAgentAgentAction)
                     {
+                        // Set Action Mode To Un Alert
                         entity.agentAgentAction.Action = AgentAction.UnAlert;
                     }
                 }
