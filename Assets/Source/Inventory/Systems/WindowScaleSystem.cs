@@ -6,7 +6,7 @@ namespace Inventory
     // If more than one window is open make sure they fit in  the screen.
     public class WindowScaleSystem
     {
-        // Toado: run this only once per frame.
+        // Todo: run this only once per frame.
         // todo: Right now each inventory has a grid. Use on single grid for every inventory.
         // If inventory ovelap with another. Find empty spot and put it there.
         // It will make this simpler to position all inventories in the screen.

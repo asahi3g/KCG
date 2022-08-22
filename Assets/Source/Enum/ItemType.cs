@@ -45,6 +45,7 @@
         Planter,
         Light,
         SmashableBox,
+        SmashableEgg,
 
         /// <summary>
         /// Materials

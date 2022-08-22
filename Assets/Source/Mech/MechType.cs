@@ -10,6 +10,7 @@ namespace Mech
         MajestyPalm,
         SagoPalm,
         DracaenaTrifasciata,
-        SmashableBox
+        SmashableBox,
+        SmashableEgg
     }
 }

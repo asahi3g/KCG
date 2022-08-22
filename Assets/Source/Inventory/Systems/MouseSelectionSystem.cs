@@ -150,26 +150,22 @@ namespace Inventory
             int width = inventoryModel.Width;
 
             // Is mouse inside inventory.
-            if (!window.IsInsideWindow(mousePos))
-                return false;
-            else
-            {
-                InventorySystemsState.MouseDown = true;
-                InventorySystemsState.TimeSinceClick = Time.realtimeSinceStartup;
+            if (!window.IsInsideWindow(mousePos)) return false;
+            
+            InventorySystemsState.MouseDown = true;
+            InventorySystemsState.TimeSinceClick = Time.realtimeSinceStartup;
 
-                int gridSlotID = (int)((window.GridSize.Y - (mousePos.Y - window.GridPosition.Y)) / window.TileSize);
-                gridSlotID = gridSlotID * width + (int)((mousePos.X - window.GridPosition.X) / window.TileSize);
-                GridSlot gridSlot = inventoryModel.Slots[gridSlotID];
+            int gridSlotID = (int)((window.GridSize.Y - (mousePos.Y - window.GridPosition.Y)) / window.TileSize);
+            gridSlotID = gridSlotID * width + (int)((mousePos.X - window.GridPosition.X) / window.TileSize);
+            GridSlot gridSlot = inventoryModel.Slots[gridSlotID];
 
-                int slotID = gridSlot.SlotID;
-                if (slotID == -1)
-                    return false;
+            int slotID = gridSlot.SlotID;
+            if (slotID == -1) return false;
 
-                InventorySystemsState.ClickedSlotslotID = slotID;
-                InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;
-                InventorySystemsState.GrabbedItemID = inventoryEntity.inventoryEntity.Slots[slotID].ItemID;
-                return true;
-            }
+            InventorySystemsState.ClickedSlotslotID = slotID;
+            InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;
+            InventorySystemsState.GrabbedItemID = inventoryEntity.inventoryEntity.Slots[slotID].ItemID;
+            return true;
         }
     }
 }
