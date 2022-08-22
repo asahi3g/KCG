@@ -22,18 +22,14 @@ namespace Utility
         public BitSet(UInt32 bitLength)
         {
             Length = bitLength;
-
-            UInt64 bitMask = 0x3ul;
             UInt64 length = (UInt64)Length >> 6;
 
-            if ((bitLength & bitMask) == 0)
-            {
+            if (bitLength % 64 != 0)
                 length++;
-            }
 
             BitMask = 1ul << (int)(bitLength % 64);
             BitMask -= 1;
-            Bits = new UInt64[length + 1];
+            Bits = new UInt64[length];
         }
 
         public void Set(int pos)
@@ -117,7 +113,7 @@ namespace Utility
         public bool this[int i]
         {
             get => Get(i);
-            set => Set(i);
+            set { if (value) { Set(i); } else { UnSet(i); } }
         }
 
         public static BitSet operator &(BitSet lhs, BitSet rhs)

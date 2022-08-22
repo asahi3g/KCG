@@ -25,15 +25,15 @@ namespace Agent
             
             if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
             {
-                bool isPlatform = false;
+                bool isPlatform = true; // if all colliding blocks are plataforms.
                 for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
                 {
                     var tile = tileMap.GetTile(i, (int)entityBoxBorders.ymin);
                     var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
-                    if (property.IsAPlatform)
+                    if (!property.IsAPlatform)
                     {
-                        isPlatform = true;
+                        isPlatform = false;
                     }
                 }
 
@@ -45,28 +45,18 @@ namespace Agent
                     physicsState.Velocity.Y = 0.0f;
                     physicsState.Acceleration.Y = 0.0f;
                     physicsState.OnGrounded = true;
-                }
-                else if (isPlatform && physicsState.Droping)
-                {
-                    if (!physicsState.WantToDrop)
-                    {
+                    if (!isPlatform)
                         physicsState.Droping = false;
-                    }
-                    else
-                    {
-                        physicsState.OnGrounded = false;
-                        physicsState.Velocity.Y = -10.0f;
-                    }
+                }
+                else
+                {
+                    physicsState.OnGrounded = false;
                 }
             }
             else
             {
-                if (physicsState.Velocity.Y >= 0.0f)
-                {
-                    physicsState.WantToDrop = false;
-                    physicsState.Droping = false;
-                    physicsState.OnGrounded = false;
-                }
+                physicsState.OnGrounded = false;
+                physicsState.Droping = false;
             }
 
 
@@ -84,7 +74,7 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree() && !physicsState.OnGrounded)
+                if (entity.IsStateFree() && !physicsState.OnGrounded && entity.isAgentPlayer)
                 {
                     physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
                 }
@@ -94,7 +84,7 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree() && !physicsState.OnGrounded)
+                if (entity.IsStateFree() && !physicsState.OnGrounded && entity.isAgentPlayer)
                 {
                     physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
                 }

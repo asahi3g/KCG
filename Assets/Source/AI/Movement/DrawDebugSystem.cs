@@ -11,6 +11,7 @@ namespace AI.Movement
         Vec2f[,] Path;
         int[] Length;
         int PathsToDraw = 0;
+        int CurrentFrame = 0;
 
         Texture2D Texture;
 
@@ -26,7 +27,17 @@ namespace AI.Movement
 
         public void AddPath(ref Vec2f[] path, int pathLength)
         {
-            Array.Copy(path, Path, pathLength);
+            if (CurrentFrame != Time.frameCount)
+            {
+                CurrentFrame = Time.frameCount;
+                PathsToDraw = 0;
+                Array.Fill(Length, 0);
+            }
+
+            for (int i = 0; i < pathLength; i++)
+            {
+                Path[PathsToDraw, i] = path[i];
+            }
             Length[PathsToDraw] = pathLength;
 
             PathsToDraw++;
@@ -45,8 +56,8 @@ namespace AI.Movement
                 }
             }
 
-            Array.Fill(Length, 0);
             PathsToDraw = 0;
+            Array.Fill(Length, 0);
         }
     }
 }

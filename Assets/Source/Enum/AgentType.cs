@@ -8,7 +8,6 @@ namespace Enums
         FlyingSlime,
         Corpse,
         EnemyGunner,
-        EnemySwordman
-
+        EnemySwordman,
     }
 }

@@ -290,7 +290,7 @@ namespace Agent
             physicsState.StaggerDuration = 1.0f;
         }
 
-        public void JumpVelocity(AgentEntity agentEntity, float velocity)
+        public void Jump(AgentEntity agentEntity)
         {
             var physicsState = agentEntity.agentPhysicsState;
             if (agentEntity.IsStateFree())
@@ -316,7 +316,7 @@ namespace Agent
                         }
 
                         // jumping
-                        physicsState.Velocity.Y = velocity;
+                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
                         physicsState.JumpCounter++;
                 
                 }
@@ -325,7 +325,7 @@ namespace Agent
                     // double jump
                     if (physicsState.JumpCounter <= 1)
                     {
-                        physicsState.Velocity.Y = velocity * 0.75f;
+                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
                         physicsState.JumpCounter++;
                     }
                 }

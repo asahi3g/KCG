@@ -86,7 +86,7 @@ namespace Agent
             PropertiesArray[CurrentIndex].Name = name;
         }
 
-        public void SetMovement(int defaultSpeed, float jumHegiht, int numOfJumps)
+        public void SetMovement(float defaultSpeed, float jumHegiht, int numOfJumps)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -97,7 +97,7 @@ namespace Agent
             }
         }
 
-        public void SetFlyingMovement(int defaultSpeed)
+        public void SetFlyingMovement(float defaultSpeed)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
