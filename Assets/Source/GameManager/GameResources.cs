@@ -186,6 +186,13 @@ public class GameResources
     public static int BeltSlotIcon;
 
     public static int DirtIcon;
+    public static int BedrockIcon;
+    public static int PipeIcon;
+    public static int WireIcon;
+
+    public static int DefaultCursor;
+    public static int AimCursor;
+    public static int BuildCursor;
 
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
@@ -198,7 +205,6 @@ public class GameResources
         if (!IsInitialized)
         {
             long beginTime = DateTime.Now.Ticks;
-            
 
             IsInitialized = true;
             // loading the sprite sheets
@@ -282,6 +288,14 @@ public class GameResources
             RingSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Ring.png", 64, 64);
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
             DirtIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", 16, 16);
+            BedrockIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png", 16, 16);
+            WireIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", 128, 128);
+            PipeIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
+
+            // Cursors
+            DefaultCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
+            AimCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
+            BuildCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
 
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
@@ -335,6 +349,7 @@ public class GameResources
             RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, Enums.AtlasType.Gui);
             BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, Enums.AtlasType.Gui);
 
+            // Plants
             SagoPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalm, 0, 0, Enums.AtlasType.Mech);
             SagoPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS1, 0, 0, Enums.AtlasType.Mech);
             SagoPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS2, 0, 0, Enums.AtlasType.Mech);
@@ -343,8 +358,17 @@ public class GameResources
             DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
-            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
 
+            // Material Icons
+            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
+            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, Enums.AtlasType.Particle);
+            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, Enums.AtlasType.Particle);
+            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, Enums.AtlasType.Particle);
+
+            // Cursors
+            DefaultCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(DefaultCursor, 0, 0, Enums.AtlasType.Particle);
+            AimCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(AimCursor, 2, 0, Enums.AtlasType.Particle);
+            BuildCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor, 1, 1, Enums.AtlasType.Particle);
 
             // TileIsotypes.
             SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
@@ -661,7 +685,7 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(PistolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 10.0f, 25.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.4f, 10.0f, 25.0f);
         GameState.ItemCreationApi.SetRangedWeaponClip(8, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
@@ -773,12 +797,21 @@ public class GameResources
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementTool, "PlacementTool");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
         GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.PlaceTilMoonAction);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementMaterialTool, "PlaceMaterial");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
+        GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMaterialPlacement);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementToolBack, "BackgroundPlacementTool");
@@ -970,6 +1003,33 @@ public class GameResources
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bedrock, "Bedrock");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BedrockIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pipe, "Pipe");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(PipeIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(PipeIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wire, "Wire");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(WireIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(WireIcon);
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.EndItem();
     }
 
     private static void CreateAgents()
@@ -977,6 +1037,7 @@ public class GameResources
         GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
         GameState.AgentCreationApi.SetName("player");
         GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
+        GameState.AgentCreationApi.SetHealth(300.0f);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 1.8f));
         GameState.AgentCreationApi.End();
@@ -1022,7 +1083,7 @@ public class GameResources
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Swordman);
-        GameState.AgentCreationApi.SetDetectionRadius(8.0f);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
 
@@ -1033,7 +1094,7 @@ public class GameResources
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
-        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetDetectionRadius(24.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
     }

@@ -52,6 +52,7 @@ namespace Mech
 
             ref MechEntity entity = ref List[index];
             entity.Destroy();
+            entity = null;
 
             if (index != Length - 1)
             {

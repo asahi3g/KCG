@@ -172,7 +172,7 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {   
-                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
+                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 2.0f;
 
@@ -189,8 +189,8 @@ namespace Projectile
                             if (entity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - 25, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= 25;
+                            
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + 25, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
@@ -209,7 +209,7 @@ namespace Projectile
                     // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {
-                        float dist = Vector2.Distance(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vector2(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
+                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
 
                         float radius = 4.0f;
 
@@ -226,8 +226,8 @@ namespace Projectile
                             if (entity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - 100, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= 100;
+                               
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + 100, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 

@@ -34,7 +34,8 @@ namespace Agent
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
-            entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown);
+            entity.AddAgentAgentAction(AgentAction.UnAlert);
+            entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown, false);
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
@@ -177,14 +178,47 @@ namespace Agent
                         //model.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = pixelMaterial;
 
 
-                        // create an animancer object and give it a reference to the Animator component
-                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                // create an animancer object and give it a reference to the Animator component
+                GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                animancerComponentGO.transform.parent = model.transform;
+                // get the animator component from the game object
+                // this component is used by animancer
+                AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                animancerComponent.Animator = model.GetComponent<Animator>();
+                entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                
+
+                entity.agentPhysicsState.Speed = 10.0f;
+                entity.isAgentPlayer = true;
+                entity.isECSInput = true;
+                entity.AddECSInputXY(new Vec2f(0, 0), false, false);
+                entity.AddAgentAgentAction(AgentAction.UnAlert);
+
+            }
+            else if (agentType == Agent.AgentType.Agent)
+            {
+                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
+            }
+            else if (agentType == Agent.AgentType.Enemy)
+            {
+                entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
+                entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+            }
+            else if (agentType == Agent.AgentType.EnemyGunner)
+            {
+                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+                GameObject model = GameObject.Instantiate(prefab);
+
+                GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+
+                model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                Vector3 eulers = model.transform.rotation.eulerAngles;
+                model.transform.rotation = Quaternion.Euler(0, 90, 0);
 
 
                         entity.isAgentPlayer = true;
@@ -216,8 +250,6 @@ namespace Agent
                         GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
                         GameObject model = GameObject.Instantiate(prefab);
 
-                        GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
 
                         model.transform.position = new Vector3(position.X, position.Y, -1.0f);
 

@@ -93,7 +93,7 @@ namespace Action
                 // Todo: Create a agent colision system?
                 foreach (var entity in entities)
                 {
-                    float dist = Vector2.Distance(new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vector2(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
+                    float dist = Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
 
                     if (dist < radius)
                     {
@@ -108,8 +108,7 @@ namespace Action
                         if (AgentEntity.hasAgentStats)
                         {
                             var stats = entity.agentStats;
-                            entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                stats.Fuel, stats.AttackCooldown);
+                            stats.Health -= (int)damage;
 
                             // spawns a debug floating text for damage 
                             planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));

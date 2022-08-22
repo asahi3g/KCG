@@ -56,8 +56,8 @@ namespace Agent
                                 Vector2 oppositeDirection = new Vector2(-direction.X, -direction.Y);
                                 var stats = entity.agentStats;
                                 float damage = 20.0f;
-                                entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= (int)damage;
+                                
 
                                 // spawns a debug floating text for damage 
                                 planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
@@ -109,8 +109,7 @@ namespace Agent
                                 Vector2 oppositeDirection = new Vector2(-direction.X, -direction.Y);
                                 var stats = entity.agentStats;
                                 float damage = 20.0f;
-                                entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= (int)damage;
 
                                 // spawns a debug floating text for damage 
                                 planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
@@ -136,7 +135,9 @@ namespace Agent
 
                                 // to move the enemy we have to add acceleration 
                                 // towards the player (Equal two time the drag.)
-                                physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
+
+                                entity.Walk((int)direction.X);
+                                //physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
 
                                 // jumping is just an increase in velocity
                                 if (jump)
@@ -190,7 +191,8 @@ namespace Agent
 
                                 // to move the enemy we have to add acceleration 
                                 // towards the player (Equal two time the drag.)
-                                physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
+                                entity.Walk((int)direction.X);
+                                //physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
 
                                 // jumping is just an increase in velocity
                                 if (jump)

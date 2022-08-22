@@ -40,7 +40,7 @@ namespace Action
                 }
 
                 // Mesure to Understand Cursor Inside the Mech
-                if (Vector2.Distance(new Vector2(x, y), new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.5f)
+                if (Vec2f.Distance(new Vec2f(x, y), new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 1.5f)
                 {
                     // Has Mech Type Component?
                     if (entity.hasMechType)
@@ -94,8 +94,8 @@ namespace Action
                             for (int i = 0; i < lights.Count; i++)
                             {
                                 // Get All Lights near the Pot
-                                if (Vector2.Distance(new Vector2(lights[i].mechPosition2D.Value.X, lights[i].mechPosition2D.Value.Y),
-                                    new Vector2(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 10.0f)
+                                if (Vec2f.Distance(new Vec2f(lights[i].mechPosition2D.Value.X, lights[i].mechPosition2D.Value.Y),
+                                    new Vec2f(entity.mechPosition2D.Value.X, entity.mechPosition2D.Value.Y)) < 10.0f)
                                 {
                                     // Increase Ligth Level
                                     entity.mechPlanter.LightLevel++;

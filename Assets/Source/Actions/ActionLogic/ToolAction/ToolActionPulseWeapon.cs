@@ -166,7 +166,7 @@ namespace Action
                 {
                     if (!entity.isAgentPlayer)
                     {
-                        float dist = Vector2.Distance(new Vector2(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vector2(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
+                        float dist = Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
 
                         if (dist < 2.0f)
                         {
@@ -181,8 +181,8 @@ namespace Action
                             if (AgentEntity.hasAgentStats)
                             {
                                 var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
+                                stats.Health -= (int)damage;
+                                
 
                                 planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 
@@ -230,8 +230,7 @@ namespace Action
                     {
                         Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
                         var stats = entity.agentStats;
-                        entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                            stats.Fuel, stats.AttackCooldown);
+                        stats.Health -= (int)damage;
 
                         planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
 

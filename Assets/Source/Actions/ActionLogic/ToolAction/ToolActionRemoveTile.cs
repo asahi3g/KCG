@@ -25,6 +25,15 @@ namespace Action
                     case TileID.Moon:
                         GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Dirt, new Vec2f(x, y));
                         break;
+                    case TileID.Bedrock:
+                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Bedrock, new Vec2f(x, y));
+                        break;
+                    case TileID.Wire:
+                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Wire, new Vec2f(x, y));
+                        break;
+                    case TileID.Pipe:
+                        GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, Enums.ItemType.Pipe, new Vec2f(x, y));
+                        break;
                 }
 
                 planet.TileMap.RemoveFrontTile(x, y);

@@ -17,6 +17,7 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
+
                 /*if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
@@ -41,6 +42,12 @@ namespace Agent
                     case AgentMovementState.Idle:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
+                    case AgentMovementState.Limp:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Limp);
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
@@ -107,8 +114,18 @@ namespace Agent
                     }
                     case AgentMovementState.FireGun:
                     {
+                        float speed =  0.6f / physicsState.GunCooldown;
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.FireGun);
-                        model3d.AnimancerComponent.Play(animation, 0.075f);
+                        var state = model3d.AnimancerComponent.Play(animation, 0.075f);
+                        state.Speed = speed;
+                        break;
+                    }
+                    case AgentMovementState.UseTool:
+                    {
+                        float speed =  0.6f / physicsState.ToolCooldown;
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.UseTool);
+                        var state = model3d.AnimancerComponent.Play(animation, 0.075f);
+                        state.Speed = speed;
                         break;
                     }
                     case AgentMovementState.KnockedDownFront:
