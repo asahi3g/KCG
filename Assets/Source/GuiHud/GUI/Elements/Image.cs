@@ -18,7 +18,7 @@ namespace KGUI.Elements
             iconCanvas = new GameObject(imageName);
 
             // Set Object Parent To Canvas
-            iconCanvas.transform.parent = GameObject.Find("Canvas").transform;
+            iconCanvas.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
             // Add Rect Transform to Manage UI Scaling
             rectTransform = iconCanvas.AddComponent<RectTransform>();

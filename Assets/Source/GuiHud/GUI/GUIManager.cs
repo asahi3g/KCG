@@ -194,6 +194,8 @@ namespace KGUI
                 // Update HUD Scale
                 _Canvas.scaleFactor = HUDScale;
 
+                _Canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+
                 // Update Elements
                 for (int i = 0; i < UIList.Count; i++)
                 {
