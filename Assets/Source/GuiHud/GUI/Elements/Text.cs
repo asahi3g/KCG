@@ -8,6 +8,8 @@ namespace KGUI.Elements
     {
         // Image Gameobject
         private GameObject textCanvas;
+        RectTransform rectTransform;
+        UnityEngine.UI.Text textComponent;
 
         // Countdown
         float timeLeft;
@@ -36,27 +38,27 @@ namespace KGUI.Elements
             textCanvas.transform.rotation = Quaternion.identity;
 
             // Add Rect Transform to Manage UI Scaling
-            textCanvas.AddComponent<RectTransform>();
+            rectTransform = textCanvas.AddComponent<RectTransform>();
 
             // Add Image Component to Render the Sprite
-            textCanvas.AddComponent<UnityEngine.UI.Text>();
+            textComponent = textCanvas.AddComponent<UnityEngine.UI.Text>();
 
             // Set Image Sprite
-            textCanvas.GetComponent<UnityEngine.UI.Text>().text = text;
-            textCanvas.GetComponent<UnityEngine.UI.Text>().font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font; ;
-            textCanvas.GetComponent<UnityEngine.UI.Text>().fontSize = 20;
-            textCanvas.GetComponent<UnityEngine.UI.Text>().fontStyle = FontStyle.Normal;
+            textComponent.text = text;
+            textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+            textComponent.fontSize = 20;
+            textComponent.fontStyle = FontStyle.Normal;
 
             // Set Anchor Min
-            textCanvas.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Max
-            textCanvas.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            textCanvas.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            textCanvas.GetComponent<UnityEngine.UI.Text>().enabled = false;
+            textComponent.enabled = false;
 
             // Reset Transform
             SetPosition(Vector3.zero);
@@ -64,7 +66,7 @@ namespace KGUI.Elements
 
         public override void Draw()
         {
-            textCanvas.GetComponent<UnityEngine.UI.Text>().enabled = true;
+            textComponent.enabled = true;
         }
 
         public GameObject GetGameObject()
@@ -75,30 +77,30 @@ namespace KGUI.Elements
         public void SetPosition(Vector3 newPos)
         {
             // Set Local Rect Position
-            textCanvas.GetComponent<RectTransform>().localPosition = newPos;
+            rectTransform.localPosition = newPos;
         }
 
         public void SetRotation(Quaternion newRot)
         {
             // Set Local Rect Rotation
-            textCanvas.GetComponent<RectTransform>().localRotation = newRot;
+            rectTransform.localRotation = newRot;
         }
 
         public void SetScale(Vector3 newScale)
         {
             // Set Local Rect Scale
-            textCanvas.GetComponent<RectTransform>().localScale = newScale;
+            rectTransform.localScale = newScale;
         }
 
         public void SetSizeDelta(Vector2 newSize)
         {
             // Set Local Rect Scale
-            textCanvas.GetComponent<RectTransform>().sizeDelta = newSize;
+            rectTransform.sizeDelta = newSize;
         }
 
         public void UpdateText(string newText)
         {
-            textCanvas.GetComponent<UnityEngine.UI.Text>().text = newText;
+            textComponent.text = newText;
         }
 
         public override void Update()

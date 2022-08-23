@@ -12,8 +12,11 @@ namespace KGUI.Elements
         // Bar Fill Value
         public float _fillValue;
 
+        RectTransform rectTransform;
+        UnityEngine.UI.Image imageComponent;
+
         // Constructor
-        public ProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue, AgentEntity agentEntity)
+        public ProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue)
         {
             // Set Fill Value
             _fillValue = fillValue;
@@ -25,85 +28,85 @@ namespace KGUI.Elements
             Bar.transform.parent = parent;
 
             // Add Rect Transform Component
-            Bar.AddComponent<RectTransform>();
+            rectTransform = Bar.AddComponent<RectTransform>();
 
             // Add Image Component
-            Bar.AddComponent<UnityEngine.UI.Image>();
+            imageComponent = Bar.AddComponent<UnityEngine.UI.Image>();
 
             // Set Anchor Min
-            Bar.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMin = new Vector2(0, 0);
 
             // Set Anchor Max
-            Bar.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            Bar.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
             // Set Sprite
-            Bar.GetComponent<UnityEngine.UI.Image>().sprite = barTexture;
+            imageComponent.sprite = barTexture;
 
             // Set Raycast Target
-            Bar.GetComponent<UnityEngine.UI.Image>().raycastTarget = true;
+            imageComponent.raycastTarget = true;
 
             // Set Maskable
-            Bar.GetComponent<UnityEngine.UI.Image>().maskable = true;
+            imageComponent.maskable = true;
 
             // Set Image Type
-            Bar.GetComponent<UnityEngine.UI.Image>().type = UnityEngine.UI.Image.Type.Filled;
+            imageComponent.type = UnityEngine.UI.Image.Type.Filled;
 
             // Set Fill Method
-            Bar.GetComponent<UnityEngine.UI.Image>().fillMethod = UnityEngine.UI.Image.FillMethod.Horizontal;
+            imageComponent.fillMethod = UnityEngine.UI.Image.FillMethod.Horizontal;
 
             // Set Fill Origin
-            Bar.GetComponent<UnityEngine.UI.Image>().fillOrigin = 0;
+            imageComponent.fillOrigin = 0;
 
             // Set Fill Value
-            Bar.GetComponent<UnityEngine.UI.Image>().fillAmount = fillValue;
+            imageComponent.fillAmount = fillValue;
 
             // Set Fil Clockwise
-            Bar.GetComponent<UnityEngine.UI.Image>().fillClockwise = false;
+            imageComponent.fillClockwise = false;
         }
 
         public void SetType(UnityEngine.UI.Image.Type type)
         {
             // Set Image Type
-            Bar.GetComponent<UnityEngine.UI.Image>().type = type;
+            imageComponent.type = type;
         }
 
         public void SetFillMethod(UnityEngine.UI.Image.FillMethod type)
         {
             // Set Fill Method
-            Bar.GetComponent<UnityEngine.UI.Image>().fillMethod = type;
+            imageComponent.fillMethod = type;
         }
 
         public void SetSprite(Sprite sprite)
         {
             // Set Fill Method
-            Bar.GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            imageComponent.sprite = sprite;
         }
 
         public void SetRaycastTarget(bool raycastTarget)
         {
             // Set Fill Method
-            Bar.GetComponent<UnityEngine.UI.Image>().raycastTarget = raycastTarget;
+            imageComponent.raycastTarget = raycastTarget;
         }
 
         public void SetPosition(Vector3 newPos)
         {
             // Set Position
-            Bar.GetComponent<RectTransform>().localPosition = newPos;
+            rectTransform.localPosition = newPos;
         }
 
         public void SetRotation(Quaternion newRot)
         {
             // Set Rotation
-            Bar.GetComponent<RectTransform>().localRotation = newRot;
+            rectTransform.localRotation = newRot;
         }
 
         public void SetScale(Vector3 newScale)
         {
             // Set Scale
-            Bar.GetComponent<RectTransform>().localScale = newScale;
+            rectTransform.localScale = newScale;
         }
 
         public void Update(float fillValue)
@@ -112,7 +115,7 @@ namespace KGUI.Elements
             _fillValue = fillValue;
 
             // Update Fill Value
-            Bar.GetComponent<UnityEngine.UI.Image>().fillAmount = fillValue;
+            imageComponent.fillAmount = fillValue;
         }
     }
 }
