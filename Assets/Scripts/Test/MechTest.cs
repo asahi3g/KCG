@@ -28,6 +28,10 @@ namespace Planet.Unity
         private Color wrongHlColor = Color.red;
 
         public Utility.FrameMesh HighliterMesh;
+        
+        public InventoryEntity MaterialBag;
+        public int InventoryID;
+        Inventory.InventoryManager InventoryManager;
 
         public void Start()
         {
@@ -84,12 +88,13 @@ namespace Planet.Unity
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
+            
+            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
         {
-            if (!Init)
-                return;
+            if (!Init) return;
 
             Planet.DrawHUD(Player);
 
@@ -138,8 +143,7 @@ namespace Planet.Unity
                         }
                     }
 
-                    if (!allTilesAir)
-                        break;
+                    if (!allTilesAir) break;
                 }
 
                 if (allTilesAir)
@@ -190,6 +194,8 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
+            InventoryManager = new Inventory.InventoryManager();
+            
             GameResources.Initialize();
 
             // Generating the map
@@ -225,6 +231,10 @@ namespace Planet.Unity
 
             Planet.InitializeSystems(Material, transform);
             Planet.InitializeHUD(Player);
+            
+            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            
+            InventoryID = Player.agentInventory.InventoryID;
 
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
@@ -237,7 +247,29 @@ namespace Planet.Unity
 
             HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
+            
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.MajestyPalm, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SagoPalm, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.WaterBottle, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.DracaenaTrifasciata, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Chest, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Planter, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Light, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SmashableBox, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SmashableEgg, 1, Planet.EntitasContext);
         }
+        
+        /*
+            MajestyPalm,
+            SagoPalm,
+            WaterBottle,
+            DracaenaTrifasciata,
+            Chest,
+            Planter,
+            Light,
+            SmashableBox,
+            SmashableEgg,
+         */
 
         void GenerateMap()
         {

@@ -296,12 +296,30 @@ namespace Planet
             return newEntity;
         }
 
+        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, Vec2f size, UnityEngine.UI.Image.Type Type, Color color)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
+                position, scale, size, Type, color, -1, ElementType.Image));
+            return newEntity;
+        }
+
         public UIElementEntity AddUIImage(string Name, Transform Parent, string path, Vec2f position, Vec3f scale, int width, int height)
         {
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
             UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
                 position, scale, width, height, -1, ElementType.Image));
+            return newEntity;
+        }
+        
+        public UIElementEntity AddUIImage(string Name, Transform Parent, string path, Vec2f position, Vec3f scale, Vec2f size, int width, int height)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
+                position, scale, size, width, height, -1, ElementType.Image));
             return newEntity;
         }
 
@@ -517,14 +535,11 @@ namespace Planet
 
             TileMap.UpdateTileSprites();
 
-            if (GameState.TGenGrid != null)
+            if (GameState.TGenGrid is {Initialized: true})
             {
-                if (GameState.TGenGrid.Initialized)
-                {
-                    GameState.TGenGrid.Update();
-                    GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
-                    GameState.TGenRenderMapMesh.Draw();
-                }
+                GameState.TGenGrid.Update();
+                GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
+                GameState.TGenRenderMapMesh.Draw();
             }
 
             // Update Meshes.

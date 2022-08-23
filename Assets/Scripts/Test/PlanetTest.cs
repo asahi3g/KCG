@@ -59,14 +59,7 @@ namespace Planet.Unity
             Planet.Update(Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
-            if(Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw == true)
-            {
-                MaterialBag.hasInventoryDraw = true;
-            }
-            else
-            {
-                MaterialBag.hasInventoryDraw = false;
-            }
+            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
