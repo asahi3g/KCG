@@ -775,6 +775,15 @@ public class GameResources
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.HealthPositon, "HealthPosition");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Potion);
+        GameState.ItemCreationApi.SetTexture(BoneIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.DrinkPotion);
+        GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.EndItem();
+
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(OreIcon);
@@ -1017,6 +1026,7 @@ public class GameResources
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
+
     }
 
     private static void CreateAgents()

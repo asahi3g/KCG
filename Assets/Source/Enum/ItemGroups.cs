@@ -13,6 +13,7 @@
         Dye,
         Gun,
         Weapon,
+        Potion,
         Mech
     }
 }

@@ -34,9 +34,12 @@ namespace Agent
         public float GunCooldown; // used to keep track of the current gun cooldown property
         public float ToolDuration;  // used to keep track of the current tool time
         public float ToolCooldown; // used to keep track of the current tool cooldown property
+        public float DrinkDuration; // used to keep track of the current drink time
+        public float DrinkCooldown; // used to keep track of the current drink cooldown property
         public float StaggerDuration;         
         public float RollCooldown;            // cooldown for rolling
         public float RollDuration;            // duration of the roll
         public float RollImpactDuration;      // after the roll you take time to get up again
+
     }
 }

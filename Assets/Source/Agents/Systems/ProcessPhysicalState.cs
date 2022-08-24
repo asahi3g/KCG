@@ -111,6 +111,18 @@ namespace Agent
                     }
                 }
 
+                if (physicsState.DrinkDuration > 0)
+                {
+                    physicsState.DrinkDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.Drink)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
                 if (physicsState.StaggerDuration > 0)
                 {
                     physicsState.StaggerDuration -= deltaTime;
