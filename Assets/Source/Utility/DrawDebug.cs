@@ -5,6 +5,12 @@ namespace Utility
 {
     public static class DrawDebug
     {
+        public static void DrawBox(Vector2 position, Vector2 size)
+        {
+            var box = new AABox2D(new Vec2f(position.x, position.y), new Vec2f(size.x, size.y));
+            box.DrawBox();
+        }
+        
         public static void DrawBox(this AABox2D aaBox2D)
         {
             var bottomLeft = new Vector3(aaBox2D.xmin, aaBox2D.ymin, 0f);
