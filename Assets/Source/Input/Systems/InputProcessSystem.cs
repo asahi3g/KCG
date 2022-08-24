@@ -127,7 +127,7 @@ namespace ECSInput
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    GameState.AgentProcessPhysicalState.JumpVelocity(player, 16f); // 16f Intial velocity necessary to jump 3.2 tiles. at 40 tiles/seconds gravity
+                    GameState.AgentProcessPhysicalState.Jump(player);
                 }
                 // Dash
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -179,7 +179,6 @@ namespace ECSInput
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     player.agentPhysicsState.Droping = true;
-                    player.agentPhysicsState.WantToDrop = true;
                 }
             }
 
@@ -393,16 +392,43 @@ namespace ECSInput
                 if (!inventoryModel.HasToolBar)
                     return;
 
+                // Get Inventory
+                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                if (item == null)
+                    return;
+                Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+                // If, Item is a weapon or gun.
+                if(itemProperty.Group == ItemGroups.Gun || itemProperty.Group == ItemGroups.Weapon)
+                {
+                    // Has Action Component?
+                    if(entity.hasAgentAgentAction)
+                    {
+                        // Set Action Mode To Alert
+                        entity.agentAgentAction.Action = AgentAction.Alert;
+                    }
+                }
+                else
+                {
+                    // Has Action Component?
+                    if (entity.hasAgentAgentAction)
+                    {
+                        // Set Action Mode To Un Alert
+                        entity.agentAgentAction.Action = AgentAction.UnAlert;
+                    }
+                }
+                
+
                 for (int i = 0; i < inventoryModel.Width; i++)
                 {
                     KeyCode keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
-                        ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         if (item == null)
                             return;
-                        Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                        itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                         switch(itemProperty.Group)
                         {

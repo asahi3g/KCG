@@ -14,6 +14,7 @@
         Gun,
         Weapon,
         Potion,
-        Mech
+        Mech,
+        BuildTools
     }
 }

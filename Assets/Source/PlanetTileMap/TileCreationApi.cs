@@ -283,6 +283,13 @@ namespace PlanetTileMap
             TilePropertyArray[(int)CurrentTileIndex].CannotBeRemoved = flag;
         }
 
+        public void SetDropTableID(Enums.LootTableType dropTableID)
+        {
+            if (CurrentTileIndex == TileID.Error) return;
+
+            TilePropertyArray[(int)CurrentTileIndex].DropTableID = dropTableID;
+        }
+
         public void EndTileProperty()
         {
             CurrentTileIndex = TileID.Error;

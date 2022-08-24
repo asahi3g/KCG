@@ -13,6 +13,6 @@ namespace Agent
         // Todo use one id instead of two: https://news.ycombinator.com/item?id=17995634
         public int ID;
         public int Index;
-        public AgentType Type;
+        public Enums.AgentType Type;
     }
 }

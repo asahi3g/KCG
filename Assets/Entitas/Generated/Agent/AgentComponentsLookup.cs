@@ -8,26 +8,28 @@
 //------------------------------------------------------------------------------
 public static class AgentComponentsLookup {
 
-    public const int AgentAIController = 0;
-    public const int AgentCorpse = 1;
-    public const int AgentEnemy = 2;
-    public const int AgentID = 3;
-    public const int AgentInventory = 4;
-    public const int AgentModel3D = 5;
-    public const int AgentPhysicsState = 6;
-    public const int AgentPlayer = 7;
-    public const int AgentSprite2D = 8;
-    public const int AgentState = 9;
-    public const int AgentStats = 10;
-    public const int AnimationState = 11;
-    public const int ECSInput = 12;
-    public const int ECSInputXY = 13;
-    public const int PhysicsBox2DCollider = 14;
-    public const int PhysicsSphere2DCollider = 15;
+    public const int AgentAgentAction = 0;
+    public const int AgentAIController = 1;
+    public const int AgentCorpse = 2;
+    public const int AgentEnemy = 3;
+    public const int AgentID = 4;
+    public const int AgentInventory = 5;
+    public const int AgentModel3D = 6;
+    public const int AgentPhysicsState = 7;
+    public const int AgentPlayer = 8;
+    public const int AgentSprite2D = 9;
+    public const int AgentState = 10;
+    public const int AgentStats = 11;
+    public const int AnimationState = 12;
+    public const int ECSInput = 13;
+    public const int ECSInputXY = 14;
+    public const int PhysicsBox2DCollider = 15;
+    public const int PhysicsSphere2DCollider = 16;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
+        "AgentAgentAction",
         "AgentAIController",
         "AgentCorpse",
         "AgentEnemy",
@@ -47,6 +49,7 @@ public static class AgentComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(Agent.AgentActionComponent),
         typeof(Agent.AIController),
         typeof(Agent.CorpseComponent),
         typeof(Agent.EnemyComponent),

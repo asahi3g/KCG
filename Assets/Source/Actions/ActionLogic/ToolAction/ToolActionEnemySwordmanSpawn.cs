@@ -24,7 +24,7 @@ namespace Action
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            planet.AddAgent(new Vec2f(x, y), Agent.AgentType.EnemySwordman);
+            planet.AddAgent(new Vec2f(x, y), Enums.AgentType.EnemySwordman);
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

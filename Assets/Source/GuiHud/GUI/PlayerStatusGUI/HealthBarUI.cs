@@ -198,7 +198,7 @@ namespace KGUI.PlayerStatus
             Border = new Image("Border", Icon.GetTransform(), borderSprite);
 
             // Create Bar
-            Bar = new ProgressBar("Health Bar", Icon.GetTransform(), fillSprite, fillValue / 100, agentEntity);
+            Bar = new ProgressBar("Health Bar", Icon.GetTransform(), fillSprite, fillValue / 100);
 
             // Create Bar Div 1
             BarDiv1 = new Image("BarDiv1", Icon.GetTransform(), barDiv1Sprite);

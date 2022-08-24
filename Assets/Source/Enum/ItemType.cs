@@ -47,10 +47,12 @@
         Planter,
         Light,
         SmashableBox,
+        SmashableEgg,
 
         /// <summary>
         /// Materials
         /// </summary>
+        Moon,
         Dirt,
         Bedrock,
         Pipe,

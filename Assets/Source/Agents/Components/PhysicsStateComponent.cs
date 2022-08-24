@@ -10,10 +10,11 @@ namespace Agent
         public Vec2f Position;
         public Vec2f PreviousPosition;
 
-        public float Speed;             // Runing speed in tiles/seconds.
+        public float Speed;                     // Runing speed in tiles/seconds.
+        public float InitialJumpVelocity;       // Velocity at the beginning of the first jump
         public Vec2f Velocity;
         public Vec2f Acceleration;      // Instantaneous, reset to zero at the end of the frame.
-        public int Direction; // 1 or -1 last direction the player was looking at
+        public int Direction;           // 1 or -1 last direction the player was looking at
 
         public Enums.AgentMovementState MovementState;
 
@@ -23,9 +24,8 @@ namespace Agent
         public bool Invulnerable;       // used for dashing
         public bool OnGrounded;         // are we standing on a block or not // Updated by collision system.
         public bool Droping;            // dropping
-        public bool WantToDrop;         // dropKey is pressed or not
 
-        public int JumpCounter;
+        public int   JumpCounter;
         public float SlidingTime;
         public float DyingDuration;
         public float DashCooldown;

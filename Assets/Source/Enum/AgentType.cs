@@ -1,13 +1,13 @@
-namespace Agent
+namespace Enums
 {
     public enum AgentType
     {
         Player,
         Agent,
-        Enemy,
+        Slime,
+        FlyingSlime,
         Corpse,
         EnemyGunner,
-        EnemySwordman
-
+        EnemySwordman,
     }
 }

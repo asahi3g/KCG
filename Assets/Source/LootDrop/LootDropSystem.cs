@@ -12,14 +12,14 @@ namespace LootDrop
         public LootDropEntity[] DropEntities = new LootDropEntity[64];
         public int length = 0;
 
-        public void Add(int tableEntryID, Vec2f pos)
+        public void Add(Enums.LootTableType tableEntryID, Vec2f pos)
         {
             DropEntities[length].TableID = tableEntryID;
             DropEntities[length].DropPos = pos;
             DropEntities[length++].InventoryID = -1;
         }
 
-        public void Add(int tableEntryID, int inventoryID)
+        public void Add(Enums.LootTableType tableEntryID, int inventoryID)
         {
             DropEntities[length].TableID = tableEntryID;
             DropEntities[length++].InventoryID = inventoryID;
