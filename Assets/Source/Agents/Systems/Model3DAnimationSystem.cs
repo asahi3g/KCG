@@ -51,6 +51,12 @@ namespace Agent
                         model3d.AnimancerComponent.Play(animation, 0.125f);
                         break;
                     }
+                    case AgentMovementState.Drink:
+                    {
+                        AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Drink);
+                        model3d.AnimancerComponent.Play(animation, 0.125f);
+                        break;
+                    }
                     case AgentMovementState.JetPackFlying:
                     {
                         AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.JetPack);

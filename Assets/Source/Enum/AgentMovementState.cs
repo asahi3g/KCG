@@ -11,6 +11,7 @@ namespace Enums
         Rolling, //Rolling
         Crouch,
         Limp,
+        Drink,
         Crouch_Move,
         StandingUpAfterRolling,  // standing up after rolling
         Stagger,        // Stagger

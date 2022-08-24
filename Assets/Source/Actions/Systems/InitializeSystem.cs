@@ -214,6 +214,11 @@ namespace Action
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMechPlacementCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
 
+            // create Use Potion
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.DrinkPotion);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionUsePotionCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
             // Create Tool Action Material Placement
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMaterialPlacement);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceMaterialCreator());

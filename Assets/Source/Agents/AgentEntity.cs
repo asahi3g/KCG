@@ -31,7 +31,8 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling &&
-        physicsState.MovementState != AgentMovementState.UseTool ;
+        physicsState.MovementState != AgentMovementState.UseTool &&
+        physicsState.MovementState != AgentMovementState.Drink;
     }
 
     public void DieInPlace()
@@ -144,6 +145,19 @@ public partial class AgentEntity
 
             physicsState.ToolDuration = cooldown;
             physicsState.ToolCooldown = cooldown;
+        }
+    }
+
+    public void UsePotion(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.Drink;
+
+            physicsState.DrinkDuration = cooldown;
+            physicsState.DrinkCooldown = cooldown;
         }
     }
 

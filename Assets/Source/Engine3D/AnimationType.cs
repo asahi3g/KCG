@@ -17,6 +17,7 @@ namespace Engine3D
         Crouch,
         Crouch_Walk,
         Limp,
+        Drink,
         Stagger,
         JumpFall,
         SwordSlash, 

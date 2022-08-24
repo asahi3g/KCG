@@ -13,6 +13,7 @@
         ChargeAction,
         ShieldAction,
         MoveAction,
+        DrinkPotion,
 
         /// <summary>
         /// Mech Actions
