@@ -14,9 +14,14 @@ namespace Planet.Unity
     {
         [SerializeField] Material Material;
 
+        [SerializeField]
+        private bool enableGeometryPlacementTool;
+
         public PlanetState Planet;
         Inventory.InventoryManager inventoryManager;
         Inventory.DrawSystem inventoryDrawSystem;
+
+        GeometryBlockPlacementTool geometryPlacementTool;
 
         AgentEntity Player;
         int PlayerID;
@@ -58,6 +63,12 @@ namespace Planet.Unity
             }
 
             Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
+
+            if (enableGeometryPlacementTool)
+            {
+                geometryPlacementTool.UpdateToolGrid();
+            }
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
@@ -133,6 +144,12 @@ namespace Planet.Unity
 
             Planet.InitializeSystems(Material, transform);
             Planet.InitializeHUD(Player);
+
+            if(enableGeometryPlacementTool)
+            {
+                geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
+                geometryPlacementTool.Initialize(ref Planet, Material, transform);
+            }
 
             //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
