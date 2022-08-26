@@ -66,7 +66,9 @@ namespace Agent
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
                  newRollDuration: 0,
-                 newRollImpactDuration: 0);
+                 newRollImpactDuration: 0,
+                 newDrinkDuration: 0,
+                 newDrinkCooldown: 0);
 
             return entity;
         }
@@ -114,7 +116,9 @@ namespace Agent
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
                 newRollDuration: 0,
-                newRollImpactDuration: 0);
+                newRollImpactDuration: 0,
+                 newDrinkDuration: 0,
+                 newDrinkCooldown: 0);
 
             return entity;
         }
@@ -160,7 +164,9 @@ namespace Agent
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
                 newRollDuration: 0,
-                newRollImpactDuration: 0);
+                newRollImpactDuration: 0,
+                newDrinkDuration: 0,
+                 newDrinkCooldown: 0);
 
             switch (agentType)
             {

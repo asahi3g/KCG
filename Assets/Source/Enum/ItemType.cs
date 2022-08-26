@@ -9,6 +9,8 @@
         Slime,
         Food,
         Bone,
+        HealthPositon,
+        
 
         /// <summary>
         /// Weapons
