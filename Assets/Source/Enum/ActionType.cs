@@ -56,5 +56,6 @@
         ToolActionRemoveMech,
         ToolActionMechPlacement,
         ToolActionMaterialPlacement,
+        ToolActionGasBomb,
     }
 }
