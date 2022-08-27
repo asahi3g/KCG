@@ -12,6 +12,7 @@ namespace Enums
         Bullet,
         Rocket,
         Missile,
+        GasGrenade,
         Invalid
     }
 

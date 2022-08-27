@@ -240,13 +240,13 @@ namespace KGUI.PlayerStatus
 
         public override void Update(AgentEntity agentEntity)
         {
-            if(Init)
+            if (Init)
             {
                 // Update Object Position
                 ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
 
                 // Update Fill Amount
-                if(agentEntity != null)
+                if (agentEntity != null)
                     fillValue = agentEntity.agentStats.Health;
                 else
                     fillValue = 0.0f;
@@ -285,32 +285,6 @@ namespace KGUI.PlayerStatus
                 else
                 {
                     BarDiv3.SetImage(barDiv1Sprite);
-                }
-
-                // Set Icon Position Based On Aspect Ratio
-                if (Camera.main.aspect >= 1.7f)
-                {
-                    Border.SetPosition(new Vector3(287f, 7f, 0));
-                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
-                }
-                else if (Camera.main.aspect >= 1.5f)
-                {
-                    Border.SetPosition(new Vector3(287f, 7f, 0));
-                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
-                }
-                else
-                {
-                    Border.SetPosition(new Vector3(287f, 7f, 0));
-                    Bar.SetPosition(new Vector3(287f, 7f, 0f));
-                    BarDiv1.SetPosition(new Vector3(187.0f, 6f, 0f));
-                    BarDiv2.SetPosition(new Vector3(287.0f, 6f, 0f));
-                    BarDiv3.SetPosition(new Vector3(387.0f, 6f, 0f));
                 }
             }
         }

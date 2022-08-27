@@ -237,6 +237,11 @@ namespace Action
             GameState.ActionPropertyManager.SetData(MaterialData);
 
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Gas Bomb Action
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionGasBomb);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionGasBombCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }

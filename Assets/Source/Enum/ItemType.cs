@@ -29,6 +29,7 @@
         Sword,
         StunBaton,
         RiotShield,
+        GasBomb,
 
         /// <summary>
         /// Equipment
