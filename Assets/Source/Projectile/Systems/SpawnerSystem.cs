@@ -21,7 +21,7 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-                                Enums.ProjectileType projectileType)
+                                Enums.ProjectileType projectileType, bool isFirstSolid)
         {
             ProjectileProperties projectileProperties = 
                                     ProjectileCreationApi.GetRef((int)projectileType);
@@ -47,7 +47,7 @@ namespace Projectile
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
 
             // Add Physics Collider Component
-            entity.AddProjectileCollider(true, true);
+            entity.AddProjectileCollider(isFirstSolid, true);
 
             // Add Projectile Type
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);

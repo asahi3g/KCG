@@ -7,7 +7,6 @@ namespace Animation
         CharacterMoveLeft,
         CharacterMoveRight,
         SlimeMoveLeft,
-        Dust,
-        SpewDust
+        Dust
     }
 }
