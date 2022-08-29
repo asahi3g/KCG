@@ -637,13 +637,6 @@ public class GameResources
         GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
         GameState.AnimationManager.SetFrameCount(6);
         GameState.AnimationManager.EndAnimation();
-
-        GameState.AnimationManager.CreateAnimation((int)Animation.AnimationType.SpewDust);
-        GameState.AnimationManager.SetName("spewdust");
-        GameState.AnimationManager.SetTimePerFrame(0.15f);
-        GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
-        GameState.AnimationManager.SetFrameCount(12);
-        GameState.AnimationManager.EndAnimation();
     }
 
     public static void CreateItems()
@@ -1113,7 +1106,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
         GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionScanner);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGasBomb);
         GameState.ItemCreationApi.EndItem();
 
     }
@@ -1330,6 +1323,16 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.SetDuration(0.1f);
         GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
         GameState.ParticleEmitterCreationApi.SetParticleCount(1);
+        GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
+        GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
+        GameState.ParticleEmitterCreationApi.End();
+
+        GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.GasEmitter);
+        GameState.ParticleEmitterCreationApi.SetName("gas-emitter");
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.DustParticle);
+        GameState.ParticleEmitterCreationApi.SetDuration(0.05f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(1.5f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(3);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
         GameState.ParticleEmitterCreationApi.End();

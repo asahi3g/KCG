@@ -6,6 +6,6 @@ namespace Particle
         OreFountain, 
         OreExplosion,
         DustEmitter,
-        SpewSmoke
+        GasEmitter
     }
 }
