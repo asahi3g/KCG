@@ -119,32 +119,32 @@ namespace KGUI
             healthBarUI = new PlayerStatus.HealthBarUI();
 
             // Initialize Bedrock Widget
-            bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+            bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+                new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
             bedrockUIBackground.SetImageMidBottom();
 
             bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             // Initialize Dirt Widget
-            dirtUIBackground = planet.AddUIImage("DirtBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+            dirtUIBackground = planet.AddUIImage("DirtBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+                new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
             dirtUIBackground.SetImageMidBottom();
 
             dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             // Initialize Pipe Widget
-            pipeUIBackground = planet.AddUIImage("PipeBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+            pipeUIBackground = planet.AddUIImage("PipeBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+                new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
             pipeUIBackground.SetImageMidBottom();
 
             pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.GetTransform(), "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
 
             // Initialize Wire Widget
-            wireUIBackground = planet.AddUIImage("WireBackground", _Canvas.transform, UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd"),
-                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+            wireUIBackground = planet.AddUIImage("WireBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
             wireUIBackground.SetImageMidBottom();
 
             wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
