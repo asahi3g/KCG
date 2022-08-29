@@ -57,16 +57,16 @@ namespace Action
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
-           // Check if projectile has hit a enemy.
-           var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            // Check if projectile has hit a enemy.
+            var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
-           // Todo: Create a agent colision system?
-           foreach (var entity in entities)
-           {
-               float dist = Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
+            // Todo: Create a agent colision system?
+            foreach (var entity in entities)
+            {
+                float dist = Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
 
-               if (dist < 2.0f)
-               {
+                if (dist < 2.0f)
+                {
                    Vec2f entityPos = entity.agentPhysicsState.Position;
                    Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
                    Vec2f diff = bulletPos - entityPos;
@@ -75,16 +75,18 @@ namespace Action
 
                    Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
 
-                   if (AgentEntity.hasAgentStats)
-                   {
-                       var stats = entity.agentStats;
-                       stats.Health -= (int)damage;
+                    if (AgentEntity.hasAgentStats)
+                    {
+                        var stats = entity.agentStats;
+                        stats.Health -= (int)damage;
 
-                       // spawns a debug floating text for damage 
-                       planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
-                   }
-               }
-           }
+                        planet.AddFloatingText("SMOKE!", 0.001f, Vec2f.Zero, AgentEntity.agentPhysicsState.Position);
+
+                        // spawns a debug floating text for damage 
+                        planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
+                    }
+                }
+            }
         }
 
         public override void OnExit(ref PlanetState planet)
