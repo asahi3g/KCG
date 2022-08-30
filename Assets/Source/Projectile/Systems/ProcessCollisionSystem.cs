@@ -3,6 +3,7 @@ using KMath;
 using System.Collections.Generic;
 using System.Collections;
 using Collisions;
+using Entitas;
 
 namespace Projectile
 {
@@ -10,6 +11,7 @@ namespace Projectile
     {
         List<ProjectileEntity> ToRemoveList = new();
         List<ProjectileEntity> ToRemoveArrowList = new();
+        List<ProjectileEntity> PopGasList = new();
         public void Update(ref PlanetTileMap.TileMap tileMap)
         {
             // Get Delta Time
@@ -37,7 +39,7 @@ namespace Projectile
                         }
                         else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -49,7 +51,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                     }
                 }
@@ -63,7 +65,7 @@ namespace Projectile
                         }
                         else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -75,7 +77,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                     }
                 }
@@ -93,7 +95,7 @@ namespace Projectile
                         }
                         else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.X = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                         else
                         {
@@ -105,7 +107,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.X = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                     }
                 }
@@ -127,7 +129,7 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.X = 0;
+                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
                     }
                 }
@@ -135,7 +137,9 @@ namespace Projectile
         }
 
         float elapsed = 0.0f;
-        bool deleteArrows;
+        private float bounceValue = 0.4f;
+        private bool deleteArrows;
+        private bool PopGas;
 
         // new version of the update function
         // uses the planet state to remove the projectile
@@ -171,11 +175,9 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
-                            deleteArrows = true;
-                            if (entity != null)
-                                DeleteProjectile(entity);
+                            entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
+                            PopGasList.Add(entity);
+                            PopGas = true;
                         }
                     }
                 }
@@ -191,11 +193,9 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
-                            deleteArrows = true;
-                            if (entity != null)
-                                DeleteProjectile(entity);
+                            entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
+                            PopGasList.Add(entity);
+                            PopGas = true;
                         }
                     }
                 }
@@ -215,11 +215,9 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.X = 0;
-                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
-                            deleteArrows = true;
-                            if (entity != null)
-                                DeleteProjectile(entity);
+                            entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
+                            PopGasList.Add(entity);
+                            PopGas = true;
                         }
                     }
                 }
@@ -235,11 +233,9 @@ namespace Projectile
                     {
                         if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
                         {
-                            entity.projectilePhysicsState.Velocity.X = 0;
-                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
-                            deleteArrows = true;
-                            if (entity != null)
-                                DeleteProjectile(entity);
+                            entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
+                            PopGasList.Add(entity);
+                            PopGas = true;
                         }
                     }
                 }
@@ -344,18 +340,40 @@ namespace Projectile
             }
 
             // Arrow Deleting
-            if (deleteArrows)
+            if (deleteArrows || PopGas)
                 elapsed += Time.deltaTime;
+
+            if(elapsed > 2.5f && elapsed < 2.53f)
+            {
+                for (int j = 0; j < PopGasList.Count; j++)
+                {
+                    if (PopGasList.Count < 1)
+                        PopGas = false;
+
+                    if (PopGasList[j].isEnabled)
+                    {
+                        planet.AddParticle(new Vec2f(PopGasList[j].projectilePhysicsState.Position.X - 2.0f, PopGasList[j].projectilePhysicsState.Position.Y - 1.5f), new Vec2f(0.0f, 0.5f), Particle.ParticleType.GasParticle);
+                    }
+                }
+                PopGas = false;
+            }
 
             if(elapsed > 8.0f)
             {
-                deleteArrows = false;
-                elapsed = 0.0f;
                 for(int i = 0; i<  ToRemoveArrowList.Count; i++)
                 {
                     if(ToRemoveArrowList[i].isEnabled)
                         ToRemoveArrowList[i].Destroy(); 
                 }
+
+                for (int j = 0; j < PopGasList.Count; j++)
+                {
+                    if (PopGasList[j].isEnabled)
+                        PopGasList[j].Destroy();
+                }
+                deleteArrows = false;
+                PopGas = false;
+                elapsed = 0.0f;
             }
         }
 

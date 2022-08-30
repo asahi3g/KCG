@@ -125,10 +125,20 @@ namespace KMath
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f Perpendicular(Vec2f inDirection) => new(-inDirection.Y, inDirection.X);
 
+        /// <summary>
+        ///   <para>Returns a vector off the vector defined by a normal</para>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vec2f Reflect(Vec2f inDirection, Vec2f inNormal)
+        {
+            float num = -2f * Dot(inNormal, inDirection);
+            return new Vec2f(num * inNormal.X + inDirection.X, num * inNormal.Y + inDirection.Y);
+        }
+
         #endregion
 
         #region Operators
-        
+
         [MethodImpl((MethodImplOptions) 256)]
         public static explicit operator Vec2i(Vec2f obj)
         {

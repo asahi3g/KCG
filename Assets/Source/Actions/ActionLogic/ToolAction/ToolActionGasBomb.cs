@@ -83,7 +83,7 @@ namespace Action
                         planet.AddFloatingText("SMOKE!", 0.001f, Vec2f.Zero, AgentEntity.agentPhysicsState.Position);
 
                         // spawns a debug floating text for damage 
-                        planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
+                        planet.AddFloatingText("" + damage, 0.001f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.85f));
                     }
                 }
             }

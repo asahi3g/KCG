@@ -7,6 +7,7 @@ namespace Particle
         Ore, 
         OreExplosionParticle,
         DustParticle,
-        Debris
+        Debris,
+        GasParticle
     }
 }
