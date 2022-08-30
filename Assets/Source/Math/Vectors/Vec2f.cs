@@ -69,7 +69,14 @@ namespace KMath
         /// <param name="rhs"></param>
         [MethodImpl((MethodImplOptions) 256)]
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
-        
+
+        [MethodImpl((MethodImplOptions)256)]
+        public float Dot(Vec2f other) => this.X * other.X + this.Y * other.Y;
+
+        [MethodImpl((MethodImplOptions)256)]
+        public float Dot(float x, float y) => this.X * x + this.Y * y;
+
+
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) => new(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
 
@@ -77,13 +84,15 @@ namespace KMath
         ///   <para>Makes this vector have a magnitude of 1.</para>
         /// </summary>
         [MethodImpl((MethodImplOptions) 256)]
-        public void Normalize()
+        public Vec2f Normalize()
         {
             var magnitude = this.Magnitude;
             if (magnitude > 9.99999974737875E-06)
                 this /= magnitude;
             else
                 this = Zero;
+            
+            return this;
         }
 
         /// <summary>

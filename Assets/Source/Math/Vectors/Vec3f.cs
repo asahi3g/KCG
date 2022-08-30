@@ -34,7 +34,26 @@ namespace KMath
         {
             [MethodImpl((MethodImplOptions) 256)] get => (float) Math.Sqrt((double) this.X * (double) this.X + (double) this.Y * (double) this.Y + (double) this.Z * (double) this.Z);
         }
-        
+
+        public Vec3f Normalize()
+        {
+            var magnitude = this.Magnitude;
+            if (magnitude > 9.99999974737875E-06)
+                this /= magnitude;
+            else
+                this = new Vec3f(0f, 0f, 0f);
+
+            return this;
+        }
+
+
+        [MethodImpl((MethodImplOptions)256)]
+        public float Dot(Vec3f other) => this.X * other.X + this.Y * other.Y + this.Z * other.Z; 
+
+        [MethodImpl((MethodImplOptions)256)]
+        public float Dot(float x, float y, float z) => this.X * x + this.Y * y + this.Z * z;
+
+
         [MethodImpl((MethodImplOptions) 256)]
         public static explicit operator Vec2f(Vec3f obj)
         {

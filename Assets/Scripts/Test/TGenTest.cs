@@ -104,7 +104,7 @@ namespace Planet.Unity
 
             InventoryID = Player.agentInventory.InventoryID;
 
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
+            //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
         }
 
     }
