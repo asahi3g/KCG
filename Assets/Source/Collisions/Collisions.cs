@@ -2,7 +2,7 @@ using System;
 
 namespace Collisions
 {
-    public static class Collisions
+    public static partial class Collisions
     {
         // Checks if square is colliding with another square
         public static bool RectOverlapRect(float r1_xmin, float r1_xmax, float r1_ymin, float r1_ymax, float r2_xmin, float r2_xmax, float r2_ymin, float r2_ymax)
