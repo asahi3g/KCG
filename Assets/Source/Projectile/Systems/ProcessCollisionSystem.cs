@@ -35,11 +35,22 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
+                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                        }
                         else
                         {
                             entity.Destroy();
                         }
                         return;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                        }
                     }
                 }
                 else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.angularVelocity))
@@ -50,11 +61,22 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
+                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                        }
                         else
                         {
                             entity.Destroy();
                         }
                         return;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                        }
                     }
                 }
 
@@ -69,11 +91,22 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
                         }
+                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.X = 0;
+                        }
                         else
                         {
                             entity.Destroy();
                         }
                         return;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.X = 0;
+                        }
                     }
                 }
                 else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.angularVelocity))
@@ -89,6 +122,13 @@ namespace Projectile
                             entity.Destroy();
                         }
                         return;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.X = 0;
+                        }
                     }
                 }
             }
@@ -127,6 +167,17 @@ namespace Projectile
                         ToRemoveList.Add(entity);
                         continue;
                     }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
+                            deleteArrows = true;
+                            if (entity != null)
+                                DeleteProjectile(entity);
+                        }
+                    }
                 }
                 else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.angularVelocity))
                 {
@@ -135,6 +186,17 @@ namespace Projectile
                         //entity.Destroy();
                         ToRemoveList.Add(entity);
                          continue;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.Y = 0;
+                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
+                            deleteArrows = true;
+                            if (entity != null)
+                                DeleteProjectile(entity);
+                        }
                     }
                 }
 
@@ -149,6 +211,17 @@ namespace Projectile
                         ToRemoveList.Add(entity);
                          continue;
                     }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.X = 0;
+                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
+                            deleteArrows = true;
+                            if (entity != null)
+                                DeleteProjectile(entity);
+                        }
+                    }
                 }
                 else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.angularVelocity))
                 {
@@ -157,6 +230,17 @@ namespace Projectile
                         //entity.Destroy();
                         ToRemoveList.Add(entity);
                          continue;
+                    }
+                    else
+                    {
+                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                        {
+                            entity.projectilePhysicsState.Velocity.X = 0;
+                            planet.AddParticleEmitter(entity.projectilePhysicsState.Position, Particle.ParticleEmitterType.GasEmitter);
+                            deleteArrows = true;
+                            if (entity != null)
+                                DeleteProjectile(entity);
+                        }
                     }
                 }
             }
@@ -243,7 +327,7 @@ namespace Projectile
 
                     entityP.projectilePhysicsState.Velocity = Vec2f.Zero;
 
-                    DeleteArrow(entityP);
+                    DeleteProjectile(entityP);
 
                     deleteArrows = true;
                 }
@@ -253,24 +337,29 @@ namespace Projectile
 
                     planet.RemoveProjectile(entityP.projectileID.Index);
                 }
+                else if (entityP.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                {
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                }
             }
 
             // Arrow Deleting
             if (deleteArrows)
                 elapsed += Time.deltaTime;
 
-            if(elapsed > 5.0f)
+            if(elapsed > 8.0f)
             {
                 deleteArrows = false;
                 elapsed = 0.0f;
                 for(int i = 0; i<  ToRemoveArrowList.Count; i++)
                 {
-                    ToRemoveArrowList[i].Destroy();
+                    if(ToRemoveArrowList[i].isEnabled)
+                        ToRemoveArrowList[i].Destroy(); 
                 }
             }
         }
 
-        public void DeleteArrow(ProjectileEntity arrow)
+        public void DeleteProjectile(ProjectileEntity arrow)
         {
             ToRemoveArrowList.Add(arrow);
         }

@@ -434,7 +434,15 @@ namespace Planet
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(EntitasContext.projectile,
-                         position, direction, projectileType));
+                         position, direction, projectileType, true));
+            return newEntity;
+        }
+
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, bool isFirstSolid)
+        {
+            Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
+            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(EntitasContext.projectile,
+                         position, direction, projectileType, isFirstSolid));
             return newEntity;
         }
 

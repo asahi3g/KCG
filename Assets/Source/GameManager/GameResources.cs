@@ -124,6 +124,7 @@ public class GameResources
     public static int CharacterSpriteId;
 
     public static int GrenadeSpriteId;
+    public static int GrenadeSprite5;
     public static int SwordSpriteId;
 
 
@@ -208,8 +209,8 @@ public class GameResources
 
             IsInitialized = true;
             // loading the sprite sheets
-            FoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Icons\\Food.png", 60, 60);
-            BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Icons\\Bone.png", 60, 60);
+            FoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Food\\Food.png", 60, 60);
+            BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Bone\\Bone.png", 60, 60);
             LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
             BackgroundSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\test - Copy.png", 16, 16);
             ColoredNumberedWangSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\colored-numbered-wang.png", 16, 16);
@@ -233,6 +234,7 @@ public class GameResources
             pipeIconSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
+            GrenadeSprite5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades5.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
             HelmetsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Helmets\\character-helmets.png", 64, 64);
             SuitsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Suits\\character-suits.png", 64, 96);
@@ -307,6 +309,7 @@ public class GameResources
             CharacterSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(CharacterSpriteSheet, 0, 0, Enums.AtlasType.Agent);
 
             GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, Enums.AtlasType.Particle);
             SwordSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SwordSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             // particle sprite atlas
 
@@ -1098,6 +1101,14 @@ public class GameResources
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
 
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGasBomb);
+        GameState.ItemCreationApi.EndItem();
+
     }
 
     private static void CreateAgents()
@@ -1315,6 +1326,16 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
         GameState.ParticleEmitterCreationApi.End();
+
+        GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.GasEmitter);
+        GameState.ParticleEmitterCreationApi.SetName("gas-emitter");
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.DustParticle);
+        GameState.ParticleEmitterCreationApi.SetDuration(0.05f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(1.5f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(3);
+        GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
+        GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
+        GameState.ParticleEmitterCreationApi.End();
     }
 
 
@@ -1335,6 +1356,15 @@ public class GameResources
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Grenade);
         GameState.ProjectileCreationApi.SetName("grenade");
         GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
+        GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
+        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+        GameState.ProjectileCreationApi.SetSpeed(10.0f);
+        GameState.ProjectileCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+        GameState.ProjectileCreationApi.End();
+
+        GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.GasGrenade);
+        GameState.ProjectileCreationApi.SetName("gas_grenade");
+        GameState.ProjectileCreationApi.SetSpriteId(GrenadeSprite5);
         GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(10.0f);

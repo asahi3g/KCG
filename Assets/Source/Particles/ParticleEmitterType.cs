@@ -5,6 +5,7 @@ namespace Particle
     {
         OreFountain, 
         OreExplosion,
-        DustEmitter
+        DustEmitter,
+        GasEmitter
     }
 }

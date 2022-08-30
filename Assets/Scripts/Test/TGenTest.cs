@@ -104,6 +104,7 @@ namespace Planet.Unity
 
             InventoryID = Player.agentInventory.InventoryID;
 
+            // Note: ItemType not exists
             //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
         }
 
