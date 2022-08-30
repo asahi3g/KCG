@@ -44,6 +44,8 @@ namespace Planet.Unity
 
         public void Update()
         {
+
+            
             ref var tileMap = ref Planet.TileMap;
             Material material = Material;
 
@@ -246,6 +248,23 @@ namespace Planet.Unity
 
             // Draw Chunk Visualizer
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+
+
+            Vector3 p = Input.mousePosition;
+            p.z = 20;
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+
+            var rayCastResult = Collisions.Collisions.RayCastPointAgainstTileMap(Planet.TileMap, new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
+            
+            Vec2f startPos = Player.agentPhysicsState.Position;
+            Vec2f endPos = new Vec2f(mouse.x, mouse.y);
+            Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
+
+            if (rayCastResult.Intersect)
+            {
+                Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
+                 new Vector3(0.3f, 0.3f, 0.3f));
+            }
         }
 
         // create the sprite atlas for testing purposes
