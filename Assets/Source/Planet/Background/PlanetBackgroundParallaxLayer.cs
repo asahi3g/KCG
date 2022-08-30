@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using KMath.PerlinNoise;
+using KMath.Noise;
 using Enums.Tile;
 using Utility;
 
@@ -180,9 +180,6 @@ namespace Planet.Background
             // Create Perlin Field
             perlinField = new PerlinField2D();
 
-            // Initialzie Perlin Field
-            perlinField.init(256, 256);
-
             perlinGrid = GenPerlin(256, 256, 3, 20);
 
             int random = Random.Range(0, 256);
@@ -312,6 +309,7 @@ namespace Planet.Background
         // Generates Perlin Map
         private float[,] GenPerlin(int width, int height, int contrast, int scale)
         {
+            perlinField.SamplingRate = scale;
             float[,] grid = new float[width, height];
             var max = 1.414f / (1.9f * contrast);
             var min = -1.414f / (1.9f * contrast);
@@ -319,7 +317,7 @@ namespace Planet.Background
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var result = perlinField.noise(x * scale, y * scale);
+                    var result = perlinField.GetNoise(x, y);
                     result = Mathf.Clamp(result - min / (max - min), 0.0f, 1.0f);
                     grid[x, y] = result;
                 }

@@ -30,7 +30,6 @@ namespace Planet.Unity
         int InventoryID;
         InventoryEntity MaterialBag;
 
-
         static bool Init = false;
 
         public void Start()
