@@ -1351,9 +1351,9 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.GasEmitter);
         GameState.ParticleEmitterCreationApi.SetName("gas-emitter");
         GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.GasParticle);
-        GameState.ParticleEmitterCreationApi.SetDuration(0.05f);
-        GameState.ParticleEmitterCreationApi.SetSpawnRadius(1.5f);
-        GameState.ParticleEmitterCreationApi.SetParticleCount(3);
+        GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.25f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(1);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
         GameState.ParticleEmitterCreationApi.End();
