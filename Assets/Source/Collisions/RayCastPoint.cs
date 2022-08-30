@@ -18,6 +18,10 @@ namespace Collisions
 
         public static RayCastResult RayCastPointAgainstTileMap(PlanetTileMap.TileMap tileMap, Line2D line)
         {
+            // DDA Algorithm ==============================================
+		    // https://lodev.org/cgtutor/raycasting.html
+            
+
             // Form ray cast from A into B
             Vec2f vRayStart = line.A;
             Vec2f vRayDir = (line.B - line.A).Normalized;
