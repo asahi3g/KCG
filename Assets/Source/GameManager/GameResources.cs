@@ -1344,8 +1344,8 @@ public class GameResources
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Bullet);
         GameState.ProjectileCreationApi.SetName("bullet");
         GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
-        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ProjectileCreationApi.SetSpeed(20.0f);
+        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
+        GameState.ProjectileCreationApi.SetSpeed(100.0f);
         GameState.ProjectileCreationApi.SetRamp(false, 1f, 10f, 1.0f);
         GameState.ProjectileCreationApi.SetDragType(Enums.DragType.Linear);
         GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);

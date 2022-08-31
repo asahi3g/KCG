@@ -10,129 +10,6 @@ namespace Projectile
     {
         List<ProjectileEntity> ToRemoveList = new();
         List<ProjectileEntity> ToRemoveArrowList = new();
-        public void Update(ref PlanetTileMap.TileMap tileMap)
-        {
-            // Get Delta Time
-            float deltaTime = Time.deltaTime;
-
-            // Get Vehicle Physics Entity
-            var entities = Contexts.sharedInstance.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
-
-            foreach (var entity in entities)
-            {
-                // Set Vehicle Physics to variable
-                var physicsState = entity.projectilePhysicsState;
-
-                // Create Box Borders
-                var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
-
-                // If is colliding bottom-top stop y movement
-                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
-                {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        if(entity.projectileType.Type == Enums.ProjectileType.Arrow)
-                        {
-                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
-                        }
-                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                        }
-                        else
-                        {
-                            entity.Destroy();
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                        }
-                    }
-                }
-                else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.angularVelocity))
-                {
-                    if(entity.projectileCollider.isFirstSolid)
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
-                        {
-                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
-                        }
-                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                        }
-                        else
-                        {
-                            entity.Destroy();
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = 0;
-                        }
-                    }
-                }
-
-                entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
-
-                // If is colliding left-right stop x movement
-                if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
-                {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
-                        {
-                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
-                        }
-                        else if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.X = 0;
-                        }
-                        else
-                        {
-                            entity.Destroy();
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.X = 0;
-                        }
-                    }
-                }
-                else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.angularVelocity))
-                {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.Arrow)
-                        {
-                            entity.projectilePhysicsState.angularVelocity = Vec2f.Zero;
-                        }
-                        else
-                        {
-                            entity.Destroy();
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.X = 0;
-                        }
-                    }
-                }
-            }
-        }
 
         float elapsed = 0.0f;
         bool deleteArrows;
@@ -158,13 +35,31 @@ namespace Projectile
                 // Create Box Borders
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
 
+                var rayCastingResult =
+                 Collisions.Collisions.RayCastAgainstTileMap(tileMap, 
+                 new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position));
+                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
+
+
+
+                 if (rayCastingResult.Intersect)
+                 {
+                    
+                    if (entity.projectileCollider.isFirstSolid)
+                    {
+                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
+                        physicsState.Velocity = new Vec2f();
+                        ToRemoveList.Add(entity);
+                    }
+                 }
+
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
                 {
                     if (entity.projectileCollider.isFirstSolid)
                     {
                         //entity.Destroy();
-                        ToRemoveList.Add(entity);
+                        //ToRemoveList.Add(entity);
                         continue;
                     }
                     else
@@ -184,7 +79,7 @@ namespace Projectile
                     if(entity.projectileCollider.isFirstSolid)
                     {
                         //entity.Destroy();
-                        ToRemoveList.Add(entity);
+                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else
@@ -208,7 +103,7 @@ namespace Projectile
                     if (entity.projectileCollider.isFirstSolid)
                     {
                         //entity.Destroy();
-                        ToRemoveList.Add(entity);
+                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else
@@ -228,7 +123,7 @@ namespace Projectile
                     if (entity.projectileCollider.isFirstSolid)
                     {
                         //entity.Destroy();
-                        ToRemoveList.Add(entity);
+                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else

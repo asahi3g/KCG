@@ -16,7 +16,7 @@ namespace Collisions
             public bool Intersect;
         }
 
-        public static RayCastResult RayCastPointAgainstTileMap(PlanetTileMap.TileMap tileMap, Line2D line)
+        public static RayCastResult RayCastAgainstTileMap(PlanetTileMap.TileMap tileMap, Line2D line)
         {
             // DDA Algorithm ==============================================
 		    // https://lodev.org/cgtutor/raycasting.html
@@ -92,10 +92,16 @@ namespace Collisions
 
 
             // Calculate intersection location
+
             Vec2f vIntersection = new Vec2f();
             if (bTileFound)
             {
                 vIntersection = vRayStart + vRayDir * fDistance;
+            }
+
+            if (fDistance > (line.B - line.A).Magnitude)
+            {
+                bTileFound = false;
             }
 
 
