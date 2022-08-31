@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 
 namespace KMath
 {
@@ -19,6 +19,11 @@ namespace KMath
             }
 
             return num;
+        }
+
+         public static float Clamp(float value, float min, float max) 
+        {
+            return Math.Max(min, Math.Min(max, value));
         }
     }
 }
