@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections;
 using Collisions;
 using Entitas;
+using Particle;
+using System.IdentityModel.Metadata;
 
 namespace Projectile
 {
@@ -138,8 +140,7 @@ namespace Projectile
 
         float elapsed = 0.0f;
         private float bounceValue = 0.4f;
-        private bool deleteArrows;
-        private bool PopGas;
+        private bool deleteArrows = false;
 
         // new version of the update function
         // uses the planet state to remove the projectile
@@ -177,7 +178,6 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
                             PopGasList.Add(entity);
-                            PopGas = true;
                         }
                     }
                 }
@@ -195,7 +195,6 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
                             PopGasList.Add(entity);
-                            PopGas = true;
                         }
                     }
                 }
@@ -217,7 +216,6 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                             PopGasList.Add(entity);
-                            PopGas = true;
                         }
                     }
                 }
@@ -235,8 +233,7 @@ namespace Projectile
                         {
                             entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                             PopGasList.Add(entity);
-                            PopGas = true;
-                        }
+                        } 
                     }
                 }
             }
@@ -340,25 +337,10 @@ namespace Projectile
             }
 
             // Arrow Deleting
-            if (deleteArrows || PopGas)
+            if (deleteArrows)
                 elapsed += Time.deltaTime;
 
-            if(elapsed > 2.5f && elapsed < 2.53f)
-            {
-                for (int j = 0; j < PopGasList.Count; j++)
-                {
-                    if (PopGasList.Count < 1)
-                        PopGas = false;
-
-                    if (PopGasList[j].isEnabled)
-                    {
-                        planet.AddParticle(new Vec2f(PopGasList[j].projectilePhysicsState.Position.X - 2.0f, PopGasList[j].projectilePhysicsState.Position.Y - 1.5f), new Vec2f(0.0f, 0.5f), Particle.ParticleType.GasParticle);
-                    }
-                }
-                PopGas = false;
-            }
-
-            if(elapsed > 8.0f)
+            if(elapsed > 12.0f)
             {
                 for(int i = 0; i<  ToRemoveArrowList.Count; i++)
                 {
@@ -372,9 +354,10 @@ namespace Projectile
                         PopGasList[j].Destroy();
                 }
                 deleteArrows = false;
-                PopGas = false;
                 elapsed = 0.0f;
             }
+
+            CircleSmoke.Update();
         }
 
         public void DeleteProjectile(ProjectileEntity arrow)
