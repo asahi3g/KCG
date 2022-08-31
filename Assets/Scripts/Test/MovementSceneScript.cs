@@ -246,6 +246,42 @@ namespace Planet.Unity
 
             // Draw Chunk Visualizer
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+
+
+            
+            bool testCircleCollision = false;
+            bool testRectangleCollision = true;
+
+            
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 20.0f;
+
+            if (testCircleCollision)
+            {
+                int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(Planet, new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
+
+                Gizmos.color = Color.yellow;
+                if (agentIds != null && agentIds.Length > 0)
+                {
+                    Gizmos.color = Color.red;
+                }    
+                
+                Gizmos.DrawSphere(worldPosition, 0.5f);
+            }
+
+            if (testRectangleCollision)
+            {
+                int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(Planet, 
+                new KMath.AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
+
+                Gizmos.color = Color.yellow;
+                if (agentIds != null && agentIds.Length > 0)
+                {
+                    Gizmos.color = Color.red;
+                }    
+                
+                Gizmos.DrawWireCube(worldPosition + new Vector3(0.25f, 0.75f * 0.5f, 0), new Vector3(0.5f, 0.75f, 0.5f));
+            }
         }
 
         // create the sprite atlas for testing purposes
