@@ -40,6 +40,7 @@ namespace Planet.Unity
         {
             if (!Init)
             {
+
                 Initialize();
                 Init = true;
             }
@@ -110,9 +111,11 @@ namespace Planet.Unity
                 } 
             }
 
+            CharacterDisplay.Update(Player);
             Planet.Update(Time.deltaTime, Material, transform);
 
         }
+        Texture2D texture;
 
         private void OnGUI()
         {
@@ -258,7 +261,7 @@ namespace Planet.Unity
 
             
             bool testCircleCollision = false;
-            bool testRectangleCollision = true;
+            bool testRectangleCollision = false;
 
             
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

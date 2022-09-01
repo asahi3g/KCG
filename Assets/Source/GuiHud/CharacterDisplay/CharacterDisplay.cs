@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace KGui
 {
 
@@ -10,85 +9,98 @@ namespace KGui
     public class CharacterDisplay
     {
 
-        public float statsPanelX;
-        public float statsPanelY;
-        public float statsPanelWidth;
-        public float statsPanelHeight;
+
+        public float x;
+        public float y;
+        public float width;
+        public float height;
 
         public bool Enabled;
         public bool DebugDraw;
 
 
+        CharacterModelDisplay CharacterModelDisplay;
+        CharacterStatsDisplay StatsDisplay;
+
+
+
         public CharacterDisplay()
         {
-            statsPanelX = 200.0f;
-            statsPanelY = 200.0f;
-
-            statsPanelWidth = 200.0f;
-
-
             Enabled = true;
-            DebugDraw = true;
+            DebugDraw = false;
+
+            x = 600;
+            y = 200;
+            width = 300;
+            height = 200;
+
+            StatsDisplay = new CharacterStatsDisplay();
+            CharacterModelDisplay = new CharacterModelDisplay();
         }
 
-        
+
+        bool init = false;
+
+
+        public void Update(AgentEntity player)
+        {
+
+            if (init == false)
+            {
+                var agentModel3D = player.agentModel3D;
+                CharacterModelDisplay.SetModel(agentModel3D.GameObject);
+                init = true;
+            }
+            if (Enabled)
+            {
+                CharacterModelDisplay.Enabled = true;
+                CharacterModelDisplay.DebugDraw = DebugDraw;
+
+                if (player.hasAgentModel3D)
+                {
+                    var agentModel3D = player.agentModel3D;
+
+                    CharacterModelDisplay.Update();
+                }
+            }
+        }
+
         public void Draw(AgentEntity player)
         {
             if (Enabled)
             {
-                int fontSize = 16;
-                float marginX = 4.0f;
-                float marginY = 8.0f;
-                float padding = 4.0f;
-                float lineSize = fontSize + padding * 2.0f;
-                float halfLifeWidth = statsPanelWidth * 0.5f - marginX - padding;
-                TextAnchor leftSizeAnchor = TextAnchor.MiddleLeft;
-                TextAnchor rightSizeAnchor = TextAnchor.MiddleRight;
-
-                int numberOfItems = 5;
-
-                statsPanelHeight = marginY * 2 + 5 * lineSize;
-
-                Color backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-                Color debugColor = new Color(0.7f, 0.7f, 0.7f, 0.5f);
-                Color statTextColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);
                 
 
-                GameState.Renderer.DrawQuadColorGui(statsPanelX, statsPanelY, statsPanelWidth, statsPanelHeight, backgroundColor);
+                StatsDisplay.Enabled = true;
+                StatsDisplay.DebugDraw = DebugDraw;
 
-                if (DebugDraw)
-                {
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + marginX, statsPanelY + lineSize * 0 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + marginX, statsPanelY + lineSize * 1 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + marginX, statsPanelY + lineSize * 2 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + marginX, statsPanelY + lineSize * 3 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + marginX, statsPanelY + lineSize * 4 + marginY, halfLifeWidth, lineSize, debugColor);
-                }
+                float marginX = 4.0f;
+                float marginY = 2.0f;
 
-                GameState.Renderer.DrawStringGui(statsPanelX + marginX, statsPanelY + lineSize * 0 + marginY, halfLifeWidth, lineSize, "Health :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(statsPanelX + marginX, statsPanelY + lineSize * 1 + marginY, halfLifeWidth, lineSize, "Vitality :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(statsPanelX + marginX, statsPanelY + lineSize * 2 + marginY, halfLifeWidth, lineSize, "Strength :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(statsPanelX + marginX, statsPanelY + lineSize * 3 + marginY, halfLifeWidth, lineSize, "Dexterity :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(statsPanelX + marginX, statsPanelY + lineSize * 4 + marginY, halfLifeWidth, lineSize, "Intelligence :", fontSize, leftSizeAnchor, Color.white);
+                Color backgroundColor = new Color(0.75f, 0.75f, 0.75f, 0.75f);
 
+                GameState.Renderer.DrawQuadColorGui(x, y, width, height, backgroundColor);
 
-                if (DebugDraw)
-                {
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 0 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 1 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 2 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 3 + marginY, halfLifeWidth, lineSize, debugColor);
-                    GameState.Renderer.DrawQuadColorGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 4 + marginY, halfLifeWidth, lineSize, debugColor);
-                }
+                StatsDisplay.x = x + width * 0.4f + marginX * 2;
+                StatsDisplay.y = y + marginX;
+                StatsDisplay.width = width * 0.6f - marginX * 2;
+
+                StatsDisplay.Draw(player);
+
+                CharacterModelDisplay.x = x + marginX;
+                CharacterModelDisplay.y = y + marginY * 2;
+                CharacterModelDisplay.width = width * 0.4f - marginX;
+                CharacterModelDisplay.height = height - marginY * 2.0f;
 
 
-                GameState.Renderer.DrawStringGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 0 + marginY, halfLifeWidth, lineSize, "255", fontSize, rightSizeAnchor, statTextColor);
-                GameState.Renderer.DrawStringGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 1 + marginY, halfLifeWidth, lineSize, "134", fontSize, rightSizeAnchor, statTextColor);
-                GameState.Renderer.DrawStringGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 2 + marginY, halfLifeWidth, lineSize, "16", fontSize, rightSizeAnchor, statTextColor);
-                GameState.Renderer.DrawStringGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 3 + marginY, halfLifeWidth, lineSize, "17", fontSize, rightSizeAnchor, statTextColor);
-                GameState.Renderer.DrawStringGui(statsPanelX + statsPanelWidth * 0.5f + padding, statsPanelY + lineSize * 4 + marginY, halfLifeWidth, lineSize, "87", fontSize, rightSizeAnchor, statTextColor);
+                CharacterModelDisplay.Draw();
+
+
+
 
             }
         }
+
+
     }
 }
