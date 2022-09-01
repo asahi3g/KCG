@@ -1,7 +1,3 @@
-using KMath.Random;
-using System;
-using TreeEditor;
-
 // Uses improved perlin algorithm from https://dl.acm.org/doi/10.1145/566654.566636
 // Original algorithm: https://mrl.cs.nyu.edu/~perlin/noise/
 // Compreensive explanetion : https://eev.ee/blog/2016/05/29/perlin-noise/#extending-to-2-d and http://adrianb.io/2014/08/09/perlinnoise.html

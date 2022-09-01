@@ -42,10 +42,11 @@ namespace Particle
                    textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
 
                    var pos = entity.particlePhysicsState.Position;
-                    var x = pos.X;
-                    var y = pos.Y;
+                    
                     var width = entity.particleSprite2D.Size.X;
                     var height = entity.particleSprite2D.Size.Y;
+                    var x = pos.X - width * 0.5f;
+                    var y = pos.Y - height * 0.5f;
 
                     if (!Utility.ObjectMesh.isOnScreen(x, y))
                         continue;

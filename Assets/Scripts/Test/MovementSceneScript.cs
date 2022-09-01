@@ -44,6 +44,8 @@ namespace Planet.Unity
 
         public void Update()
         {
+
+            
             ref var tileMap = ref Planet.TileMap;
             Material material = Material;
 
@@ -248,9 +250,31 @@ namespace Planet.Unity
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
 
 
+            bool drawRayCast = false;
+
+
+            if (drawRayCast)
+            {
+                Vector3 p = Input.mousePosition;
+                p.z = 20;
+                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+
+                var rayCastResult = Collisions.Collisions.RayCastAgainstTileMap(Planet.TileMap, new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
+                
+                Vec2f startPos = Player.agentPhysicsState.Position;
+                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
+                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
+
+                if (rayCastResult.Intersect)
+                {
+                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
+                    new Vector3(0.3f, 0.3f, 0.3f));
+                }
+            }
+
             
             bool testCircleCollision = false;
-            bool testRectangleCollision = true;
+            bool testRectangleCollision = false;
 
             
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -337,6 +361,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
         }
 
 

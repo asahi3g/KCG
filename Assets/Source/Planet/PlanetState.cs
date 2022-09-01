@@ -581,11 +581,11 @@ namespace Planet
             {
                 case EventType.MouseDown:
                     GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
-                    break;
+                    return;
                 case EventType.MouseUp:
                     GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
-                    break;
-                case EventType.Repaint:
+                    return;
+                case not EventType.Repaint:
                     return;
             }
 
