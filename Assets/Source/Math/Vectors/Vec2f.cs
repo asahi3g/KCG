@@ -154,6 +154,7 @@ namespace KMath
             X = px;
 
             return this;
+        }
         ///   <para>Returns a vector off the vector defined by a normal</para>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
