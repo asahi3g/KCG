@@ -63,7 +63,7 @@ namespace Action
 
             if(elapsed > 3.0f)
             {
-                CircleSmoke.Spawn(1, ProjectileEntity.projectilePhysicsState.Position, new Vec2f(0.1f, 0.2f), new Vec2f(0.05f, 0.1f));
+                CircleSmoke.Spawn(1, ProjectileEntity.projectilePhysicsState.Position, new Vec2f(0.1f, 0.2f), new Vec2f(0.1f, 0.2f));
             }
 
             if(elapsed > 8.0f)
