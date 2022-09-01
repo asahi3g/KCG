@@ -18,10 +18,9 @@ namespace KGui
         public bool Enabled;
         public bool DebugDraw;
 
-
         CharacterModelDisplay CharacterModelDisplay;
         CharacterStatsDisplay StatsDisplay;
-
+        public AgentEntity Player;
 
 
         public CharacterDisplay()
@@ -39,33 +38,31 @@ namespace KGui
         }
 
 
-        bool init = false;
+        public void setPlayer(AgentEntity player)
+        {
+            Player = player;
+            var agentModel3D = player.agentModel3D;
+            CharacterModelDisplay.SetModel(agentModel3D.GameObject);
+        }
 
-
-        public void Update(AgentEntity player)
+        public void Update()
         {
 
-            if (init == false)
-            {
-                var agentModel3D = player.agentModel3D;
-                CharacterModelDisplay.SetModel(agentModel3D.GameObject);
-                init = true;
-            }
             if (Enabled)
             {
                 CharacterModelDisplay.Enabled = true;
                 CharacterModelDisplay.DebugDraw = DebugDraw;
 
-                if (player.hasAgentModel3D)
+                if (Player.hasAgentModel3D)
                 {
-                    var agentModel3D = player.agentModel3D;
+                    var agentModel3D = Player.agentModel3D;
 
                     CharacterModelDisplay.Update();
                 }
             }
         }
 
-        public void Draw(AgentEntity player)
+        public void Draw()
         {
             if (Enabled)
             {
@@ -85,7 +82,7 @@ namespace KGui
                 StatsDisplay.y = y + marginX;
                 StatsDisplay.width = width * 0.6f - marginX * 2;
 
-                StatsDisplay.Draw(player);
+                StatsDisplay.Draw(Player);
 
                 CharacterModelDisplay.x = x + marginX;
                 CharacterModelDisplay.y = y + marginY * 2;

@@ -46,6 +46,55 @@ namespace Planet.Unity
             }
         }
 
+                // create the sprite atlas for testing purposes
+        public void Initialize()
+        {
+
+            
+            Application.targetFrameRate = 60;
+
+            GameResources.Initialize();
+
+            // Generating the map
+            Vec2i mapSize = new Vec2i(128, 32);
+            Planet = new Planet.PlanetState();
+            Planet.Init(mapSize);
+
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+            PlayerID = Player.agentID.ID;
+
+            PlayerID = Player.agentID.ID;
+            inventoryID = Player.agentInventory.InventoryID;
+
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
+            GameState.MechGUIDrawSystem.Initialize(ref Planet);
+            //GenerateMap();
+            var camera = Camera.main;
+            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+
+            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                Debug.Log("loaded!");*/
+
+            GenerateMap();
+
+            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+
+            AddItemsToPlayer();
+
+            totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
+
+            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
+                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
+
+
+
+            CharacterDisplay = new KGui.CharacterDisplay();
+            CharacterDisplay.setPlayer(Player);
+        }
+
         public void Update()
         {
             ref var tileMap = ref Planet.TileMap;
@@ -111,7 +160,7 @@ namespace Planet.Unity
                 } 
             }
 
-            CharacterDisplay.Update(Player);
+            CharacterDisplay.Update();
             Planet.Update(Time.deltaTime, Material, transform);
 
         }
@@ -131,7 +180,7 @@ namespace Planet.Unity
             }
 
             
-            CharacterDisplay.Draw(Player);
+            CharacterDisplay.Draw();
 
                  
         }
@@ -295,53 +344,6 @@ namespace Planet.Unity
             }
         }
 
-        // create the sprite atlas for testing purposes
-        public void Initialize()
-        {
-
-            
-            Application.targetFrameRate = 60;
-
-            GameResources.Initialize();
-
-            // Generating the map
-            Vec2i mapSize = new Vec2i(128, 32);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
-            PlayerID = Player.agentID.ID;
-
-            PlayerID = Player.agentID.ID;
-            inventoryID = Player.agentInventory.InventoryID;
-
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
-            GameState.MechGUIDrawSystem.Initialize(ref Planet);
-            //GenerateMap();
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-
-            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                Debug.Log("loaded!");*/
-
-            GenerateMap();
-
-            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-
-            AddItemsToPlayer();
-
-            totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
-
-            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
-                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
-
-
-
-            CharacterDisplay = new KGui.CharacterDisplay();
-        }
 
         public void AddItemsToPlayer()
         {
