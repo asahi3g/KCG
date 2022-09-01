@@ -154,6 +154,13 @@ namespace KMath
             X = px;
 
             return this;
+        ///   <para>Returns a vector off the vector defined by a normal</para>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vec2f Reflect(Vec2f inDirection, Vec2f inNormal)
+        {
+            float num = -2f * Dot(inNormal, inDirection);
+            return new Vec2f(num * inNormal.X + inDirection.X, num * inNormal.Y + inDirection.Y);
         }
 
         #endregion

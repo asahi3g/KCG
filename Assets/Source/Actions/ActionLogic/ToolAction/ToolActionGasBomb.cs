@@ -3,6 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using System.Collections;
+using Particle;
 
 namespace Action
 {
@@ -12,6 +13,7 @@ namespace Action
         private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
         private Vec2f StartPos;
+        private float elapsed = 0.0f;
 
         public ToolActionGasBomb(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -57,6 +59,20 @@ namespace Action
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
+            elapsed += Time.deltaTime;
+
+            if(elapsed > 3.0f)
+            {
+                CircleSmoke.Spawn(1, ProjectileEntity.projectilePhysicsState.Position, new Vec2f(0.1f, 0.2f), new Vec2f(0.05f, 0.1f));
+            }
+
+            if(elapsed > 8.0f)
+            {
+                ProjectileEntity.Destroy();
+                ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                return;
+            }
+
             // Check if projectile has hit a enemy.
             var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
@@ -83,7 +99,7 @@ namespace Action
                         planet.AddFloatingText("SMOKE!", 0.001f, Vec2f.Zero, AgentEntity.agentPhysicsState.Position);
 
                         // spawns a debug floating text for damage 
-                        planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
+                        planet.AddFloatingText("" + damage, 0.001f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.85f));
                     }
                 }
             }

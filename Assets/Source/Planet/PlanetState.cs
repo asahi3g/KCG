@@ -575,14 +575,19 @@ namespace Planet
 
         public void DrawHUD(AgentEntity agentEntity)
         { 
-            if (Event.current.type == EventType.MouseDown)
-                GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
-
-            if (Event.current.type == EventType.MouseUp)
-                GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
-
-            if (Event.current.type != EventType.Repaint)
-                return;
+            if(Event.current == null) return;
+            
+            switch (Event.current.type)
+            {
+                case EventType.MouseDown:
+                    GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
+                    break;
+                case EventType.MouseUp:
+                    GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
+                    break;
+                case EventType.Repaint:
+                    return;
+            }
 
             // Mouse Interactions with objects.
             GameState.AgentMouseInteractionSystem.Update(ref this);
