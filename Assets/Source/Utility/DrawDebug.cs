@@ -5,9 +5,9 @@ namespace Utility
 {
     public static class DrawDebug
     {
-        public static void DrawBox(Vector2 position, Vector2 size)
+        public static void DrawBox(Vec2f position, Vec2f size)
         {
-            var box = new AABox2D(new Vec2f(position.x, position.y), new Vec2f(size.x, size.y));
+            var box = new AABox2D(position, size);
             box.DrawBox();
         }
         
