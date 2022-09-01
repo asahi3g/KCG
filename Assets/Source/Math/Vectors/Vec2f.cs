@@ -157,6 +157,10 @@ namespace KMath
 
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator *(Vec2f a, float d) => new(a.X * d, a.Y * d);
+
+
+        public static Vec2f operator *(Vec2f a, Vec2f b) => new(a.X * b.X, a.Y * b.Y);
+
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator *(float d, Vec2f a) => new(a.X * d, a.Y * d);
 
