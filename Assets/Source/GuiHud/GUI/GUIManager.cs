@@ -41,6 +41,10 @@ namespace KGUI
         public Image pipeUI;
         public Image pipeUIBackground;
 
+        // Bedrock
+        public Image healthPotionUI;
+        public Image healthPotionUIBackground;
+
         // Default Cursors
         public Image DefaultCursor;
 
@@ -156,6 +160,15 @@ namespace KGUI
 
             wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
+
+            // Initialize Health Potion Widget
+            healthPotionUIBackground = planet.AddUIImage("HealthPotionBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+            healthPotionUIBackground.SetImageMidBottom();
+            healthPotionUIBackground.GetGameObject().SetActive(false);
+
+            healthPotionUI = planet.AddUIImage("HealthPotion", healthPotionUIBackground.GetTransform(), "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 19, 19).kGUIElementsImage.Image;
 
             //// Initialize Default Cursor
             //DefaultCursor = planet.AddUIImage("DefaultCursor", _Canvas.transform, 16, 16, GameResources.DefaultCursor, new Vec2f(0, 0), 
@@ -433,6 +446,60 @@ namespace KGUI
                             }
                         }
                     }
+                    else if (item.itemType.Type == Enums.ItemType.PotionTool)
+                    {
+                        // Set All Tiles Active To False
+                        healthPotionUIBackground.GetGameObject().SetActive(true);
+
+                        // Get Inventories
+                        var entities = _planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+
+                        // Iterate All Inventories
+                        foreach (var entity in entities)
+                        {
+                            // Check Component Availble
+                            if (entity.hasInventoryName)
+                            {
+                                // Check Entity Name Is Equals To Material Bag
+                                if (entity.inventoryName.Name == "MaterialBag")
+                                {
+                                    // Get All Slots
+                                    var Slots = _planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+
+                                    // Iterate All Slots
+                                    for (int i = 0; i < Slots.Length; i++)
+                                    {
+                                        // Get Item
+                                        ItemInventoryEntity MaterialBag = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, entity.inventoryID.ID, i);
+
+                                        // Check Item Is Available
+                                        if (MaterialBag != null)
+                                        {
+                                            // Item Equals To Dirt?
+                                            if (MaterialBag.itemType.Type == Enums.ItemType.HealthPositon)
+                                            {
+                                                // Entity Has Item Stack?
+                                                if (MaterialBag.hasItemStack)
+                                                {
+                                                    // Check Count Of The Item
+                                                    if (MaterialBag.itemStack.Count >= 1)
+                                                    {
+                                                        // Set Active True
+                                                        healthPotionUIBackground.GetGameObject().SetActive(true);
+                                                    }
+                                                    else
+                                                    {
+                                                        // Set Active False
+                                                        healthPotionUIBackground.GetGameObject().SetActive(false);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else
                     {
                         // If Item Is not equal to any placement tool,
@@ -441,6 +508,7 @@ namespace KGUI
                         bedrockUIBackground.GetGameObject().SetActive(false);
                         wireUIBackground.GetGameObject().SetActive(false);
                         pipeUIBackground.GetGameObject().SetActive(false);
+                        healthPotionUIBackground.GetGameObject().SetActive(false);
                     }
                 }
 
