@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Collisions;
 using PlanetTileMap;
+using Particle;
 
 public class GameResources
 {
@@ -1315,6 +1316,8 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingScale(20.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255f, 72f, 0f, 255.0f));
         GameState.ParticleCreationApi.End();
+
+        CircleSmoke.Initialize();
     }
 
     private static void CreateParticleEmitters()
