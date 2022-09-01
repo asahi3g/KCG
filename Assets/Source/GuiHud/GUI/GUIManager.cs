@@ -4,6 +4,7 @@ using UnityEngine;
 using KGUI.Elements;
 using KMath;
 using Enums.Tile;
+using Utility;
 
 namespace KGUI
 {
@@ -50,19 +51,25 @@ namespace KGUI
         public Image BuildCursor;
 
         // GUI Elements List
-        public List<GUIManager> UIList = new List<GUIManager>();
+        public List<GUIManager> UIList = new();
 
         // Cursor Screen Position from Unity Input Class
         public Vec2f CursorPosition;
 
         // Object Screen Position
         public Vec2f ObjectPosition;
-
-        // Run Various Functions One Time
-        private bool CanRun = true;
+        // Object Screen Size
+        public Vec2f ObjectSize;
+        
+        // Mouse Enter = true
+        // Mouse Exit = false;
+        private GUIManager LastEnteredObject = null;
 
         // UI Scaling
         private float HUDScale = 1.0f;
+
+        public float width;
+        public float height;
 
         // Canvas
         Canvas _Canvas;
@@ -71,7 +78,7 @@ namespace KGUI
         Planet.PlanetState _planet;
 
         // Scanner Tool Text
-        Text scannerText = new Text();
+        Text scannerText = new();
 
         // Inventory ID
         int inventoryID;
@@ -86,7 +93,7 @@ namespace KGUI
         ItemInventoryEntity item;
 
         // Initializon Condition
-        static bool Init = false;
+        static bool Init;
 
         // Initialize
         public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
@@ -197,9 +204,10 @@ namespace KGUI
                 _Canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
 
                 // Update Elements
-                for (int i = 0; i < UIList.Count; i++)
+                foreach (var uiObject in UIList)
                 {
-                    UIList[i].Update(agentEntity);
+                    uiObject.Update(agentEntity);
+                    DrawDebug.DrawBox(uiObject.ObjectPosition, uiObject.ObjectSize);
                 }
 
                 // Assign New Cursor Position
@@ -485,17 +493,19 @@ namespace KGUI
 
         public virtual void OnMouseClick(AgentEntity agentEntity)
         {
-            // Handle Inputs
-            for (int i = 0; i < UIList.Count; i++)
+            // If Mosue 0 Button Down
+            if (Input.GetMouseButton(0))
             {
-                // Check The Distance Betweeen Cursor And Object
-                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                // Handle Inputs
+                foreach (var uiObject in UIList)
                 {
-                    // If Mosue 0 Button Down
-                    if (Input.GetMouseButton(0))
+                    // Check The Distance Betweeen Cursor And Object
+                    if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y,
+                            uiObject.ObjectPosition.X, uiObject.ObjectPosition.X + uiObject.ObjectSize.X,
+                            uiObject.ObjectPosition.Y, uiObject.ObjectPosition.Y + uiObject.ObjectSize.Y))
                     {
                         // Call All Click Events
-                        UIList[i].OnMouseClick(agentEntity);
+                        uiObject.OnMouseClick(agentEntity);
                     }
                 }
             }
@@ -598,59 +608,40 @@ namespace KGUI
             }
         }
 
-        public virtual void OnMouseEnter()
-        {
-            // Handle Inputs
-            for (int i = 0; i < UIList.Count; i++)
-            {
-                // If Condition Is True
-                if(UIList[i].CanRun)
-                {
-                    // Set Condition Bool
-                    UIList[i].CanRun = false;
-
-                    // If Cursor Is In UI Element
-                    if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
-                    {
-                        // Run Mouse Enter Event
-                        UIList[i].OnMouseEnter();
-                    }
-                }
-            }
-        }
+        public virtual void OnMouseEnter() { }
+        public virtual void OnMouseExit() { }
 
         public virtual void OnMouseStay()
         {
             // Handle Inputs
-            for (int i = 0; i < UIList.Count; i++)
+            if (LastEnteredObject == null)
             {
-                // Check If Cursor Is On UI Element
-                if (Vec2f.Distance(new Vec2f(CursorPosition.X, CursorPosition.Y), new Vec2f(UIList[i].ObjectPosition.X, UIList[i].ObjectPosition.Y)) < 20.0f)
+                foreach (var uiObject in UIList)
                 {
-                    // Run Mouse Enter Event
-                    OnMouseEnter();
-
-                    // Call Mouse Stay Event For Each
-                    UIList[i].OnMouseStay();
+                    // Check If Cursor Is On UI Element
+                    if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y,
+                            uiObject.ObjectPosition.X, uiObject.ObjectPosition.X + uiObject.ObjectSize.X, 
+                            uiObject.ObjectPosition.Y, uiObject.ObjectPosition.Y + uiObject.ObjectSize.Y))
+                    {
+                        // Run Mouse Enter Event
+                        uiObject.OnMouseEnter();
+                        LastEnteredObject = uiObject;
+                    }
+                }
+            }
+            else
+            {
+                if (!Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y,
+                        LastEnteredObject.ObjectPosition.X, LastEnteredObject.ObjectPosition.X + LastEnteredObject.ObjectSize.X,
+                        LastEnteredObject.ObjectPosition.Y, LastEnteredObject.ObjectPosition.Y + LastEnteredObject.ObjectSize.Y))
+                {
+                    LastEnteredObject.OnMouseExit();
+                    LastEnteredObject = null;
                 }
                 else
                 {
-                    // Set Condition to True
-                    UIList[i].CanRun = true;
-
-                    // Run On Mouse Exit
-                    OnMouseExit();
+                    LastEnteredObject.OnMouseStay();
                 }
-            }
-        }
-
-        public virtual void OnMouseExit()
-        {
-            // Handle Inputs
-            for (int i = 0; i < UIList.Count; i++)
-            {
-                // On Mouse Exit
-                UIList[i].OnMouseExit();
             }
         }
 

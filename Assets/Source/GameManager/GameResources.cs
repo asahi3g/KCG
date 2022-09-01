@@ -637,6 +637,13 @@ public class GameResources
         GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
         GameState.AnimationManager.SetFrameCount(6);
         GameState.AnimationManager.EndAnimation();
+
+        GameState.AnimationManager.CreateAnimation((int)Animation.AnimationType.Smoke);
+        GameState.AnimationManager.SetName("smoke");
+        GameState.AnimationManager.SetTimePerFrame(0.075f);
+        GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
+        GameState.AnimationManager.SetFrameCount(6);
+        GameState.AnimationManager.EndAnimation();
     }
 
     public static void CreateItems()
@@ -1294,6 +1301,20 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
         GameState.ParticleCreationApi.SetIsCollidable(true);
         GameState.ParticleCreationApi.End();
+
+        GameState.ParticleCreationApi.Create((int)Particle.ParticleType.GasParticle);
+        GameState.ParticleCreationApi.SetName("gas-particle");
+        GameState.ParticleCreationApi.SetDecayRate(0.17f);
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetDeltaRotation(0);
+        GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+        GameState.ParticleCreationApi.SetAnimationType(Animation.AnimationType.Smoke);
+        GameState.ParticleCreationApi.SetSize(new Vec2f(4.5f, 4.5f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingRotation(10.3f);
+        GameState.ParticleCreationApi.SetStartingScale(20.0f);
+        GameState.ParticleCreationApi.SetStartingColor(new Color(255f, 72f, 0f, 255.0f));
+        GameState.ParticleCreationApi.End();
     }
 
     private static void CreateParticleEmitters()
@@ -1329,10 +1350,10 @@ public class GameResources
 
         GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.GasEmitter);
         GameState.ParticleEmitterCreationApi.SetName("gas-emitter");
-        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.DustParticle);
-        GameState.ParticleEmitterCreationApi.SetDuration(0.05f);
-        GameState.ParticleEmitterCreationApi.SetSpawnRadius(1.5f);
-        GameState.ParticleEmitterCreationApi.SetParticleCount(3);
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.GasParticle);
+        GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.25f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(1);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
         GameState.ParticleEmitterCreationApi.End();
@@ -1368,7 +1389,10 @@ public class GameResources
         GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(10.0f);
-        GameState.ProjectileCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+        GameState.ProjectileCreationApi.SetDragType(Enums.DragType.Off);
+        GameState.ProjectileCreationApi.SetLinearDrag(0, 0);
+        GameState.ProjectileCreationApi.SetAffectedByGravity(false);
+        GameState.ProjectileCreationApi.SetAcceleration(new Vec2f(0.0f, -5.0f));
         GameState.ProjectileCreationApi.End();
 
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Rocket);
