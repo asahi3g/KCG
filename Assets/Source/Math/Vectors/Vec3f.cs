@@ -26,7 +26,21 @@ namespace KMath
             Y = y;
             Z = z;
         }
-        
+
+        public Vec3f(Vec2f xy)
+        {
+            X = xy.X;
+            Y = xy.Y;
+            Z = 0f;
+        }
+
+        public Vec3f(Vec2f xy, float z)
+        {
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
+        }
+
         /// <summary>
         ///   <para>Returns the length of this vector (Read Only).</para>
         /// </summary>
@@ -46,6 +60,14 @@ namespace KMath
             return this;
         }
 
+        [MethodImpl((MethodImplOptions)256)]
+        public static Vec3f Cross(Vec3f first, Vec3f second)
+        {
+            float x = first.Y * second.Z - first.Z * second.Y;
+            float y = first.Z * second.X - first.X * second.Z;
+            float z = first.X * second.Y - first.Y * second.X;
+            return new Vec3f(x, y, z);
+        }
 
         [MethodImpl((MethodImplOptions)256)]
         public float Dot(Vec3f other) => this.X * other.X + this.Y * other.Y + this.Z * other.Z; 
