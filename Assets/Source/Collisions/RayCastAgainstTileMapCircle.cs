@@ -9,7 +9,8 @@ namespace Collisions
     public static partial class Collisions
     {
 
-        public static RayCastResult RayCastAgainstTileMap(PlanetTileMap.TileMap tileMap, Line2D line)
+
+        public static RayCastResult RayCastAgainstTileMapAABB(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
         {
             // DDA Algorithm ==============================================
 		    // https://lodev.org/cgtutor/raycasting.html
@@ -70,7 +71,26 @@ namespace Collisions
                     vRayLength1D.Y += vRayUnitStepSize.Y;
                 }
 
-                // Test tile at new test point
+                Vec2f currentPoint = vRayStart + vRayDir * fDistance;
+
+                Vec2f min = currentPoint - new Vec2f(width / 2, height / 2);
+                Vec2f max = currentPoint + new Vec2f(width / 2, height / 2);
+
+                for(int y = (int)min.Y; y <= (int)max.Y; y++)
+                {
+                    for(int x = (int)min.X; x <= (int)max.X; x++)
+                    {
+                        Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
+                        PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
+                        if (tileID != Enums.Tile.TileID.Air)
+                        {
+                            bTileFound = true;
+                        }
+                    }
+                }
+
+
+                /*// Test tile at new test point
                 if (vMapCheck.X >= 0 && vMapCheck.X < tileMap.MapSize.X && vMapCheck.Y >= 0 && vMapCheck.Y < tileMap.MapSize.Y)
                 {
                     Enums.Tile.TileID tileID = tileMap.GetFrontTileID(vMapCheck.X, vMapCheck.Y);
@@ -80,7 +100,7 @@ namespace Collisions
                     {
                         bTileFound = true;
                     }
-                }
+                }*/
             }
 
 

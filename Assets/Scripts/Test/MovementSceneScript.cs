@@ -250,7 +250,7 @@ namespace Planet.Unity
             Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
 
 
-            bool drawRayCast = true;
+            bool drawRayCast = false;
 
 
             if (drawRayCast)
@@ -274,7 +274,7 @@ namespace Planet.Unity
 
             
             bool testCircleCollision = false;
-            bool testRectangleCollision = true;
+            bool testRectangleCollision = false;
 
             
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

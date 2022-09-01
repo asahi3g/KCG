@@ -42,8 +42,8 @@ namespace Projectile
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
 
                 var rayCastingResult =
-                 Collisions.Collisions.RayCastAgainstTileMap(tileMap, 
-                 new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position));
+                 Collisions.Collisions.RayCastAgainstTileMapAABB(tileMap, 
+                 new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), entity.projectileSprite2D.Size.X, entity.projectileSprite2D.Size.Y);
                  Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
 
