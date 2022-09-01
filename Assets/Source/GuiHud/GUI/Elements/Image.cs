@@ -287,7 +287,7 @@ namespace KGUI.Elements
             var sizeDelta = rectTransform.sizeDelta;
             var halfSize = sizeDelta / 2f;
             var bottomLeft = (Vector2)position - halfSize;
-            DrawDebug.DrawBox(bottomLeft, sizeDelta);
+            DrawDebug.DrawBox(new Vec2f(bottomLeft.x, bottomLeft.y), new Vec2f(sizeDelta.x, sizeDelta.y));
 
             return Collisions.Collisions.PointOverlapRect(cursor.X, cursor.Y, bottomLeft.x, bottomLeft.x + sizeDelta.x,
                 bottomLeft.y, bottomLeft.y + sizeDelta.y);

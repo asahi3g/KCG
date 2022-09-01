@@ -122,8 +122,9 @@ namespace KGUI.PlayerStatus
         {
             if (Init)
             {
-                // Set Object Position
-                ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x, Icon.GetTransform().position.y);
+                Rect rect = ((RectTransform) Icon.GetTransform()).rect;
+                ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
+                ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
 
                 // Update Fill Amount
                 if (agentEntity != null)
