@@ -843,6 +843,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(BoneIcon);
         GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPotion);
         GameState.ItemCreationApi.EndItem();
 
