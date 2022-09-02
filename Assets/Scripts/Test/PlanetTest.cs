@@ -7,6 +7,7 @@ using HUD;
 using KGUI.Elements;
 using PlanetTileMap;
 using System.IO;
+using Particle;
 
 namespace Planet.Unity
 {
@@ -95,6 +96,10 @@ namespace Planet.Unity
             if(Planet.TileMap != null)
             Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
+            Gizmos.color = Color.yellow;
+            CircleSmoke.DrawGizmos();
+            Gizmos.color = Color.red;
+
             // Draw lines around player if out of bounds
             if (Player != null)
                 if(Player.agentPhysicsState.Position.X -10.0f >= Planet.TileMap.MapSize.X)
@@ -170,6 +175,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GasBomb, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);

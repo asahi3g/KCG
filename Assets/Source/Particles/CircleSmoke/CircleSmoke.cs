@@ -1,3 +1,5 @@
+using Collisions;
+using Entitas;
 using KMath;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,14 +10,25 @@ namespace Particle
 {
     public static class CircleSmoke
     {
+        // Lists
         private static List<SpriteRenderer> Smokes = new();
         private static List<Vec2f> Velocities = new();
         private static List<Vec2f> Positions = new();
         private static List<Vec2f> Scales = new();
+        private static List<AABox2D> Collisions = new();
+        private static float bounceValue = 0.4f;
+
+        // Smoke Circle Sprite
         private static Sprite sprite;
 
         public static void Initialize()
         {
+            // Create, Initialize and Copy Sprite To Atlas Once.
+            // Set Created Sprite To Global Sprite
+            // Because, we only have one sprite for circle smoke effect
+
+            // Initialize Once, Use it many times
+
             Vector2Int iconPngSize = new Vector2Int(256, 256);
 
             var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
@@ -33,10 +46,17 @@ namespace Particle
 
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
         {
-            for(int i = 0; i < count; i++)
+            // Spawn "count" Particle at "position"
+            // Veloctity to give wind effect (veloicty over time or default velocity?)
+            // Scale to give physics effects (scale over time)
+
+            for (int i = 0; i < count; i++)
             {
                 GameObject CircleSmoke = new GameObject("SmokeParticle");
                 SpriteRenderer spriteRenderer = CircleSmoke.AddComponent<SpriteRenderer>();
+
+                AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
+                    new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
 
                 CircleSmoke.transform.localScale = new Vector2(0.1f, 0.1f);
                 CircleSmoke.transform.position = new Vector2(position.X, position.Y);
@@ -50,11 +70,17 @@ namespace Particle
                 Positions.Add(velocity);
                 Velocities.Add(velocity);
                 Scales.Add(scaleVelocity);
+                Collisions.Add(collision);
             }
         }
 
-        public static void Update()
+        public static void Update(ref PlanetTileMap.TileMap tileMap)
         {
+            // Decrease Alpha Blending over time
+            // Apply Velocity
+            // Apply Scale Over Time
+            // Update Collision Physics
+
             if(Smokes.Count > 0)
             {
                 for(int i = 0; i < Smokes.Count; i++)
@@ -62,13 +88,41 @@ namespace Particle
                     if(Smokes[i] != null)
                     {
                         Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
-                            Mathf.Lerp(Smokes[i].color.a, 0.0f, Random.Range(0.2f, 0.8f) * Time.deltaTime));
+                            Mathf.Lerp(Smokes[i].color.a, 0.0f, Random.Range(0.05f, 0.4f) * Time.deltaTime));
 
                         Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 3)), 0.0f) * Time.deltaTime;
                         Smokes[i].transform.localScale += new Vector3(Random.Range(0.0f, Scales[i].X), Random.Range(0.0f, Scales[i].Y), 0.0f) * Time.deltaTime;
 
-                        if (Smokes[i].color.a <= 0.1f)
+                        AABox2D tempCollision = Collisions[i];
+
+                        //TODO(Mert): Do Collisions Properly
+                        //TODO(Mert): Bounce
+
+                        //if (tempCollision.IsCollidingTop(tileMap, Velocities[i]) || tempCollision.IsCollidingBottom(tileMap, Velocities[i]) ||
+                        //        tempCollision.IsCollidingLeft(tileMap, Velocities[i]) || tempCollision.IsCollidingRight(tileMap, Velocities[i]))
+                        //{
+                        //    Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
+                        //    Mathf.Lerp(Smokes[i].color.a, 0.0f, 7.0f * Time.deltaTime));
+                        //}
+                        
+                        Collisions[i] = tempCollision;
+
+                        if (Smokes[i].color.a <= 0.05f)
                             GameObject.Destroy(Smokes[i].gameObject);
+                    }
+                }
+            }
+        }
+
+        public static void DrawGizmos()
+        {
+            if (Smokes.Count > 0)
+            {
+                for (int i = 0; i < Smokes.Count; i++)
+                {
+                    if (Smokes[i] != null)
+                    {
+                        Gizmos.DrawCube(new Vector3(Collisions[i].center.X, Collisions[i].center.Y, 0.0f), new Vector3(Collisions[i].halfSize.X, Collisions[i].halfSize.Y, 0.0f));
                     }
                 }
             }

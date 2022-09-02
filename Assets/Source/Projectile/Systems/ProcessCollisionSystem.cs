@@ -253,7 +253,7 @@ namespace Projectile
                 elapsed = 0.0f;
             }
 
-            CircleSmoke.Update();
+            CircleSmoke.Update(ref planet.TileMap);
         }
 
         public void DeleteProjectile(ProjectileEntity arrow)
