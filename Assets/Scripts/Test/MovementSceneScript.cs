@@ -306,6 +306,33 @@ namespace Planet.Unity
                 
                 Gizmos.DrawWireCube(worldPosition + new Vector3(0.25f, 0.75f * 0.5f, 0), new Vector3(0.5f, 0.75f, 0.5f));
             }
+
+            bool testRayAgainstCircle = true;
+
+            if (testRayAgainstCircle)
+            {
+                Vector3 p = Input.mousePosition;
+                p.z = 20;
+                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+
+                var rayCastResult = Collisions.Collisions.RayCastAgainstCircle(new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)),
+                 new Vec2f(9, 19), 1.0f);
+
+                Vec2f startPos = Player.agentPhysicsState.Position;
+                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
+                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
+
+                Gizmos.color = Color.yellow;
+                if (rayCastResult.Intersect)
+                {
+                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
+                    new Vector3(0.3f, 0.3f, 0.3f));
+
+                    Gizmos.color = Color.red;
+                }
+
+                Gizmos.DrawSphere(new Vector3(9, 19, 20.0f), 1.0f);
+            }
         }
 
         // create the sprite atlas for testing purposes
