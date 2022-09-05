@@ -242,6 +242,11 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionGasBomb);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionGasBombCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Potion Tool
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPotion);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPotionCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }

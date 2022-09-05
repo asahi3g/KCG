@@ -57,5 +57,6 @@
         ToolActionMechPlacement,
         ToolActionMaterialPlacement,
         ToolActionGasBomb,
+        ToolActionPotion,
     }
 }
