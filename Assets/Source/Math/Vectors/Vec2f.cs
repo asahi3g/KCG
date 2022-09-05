@@ -150,7 +150,7 @@ namespace KMath
             float sin = MathF.Sin(angle);
 
             float px = X * cos - Y * sin;
-            Y = X * cos - Y * sin;
+            Y = X * sin + Y * cos;
             X = px;
 
             return this;

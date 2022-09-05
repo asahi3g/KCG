@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using Enums.Tile;
 using KMath;
 using Inventory;
 using Item;
-using PlanetTileMap;
 
 namespace Planet.Unity
 {
