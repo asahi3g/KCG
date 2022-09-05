@@ -155,6 +155,23 @@ namespace KMath
 
             return this;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="angle">Angle in rad</param>
+        /// <returns></returns>
+        [MethodImpl((MethodImplOptions)256)]
+        public static Vec2f Rotate(Vec2f vec, float angle)
+        {
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
+
+            float px = vec.X * cos - vec.Y * sin;
+            vec.Y = vec.X * sin + vec.Y * cos;
+            vec.X = px;
+
+            return vec;
+        }
         ///   <para>Returns a vector off the vector defined by a normal</para>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -13,10 +13,15 @@ public class LineOfSight : MonoBehaviour
     public CircleSectorRenderDebug CircleSector;
 
     PlanetState Planet;
-    Color standard = new Color(1.0f, 1.0f, 1.0f, 0.8f);
-    Color hitColor = new Color(1.0f, 0.0f, 0.0f, 0.8f);
+    Color standard = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+    Color hitColor = new Color(1.0f, 0.0f, 0.0f, 0.6f);
     Vec2i mapSize = new(64, 32);
     float theta = 0;
+    bool mousePressed = false;
+    bool PressedW = false;
+    bool PressedS = false;
+    bool PressedD = false;
+    bool PressedA = false;
 
     void Start()
     {
@@ -45,6 +50,42 @@ public class LineOfSight : MonoBehaviour
         Vec2f pos = CircleSector.getPos();
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
+            mousePressed = true;
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+            mousePressed = false;
+        
+        if (Input.GetKeyDown(KeyCode.W))
+            PressedW = true;
+        if (Input.GetKeyUp(KeyCode.W))
+            PressedW = false;
+
+        if (Input.GetKeyDown(KeyCode.S))
+            PressedS = true;
+        if (Input.GetKeyUp(KeyCode.S))
+            PressedS = false;
+
+        if (Input.GetKeyDown(KeyCode.D))
+            PressedD = true;
+        if (Input.GetKeyUp(KeyCode.D))
+            PressedD = false;
+
+        if (Input.GetKeyDown(KeyCode.A))
+            PressedA = true;
+        if (Input.GetKeyUp(KeyCode.A))
+            PressedA = false;
+
+
+        if (PressedW)
+            CircleSector.transform.position += new Vector3(0f, 0.05f, 0f);
+        if (PressedS)
+            CircleSector.transform.position += new Vector3(0f, -0.05f, 0f);
+        if (PressedD)
+            CircleSector.transform.position += new Vector3(0.05f, 0f, 0f);
+        if (PressedA)
+            CircleSector.transform.position += new Vector3(-0.05f, 0f, 0f);
+
+
+        if (mousePressed)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vec2f end = new Vec2f(worldPosition.x, worldPosition.y);
@@ -55,9 +96,10 @@ public class LineOfSight : MonoBehaviour
 
             CircleSector.radius = dir.Magnitude;
         }
+
         Planet.Update(Time.deltaTime, Material, transform);
 
-        Vec2f direction = new Vec2f(MathF.Cos(theta), MathF.Sin(theta));
+        Vec2f direction = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
 
         for (int i = 0; i < Planet.AgentList.Length; i++)
         {
@@ -67,7 +109,7 @@ public class LineOfSight : MonoBehaviour
 
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
             bool intersect = LineOfSightTest.AABBIntersectSector(ref entityBoxBorders, CircleSector.radius,
-                CircleSector.angle, pos, direction);
+                CircleSector.angle * Mathf.Deg2Rad, pos, direction.Normalized);
 
             if (intersect)
             {

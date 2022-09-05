@@ -32,11 +32,8 @@ namespace Collisions
         {
 
             // Broad phase check if box overlap with sector. (Same code of AABBOverlapsSphere)
-            if (CircleTileMapStaticCollision.AABBOverlapsSphere(ref box, radious, startPos))
+            if (!CircleTileMapStaticCollision.AABBOverlapsSphere(ref box, radious, startPos))
                 return false;
-
-            Vec2f leftEdge = dir.Rotate(-fov / 2);   // Edge counter clock wise rotation
-            Vec2f rightEdge = dir.Rotate(fov / 2);   // Edge  clock wise rotation
 
             Vec2f[] points = new Vec2f[4];
             points[0] = new Vec2f(box.xmin, box.ymin);  // Botton left
@@ -44,36 +41,47 @@ namespace Collisions
             points[2] = new Vec2f(box.xmax, box.ymin);  // Botton Right
             points[3] = new Vec2f(box.xmax, box.ymax);  // Top Right
 
+
+
             IsBehindFlag isBehindFlag = new IsBehindFlag();
+
+            Vec2f leftEdge = Vec2f.Rotate(dir, fov / 2);   // Edge counter clock wise rotation
+            Vec2f rightEdge = Vec2f.Rotate(dir, -fov / 2);   // Edge  clock wise rotation
 
             // Update point state.
             for (int i = 0; i < points.Length; i++)
             {
-                Vec2f pointDir = points[0] - startPos;
+                Vec2f pointDir = points[i] - startPos;
                 if (Vec2f.Dot(pointDir, dir) <= 0)
+                {
                     isBehindFlag |= (IsBehindFlag)(1 << i);
-                else if (MathF.Sign(Vec2f.Cross(leftEdge, pointDir)) == MathF.Sign(Vec2f.Cross(pointDir, rightEdge)))
+                    continue;
+                }
+                if (pointDir.Magnitude > radious)
+                    continue;
+                
+                if (MathF.Sign(Vec2f.Cross(leftEdge, pointDir)) == MathF.Sign(Vec2f.Cross(pointDir, rightEdge)))
                     return true;
             }
 
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonLeft) || !isBehindFlag.HasFlag(IsBehindFlag.TopLeft))
             {
-                if (EdgeIntersectSector(points[0], points[1], radious, fov, startPos, dir))
+                if (EdgeIntersectSector(points[0], points[1], radious, leftEdge, rightEdge, startPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonLeft) || !isBehindFlag.HasFlag(IsBehindFlag.BottonRight))
             {
-                if (EdgeIntersectSector(points[0], points[2], radious, fov, startPos, dir))
+                if (EdgeIntersectSector(points[0], points[2], radious, leftEdge, rightEdge, startPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.TopLeft) || !isBehindFlag.HasFlag(IsBehindFlag.TopRight))
             {
-                if (EdgeIntersectSector(points[1], points[3], radious, fov, startPos, dir))
+                if (EdgeIntersectSector(points[1], points[3], radious, leftEdge, rightEdge, startPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonRight) || !isBehindFlag.HasFlag(IsBehindFlag.TopRight))
             {
-                if (EdgeIntersectSector(points[2], points[3], radious, fov, startPos, dir))
+                if (EdgeIntersectSector(points[2], points[3], radious, leftEdge, rightEdge, startPos))
                     return true;
             }
 
@@ -81,35 +89,33 @@ namespace Collisions
         }
 
         [MethodImpl((MethodImplOptions)256)]
-        private static bool EdgeIntersectSector(Vec2f start, Vec2f end, float radious, float fov, Vec2f startPos, Vec2f dir)
+        private static bool EdgeIntersectSector(Vec2f start, Vec2f end, float radious, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
         {
             // https://www.geometrictools.com/Documentation/IntersectionLine2Circle2.pdf
             // Sector Arc Intersection
             Vec2f delta = start - startPos;
+            Vec2f diff = end - start;
             float dLen = delta.Magnitude;
-            float endLen = end.Magnitude;
+            float diffLen = diff.Magnitude;
 
             float t1 = Vec2f.Dot(end, delta);
-            float t2 = t1 * t1 - (endLen * endLen * (dLen * dLen - radious * radious));
+            float t2 = t1 * t1 - (diffLen * diffLen * (dLen * dLen - radious * radious));
 
             float c1 = -1, c2 = -1;
             if (t2 >= 0)
             {
-                c1 = (-t1 + MathF.Sqrt(t2))/ (endLen * endLen);
+                c1 = (-t1 + MathF.Sqrt(t2))/ (diffLen * diffLen);
             }
             if (t1 > 0)
             {
-                c2 = (-t1 - MathF.Sqrt(t2)) / (endLen * endLen);
+                c2 = (-t1 - MathF.Sqrt(t2)) / (diffLen * diffLen);
             }
-
-            Vec2f leftEdge = dir.Rotate(-fov / 2);   // Edge counter clock wise rotation
-            Vec2f rightEdge = dir.Rotate(fov / 2);   // Edge  clock wise rotation
 
             // If intersects with circle
             if (c1 >= 0 && c1 <= 1)
             {
                 // Check if intersection point is inside arc.
-                Vec2f intersectPoint = start + c1 * end;
+                Vec2f intersectPoint = start + c1 * diff;
                 Vec2f pointDir = intersectPoint - startPos;
                 if (MathF.Sign(Vec2f.Cross(leftEdge, pointDir)) == MathF.Sign(Vec2f.Cross(pointDir, rightEdge)))
                    return true;
@@ -118,7 +124,7 @@ namespace Collisions
             if (c2 >= 0 && c2 <= 1)
             {
                 // Check if intersection point is inside arc.
-                Vec2f intersectPoint = start + c2 * end;
+                Vec2f intersectPoint = start + c2 * diff;
                 Vec2f pointDir = intersectPoint - startPos;
                 if (MathF.Sign(Vec2f.Cross(leftEdge, pointDir)) == MathF.Sign(Vec2f.Cross(pointDir, rightEdge)))
                    return true;
@@ -128,9 +134,9 @@ namespace Collisions
             leftEdge *= radious;
             rightEdge *= radious;
 
-            if (TwoLinesInteresctionTest(startPos, leftEdge, start, end))
+            if (TwoLinesInteresctionTest(startPos, startPos + leftEdge, start, end))
                 return true;
-            if (TwoLinesInteresctionTest(startPos, leftEdge, start, end))
+            if (TwoLinesInteresctionTest(startPos, startPos + rightEdge, start, end))
                 return true;
 
             return false;
@@ -148,7 +154,7 @@ namespace Collisions
         [MethodImpl((MethodImplOptions)256)]
         private static int CheckOrientation(Vec2f p1, Vec2f p2, Vec2f p3)
         { 
-            float temp = (p2.Y - p1.Y) * (p3.X - p3.X) - (p2.X - p1.X) * (p3.Y - p3.Y);
+            float temp = (p2.Y - p1.Y) * (p3.X - p2.X) - (p2.X - p1.X) * (p3.Y - p2.Y);
 
             if (temp == 0) return 0;
 

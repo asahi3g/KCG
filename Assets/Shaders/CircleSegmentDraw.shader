@@ -61,7 +61,7 @@ Shader "Unlit/CircleSegmentDraw"
                 float dist = length(i.uv);
                 bool isInCircle = dist <= 0.5;
                 float angle = abs(theta) - _Angle / 2.0f;
-                bool isInSector = angle <= 0.5;
+                bool isInSector = angle <= 0.0;
 
                 if (isInSector && isInCircle)
                 {
