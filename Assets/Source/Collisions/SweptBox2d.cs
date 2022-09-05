@@ -34,7 +34,7 @@ namespace Collisions
             return hit;
         }
 
-        public static void SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2)
+        public static void SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
             // Swept collision  detection using Minkowski sum
 
@@ -51,10 +51,17 @@ namespace Collisions
             float timeRemaining = 1.0f;
             bool hit = false;
 
-            for(int iteration = 0; iteration < 4 && timeRemaining > 0.0f; iteration++)
+            int numberOfIterations = 1;
+
+            if (slide)
+            {
+                numberOfIterations = 4;
+            }
+
+            for(int iteration = 0; iteration < numberOfIterations && timeRemaining > 0.0f; iteration++)
             {
                 float tMin = 1.0f;
-                
+
                 // raycasting the point across all box2d lines
                 if (TestLine(minCorner.X, b1Center.X, b1Center.Y, delta.X, delta.Y, ref tMin, minCorner.Y, maxCorner.Y))
                 {
