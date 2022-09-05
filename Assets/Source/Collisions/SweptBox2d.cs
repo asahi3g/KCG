@@ -1,17 +1,11 @@
-
 using Entitas;
 using KMath;
 using System;
 
 namespace Collisions
 {
-
-
-   
-
     public static partial class Collisions
     {
-
         public static bool TestLine(float lineX, float x, float y, float deltaX, float deltaY,
         ref float tMin, float minY, float maxY)
         {
@@ -34,10 +28,11 @@ namespace Collisions
             return hit;
         }
 
+        /// <summary>
+        /// Swept collision  detection using Minkowski sum
+        /// </summary>
         public static void SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
-            // Swept collision  detection using Minkowski sum
-
 
             Vec2f b1Center = new Vec2f(b1.x - b2.x, b1.y - b2.y);
 
@@ -95,78 +90,5 @@ namespace Collisions
             }
 
         }
-  
-        public static float SweptBox2d(Box2D b1, Vec2f b1Velocity, Box2D b2)
-        {
-            float xInvEntry, yInvEntry; 
-            float xInvExit, yInvExit; 
-
-            // find the distance between the objects on the near and far sides for both x and y 
-            if (b1Velocity.X > 0.0f) 
-            { 
-                xInvEntry = b2.x - (b1.x + b1.w);  
-                xInvExit = (b2.x + b2.w) - b1.x;
-            }
-            else 
-            { 
-                xInvEntry = (b2.x + b2.w) - b1.x;  
-                xInvExit = b2.x - (b1.x + b1.w);  
-            } 
-
-            if (b1Velocity.Y > 0.0f) 
-            { 
-                yInvEntry = b2.y - (b1.y + b1.h);  
-                UnityEngine.Debug.Log("b2 " + b2.y + " " + (b1.y + b1.h));
-                 yInvExit = (b2.y + b2.h) - b1.y;  
-            }
-            else 
-            { 
-                yInvEntry = (b2.y + b2.h) - b1.y;  
-                yInvExit = b2.y - (b1.y + b1.h);  
-            }
-
-
-            // find time of collision and time of leaving for each axis (if statement is to prevent divide by zero) 
-            float xEntry, yEntry; 
-            float xExit, yExit; 
-
-            if (b1Velocity.X == 0.0f) 
-            { 
-                xEntry = -float.PositiveInfinity; 
-                xExit = float.PositiveInfinity; 
-            } 
-            else 
-            { 
-                xEntry = xInvEntry / b1Velocity.X; 
-                xExit = xInvExit / b1Velocity.X; 
-            } 
-
-            if (b1Velocity.Y == 0.0f) 
-            { 
-                yEntry = -float.PositiveInfinity; 
-                yExit = float.PositiveInfinity; 
-            } 
-            else 
-            { 
-                yEntry = yInvEntry / b1Velocity.Y; 
-                yExit = yInvExit / b1Velocity.Y; 
-            }
-
-            // find the earliest/latest times of collisionfloat
-            float entryTime = Math.Max(xEntry, yEntry); 
-            float exitTime = Math.Max(xExit, yExit);
-
-
-            // if there was no collision
-            if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f) 
-            {  
-                return 1.0f; 
-            }
-
-
-            return entryTime;
-        }
-
-
     }
 }

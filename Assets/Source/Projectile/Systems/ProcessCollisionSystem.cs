@@ -46,8 +46,6 @@ namespace Projectile
                  new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), entity.projectileSprite2D.Size.X, entity.projectileSprite2D.Size.Y);
                  Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
-
-
                  if (rayCastingResult.Intersect)
                  {
                     
