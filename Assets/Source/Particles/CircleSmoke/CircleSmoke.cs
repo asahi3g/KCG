@@ -29,7 +29,7 @@ namespace Particle
 
             // Initialize Once, Use it many times
 
-            Vector2Int iconPngSize = new Vector2Int(256, 256);
+            Vector2Int iconPngSize = new Vector2Int(300, 300);
 
             var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
 
@@ -59,13 +59,15 @@ namespace Particle
                 AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
 
-                CircleSmoke.transform.localScale = new Vector2(0.1f, 0.1f);
+                CircleSmoke.transform.localScale = new Vector2(0.05f, 0.1f);
                 CircleSmoke.transform.position = new Vector2(position.X, position.Y);
 
                 Debug.Log(new Vector2(position.X, position.Y));
 
                 spriteRenderer.sprite = sprite;
-                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.b, spriteRenderer.color.g, 0.8f);
+
+                var color = Random.Range(0.7f, 0.8f);
+                spriteRenderer.color = new Color(color, color, color, 0.8f);
 
                 Smokes.Add(spriteRenderer);
                 Positions.Add(velocity);
@@ -95,17 +97,22 @@ namespace Particle
                         Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
                             Mathf.Lerp(Smokes[i].color.a, 0.0f, Random.Range(0.05f, 0.4f) * Time.deltaTime));
 
-                        Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 3)), 0.0f) * Time.deltaTime;
+                        Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 8)), 0.0f) * Time.deltaTime;
                         Smokes[i].transform.localScale += new Vector3(Random.Range(0.0f, Scales[i].X), Random.Range(0.0f, Scales[i].Y), 0.0f) * Time.deltaTime;
 
                         AABox2D tempCollision = Collisions[i];
                         if (tempCollision.IsCollidingTop(tileMap, Velocities[i]))
                         {
-                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, -Velocities[i].Y - Random.Range(0, 3)), 0.0f) * Time.deltaTime;
+                            Smokes[i].transform.position += new Vector3(0f, Random.Range(0.0f, -Velocities[i].Y - Random.Range(0, 20)), 0.0f) * Time.deltaTime;
                         }
-                        else if(tempCollision.IsCollidingBottom(tileMap, Velocities[i]))
+
+                        if(tempCollision.IsCollidingRight(tileMap, Velocities[i]))
                         {
-                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 3)), 0.0f) * Time.deltaTime;
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, -Velocities[i].X - Random.Range(-1, 15)), 0f) * Time.deltaTime;
+                        }
+                        else if(tempCollision.IsCollidingLeft(tileMap, Velocities[i]))
+                        {
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 15)), 0f) * Time.deltaTime;
                         }
                         Collisions[i] = tempCollision;
 
