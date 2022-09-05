@@ -10,7 +10,7 @@ namespace Collisions
     {
 
 
-        public static RayCastResult RayCastAgainstTileMapAABB(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
+        public static RayCastResult RayCastAgainstTileMapBox2d(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
         {
             // DDA Algorithm ==============================================
 		    // https://lodev.org/cgtutor/raycasting.html
@@ -89,18 +89,6 @@ namespace Collisions
                     }
                 }
 
-
-                /*// Test tile at new test point
-                if (vMapCheck.X >= 0 && vMapCheck.X < tileMap.MapSize.X && vMapCheck.Y >= 0 && vMapCheck.Y < tileMap.MapSize.Y)
-                {
-                    Enums.Tile.TileID tileID = tileMap.GetFrontTileID(vMapCheck.X, vMapCheck.Y);
-                    PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                    
-                    if (tileID != Enums.Tile.TileID.Air)
-                    {
-                        bTileFound = true;
-                    }
-                }*/
             }
 
 
