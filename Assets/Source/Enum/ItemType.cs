@@ -77,6 +77,7 @@
         ConstructionTool,
         ScannerTool,
         PlanterTool,
-        RemoveMech
+        RemoveMech,
+        PotionTool,
     }
 }
