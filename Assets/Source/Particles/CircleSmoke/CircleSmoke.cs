@@ -54,6 +54,7 @@ namespace Particle
             {
                 GameObject CircleSmoke = new GameObject("SmokeParticle");
                 SpriteRenderer spriteRenderer = CircleSmoke.AddComponent<SpriteRenderer>();
+                spriteRenderer.sortingOrder = 180;
 
                 AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
@@ -87,6 +88,10 @@ namespace Particle
                 {
                     if(Smokes[i] != null)
                     {
+                        Collisions[i] = new AABox2D(new Vec2f(Smokes[i].gameObject.transform.position.x,
+                            Smokes[i].gameObject.transform.position.y), new Vec2f(Smokes[i].gameObject.transform.localScale.x,
+                                Smokes[i].gameObject.transform.localScale.y));
+
                         Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
                             Mathf.Lerp(Smokes[i].color.a, 0.0f, Random.Range(0.05f, 0.4f) * Time.deltaTime));
 
@@ -94,17 +99,14 @@ namespace Particle
                         Smokes[i].transform.localScale += new Vector3(Random.Range(0.0f, Scales[i].X), Random.Range(0.0f, Scales[i].Y), 0.0f) * Time.deltaTime;
 
                         AABox2D tempCollision = Collisions[i];
-
-                        //TODO(Mert): Do Collisions Properly
-                        //TODO(Mert): Bounce
-
-                        //if (tempCollision.IsCollidingTop(tileMap, Velocities[i]) || tempCollision.IsCollidingBottom(tileMap, Velocities[i]) ||
-                        //        tempCollision.IsCollidingLeft(tileMap, Velocities[i]) || tempCollision.IsCollidingRight(tileMap, Velocities[i]))
-                        //{
-                        //    Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
-                        //    Mathf.Lerp(Smokes[i].color.a, 0.0f, 7.0f * Time.deltaTime));
-                        //}
-                        
+                        if (tempCollision.IsCollidingTop(tileMap, Velocities[i]))
+                        {
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, -Velocities[i].Y - Random.Range(0, 3)), 0.0f) * Time.deltaTime;
+                        }
+                        else if(tempCollision.IsCollidingBottom(tileMap, Velocities[i]))
+                        {
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 3)), 0.0f) * Time.deltaTime;
+                        }
                         Collisions[i] = tempCollision;
 
                         if (Smokes[i].color.a <= 0.05f)
