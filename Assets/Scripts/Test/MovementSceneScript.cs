@@ -42,8 +42,27 @@ namespace Planet.Unity
             }
         }
 
+        Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
+        Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
+
         public void Update()
         {
+
+            Vector3 p = Input.mousePosition;
+            p.z = 20;
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+            
+            var playerPhysicsState = Player.agentPhysicsState;
+            Vec2f playerPosition = playerPhysicsState.Position;
+            var playerCollider = Player.physicsBox2DCollider;
+
+            orrectedBox.w = playerCollider.Size.X;
+            orrectedBox.h = playerCollider.Size.Y;
+
+            
+            Vec2f velocity = new Vec2f(mouse.x - orrectedBox.x, mouse.y - orrectedBox.y);
+            Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox);
+
 
             
             ref var tileMap = ref Planet.TileMap;
@@ -307,7 +326,7 @@ namespace Planet.Unity
                 Gizmos.DrawWireCube(worldPosition + new Vector3(0.25f, 0.75f * 0.5f, 0), new Vector3(0.5f, 0.75f, 0.5f));
             }
 
-            bool testRayAgainstCircle = true;
+            bool testRayAgainstCircle = false;
 
             if (testRayAgainstCircle)
             {
@@ -332,6 +351,17 @@ namespace Planet.Unity
                 }
 
                 Gizmos.DrawSphere(new Vector3(9, 19, 20.0f), 1.0f);
+            }
+
+
+            bool testSweptCollision = true;
+            if (testSweptCollision)
+            {
+                var playerCollider = Player.physicsBox2DCollider;
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(new Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
             }
         }
 
