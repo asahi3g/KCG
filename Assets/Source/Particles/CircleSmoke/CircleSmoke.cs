@@ -16,7 +16,7 @@ namespace Particle
         private static List<Vec2f> Positions = new();
         private static List<Vec2f> Scales = new();
         private static List<AABox2D> Collisions = new();
-        private static float bounceValue = 0.4f;
+        private static Material SmokeMaterial;
 
         // Smoke Circle Sprite
         private static Sprite sprite;
@@ -42,6 +42,8 @@ namespace Particle
             Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
 
             sprite = Sprite.Create(iconTex, new Rect(0, 0, iconPngSize.x, iconPngSize.y), new Vector2(0.5f, 0.5f));
+
+            SmokeMaterial = Resources.Load("Materials\\ToonShader\\Smoke", typeof(Material)) as Material;
         }
 
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
@@ -50,11 +52,12 @@ namespace Particle
             // Veloctity to give wind effect (veloicty over time or default velocity?)
             // Scale to give physics effects (scale over time)
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) 
             {
                 GameObject CircleSmoke = new GameObject("SmokeParticle");
                 SpriteRenderer spriteRenderer = CircleSmoke.AddComponent<SpriteRenderer>();
                 spriteRenderer.sortingOrder = 180;
+                spriteRenderer.material = SmokeMaterial;
 
                 AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
