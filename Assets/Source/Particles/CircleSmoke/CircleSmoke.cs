@@ -11,12 +11,12 @@ namespace Particle
     public static class CircleSmoke
     {
         // Lists
-        private static List<SpriteRenderer> Smokes = new();
+        private static List<MeshRenderer> Smokes = new();
         private static List<Vec2f> Velocities = new();
         private static List<Vec2f> Positions = new();
         private static List<Vec2f> Scales = new();
         private static List<AABox2D> Collisions = new();
-        private static Material SmokeMaterial;
+        private static List<Material> Materials = new();
 
         // Smoke Circle Sprite
         private static Sprite sprite;
@@ -29,21 +29,19 @@ namespace Particle
 
             // Initialize Once, Use it many times
 
-            Vector2Int iconPngSize = new Vector2Int(300, 300);
+            //Vector2Int iconPngSize = new Vector2Int(300, 300);
 
-            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
+            //var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
 
-            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
+            //int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
 
-            byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
+            //byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
 
-            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
+            //GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
 
-            Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
+            //Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
 
-            sprite = Sprite.Create(iconTex, new Rect(0, 0, iconPngSize.x, iconPngSize.y), new Vector2(0.5f, 0.5f));
-
-            SmokeMaterial = Resources.Load("Materials\\ToonShader\\Smoke", typeof(Material)) as Material;
+            //sprite = Sprite.Create(iconTex, new Rect(0, 0, iconPngSize.x, iconPngSize.y), new Vector2(0.5f, 0.5f));
         }
 
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
@@ -54,29 +52,30 @@ namespace Particle
 
             for (int i = 0; i < count; i++) 
             {
-                GameObject CircleSmoke = new GameObject("SmokeParticle");
-                SpriteRenderer spriteRenderer = CircleSmoke.AddComponent<SpriteRenderer>();
-                spriteRenderer.sortingOrder = 180;
-                spriteRenderer.material = SmokeMaterial;
+                GameObject CircleSmoke = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                GameObject.Destroy(CircleSmoke.GetComponent<SphereCollider>());
+                MeshRenderer meshRenderer = CircleSmoke.GetComponent<MeshRenderer>();
+                CircleSmoke.name = "CircleSmoke";
+
+                Material SmokeMaterial = MonoBehaviour.Instantiate(Resources.Load("Materials\\ToonShader\\Smoke", typeof(Material)) as Material);
+
+                meshRenderer.material = SmokeMaterial;
 
                 AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
 
-                CircleSmoke.transform.localScale = new Vector2(0.05f, 0.1f);
-                CircleSmoke.transform.position = new Vector2(position.X, position.Y);
-
-                Debug.Log(new Vector2(position.X, position.Y));
-
-                spriteRenderer.sprite = sprite;
+                CircleSmoke.transform.localScale = new Vector3(0.5f, 1.0f, 1.0f);
+                CircleSmoke.transform.position = new Vector3(position.X, position.Y, 0.0f);
 
                 var color = Random.Range(0.7f, 0.8f);
-                spriteRenderer.color = new Color(color, color, color, 0.8f);
+                SmokeMaterial.color = new Color(color, color, color, 0.8f);
 
-                Smokes.Add(spriteRenderer);
+                Smokes.Add(meshRenderer);
                 Positions.Add(velocity);
                 Velocities.Add(velocity);
                 Scales.Add(scaleVelocity);
                 Collisions.Add(collision);
+                Materials.Add(SmokeMaterial);
             }
         }
 
@@ -97,29 +96,29 @@ namespace Particle
                             Smokes[i].gameObject.transform.position.y), new Vec2f(Smokes[i].gameObject.transform.localScale.x,
                                 Smokes[i].gameObject.transform.localScale.y));
 
-                        Smokes[i].color = new Color(Smokes[i].color.r, Smokes[i].color.g, Smokes[i].color.b,
-                            Mathf.Lerp(Smokes[i].color.a, 0.0f, Random.Range(0.05f, 0.4f) * Time.deltaTime));
+                        Materials[i].color = new Color(Materials[i].color.r, Materials[i].color.g, Materials[i].color.b,
+                            Mathf.Lerp(Materials[i].color.a, 0.0f, Random.Range(0.05f, 0.4f) * Time.deltaTime));
 
-                        Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 3)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 8)), 0.0f) * Time.deltaTime;
+                        Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-7, 7)), Random.Range(0.0f, Velocities[i].Y + Random.Range(0, 2)), 0.0f) * Time.deltaTime;
                         Smokes[i].transform.localScale += new Vector3(Random.Range(0.0f, Scales[i].X), Random.Range(0.0f, Scales[i].Y), 0.0f) * Time.deltaTime;
 
                         AABox2D tempCollision = Collisions[i];
                         if (tempCollision.IsCollidingTop(tileMap, Velocities[i]))
                         {
-                            Smokes[i].transform.position += new Vector3(0f, Random.Range(0.0f, -Velocities[i].Y - Random.Range(0, 20)), 0.0f) * Time.deltaTime;
+                            Smokes[i].transform.position += new Vector3(0f, Random.Range(0.0f, -Velocities[i].Y - Random.Range(0, 12)), 0.0f) * Time.deltaTime;
                         }
 
                         if(tempCollision.IsCollidingRight(tileMap, Velocities[i]))
                         {
-                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, -Velocities[i].X - Random.Range(-1, 15)), 0f) * Time.deltaTime;
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, -Velocities[i].X - Random.Range(-1, 12)), 0f) * Time.deltaTime;
                         }
                         else if(tempCollision.IsCollidingLeft(tileMap, Velocities[i]))
                         {
-                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 15)), 0f) * Time.deltaTime;
+                            Smokes[i].transform.position += new Vector3(Random.Range(0.0f, Velocities[i].X + Random.Range(-1, 12)), 0f) * Time.deltaTime;
                         }
                         Collisions[i] = tempCollision;
 
-                        if (Smokes[i].color.a <= 0.05f)
+                        if (Materials[i].color.a <= 0.05f)
                             GameObject.Destroy(Smokes[i].gameObject);
                     }
                 }
