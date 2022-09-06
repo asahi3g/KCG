@@ -162,6 +162,19 @@ public partial class AgentEntity
     }
 
 
+    public void MonsterAttack(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.MonsterAttack;
+
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;
+        }
+    }
+
     public void Dash(int horizontalDir)
     {
         var PhysicsState = agentPhysicsState;

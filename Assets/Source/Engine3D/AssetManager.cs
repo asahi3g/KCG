@@ -70,6 +70,8 @@ namespace Engine3D
 
         private void LoadAnimations()
         {
+
+            // Humanoid
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Idle", AnimationType.Idle);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Run", AnimationType.Run);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Walk_F", AnimationType.Walk);
@@ -93,11 +95,18 @@ namespace Engine3D
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/98_Damage/Stander@LyingFront", AnimationType.LyingFront);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/98_Damage/Stander@KnockDown_B_Light", AnimationType.KnockedDownBack);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/98_Damage/Stander@LyingBack", AnimationType.LyingBack);
+
+            // Insect
+            AnimationLoader.Load("ArtistAnimations/InsectRun", AnimationType.InsectRun);
+            AnimationLoader.Load("ArtistAnimations/InsectAttack", AnimationType.InsectAttack);
+            AnimationLoader.Load("ArtistAnimations/InsectJump", AnimationType.InsectJump);
+            AnimationLoader.Load("ArtistAnimations/InsectDeath", AnimationType.InsectDie);
         }
 
         private void LoadModels()
         {
             ModelLoader.Load("DefaultHumanoid", ModelType.DefaultHumanoid);
+            ModelLoader.Load("SmallInsect", ModelType.SmallInsect);
             ModelLoader.Load("Stander", ModelType.Stander);
             ModelLoader.Load("Pistol", ModelType.Pistol);
             ModelLoader.Load("Rapier", ModelType.Rapier);

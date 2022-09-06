@@ -20,21 +20,25 @@ namespace Agent
                 model3d.GameObject.transform.position = new Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
 
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                if(entity.hasAgentModel3D)
-                {
-                    entity.agentModel3D.GameObject.transform.GetChild(3).position = new Vector3(worldPosition.x, worldPosition.y, 0.0f);
-                }
 
-                if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
+                if (model3d.AnimationType == Enums.AgentAnimationType.HumanoidAnimation)
                 {
-                    entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight = Mathf.Lerp(
-                        entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
-                    entity.agentAgentAction.Action = AgentAction.Aiming;
-                }
-                else
-                {
-                    entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight = Mathf.Lerp(
-                    entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
+                    if(entity.hasAgentModel3D)
+                    {
+                        entity.agentModel3D.GameObject.transform.GetChild(3).position = new Vector3(worldPosition.x, worldPosition.y, 0.0f);
+                    }
+
+                    if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
+                    {
+                        entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight = Mathf.Lerp(
+                            entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                        entity.agentAgentAction.Action = AgentAction.Aiming;
+                    }
+                    else
+                    {
+                        entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight = Mathf.Lerp(
+                        entity.agentModel3D.GameObject.transform.GetChild(2).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
+                    }
                 }
 
                 Vector3 eulers = model3d.GameObject.transform.rotation.eulerAngles;

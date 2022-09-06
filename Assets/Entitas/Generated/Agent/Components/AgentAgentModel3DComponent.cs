@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.Model3DComponent agentModel3D { get { return (Agent.Model3DComponent)GetComponent(AgentComponentsLookup.AgentModel3D); } }
     public bool hasAgentModel3D { get { return HasComponent(AgentComponentsLookup.AgentModel3D); } }
 
-    public void AddAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent) {
+    public void AddAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
         component.GameObject = newGameObject;
@@ -20,10 +20,11 @@ public partial class AgentEntity {
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimancerComponent = newAnimancerComponent;
+        component.AnimationType = newAnimationType;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent) {
+    public void ReplaceAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
         component.GameObject = newGameObject;
@@ -32,6 +33,7 @@ public partial class AgentEntity {
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimancerComponent = newAnimancerComponent;
+        component.AnimationType = newAnimationType;
         ReplaceComponent(index, component);
     }
 

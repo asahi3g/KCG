@@ -139,6 +139,14 @@ namespace Agent
             }
         }
 
+        public void SetAgentAnimationType(Enums.AgentAnimationType agentAnimationType)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].AnimationType = agentAnimationType;
+            }
+        }
+
         public void SetDetectionRadius(float detectionRadius)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)

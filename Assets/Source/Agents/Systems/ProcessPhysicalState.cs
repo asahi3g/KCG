@@ -61,6 +61,18 @@ namespace Agent
                     }
                 }
 
+                if (physicsState.ActionDuration > 0)
+                {
+                    physicsState.ActionDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.MonsterAttack)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
                 if (physicsState.RollDuration > 0)
                 {
                     physicsState.RollDuration -= deltaTime;

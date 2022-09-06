@@ -29,5 +29,9 @@ namespace Engine3D
         LyingFront,
         KnockedDownBack,
         LyingBack,
+        InsectRun,
+        InsectAttack,
+        InsectJump,
+        InsectDie,
     }
 }

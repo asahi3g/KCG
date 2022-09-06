@@ -55,6 +55,8 @@ namespace Agent
                  newOnGrounded: false,
                  newDroping: false,
                  newJumpCounter: 0,
+                 newActionDuration: 0,
+                 newActionCooldown: 0,
                  newSlidingTime: 0,
                  newDyingDuration: 0,
                  newDashCooldown: 0,
@@ -106,6 +108,8 @@ namespace Agent
                 newDroping: false,
                 newJumpCounter: 0,
                 newSlidingTime: 0,
+                newActionDuration: 0,
+                newActionCooldown: 0,
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
@@ -159,6 +163,8 @@ namespace Agent
                 newSlashCooldown: 0,
                 newGunDuration: 0,
                 newGunCooldown: 0,
+                newActionDuration: 0,
+                newActionCooldown: 0,
                 newToolDuration: 0,
                 newToolCooldown: 0,
                 newStaggerDuration: 0,
@@ -200,7 +206,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent, Enums.AgentAnimationType.HumanoidAnimation);
 
 
                         entity.agentPhysicsState.Speed = 10.0f;
@@ -251,7 +257,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -280,10 +286,34 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
+                        break;
+                    }
+                    case Enums.AgentType.EnemyInsect:
+                    {
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SmallInsect);
+                        GameObject model = GameObject.Instantiate(prefab);
+
+                        model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                        Vector3 eulers = model.transform.rotation.eulerAngles;
+                        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                        // create an animancer object and give it a reference to the Animator component
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+                        // get the animator component from the game object
+                        // this component is used by animancer
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectAnimation);
+                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                        entity.agentPhysicsState.Speed = 5.0f;
+
                         break;
                     }
             }

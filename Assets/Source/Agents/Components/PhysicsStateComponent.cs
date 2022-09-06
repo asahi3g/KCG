@@ -28,6 +28,8 @@ namespace Agent
         public int   JumpCounter;
         public float SlidingTime;
         public float DyingDuration;
+        public float ActionDuration;
+        public float ActionCooldown;
         public float DashCooldown;
         public float SlashCooldown;
         public float GunDuration;  // used to keep track of the current fire gun time
