@@ -13,8 +13,7 @@ namespace Projectile
     {
         List<ProjectileEntity> ToRemoveList = new();
         List<ProjectileEntity> ToRemoveArrowList = new();
-              List<ProjectileEntity> PopGasList = new();
-
+        List<ProjectileEntity> PopGasList = new();
 
         float elapsed = 0.0f;
         private float bounceValue = 0.4f;
@@ -253,7 +252,7 @@ namespace Projectile
                 elapsed = 0.0f;
             }
 
-            CircleSmoke.Update();
+            CircleSmoke.Update(ref planet.TileMap);
         }
 
         public void DeleteProjectile(ProjectileEntity arrow)

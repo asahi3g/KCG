@@ -111,6 +111,43 @@ namespace Action
                                     }
                                 }
                             }
+                            else if(ItemEntity.itemType.Type == Enums.ItemType.HealthPositon)
+                            {
+                                // Get All Inventories
+                                var entities = EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+
+                                // Iterate All Entities
+                                foreach (var entity in entities)
+                                {
+                                    // Check Component Is Available
+                                    if (entity.hasInventoryName)
+                                    {
+                                        // Check Name Equals To Material Bag
+                                        if (entity.inventoryName.Name == "MaterialBag")
+                                        {
+                                            // Check Inventory Available Space
+                                            if (GameState.InventoryManager.IsFull(EntitasContext, entity.inventoryID.ID))
+                                            {
+                                                // Pickup Item To Inventory
+                                                GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, inventoryID);
+
+                                                // Return True
+                                                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                // Pickup Item To Inventory
+                                                GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, entity.inventoryID.ID);
+
+                                                // Return True
+                                                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
                             // Pickup Item To Inventory
                             GameState.InventoryManager.PickUp(EntitasContext, ItemEntity, inventoryID);
