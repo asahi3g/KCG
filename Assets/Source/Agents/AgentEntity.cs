@@ -27,6 +27,7 @@ public partial class AgentEntity
         return state.State == AgentState.Alive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
+        physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
@@ -170,8 +171,11 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.MonsterAttack;
 
+            physicsState.ActionJustEnded = false;
+            physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
             physicsState.ActionCooldown = cooldown;
+         
         }
     }
 

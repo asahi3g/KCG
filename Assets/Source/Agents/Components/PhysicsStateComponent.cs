@@ -28,6 +28,8 @@ namespace Agent
         public int   JumpCounter;
         public float SlidingTime;
         public float DyingDuration;
+        public bool ActionInProgress;
+        public bool ActionJustEnded;
         public float ActionDuration;
         public float ActionCooldown;
         public float DashCooldown;

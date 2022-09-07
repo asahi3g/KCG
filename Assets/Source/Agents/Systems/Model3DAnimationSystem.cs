@@ -190,7 +190,8 @@ namespace Agent
                     {
                         case AgentMovementState.Move:
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);    
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);  
+                            model3d.AnimancerComponent.Play(animation, 0.125f);  
                             break;
                         }
                         case AgentMovementState.Limp:
@@ -201,7 +202,7 @@ namespace Agent
                         }
                         case AgentMovementState.Idle:
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
                             model3d.AnimancerComponent.Play(animation, 0.125f);
                             break;
                         }

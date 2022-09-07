@@ -1199,7 +1199,7 @@ public class GameResources
         GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
-        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Swordman);
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
         GameState.AgentCreationApi.SetDetectionRadius(16.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
