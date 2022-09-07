@@ -109,7 +109,7 @@ public class LineOfSightTest : MonoBehaviour
             
             CircleSector circleSector = new CircleSector()
             {
-                Radious = CircleSector.radius,
+                Radius = CircleSector.radius,
                 Fov = CircleSector.angle * Mathf.Deg2Rad,
                 StartPos = pos,
                 Dir = direction.Normalized

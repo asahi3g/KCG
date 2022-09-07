@@ -24,7 +24,7 @@ namespace Collisions
         {
             Circle2D circle = new Circle2D()
             { 
-                Radius = circleSector.Radious,
+                Radius = circleSector.Radius,
                 Center = circleSector.StartPos
             };
 
@@ -54,7 +54,7 @@ namespace Collisions
                     isBehindFlag |= (IsBehindFlag)(1 << i);
                     continue;
                 }
-                if (pointDir.Magnitude > circleSector.Radious)
+                if (pointDir.Magnitude > circleSector.Radius)
                     continue;
                 
                 if (MathF.Sign(Vec2f.Cross(leftEdge, pointDir)) == MathF.Sign(Vec2f.Cross(pointDir, rightEdge)))
@@ -63,22 +63,22 @@ namespace Collisions
 
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonLeft) || !isBehindFlag.HasFlag(IsBehindFlag.TopLeft))
             {
-                if (EdgeIntersectSector(new Line2D(points[0], points[1]), circleSector.Radious, leftEdge, rightEdge, circleSector.StartPos))
+                if (EdgeIntersectSector(new Line2D(points[0], points[1]), circleSector.Radius, leftEdge, rightEdge, circleSector.StartPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonLeft) || !isBehindFlag.HasFlag(IsBehindFlag.BottonRight))
             {
-                if (EdgeIntersectSector(new Line2D(points[0], points[2]), circleSector.Radious, leftEdge, rightEdge, circleSector.StartPos))
+                if (EdgeIntersectSector(new Line2D(points[0], points[2]), circleSector.Radius, leftEdge, rightEdge, circleSector.StartPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.TopLeft) || !isBehindFlag.HasFlag(IsBehindFlag.TopRight))
             {
-                if (EdgeIntersectSector(new Line2D(points[1], points[3]), circleSector.Radious, leftEdge, rightEdge, circleSector.StartPos))
+                if (EdgeIntersectSector(new Line2D(points[1], points[3]), circleSector.Radius, leftEdge, rightEdge, circleSector.StartPos))
                     return true;
             }
             if (!isBehindFlag.HasFlag(IsBehindFlag.BottonRight) || !isBehindFlag.HasFlag(IsBehindFlag.TopRight))
             {
-                if (EdgeIntersectSector(new Line2D(points[2], points[3]), circleSector.Radious, leftEdge, rightEdge, circleSector.StartPos))
+                if (EdgeIntersectSector(new Line2D(points[2], points[3]), circleSector.Radius, leftEdge, rightEdge, circleSector.StartPos))
                     return true;
             }
 
@@ -86,7 +86,7 @@ namespace Collisions
         }
 
         [MethodImpl((MethodImplOptions)256)]
-        private static bool EdgeIntersectSector(Line2D line, float radious, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
+        private static bool EdgeIntersectSector(Line2D line, float radius, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
         {
             // https://www.geometrictools.com/Documentation/IntersectionLine2Circle2.pdf
             // Sector Arc Intersection
@@ -96,7 +96,7 @@ namespace Collisions
             float diffLen = diff.Magnitude;
 
             float t1 = Vec2f.Dot(line.B, delta);
-            float t2 = t1 * t1 - (diffLen * diffLen * (dLen * dLen - radious * radious));
+            float t2 = t1 * t1 - (diffLen * diffLen * (dLen * dLen - radius * radius));
 
             float c1 = -1, c2 = -1;
             if (t2 >= 0)
@@ -128,8 +128,8 @@ namespace Collisions
             }
 
             // Sector Edge Intersection
-            leftEdge *= radious;
-            rightEdge *= radious;
+            leftEdge *= radius;
+            rightEdge *= radius;
 
             if (line.Intersects(new Line2D(startPos, startPos + leftEdge)))
                 return true;

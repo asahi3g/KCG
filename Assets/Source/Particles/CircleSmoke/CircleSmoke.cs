@@ -19,15 +19,11 @@ namespace Particle
             Vector2Int iconPngSize = new Vector2Int(256, 256);
 
             var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
-
             int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
-
             byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
 
             GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
-
             Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
-
             sprite = Sprite.Create(iconTex, new Rect(0, 0, iconPngSize.x, iconPngSize.y), new Vector2(0.5f, 0.5f));
         }
 
@@ -40,8 +36,6 @@ namespace Particle
 
                 CircleSmoke.transform.localScale = new Vector2(0.1f, 0.1f);
                 CircleSmoke.transform.position = new Vector2(position.X, position.Y);
-
-                Debug.Log(new Vector2(position.X, position.Y));
 
                 spriteRenderer.sprite = sprite;
                 spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.b, spriteRenderer.color.g, 0.8f);

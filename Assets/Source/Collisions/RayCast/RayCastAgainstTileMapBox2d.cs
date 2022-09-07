@@ -16,8 +16,14 @@ namespace Collisions
             Vec2f vRayDir = (line.B - line.A).Normalized;
 
 
-            Vec2f vRayUnitStepSize = new Vec2f( (float)Math.Sqrt(1 + (vRayDir.Y / vRayDir.X) * (vRayDir.Y / vRayDir.X)), 
+            Vec2f vRayUnitStepSize = new Vec2f( (float)Math.Sqrt(1 + (vRayDir.Y / vRayDir.X) * (vRayDir.Y / vRayDir.X)),
             (float)Math.Sqrt(1 + (vRayDir.X / vRayDir.Y) * (vRayDir.X / vRayDir.Y)) );
+
+            if (vRayUnitStepSize.X != vRayUnitStepSize.X) // This returns true if vRayUnitStepSize.X is a float.NAN
+                vRayUnitStepSize.X = 0;
+            if (vRayUnitStepSize.Y != vRayUnitStepSize.Y)
+                vRayUnitStepSize.Y = 0;
+
             Vec2i vMapCheck = new Vec2i((int)vRayStart.X, (int)vRayStart.Y);
             Vec2f vRayLength1D;
             Vec2i vStep;
@@ -71,7 +77,17 @@ namespace Collisions
                 Vec2f min = currentPoint - new Vec2f(width / 2, height / 2);
                 Vec2f max = currentPoint + new Vec2f(width / 2, height / 2);
 
-                for(int y = (int)min.Y; y <= (int)max.Y; y++)
+                // Clamp min and max.
+                if (min.X < 0)
+                    min.X = 0;
+                if (min.Y < 0)
+                    min.Y = 0;
+                if (max.X >= tileMap.MapSize.X)
+                    max.X = tileMap.MapSize.X - 1;
+                if (max.Y >= tileMap.MapSize.Y)
+                    max.Y = tileMap.MapSize.Y - 1;
+
+                for (int y = (int)min.Y; y <= (int)max.Y; y++)
                 {
                     for(int x = (int)min.X; x <= (int)max.X; x++)
                     {

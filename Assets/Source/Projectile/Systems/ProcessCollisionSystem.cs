@@ -13,7 +13,7 @@ namespace Projectile
     {
         List<ProjectileEntity> ToRemoveList = new();
         List<ProjectileEntity> ToRemoveArrowList = new();
-              List<ProjectileEntity> PopGasList = new();
+        List<ProjectileEntity> PopGasList = new();
 
 
         float elapsed = 0.0f;
@@ -26,21 +26,16 @@ namespace Projectile
         {
             ToRemoveList.Clear();
 
-            // Get Delta Time
             float deltaTime = Time.deltaTime;
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
-            // Get Vehicle Physics Entity
             var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
 
             foreach (var entity in entities)
             {
-                // Set Vehicle Physics to variable
                 var physicsState = entity.projectilePhysicsState;
 
-                // Create Box Borders
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
-
                 var rayCastingResult =
                  Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
                  new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), entity.projectileSprite2D.Size.X, entity.projectileSprite2D.Size.Y);
@@ -57,13 +52,10 @@ namespace Projectile
                     }
                  }
 
-                // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
                 {
                     if (entity.projectileCollider.isFirstSolid)
                     {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
                         continue;
                     }
                     else
@@ -79,8 +71,6 @@ namespace Projectile
                 {
                     if(entity.projectileCollider.isFirstSolid)
                     {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else
@@ -95,13 +85,10 @@ namespace Projectile
 
                 entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
 
-                // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
                 {
                     if (entity.projectileCollider.isFirstSolid)
                     {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else
@@ -117,8 +104,6 @@ namespace Projectile
                 {
                     if (entity.projectileCollider.isFirstSolid)
                     {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
                          continue;
                     }
                     else
@@ -140,7 +125,6 @@ namespace Projectile
                     // Check if projectile has hit a enemy.
                     var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
-                    // Todo: Create a agent colision system?
                     foreach (var entity in entitiesA)
                     {   
                         float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
@@ -252,6 +236,11 @@ namespace Projectile
             }
 
             CircleSmoke.Update();
+        }
+
+        public void Update(ref Planet.PlanetState planet)
+        { 
+          
         }
 
         public void DeleteProjectile(ProjectileEntity arrow)
