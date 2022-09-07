@@ -453,11 +453,11 @@ namespace Planet
             ProjectileList.Remove(entity.projectileID.Index);
         }
 
-        public VehicleEntity AddVehicle(UnityEngine.Material material, Vector2 position)
+        public VehicleEntity AddVehicle(Enums.VehicleType vehicleType, Vec2f position)
         {
             Utils.Assert(VehicleList.Length < PlanetEntityLimits.VehicleLimit);
 
-            VehicleEntity newEntity = VehicleList.Add(new VehicleEntity());
+            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(vehicleType, position));
             return newEntity;
         }
 

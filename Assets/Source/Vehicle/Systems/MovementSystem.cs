@@ -2,27 +2,18 @@ using UnityEngine;
 using Entitas;
 using System.Collections;
 using KMath;
+using Projectile;
 
 namespace Vehicle
 {
-    public sealed class ProcessVelocitySystem
+    public sealed class MovementSystem
     {
-        // Singleton
-        public static readonly ProcessVelocitySystem Instance;
-
-        // Game Context
-        private VehicleContext vehicleContext;
-
-        // Static Constructor
-        static ProcessVelocitySystem()
-        {
-            Instance = new ProcessVelocitySystem();
-        }
+        VehicleCreationApi VehicleCreationApi;
 
         // Constructor
-        public ProcessVelocitySystem()
+        public MovementSystem(VehicleCreationApi vehicleCreationApi)
         {
-            vehicleContext = Contexts.sharedInstance.vehicle;
+            VehicleCreationApi = vehicleCreationApi;
         }
 
         public void ProcessMovement(Vec2f newSpeed, Contexts contexts)

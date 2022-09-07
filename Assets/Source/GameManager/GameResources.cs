@@ -5,6 +5,7 @@ using System;
 using Collisions;
 using PlanetTileMap;
 using Particle;
+using System.EnterpriseServices;
 
 public class GameResources
 {
@@ -178,6 +179,8 @@ public class GameResources
     public static int Light2IconItem;
 
     public static int WaterIcon;
+
+    public static int JetChassis;
 
     // Temporary inventory slotIcons.
     public static int DyeSlotIcon;
@@ -404,6 +407,7 @@ public class GameResources
             CreateParticleEmitters();
             CreateProjectiles();
             CreateMechs();
+            CreateVehicles();
 
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
@@ -1422,6 +1426,23 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
+    }
+
+    private static void CreateVehicles()
+    {
+        GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
+        GameState.VehicleCreationApi.SetName("Car");
+        GameState.VehicleCreationApi.SetSpriteId(JetChassis);
+        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+        GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.AngularVelocity(new Vec2f(15.0f, 15.0f));
+        GameState.VehicleCreationApi.AngularMass(14f);
+        GameState.VehicleCreationApi.AngularAcceleration(4f);
+        GameState.VehicleCreationApi.CenterOfGravity(-9f);
+        GameState.VehicleCreationApi.CenterOfRotation(Vec2f.Zero);
+        GameState.VehicleCreationApi.End();
+
     }
  
 }
