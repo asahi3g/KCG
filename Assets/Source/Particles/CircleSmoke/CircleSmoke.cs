@@ -18,41 +18,17 @@ namespace Particle
         private static List<AABox2D> Collisions = new();
         private static List<Material> Materials = new();
 
-        // Smoke Circle Sprite
-        private static Sprite sprite;
-
-        public static void Initialize()
-        {
-            // Create, Initialize and Copy Sprite To Atlas Once.
-            // Set Created Sprite To Global Sprite
-            // Because, we only have one sprite for circle smoke effect
-
-            // Initialize Once, Use it many times
-
-            //Vector2Int iconPngSize = new Vector2Int(300, 300);
-
-            //var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_circle.png", iconPngSize.x, iconPngSize.y);
-
-            //int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
-
-            //byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
-
-            //GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
-
-            //Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
-
-            //sprite = Sprite.Create(iconTex, new Rect(0, 0, iconPngSize.x, iconPngSize.y), new Vector2(0.5f, 0.5f));
-        }
-
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
         {
             // Spawn "count" Particle at "position"
             // Veloctity to give wind effect (veloicty over time or default velocity?)
             // Scale to give physics effects (scale over time)
+            // Apply Toon Smoke Material
 
             for (int i = 0; i < count; i++) 
             {
                 GameObject CircleSmoke = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                CircleSmoke.hideFlags = HideFlags.HideInHierarchy;
                 GameObject.Destroy(CircleSmoke.GetComponent<SphereCollider>());
                 MeshRenderer meshRenderer = CircleSmoke.GetComponent<MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
