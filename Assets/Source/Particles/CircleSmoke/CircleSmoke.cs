@@ -94,7 +94,7 @@ namespace Particle
                         }
                         Collisions[i] = tempCollision;
 
-                        if (Materials[i].color.a <= 0.05f)
+                        if (Materials[i].color.a <= 0.2f)
                             GameObject.Destroy(Smokes[i].gameObject);
                     }
                 }
