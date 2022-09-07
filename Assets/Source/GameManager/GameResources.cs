@@ -1203,6 +1203,18 @@ public class GameResources
         GameState.AgentCreationApi.SetDetectionRadius(16.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
+
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
+        GameState.AgentCreationApi.SetName("enemy-insect-heavy");
+        GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
     }
 
     private static void CreateMechs()
@@ -1388,7 +1400,7 @@ public class GameResources
         GameState.ProjectileCreationApi.SetName("bullet");
         GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
-        GameState.ProjectileCreationApi.SetSpeed(2.0f);
+        GameState.ProjectileCreationApi.SetSpeed(100.0f);
         GameState.ProjectileCreationApi.SetRamp(false, 1f, 10f, 1.0f);
         GameState.ProjectileCreationApi.SetDragType(Enums.DragType.Linear);
         GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);

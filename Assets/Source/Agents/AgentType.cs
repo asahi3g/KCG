@@ -10,5 +10,6 @@ namespace Enums
         EnemyGunner,
         EnemySwordman,
         EnemyInsect,
+        EnemyHeavy,
     }
 }

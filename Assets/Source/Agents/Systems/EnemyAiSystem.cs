@@ -261,7 +261,7 @@ namespace Agent
                             }
 
 
-                            if (physicsState.ActionInProgress && physicsState.ActionDuration <= 0.0f)
+                            if (physicsState.ActionJustEnded)
                             {
                                 Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.Direction * box2DComponent.Size.X,
                                 physicsState.Position.Y + box2DComponent.Offset.Y);
@@ -297,7 +297,7 @@ namespace Agent
 
                                 }
                                 
-                                physicsState.ActionInProgress = false;
+                                physicsState.ActionJustEnded = false;
                                 enemyComponent.EnemyCooldown = 2.0f;
                             }
                         }

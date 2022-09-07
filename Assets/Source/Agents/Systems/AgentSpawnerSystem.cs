@@ -63,16 +63,9 @@ namespace Agent
                  newDyingDuration: 0,
                  newDashCooldown: 0,
                  newSlashCooldown: 0,
-                 newGunDuration: 0,
-                 newGunCooldown: 0,
-                 newToolDuration: 0,
-                 newToolCooldown: 0,
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
-                 newRollDuration: 0,
-                 newRollImpactDuration: 0,
-                 newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                 newRollImpactDuration: 0);
 
             return entity;
         }
@@ -117,16 +110,9 @@ namespace Agent
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newGunDuration: 0,
-                newGunCooldown: 0,
-                newToolDuration: 0,
-                newToolCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
-                newRollDuration: 0,
-                newRollImpactDuration: 0,
-                 newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                newRollImpactDuration: 0);
 
             return entity;
         }
@@ -167,18 +153,11 @@ namespace Agent
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newGunDuration: 0,
-                newGunCooldown: 0,
                 newActionDuration: 0,
                 newActionCooldown: 0,
-                newToolDuration: 0,
-                newToolCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
-                newRollDuration: 0,
-                newRollImpactDuration: 0,
-                newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                newRollImpactDuration: 0);
 
             switch (agentType)
             {
@@ -318,7 +297,31 @@ namespace Agent
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectAnimation);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
-                        entity.agentPhysicsState.Speed = 5.0f;
+                        entity.agentPhysicsState.Speed = 6.0f;
+
+                        break;
+                    }
+                    case Enums.AgentType.EnemyHeavy:
+                    {
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.HeavyInsect);
+                        GameObject model = GameObject.Instantiate(prefab);
+
+                        model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                        Vector3 eulers = model.transform.rotation.eulerAngles;
+                        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                        // create an animancer object and give it a reference to the Animator component
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+                        // get the animator component from the game object
+                        // this component is used by animancer
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectHeavyAnimation);
+                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                        entity.agentPhysicsState.Speed = 4.0f;
 
                         break;
                     }

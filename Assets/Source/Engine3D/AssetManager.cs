@@ -101,12 +101,20 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/InsectAttack", AnimationType.InsectAttack);
             AnimationLoader.Load("ArtistAnimations/InsectJump", AnimationType.InsectJump);
             AnimationLoader.Load("ArtistAnimations/InsectDeath", AnimationType.InsectDie);
+
+             // Heavy Insect
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyIdle", AnimationType.InsectHeavyIdle);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyRun", AnimationType.InsectHeavyRun);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyAttack", AnimationType.InsectHeavyAttack);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyJump", AnimationType.InsectHeavyJump);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyDeath", AnimationType.InsectHeavyDie);
         }
 
         private void LoadModels()
         {
             ModelLoader.Load("DefaultHumanoid", ModelType.DefaultHumanoid);
             ModelLoader.Load("SmallInsect", ModelType.SmallInsect);
+            ModelLoader.Load("HeavyInsect", ModelType.HeavyInsect);
             ModelLoader.Load("Stander", ModelType.Stander);
             ModelLoader.Load("Pistol", ModelType.Pistol);
             ModelLoader.Load("Rapier", ModelType.Rapier);

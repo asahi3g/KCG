@@ -17,6 +17,7 @@ namespace Agent
         public int Direction;           // 1 or -1 last direction the player was looking at
 
         public Enums.AgentMovementState MovementState;
+        public bool SetMovementState;
 
         //public Flags MovementFlags; 
         public bool AffectedByGravity;  // is used to know whether the agent is affected by the gravity
@@ -34,15 +35,8 @@ namespace Agent
         public float ActionCooldown;
         public float DashCooldown;
         public float SlashCooldown;
-        public float GunDuration;  // used to keep track of the current fire gun time
-        public float GunCooldown; // used to keep track of the current gun cooldown property
-        public float ToolDuration;  // used to keep track of the current tool time
-        public float ToolCooldown; // used to keep track of the current tool cooldown property
-        public float DrinkDuration; // used to keep track of the current drink time
-        public float DrinkCooldown; // used to keep track of the current drink cooldown property
         public float StaggerDuration;         
         public float RollCooldown;            // cooldown for rolling
-        public float RollDuration;            // duration of the roll
         public float RollImpactDuration;      // after the roll you take time to get up again
 
     }

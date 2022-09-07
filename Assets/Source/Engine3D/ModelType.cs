@@ -6,6 +6,7 @@ namespace Engine3D
     {
         DefaultHumanoid,
         SmallInsect,
+        HeavyInsect,
         Stander,
         Pistol,
         Rapier

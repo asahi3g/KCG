@@ -3,6 +3,7 @@ namespace Enums
     public enum AgentAnimationType
     {
         HumanoidAnimation,
-        GroundInsectAnimation
+        GroundInsectAnimation,
+        GroundInsectHeavyAnimation
     }
 }
