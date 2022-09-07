@@ -33,8 +33,8 @@ namespace Action
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
-            GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
-            ItemEntity.Destroy();
+            //GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
+            //ItemEntity.Destroy();
 
             ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
 

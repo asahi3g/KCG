@@ -93,9 +93,6 @@ namespace Action
                                                         // Destroy Item Entity
                                                         item.Destroy();
 
-                                                        // Reset TileID
-                                                        ItemEntity.itemCastData.data.TileID = TileID.Error;
-
                                                         // Return;
                                                         ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
                                                         return;
