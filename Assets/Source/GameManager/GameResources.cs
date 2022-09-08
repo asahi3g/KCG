@@ -5,6 +5,7 @@ using System;
 using Collisions;
 using PlanetTileMap;
 using Particle;
+using System.EnterpriseServices;
 
 public class GameResources
 {
@@ -179,6 +180,8 @@ public class GameResources
 
     public static int WaterIcon;
 
+    public static int JetChassis;
+
     // Temporary inventory slotIcons.
     public static int DyeSlotIcon;
     public static int HelmetSlotIcon;
@@ -300,6 +303,9 @@ public class GameResources
             AimCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
             BuildCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
 
+            //Vehicles
+            JetChassis = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Jet\\Chassis\\Jet_chassis.png", 144, 96);
+
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
             Ore3Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore3SpriteSheet, 0, 0, 0);
@@ -374,6 +380,9 @@ public class GameResources
             AimCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(AimCursor, 2, 0, Enums.AtlasType.Particle);
             BuildCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor, 1, 1, Enums.AtlasType.Particle);
 
+            // Vehicles
+            JetChassis = GameState.SpriteAtlasManager.CopySpriteToAtlas(JetChassis, 0, 0, Enums.AtlasType.Vehicle);
+
             // TileIsotypes.
             SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
             SB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0001Sheet, 0, 0, 0);
@@ -404,6 +413,7 @@ public class GameResources
             CreateParticleEmitters();
             CreateProjectiles();
             CreateMechs();
+            CreateVehicles();
 
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
@@ -1422,6 +1432,23 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
+    }
+
+    private static void CreateVehicles()
+    {
+        GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
+        GameState.VehicleCreationApi.SetName("Car");
+        GameState.VehicleCreationApi.SetSpriteId(JetChassis);
+        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+        GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.AngularVelocity(new Vec2f(15.0f, 15.0f));
+        GameState.VehicleCreationApi.AngularMass(14f);
+        GameState.VehicleCreationApi.AngularAcceleration(4f);
+        GameState.VehicleCreationApi.CenterOfGravity(-9f);
+        GameState.VehicleCreationApi.CenterOfRotation(Vec2f.Zero);
+        GameState.VehicleCreationApi.End();
+
     }
  
 }
