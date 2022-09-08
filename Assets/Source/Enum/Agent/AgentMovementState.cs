@@ -24,5 +24,6 @@ namespace Enums
         LyingFront, // dead state front version
         KnockedDownBack, // the death animation back version
         LyingBack, // dead state back version
+        MonsterAttack,
     }
 }

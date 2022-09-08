@@ -31,8 +31,6 @@ namespace Collisions
         /// <summary>
         /// Swept collision  detection using Minkowski sum
         /// </summary>
-        public static void SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
-        {
         public static bool SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
             
