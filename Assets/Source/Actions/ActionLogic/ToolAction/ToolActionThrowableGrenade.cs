@@ -49,7 +49,6 @@ namespace Action
             if (ItemEntity.hasItemFireWeaponClip)
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
-            // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
@@ -133,9 +132,7 @@ namespace Action
         }
     }
 
-    /// <summary>
-    /// Factory Method
-    /// </summary>
+
     public class ToolActionThrowableGrenadeCreator : ActionCreator
     {
         public override ActionBase CreateAction(Contexts entitasContext, int actionID)

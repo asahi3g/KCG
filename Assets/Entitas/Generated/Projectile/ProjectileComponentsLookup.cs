@@ -12,9 +12,9 @@ public static class ProjectileComponentsLookup {
     public const int ECSInput = 1;
     public const int PhysicsBox2DCollider = 2;
     public const int PhysicsSphere2DCollider = 3;
-    public const int ProjectileCollider = 4;
-    public const int ProjectileID = 5;
-    public const int ProjectileLinearDrag = 6;
+    public const int ProjectileID = 4;
+    public const int ProjectileLinearDrag = 5;
+    public const int ProjectileOnHit = 6;
     public const int ProjectilePhysicsState = 7;
     public const int ProjectileRamp = 8;
     public const int ProjectileSprite2D = 9;
@@ -27,9 +27,9 @@ public static class ProjectileComponentsLookup {
         "ECSInput",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
-        "ProjectileCollider",
         "ProjectileID",
         "ProjectileLinearDrag",
+        "ProjectileOnHit",
         "ProjectilePhysicsState",
         "ProjectileRamp",
         "ProjectileSprite2D",
@@ -41,9 +41,9 @@ public static class ProjectileComponentsLookup {
         typeof(ECSInput.Component),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
-        typeof(Projectile.ColliderComponent),
         typeof(Projectile.IDComponent),
         typeof(Projectile.LinearDragComponent),
+        typeof(Projectile.OnHitComponent),
         typeof(Projectile.PhysicsStateComponent),
         typeof(Projectile.RampComponent),
         typeof(Projectile.Sprite2DComponent),
