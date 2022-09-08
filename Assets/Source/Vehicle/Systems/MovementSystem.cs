@@ -3,6 +3,8 @@ using Entitas;
 using System.Collections;
 using KMath;
 using Projectile;
+using Enums;
+using UnityEngine.UIElements;
 
 namespace Vehicle
 {
@@ -16,32 +18,21 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public void ProcessMovement(VehicleContext vehicleContexts, Vec2f newSpeed)
+        public void UpdateEx(VehicleContext vehicleContexts)
         {
             // Get Vehicle Entites
             IGroup<VehicleEntity> entities =
             vehicleContexts.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
             foreach (var vehicle in entities)
             {
-                // Get position from component
-                var position = vehicle.vehiclePhysicsState2D;
-                position.TempPosition = position.Position;
+                VehicleProperties vehicleProperties =
+                        VehicleCreationApi.GetRef((int)vehicle.vehicleType.Type);
 
-                // Update the position
-                vehicle.ReplaceVehiclePhysicsState2D(position.Position, position.TempPosition, position.Scale, position.TempScale,
-                    newSpeed, vehicle.vehiclePhysicsState2D.angularMass, vehicle.vehiclePhysicsState2D.angularAcceleration,
-                         vehicle.vehiclePhysicsState2D.centerOfGravity, vehicle.vehiclePhysicsState2D.centerOfRotation);
+                // Process Gravity
+                if(vehicleProperties.AffectedByGravity)
+                    vehicle.vehiclePhysicsState2D.Position.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
 
-                // Add velocity to position
-                position.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
-
-                // Update the position
-                vehicle.ReplaceVehiclePhysicsState2D(position.Position, position.TempPosition, position.Scale, position.TempScale,
-                    vehicle.vehiclePhysicsState2D.angularVelocity, vehicle.vehiclePhysicsState2D.angularMass, vehicle.vehiclePhysicsState2D.angularAcceleration,
-                         vehicle.vehiclePhysicsState2D.centerOfGravity, vehicle.vehiclePhysicsState2D.centerOfRotation);
-
-                return;
-
+                vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
             }
         }
     }

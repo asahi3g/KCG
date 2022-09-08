@@ -9,5 +9,7 @@ namespace Enums
         Corpse,
         EnemyGunner,
         EnemySwordman,
+        EnemyInsect,
+        EnemyHeavy,
     }
 }

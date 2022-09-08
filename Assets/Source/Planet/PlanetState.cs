@@ -539,7 +539,7 @@ namespace Planet
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
             GameState.VehicleCollisionSystem.Update(ref this);
-            GameState.VehicleMovementSystem.ProcessMovement(EntitasContext.vehicle, Vec2f.Zero);
+            GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
             GameState.ProjectileMovementSystem.Update(EntitasContext.projectile);
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
 

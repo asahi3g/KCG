@@ -27,7 +27,7 @@ public partial class AgentEntity
         return state.State == AgentState.Alive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
-        physicsState.MovementState != AgentMovementState.MonsterAttack &&
+        //physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
@@ -173,7 +173,7 @@ public partial class AgentEntity
 
         if (IsStateFree())
         {
-            physicsState.MovementState = AgentMovementState.MonsterAttack;
+            //physicsState.MovementState = AgentMovementState.MonsterAttack;
             physicsState.SetMovementState = true;
             
 

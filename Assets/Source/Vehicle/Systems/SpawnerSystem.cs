@@ -39,6 +39,8 @@ namespace Vehicle
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(vehicleProperties.CollisionSize, Vec2f.Zero);
 
+            entity.AddVehicleType(vehicleType);
+
 
             // Increase ID per object statically
             UniqueID++;

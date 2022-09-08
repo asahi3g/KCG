@@ -22,34 +22,36 @@ namespace Vehicle
                 var size = entity.physicsBox2DCollider.Size;
 
                 // Create Box Borders
-                var entityBoxBorders = new AABox2D(new Vec2f(pos.TempPosition.X, pos.Position.Y), size);
+                var entityBoxBorders = new AABox2D(new Vec2f(pos.TempPosition.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingBottom(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.ReplaceVehiclePhysicsState2D(new Vec2f(pos.Position.X, pos.TempPosition.Y), pos.TempPosition, pos.Scale, pos.TempScale, 
-                        new Vec2f(pos.angularVelocity.X, 0.0f), pos.angularMass, pos.angularAcceleration, pos.centerOfGravity, pos.centerOfRotation);
+                    pos.Position = new Vec2f(pos.Position.X, pos.TempPosition.Y);
+                    pos.angularVelocity.Y = 0.0f;
+                    pos.angularAcceleration = 0.0f;
                 }
                 else if (entityBoxBorders.IsCollidingTop(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.ReplaceVehiclePhysicsState2D(new Vec2f(pos.Position.X, pos.TempPosition.Y), pos.TempPosition, pos.Scale, pos.TempScale,
-                      new Vec2f(pos.angularVelocity.X, 0.0f), pos.angularMass, pos.angularAcceleration, pos.centerOfGravity, pos.centerOfRotation);
+                    pos.Position = new Vec2f(pos.Position.X, pos.TempPosition.Y);
+                    pos.angularVelocity.Y = 0.0f;
+                    pos.angularAcceleration = 0.0f;
                 }
 
                 pos = entity.vehiclePhysicsState2D;
+
                 size = entity.physicsBox2DCollider.Size;
-                entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.TempPosition.Y), size);
+
+                entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.TempPosition.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.ReplaceVehiclePhysicsState2D(new Vec2f(pos.Position.X, pos.TempPosition.Y), pos.TempPosition, pos.Scale, pos.TempScale,
-                      new Vec2f(0.0f, pos.angularVelocity.Y), pos.angularMass, pos.angularAcceleration, pos.centerOfGravity, pos.centerOfRotation);
+                    pos.angularVelocity = new Vec2f(0f, pos.angularVelocity.Y);
                 }
                 else if (entityBoxBorders.IsCollidingRight(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.ReplaceVehiclePhysicsState2D(new Vec2f(pos.Position.X, pos.TempPosition.Y), pos.TempPosition, pos.Scale, pos.TempScale,
-                      new Vec2f(0.0f, pos.angularVelocity.Y), pos.angularMass, pos.angularAcceleration, pos.centerOfGravity, pos.centerOfRotation);
+                    pos.angularVelocity = new Vec2f(0f, pos.angularVelocity.Y);
                 }
             }
         }
