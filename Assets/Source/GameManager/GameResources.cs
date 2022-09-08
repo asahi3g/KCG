@@ -843,6 +843,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(BoneIcon);
         GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPotion);
         GameState.ItemCreationApi.EndItem();
 
@@ -1347,8 +1348,6 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingScale(20.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255f, 72f, 0f, 255.0f));
         GameState.ParticleCreationApi.End();
-
-        CircleSmoke.Initialize();
     }
 
     private static void CreateParticleEmitters()

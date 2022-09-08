@@ -165,7 +165,6 @@ namespace KGUI
             healthPotionUIBackground = planet.AddUIImage("HealthPotionBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
                 new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
             healthPotionUIBackground.SetImageMidBottom();
-            healthPotionUIBackground.GetGameObject().SetActive(false);
 
             healthPotionUI = planet.AddUIImage("HealthPotion", healthPotionUIBackground.GetTransform(), "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 19, 19).kGUIElementsImage.Image;
@@ -306,6 +305,7 @@ namespace KGUI
                         bedrockUIBackground.GetGameObject().SetActive(true);
                         wireUIBackground.GetGameObject().SetActive(true);
                         pipeUIBackground.GetGameObject().SetActive(true);
+                        healthPotionUIBackground.GetGameObject().SetActive(false);
 
                         // If Selected     = Red
                         // If Not Selected = Yellow
@@ -321,6 +321,7 @@ namespace KGUI
                         bedrockUIBackground.GetGameObject().SetActive(false);
                         wireUIBackground.GetGameObject().SetActive(false);
                         pipeUIBackground.GetGameObject().SetActive(false);
+                        healthPotionUIBackground.GetGameObject().SetActive(false);
 
                         // Get Inventories
                         var entities = _planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
@@ -450,6 +451,10 @@ namespace KGUI
                     {
                         // Set All Tiles Active To False
                         healthPotionUIBackground.GetGameObject().SetActive(true);
+                        dirtUIBackground.GetGameObject().SetActive(false);
+                        bedrockUIBackground.GetGameObject().SetActive(false);
+                        wireUIBackground.GetGameObject().SetActive(false);
+                        pipeUIBackground.GetGameObject().SetActive(false);
 
                         // Get Inventories
                         var entities = _planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
@@ -481,16 +486,38 @@ namespace KGUI
                                                 // Entity Has Item Stack?
                                                 if (MaterialBag.hasItemStack)
                                                 {
-                                                    // Check Count Of The Item
-                                                    if (MaterialBag.itemStack.Count >= 1)
+                                                    // Set Active True
+                                                    healthPotionUIBackground.GetGameObject().SetActive(true);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                healthPotionUIBackground.GetGameObject().SetActive(false);
+                                            }
+
+                                            // Check Item Has Stack
+                                            if (MaterialBag.hasItemStack)
+                                            {
+                                                // Set Inventory Elements
+                                                inventoryID = agentEntity.agentInventory.InventoryID;
+                                                Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                                                selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+
+                                                // Create Item
+                                                item = GameState.InventoryManager.GetItemInSlot(_planet.EntitasContext, inventoryID, selectedSlot);
+
+                                                // Check If Item Is Available
+                                                if (item != null)
+                                                {
+                                                    if (item.itemPotionCastData.potionType == Enums.PotionType.HealthPotion)
                                                     {
-                                                        // Set Active True
-                                                        healthPotionUIBackground.GetGameObject().SetActive(true);
+                                                        // Set Red After Selected
+                                                        healthPotionUIBackground.SetImageColor(Color.red);
                                                     }
                                                     else
                                                     {
-                                                        // Set Active False
-                                                        healthPotionUIBackground.GetGameObject().SetActive(false);
+                                                        // Set Yellow After Unselected
+                                                        healthPotionUIBackground.SetImageColor(Color.yellow);
                                                     }
                                                 }
                                             }

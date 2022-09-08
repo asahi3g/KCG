@@ -104,6 +104,12 @@ namespace Item
                     if(itemProperty.MechType != Mech.MechType.Error)
                         entity.itemMechCastData.data.MechID = itemProperty.MechType;
                 }
+
+                if(entity.itemType.Type == ItemType.PotionTool)
+                {
+                    Enums.PotionType potionType = PotionType.Error;
+                    entity.AddItemPotionCastData(potionType);
+                }
             }
 
             ItemID++;
