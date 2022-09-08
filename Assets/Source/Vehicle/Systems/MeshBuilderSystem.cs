@@ -16,15 +16,15 @@ namespace Vehicle
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle), drawOrder);
         }
 
-        public void UpdateMesh()
+        public void UpdateMesh(VehicleContext contexts)
         {
-            var VehiclesWithSprite = Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.VehicleSprite2D));
+            var VehiclesWithSprite = contexts.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.VehicleSprite2D));
 
             Mesh.Clear();
             int index = 0;
             foreach (var entity in VehiclesWithSprite)
             {
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleSprite2D.SpriteId, Enums.AtlasType.Particle).TextureCoords;
+                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
                 var x = entity.vehiclePhysicsState2D.Position.X;
                 var y = entity.vehiclePhysicsState2D.Position.Y;

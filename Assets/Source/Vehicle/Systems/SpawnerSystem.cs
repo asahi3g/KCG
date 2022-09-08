@@ -18,13 +18,13 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public VehicleEntity Spawn(VehicleType vehicleType, Vec2f position)
+        public VehicleEntity Spawn(VehicleContext contexts, VehicleType vehicleType, Vec2f position)
         {
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);
 
             // Create Entity
-            var entity = Contexts.sharedInstance.vehicle.CreateEntity();
+            var entity = contexts.CreateEntity();
 
             // Add ID Component
             entity.AddVehicleID(UniqueID, -1);
