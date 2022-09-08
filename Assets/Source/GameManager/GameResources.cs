@@ -699,7 +699,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(SMGIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
         GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.2f, 20.0f, 15.0f);
-        GameState.ItemCreationApi.SetRangedWeaponClip(30, 1, 1f);
+        GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);

@@ -108,6 +108,12 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/InsectHeavyAttack", AnimationType.InsectHeavyAttack);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyJump", AnimationType.InsectHeavyJump);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyDeath", AnimationType.InsectHeavyDie);
+
+
+            AnimationLoader.Load("ArtistAnimations/SpaceMarineWalk", AnimationType.SpaceMarineRun);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarineStagger", AnimationType.SpaceMarineStagger);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarineDeath", AnimationType.SpaceMarineDead);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarineIdle", AnimationType.SpaceMarineIdle);
         }
 
         private void LoadModels()
@@ -116,6 +122,7 @@ namespace Engine3D
             ModelLoader.Load("SmallInsect", ModelType.SmallInsect);
             ModelLoader.Load("HeavyInsect", ModelType.HeavyInsect);
             ModelLoader.Load("Stander", ModelType.Stander);
+            ModelLoader.Load("SpaceMarine", ModelType.SpaceMarine);
             ModelLoader.Load("Pistol", ModelType.Pistol);
             ModelLoader.Load("Rapier", ModelType.Rapier);
         }

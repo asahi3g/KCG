@@ -4,6 +4,7 @@ namespace Enums
     {
         HumanoidAnimation,
         GroundInsectAnimation,
-        GroundInsectHeavyAnimation
+        GroundInsectHeavyAnimation,
+        SpaceMarineAnimations
     }
 }

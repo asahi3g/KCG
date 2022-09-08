@@ -8,6 +8,7 @@ namespace Engine3D
         SmallInsect,
         HeavyInsect,
         Stander,
+        SpaceMarine,
         Pistol,
         Rapier
     }

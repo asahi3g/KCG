@@ -217,7 +217,7 @@ namespace Agent
                                 // spawns a debug floating text for damage 
                                 planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
-                                enemyComponent.EnemyCooldown = 2.0f;
+                                enemyComponent.EnemyCooldown = 1.0f;
 
                             }
                         }
@@ -298,7 +298,7 @@ namespace Agent
                                 }
                                 
                                 physicsState.ActionJustEnded = false;
-                                enemyComponent.EnemyCooldown = 2.0f;
+                                enemyComponent.EnemyCooldown = 1.0f;
                             }
                         }
 

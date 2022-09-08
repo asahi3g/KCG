@@ -42,5 +42,11 @@ namespace Engine3D
         InsectHeavyAttack,
         InsectHeavyJump,
         InsectHeavyDie,
+
+
+        SpaceMarineIdle,
+        SpaceMarineRun,
+        SpaceMarineStagger,
+        SpaceMarineDead,
     }
 }

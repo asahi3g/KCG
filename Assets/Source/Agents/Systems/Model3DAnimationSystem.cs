@@ -304,6 +304,64 @@ namespace Agent
                         }
                     }
                 }
+                else if (model3d.AnimationType == Enums.AgentAnimationType.SpaceMarineAnimations)
+                {
+                    switch(physicsState.MovementState)
+                    {
+                        case AgentMovementState.Move:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRun);  
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);  
+                            break;
+                        }
+                        case AgentMovementState.Limp:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRun);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Idle:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Falling:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.Stagger:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineStagger);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.LyingFront:
+                        case AgentMovementState.LyingBack:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineDead);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                    }
+
+                     if (physicsState.MovementState != AgentMovementState.Falling && 
+                    physicsState.MovementState != AgentMovementState.Dashing)
+                    {
+                        if (physicsState.JumpCounter == 1)
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                        }
+                        else if (physicsState.JumpCounter == 2)
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                        }
+                    }
+                }
 
                 if (currentClip != null && physicsState.SetMovementState)
                 {
