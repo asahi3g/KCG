@@ -26,6 +26,7 @@ namespace Agent
         public float AttackCooldown;
 
         public MovementProperties MovProperties;
+        public Enums.AgentAnimationType AnimationType;
     }
 
     public struct MovementProperties

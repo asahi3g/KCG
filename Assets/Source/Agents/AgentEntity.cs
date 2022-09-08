@@ -27,6 +27,7 @@ public partial class AgentEntity
         return state.State == AgentState.Alive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
+        physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
@@ -130,8 +131,9 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.FireGun;
 
-            physicsState.GunDuration = cooldown;
-            physicsState.GunCooldown = cooldown;
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -143,8 +145,9 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.UseTool;
 
-            physicsState.ToolDuration = cooldown;
-            physicsState.ToolCooldown = cooldown;
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -156,11 +159,29 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.Drink;
 
-            physicsState.DrinkDuration = cooldown;
-            physicsState.DrinkCooldown = cooldown;
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;
         }
     }
 
+
+    public void MonsterAttack(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+        var model3d = agentModel3D; 
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.MonsterAttack;
+            physicsState.SetMovementState = true;
+            
+
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;      
+        }
+    }
 
     public void Dash(int horizontalDir)
     {
@@ -184,8 +205,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (PhysicsState.RollDuration <= 0.0f &&
-        PhysicsState.RollCooldown <= 0.0f &&
+        if (
         IsStateFree() && PhysicsState.OnGrounded)
         {
             PhysicsState.Velocity.X = 1.35f * PhysicsState.Speed * horizontalDir;
@@ -195,8 +215,10 @@ public partial class AgentEntity
             PhysicsState.AffectedByGravity = true;
             PhysicsState.AffectedByFriction = false;
             PhysicsState.MovementState = AgentMovementState.Rolling;
-            PhysicsState.RollDuration = 0.5f;
-            PhysicsState.RollCooldown = 1.75f;
+            PhysicsState.ActionInProgress = true;
+            PhysicsState.ActionJustEnded = false;
+            PhysicsState.ActionDuration = 0.5f;
+            PhysicsState.ActionCooldown = 1.75f;
         }
     }
 

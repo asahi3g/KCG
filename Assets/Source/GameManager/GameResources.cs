@@ -709,7 +709,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(SMGIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
         GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.2f, 20.0f, 15.0f);
-        GameState.ItemCreationApi.SetRangedWeaponClip(30, 1, 1f);
+        GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
@@ -1201,6 +1201,29 @@ public class GameResources
         GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
         GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
         GameState.AgentCreationApi.SetDetectionRadius(24.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
+        GameState.AgentCreationApi.SetName("enemy-insect");
+        GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
+
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
+        GameState.AgentCreationApi.SetName("enemy-insect-heavy");
+        GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
     }

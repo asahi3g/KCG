@@ -80,11 +80,14 @@ namespace Collisions
                 {
                     for(int x = (int)min.X; x <= (int)max.X; x++)
                     {
-                        Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
-                        PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                        if (tileID != Enums.Tile.TileID.Air)
+                        if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
                         {
-                            bTileFound = true;
+                            Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
+                            PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
+                            if (tileID != Enums.Tile.TileID.Air)
+                            {
+                                bTileFound = true;
+                            }
                         }
                     }
                 }
