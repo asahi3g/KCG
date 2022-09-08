@@ -69,7 +69,7 @@ namespace Projectile
                  foreach (var agent in agents)
                  {
                     Collisions.Box2D entityBox = new Collisions.Box2D{x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y};
-                Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+                    Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
                     if (!agent.isAgentPlayer && agent.agentState.State == Agent.AgentState.Alive)
                     {
                         var agentPhysicsState = agent.agentPhysicsState;
@@ -90,7 +90,8 @@ namespace Projectile
                             
 
                                 // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 10, 2.5f, new Vec2f(0.0f, 0.1f), agentPosition);
+                                planet.AddFloatingText("" + 10, 1.5f, new Vec2f(0.0f, 0.1f), agentPosition);
+                                planet.AddParticleEmitter(agentPosition, Particle.ParticleEmitterType.Blood);
                             }
 
                             removeThisEntity = true;
