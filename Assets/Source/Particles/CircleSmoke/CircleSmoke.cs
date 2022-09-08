@@ -41,7 +41,7 @@ namespace Particle
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
 
                 CircleSmoke.transform.localScale = new Vector3(0.5f, 1.0f, 1.0f);
-                CircleSmoke.transform.position = new Vector3(position.X, position.Y, 0.0f);
+                CircleSmoke.transform.position = new Vector3(position.X, position.Y, -1.0f);
 
                 var color = Random.Range(0.7f, 0.8f);
                 SmokeMaterial.color = new Color(color, color, color, 0.8f);

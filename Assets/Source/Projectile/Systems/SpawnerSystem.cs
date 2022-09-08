@@ -27,6 +27,7 @@ namespace Projectile
                                     ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
+
             // Add ID Component
             entity.AddProjectileID(UniqueID++, -1);
 

@@ -13,6 +13,7 @@ namespace Agent
         public Model3DWeapon CurrentWeapon;
         public GameObject Weapon;
         public AnimancerComponent AnimancerComponent;
+        public Enums.AgentAnimationType AnimationType;
     }
 
         

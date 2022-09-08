@@ -107,6 +107,14 @@ public class GameState
     public static readonly FloatingText.FloatingTextDrawSystem FloatingTextDrawSystem;
     #endregion
 
+    #region Vehicle
+    public static readonly Vehicle.VehicleCreationApi VehicleCreationApi;
+    public static readonly Vehicle.ProcessCollisionSystem VehicleCollisionSystem;
+    public static readonly Vehicle.MovementSystem VehicleMovementSystem;
+    public static readonly Vehicle.SpawnerSystem VehicleSpawnerSystem;
+    public static readonly Vehicle.MeshBuilderSystem VehicleMeshBuilderSystem;
+    #endregion
+
     public static readonly Utility.FileLoadingManager FileLoadingManager;
     public static readonly ECSInput.InputProcessSystem InputProcessSystem;
 
@@ -204,5 +212,10 @@ public class GameState
         ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
         ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
         ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
+        VehicleCreationApi = new Vehicle.VehicleCreationApi();
+        VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();
+        VehicleMovementSystem = new Vehicle.MovementSystem(VehicleCreationApi);
+        VehicleSpawnerSystem = new Vehicle.SpawnerSystem(VehicleCreationApi);
+        VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
     }
 }

@@ -24,6 +24,7 @@ namespace Agent
                     var targetPhysicsState = closestPlayer.agentPhysicsState;
                     var enemyComponent = entity.agentEnemy;
                     var physicsState = entity.agentPhysicsState;
+                    var box2DComponent = entity.physicsBox2DCollider;
 
                     if (state.State == AgentState.Alive)
                     {
@@ -216,8 +217,88 @@ namespace Agent
                                 // spawns a debug floating text for damage 
                                 planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
-                                enemyComponent.EnemyCooldown = 2.0f;
+                                enemyComponent.EnemyCooldown = 1.0f;
 
+                            }
+                        }
+                        else if (enemyComponent.Behaviour == EnemyBehaviour.Insect)
+                        {
+
+                            float swordRange = 1.5f;
+                            // if the enemy is close to the player
+                            // the enemy will move towards the player
+                            if (Len <= enemyComponent.DetectionRadius && Len >= swordRange && 
+                            enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
+                            {
+                                // if the enemy is stuck
+                                // trigger the jump
+                                bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
+                                                physicsState.Velocity.Y <= 0.05f && 
+                                                physicsState.Velocity.Y >= -0.05f &&
+                                                YDiff >= 0.9f;
+
+                                // to move the enemy we have to add acceleration 
+                                // towards the player (Equal two time the drag.)
+                                entity.Walk((int)direction.X);
+                                //physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
+
+                                // jumping is just an increase in velocity
+                                if (jump)
+                                {
+                                    GameState.AgentProcessPhysicalState.Jump(entity);
+                                }
+
+                            }
+                            else
+                            {
+                                //Idle
+                                physicsState.Acceleration = new Vec2f();
+                            }
+
+                            if (Len <= swordRange && enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
+                            {
+                                entity.MonsterAttack(2.0f);
+                            }
+
+
+                            if (physicsState.ActionJustEnded)
+                            {
+                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.Direction * box2DComponent.Size.X,
+                                physicsState.Position.Y + box2DComponent.Offset.Y);
+
+                                
+                                int [] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(planetState, swordPosition, 1.0f);
+                                for(int agentIndex = 0; agentIndex < agentIds.Length; agentIndex++)
+                                {
+                                    int agentID = agentIds[agentIndex];
+                                    AgentEntity thisAgent = planetState.AgentList.Get(agentID);
+                                    if (thisAgent != entity)
+                                    {
+                                        var thisAgentPhysicsState = thisAgent.agentPhysicsState;
+
+                                        Vec2f thisDirection = thisAgentPhysicsState.Position - physicsState.Position;
+                                        int thisKnockbackDir = 0;
+                                        if (thisDirection.X > 0)
+                                        {
+                                            thisKnockbackDir = 1;
+                                        }
+                                        else if (thisDirection.X < 0)
+                                        {
+                                            thisKnockbackDir = -1;
+                                        }
+
+                                        GameState.AgentProcessPhysicalState.Knockback(thisAgent, 7.0f, thisKnockbackDir);
+
+                                        float damage = 25.0f;
+                                        // spawns a debug floating text for damage 
+                                        planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(thisDirection.X * 0.05f, thisDirection.Y * 0.05f), 
+                                    new Vec2f(thisAgentPhysicsState.Position.X, thisAgentPhysicsState.Position.Y + 0.35f));
+                                    }
+
+                                }
+                                
+                                physicsState.ActionJustEnded = false;
+                                enemyComponent.EnemyCooldown = 1.0f;
                             }
                         }
 

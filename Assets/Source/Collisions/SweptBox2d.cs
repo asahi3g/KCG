@@ -33,6 +33,41 @@ namespace Collisions
         /// </summary>
         public static void SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
+        public static bool SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
+        {
+            
+           /* bool collided = false;
+            Vec2f d = delta;
+            float stepSize = 0.1f;
+            while(d.X > 0 && d.Y > 0)
+            {
+                Vec2f thisDelta = new Vec2f(Math.Max(stepSize, d.X), Math.Max(stepSize, d.Y));
+                AABox2D b1AABB = new AABox2D(new Vec2f(b1.x, b1.y) + thisDelta, new Vec2f(b1.w, b1.h));
+                AABox2D b2AABB = new AABox2D(new Vec2f(b2.x, b2.y), new Vec2f(b2.w - 0.01f, b2.h - 0.01f));
+
+                if (Collisions.RectOverlapRect(b1AABB.xmin, b1AABB.xmax, b1AABB.ymin, b1AABB.ymax,
+                        b2AABB.xmin, b2AABB.xmax, b2AABB.ymin, b2AABB.ymax))
+                {
+                    Vec2f centerB2 = new Vec2f(b2AABB.xmin + b2.w * 0.5f, b2AABB.ymin + b2.h * 0.5f);
+                    Vec2f centerB1 = new Vec2f(b1AABB.xmin + b1.w * 0.5f, b1AABB.ymax + b1.h * 0.5f);
+
+                    Vec2f dir = (-thisDelta).Normalized;
+                    Vec2f magnitude = new Vec2f((b1.w + b2.w) * 0.5f - Math.Abs((centerB2.X - centerB1.X)), (b1.h + b2.h) * 0.5f - Math.Abs((centerB2.Y - centerB1.Y)));
+                    b1.x = b1.x + dir.X * magnitude.X;
+                    b1.y = b1.y + dir.Y * magnitude.Y;
+                    collided = true;
+                }
+
+                d -= stepSize;
+
+            }
+
+            if (collided)
+            {
+                return true;
+            }*/
+
+            // Swept collision  detection using Minkowski sum
 
             Vec2f b1Center = new Vec2f(b1.x - b2.x, b1.y - b2.y);
 
@@ -88,7 +123,7 @@ namespace Collisions
                 timeRemaining -= tMin * timeRemaining;
                 
             }
-
+            return hit;
         }
     }
 }
