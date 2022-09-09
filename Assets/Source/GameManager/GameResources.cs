@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using Collisions;
 using PlanetTileMap;
+using Particle;
+using System.EnterpriseServices;
 
 public class GameResources
 {
@@ -178,6 +180,8 @@ public class GameResources
 
     public static int WaterIcon;
 
+    public static int JetChassis;
+
     // Temporary inventory slotIcons.
     public static int DyeSlotIcon;
     public static int HelmetSlotIcon;
@@ -299,6 +303,9 @@ public class GameResources
             AimCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
             BuildCursor = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
 
+            //Vehicles
+            JetChassis = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Jet\\Chassis\\Jet_chassis.png", 144, 96);
+
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
             Ore3Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore3SpriteSheet, 0, 0, 0);
@@ -373,6 +380,9 @@ public class GameResources
             AimCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(AimCursor, 2, 0, Enums.AtlasType.Particle);
             BuildCursor = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor, 1, 1, Enums.AtlasType.Particle);
 
+            // Vehicles
+            JetChassis = GameState.SpriteAtlasManager.CopySpriteToAtlas(JetChassis, 0, 0, Enums.AtlasType.Vehicle);
+
             // TileIsotypes.
             SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
             SB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0001Sheet, 0, 0, 0);
@@ -403,6 +413,7 @@ public class GameResources
             CreateParticleEmitters();
             CreateProjectiles();
             CreateMechs();
+            CreateVehicles();
 
             Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
@@ -698,7 +709,7 @@ public class GameResources
         GameState.ItemCreationApi.SetTexture(SMGIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
         GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.2f, 20.0f, 15.0f);
-        GameState.ItemCreationApi.SetRangedWeaponClip(30, 1, 1f);
+        GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
@@ -835,6 +846,15 @@ public class GameResources
         GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetStackable(99);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.PotionTool, "PotionTool");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(BoneIcon);
+        GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPotion);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.HealthPositon, "HealthPosition");
@@ -1183,6 +1203,29 @@ public class GameResources
         GameState.AgentCreationApi.SetDetectionRadius(24.0f);
         GameState.AgentCreationApi.SetHealth(100.0f);
         GameState.AgentCreationApi.End();
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
+        GameState.AgentCreationApi.SetName("enemy-insect");
+        GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
+
+
+        GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
+        GameState.AgentCreationApi.SetName("enemy-insect-heavy");
+        GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+        GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+        GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+        GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Insect);
+        GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+        GameState.AgentCreationApi.SetHealth(100.0f);
+        GameState.AgentCreationApi.End();
     }
 
     private static void CreateMechs()
@@ -1365,8 +1408,8 @@ public class GameResources
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Bullet);
         GameState.ProjectileCreationApi.SetName("bullet");
         GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
-        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ProjectileCreationApi.SetSpeed(20.0f);
+        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
+        GameState.ProjectileCreationApi.SetSpeed(100.0f);
         GameState.ProjectileCreationApi.SetRamp(false, 1f, 10f, 1.0f);
         GameState.ProjectileCreationApi.SetDragType(Enums.DragType.Linear);
         GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
@@ -1412,6 +1455,23 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetSpeed(20.0f);
         GameState.ProjectileCreationApi.End();
+    }
+
+    private static void CreateVehicles()
+    {
+        GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
+        GameState.VehicleCreationApi.SetName("Car");
+        GameState.VehicleCreationApi.SetSpriteId(JetChassis);
+        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+        GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.AngularVelocity(new Vec2f(15.0f, 15.0f));
+        GameState.VehicleCreationApi.AngularMass(14f);
+        GameState.VehicleCreationApi.AngularAcceleration(4f);
+        GameState.VehicleCreationApi.CenterOfGravity(-9f);
+        GameState.VehicleCreationApi.CenterOfRotation(Vec2f.Zero);
+        GameState.VehicleCreationApi.End();
+
     }
  
 }

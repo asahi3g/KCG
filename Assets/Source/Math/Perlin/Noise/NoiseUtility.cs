@@ -1,6 +1,4 @@
-﻿
-
-namespace KMath.Noise
+﻿namespace KMath.Noise
 {
     internal static class NoiseUtility
     {

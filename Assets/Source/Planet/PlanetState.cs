@@ -74,6 +74,7 @@ namespace Planet
             GameState.TileMapRenderer.Initialize(material, transform, 7);
             GameState.AgentMeshBuilderSystem.Initialize(material, transform, 11);
             GameState.ItemMeshBuilderSystem.Initialize(material, transform, 12);
+            GameState.VehicleMeshBuilderSystem.Initialize(material, transform, 14);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
@@ -453,11 +454,11 @@ namespace Planet
             ProjectileList.Remove(entity.projectileID.Index);
         }
 
-        public VehicleEntity AddVehicle(UnityEngine.Material material, Vector2 position)
+        public VehicleEntity AddVehicle(Enums.VehicleType vehicleType, Vec2f position)
         {
             Utils.Assert(VehicleList.Length < PlanetEntityLimits.VehicleLimit);
 
-            VehicleEntity newEntity = VehicleList.Add(new VehicleEntity());
+            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(EntitasContext.vehicle, vehicleType, position));
             return newEntity;
         }
 
@@ -537,8 +538,11 @@ namespace Planet
             GameState.ParticleEmitterUpdateSystem.Update(ref this);
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
+            GameState.VehicleCollisionSystem.Update(ref this);
+            GameState.VehicleMovementSystem.ProcessMovement(EntitasContext.vehicle, Vec2f.Zero);
             GameState.ProjectileMovementSystem.Update(EntitasContext.projectile);
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
+
             cameraFollow.Update(ref this);
 
             TileMap.UpdateTileSprites();
@@ -556,6 +560,7 @@ namespace Planet
             GameState.TileMapRenderer.UpdateFrontLayerMesh(TileMap);
             GameState.ItemMeshBuilderSystem.UpdateMesh(EntitasContext);
             GameState.AgentMeshBuilderSystem.UpdateMesh(EntitasContext.agent);
+            GameState.VehicleMeshBuilderSystem.UpdateMesh(EntitasContext.vehicle);
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
             GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
@@ -566,6 +571,7 @@ namespace Planet
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
             GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
+            GameState.Renderer.DrawFrame(ref GameState.VehicleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle));
             GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
@@ -581,11 +587,11 @@ namespace Planet
             {
                 case EventType.MouseDown:
                     GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
-                    break;
+                    return;
                 case EventType.MouseUp:
                     GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
-                    break;
-                case EventType.Repaint:
+                    return;
+                case not EventType.Repaint:
                     return;
             }
 

@@ -123,7 +123,7 @@ public class ProjectileTest : MonoBehaviour
             //projectileVelocitySystem.Update(new Vec3f(diff.X, diff.Y));
 
             // Process Collision System
-            projectileCollisionSystem.Update(ref planetState.TileMap);
+           // projectileCollisionSystem.Update(ref planetState.TileMap);
 
             // Draw Initialized Projectile
             projectileMeshBuilderSystem.UpdateMesh(Contexts.sharedInstance.projectile);

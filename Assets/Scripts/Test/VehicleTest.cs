@@ -1,205 +1,366 @@
-using Entitas;
-using KMath;
-using Planet;
 using UnityEngine;
+using Enums.Tile;
+using KMath;
+using Item;
+using Animancer;
+using HUD;
+using KGUI.Elements;
+using PlanetTileMap;
+using System.IO;
+using Particle;
 
-public class VehicleTest : MonoBehaviour
+namespace Planet.Unity
 {
-    // Vehilce Mesh 
-    Vehicle.MeshBuilderSystem MeshBuilderSystem ;
-
-    // Vehicle Collision System
-    Vehicle.ProcessCollisionSystem vehicleCollisionSystem;
-
-    // Vehicle Spawner System
-    Vehicle.SpawnerSystem vehicleSpawnerSystem;
-
-    // Vehicle Physics
-    public Vehicle.ProcessVelocitySystem vehiclePhysics;
-    
-    // Planet Tile Map
-    private PlanetState planet;
-
-    // Rendering Material
-    [SerializeField]
-    Material Material;
-
-    public bool canUpdateGravity = true;
-
-    // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
-    private void Start()
+    class VehicleTest : MonoBehaviour
     {
-        // Initialize Vehicle Spawner System
-        vehicleSpawnerSystem = new Vehicle.SpawnerSystem();
+        [SerializeField] Material Material;
 
-        // Initialize Vehicle Physics System
-        vehiclePhysics = new Vehicle.ProcessVelocitySystem();
+        [SerializeField]
+        private bool enableGeometryPlacementTool;
 
-        // Initialize Vehicle Mesh
-        MeshBuilderSystem = new Vehicle.MeshBuilderSystem();
+        public PlanetState Planet;
+        Inventory.InventoryManager inventoryManager;
+        Inventory.DrawSystem inventoryDrawSystem;
 
-        // Initialize Vehicle Collision System
-        vehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();
+        GeometryBlockPlacementTool geometryPlacementTool;
 
-        // Initialize Image
-        int image = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Speeder\\Chassis\\Speeder_chassis.png", 128, 96);
+        AgentEntity Player;
+        int PlayerID;
 
-        // Loading Image
-        vehicleSpawnerSystem.SpawnVehicle(Material, image, 128, 96, new Vec2f(-5.0f, 0));
-        
-        // Initialize Planet Tile Map
-        planet = GameObject.Find("TilesTest").GetComponent<Planet.Unity.MapLoaderTestScript>().PlanetState;
-    }
-    
-    // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
-    private void Update()
-    {
-        // check if the sprite atlas textures needs to be updated
-        for(int type = 0; type < GameState.SpriteAtlasManager.Length; type++)
+        int CharacterSpriteId;
+        int InventoryID;
+        InventoryEntity MaterialBag;
+
+        static bool Init = false;
+
+        public void Start()
         {
-            GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-        }
-
-        // check if the tile sprite atlas textures needs to be updated
-        for(int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-        {
-            GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-        }
-
-        // Update Gravity
-        if (canUpdateGravity)
-          vehiclePhysics.UpdateGravity(Contexts.sharedInstance);
-
-        // Update Collision Physics
-        vehicleCollisionSystem.Update(ref planet.TileMap);
-
-        MeshBuilderSystem.UpdateMesh();
-        // Draw Vehicle
-        GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
-
-        Controls();
-    }
-
-    private VehicleEntity vehicleEntity;
-
-    void Controls()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
+            if (!Init)
             {
-                vehicleEntity = vehicle;
-
-                // Get scale from component
-                vehicle.ReplaceVehiclePhysicsState2D(vehicle.vehiclePhysicsState2D.Position, vehicle.vehiclePhysicsState2D.TempPosition, new Vec2f(-vehicle.vehiclePhysicsState2D.Scale.X, vehicle.vehiclePhysicsState2D.Scale.Y), vehicle.vehiclePhysicsState2D.Scale, vehicle.vehiclePhysicsState2D.angularVelocity, vehicle.vehiclePhysicsState2D.angularMass, vehicle.vehiclePhysicsState2D.angularAcceleration,
-                     vehicle.vehiclePhysicsState2D.centerOfGravity, vehicle.vehiclePhysicsState2D.centerOfRotation);
-            }
-
-            float velocity = Mathf.Lerp(vehicleEntity.vehiclePhysicsState2D.angularVelocity.X, -1.0f, vehicleEntity.vehiclePhysicsState2D.angularAcceleration * Time.deltaTime);
-
-            vehiclePhysics.ProcessMovement(new Vec2f(velocity, vehicleEntity.vehiclePhysicsState2D.angularVelocity.Y), Contexts.sharedInstance);
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
-            {
-                vehicleEntity = vehicle;
-
-                StartCoroutine(vehiclePhysics.Break(true, vehicleEntity.vehiclePhysicsState2D.angularVelocity, Contexts.sharedInstance));
+                Initialize();
+                Init = true;
             }
         }
 
-        if (Input.GetKey(KeyCode.D))
+        public void Update()
         {
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
+
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
+
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
+            if (item != null)
             {
-                vehicleEntity = vehicle;
-                // Get scale from component
-                vehicle.ReplaceVehiclePhysicsState2D(vehicle.vehiclePhysicsState2D.Position, vehicle.vehiclePhysicsState2D.TempPosition, new Vec2f(vehicle.vehiclePhysicsState2D.Scale.X, vehicle.vehiclePhysicsState2D.Scale.Y), vehicle.vehiclePhysicsState2D.Scale, vehicle.vehiclePhysicsState2D.angularVelocity, vehicle.vehiclePhysicsState2D.angularMass, vehicle.vehiclePhysicsState2D.angularAcceleration,
-                     vehicle.vehiclePhysicsState2D.centerOfGravity, vehicle.vehiclePhysicsState2D.centerOfRotation);
+                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                if (itemProperty.IsTool())
+                {
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        if (!Inventory.InventorySystemsState.MouseDown)
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                            Player.agentID.ID, item.itemID.ID);
+                    }
+                }
             }
 
-            float velocity = Mathf.Lerp(vehicleEntity.vehiclePhysicsState2D.angularVelocity.X, 1.0f, vehicleEntity.vehiclePhysicsState2D.angularAcceleration * Time.deltaTime);
+            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
 
-            vehiclePhysics.ProcessMovement(new Vec2f(velocity, vehicleEntity.vehiclePhysicsState2D.angularVelocity.Y), Contexts.sharedInstance);
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
+            if (enableGeometryPlacementTool)
             {
-                vehicleEntity = vehicle;
-
-                StartCoroutine(vehiclePhysics.Break(true, vehicleEntity.vehiclePhysicsState2D.angularVelocity, Contexts.sharedInstance));
+                geometryPlacementTool.UpdateToolGrid();
             }
-        }
+            //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            canUpdateGravity = false;
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
-            {
-                vehicleEntity = vehicle;
-            }
-
-            float velocity = Mathf.Lerp(vehicleEntity.vehiclePhysicsState2D.angularVelocity.Y, 1.0f, vehicleEntity.vehiclePhysicsState2D.angularAcceleration * Time.deltaTime);
-            vehiclePhysics.ProcessMovement(new Vec2f(vehicleEntity.vehiclePhysicsState2D.angularVelocity.X, velocity), Contexts.sharedInstance);
-        }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            canUpdateGravity = true;
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
-            {
-                vehicleEntity = vehicle;
-
-                StartCoroutine(vehiclePhysics.Break(false, vehicleEntity.vehiclePhysicsState2D.angularVelocity, Contexts.sharedInstance));
-            }
+            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        private void OnGUI()
         {
-            canUpdateGravity = false;
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
-            {
-                vehicleEntity = vehicle;
-            }
+            if (!Init)
+                return;
 
-            float velocity = Mathf.Lerp(vehicleEntity.vehiclePhysicsState2D.angularVelocity.Y, -1.0f, vehicleEntity.vehiclePhysicsState2D.angularAcceleration * Time.deltaTime);
+            Planet.DrawHUD(Player);
 
-            vehiclePhysics.ProcessMovement(new Vec2f(vehicleEntity.vehiclePhysicsState2D.angularVelocity.X, velocity), Contexts.sharedInstance);
+            if (Event.current.type != EventType.Repaint)
+                return;
+            // Draw Statistics
+            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
         }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            canUpdateGravity = true;
-            // Get Vehicle Entites
-            IGroup<VehicleEntity> entities =
-                Contexts.sharedInstance.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
-            foreach (var vehicle in entities)
-            {
-                vehicleEntity = vehicle;
 
-                StartCoroutine(vehiclePhysics.Break(false, vehicleEntity.vehiclePhysicsState2D.angularVelocity, Contexts.sharedInstance));
+        private void OnDrawGizmos()
+        {
+            // Set the color of gizmos
+            Gizmos.color = Color.green;
+
+            // Draw a cube around the map
+            if (Planet.TileMap != null)
+                Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+
+            Gizmos.color = Color.yellow;
+            CircleSmoke.DrawGizmos();
+            Gizmos.color = Color.red;
+
+            // Draw lines around player if out of bounds
+            if (Player != null)
+                if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
+                {
+                    // Out of bounds
+
+                    // X+
+                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+
+                    // X-
+                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+
+                    // Y+
+                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+
+                    // Y-
+                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                }
+
+            // Draw Chunk Visualizer
+            Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+        }
+
+        // create the sprite atlas for testing purposes
+        public void Initialize()
+        {
+
+            Application.targetFrameRate = 60;
+
+            inventoryManager = new Inventory.InventoryManager();
+            inventoryDrawSystem = new Inventory.DrawSystem();
+
+            GameResources.Initialize();
+
+            // Generating the map
+            Vec2i mapSize = new Vec2i(32, 32);
+            Planet = new Planet.PlanetState();
+            Planet.Init(mapSize);
+
+            /*var camera = Camera.main;
+            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+            Planet.TileMap = TileMapManager.Load("map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);*/
+
+            GenerateMap();
+            SpawnStuff();
+
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
+
+            if (enableGeometryPlacementTool)
+            {
+                geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
+                geometryPlacementTool.Initialize(ref Planet, Material, transform);
             }
+
+            //TileMapManager.Save(Planet.TileMap, "map.kmap");
+
+            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+
+            InventoryID = Player.agentInventory.InventoryID;
+
+            // Admin API Spawn Items
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
+
+            // Admin API Add Items
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GasBomb, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon, 64, Planet.EntitasContext);
+        }
+
+        void GenerateMap()
+        {
+            KMath.Random.Mt19937.init_genrand((ulong)System.DateTime.Now.Ticks);
+
+            ref var tileMap = ref Planet.TileMap;
+
+            for (int j = 0; j < tileMap.MapSize.Y; j++)
+            {
+                for (int i = 0; i < tileMap.MapSize.X; i++)
+                {
+                    var frontTileID = TileID.Air;
+                    var backTileID = TileID.Air;
+
+                    if (i >= tileMap.MapSize.X / 2)
+                    {
+                        if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
+                        {
+                            frontTileID = TileID.Moon;
+                            backTileID = TileID.Background;
+                        }
+                        else
+                        {
+                            frontTileID = TileID.Glass;
+                            backTileID = TileID.Background;
+                        }
+                    }
+                    else
+                    {
+                        if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
+                        {
+                            frontTileID = TileID.Glass;
+                            backTileID = TileID.Background;
+                        }
+                        else
+                        {
+                            frontTileID = TileID.Moon;
+                            backTileID = TileID.Background;
+                            if ((int)KMath.Random.Mt19937.genrand_int32() % 10 == 0)
+                            {
+                                int oreRandom = (int)KMath.Random.Mt19937.genrand_int32() % 3;
+                                if (oreRandom == 0)
+                                {
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.OreSprite;
+                                }
+                                else if (oreRandom == 1)
+                                {
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore2Sprite;
+                                }
+                                else
+                                {
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore3Sprite;
+                                }
+
+                                tileMap.GetTile(i, j).DrawType = TileDrawType.Composited;
+                            }
+                        }
+                    }
+
+                    tileMap.SetFrontTile(i, j, frontTileID);
+                    tileMap.SetBackTile(i, j, backTileID);
+                }
+            }
+
+
+
+            for (int i = 0; i < tileMap.MapSize.X; i++)
+            {
+                for (int j = tileMap.MapSize.Y - 10; j < tileMap.MapSize.Y; j++)
+                {
+                    tileMap.SetFrontTile(i, j, TileID.Air);
+                    tileMap.SetBackTile(i, j, TileID.Air);
+                    tileMap.GetTile(i, j).DrawType = TileDrawType.Normal;
+                }
+            }
+
+            int carveHeight = tileMap.MapSize.Y - 10;
+
+            for (int i = 0; i < tileMap.MapSize.X; i++)
+            {
+                int move = ((int)KMath.Random.Mt19937.genrand_int32() % 3) - 1;
+                if (((int)KMath.Random.Mt19937.genrand_int32() % 5) <= 3)
+                {
+                    move = 0;
+                }
+
+                carveHeight += move;
+                if (carveHeight >= tileMap.MapSize.Y)
+                {
+                    carveHeight = tileMap.MapSize.Y - 1;
+                }
+
+                if (carveHeight < 0)
+                {
+                    carveHeight = 0;
+                }
+
+                for (int j = carveHeight; j < tileMap.MapSize.Y && j < carveHeight + 4; j++)
+                {
+                    tileMap.SetFrontTile(i, j, TileID.Air);
+                    tileMap.SetBackTile(i, j, TileID.Air);
+                    tileMap.SetMidTile(i, j, TileID.Wire);
+                }
+            }
+
+            carveHeight = 5;
+
+            for (int i = tileMap.MapSize.X - 1; i >= 0; i--)
+            {
+                int move = ((int)KMath.Random.Mt19937.genrand_int32() % 3) - 1;
+                if (((int)KMath.Random.Mt19937.genrand_int32() % 10) <= 3)
+                {
+                    move = 1;
+                }
+
+                carveHeight += move;
+                if (carveHeight >= tileMap.MapSize.Y)
+                {
+                    carveHeight = tileMap.MapSize.Y - 1;
+                }
+
+                if (carveHeight < 0)
+                {
+                    carveHeight = 0;
+                }
+
+                for (int j = carveHeight; j < tileMap.MapSize.Y && j < carveHeight + 4; j++)
+                {
+                    tileMap.GetTile(i, j).FrontTileID = TileID.Air;
+                    tileMap.GetTile(i, j).MidTileID = TileID.Pipe;
+                }
+            }
+
+
+            for (int i = 0; i < tileMap.MapSize.X; i++)
+            {
+                tileMap.GetTile(i, 0).FrontTileID = TileID.Bedrock;
+                tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
+            }
+
+            for (int j = 0; j < tileMap.MapSize.Y; j++)
+            {
+                tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
+                tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
+            }
+
+            var camera = Camera.main;
+            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+
+            tileMap.SetFrontTile(4, 15, TileID.Platform);
+            tileMap.SetFrontTile(5, 15, TileID.Platform);
+            tileMap.SetFrontTile(6, 15, TileID.Platform);
+            tileMap.SetFrontTile(7, 15, TileID.Platform);
+            tileMap.SetFrontTile(8, 15, TileID.Platform);
+
+            tileMap.SetFrontTile(4, 18, TileID.Platform);
+            tileMap.SetFrontTile(5, 18, TileID.Platform);
+            tileMap.SetFrontTile(6, 18, TileID.Platform);
+            tileMap.SetFrontTile(7, 18, TileID.Platform);
+            tileMap.SetFrontTile(8, 18, TileID.Platform);
+
+            tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            tileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+        }
+
+        void SpawnStuff()
+        {
+            ref var tileMap = ref Planet.TileMap;
+
+            float spawnHeight = tileMap.MapSize.Y - 2;
+
+            Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            PlayerID = Player.agentID.ID;
+
+            Planet.AddVehicle(Enums.VehicleType.Jet, new Vec2f(2.0f, 2.0f));
+
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
     }
 }

@@ -54,21 +54,18 @@ namespace Agent
                  newInvulnerable: false,
                  newOnGrounded: false,
                  newDroping: false,
+                 newActionInProgress: false,
+                 newActionJustEnded: false,
                  newJumpCounter: 0,
+                 newActionDuration: 0,
+                 newActionCooldown: 0,
                  newSlidingTime: 0,
                  newDyingDuration: 0,
                  newDashCooldown: 0,
                  newSlashCooldown: 0,
-                 newGunDuration: 0,
-                 newGunCooldown: 0,
-                 newToolDuration: 0,
-                 newToolCooldown: 0,
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
-                 newRollDuration: 0,
-                 newRollImpactDuration: 0,
-                 newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                 newRollImpactDuration: 0);
 
             return entity;
         }
@@ -104,21 +101,18 @@ namespace Agent
                 newInvulnerable: false,
                 newOnGrounded: false,
                 newDroping: false,
+                newActionInProgress: false,
+                newActionJustEnded: false,
                 newJumpCounter: 0,
                 newSlidingTime: 0,
+                newActionDuration: 0,
+                newActionCooldown: 0,
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newGunDuration: 0,
-                newGunCooldown: 0,
-                newToolDuration: 0,
-                newToolCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
-                newRollDuration: 0,
-                newRollImpactDuration: 0,
-                 newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                newRollImpactDuration: 0);
 
             return entity;
         }
@@ -152,21 +146,18 @@ namespace Agent
                 newInvulnerable: false,
                 newOnGrounded: false,
                 newDroping: false,
+                newActionInProgress: false,
+                newActionJustEnded: false,
                 newJumpCounter: 0,
                 newSlidingTime: 0,
                 newDyingDuration: 0,
                 newDashCooldown: 0,
                 newSlashCooldown: 0,
-                newGunDuration: 0,
-                newGunCooldown: 0,
-                newToolDuration: 0,
-                newToolCooldown: 0,
+                newActionDuration: 0,
+                newActionCooldown: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
-                newRollDuration: 0,
-                newRollImpactDuration: 0,
-                newDrinkDuration: 0,
-                 newDrinkCooldown: 0);
+                newRollImpactDuration: 0);
 
             switch (agentType)
             {
@@ -182,10 +173,11 @@ namespace Agent
 
                         //var hand = model.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand");
 
-                        GameObject leftHand = null;
-                        GameObject rightHand = null;
-                        //GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        //GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        //GameObject leftHand = null;
+                      //  GameObject rightHand = null;
+
+                        GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
 
 
                         //GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
@@ -205,7 +197,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent, Enums.AgentAnimationType.HumanoidAnimation);
 
 
                         entity.agentPhysicsState.Speed = 10.0f;
@@ -256,7 +248,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -285,10 +277,58 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
+                        break;
+                    }
+                    case Enums.AgentType.EnemyInsect:
+                    {
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SmallInsect);
+                        GameObject model = GameObject.Instantiate(prefab);
+
+                        model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                        Vector3 eulers = model.transform.rotation.eulerAngles;
+                        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                        // create an animancer object and give it a reference to the Animator component
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+                        // get the animator component from the game object
+                        // this component is used by animancer
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectAnimation);
+                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                        entity.agentPhysicsState.Speed = 6.0f;
+
+                        break;
+                    }
+                    case Enums.AgentType.EnemyHeavy:
+                    {
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.HeavyInsect);
+                        GameObject model = GameObject.Instantiate(prefab);
+
+                        model.transform.position = new Vector3(position.X, position.Y, -1.0f);
+
+                        Vector3 eulers = model.transform.rotation.eulerAngles;
+                        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                        // create an animancer object and give it a reference to the Animator component
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+                        // get the animator component from the game object
+                        // this component is used by animancer
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectHeavyAnimation);
+                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+
+                        entity.agentPhysicsState.Speed = 4.0f;
+
                         break;
                     }
             }

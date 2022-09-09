@@ -61,17 +61,34 @@ namespace Agent
                     }
                 }
 
-                if (physicsState.RollDuration > 0)
+                if (physicsState.ActionDuration > 0)
                 {
-                    physicsState.RollDuration -= deltaTime;
+                    physicsState.ActionDuration -= deltaTime;
                 }
                 else
                 {
-                    if (physicsState.MovementState == AgentMovementState.Rolling)
+                    switch(physicsState.MovementState)
                     {
-                        physicsState.MovementState = AgentMovementState.StandingUpAfterRolling;
-                        physicsState.AffectedByFriction = true;
-                        physicsState.RollImpactDuration = 0.8f;
+                        case AgentMovementState.MonsterAttack:
+                        case AgentMovementState.FireGun:
+                        case AgentMovementState.UseTool:
+                        case AgentMovementState.Drink:
+                        {
+                            physicsState.MovementState = AgentMovementState.None;
+                            physicsState.ActionInProgress = false;
+                            physicsState.ActionJustEnded = true;
+                            break;
+                        }
+
+                        case AgentMovementState.Rolling:
+                        {
+                            physicsState.MovementState = AgentMovementState.StandingUpAfterRolling;
+                            physicsState.AffectedByFriction = true;
+                            physicsState.RollImpactDuration = 0.8f;
+                            physicsState.ActionInProgress = false;
+                            physicsState.ActionJustEnded = true;
+                            break;
+                        }
                     }
                 }
 
@@ -82,42 +99,6 @@ namespace Agent
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.StandingUpAfterRolling)
-                    {
-                        physicsState.MovementState = AgentMovementState.None;
-                    }
-                }
-
-                if (physicsState.GunDuration > 0)
-                {
-                    physicsState.GunDuration -= deltaTime;
-                }
-                else
-                {
-                    if (physicsState.MovementState == AgentMovementState.FireGun)
-                    {
-                        physicsState.MovementState = AgentMovementState.None;
-                    }
-                }
-
-                if (physicsState.ToolDuration > 0)
-                {
-                    physicsState.ToolDuration -= deltaTime;
-                }
-                else
-                {
-                    if (physicsState.MovementState == AgentMovementState.UseTool)
-                    {
-                        physicsState.MovementState = AgentMovementState.None;
-                    }
-                }
-
-                if (physicsState.DrinkDuration > 0)
-                {
-                    physicsState.DrinkDuration -= deltaTime;
-                }
-                else
-                {
-                    if (physicsState.MovementState == AgentMovementState.Drink)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }

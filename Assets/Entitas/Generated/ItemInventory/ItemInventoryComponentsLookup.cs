@@ -16,11 +16,12 @@ public static class ItemInventoryComponentsLookup {
     public const int ItemInventory = 5;
     public const int ItemLabel = 6;
     public const int ItemMechCastData = 7;
-    public const int ItemPulseWeaponPulse = 8;
-    public const int ItemStack = 9;
-    public const int ItemType = 10;
+    public const int ItemPotionCastData = 8;
+    public const int ItemPulseWeaponPulse = 9;
+    public const int ItemStack = 10;
+    public const int ItemType = 11;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 12;
 
     public static readonly string[] componentNames = {
         "ItemCastData",
@@ -31,6 +32,7 @@ public static class ItemInventoryComponentsLookup {
         "ItemInventory",
         "ItemLabel",
         "ItemMechCastData",
+        "ItemPotionCastData",
         "ItemPulseWeaponPulse",
         "ItemStack",
         "ItemType"
@@ -45,6 +47,7 @@ public static class ItemInventoryComponentsLookup {
         typeof(Item.InventoryComponent),
         typeof(Item.LabelComponent),
         typeof(Item.MechCastDataComponent),
+        typeof(Item.PotionCastDataComponent),
         typeof(Item.PulseWeapon.PulseComponent),
         typeof(Item.StackComponent),
         typeof(Item.TypeComponent)

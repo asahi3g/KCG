@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace KMath
 {
@@ -61,12 +62,16 @@ namespace KMath
         #endregion
 
         #region Methods
-        
+
+        [MethodImpl((MethodImplOptions)256)]
+        public static float Cross(Vec2f lhs, Vec2f rhs)
+        {
+            return lhs.X * rhs.Y - lhs.Y * rhs.X;
+        }
+
         /// <summary>
         ///   <para>Dot Product of two vectors.</para>
         /// </summary>
-        /// <param name="lhs"></param>
-        /// <param name="rhs"></param>
         [MethodImpl((MethodImplOptions) 256)]
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
 
@@ -135,6 +140,21 @@ namespace KMath
         public static Vec2f Perpendicular(Vec2f inDirection) => new(-inDirection.Y, inDirection.X);
 
         /// <summary>
+        /// </summary>
+        /// <param name="angle">Angle in rad</param>
+        /// <returns></returns>
+        [MethodImpl((MethodImplOptions)256)]
+        public Vec2f Rotate(float angle)
+        {
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
+
+            float px = X * cos - Y * sin;
+            Y = X * cos - Y * sin;
+            X = px;
+
+            return this;
+        }
         ///   <para>Returns a vector off the vector defined by a normal</para>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -157,6 +177,10 @@ namespace KMath
 
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator *(Vec2f a, float d) => new(a.X * d, a.Y * d);
+
+
+        public static Vec2f operator *(Vec2f a, Vec2f b) => new(a.X * b.X, a.Y * b.Y);
+
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f operator *(float d, Vec2f a) => new(a.X * d, a.Y * d);
 
