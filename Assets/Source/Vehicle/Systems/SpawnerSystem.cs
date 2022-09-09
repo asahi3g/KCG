@@ -34,7 +34,7 @@ namespace Vehicle
 
             // Add Physics State 2D Component
             entity.AddVehiclePhysicsState2D(position, position, vehicleProperties.Scale, vehicleProperties.Scale, vehicleProperties.AngularVelocity, vehicleProperties.AngularMass,
-                vehicleProperties.AngularAcceleration, vehicleProperties.CenterOfGravity, vehicleProperties.CenterOfRotation);
+                vehicleProperties.AngularAcceleration, vehicleProperties.CenterOfGravity, vehicleProperties.CenterOfRotation, vehicleProperties.AffectedByGravity);
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(vehicleProperties.CollisionSize, Vec2f.Zero);

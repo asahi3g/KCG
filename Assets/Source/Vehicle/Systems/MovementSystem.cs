@@ -29,8 +29,8 @@ namespace Vehicle
                         VehicleCreationApi.GetRef((int)vehicle.vehicleType.Type);
 
                 // Process Gravity
-                if(vehicleProperties.AffectedByGravity)
-                    vehicle.vehiclePhysicsState2D.Position.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
+                if(vehicle.vehiclePhysicsState2D.AffectedByGravity)
+                    vehicle.vehiclePhysicsState2D.angularVelocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
 
                 vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
             }
