@@ -45,11 +45,11 @@ namespace Agent
                 }
 
                 Vector3 eulers = model3d.GameObject.transform.rotation.eulerAngles;
-                if (physicsState.Direction == 1)
+                if (physicsState.FacingDirection == 1)
                 {
                     model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
-                else if (physicsState.Direction == -1)
+                else if (physicsState.FacingDirection == -1)
                 {
                     model3d.GameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }

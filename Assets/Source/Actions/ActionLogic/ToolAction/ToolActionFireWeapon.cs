@@ -69,13 +69,13 @@ namespace Action
 
             if (planet.Player != null)
             {
-                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == -1)
+                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.MovingDirection == -1)
                 {
-                    planet.Player.agentPhysicsState.Direction = 1;
+                    planet.Player.agentPhysicsState.MovingDirection = 1;
                 }
-                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == 1)
+                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.MovingDirection == 1)
                 {
-                    planet.Player.agentPhysicsState.Direction = -1;
+                    planet.Player.agentPhysicsState.MovingDirection = -1;
                 }
 
 
@@ -83,7 +83,7 @@ namespace Action
                 player.FireGun(WeaponProperty.CoolDown); // fire animation
 
 
-                if (planet.Player.agentPhysicsState.Direction == 1)
+                if (planet.Player.agentPhysicsState.MovingDirection == 1)
                 {
                     StartPos.X += 0.3f;
                     StartPos.Y += 1.75f;
@@ -93,7 +93,7 @@ namespace Action
                         x = StartPos.X + 0.5f;
                     }
                 }
-                else if (planet.Player.agentPhysicsState.Direction == -1)
+                else if (planet.Player.agentPhysicsState.MovingDirection == -1)
                 {
                     StartPos.X -= 0.3f;
                     StartPos.Y += 1.75f;
