@@ -11,23 +11,21 @@ public static class ItemInventoryComponentsLookup {
     public const int ItemCastData = 0;
     public const int ItemFireWeaponCharge = 1;
     public const int ItemFireWeaponClip = 2;
-    public const int ItemFireWeaponSpread = 3;
-    public const int ItemID = 4;
-    public const int ItemInventory = 5;
-    public const int ItemLabel = 6;
-    public const int ItemMechCastData = 7;
-    public const int ItemPotionCastData = 8;
-    public const int ItemPulseWeaponPulse = 9;
-    public const int ItemStack = 10;
-    public const int ItemType = 11;
+    public const int ItemID = 3;
+    public const int ItemInventory = 4;
+    public const int ItemLabel = 5;
+    public const int ItemMechCastData = 6;
+    public const int ItemPotionCastData = 7;
+    public const int ItemPulseWeaponPulse = 8;
+    public const int ItemStack = 9;
+    public const int ItemType = 10;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "ItemCastData",
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
-        "ItemFireWeaponSpread",
         "ItemID",
         "ItemInventory",
         "ItemLabel",
@@ -42,7 +40,6 @@ public static class ItemInventoryComponentsLookup {
         typeof(Item.CastDataComponent),
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),
-        typeof(Item.FireWeapon.SpreadComponent),
         typeof(Item.IDComponent),
         typeof(Item.InventoryComponent),
         typeof(Item.LabelComponent),

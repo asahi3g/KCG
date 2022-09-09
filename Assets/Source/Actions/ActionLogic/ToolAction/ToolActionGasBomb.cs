@@ -35,7 +35,7 @@ namespace Action
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
             ItemEntity.Destroy();
 
-            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
+            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade);
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
 
@@ -67,7 +67,6 @@ namespace Action
 
             if(elapsed > 8.0f)
             {
-                ProjectileEntity.Destroy();
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
                 return;
             }
@@ -109,7 +108,6 @@ namespace Action
             base.OnExit(ref planet);
         }
     }
-
 
     public class ToolActionGasBombCreator : ActionCreator
     {

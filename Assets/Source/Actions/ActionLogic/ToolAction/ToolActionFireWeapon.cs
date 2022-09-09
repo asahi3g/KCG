@@ -27,7 +27,7 @@ namespace Action
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            int bulletsPerShot = ItemEntity.itemFireWeaponClip.BulletsPerShot;
+            int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
             if (ItemEntity.hasItemFireWeaponClip)
             {
@@ -56,65 +56,25 @@ namespace Action
                     planet.Player.agentPhysicsState.Direction = -1;
                 }
 
-
                 var player = planet.Player;
                 player.FireGun(WeaponProperty.CoolDown);
 
-
-                if (planet.Player.agentPhysicsState.Direction == 1)
-                {
-                    StartPos.X += 0.3f;
-                    StartPos.Y += 1.75f;
-            
-                    if (x < StartPos.X)
-                    {
-                        x = StartPos.X + 0.5f;
-                    }
-                }
-                else if (planet.Player.agentPhysicsState.Direction == -1)
-                {
-                    StartPos.X -= 0.3f;
-                    StartPos.Y += 1.75f;
-
-                    if (x > StartPos.X ) 
-                    {
-                        x = StartPos.X - 0.5f;
-                    }
-                }
+                StartPos.X += 0.3f * planet.Player.agentPhysicsState.Direction;
+                StartPos.Y += 1.75f;
+                
+                // Todo: Rotate player instead.
+                if (Math.Sign(x - StartPos.X) != Math.Sign(planet.Player.agentPhysicsState.Direction))
+                    x = StartPos.X + 0.5f * planet.Player.agentPhysicsState.Direction;
             }
 
-
-            if (ItemEntity.hasItemFireWeaponSpread)
+            var spread = WeaponProperty.SpreadAngle;
+            for(int i = 0; i < bulletsPerShot; i++)
             {
-                var spread = ItemEntity.itemFireWeaponSpread;
-                for(int i = 0; i < bulletsPerShot; i++)
-                {
-                    var random = UnityEngine.Random.Range(-spread.SpreadAngle, spread.SpreadAngle);
-                    ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f((x - StartPos.X) - random, y - StartPos.Y).Normalized, Enums.ProjectileType.Bullet);
-                    EndPointList.Add(ProjectileEntity);
-                }
+                float randomSpread = UnityEngine.Random.Range(-spread, spread);
+                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f((x - StartPos.X) - randomSpread, y - StartPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage);
+                EndPointList.Add(ProjectileEntity);
             }
 
-            if(ItemEntity.itemType.Type == Enums.ItemType.Bow)
-            {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Arrow);
-            }
-            else
-            {
-                if(ItemEntity.itemFireWeaponClip.BulletsPerShot > 0)
-                {
-                    for(int i = 0; i < bulletsPerShot; i++)
-                    {
-                        ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Bullet);
-                    }
-                }
-                else
-                {
-                    ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Bullet);
-                }
-            }
-
-            EndPointList.Add(ProjectileEntity);
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
@@ -122,7 +82,6 @@ namespace Action
         public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
         {
             float range = WeaponProperty.Range;
-            float damage = WeaponProperty.BasicDemage;
 
             if (!ProjectileEntity.isEnabled)
             {
@@ -143,34 +102,6 @@ namespace Action
                     Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePhysicsState.Position.X, EndPointList[i].projectilePhysicsState.Position.Y, 0), Color.red, 2.0f, false);
             }
 #endif
-
-            var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
-
-            // Todo: Create a agent colision system?
-            foreach (var entity in entities)
-            {
-                if (entity == AgentEntity)
-                    continue;
-
-                Vec2f entityPos = entity.agentPhysicsState.Position;
-                Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
-                var physiscsState = entity.agentPhysicsState;
-
-                Vec2f diff = bulletPos - entityPos;
-                float Len = diff.Magnitude;
-                diff.Y = 0;
-                diff.Normalize();
-
-                if (entity.hasAgentStats && Len <= 0.5f)
-                {
-                    Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
-                    var stats = entity.agentStats;
-                    stats.Health -= (int)damage;
-
-                    planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
-                    ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                }
-            }
         }
 
         public override void OnExit(ref PlanetState planet)
@@ -194,4 +125,3 @@ namespace Action
         }
     }
 }
-

@@ -1,9 +1,7 @@
-using Agent;
-using Inventory;
-using Projectile;
 /// <summary>
 /// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 /// </summary>
+
 public class GameState
 {
     //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
@@ -99,6 +97,7 @@ public class GameState
     public static readonly Projectile.MovementSystem ProjectileMovementSystem;
     public static readonly Projectile.SpawnerSystem ProjectileSpawnerSystem;
     public static readonly Projectile.MeshBuilderSystem ProjectileMeshBuilderSystem;
+    public static readonly Projectile.ProcessOnHit ProjectileProcessOnHit;
     #endregion
 
     #region FloatingText
@@ -201,6 +200,7 @@ public class GameState
         ProjectileMovementSystem = new Projectile.MovementSystem(ProjectileCreationApi);
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
+        ProjectileProcessOnHit = new Projectile.ProcessOnHit();
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();

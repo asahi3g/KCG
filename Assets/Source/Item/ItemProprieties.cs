@@ -42,22 +42,16 @@ namespace Item
     {
         /// <summary>
         /// Fire weapon basic attributes:
-        /// 
-        /// BulletSpeed     - Start Speed Position.
-        /// CoolDown        - How Long it takes to shoot again in seconds.
-        /// Range           - Max projectile range. 
-        /// BasicDamage     - Demage on hit without any modifiers.
-        /// BulletSpriteSize      - Size of the bullet sprite.
-        /// BulletSprideID  - SpriteID.
-        /// 
+        /// BulletSpeed         - Start Speed Position.
+        /// CoolDown            - How Long it takes to shoot again in seconds.
+        /// Range               - Max projectile range. 
+        /// BasicDamage         - Demage on hit without any modifiers.
         /// </summary>
         public float BulletSpeed;
         public float CoolDown;
         public float Range;
-        public float BasicDemage;
-
-        public Vec2f BulletSpriteSize;
-        public int BulletSpriteID;
+        public int BasicDemage;
+        public Enums.ProjectileType ProjectileType;
 
         /// <summary>
         /// Number Off Bullets Per Shot
@@ -81,7 +75,6 @@ namespace Item
         
         /// <summary>
         /// Clip attributes.
-        /// 
         /// ClipSize            - Max number of bullets in the clip.
         /// ReloadTime          - Time take to reload in seconds.
         /// </summary>
@@ -90,10 +83,10 @@ namespace Item
 
         /// <summary>
         /// If gun shoots more than one bullet.
-        /// 
         /// SpreadAngle         - Cone angle in which bullets will be spreaded.
         /// NumOfBullets        - Number of bullets discharged every shot.
         /// </summary>
+        [Range(-1f, 1f)]
         public float SpreadAngle;
         public int NumOfBullets;
 
@@ -113,11 +106,9 @@ namespace Item
 
         /// <summary>
         /// Melee Attack Properties
-        /// 
         /// StaggerTime -> Stun Time
         /// Stagger Rate -> Stagger Multipiler
         /// Shield Active -> Shield Condition
-        /// 
         /// </summary>
         public float StaggerTime;
         [Range(0, 1)]
@@ -126,11 +117,9 @@ namespace Item
 
         /// <summary>
         /// Pulse Weapon Properties
-        /// 
         /// IsLaunchGreanade -> Launch Grenade Mode Condition
         /// NumberOfGrenades-> Number Of Grenades in Clip
         /// GrenadeClipSize -> Size of the Grenade Clip
-        /// 
         /// </summary>
         public bool IsLaunchGreanade;
         public int NumberOfGrenades;
@@ -138,12 +127,10 @@ namespace Item
 
         /// <summary>
         /// Weapon Flags
-        /// 
         /// HasClip -> If Weapon Has an Ammo Clip
         /// ShouldSpread -> Should Weapon Spread the Ammos (ex, pump shotgun)
         /// HasCharge -> If Weapon Chargable or Not
         /// PulseWeapon -> If the weapon is a pulse weapon or not
-        /// 
         /// </summary>
         public Flags WeaponFlags;
         [Flags]
@@ -157,10 +144,8 @@ namespace Item
 
         /// <summary>
         /// Melee Flags
-        /// 
         /// Stab -> If Melee Weapon Stabs
         /// Slash -> If Melee Weapon Slashes
-        /// 
         /// </summary>
         public MeleeFlags MeleeAttackFlags;
         public enum MeleeFlags : byte
@@ -171,11 +156,9 @@ namespace Item
 
         /// <summary>
         /// Grenades Flags
-        /// 
         /// Cocussions -> Cocussions Bombs
         /// Flame -> Flame Bombs
         /// Fragmentation -> Fragmentation Bombs
-        /// 
         /// </summary>
         public GrenadesFlags GrenadeFlags;
         public enum GrenadesFlags : byte

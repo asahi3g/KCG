@@ -664,10 +664,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(SniperRifleIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SniperRifleIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(200.0f, 1f, 350.0f, 60.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(200.0f, 1f, 350.0f, 60);
         GameState.ItemCreationApi.SetRangedWeaponClip(6, 1, 1.3f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -675,10 +675,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(LongRifleIcon);
         GameState.ItemCreationApi.SetInventoryTexture(LongRifleIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 1f, 20.0f, 40.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 1f, 20.0f, 40);
         GameState.ItemCreationApi.SetRangedWeaponClip(25, 1, 2f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -686,10 +686,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(PulseIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PulseIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25);
         GameState.ItemCreationApi.SetRangedWeaponClip(25, 4, 1, 1);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPulseWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -697,10 +697,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(LongRifleIcon);
         GameState.ItemCreationApi.SetInventoryTexture(LongRifleIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.5f, 20.0f, 40.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
         GameState.ItemCreationApi.SetRangedWeaponClip(40, 3, 4f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -708,10 +708,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(SMGIcon);
         GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.2f, 20.0f, 15.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
         GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -719,11 +719,11 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(ShotgunIcon);
         GameState.ItemCreationApi.SetInventoryTexture(ShotgunIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(30.0f, 1f, 10.0f, 35.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(30.0f, 1f, 10.0f, 35);
         GameState.ItemCreationApi.SetSpreadAngle(1.0f);
         GameState.ItemCreationApi.SetRangedWeaponClip(6, 2, 2.5f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.Flags.ShouldSpread);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
@@ -732,12 +732,12 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(ShotgunIcon);
         GameState.ItemCreationApi.SetInventoryTexture(ShotgunIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 2f, 5.0f, 30.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 2f, 5.0f, 30);
         GameState.ItemCreationApi.SetSpreadAngle(1.0f);
         GameState.ItemCreationApi.SetRangedWeaponClip(8, 4, 2.5f);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.Flags.ShouldSpread);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -745,10 +745,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(PistolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.4f, 10.0f, 25.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.4f, 10.0f, 25);
         GameState.ItemCreationApi.SetRangedWeaponClip(8, 1, 1f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -756,10 +756,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(RPGIcon);
         GameState.ItemCreationApi.SetInventoryTexture(RPGIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 3f, 50.0f, 100.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(50.0f, 3f, 50.0f, 100);
         GameState.ItemCreationApi.SetRangedWeaponClip(2, 1, 3);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(GrenadeSpriteId, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Rocket);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionThrowGrenade);
         GameState.ItemCreationApi.EndItem();
 
@@ -767,11 +767,11 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
         GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
-        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 20.0f, 25.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 20.0f, 25);
         GameState.ItemCreationApi.SetRangedWeaponClip(4, 1, 2);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.GrenadesFlags.Flame);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(GrenadeSpriteId, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Grenade);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionThrowGrenade);
         GameState.ItemCreationApi.EndItem();
 
@@ -779,10 +779,10 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
         GameState.ItemCreationApi.SetTexture(PistolIcon);
         GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-        GameState.ItemCreationApi.SetRangedWeapon(70.0f, 3f, 100.0f, 30.0f);
+        GameState.ItemCreationApi.SetRangedWeapon(70.0f, 3f, 100.0f, 30);
         GameState.ItemCreationApi.SetRangedWeaponClip(1, 1, 2f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetBullet(OreIcon, new Vec2f(0.2f, 0.2f));
+        GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Arrow);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
         GameState.ItemCreationApi.EndItem();
 
@@ -790,7 +790,7 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Weapon);
         GameState.ItemCreationApi.SetTexture(SwordSpriteId);
         GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-        GameState.ItemCreationApi.SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10.0f);
+        GameState.ItemCreationApi.SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.MeleeFlags.Stab);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMeleeAttack);
@@ -800,7 +800,7 @@ public class GameResources
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Weapon);
         GameState.ItemCreationApi.SetTexture(SwordSpriteId);
         GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-        GameState.ItemCreationApi.SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5.0f);
+        GameState.ItemCreationApi.SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.MeleeFlags.Slash);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionMeleeAttack);
@@ -1436,6 +1436,7 @@ public class GameResources
         GameState.ProjectileCreationApi.SetLinearDrag(0, 0);
         GameState.ProjectileCreationApi.SetAffectedByGravity(false);
         GameState.ProjectileCreationApi.SetAcceleration(new Vec2f(0.0f, -5.0f));
+        GameState.ProjectileCreationApi.SetBounce(0.4f);
         GameState.ProjectileCreationApi.End();
 
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Rocket);

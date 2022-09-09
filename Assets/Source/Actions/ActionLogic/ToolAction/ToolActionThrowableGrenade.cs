@@ -31,7 +31,7 @@ namespace Action
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            int bulletsPerShot = ItemEntity.itemFireWeaponClip.BulletsPerShot;
+            int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
             // Check if gun got any ammo
             if (ItemEntity.hasItemFireWeaponClip)

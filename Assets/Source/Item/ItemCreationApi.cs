@@ -160,7 +160,7 @@ namespace Item
             fireWeapon.SpreadAngle = spreadAngle;
         }
 
-        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, float basicDamage)
+        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, int basicDamage)
         {
             IsItemTypeValid();
 
@@ -176,7 +176,7 @@ namespace Item
             PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
         }
 
-        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, bool isLaunchGrenade, float basicDamage)
+        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, bool isLaunchGrenade, int basicDamage)
         {
             IsItemTypeValid();
 
@@ -238,7 +238,7 @@ namespace Item
             fireWeapon.RecoverDelay = recoverDelay;
         }
 
-        public void SetMeleeWeapon(float coolDown, float range, float staggerTime, float staggerRate, float basicDamage)
+        public void SetMeleeWeapon(float coolDown, float range, float staggerTime, float staggerRate, int basicDamage)
         {
             IsItemTypeValid();
 
@@ -299,13 +299,12 @@ namespace Item
             PropertiesArray[(int)CurrentIndex].ItemFlags |= flags;
         }
 
-        public void SetBullet(int bulletSpriteID, Vec2f size)
+        public void SetProjectileType(Enums.ProjectileType projectileType)
         {
             IsItemTypeValid();
 
             ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
-            fireWeapon.BulletSpriteID = bulletSpriteID;
-            fireWeapon.BulletSpriteSize = size;
+            fireWeapon.ProjectileType = projectileType;
         }
 
         public void EndItem()

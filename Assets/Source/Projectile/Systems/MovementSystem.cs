@@ -86,7 +86,7 @@ namespace Projectile
                             projectileProperties.Speed = Mathf.Lerp(startSpeed, maxSpeed, elapsed / rampTime);
 
                             // If linear drag is on
-                            if (projectileProperties.dragType == Enums.DragType.Linear)
+                            if (projectileProperties.DragType == Enums.DragType.Linear)
                             {
                                 // Apply linear drag to speed
                                 projectileProperties.Speed = (1 - projectileProperties.Speed / (linearDrag + linearCutoff));
@@ -103,7 +103,7 @@ namespace Projectile
                                 // Add drag force to velocity vector
                                 newVelocity += dragForceVector;
                             }
-                            else if (projectileProperties.dragType == Enums.DragType.Off) // If linear drag is off
+                            else if (projectileProperties.DragType == Enums.DragType.Off) // If linear drag is off
                             {
                                 // Set New velocity without adding any drag
                                 newVelocity = physicsState.Acceleration * deltaTime + (physicsState.Velocity * projectileProperties.Speed);
@@ -119,7 +119,7 @@ namespace Projectile
                 else
                 {
                     // If linear drag is on
-                    if(projectileProperties.dragType == Enums.DragType.Linear)
+                    if(projectileProperties.DragType == Enums.DragType.Linear)
                     {
                         // Calculate Speed
                         projectileProperties.Speed = (1 - projectileProperties.Speed / (linearDrag + linearCutoff));
@@ -141,7 +141,7 @@ namespace Projectile
 
 
                     }
-                    else if (projectileProperties.dragType == Enums.DragType.Off)
+                    else if (projectileProperties.DragType == Enums.DragType.Off)
                     {
                         newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
                     }

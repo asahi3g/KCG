@@ -21,15 +21,15 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-                                Enums.ProjectileType projectileType, bool isFirstSolid)
+            Enums.ProjectileType projectileType)
         {
             ProjectileProperties projectileProperties = 
                                     ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
             entity.AddProjectileID(UniqueID++, -1);
-            entity.AddProjectileRamp(projectileProperties.canRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.rampTime);
-            entity.AddProjectileLinearDrag(projectileProperties.linearDrag, projectileProperties.linearCutOff);
+            entity.AddProjectileRamp(projectileProperties.CanRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.RampTime);
+            entity.AddProjectileLinearDrag(projectileProperties.LinearDrag, projectileProperties.LinearCutOff);
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
             entity.AddProjectilePhysicsState(
                 newPosition: position,
@@ -45,17 +45,23 @@ namespace Projectile
                 newCenterOfRotation: Vec2f.Zero);
             
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
-
-            entity.AddProjectileCollider(isFirstSolid, true);
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);
 
             if (projectileProperties.HasAnimation)
             {
-                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=(int)projectileProperties.AnimationType});
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=(int)projectileProperties.AnimationType});
             }
 
             return entity;
+        }
 
+        public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction,
+            Enums.ProjectileType projectileType, int damage)
+        {
+            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType);
+            entity.AddProjectileDamage(damage);
+
+            return entity;
         }
     }
 }

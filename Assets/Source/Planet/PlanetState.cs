@@ -431,11 +431,21 @@ namespace Planet
             ParticleList.Remove(index);
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, bool isFirstSolid = true)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
-                EntitasContext.projectile, position, direction, projectileType, isFirstSolid));
+                EntitasContext.projectile, position, direction, projectileType));
+            
+            return newEntity;
+        }
+
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int damage)
+        {
+            Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
+            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
+                EntitasContext.projectile, position, direction, projectileType, damage));
+            
             return newEntity;
         }
 
