@@ -1462,7 +1462,7 @@ public class GameResources
         GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
         GameState.VehicleCreationApi.SetName("Car");
         GameState.VehicleCreationApi.SetSpriteId(JetChassis);
-        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
+        GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
         GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(3.0f, 3.0f));
         GameState.VehicleCreationApi.SetCollisionOffset(Vec2f.Zero);
         GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));

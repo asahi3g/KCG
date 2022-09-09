@@ -21,7 +21,7 @@ namespace Vehicle
 
                 var size = entity.physicsBox2DCollider.Size;
                 // Create Box Borders
-                var entityBoxBorders = new AABox2D(new Vec2f(pos.TempPosition.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
+                var entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingTop(planet.TileMap, pos.angularVelocity))
@@ -43,7 +43,7 @@ namespace Vehicle
 
                 size = entity.physicsBox2DCollider.Size;
 
-                entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.TempPosition.Y) + entity.physicsBox2DCollider.Offset, size);
+                entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(planet.TileMap, pos.angularVelocity))

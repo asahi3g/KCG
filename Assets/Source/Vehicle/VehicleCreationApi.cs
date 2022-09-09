@@ -115,7 +115,7 @@ namespace Vehicle
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].CollisionSize = size;
+                PropertiesArray[CurrentIndex].Scale = size;
             }
         }
 
