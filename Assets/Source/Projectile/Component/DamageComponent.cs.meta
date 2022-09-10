@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/Projectile/Component/DamageComponent.cs.meta
 guid: 3b6e7abcccd42b2479fb87342e95bbef
+========
+guid: d3391ce382a9f034a921aade38bfc35d
+>>>>>>>> origin/dev-character-display:Assets/Source/GuiHud/CharacterDisplay/CharacterStatsDisplay.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
