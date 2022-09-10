@@ -26,28 +26,31 @@ namespace Projectile
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
                 var box2dCollider = entity.physicsBox2DCollider;
 
-                Vec2f position = physicsState.PreviousPosition + box2dCollider.Offset;
-
                 // Collising with terrain with raycasting
                 var rayCastingResult =
                 Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), entity.projectileSprite2D.Size.X, entity.projectileSprite2D.Size.Y);
+                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), box2dCollider.Size.X, box2dCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)
                 {
                     physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                     physicsState.Velocity = new Vec2f();
-                    entity.ReplaceProjectileOnHit(-1, Time.time, rayCastingResult.Point);
+                    if (!entity.hasProjectileExplosive)
+                        entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                    else 
+                    {
+                        entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
+                        entity.projectileOnHit.LastHitTime = Time.time;
+                    }
                 }
-                            
-                 // collision with agents
-                 Vec2f collidedPosition = position;
-                 for (int i = 0; i < planet.AgentList.Length; i++)
-                 {
-                    Collisions.Box2D entityBox = new Collisions.Box2D{x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y};
-                    Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
 
+                // Collision with Agent.
+                Vec2f position = physicsState.Position + box2dCollider.Offset;
+                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y };
+                Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+                for (int i = 0; i < planet.AgentList.Length; i++)
+                {
                     AgentEntity agentEntity = planet.AgentList.Get(i);
                     if (!agentEntity.isAgentPlayer && agentEntity.agentState.State == Agent.AgentState.Alive)
                     {
@@ -60,10 +63,16 @@ namespace Projectile
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                            entity.ReplaceProjectileOnHit(agentEntity.agentID.ID, Time.time, rayCastingResult.Point);
+                            if (!entity.hasProjectileExplosive)
+                                entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                            else
+                            {
+                                entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
+                                entity.projectileOnHit.LastHitTime = Time.time;
+                            }
                         }
                     }
-                 }
+                }
 
                 // Todo: Use only new collision system.
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))

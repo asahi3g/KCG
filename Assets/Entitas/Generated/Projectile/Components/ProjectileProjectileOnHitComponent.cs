@@ -11,21 +11,25 @@ public partial class ProjectileEntity {
     public Projectile.OnHitComponent projectileOnHit { get { return (Projectile.OnHitComponent)GetComponent(ProjectileComponentsLookup.ProjectileOnHit); } }
     public bool hasProjectileOnHit { get { return HasComponent(ProjectileComponentsLookup.ProjectileOnHit); } }
 
-    public void AddProjectileOnHit(int newAgentID, float newHitTime, KMath.Vec2f newHitPos) {
+    public void AddProjectileOnHit(int newAgentID, float newFirstHitTime, KMath.Vec2f newFistHitPos, float newLastHitTime, KMath.Vec2f newLastHitPos) {
         var index = ProjectileComponentsLookup.ProjectileOnHit;
         var component = (Projectile.OnHitComponent)CreateComponent(index, typeof(Projectile.OnHitComponent));
         component.AgentID = newAgentID;
-        component.HitTime = newHitTime;
-        component.HitPos = newHitPos;
+        component.FirstHitTime = newFirstHitTime;
+        component.FistHitPos = newFistHitPos;
+        component.LastHitTime = newLastHitTime;
+        component.LastHitPos = newLastHitPos;
         AddComponent(index, component);
     }
 
-    public void ReplaceProjectileOnHit(int newAgentID, float newHitTime, KMath.Vec2f newHitPos) {
+    public void ReplaceProjectileOnHit(int newAgentID, float newFirstHitTime, KMath.Vec2f newFistHitPos, float newLastHitTime, KMath.Vec2f newLastHitPos) {
         var index = ProjectileComponentsLookup.ProjectileOnHit;
         var component = (Projectile.OnHitComponent)CreateComponent(index, typeof(Projectile.OnHitComponent));
         component.AgentID = newAgentID;
-        component.HitTime = newHitTime;
-        component.HitPos = newHitPos;
+        component.FirstHitTime = newFirstHitTime;
+        component.FistHitPos = newFistHitPos;
+        component.LastHitTime = newLastHitTime;
+        component.LastHitPos = newLastHitPos;
         ReplaceComponent(index, component);
     }
 

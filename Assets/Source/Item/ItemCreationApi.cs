@@ -268,6 +268,16 @@ namespace Item
             PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
         }
 
+        public void SetExplosion(float radius, int maxDamage, float elapse)
+        {
+            IsItemTypeValid();
+
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            fireWeapon.BlastRadius = radius;
+            fireWeapon.MaxDamage = maxDamage;
+            fireWeapon.Elapse = elapse;
+        }
+
         public void SetFlags(FireWeaponPropreties.MeleeFlags flags)
         {
             IsItemTypeValid();

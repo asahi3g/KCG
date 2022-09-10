@@ -758,21 +758,31 @@ public class GameResources
         GameState.ItemCreationApi.SetInventoryTexture(RPGIcon);
         GameState.ItemCreationApi.SetRangedWeapon(50.0f, 3f, 50.0f, 100);
         GameState.ItemCreationApi.SetRangedWeaponClip(2, 1, 3);
+        GameState.ItemCreationApi.SetExplosion(3.0f, 15, 0f);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Rocket);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionThrowGrenade);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.GrenadeLauncher, "GrenadeLauncher");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
         GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
         GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 20.0f, 25);
         GameState.ItemCreationApi.SetRangedWeaponClip(4, 1, 2);
+        GameState.ItemCreationApi.SetExplosion(4.0f, 15, 0f);
         GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.GrenadesFlags.Flame);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Grenade);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionThrowGrenade);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGasBomb);
         GameState.ItemCreationApi.EndItem();
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bow, "Bow");
@@ -1127,15 +1137,6 @@ public class GameResources
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
-
-        GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-        GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
-        GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
-        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGasBomb);
-        GameState.ItemCreationApi.EndItem();
-
     }
 
     private static void CreateAgents()

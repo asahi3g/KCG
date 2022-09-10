@@ -13,15 +13,16 @@ public static class ProjectileComponentsLookup {
     public const int PhysicsBox2DCollider = 2;
     public const int PhysicsSphere2DCollider = 3;
     public const int ProjectileDamage = 4;
-    public const int ProjectileID = 5;
-    public const int ProjectileLinearDrag = 6;
-    public const int ProjectileOnHit = 7;
-    public const int ProjectilePhysicsState = 8;
-    public const int ProjectileRamp = 9;
-    public const int ProjectileSprite2D = 10;
-    public const int ProjectileType = 11;
+    public const int ProjectileExplosive = 5;
+    public const int ProjectileID = 6;
+    public const int ProjectileLinearDrag = 7;
+    public const int ProjectileOnHit = 8;
+    public const int ProjectilePhysicsState = 9;
+    public const int ProjectileRamp = 10;
+    public const int ProjectileSprite2D = 11;
+    public const int ProjectileType = 12;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 13;
 
     public static readonly string[] componentNames = {
         "AnimationState",
@@ -29,6 +30,7 @@ public static class ProjectileComponentsLookup {
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
         "ProjectileDamage",
+        "ProjectileExplosive",
         "ProjectileID",
         "ProjectileLinearDrag",
         "ProjectileOnHit",
@@ -44,6 +46,7 @@ public static class ProjectileComponentsLookup {
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
         typeof(Projectile.DamageComponent),
+        typeof(Projectile.ExplosiveComponent),
         typeof(Projectile.IDComponent),
         typeof(Projectile.LinearDragComponent),
         typeof(Projectile.OnHitComponent),

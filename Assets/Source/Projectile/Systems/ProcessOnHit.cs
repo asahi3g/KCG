@@ -71,11 +71,17 @@ namespace Projectile
 
         public void Explosive(ref Planet.PlanetState planet, ProjectileEntity pEntity)
         {
-            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+            float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            Vec2f pos = pEntity.projectileOnHit.HitPos;
-            float radius = 2f;
-            int damage = 12;
+            if (elapse <= 0.05f)
+                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+
+            if (elapse - pEntity.projectileExplosive.Elapse <= 0.05f)
+                return;
+
+            Vec2f pos = pEntity.projectileOnHit.LastHitPos;
+            float radius = pEntity.projectileExplosive.BlastRadius;
+            int damage = pEntity.projectileExplosive.MaxDamage;
 
             Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
 
