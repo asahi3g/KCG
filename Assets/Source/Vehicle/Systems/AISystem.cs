@@ -29,6 +29,12 @@ namespace Vehicle
             movementSpeed = _movementSpeed;
         }
 
+        public void StopAI()
+        {
+            vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0f, vehicle.vehiclePhysicsState2D.angularVelocity.Y);
+            vehicle = null;
+        }
+
         public void Update()
         {
             if (vehicle == null || particlePosition == null || movementSpeed == null)
@@ -36,7 +42,7 @@ namespace Vehicle
 
             vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * Time.deltaTime;
 
-            CircleSmoke.Spawn(1, particlePosition, new Vec2f(4.0f, 1.0f), new Vec2f(1.0f, 0.4f));
+            CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(4.0f, 4.0f), new Vec2f(0.1f, 0.3f));
         }
     }
 }

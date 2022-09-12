@@ -119,7 +119,15 @@ namespace Vehicle
             }
         }
 
-        public void AngularVelocity(Vec2f velocity)
+        public void SetRotation(float newRotation)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Rotation = newRotation;
+            }
+        }
+
+        public void SetAngularVelocity(Vec2f velocity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -127,7 +135,7 @@ namespace Vehicle
             }
         }
 
-        public void AngularMass(float AngularMass)
+        public void SetAngularMass(float AngularMass)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -135,7 +143,7 @@ namespace Vehicle
             }
         }
 
-        public void AngularAcceleration(float AngularAcceleration)
+        public void SetAngularAcceleration(float AngularAcceleration)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -143,7 +151,7 @@ namespace Vehicle
             }
         }
 
-        public void CenterOfGravity(float centerOfGravity)
+        public void SetCenterOfGravity(float centerOfGravity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -151,7 +159,7 @@ namespace Vehicle
             }
         }
 
-        public void CenterOfRotation(Vec2f CenterOfRotation)
+        public void SetCenterOfRotation(Vec2f CenterOfRotation)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -159,7 +167,7 @@ namespace Vehicle
             }
         }
 
-        public void AffectedByGravity(bool AffectedByGravity)
+        public void SetAffectedByGravity(bool AffectedByGravity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
