@@ -75,6 +75,9 @@ namespace Action
                 EndPointList.Add(ProjectileEntity);
             }
 
+            if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
+                ProjectileEntity.isProjectileFirstHIt = false;
+
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
