@@ -21,7 +21,7 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-            Enums.ProjectileType projectileType)
+            Enums.ProjectileType projectileType, bool isFirstHit = true)
         {
             ProjectileProperties projectileProperties = 
                                     ProjectileCreationApi.GetRef((int)projectileType);
@@ -48,17 +48,18 @@ namespace Projectile
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);
 
             if (projectileProperties.HasAnimation)
-            {
                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=(int)projectileProperties.AnimationType});
-            }
+
+            if (isFirstHit)
+                entity.isProjectileFirstHIt = true;
 
             return entity;
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction,
-            Enums.ProjectileType projectileType, int damage)
+            Enums.ProjectileType projectileType, int damage, bool isFirstHit = true)
         {
-            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType);
+            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType, isFirstHit);
             entity.AddProjectileDamage(damage);
 
             return entity;
