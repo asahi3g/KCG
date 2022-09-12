@@ -21,126 +21,46 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-                                Enums.ProjectileType projectileType, bool isFirstSolid)
+            Enums.ProjectileType projectileType)
         {
             ProjectileProperties projectileProperties = 
                                     ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
-
-            // Add ID Component
             entity.AddProjectileID(UniqueID++, -1);
-
-            // Add Ramp Component
-            entity.AddProjectileRamp(projectileProperties.canRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.rampTime);
-
-            // Add Linear Drag Component
-            entity.AddProjectileLinearDrag(projectileProperties.linearDrag, projectileProperties.linearCutOff);
-
-            // Add Sprite Component
+            entity.AddProjectileRamp(projectileProperties.CanRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.RampTime);
+            entity.AddProjectileLinearDrag(projectileProperties.LinearDrag, projectileProperties.LinearCutOff);
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
-            // Add Position Component
-            entity.AddProjectilePhysicsState(position, position, 0.0f,
-                direction.Normalized * projectileProperties.Speed, projectileProperties.Acceleration,
-                projectileProperties.AffectedByGravity, Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
+            entity.AddProjectilePhysicsState(
+                newPosition: position,
+                newPreviousPosition: position,
+                newRotation: 0.0f,
+                newVelocity: direction.Normalized * projectileProperties.Speed,
+                newAcceleration: projectileProperties.Acceleration,
+                newAffectedByGravity: projectileProperties.AffectedByGravity,
+                newAngularVelocity: Vec2f.Zero,
+                newAngularMass: 1.0f, 
+                newAngularAcceleration: 1.0f,
+                newCenterOfGravity: 0.5f,
+                newCenterOfRotation: Vec2f.Zero);
             
-            // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
-
-            // Add Physics Collider Component
-            entity.AddProjectileCollider(isFirstSolid, true);
-
-            // Add Projectile Type
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);
 
             if (projectileProperties.HasAnimation)
             {
-                 entity.AddAnimationState(1.0f, new Animation.Animation{Type=(int)projectileProperties.AnimationType});
+                entity.AddAnimationState(1.0f, new Animation.Animation{Type=(int)projectileProperties.AnimationType});
             }
-
-            return entity;
-
-        }
-
-        public ProjectileEntity SpawnBullet(Contexts entitasContext, int spriteID, int width, int height, Vec2f startPos,
-            Vec2f velocity, Vec2f acceleration, ProjectileType projectileType, 
-            ProjectileDrawType projectileDrawType)
-        {
-            ProjectileEntity entity = entitasContext.projectile.CreateEntity();
-
-            // Set Png Size
-            var pngSize = new Vector2Int(width, height);
-            var spriteSize = new Vec2f(pngSize.x / 32f, pngSize.y / 32f);
-            
-            // Add ID Component
-            entity.AddProjectileID(UniqueID++, -1);
-
-            // Add Sprite Component
-            entity.AddProjectileSprite2D(spriteID, spriteSize);
-
-            // Add Moviment Component
-            entity.AddProjectilePhysicsState(startPos, startPos, 0.0f, velocity, acceleration, 
-                false, Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
-
-            // Add Physics Box Collider Component
-            entity.AddPhysicsBox2DCollider(spriteSize, Vec2f.Zero);
-
-            // Add Physics Collider Component
-            entity.AddProjectileCollider(true, true);
-
-            // Add Projectile Type
-            entity.AddProjectileType(projectileType, projectileDrawType);
 
             return entity;
         }
 
-        public Entity SpawnProjectile(Contexts entitasContext, int spriteID, int width, int height, Vec2f startPos,
-            Cell start, Cell end, ProjectileType projectileType, ProjectileDrawType projectileDrawType)
+        public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction,
+            Enums.ProjectileType projectileType, int damage)
         {
-            // Create Entity
-            var entity = entitasContext.projectile.CreateEntity();
+            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType);
+            entity.AddProjectileDamage(damage);
 
-            // Set Png Size
-            var pngSize = new Vector2Int(width, height);
-
-            // Set Sprite ID from Sprite Atlas
-            var spriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(spriteID, 0, 0, Enums.AtlasType.Particle);
-
-            // Set Sprite Size
-            var spriteSize = new Vec2f(pngSize.x / 32f, pngSize.y / 32f);
-
-            // Add ID Component
-            entity.AddProjectileID(UniqueID++, -1);
-
-            // Add Sprite Component
-            entity.AddProjectileSprite2D(spriteId, spriteSize);
-
-            // Add Physics State 2D Component
-            entity.AddProjectilePhysicsState(startPos, startPos, 0.0f, Vec2f.Zero, Vec2f.Zero, false, 
-                Vec2f.Zero, 1.0f, 1.0f, 0.5f, Vec2f.Zero);
-
-            // Add Physics Box Collider Component
-            entity.AddPhysicsBox2DCollider(spriteSize, Vec2f.Zero);
-
-            bool isFirstSolid = false;
-            // Log Places Shooted Ray Go Through
-            foreach (var cell in start.LineTo(end))
-            {
-                isFirstSolid = true;
-            }
-
-#if UNITY_EDITOR
-            // Draw Debug Line to see shooted ray
-            Debug.DrawLine(new Vector3(start.x, start.y, 0.0f), new Vector3(end.x, end.y), Color.red);
-#endif
-
-            // Add Physics Collider Component
-            entity.AddProjectileCollider(isFirstSolid, false);
-
-            // Add Projectile Type
-            entity.AddProjectileType(projectileType, projectileDrawType);
-
-            // Return projectile entity
             return entity;
         }
     }

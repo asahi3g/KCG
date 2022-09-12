@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Test/LineOfSightTest.cs.meta
+guid: bdc63c12f04b2a34c86511142ecd5c9f
+========
 guid: 2c0d9a80575c84744bb698106488ae07
+>>>>>>>> origin/dev-character-display:Assets/Source/GuiHud/CharacterDisplay/CharacterModelDisplay.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

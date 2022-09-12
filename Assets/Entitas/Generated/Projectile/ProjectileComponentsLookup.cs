@@ -12,24 +12,30 @@ public static class ProjectileComponentsLookup {
     public const int ECSInput = 1;
     public const int PhysicsBox2DCollider = 2;
     public const int PhysicsSphere2DCollider = 3;
-    public const int ProjectileCollider = 4;
-    public const int ProjectileID = 5;
-    public const int ProjectileLinearDrag = 6;
-    public const int ProjectilePhysicsState = 7;
-    public const int ProjectileRamp = 8;
-    public const int ProjectileSprite2D = 9;
-    public const int ProjectileType = 10;
+    public const int ProjectileDamage = 4;
+    public const int ProjectileExplosive = 5;
+    public const int ProjectileFirstHIt = 6;
+    public const int ProjectileID = 7;
+    public const int ProjectileLinearDrag = 8;
+    public const int ProjectileOnHit = 9;
+    public const int ProjectilePhysicsState = 10;
+    public const int ProjectileRamp = 11;
+    public const int ProjectileSprite2D = 12;
+    public const int ProjectileType = 13;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "AnimationState",
         "ECSInput",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
-        "ProjectileCollider",
+        "ProjectileDamage",
+        "ProjectileExplosive",
+        "ProjectileFirstHIt",
         "ProjectileID",
         "ProjectileLinearDrag",
+        "ProjectileOnHit",
         "ProjectilePhysicsState",
         "ProjectileRamp",
         "ProjectileSprite2D",
@@ -41,9 +47,12 @@ public static class ProjectileComponentsLookup {
         typeof(ECSInput.Component),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
-        typeof(Projectile.ColliderComponent),
+        typeof(Projectile.DamageComponent),
+        typeof(Projectile.ExplosiveComponent),
+        typeof(Projectile.FirstHItComponent),
         typeof(Projectile.IDComponent),
         typeof(Projectile.LinearDragComponent),
+        typeof(Projectile.OnHitComponent),
         typeof(Projectile.PhysicsStateComponent),
         typeof(Projectile.RampComponent),
         typeof(Projectile.Sprite2DComponent),

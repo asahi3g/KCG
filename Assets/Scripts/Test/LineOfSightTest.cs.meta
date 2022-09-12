@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Test/LineOfSightTest.cs.meta
+guid: aead3cdb77b10c24f8d9db6d4a439937
+========
+guid: 2c0d9a80575c84744bb698106488ae07
+>>>>>>>> origin/dev-character-display:Assets/Source/GuiHud/CharacterDisplay/CharacterModelDisplay.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

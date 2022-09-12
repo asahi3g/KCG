@@ -1,312 +1,115 @@
 using UnityEngine;
 using KMath;
-using System.Collections.Generic;
-using System.Collections;
 using Collisions;
-using Entitas;
 using Particle;
-using System.IdentityModel.Metadata;
+using UnityEngine.UIElements;
 
 namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        List<ProjectileEntity> ToRemoveList = new();
-        List<ProjectileEntity> ToRemoveArrowList = new();
-        List<ProjectileEntity> PopGasList = new();
-
-        float elapsed = 0.0f;
-        private float bounceValue = 0.4f;
-        private bool deleteArrows = false;
-
         // new version of the update function
         // uses the planet state to remove the projectile
         public void UpdateEx(ref Planet.PlanetState planet)
         {
-            ToRemoveList.Clear();
-
-            // Get Delta Time
-            float deltaTime = Time.deltaTime;
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
-            // Get Vehicle Physics Entity
             var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
 
             foreach (var entity in entities)
             {
-                // Set Vehicle Physics to variable
+                float bounceValue = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).BounceValue;
+                bool bounce = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Bounce;
+
                 var physicsState = entity.projectilePhysicsState;
-                // Create Box Borders
+
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
                 var box2dCollider = entity.physicsBox2DCollider;
 
-                Vec2f position = physicsState.PreviousPosition + box2dCollider.Offset;
-
-
-
                 // Collising with terrain with raycasting
                 var rayCastingResult =
-                 Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                 new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), entity.projectileSprite2D.Size.X, entity.projectileSprite2D.Size.Y);
-                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
-                 if (rayCastingResult.Intersect)
-                 {
-                    
-                    if (entity.projectileCollider.isFirstSolid)
+                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
+                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), box2dCollider.Size.X, box2dCollider.Size.Y);
+                Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
+
+                if (rayCastingResult.Intersect)
+                {
+                    if (!entity.hasProjectileExplosive)
+                        entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                    else 
+                    {
+                        entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
+                        entity.projectileOnHit.LastHitTime = Time.time;
+                    }
+                    if (entity.isProjectileFirstHIt)
                     {
                         physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                         physicsState.Velocity = new Vec2f();
-                        ToRemoveList.Add(entity);
                     }
-                 }
+                }
 
-                
-            
-                var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
-                 // collision with agents
-                 bool removeThisEntity = false;
-                 Vec2f collidedPosition = position;
-                 foreach (var agent in agents)
-                 {
-                    Collisions.Box2D entityBox = new Collisions.Box2D{x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y};
-                    Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
-                    if (!agent.isAgentPlayer && agent.agentState.State == Agent.AgentState.Alive)
+                // Collision with Agent.
+                Vec2f position = physicsState.Position + box2dCollider.Offset;
+                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y };
+                Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+                for (int i = 0; i < planet.AgentList.Length; i++)
+                {
+                    AgentEntity agentEntity = planet.AgentList.Get(i);
+                    if (!agentEntity.isAgentPlayer && agentEntity.agentState.State == Agent.AgentState.Alive)
                     {
-                        var agentPhysicsState = agent.agentPhysicsState;
-                        var agentBox2dCollider = agent.physicsBox2DCollider;
+                        var agentPhysicsState = agentEntity.agentPhysicsState;
+                        var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
                         Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
 
                         Collisions.Box2D agentBox = new Collisions.Box2D{x = agentPosition.X, y = agentPosition.Y, w = agentBox2dCollider.Size.X, h = agentBox2dCollider.Size.Y};
-                        bool collided = Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false);
-                        
-                        if (collided)
+                        if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
-                            collidedPosition = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
-                            if (agent.hasAgentStats)
+                            if (entity.isProjectileFirstHIt)
+                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
+
+                            // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                            if (!entity.hasProjectileExplosive)
+                                entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                            else
                             {
-                                var stats = agent.agentStats;
-                                stats.Health -= 10;
-                            
-
-                                // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 10, 1.5f, new Vec2f(0.0f, 0.1f), agentPosition);
-                                planet.AddParticleEmitter(agentPosition, Particle.ParticleEmitterType.Blood);
+                                entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
+                                entity.projectileOnHit.LastHitTime = Time.time;
                             }
-
-                            removeThisEntity = true;
-                            break;
-                        }
-                    }
-                 }
-
-                 if (removeThisEntity)
-                 {
-                    physicsState.Position = collidedPosition;
-                    ToRemoveList.Add(entity);
-                 }
-
-
-                // If is colliding bottom-top stop y movement
-                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
-                {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
-                        continue;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                            PopGasList.Add(entity);
                         }
                     }
                 }
+
+                // Todo: Use only new collision system.
+                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
+                {
+                    if (bounce)
+                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
+                }
                 else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.angularVelocity))
                 {
-                    if(entity.projectileCollider.isFirstSolid)
-                    {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
-                         continue;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                            PopGasList.Add(entity);
-                        }
-                    }
+                    
+                    if (bounce)
+                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
                 }
 
                 entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
 
-                // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
                 {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
-                         continue;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
-                            PopGasList.Add(entity);
-                        }
-                    }
+                    if (bounce)
+                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
+                    
                 }
                 else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.angularVelocity))
                 {
-                    if (entity.projectileCollider.isFirstSolid)
-                    {
-                        //entity.Destroy();
-                        //ToRemoveList.Add(entity);
-                         continue;
-                    }
-                    else
-                    {
-                        if (entity.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                        {
-                            entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
-                            PopGasList.Add(entity);
-                        } 
-                    }
+                    if (bounce)
+                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                 }
-            }
-
-            foreach (var entityP in ToRemoveList)
-            {
-                if(entityP.projectileType.Type == Enums.ProjectileType.Grenade)
-                {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-                    // Check if projectile has hit a enemy.
-                    var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
-
-                    // Todo: Create a agent colision system?
-                    foreach (var entity in entitiesA)
-                    {   
-                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
-
-                        float radius = 2.0f;
-
-                        if (dist < radius)
-                        {
-                            Vec2f entityPos = entity.agentPhysicsState.Position;
-                            Vec2f bulletPos = entityP.projectilePhysicsState.Position;
-                            Vec2f diff = bulletPos - entityPos;
-                            diff.Y = 0;
-                            diff.Normalize();
-
-                            Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
-
-                            if (entity.hasAgentStats)
-                            {
-                                var stats = entity.agentStats;
-                                stats.Health -= 25;
-                            
-
-                                // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 25, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
-                                    new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
-                            }
-                        }
-                    }
-                    planet.RemoveProjectile(entityP.projectileID.Index);
-                }
-                else if (entityP.projectileType.Type == Enums.ProjectileType.Rocket)
-                {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-                    // Check if projectile has hit a enemy.
-                    var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
-
-                    // Todo: Create a agent colision system?
-                    foreach (var entity in entitiesA)
-                    {
-                        float dist = Vec2f.Distance(new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y), new Vec2f(entityP.projectilePhysicsState.Position.X, entityP.projectilePhysicsState.Position.Y));
-
-                        float radius = 4.0f;
-
-                        if (dist < radius)
-                        {
-                            Vec2f entityPos = entity.agentPhysicsState.Position;
-                            Vec2f bulletPos = entityP.projectilePhysicsState.Position;
-                            Vec2f diff = bulletPos - entityPos;
-                            diff.Y = 0;
-                            diff.Normalize();
-
-                            Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
-
-                            if (entity.hasAgentStats)
-                            {
-                                var stats = entity.agentStats;
-                                stats.Health -= 100;
-                               
-
-                                // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + 100, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), 
-                                    new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
-                            }
-                        }
-                    }
-                    planet.RemoveProjectile(entityP.projectileID.Index);
-                }
-                else if (entityP.projectileType.Type == Enums.ProjectileType.Arrow)
-                {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-
-                    entityP.projectilePhysicsState.Velocity = Vec2f.Zero;
-
-                    DeleteProjectile(entityP);
-
-                    deleteArrows = true;
-                }
-                else if (entityP.projectileType.Type == Enums.ProjectileType.Bullet)
-                {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-
-                    planet.RemoveProjectile(entityP.projectileID.Index);
-                }
-                else if (entityP.projectileType.Type == Enums.ProjectileType.GasGrenade)
-                {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-                }
-            }
-
-            // Arrow Deleting
-            if (deleteArrows)
-                elapsed += Time.deltaTime;
-
-            if(elapsed > 12.0f)
-            {
-                for(int i = 0; i<  ToRemoveArrowList.Count; i++)
-                {
-                    if(ToRemoveArrowList[i].isEnabled)
-                        ToRemoveArrowList[i].Destroy(); 
-                }
-
-                for (int j = 0; j < PopGasList.Count; j++)
-                {
-                    if (PopGasList[j].isEnabled)
-                        PopGasList[j].Destroy();
-                }
-                deleteArrows = false;
-                elapsed = 0.0f;
             }
 
             CircleSmoke.Update(ref planet.TileMap);
-        }
-
-        public void DeleteProjectile(ProjectileEntity arrow)
-        {
-            ToRemoveArrowList.Add(arrow);
+            GameState.ProjectileProcessOnHit.Update(ref planet);
         }
     }
 }

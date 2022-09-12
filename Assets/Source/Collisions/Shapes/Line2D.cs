@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Enums.Tile;
 
 namespace KMath
@@ -14,19 +15,66 @@ namespace KMath
             A = a;
             B = b;
         }
-        
-        // LINE/LINE collision check
+
+        /// <summary>
+        /// LINE/LINE collision check
+        /// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+        /// </summary>
         public bool Intersects(Line2D other)
         {
-            // calculate the distance to intersection point
-            var uA = ((other.B.X - other.A.X) * (A.Y - other.A.Y) - (other.B.Y - other.A.Y) * (A.X - other.A.X)) /
-                     ((other.B.Y - other.A.Y) * (B.X - A.X) - (other.B.X - other.A.X) * (B.Y - A.Y));
-            var uB = ((B.X - A.X) * (A.Y - other.A.Y) - (B.Y - A.Y) * (A.X - other.A.X)) /
-                     ((other.B.Y - other.A.Y) * (B.X - A.X) - (other.B.X - other.A.X) * (B.Y - A.Y));
+            int o1 = CheckOrientation(A, B, other.A);
+            int o2 = CheckOrientation(A, B, other.B);
+            int o3 = CheckOrientation(other.A, other.B, A);
+            int o4 = CheckOrientation(other.A, other.B, B);
 
-            // if uA and uB are between 0-1, lines are colliding
-            return uA is >= 0 and <= 1 && uB is >= 0 and <= 1;
+            // General case.
+            if (o1 != o2 && o3 != o4)
+                return true;
+
+            // Lines are colinear and lies on segment
+            if (o1 == 0 && OnSegment(A, other.A, B))
+                return true;
+            if (o2 == 0 && OnSegment(A, other.B, B))
+                return true;
+            if (o3 == 0 && OnSegment(other.A, other.B, other.B))
+                return true;
+            if (o4 == 0 && OnSegment(other.A, B, other.B))
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        ///  https://bryceboe.com/2006/10/23/line-segment-intersection-algorithm/
+        ///  
+        /// </summary>
+        /// <returns>
+        /// 0 - p1, p2 and p3 are collinear
+        /// 1 - Clockwise
+        /// 2 - Counterclockwise
+        /// </returns>
+        [MethodImpl((MethodImplOptions)256)]
+        private static int CheckOrientation(Vec2f p1, Vec2f p2, Vec2f p3)
+        {
+            float temp = (p2.Y - p1.Y) * (p3.X - p2.X) - (p2.X - p1.X) * (p3.Y - p2.Y);
+
+            if (temp == 0) return 0;
+
+            return (temp > 0) ? 1 : 2;
+        }
+
+        /// <summary>
+        /// Given tree colinear points check if point lines in the line point1 to point3
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl((MethodImplOptions)256)]
+        private static bool OnSegment(Vec2f point1, Vec2f point2, Vec2f point3)
+        {
+            if (point2.X <= MathF.Max(point1.X, point3.X) && point2.X >= MathF.Min(point1.X, point3.X) &&
+                 point2.Y <= MathF.Max(point1.Y, point3.Y) && point2.Y >= MathF.Min(point1.Y, point3.Y))
+                return true;
+
+            return false;
         }
     }
 }
-

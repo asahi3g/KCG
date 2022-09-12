@@ -28,7 +28,6 @@ namespace Action
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
@@ -36,7 +35,7 @@ namespace Action
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
             ItemEntity.Destroy();
 
-            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
+            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade);
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
 
@@ -68,7 +67,6 @@ namespace Action
 
             if(elapsed > 8.0f)
             {
-                ProjectileEntity.Destroy();
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
                 return;
             }
@@ -111,9 +109,6 @@ namespace Action
         }
     }
 
-    /// <summary>
-    /// Factory Method
-    /// </summary>
     public class ToolActionGasBombCreator : ActionCreator
     {
         public override ActionBase CreateAction(Contexts entitasContext, int actionID)
