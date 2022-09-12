@@ -34,7 +34,7 @@ namespace Projectile
 
                 if (rayCastingResult.Intersect)
                 {
-                    if (!entity.hasProjectileExplosive)
+                    if (!entity.hasProjectileOnHit)
                         entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                     else 
                     {
@@ -69,7 +69,7 @@ namespace Projectile
                                 physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
 
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                            if (!entity.hasProjectileExplosive)
+                            if (!entity.hasProjectileOnHit)
                                 entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                             else
                             {
