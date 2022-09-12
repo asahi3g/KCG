@@ -110,7 +110,7 @@ namespace Projectile
 
         public void Arrow(ref Planet.PlanetState planet, ProjectileEntity pEntity)
         {
-            float elapse = Time.time - pEntity.projectileOnHit.HitTime;
+            float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
             if (elapse <= 0.05f)
             {
@@ -126,7 +126,7 @@ namespace Projectile
 
         public void GasGrenade(ref Planet.PlanetState planet, ProjectileEntity pEntity)
         {
-            float elapse = Time.time - pEntity.projectileOnHit.HitTime;
+            float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
             if (elapse >= 12.0f)
                 planet.RemoveProjectile(pEntity.projectileID.Index);
