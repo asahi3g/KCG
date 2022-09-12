@@ -6,6 +6,7 @@ namespace Particle
         OreFountain, 
         OreExplosion,
         DustEmitter,
-        GasEmitter
+        GasEmitter,
+        Blood
     }
 }

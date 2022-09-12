@@ -135,6 +135,7 @@ public class GameResources
     public static int DustBaseSpriteId;
 
     public static int OreIcon;
+    
     public static int PistolIcon;
     public static int PulseIcon;
     public static int ShotgunIcon;
@@ -199,6 +200,8 @@ public class GameResources
     public static int AimCursor;
     public static int BuildCursor;
 
+    public static int BloodSprite;
+
     public static int LoadingTilePlaceholderSpriteId;
     public static int LoadingTilePlaceholderTileId;
 
@@ -242,6 +245,7 @@ public class GameResources
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
             HelmetsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Helmets\\character-helmets.png", 64, 64);
             SuitsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Suits\\character-suits.png", 64, 96);
+            int BloodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\red_32x32.png", 32, 32);
 
             SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
             SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
@@ -306,6 +310,7 @@ public class GameResources
             //Vehicles
             JetChassis = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Jet\\Chassis\\Jet_chassis.png", 144, 96);
 
+
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             Ore2Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore2SpriteSheet, 0, 0, 0);
             Ore3Sprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(Ore3SpriteSheet, 0, 0, 0);
@@ -320,6 +325,7 @@ public class GameResources
             SwordSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SwordSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             // particle sprite atlas
 
+            BloodSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(BloodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             FoodIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(FoodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             BoneIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BoneSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
@@ -1359,6 +1365,22 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingScale(20.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255f, 72f, 0f, 255.0f));
         GameState.ParticleCreationApi.End();
+
+
+        GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Blood);
+        GameState.ParticleCreationApi.SetName("Blood");
+        GameState.ParticleCreationApi.SetDecayRate(0.5f);
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+        GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
+        GameState.ParticleCreationApi.SetDeltaScale(0.0f);
+        GameState.ParticleCreationApi.SetSpriteId(BloodSprite);
+        GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
+        GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+        GameState.ParticleCreationApi.SetStartingScale(1.0f);
+        GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.SetIsCollidable(true);
+        GameState.ParticleCreationApi.End();
     }
 
     private static void CreateParticleEmitters()
@@ -1400,6 +1422,16 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.SetParticleCount(1);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
+        GameState.ParticleEmitterCreationApi.End();
+
+        GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.Blood);
+        GameState.ParticleEmitterCreationApi.SetName("blood");
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Blood);
+        GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(30);
+        GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+        GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
         GameState.ParticleEmitterCreationApi.End();
     }
 
@@ -1464,14 +1496,16 @@ public class GameResources
         GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
         GameState.VehicleCreationApi.SetName("Car");
         GameState.VehicleCreationApi.SetSpriteId(JetChassis);
-        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
-        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+        GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(3.0f, 3.0f));
+        GameState.VehicleCreationApi.SetCollisionOffset(Vec2f.Zero);
         GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
-        GameState.VehicleCreationApi.AngularVelocity(new Vec2f(15.0f, 15.0f));
+        GameState.VehicleCreationApi.AngularVelocity(Vec2f.Zero);
         GameState.VehicleCreationApi.AngularMass(14f);
         GameState.VehicleCreationApi.AngularAcceleration(4f);
-        GameState.VehicleCreationApi.CenterOfGravity(-9f);
+        GameState.VehicleCreationApi.CenterOfGravity(-6f);
         GameState.VehicleCreationApi.CenterOfRotation(Vec2f.Zero);
+        GameState.VehicleCreationApi.AffectedByGravity(true);
         GameState.VehicleCreationApi.End();
 
     }

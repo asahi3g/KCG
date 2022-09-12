@@ -34,14 +34,17 @@ namespace Projectile
 
                 if (rayCastingResult.Intersect)
                 {
-                    physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
-                    physicsState.Velocity = new Vec2f();
                     if (!entity.hasProjectileExplosive)
                         entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                     else 
                     {
                         entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
                         entity.projectileOnHit.LastHitTime = Time.time;
+                    }
+                    if (entity.projectileCollider.isFirstSolid)
+                    {
+                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
+                        physicsState.Velocity = new Vec2f();
                     }
                 }
 
@@ -62,6 +65,9 @@ namespace Projectile
                         Collisions.Box2D agentBox = new Collisions.Box2D{x = agentPosition.X, y = agentPosition.Y, w = agentBox2dCollider.Size.X, h = agentBox2dCollider.Size.Y};
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
+                            if (entity.projectileCollider.isFirstSolid)
+                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
+
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
                             if (!entity.hasProjectileExplosive)
                                 entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);

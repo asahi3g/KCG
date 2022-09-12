@@ -23,6 +23,8 @@ namespace Vehicle
         
         public float centerOfGravity = 0.0f;
         public Vec2f centerOfRotation = Vec2f.One;
+
+        public bool AffectedByGravity;
     }
 }
 

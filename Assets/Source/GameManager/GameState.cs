@@ -112,6 +112,7 @@ public class GameState
     public static readonly Vehicle.MovementSystem VehicleMovementSystem;
     public static readonly Vehicle.SpawnerSystem VehicleSpawnerSystem;
     public static readonly Vehicle.MeshBuilderSystem VehicleMeshBuilderSystem;
+    public static readonly Vehicle.AISystem VehicleAISystem;
     #endregion
 
     public static readonly Utility.FileLoadingManager FileLoadingManager;
@@ -143,14 +144,22 @@ public class GameState
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
+
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
+
         SpriteLoader = new Sprites.SpriteLoader();
+
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager(SpriteLoader);
+
         SpriteAtlasManager = new Sprites.SpriteAtlasManager(SpriteLoader);
+
         TileCreationApi = new PlanetTileMap.TileCreationApi();
         TileMapRenderer = new PlanetTileMap.TileMapRenderer();
+
         FileLoadingManager = new Utility.FileLoadingManager();
+
         InputProcessSystem = new ECSInput.InputProcessSystem();
+
         AgentCreationApi = new Agent.AgentCreationApi();
         AgentSpawnerSystem = new Agent.AgentSpawnerSystem(AgentCreationApi);
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
@@ -160,33 +169,44 @@ public class GameState
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
+
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
+
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
         InventoryCreationApi = new Inventory.CreationApi();
         InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
         InventoryWindowScaleSystem = new Inventory.WindowScaleSystem();
+
         EnemyAiSystem = new Agent.EnemyAiSystem();
+
         AnimationManager = new Animation.AnimationManager();
+
         FloatingTextUpdateSystem = new FloatingText.FloatingTextUpdateSystem();
         FloatingTextSpawnerSystem = new FloatingText.FloatingTextSpawnerSystem();
         FloatingTextDrawSystem = new FloatingText.FloatingTextDrawSystem();
+
         AnimationUpdateSystem = new Animation.UpdateSystem();
+
         //UnityImage2DCache = new Sprites.UnityImage2DCache();
+
         ItemCreationApi = new Item.ItemCreationApi();
         ItemSpawnSystem = new Item.SpawnerSystem();
         ItemPickUpSystem = new Item.PickUpSystem();
         ItemMeshBuilderSystem = new Item.MeshBuilderSystem();
         ItemMovableSystem = new Item.MovementSystem();
         ItemProcessCollisionSystem = new Item.ProcessCollisionSystem();
+
         LootTableCreationAPI = new LootDrop.CreationApi();
         LootDropSystem = new LootDrop.LootDropSystem();
+
         ActionPropertyManager = new Action.ActionPropertyManager();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();
         ActionInitializeSystem = new Action.InitializeSystem();
         ActionCoolDownSystem = new Action.CoolDownSystem();
+
         ParticleCreationApi = new Particle.ParticleCreationApi();
         ParticleEmitterCreationApi = new Particle.ParticleEmitterCreationApi();
         ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticleCreationApi);
@@ -195,27 +215,34 @@ public class GameState
         ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticleCreationApi);
         ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticleCreationApi);
         ParticleProcessCollisionSystem = new Particle.ParticleProcessCollisionSystem();
+
         ProjectileCreationApi = new Projectile.ProjectileCreationApi();
         ProjectileCollisionSystem = new Projectile.ProcessCollisionSystem();
         ProjectileMovementSystem = new Projectile.MovementSystem(ProjectileCreationApi);
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         ProjectileProcessOnHit = new Projectile.ProcessOnHit();
+
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
+
         Renderer = new Utility.Render();
+
         TGenGrid = new TGen.Grid();
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();
         TGenRenderMapBorder = new TGen.RenderMapBorder();
         TGenRenderMapMesh = new TGen.RenderMapMesh();
+
         ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
         ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
         ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
+
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();
         VehicleMovementSystem = new Vehicle.MovementSystem(VehicleCreationApi);
         VehicleSpawnerSystem = new Vehicle.SpawnerSystem(VehicleCreationApi);
         VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
+        VehicleAISystem = new Vehicle.AISystem(VehicleCreationApi);
     }
 }
