@@ -12,7 +12,6 @@ namespace Action
         private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
         private Vec2f StartPos;
-        float radius = 0.0f;
 
         public ToolActionThrowableGrenade(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -23,15 +22,10 @@ namespace Action
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
             WeaponProperty = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 
-            if (ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
-                radius = 2.0f;
-            else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
-                radius = 4.0f;
-
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            int bulletsPerShot = ItemEntity.itemFireWeaponClip.BulletsPerShot;
+            int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
             // Check if gun got any ammo
             if (ItemEntity.hasItemFireWeaponClip)
@@ -49,7 +43,6 @@ namespace Action
             if (ItemEntity.hasItemFireWeaponClip)
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
-            // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
@@ -63,7 +56,7 @@ namespace Action
             {
                 ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Rocket);
             }
-
+            ProjectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
 
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
@@ -72,7 +65,6 @@ namespace Action
         public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
         {
             float range = WeaponProperty.Range;
-            float damage = WeaponProperty.BasicDemage;
 
             // Check if projectile has hit something and was destroyed.
             if (!ProjectileEntity.isEnabled)
@@ -86,37 +78,6 @@ namespace Action
             {
 
                 planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-
-                // Check if projectile has hit a enemy.
-                var entities = EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
-
-                // Todo: Create a agent colision system?
-                foreach (var entity in entities)
-                {
-                    float dist = Vec2f.Distance(new Vec2f(AgentEntity.agentPhysicsState.Position.X, AgentEntity.agentPhysicsState.Position.Y), new Vec2f(ProjectileEntity.projectilePhysicsState.Position.X, ProjectileEntity.projectilePhysicsState.Position.Y));
-
-                    if (dist < radius)
-                    {
-                        Vec2f entityPos = entity.agentPhysicsState.Position;
-                        Vec2f bulletPos = ProjectileEntity.projectilePhysicsState.Position;
-                        Vec2f diff = bulletPos - entityPos;
-                        diff.Y = 0;
-                        diff.Normalize();
-
-                        Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
-
-                        if (AgentEntity.hasAgentStats)
-                        {
-                            var stats = entity.agentStats;
-                            stats.Health -= (int)damage;
-
-                            // spawns a debug floating text for damage 
-                            planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
-                            ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                        }
-                    }
-                }
-                ActionEntity.actionExecution.State = Enums.ActionState.Success;
             }
         }
 
@@ -133,9 +94,7 @@ namespace Action
         }
     }
 
-    /// <summary>
-    /// Factory Method
-    /// </summary>
+
     public class ToolActionThrowableGrenadeCreator : ActionCreator
     {
         public override ActionBase CreateAction(Contexts entitasContext, int actionID)

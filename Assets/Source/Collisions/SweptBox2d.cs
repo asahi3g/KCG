@@ -1,17 +1,11 @@
-
 using Entitas;
 using KMath;
 using System;
 
 namespace Collisions
 {
-
-
-   
-
     public static partial class Collisions
     {
-
         public static bool TestLine(float lineX, float x, float y, float deltaX, float deltaY,
         ref float tMin, float minY, float maxY)
         {
@@ -34,6 +28,9 @@ namespace Collisions
             return hit;
         }
 
+        /// <summary>
+        /// Swept collision  detection using Minkowski sum
+        /// </summary>
         public static bool SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
             
@@ -124,10 +121,7 @@ namespace Collisions
                 timeRemaining -= tMin * timeRemaining;
                 
             }
-
             return hit;
         }
-
-
     }
 }
