@@ -11,7 +11,7 @@ public partial class VehicleEntity {
     public Vehicle.PhysicsState2DComponent vehiclePhysicsState2D { get { return (Vehicle.PhysicsState2DComponent)GetComponent(VehicleComponentsLookup.VehiclePhysicsState2D); } }
     public bool hasVehiclePhysicsState2D { get { return HasComponent(VehicleComponentsLookup.VehiclePhysicsState2D); } }
 
-    public void AddVehiclePhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation) {
+    public void AddVehiclePhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
         var index = VehicleComponentsLookup.VehiclePhysicsState2D;
         var component = (Vehicle.PhysicsState2DComponent)CreateComponent(index, typeof(Vehicle.PhysicsState2DComponent));
         component.Position = newPosition;
@@ -23,10 +23,11 @@ public partial class VehicleEntity {
         component.angularAcceleration = newAngularAcceleration;
         component.centerOfGravity = newCenterOfGravity;
         component.centerOfRotation = newCenterOfRotation;
+        component.AffectedByGravity = newAffectedByGravity;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation) {
+    public void ReplaceVehiclePhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
         var index = VehicleComponentsLookup.VehiclePhysicsState2D;
         var component = (Vehicle.PhysicsState2DComponent)CreateComponent(index, typeof(Vehicle.PhysicsState2DComponent));
         component.Position = newPosition;
@@ -38,6 +39,7 @@ public partial class VehicleEntity {
         component.angularAcceleration = newAngularAcceleration;
         component.centerOfGravity = newCenterOfGravity;
         component.centerOfRotation = newCenterOfRotation;
+        component.AffectedByGravity = newAffectedByGravity;
         ReplaceComponent(index, component);
     }
 

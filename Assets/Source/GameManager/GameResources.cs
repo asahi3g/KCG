@@ -1494,14 +1494,16 @@ public class GameResources
         GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
         GameState.VehicleCreationApi.SetName("Car");
         GameState.VehicleCreationApi.SetSpriteId(JetChassis);
-        GameState.VehicleCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
-        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+        GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+        GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(3.0f, 3.0f));
+        GameState.VehicleCreationApi.SetCollisionOffset(Vec2f.Zero);
         GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
-        GameState.VehicleCreationApi.AngularVelocity(new Vec2f(15.0f, 15.0f));
+        GameState.VehicleCreationApi.AngularVelocity(Vec2f.Zero);
         GameState.VehicleCreationApi.AngularMass(14f);
         GameState.VehicleCreationApi.AngularAcceleration(4f);
-        GameState.VehicleCreationApi.CenterOfGravity(-9f);
+        GameState.VehicleCreationApi.CenterOfGravity(-6f);
         GameState.VehicleCreationApi.CenterOfRotation(Vec2f.Zero);
+        GameState.VehicleCreationApi.AffectedByGravity(true);
         GameState.VehicleCreationApi.End();
 
     }

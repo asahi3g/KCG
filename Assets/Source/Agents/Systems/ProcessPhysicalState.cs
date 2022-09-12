@@ -69,7 +69,7 @@ namespace Agent
                 {
                     switch(physicsState.MovementState)
                     {
-                        case AgentMovementState.MonsterAttack:
+                        //case AgentMovementState.MonsterAttack:
                         case AgentMovementState.FireGun:
                         case AgentMovementState.UseTool:
                         case AgentMovementState.Drink:
