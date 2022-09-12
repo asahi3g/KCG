@@ -162,8 +162,17 @@ namespace ECSInput
                 }
 
                 // JetPack
-                if (Input.GetKey(KeyCode.F))
+                if (Input.GetKey(KeyCode.F) && player.agentStats.Fuel > 0)
+                {
                     GameState.AgentProcessPhysicalState.JetPackFlying(player);
+                }
+                else
+                {
+                    if (player.agentPhysicsState.MovementState == AgentMovementState.JetPackFlying)
+                    {
+                        player.agentPhysicsState.MovementState = AgentMovementState.None;
+                    }
+                }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
