@@ -8,6 +8,7 @@ namespace Particle
         OreExplosionParticle,
         DustParticle,
         Debris,
-        GasParticle
+        GasParticle,
+        Blood
     }
 }
