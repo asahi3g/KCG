@@ -31,17 +31,69 @@ namespace Planet.Unity
         private Color wrongHlColor = Color.red;
         private Color correctHlColor = Color.green;
 
+
+        KGui.CharacterDisplay CharacterDisplay;
+
         static bool Init = false;
 
         public void Start()
         {
             if (!Init)
             {
+
                 Initialize();
                 Init = true;
             }
         }
 
+                // create the sprite atlas for testing purposes
+        public void Initialize()
+        {
+
+            
+            Application.targetFrameRate = 60;
+
+            GameResources.Initialize();
+
+            // Generating the map
+            Vec2i mapSize = new Vec2i(128, 32);
+            Planet = new Planet.PlanetState();
+            Planet.Init(mapSize);
+
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+            PlayerID = Player.agentID.ID;
+
+            PlayerID = Player.agentID.ID;
+            inventoryID = Player.agentInventory.InventoryID;
+
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD(Player);
+            GameState.MechGUIDrawSystem.Initialize(ref Planet);
+            //GenerateMap();
+            var camera = Camera.main;
+            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+
+            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                Debug.Log("loaded!");*/
+
+            GenerateMap();
+
+            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+
+            AddItemsToPlayer();
+
+            totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
+
+            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
+                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
+
+
+
+            CharacterDisplay = new KGui.CharacterDisplay();
+            CharacterDisplay.setPlayer(Player);
+        }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
 
@@ -128,8 +180,11 @@ namespace Planet.Unity
                 } 
             }
 
+            CharacterDisplay.Update();
             Planet.Update(Time.deltaTime, Material, transform);
+
         }
+        Texture2D texture;
 
         private void OnGUI()
         {
@@ -144,9 +199,48 @@ namespace Planet.Unity
                 DrawCurrentMechHighlighter();
             }
 
+            
+            CharacterDisplay.Draw();
+
                  
         }
 
+        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        {
+            var mr = gameObject.GetComponent<MeshRenderer>();
+            mr.sharedMaterial.color = color;
+
+            var mf = gameObject.GetComponent<MeshFilter>();
+            var mesh = mf.sharedMesh;
+
+            List<int> triangles = new List<int>();
+            List<Vector3> vertices = new List<Vector3>();
+
+            Vec2f topLeft = new Vec2f(x, y + h);
+            Vec2f BottomLeft = new Vec2f(x, y);
+            Vec2f BottomRight = new Vec2f(x + w, y);
+            Vec2f TopRight = new Vec2f(x + w, y + h);
+
+            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+
+            vertices.Add(p0);
+            vertices.Add(p1);
+            vertices.Add(p2);
+            vertices.Add(p3);
+
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 2);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 1);
+
+            mesh.SetVertices(vertices);
+            mesh.SetTriangles(triangles.ToArray(), 0);
+        }
 
         private void DrawCurrentMechHighlighter()
         {
@@ -199,42 +293,7 @@ namespace Planet.Unity
             }
         }
 
-        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
-        {
-            var mr = gameObject.GetComponent<MeshRenderer>();
-            mr.sharedMaterial.color = color;
-
-            var mf = gameObject.GetComponent<MeshFilter>();
-            var mesh = mf.sharedMesh;
-
-            List<int> triangles = new List<int>();
-            List<Vector3> vertices = new List<Vector3>();
-
-            Vec2f topLeft = new Vec2f(x, y + h);
-            Vec2f BottomLeft = new Vec2f(x, y);
-            Vec2f BottomRight = new Vec2f(x + w, y);
-            Vec2f TopRight = new Vec2f(x + w, y + h);
-
-            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
-            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
-            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
-            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
-
-            vertices.Add(p0);
-            vertices.Add(p1);
-            vertices.Add(p2);
-            vertices.Add(p3);
-
-            triangles.Add(vertices.Count - 4);
-            triangles.Add(vertices.Count - 2);
-            triangles.Add(vertices.Count - 3);
-            triangles.Add(vertices.Count - 4);
-            triangles.Add(vertices.Count - 3);
-            triangles.Add(vertices.Count - 1);
-
-            mesh.SetVertices(vertices);
-            mesh.SetTriangles(triangles.ToArray(), 0);
-        }
+    
 
 
         private void OnDrawGizmos()
@@ -365,49 +424,6 @@ namespace Planet.Unity
             }
         }
 
-        // create the sprite atlas for testing purposes
-        public void Initialize()
-        {
-
-            
-            Application.targetFrameRate = 60;
-
-            GameResources.Initialize();
-
-            // Generating the map
-            Vec2i mapSize = new Vec2i(128, 32);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
-            PlayerID = Player.agentID.ID;
-
-            PlayerID = Player.agentID.ID;
-            inventoryID = Player.agentInventory.InventoryID;
-
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
-            GameState.MechGUIDrawSystem.Initialize(ref Planet);
-            //GenerateMap();
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-
-            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                Debug.Log("loaded!");*/
-
-            GenerateMap();
-
-            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-
-            AddItemsToPlayer();
-
-            totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
-
-            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
-                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
-        }
 
         public void AddItemsToPlayer()
         {
