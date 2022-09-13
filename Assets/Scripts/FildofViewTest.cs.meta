@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/FildofViewTest.cs.meta
+guid: 70ad5c3569379a84bb488d1b2aec59a2
+========
+guid: de1187dbee4b9b9478bfa7cbd897768a
+>>>>>>>> origin/dev-character-display:Assets/Source/GuiHud/CharacterDisplay/CharacterDisplay.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

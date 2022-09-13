@@ -8,7 +8,6 @@ namespace Item.FireWeapon
     public class ClipComponent : IComponent
     {
         public int NumOfBullets;
-        public int BulletsPerShot;
     }
 }
 

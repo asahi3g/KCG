@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/Vehicle/Systems/AISystem.cs.meta
+guid: 9688d53243b6c594bb1621932c21f247
+========
+guid: b9a4b3856650490409590a031b962d84
+>>>>>>>> main:Assets/Source/Enum/Agent/AgentMovementState.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

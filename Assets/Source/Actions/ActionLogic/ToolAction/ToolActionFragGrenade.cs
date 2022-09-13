@@ -31,23 +31,7 @@ namespace Action
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            int bulletsPerShot = ItemEntity.itemFireWeaponClip.BulletsPerShot;
 
-            // Check if gun got any ammo
-            if (ItemEntity.hasItemFireWeaponClip)
-            {
-                int numBullet = ItemEntity.itemFireWeaponClip.NumOfBullets;
-                if (numBullet == 0)
-                {
-                    Debug.Log("Clip is empty. Press R to reload.");
-                    ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Fail);
-                    return;
-                }
-            }
-
-            // Decrase number of bullets when shoot
-            if (ItemEntity.hasItemFireWeaponClip)
-                ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
             // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;

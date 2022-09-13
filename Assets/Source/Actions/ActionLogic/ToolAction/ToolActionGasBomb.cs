@@ -28,7 +28,6 @@ namespace Action
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
@@ -68,7 +67,6 @@ namespace Action
 
             if(elapsed > 8.0f)
             {
-                ProjectileEntity.Destroy();
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
                 return;
             }
@@ -111,9 +109,6 @@ namespace Action
         }
     }
 
-    /// <summary>
-    /// Factory Method
-    /// </summary>
     public class ToolActionGasBombCreator : ActionCreator
     {
         public override ActionBase CreateAction(Contexts entitasContext, int actionID)

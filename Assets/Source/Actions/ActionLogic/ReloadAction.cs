@@ -31,9 +31,7 @@ namespace Action
                     AgentEntity.agentInventory.InventoryID, selectedSlot);
                 WeaponPropreties = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 
-                bool isReloadable = ItemEntity.hasItemFireWeaponClip | ItemEntity.hasItemPulseWeaponPulse;
-
-                if (isReloadable)
+                if (ItemEntity.hasItemFireWeaponClip)
                 {
                     ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Running);
                     return;
@@ -49,9 +47,6 @@ namespace Action
             {
                 if(ItemEntity.hasItemFireWeaponClip)
                     ItemEntity.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;
-                
-                if(ItemEntity.hasItemPulseWeaponPulse)
-                    ItemEntity.itemPulseWeaponPulse.NumberOfGrenades = WeaponPropreties.GrenadeClipSize;
 
                 ActionEntity.actionExecution.State =  Enums.ActionState.Success;
             }
@@ -67,8 +62,6 @@ namespace Action
             {
                 if (ItemEntity.hasItemFireWeaponClip)
                     Debug.Log("Weapon Reloaded." + ItemEntity.itemFireWeaponClip.NumOfBullets.ToString() + " Ammo in the clip.");
-                else if (ItemEntity.hasItemPulseWeaponPulse)
-                    Debug.Log("Weapon Reloaded." + ItemEntity.itemPulseWeaponPulse.NumberOfGrenades.ToString() + " Grenades in the clip");
             }
 
             base.OnExit(ref planet);

@@ -431,19 +431,21 @@ namespace Planet
             ParticleList.Remove(index);
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
-            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(EntitasContext.projectile,
-                         position, direction, projectileType, true));
+            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
+                EntitasContext.projectile, position, direction, projectileType, isFirstHit));
+            
             return newEntity;
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, bool isFirstSolid)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int damage, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
-            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(EntitasContext.projectile,
-                         position, direction, projectileType, isFirstSolid));
+            ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
+                EntitasContext.projectile, position, direction, projectileType, damage, isFirstHit));
+            
             return newEntity;
         }
 
@@ -539,7 +541,8 @@ namespace Planet
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
             GameState.VehicleCollisionSystem.Update(ref this);
-            GameState.VehicleMovementSystem.ProcessMovement(EntitasContext.vehicle, Vec2f.Zero);
+            GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
+            GameState.VehicleAISystem.Update();
             GameState.ProjectileMovementSystem.Update(EntitasContext.projectile);
             GameState.ProjectileCollisionSystem.UpdateEx(ref this);
 

@@ -8,4 +8,3 @@ namespace Collisions
         public Vec2f point;
     }
 }
-

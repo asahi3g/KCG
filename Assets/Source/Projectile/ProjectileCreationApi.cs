@@ -117,8 +117,8 @@ namespace Projectile
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].rampTime = rampTime;
-                PropertiesArray[CurrentIndex].canRamp = canRamp;
+                PropertiesArray[CurrentIndex].RampTime = rampTime;
+                PropertiesArray[CurrentIndex].CanRamp = canRamp;
                 PropertiesArray[CurrentIndex].StartVelocity = startSpeed;
                 PropertiesArray[CurrentIndex].MaxVelocity = maxSpeed;
             }
@@ -128,8 +128,8 @@ namespace Projectile
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].linearDrag = linearDrag;
-                PropertiesArray[CurrentIndex].linearCutOff = cutOff;
+                PropertiesArray[CurrentIndex].LinearDrag = linearDrag;
+                PropertiesArray[CurrentIndex].LinearCutOff = cutOff;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Projectile
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].dragType = dragType;
+                PropertiesArray[CurrentIndex].DragType = dragType;
             }
         }
 
@@ -162,6 +162,16 @@ namespace Projectile
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
                 PropertiesArray[CurrentIndex].AffectedByGravity = affectedByGravity;
+            }
+        }
+
+        public void SetBounce(float value)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Bounce = true;
+                PropertiesArray[CurrentIndex].BounceValue = value;
+
             }
         }
 

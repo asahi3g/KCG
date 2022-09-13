@@ -13,6 +13,7 @@ namespace Vehicle
         public Vec2f SpriteSize;
 
         public Vec2f CollisionSize;
+        public Vec2f CollisionOffset;
         public Vec2f Scale;
         public Vec2f AngularVelocity;
 
@@ -21,6 +22,8 @@ namespace Vehicle
         public float CenterOfGravity;
 
         public Vec2f CenterOfRotation;
+
+        public bool AffectedByGravity;
     }
 }
 
