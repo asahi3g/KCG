@@ -27,13 +27,15 @@ namespace Collisions
             // This is a temporary solution to get eys position. Todo: Implement a way to get eys pos
             Vec2f agentEyes = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
 
-            CircleSector visionCone = new CircleSector()
-            {
-                Radius = 10.0f,
-                Fov = 80.0f,
-                StartPos = agentEyes,
-                Dir = new Vec2f(agentEntity.agentPhysicsState.Direction, 0.0f)
-            };
+            //CircleSector visionCone = new CircleSector()
+            //{
+            //    Radius = 10.0f,
+            //    Fov = 80.0f,
+            //    StartPos = agentEyes,
+            //    Dir = new Vec2f(agentEntity.agentPhysicsState.Direction, 0.0f)
+            //};
+
+            CircleSector visionCone = agentEntity.agentsLineOfSight.ConeSight;
 
             AABox2D targetBox2D = new AABox2D(
                 new Vec2f(targetAgentEntity.agentPhysicsState.Position.X, targetAgentEntity.agentPhysicsState.Position.Y) + targetAgentEntity.physicsBox2DCollider.Offset,
@@ -43,9 +45,9 @@ namespace Collisions
                 return false;
 
             // Todo: better way to get body part.
-            Vec2f targetUp = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
-            Vec2f targetMiddle = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.5f;
-            Vec2f targetDown = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.1f; ;
+            Vec2f targetUp = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.9f;
+            Vec2f targetMiddle = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.5f;
+            Vec2f targetDown = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.1f; ;
 
             Line2D toUp = new Line2D(agentEyes, targetUp);
             Line2D toMiddle = new Line2D(agentEyes, targetMiddle);
