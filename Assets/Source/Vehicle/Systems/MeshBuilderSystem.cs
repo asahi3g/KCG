@@ -31,9 +31,6 @@ namespace Vehicle
                 var width = entity.vehicleSprite2D.Size.X;
                 var height = entity.vehicleSprite2D.Size.Y;
 
-                if(entity.hasVehicleType)
-                    entity.vehicleType.Obj = Mesh.obj;
-
                 if (!Utility.ObjectMesh.isOnScreen(x, y))
                     continue;
 

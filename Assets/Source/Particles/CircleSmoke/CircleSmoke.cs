@@ -78,10 +78,11 @@ namespace Particle
                     new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
 
                 CircleSmoke.transform.localScale = new Vector3(0.5f, 1.0f, 1.0f);
-                CircleSmoke.transform.position = new Vector3(position.X, position.Y, -1.0f);
+                CircleSmoke.transform.position = new Vector3(position.X, position.Y, 1.0f);
 
-                var color = Random.Range(0.7f, 0.8f);
-                SmokeMaterial.color = new Color(color, color, color, 0.8f);
+                var colorR = Random.Range(0.7f, 0.8f);
+                var colorG = Random.Range(0.35f, 0.45f);
+                SmokeMaterial.color = new Color(colorR, colorG, 0.0f, 1.0f);
 
                 Smokes.Add(meshRenderer); 
                 Positions.Add(position);
@@ -131,7 +132,7 @@ namespace Particle
                         }
                         Collisions[i] = tempCollision;
 
-                        if (Materials[i].color.a <= 0.2f)
+                        if (Materials[i].color.a <= 0.5f)
                             GameObject.Destroy(Smokes[i].gameObject);
                     }
                 }

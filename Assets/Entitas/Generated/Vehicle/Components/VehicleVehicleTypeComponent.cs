@@ -11,19 +11,19 @@ public partial class VehicleEntity {
     public Vehicle.TypeComponent vehicleType { get { return (Vehicle.TypeComponent)GetComponent(VehicleComponentsLookup.VehicleType); } }
     public bool hasVehicleType { get { return HasComponent(VehicleComponentsLookup.VehicleType); } }
 
-    public void AddVehicleType(Enums.VehicleType newType, UnityEngine.GameObject newObj) {
+    public void AddVehicleType(Enums.VehicleType newType, bool newHasAgent) {
         var index = VehicleComponentsLookup.VehicleType;
         var component = (Vehicle.TypeComponent)CreateComponent(index, typeof(Vehicle.TypeComponent));
         component.Type = newType;
-        component.Obj = newObj;
+        component.HasAgent = newHasAgent;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehicleType(Enums.VehicleType newType, UnityEngine.GameObject newObj) {
+    public void ReplaceVehicleType(Enums.VehicleType newType, bool newHasAgent) {
         var index = VehicleComponentsLookup.VehicleType;
         var component = (Vehicle.TypeComponent)CreateComponent(index, typeof(Vehicle.TypeComponent));
         component.Type = newType;
-        component.Obj = newObj;
+        component.HasAgent = newHasAgent;
         ReplaceComponent(index, component);
     }
 

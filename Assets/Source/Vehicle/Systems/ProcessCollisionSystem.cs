@@ -26,17 +26,11 @@ namespace Vehicle
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingTop(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = false;
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
                 }
                 else if (entityBoxBorders.IsCollidingBottom(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = false;
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
-                }
-                else
-                {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = true;
                 }
 
                 pos = entity.vehiclePhysicsState2D;
@@ -48,17 +42,11 @@ namespace Vehicle
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = false;
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }
                 else if (entityBoxBorders.IsCollidingRight(planet.TileMap, pos.angularVelocity))
                 {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = false;
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
-                }
-                else
-                {
-                    entity.vehiclePhysicsState2D.AffectedByGravity = true;
                 }
             }
         }
