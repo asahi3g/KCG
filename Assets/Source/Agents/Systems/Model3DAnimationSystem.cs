@@ -18,10 +18,10 @@ namespace Agent
                 var model3d = entity.agentModel3D;
 
 
-                if (entity.isAgentPlayer)
+                /*if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
-                }
+                }*/
 
 
 
@@ -363,6 +363,7 @@ namespace Agent
                         {
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRoll);
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            currentClip.Speed = 1.0f;
                             break;
                         }
                         case AgentMovementState.Crouch:

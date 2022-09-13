@@ -9,5 +9,6 @@ namespace Animation
         SlimeMoveLeft,
         Dust,
         Smoke,
+        Explosion
     }
 }

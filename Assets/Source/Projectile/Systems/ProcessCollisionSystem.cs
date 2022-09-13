@@ -186,7 +186,7 @@ namespace Projectile
             {
                 if(entityP.projectileType.Type == Enums.ProjectileType.Grenade)
                 {
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.ExplosionEmitter);
                     // Check if projectile has hit a enemy.
                     var entitiesA = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 

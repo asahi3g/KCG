@@ -122,7 +122,7 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/DEFORM_CrouchWalk", AnimationType.SpaceMarineCrouch_Walk);
             AnimationLoader.Load("ArtistAnimations/DEFORM_Limp", AnimationType.SpaceMarineLimp);
             AnimationLoader.Load("ArtistAnimations/DEFORM_Drink", AnimationType.SpaceMarineDrink);
-            AnimationLoader.Load("ArtistAnimations/DEFORM_FallLegs", AnimationType.SpaceMarineJumpFall);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_JumpDown", AnimationType.SpaceMarineJumpFall);
             AnimationLoader.Load("ArtistAnimations/DEFORM_SwordAttack", AnimationType.SpaceMarineSwordSlash);
             AnimationLoader.Load("ArtistAnimations/DEFORM_Shooting", AnimationType.SpaceMarineFireGun);
             AnimationLoader.Load("ArtistAnimations/DEFORM_Throw", AnimationType.SpaceMarineUseTool);
