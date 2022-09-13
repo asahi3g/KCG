@@ -1,4 +1,5 @@
 using Collisions;
+using Entitas;
 using Enums.Tile;
 using KMath;
 using KMath.Random;
@@ -11,6 +12,7 @@ public class LineOfSightTest : MonoBehaviour
     [SerializeField] Material Material;
 
     public CircleSectorRenderDebug CircleSector;
+    public AgentEntity Player;
 
     PlanetState Planet;
     Color standard = new Color(1.0f, 1.0f, 1.0f, 0.6f);
@@ -35,19 +37,20 @@ public class LineOfSightTest : MonoBehaviour
         CircleSector.angle = 40.0f;
         CircleSector.radius = 6.0f;
         CircleSector.color = standard;
-
         GameResources.Initialize();
 
         Planet = new Planet.PlanetState();
         Planet.Init(mapSize);
         Planet.InitializeSystems(Material, transform);
+        Player = Planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime);
 
         GenerateMap();
     }
 
     private void Update()
     {
-        Vec2f pos = CircleSector.getPos();
+        ref Vec2f pos = ref Player.agentPhysicsState.Position;
+        CircleSector.SetPos(pos + Player.agentSprite2D.Size/2.0f);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
             mousePressed = true;
@@ -74,15 +77,18 @@ public class LineOfSightTest : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.A))
             PressedA = false;
 
-
+        Vec2f direction = Vec2f.Zero;
         if (PressedW)
-            CircleSector.transform.position += new Vector3(0f, 0.05f, 0f);
+            direction = new Vec2f(0f, 1f);
         if (PressedS)
-            CircleSector.transform.position += new Vector3(0f, -0.05f, 0f);
+            direction = new Vec2f(0f, -1f);
         if (PressedD)
-            CircleSector.transform.position += new Vector3(0.05f, 0f, 0f);
+            direction = new Vec2f(1f, 0f);
         if (PressedA)
-            CircleSector.transform.position += new Vector3(-0.05f, 0f, 0f);
+            direction = new Vec2f(-1f, 0f);
+
+        const float SPEED = 10.0F;
+        Player.agentPhysicsState.Acceleration =  direction * SPEED / Physics.Constants.TimeToMax;
 
 
         if (mousePressed)
@@ -91,7 +97,7 @@ public class LineOfSightTest : MonoBehaviour
             Vec2f end = new Vec2f(worldPosition.x, worldPosition.y);
             Vec2f dir = end - pos;
             float newTheta = Mathf.Atan2(dir.Y, dir.X) * Mathf.Rad2Deg;
-            CircleSector.transform.RotateAround(new Vector3(pos.X, pos.Y, 0.0f), Vector3.forward, newTheta - theta);
+            CircleSector.Rotate(newTheta - theta);
             theta = newTheta;
 
             CircleSector.radius = dir.Magnitude;
@@ -99,7 +105,7 @@ public class LineOfSightTest : MonoBehaviour
 
         Planet.Update(Time.deltaTime, Material, transform);
 
-        Vec2f direction = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
+        Vec2f sectorDir = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
 
         for (int i = 0; i < Planet.AgentList.Length; i++)
         {
@@ -112,7 +118,7 @@ public class LineOfSightTest : MonoBehaviour
                 Radius = CircleSector.radius,
                 Fov = CircleSector.angle * Mathf.Deg2Rad,
                 StartPos = pos,
-                Dir = direction.Normalized
+                Dir = sectorDir.Normalized
             };
 
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
@@ -143,16 +149,26 @@ public class LineOfSightTest : MonoBehaviour
         {
             for (int i = 0; i < tileMap.MapSize.X; i++)
             {
-                int rand = (int)random.GetUInt32() % 100;
+                int rand = (int)random.GetUInt32();
+                rand = Math.Abs(rand);
+                rand = rand % 100;
+
+                int y = tileMap.MapSize.Y - 1 - j;
+
+                if (rand <= 10 && !(y == mapSize.Y / 2 && i == mapSize.X / 2))
+                    tileMap.SetFrontTile(i, y, TileID.Moon);
+                else 
+                {
+                    tileMap.SetFrontTile(i, y, TileID.Air);
+                    tileMap.SetBackTile(i, y, TileID.Glass);
+                }
+
 
                 if (rand >= 98)
                 {
                     Planet.AddAgent(new Vec2f(i, tileMap.MapSize.Y - 1 - j), 
                         Enums.AgentType.FlyingSlime);
                 }
-
-                tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1 - j, TileID.Air);
-                tileMap.SetBackTile(i, tileMap.MapSize.Y - 1 - j, TileID.Moon);
             }
         }
     }

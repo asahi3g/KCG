@@ -2,6 +2,7 @@
 using KMath;
 using System;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Collisions
 {
@@ -15,6 +16,56 @@ namespace Collisions
             BottonRight = 1 << 2,
             TopRight = 1 << 3
         }
+
+
+        // Todo(Joao): Remove magic numbers.
+        public static bool CanSee(ref Planet.PlanetState planet, int agentID, int targetAgentID)
+        {
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
+            AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
+
+            // This is a temporary solution to get eys position. Todo: Implement a way to get eys pos
+            Vec2f agentEyes = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
+
+            CircleSector visionCone = new CircleSector()
+            {
+                Radius = 10.0f,
+                Fov = 80.0f,
+                StartPos = agentEyes,
+                Dir = new Vec2f(agentEntity.agentPhysicsState.Direction, 0.0f)
+            };
+
+            AABox2D targetBox2D = new AABox2D(
+                new Vec2f(targetAgentEntity.agentPhysicsState.Position.X, targetAgentEntity.agentPhysicsState.Position.Y) + targetAgentEntity.physicsBox2DCollider.Offset,
+                targetAgentEntity.physicsBox2DCollider.Size);
+
+            if (!AABBIntersectSector(ref targetBox2D, visionCone))
+                return false;
+
+            // Todo: better way to get body part.
+            Vec2f targetUp = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
+            Vec2f targetMiddle = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.5f;
+            Vec2f targetDown = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.1f; ;
+
+            Line2D toUp = new Line2D(agentEyes, targetUp);
+            Line2D toMiddle = new Line2D(agentEyes, targetMiddle);
+            Line2D toLow = new Line2D(agentEyes, targetDown);
+            
+            RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUp);
+            if (!toUp.OnLine(result.Point))
+                return true;
+
+            result = Collisions.RayCastAgainstTileMap(planet.TileMap, toMiddle);
+            if (!toMiddle.OnLine(result.Point))
+                return true;
+
+            result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLow);
+            if (!toLow.OnLine(result.Point))
+                return true;
+
+            return false;
+        }
+
 
         /// <summary>
         /// If true it's inside field of view.

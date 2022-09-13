@@ -68,13 +68,23 @@ namespace KMath
         /// </summary>
         /// <returns></returns>
         [MethodImpl((MethodImplOptions)256)]
-        private static bool OnSegment(Vec2f point1, Vec2f point2, Vec2f point3)
+        public static bool OnSegment(Vec2f point1, Vec2f point2, Vec2f point3)
         {
             if (point2.X <= MathF.Max(point1.X, point3.X) && point2.X >= MathF.Min(point1.X, point3.X) &&
                  point2.Y <= MathF.Max(point1.Y, point3.Y) && point2.Y >= MathF.Min(point1.Y, point3.Y))
                 return true;
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Check if point in on the line.
+        /// </summary>
+        [MethodImpl((MethodImplOptions)256)]
+        public bool OnLine(Vec2f point)
+        {
+            return OnSegment(A, point, B);
         }
     }
 }
