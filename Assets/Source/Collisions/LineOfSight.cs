@@ -17,7 +17,6 @@ namespace Collisions
             TopRight = 1 << 3
         }
 
-
         // Todo(Joao): Remove magic numbers.
         public static bool CanSee(ref Planet.PlanetState planet, int agentID, int targetAgentID)
         {
@@ -27,16 +26,7 @@ namespace Collisions
             // This is a temporary solution to get eys position. Todo: Implement a way to get eys pos
             Vec2f agentEyes = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
 
-            //CircleSector visionCone = new CircleSector()
-            //{
-            //    Radius = 10.0f,
-            //    Fov = 80.0f,
-            //    StartPos = agentEyes,
-            //    Dir = new Vec2f(agentEntity.agentPhysicsState.Direction, 0.0f)
-            //};
-
             CircleSector visionCone = agentEntity.agentsLineOfSight.ConeSight;
-
             AABox2D targetBox2D = new AABox2D(
                 new Vec2f(targetAgentEntity.agentPhysicsState.Position.X, targetAgentEntity.agentPhysicsState.Position.Y) + targetAgentEntity.physicsBox2DCollider.Offset,
                 targetAgentEntity.physicsBox2DCollider.Size);
@@ -45,25 +35,54 @@ namespace Collisions
                 return false;
 
             // Todo: better way to get body part.
-            Vec2f targetUp = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.9f;
+            Vec2f targetUpLeft = targetAgentEntity.agentPhysicsState.Position 
+                + new Vec2f(targetAgentEntity.physicsBox2DCollider.Size.X * 0.1f, targetAgentEntity.physicsBox2DCollider.Size.Y * 0.9f);
+            Vec2f targetDownLeft = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.1f;
             Vec2f targetMiddle = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.5f;
-            Vec2f targetDown = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.1f; ;
+            Vec2f targetDownRight = targetAgentEntity.agentPhysicsState.Position 
+                + new Vec2f(targetAgentEntity.physicsBox2DCollider.Size.X * 0.9f, targetAgentEntity.physicsBox2DCollider.Size.Y * 0.1f);
+            Vec2f targetUpRight = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.9f;
 
-            Line2D toUp = new Line2D(agentEyes, targetUp);
+            Line2D toUpLeft = new Line2D(agentEyes, targetUpLeft);
+            Line2D toLowLeft = new Line2D(agentEyes, targetDownLeft);
             Line2D toMiddle = new Line2D(agentEyes, targetMiddle);
-            Line2D toLow = new Line2D(agentEyes, targetDown);
-            
-            RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUp);
-            if (!toUp.OnLine(result.Point))
-                return true;
+            Line2D toUpRight = new Line2D(agentEyes, targetUpRight);
+            Line2D toLowRight = new Line2D(agentEyes, targetDownRight);
 
-            result = Collisions.RayCastAgainstTileMap(planet.TileMap, toMiddle);
-            if (!toMiddle.OnLine(result.Point))
-                return true;
+            if (visionCone.Intersect(targetDownLeft))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowLeft);
+                if (!toLowLeft.OnLine(result.Point))
+                    return true;
+            }
 
-            result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLow);
-            if (!toLow.OnLine(result.Point))
-                return true;
+            if (visionCone.Intersect(targetUpRight))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpRight);
+                if (!toUpRight.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetMiddle))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toMiddle);
+                if (!toMiddle.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetDownRight))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowRight);
+                if (!toLowRight.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetUpLeft))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpLeft);
+                if (!toUpLeft.OnLine(result.Point))
+                    return true;
+            }
 
             return false;
         }
