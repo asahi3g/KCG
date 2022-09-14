@@ -38,6 +38,5 @@ namespace Agent
         public float StaggerDuration;         
         public float RollCooldown;            // cooldown for rolling
         public float RollImpactDuration;      // after the roll you take time to get up again
-
     }
 }

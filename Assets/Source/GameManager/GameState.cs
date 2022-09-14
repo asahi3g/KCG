@@ -218,8 +218,8 @@ public class GameState
 
         ProjectileCreationApi = new Projectile.ProjectileCreationApi();
         ProjectileCollisionSystem = new Projectile.ProcessCollisionSystem();
-        ProjectileMovementSystem = new Projectile.MovementSystem(ProjectileCreationApi);
-        ProjectileSpawnerSystem = new Projectile.SpawnerSystem(ProjectileCreationApi);
+        ProjectileMovementSystem = new Projectile.MovementSystem();
+        ProjectileSpawnerSystem = new Projectile.SpawnerSystem();
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         ProjectileProcessOnHit = new Projectile.ProcessOnHit();
 

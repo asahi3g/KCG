@@ -93,7 +93,6 @@ public class LineOfSightTest : MonoBehaviour
         const float SPEED = 10.0F;
         Player.agentPhysicsState.Acceleration =  direction * SPEED / Physics.Constants.TimeToMax;
 
-
         if (mousePressed)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -102,7 +101,6 @@ public class LineOfSightTest : MonoBehaviour
             float newTheta = Mathf.Atan2(dir.Y, dir.X) * Mathf.Rad2Deg;
             CircleSector.Rotate(newTheta - theta);
             theta = newTheta;
-
             CircleSector.radius = dir.Magnitude;
         }
 
@@ -135,7 +133,7 @@ public class LineOfSightTest : MonoBehaviour
 
     void GenerateMap()
     {
-        var date = DateTime.Now;
+        DateTime date = DateTime.Now;
         int seed = date.Year * 10000 + date.Month * 100
             + date.Day + date.Hour + date.Minute + date.Second;
 
@@ -159,7 +157,6 @@ public class LineOfSightTest : MonoBehaviour
                     tileMap.SetFrontTile(i, y, TileID.Air);
                     tileMap.SetBackTile(i, y, TileID.Glass);
                 }
-
 
                 if (rand >= 98)
                 {

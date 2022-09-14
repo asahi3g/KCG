@@ -158,7 +158,7 @@ namespace Collisions
         }
 
         [MethodImpl((MethodImplOptions)256)]
-        private static bool EdgeIntersectSector(Line2D line, float radius, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
+        public static bool EdgeIntersectSector(Line2D line, float radius, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
         {
             // https://www.geometrictools.com/Documentation/IntersectionLine2Circle2.pdf
             // Sector Arc Intersection
