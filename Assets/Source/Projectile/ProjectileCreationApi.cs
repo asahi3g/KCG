@@ -62,9 +62,7 @@ namespace Projectile
 
             CurrentIndex = Id;
             if (CurrentIndex != -1)
-            {
                 PropertiesArray[CurrentIndex].PropertiesId = CurrentIndex;
-            }
         }
 
         public void SetName(string name)
@@ -82,17 +80,13 @@ namespace Projectile
         public void SetSpriteId(int SpriteId)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
                 PropertiesArray[CurrentIndex].SpriteId = SpriteId;
-            }
         }
 
         public void SetSize(Vec2f size)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
                 PropertiesArray[CurrentIndex].Size = size;
-            }
         }
 
         public void SetAnimation(Animation.AnimationType animationType)
@@ -104,23 +98,18 @@ namespace Projectile
             }
         }
 
-        public void SetSpeed(float speed)
+        public void SetStartVelocity(float startVelocity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].Speed = speed;
-            }
+                PropertiesArray[CurrentIndex].StartVelocity = startVelocity;
         }
 
-        public void SetRamp(bool canRamp, float startSpeed, float maxSpeed, 
-            float rampTime)
+        public void SetRamp(float maxVelocity)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].RampTime = rampTime;
-                PropertiesArray[CurrentIndex].CanRamp = canRamp;
-                PropertiesArray[CurrentIndex].StartVelocity = startSpeed;
-                PropertiesArray[CurrentIndex].MaxVelocity = maxSpeed;
+                PropertiesArray[CurrentIndex].Flags |= ProjectileProperties.ProjFlags.CanRamp;
+                PropertiesArray[CurrentIndex].MaxVelocity = maxVelocity;
             }
         }
 
@@ -128,48 +117,35 @@ namespace Projectile
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
+                PropertiesArray[CurrentIndex].Flags |= ProjectileProperties.ProjFlags.HasLinearDrag;
                 PropertiesArray[CurrentIndex].LinearDrag = linearDrag;
                 PropertiesArray[CurrentIndex].LinearCutOff = cutOff;
             }
         }
 
-        public void SetDragType(Enums.DragType dragType)
+        public void SetRampAcceleration(float acceleration)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].DragType = dragType;
-            }
-        }
-
-        public void SetAcceleration(Vec2f acceleration)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].Acceleration = acceleration;
-            }
+                PropertiesArray[CurrentIndex].RampAcceleration = acceleration;
         }
 
         public void SetDeltaRotation(float deltaRotation)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
                 PropertiesArray[CurrentIndex].DeltaRotation = deltaRotation;
-            }
         }
 
-        public void SetAffectedByGravity(bool affectedByGravity)
+        public void SetAffectedByGravity()
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].AffectedByGravity = affectedByGravity;
-            }
+                PropertiesArray[CurrentIndex].Flags |= ProjectileProperties.ProjFlags.AffectedByGravity;
         }
 
         public void SetBounce(float value)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].Bounce = true;
+                PropertiesArray[CurrentIndex].Flags |= ProjectileProperties.ProjFlags.CanBounce;
                 PropertiesArray[CurrentIndex].BounceValue = value;
 
             }
@@ -177,6 +153,9 @@ namespace Projectile
 
         public void End()
         {
+            if (PropertiesArray[CurrentIndex].MaxVelocity < PropertiesArray[CurrentIndex].StartVelocity)
+                PropertiesArray[CurrentIndex].MaxVelocity = PropertiesArray[CurrentIndex].StartVelocity;
+
             CurrentIndex = -1;
         }
     }

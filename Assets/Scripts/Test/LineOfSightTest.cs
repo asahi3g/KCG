@@ -1,4 +1,6 @@
 using Collisions;
+using Entitas;
+using Enums;
 using Enums.Tile;
 using KMath;
 using KMath.Random;
@@ -11,6 +13,7 @@ public class LineOfSightTest : MonoBehaviour
     [SerializeField] Material Material;
 
     public CircleSectorRenderDebug CircleSector;
+    public AgentEntity Player;
 
     PlanetState Planet;
     Color standard = new Color(1.0f, 1.0f, 1.0f, 0.6f);
@@ -35,19 +38,22 @@ public class LineOfSightTest : MonoBehaviour
         CircleSector.angle = 40.0f;
         CircleSector.radius = 6.0f;
         CircleSector.color = standard;
-
         GameResources.Initialize();
 
         Planet = new Planet.PlanetState();
         Planet.Init(mapSize);
         Planet.InitializeSystems(Material, transform);
+        Player = Planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime);
+        Player.AddAgentsLineOfSight(new CircleSector());
 
         GenerateMap();
     }
 
     private void Update()
     {
-        Vec2f pos = CircleSector.getPos();
+        Vec2f pos = Player.agentPhysicsState.Position; 
+        pos += Player.agentSprite2D.Size / 2.0f;
+        CircleSector.SetPos(pos);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
             mousePressed = true;
@@ -74,16 +80,18 @@ public class LineOfSightTest : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.A))
             PressedA = false;
 
-
+        Vec2f direction = Vec2f.Zero;
         if (PressedW)
-            CircleSector.transform.position += new Vector3(0f, 0.05f, 0f);
+            direction = new Vec2f(0f, 1f);
         if (PressedS)
-            CircleSector.transform.position += new Vector3(0f, -0.05f, 0f);
+            direction = new Vec2f(0f, -1f);
         if (PressedD)
-            CircleSector.transform.position += new Vector3(0.05f, 0f, 0f);
+            direction = new Vec2f(1f, 0f);
         if (PressedA)
-            CircleSector.transform.position += new Vector3(-0.05f, 0f, 0f);
+            direction = new Vec2f(-1f, 0f);
 
+        const float SPEED = 10.0F;
+        Player.agentPhysicsState.Acceleration =  direction * SPEED / Physics.Constants.TimeToMax;
 
         if (mousePressed)
         {
@@ -91,33 +99,28 @@ public class LineOfSightTest : MonoBehaviour
             Vec2f end = new Vec2f(worldPosition.x, worldPosition.y);
             Vec2f dir = end - pos;
             float newTheta = Mathf.Atan2(dir.Y, dir.X) * Mathf.Rad2Deg;
-            CircleSector.transform.RotateAround(new Vector3(pos.X, pos.Y, 0.0f), Vector3.forward, newTheta - theta);
+            CircleSector.Rotate(newTheta - theta);
             theta = newTheta;
-
             CircleSector.radius = dir.Magnitude;
         }
 
         Planet.Update(Time.deltaTime, Material, transform);
 
-        Vec2f direction = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
+        Vec2f sectorDir = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
+
+        ref CircleSector circleSector = ref Player.agentsLineOfSight.ConeSight;
+        circleSector.Radius = CircleSector.radius;
+        circleSector.Fov = CircleSector.angle * Mathf.Deg2Rad;
+        circleSector.StartPos = pos;
+        circleSector.Dir = sectorDir.Normalized;
 
         for (int i = 0; i < Planet.AgentList.Length; i++)
         {
             AgentEntity entity = Planet.AgentList.Get(i);
-            Agent.PhysicsStateComponent physicsState = entity.agentPhysicsState;
-            Physics.Box2DColliderComponent box2DCollider = entity.physicsBox2DCollider;
-            
-            CircleSector circleSector = new CircleSector()
-            {
-                Radius = CircleSector.radius,
-                Fov = CircleSector.angle * Mathf.Deg2Rad,
-                StartPos = pos,
-                Dir = direction.Normalized
-            };
+            if (entity.agentID.ID == Player.agentID.ID)
+                continue;
 
-            AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
-            bool intersect = Collisions.LineOfSight.AABBIntersectSector(ref entityBoxBorders, circleSector);
-
+            bool intersect = LineOfSight.CanSee(ref Planet, Player.agentID.ID, entity.agentID.ID);
             if (intersect)
             {
                 CircleSector.color = hitColor;
@@ -130,7 +133,7 @@ public class LineOfSightTest : MonoBehaviour
 
     void GenerateMap()
     {
-        var date = DateTime.Now;
+        DateTime date = DateTime.Now;
         int seed = date.Year * 10000 + date.Month * 100
             + date.Day + date.Hour + date.Minute + date.Second;
 
@@ -143,16 +146,23 @@ public class LineOfSightTest : MonoBehaviour
         {
             for (int i = 0; i < tileMap.MapSize.X; i++)
             {
-                int rand = (int)random.GetUInt32() % 100;
+                int rand = (int)(random.GetUInt32() % 100);
+
+                int y = tileMap.MapSize.Y - 1 - j;
+
+                if (rand <= 10 && !(y == mapSize.Y / 2 && i == mapSize.X / 2))
+                    tileMap.SetFrontTile(i, y, TileID.Moon);
+                else 
+                {
+                    tileMap.SetFrontTile(i, y, TileID.Air);
+                    tileMap.SetBackTile(i, y, TileID.Glass);
+                }
 
                 if (rand >= 98)
                 {
                     Planet.AddAgent(new Vec2f(i, tileMap.MapSize.Y - 1 - j), 
                         Enums.AgentType.FlyingSlime);
                 }
-
-                tileMap.SetFrontTile(i, tileMap.MapSize.Y - 1 - j, TileID.Air);
-                tileMap.SetBackTile(i, tileMap.MapSize.Y - 1 - j, TileID.Moon);
             }
         }
     }

@@ -2,6 +2,7 @@
 using KMath;
 using System;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Collisions
 {
@@ -15,6 +16,77 @@ namespace Collisions
             BottonRight = 1 << 2,
             TopRight = 1 << 3
         }
+
+        // Todo(Joao): Remove magic numbers.
+        public static bool CanSee(ref Planet.PlanetState planet, int agentID, int targetAgentID)
+        {
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
+            AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
+
+            // This is a temporary solution to get eys position. Todo: Implement a way to get eys pos
+            Vec2f agentEyes = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
+
+            CircleSector visionCone = agentEntity.agentsLineOfSight.ConeSight;
+            AABox2D targetBox2D = new AABox2D(
+                new Vec2f(targetAgentEntity.agentPhysicsState.Position.X, targetAgentEntity.agentPhysicsState.Position.Y) + targetAgentEntity.physicsBox2DCollider.Offset,
+                targetAgentEntity.physicsBox2DCollider.Size);
+
+            if (!AABBIntersectSector(ref targetBox2D, visionCone))
+                return false;
+
+            // Todo: better way to get body part.
+            Vec2f targetUpLeft = targetAgentEntity.agentPhysicsState.Position 
+                + new Vec2f(targetAgentEntity.physicsBox2DCollider.Size.X * 0.1f, targetAgentEntity.physicsBox2DCollider.Size.Y * 0.9f);
+            Vec2f targetDownLeft = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.1f;
+            Vec2f targetMiddle = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.5f;
+            Vec2f targetDownRight = targetAgentEntity.agentPhysicsState.Position 
+                + new Vec2f(targetAgentEntity.physicsBox2DCollider.Size.X * 0.9f, targetAgentEntity.physicsBox2DCollider.Size.Y * 0.1f);
+            Vec2f targetUpRight = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size * 0.9f;
+
+            Line2D toUpLeft = new Line2D(agentEyes, targetUpLeft);
+            Line2D toLowLeft = new Line2D(agentEyes, targetDownLeft);
+            Line2D toMiddle = new Line2D(agentEyes, targetMiddle);
+            Line2D toUpRight = new Line2D(agentEyes, targetUpRight);
+            Line2D toLowRight = new Line2D(agentEyes, targetDownRight);
+
+            if (visionCone.Intersect(targetDownLeft))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowLeft);
+                if (!toLowLeft.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetUpRight))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpRight);
+                if (!toUpRight.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetMiddle))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toMiddle);
+                if (!toMiddle.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetDownRight))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowRight);
+                if (!toLowRight.OnLine(result.Point))
+                    return true;
+            }
+
+            if (visionCone.Intersect(targetUpLeft))
+            {
+                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpLeft);
+                if (!toUpLeft.OnLine(result.Point))
+                    return true;
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// If true it's inside field of view.
@@ -86,7 +158,7 @@ namespace Collisions
         }
 
         [MethodImpl((MethodImplOptions)256)]
-        private static bool EdgeIntersectSector(Line2D line, float radius, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
+        public static bool EdgeIntersectSector(Line2D line, float radius, Vec2f leftEdge, Vec2f rightEdge, Vec2f startPos)
         {
             // https://www.geometrictools.com/Documentation/IntersectionLine2Circle2.pdf
             // Sector Arc Intersection

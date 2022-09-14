@@ -32,7 +32,6 @@ namespace Item
             PlacementTool = 1 << 4,
         }
 
-
         public bool IsStackable() { return ItemFlags.HasFlag(Flags.Stackable); }
         public bool IsTool() { return ItemFlags.HasFlag(Flags.Tool); }
         public bool IsPlacementTool() { return ItemFlags.HasFlag(Flags.PlacementTool); }

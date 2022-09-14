@@ -57,8 +57,15 @@ namespace Collisions
             Vec2f surfaceNormal = new Vec2f();
             float fMaxDistance = 100.0f;
             float fDistance = 0.0f;
+            int maxIterations = 1000;
+            int i = 0;
             while (!bTileFound && fDistance < fMaxDistance)
             {
+                i++;
+                if (i >= maxIterations)
+                {
+                    break;
+                }
                 // Walk along shortest path
                 if (vRayLength1D.X < vRayLength1D.Y)
                 {

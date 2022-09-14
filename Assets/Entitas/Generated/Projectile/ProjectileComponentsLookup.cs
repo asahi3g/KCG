@@ -14,12 +14,12 @@ public static class ProjectileComponentsLookup {
     public const int PhysicsSphere2DCollider = 3;
     public const int ProjectileDamage = 4;
     public const int ProjectileExplosive = 5;
-    public const int ProjectileFirstHIt = 6;
-    public const int ProjectileID = 7;
-    public const int ProjectileLinearDrag = 8;
-    public const int ProjectileOnHit = 9;
-    public const int ProjectilePhysicsState = 10;
-    public const int ProjectileRamp = 11;
+    public const int ProjectileFirstFrame = 6;
+    public const int ProjectileFirstHIt = 7;
+    public const int ProjectileID = 8;
+    public const int ProjectileLinearDrag = 9;
+    public const int ProjectileOnHit = 10;
+    public const int ProjectilePhysicsState = 11;
     public const int ProjectileSprite2D = 12;
     public const int ProjectileType = 13;
 
@@ -32,12 +32,12 @@ public static class ProjectileComponentsLookup {
         "PhysicsSphere2DCollider",
         "ProjectileDamage",
         "ProjectileExplosive",
+        "ProjectileFirstFrame",
         "ProjectileFirstHIt",
         "ProjectileID",
         "ProjectileLinearDrag",
         "ProjectileOnHit",
         "ProjectilePhysicsState",
-        "ProjectileRamp",
         "ProjectileSprite2D",
         "ProjectileType"
     };
@@ -49,12 +49,12 @@ public static class ProjectileComponentsLookup {
         typeof(Physics.Sphere2DColliderComponent),
         typeof(Projectile.DamageComponent),
         typeof(Projectile.ExplosiveComponent),
+        typeof(Projectile.FirstFrameComponent),
         typeof(Projectile.FirstHItComponent),
         typeof(Projectile.IDComponent),
         typeof(Projectile.LinearDragComponent),
         typeof(Projectile.OnHitComponent),
         typeof(Projectile.PhysicsStateComponent),
-        typeof(Projectile.RampComponent),
         typeof(Projectile.Sprite2DComponent),
         typeof(Projectile.TypeComponent)
     };
