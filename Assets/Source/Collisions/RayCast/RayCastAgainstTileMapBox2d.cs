@@ -54,6 +54,7 @@ namespace Collisions
 
             // Perform "Walk" until collision or range check
             bool bTileFound = false;
+            Vec2f surfaceNormal = new Vec2f();
             float fMaxDistance = 100.0f;
             float fDistance = 0.0f;
             while (!bTileFound && fDistance < fMaxDistance)
@@ -97,6 +98,34 @@ namespace Collisions
                             PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
                             if (tileID != Enums.Tile.TileID.Air)
                             {
+
+                                float diffx = (x + 0.5f) - currentPoint.X;
+                                float diffy = (y + 0.5f) - currentPoint.Y;
+
+                                if (Math.Abs(diffx) > Math.Abs(diffy))
+                                {
+                                    if (diffx > 0)
+                                    {
+                                        surfaceNormal = new Vec2f(-1.0f, 0.0f);
+                                    }
+                                    else
+                                    {
+                                        surfaceNormal = new Vec2f(1.0f, 0.0f);
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    if (diffy > 0)
+                                    {
+                                        surfaceNormal = new Vec2f(0.0f, -1.0f);
+                                    }
+                                    else
+                                    {
+                                        surfaceNormal = new Vec2f(0.0f, 1.0f);
+                                    }
+                                }
+
                                 bTileFound = true;
                             }
                         }
@@ -123,6 +152,7 @@ namespace Collisions
             RayCastResult result = new RayCastResult();
             result.Intersect = bTileFound;
             result.Point = vIntersection;
+            result.Normal = surfaceNormal;
 
             return result;
 
