@@ -159,14 +159,24 @@ namespace Projectile
             CurrentIndex = -1;
         }
 
+        // Sheets
         public static int OreSpriteSheet;
+        public static int GrenadeSpriteSheet;
+
+        // ID's
         public static int OreIcon;
+        public static int GrenadeSpriteId;
+        public static int GrenadeSprite5;
 
         public void InitializeResources()
         {
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
+            GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
+            GrenadeSprite5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades5.png", 16, 16);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Arrow);
             GameState.ProjectileCreationApi.SetName("arrow");
@@ -174,6 +184,41 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
             GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
             GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Rocket);
+            GameState.ProjectileCreationApi.SetName("rocket");
+            GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
+            GameState.ProjectileCreationApi.SetRamp(40f);
+            GameState.ProjectileCreationApi.SetRampAcceleration(4.0f);
+            GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.GasGrenade);
+            GameState.ProjectileCreationApi.SetName("gas_grenade");
+            GameState.ProjectileCreationApi.SetSpriteId(GrenadeSprite5);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(15.0f);
+            GameState.ProjectileCreationApi.SetLinearDrag(0, 0);
+            GameState.ProjectileCreationApi.SetBounce(0.4f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Grenade);
+            GameState.ProjectileCreationApi.SetName("grenade");
+            GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(15.0f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Bullet);
+            GameState.ProjectileCreationApi.SetName("bullet");
+            GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
+            GameState.ProjectileCreationApi.SetStartVelocity(100.0f);
+            GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
             GameState.ProjectileCreationApi.End();
         }
     }
