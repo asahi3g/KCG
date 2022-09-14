@@ -11,17 +11,19 @@ public partial class VehicleEntity {
     public Vehicle.TypeComponent vehicleType { get { return (Vehicle.TypeComponent)GetComponent(VehicleComponentsLookup.VehicleType); } }
     public bool hasVehicleType { get { return HasComponent(VehicleComponentsLookup.VehicleType); } }
 
-    public void AddVehicleType(Enums.VehicleType newType) {
+    public void AddVehicleType(Enums.VehicleType newType, bool newHasAgent) {
         var index = VehicleComponentsLookup.VehicleType;
         var component = (Vehicle.TypeComponent)CreateComponent(index, typeof(Vehicle.TypeComponent));
         component.Type = newType;
+        component.HasAgent = newHasAgent;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehicleType(Enums.VehicleType newType) {
+    public void ReplaceVehicleType(Enums.VehicleType newType, bool newHasAgent) {
         var index = VehicleComponentsLookup.VehicleType;
         var component = (Vehicle.TypeComponent)CreateComponent(index, typeof(Vehicle.TypeComponent));
         component.Type = newType;
+        component.HasAgent = newHasAgent;
         ReplaceComponent(index, component);
     }
 

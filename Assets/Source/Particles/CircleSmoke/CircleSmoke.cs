@@ -55,6 +55,44 @@ namespace Particle
             }
         }
 
+        public static void Spawn(VehicleEntity vehicle, int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
+        {
+            // Spawn "count" Particle at "position"
+            // Veloctity to give wind effect (veloicty over time or default velocity?)
+            // Scale to give physics effects (scale over time)
+            // Apply Toon Smoke Material
+             
+            for (int i = 0; i < count; i++)
+            {
+                GameObject CircleSmoke = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                CircleSmoke.hideFlags = HideFlags.HideInHierarchy;
+                GameObject.Destroy(CircleSmoke.GetComponent<SphereCollider>());
+                MeshRenderer meshRenderer = CircleSmoke.GetComponent<MeshRenderer>();
+                CircleSmoke.name = "CircleSmoke";
+
+                Material SmokeMaterial = MonoBehaviour.Instantiate(Resources.Load("Materials\\ToonShader\\Smoke", typeof(Material)) as Material);
+
+                meshRenderer.material = SmokeMaterial;
+
+                AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
+                    new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
+
+                CircleSmoke.transform.localScale = new Vector3(0.5f, 1.0f, 1.0f);
+                CircleSmoke.transform.position = new Vector3(position.X, position.Y, 1.0f);
+
+                var colorR = Random.Range(0.7f, 0.8f);
+                var colorG = Random.Range(0.35f, 0.45f);
+                SmokeMaterial.color = new Color(colorR, colorG, 0.0f, 1.0f);
+
+                Smokes.Add(meshRenderer); 
+                Positions.Add(position);
+                Velocities.Add(velocity);
+                Scales.Add(scaleVelocity);
+                Collisions.Add(collision);
+                Materials.Add(SmokeMaterial);
+            }
+        }
+
         public static void Update(ref PlanetTileMap.TileMap tileMap)
         {
             // Decrease Alpha Blending over time
@@ -94,7 +132,7 @@ namespace Particle
                         }
                         Collisions[i] = tempCollision;
 
-                        if (Materials[i].color.a <= 0.2f)
+                        if (Materials[i].color.a <= 0.5f)
                             GameObject.Destroy(Smokes[i].gameObject);
                     }
                 }

@@ -33,13 +33,13 @@ namespace Vehicle
             entity.AddVehicleSprite2D(vehicleProperties.SpriteId, vehicleProperties.SpriteSize);
 
             // Add Physics State 2D Component
-            entity.AddVehiclePhysicsState2D(position, position, vehicleProperties.Scale, vehicleProperties.Scale, vehicleProperties.AngularVelocity, vehicleProperties.AngularMass,
+            entity.AddVehiclePhysicsState2D(position, position, vehicleProperties.Scale, vehicleProperties.Scale, vehicleProperties.Rotation, vehicleProperties.AngularVelocity, vehicleProperties.AngularMass,
                 vehicleProperties.AngularAcceleration, vehicleProperties.CenterOfGravity, vehicleProperties.CenterOfRotation, vehicleProperties.AffectedByGravity);
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(vehicleProperties.CollisionSize, vehicleProperties.CollisionOffset);
 
-            entity.AddVehicleType(vehicleType);
+            entity.AddVehicleType(vehicleType, false);
 
 
             // Increase ID per object statically

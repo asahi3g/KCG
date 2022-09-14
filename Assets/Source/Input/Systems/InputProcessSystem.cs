@@ -185,20 +185,30 @@ namespace ECSInput
 
                     foreach (var vehicle in vehicles)
                     {
-                        if(Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 2.0f)
+                        if(Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
                         {
                             if(player.agentModel3D.GameObject.gameObject.active == true)
                             {
+                                GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+
+                                // Player Gets inside of Rocket
+                                // Hide Agent/Player
                                 player.agentModel3D.GameObject.gameObject.SetActive(false);
                                 player.agentState.State = AgentState.Dead;
-                                GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(vehicle.vehiclePhysicsState2D.TempPosition.X + 2.5f,
-                                    vehicle.vehiclePhysicsState2D.Position.Y + 1.0f), new Vec2f(-6.0f, 0.3f));
+                                vehicle.vehicleType.HasAgent = true;
+
+                                GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
                             }
                             else
                             {
+                                vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                                GameState.VehicleAISystem.StopAI();
+
+                                vehicle.vehicleType.HasAgent = false;
                                 player.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
                                 player.agentModel3D.GameObject.gameObject.SetActive(true);
                                 player.agentState.State = AgentState.Alive;
+
                             }
                             
                         }
