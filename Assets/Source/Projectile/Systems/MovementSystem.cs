@@ -3,156 +3,57 @@ using System.Collections.Generic;
 using System.Collections;
 using KMath;
 using UnityEngine;
+using Physics;
+using Enums;
+using Planet;
 
 namespace Projectile
 {
     public class MovementSystem
     {
-        ProjectileCreationApi ProjectileCreationApi;
-
-        float Gravity = 0.1f;
-
-        public bool fixedGravity = false;
-
-        public MovementSystem(ProjectileCreationApi projectileCreationApi)
+        private void Update(ProjectileEntity entityP, float deltaTime)
         {
-            ProjectileCreationApi = projectileCreationApi;
+            if (entityP.isProjectileFirstFrame)
+            {
+                entityP.isProjectileFirstFrame = false;
+                return;
+            }
+
+            ProjectileProperties projectileProperties = 
+                GameState.ProjectileCreationApi.GetRef((int)entityP.projectileType.Type);
+
+            PhysicsStateComponent physicsState = entityP.projectilePhysicsState;
+            if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.AffectedByGravity))
+                physicsState.Acceleration.Y -= Constants.Gravity;
+
+            Vec2f dir = physicsState.Velocity.Normalized;
+            if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.CanRamp) && physicsState.Velocity.Magnitude < projectileProperties.MaxVelocity)
+                physicsState.Acceleration += dir * projectileProperties.RampAcceleration;
+
+            if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.HasLinearDrag))
+                physicsState.Acceleration += dir * projectileProperties.LinearDrag;
+
+            Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
+            Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
+
+            dir = newVelocity.Normalized;
+            if (physicsState.Velocity.Magnitude > projectileProperties.MaxVelocity)
+                newVelocity = dir * projectileProperties.MaxVelocity;
+
+            Vec2f newPosition = physicsState.Position + displacement;
+            physicsState.PreviousPosition = physicsState.Position;
+            physicsState.Position = newPosition;
+
+            physicsState.Velocity = newVelocity;
+            physicsState.Acceleration = Vec2f.Zero;
         }
 
-        public void Update(ProjectileContext gameContext)
+        public void Update(ref PlanetState planet)
         {
             float deltaTime = Time.deltaTime;
-            var projectiles = gameContext.GetGroup(ProjectileMatcher.ProjectilePhysicsState);
-            foreach (var projectile in projectiles)
+            for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
-                // Get Projectile Type
-                var type = projectile.projectileType.Type;
-
-                // Get Projectile Properties
-                ProjectileProperties projectileProperties =
-                                    ProjectileCreationApi.GetRef((int)type);
-
-                // Get Projectile Position
-                var pos = projectile.projectilePhysicsState;
-
-                // Get physicsState Component
-                var physicsState = projectile.projectilePhysicsState;
-
-                // Set Gravity
-                projectileProperties.GravityScale = 0.1f;
-                Gravity = projectileProperties.GravityScale;
-
-                // Get Projectile Can Ramp Condition
-                var canRamp = projectile.projectileRamp.canRamp;
-
-                // Get Linear Drag
-                var linearDrag = projectile.projectileLinearDrag.Drag;
-
-                // Get Linear Drag Cutoff
-                var linearCutoff = projectile.projectileLinearDrag.CutOff;
-
-                // Calculate Displacement
-                Vec2f displacement =
-                    0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
-
-                // New Calculated Velocity
-                Vec2f newVelocity = new Vec2f(0f, 0f);
-
-                if(projectileProperties.AffectedByGravity)
-                    projectile.projectilePhysicsState.Velocity.Y -= Gravity;
-
-                // If Ramp is On
-                if(canRamp)
-                {
-                    // Get Start Speed for Ramp
-                    var startSpeed = projectile.projectileRamp.startVelocity;
-
-                    // Get Max Speed for Ramp
-                    var maxSpeed = projectile.projectileRamp.maxVelocity;
-
-                    // Get Ramp Time for Ramp
-                    var rampTime = projectile.projectileRamp.rampTime; 
-
-                    // Elapsed time
-                    float elapsed = 0.0f;
-
-                    // Smoothly Increasing velocity
-                    while (elapsed < rampTime)
-                    {
-                        // If ramp is on
-                        if (canRamp)
-                        {
-                            // Increase projectile speed smoothly
-                            projectileProperties.Speed = Mathf.Lerp(startSpeed, maxSpeed, elapsed / rampTime);
-
-                            // If linear drag is on
-                            if (projectileProperties.DragType == Enums.DragType.Linear)
-                            {
-                                // Apply linear drag to speed
-                                projectileProperties.Speed = (1 - projectileProperties.Speed / (linearDrag + linearCutoff));
-
-                                // Calculate Drag Force Magnitude
-                                var dragForceMag = physicsState.Velocity.Magnitude / 2 * linearDrag;
-
-                                // Calculate Force Vector
-                                var dragForceVector = dragForceMag *  new Vec2f(-physicsState.Velocity.Normalized.X, -physicsState.Velocity.Normalized.Y);
-
-                                // Calculate New Velocity
-                                newVelocity = physicsState.Acceleration * deltaTime + (physicsState.Velocity * projectileProperties.Speed);
-
-                                // Add drag force to velocity vector
-                                newVelocity += dragForceVector;
-                            }
-                            else if (projectileProperties.DragType == Enums.DragType.Off) // If linear drag is off
-                            {
-                                // Set New velocity without adding any drag
-                                newVelocity = physicsState.Acceleration * deltaTime + (physicsState.Velocity * projectileProperties.Speed);
-                            }
-                            
-                            // Increase Time
-                            elapsed += Time.deltaTime;
-                        }
-                    }
-                    // Set Speed to Maxmium Velocity
-                    projectileProperties.Speed = projectileProperties.MaxVelocity;
-                }
-                else
-                {
-                    // If linear drag is on
-                    if(projectileProperties.DragType == Enums.DragType.Linear)
-                    {
-                        // Calculate Speed
-                        projectileProperties.Speed = (1 - projectileProperties.Speed / (linearDrag + linearCutoff));
-
-
-                        // Calculate Drag Force Magnitude
-                        var dragForceMag = physicsState.Velocity.Magnitude / 2 * linearDrag;
-
-
-                        // Calculate Drag Force Vector
-                        var dragForceVector = dragForceMag * new Vec2f(-physicsState.Velocity.Normalized.X, -physicsState.Velocity.Normalized.Y);
-
-
-                        // Calculate New Velocity
-                        newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity / linearDrag;
-
-                        // Add drag force to new velocity
-                        newVelocity += dragForceVector;
-
-
-                    }
-                    else if (projectileProperties.DragType == Enums.DragType.Off)
-                    {
-                        newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
-                    }
-                }
-
-                float newRotation = pos.Rotation + projectileProperties.DeltaRotation * deltaTime;  
-
-                projectile.ReplaceProjectilePhysicsState(pos.Position + displacement, pos.Position, newRotation,
-                    newVelocity, physicsState.Acceleration, physicsState.AffectedByGravity, newVelocity, projectile.projectilePhysicsState.angularMass,
-                    projectile.projectilePhysicsState.angularAcceleration, projectile.projectilePhysicsState.centerOfGravity,
-                    projectile.projectilePhysicsState.centerOfRotation);
+                Update(planet.ProjectileList.Get(i), deltaTime);
             }
         }
     }
