@@ -143,6 +143,16 @@ namespace Agent
                  //   }
                 }
 
+                Vec2f particlesSpawnPosition = physicsState.Position;
+                if (physicsState.Direction == 1)
+                {
+                    particlesSpawnPosition += new Vec2f(-0.44f, 1.2f);
+                }
+                else if (physicsState.Direction == -1)
+                {
+                    particlesSpawnPosition += new Vec2f(0.44f, 1.2f);
+                }
+
 
                 // the end of dashing
                 // we can do this using a fixed amount of time.
@@ -156,7 +166,7 @@ namespace Agent
                 // if we are dashing we add some particles
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
-                    planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, 0.5f), Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
                 }
 
                 // if we are sliding
@@ -207,23 +217,27 @@ namespace Agent
                     physicsState.Velocity.Y = 3.5f;
 
                     // Reduce the fuel and spawn particles
-                    stats.Fuel -= 1.0f;
+                    stats.Fuel -= 30.0f * deltaTime;
                     if (stats.Fuel <= 1.0f)
                     {
-                        stats.Fuel -= 30.0f;
+                        stats.Fuel -= 10.0f;
                     }
-                    planet.AddParticleEmitter(physicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
 
-                    physicsState.MovementState = AgentMovementState.None;
+                    //physicsState.MovementState = AgentMovementState.None;
                 }
                 else
                 {
                     // make sure the fuel never goes up more than it should
                     if (stats.Fuel <= 100)
+                    {
                         // if we are not JetPackFlying, add fuel to the tank
-                        stats.Fuel += 1.0f;
+                        stats.Fuel += 30.0f * deltaTime;
+                    }
                     else
+                    {
                         stats.Fuel = 100;
+                    }
                 }
                 
 

@@ -28,7 +28,7 @@ namespace KGui
             Enabled = true;
             DebugDraw = false;
 
-            x = 600;
+            x = 800;
             y = 200;
             width = 300;
             height = 200;

@@ -73,7 +73,7 @@ namespace KGui
 
             Model = GameObject.Instantiate(model);
             Model.transform.position = new Vector3(-1000.0f - 2.5f, -1000.0f - 4.5f, 20.0f);
-            Model.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
+            Model.transform.localScale = new Vector3(1.5f * 4, 1.5f * 4, 1.5f * 4); 
 
             GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
             animancerComponentGO.transform.parent = Model.transform;
@@ -82,10 +82,10 @@ namespace KGui
             AnimancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
             AnimancerComponent.Animator = Model.GetComponent<Animator>();
 
-            Model.transform.rotation = Quaternion.Euler(0, 120, 0);
+            Model.transform.rotation = Quaternion.Euler(0, 140, 0);
             if (AnimancerComponent)
             {
-                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
                 AnimancerComponent.Play(animation);
             }
         }
