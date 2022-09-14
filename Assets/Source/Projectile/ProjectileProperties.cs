@@ -19,19 +19,22 @@ namespace Projectile
         public Vec2f Acceleration;
         public float DeltaRotation;
 
-        public bool canRamp;
+        public bool  CanRamp;
         public float StartVelocity;
         public float MaxVelocity;
-        public float rampTime;
+        public float RampTime;
 
-        public bool canLinearDrag;
-        public float linearDrag;
-        public float linearCutOff;
+        public bool  HasLinearDrag;
+        public float LinearDrag;
+        public float LinearCutOff;
 
-        public bool AffectedByGravity;
+        public bool  Bounce;
+        public float BounceValue;
+
+        public bool  AffectedByGravity;
         public float GravityScale;
 
-        public Enums.DragType dragType;
+        public Enums.DragType DragType;
     }
 }
 

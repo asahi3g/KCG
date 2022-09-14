@@ -103,11 +103,19 @@ namespace Vehicle
             }
         }
 
+        public void SetCollisionOffset(Vec2f offset)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].CollisionOffset = offset;
+            }
+        }
+
         public void SetScale(Vec2f size)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].CollisionSize = size;
+                PropertiesArray[CurrentIndex].Scale = size;
             }
         }
 
@@ -148,6 +156,14 @@ namespace Vehicle
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
                 PropertiesArray[CurrentIndex].CenterOfRotation = CenterOfRotation;
+            }
+        }
+
+        public void AffectedByGravity(bool AffectedByGravity)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].AffectedByGravity = AffectedByGravity;
             }
         }
 

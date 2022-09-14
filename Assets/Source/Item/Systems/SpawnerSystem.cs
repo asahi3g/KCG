@@ -17,7 +17,7 @@ namespace Item
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(itemType);
             FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
-            Vec2f size = itemProperty.SpriteSize;
+            Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
 
             var entity = entitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID);
@@ -26,19 +26,12 @@ namespace Item
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
 
             if (weaponProperty.HasClip())
-                entity.AddItemFireWeaponClip(weaponProperty.ClipSize, weaponProperty.BulletsPerShot);
-
-            if (weaponProperty.ShouldSpread())
-                entity.AddItemFireWeaponSpread(weaponProperty.SpreadAngle);
-
-            if (weaponProperty.IsPulse())
-                entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
+                entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
 
             ItemID++;
             return entity;
         }
 
-        // Todo(João): This create more work as we expand item funcionalities, Do code generation for this function.
         /// <summary>
         /// Spawn Item particle from item inventory. Used in dropItem action or after enemy dies.
         /// Destroy itemParticle.
@@ -53,11 +46,10 @@ namespace Item
             if(itemInventoryEntity.hasItemStack)
                 entity.AddItemStack(itemInventoryEntity.itemStack.Count);
 
-            if(itemInventoryEntity.hasItemFireWeaponClip)
-                entity.ReplaceItemFireWeaponClip(itemInventoryEntity.itemFireWeaponClip.NumOfBullets, itemInventoryEntity.itemFireWeaponClip.BulletsPerShot);
-
-            if (itemInventoryEntity.hasItemFireWeaponSpread)
-                entity.ReplaceItemFireWeaponSpread(itemInventoryEntity.itemFireWeaponSpread.SpreadAngle);
+            if (itemInventoryEntity.hasItemFireWeaponClip)
+            {
+                entity.itemFireWeaponClip.NumOfBullets = itemInventoryEntity.itemFireWeaponClip.NumOfBullets;
+            }
 
             itemInventoryEntity.Destroy();
 
@@ -67,24 +59,10 @@ namespace Item
         public ItemInventoryEntity SpawnInventoryItem(Contexts entitasContext, ItemType itemType)
         {
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(itemType);
-            FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = entitasContext.itemInventory.CreateEntity();
             entity.AddItemID(ItemID);
             entity.AddItemType(itemType);
-
-            if (weaponProperty.HasClip())
-                entity.AddItemFireWeaponClip(weaponProperty.ClipSize, weaponProperty.BulletsPerShot);
-
-            if (weaponProperty.HasCharge())
-                entity.AddItemFireWeaponCharge(weaponProperty.CanCharge, weaponProperty.ChargeMin, weaponProperty.ChargeRatio, weaponProperty.ChargePerShot, weaponProperty.ChargeMin,
-                    weaponProperty.ChargeMax);
-
-            if (weaponProperty.ShouldSpread())
-                entity.AddItemFireWeaponSpread(weaponProperty.SpreadAngle);
-
-            if (weaponProperty.IsPulse())
-                entity.AddItemPulseWeaponPulse(weaponProperty.IsLaunchGreanade, weaponProperty.NumberOfGrenades);
 
             if (itemProperty.IsPlacementTool())
             {
@@ -125,12 +103,6 @@ namespace Item
 
             if (itemParticleEntity.hasItemStack)
                 entity.AddItemStack(itemParticleEntity.itemStack.Count);
-
-            if (itemParticleEntity.hasItemFireWeaponClip)
-                entity.ReplaceItemFireWeaponClip(itemParticleEntity.itemFireWeaponClip.NumOfBullets, itemParticleEntity.itemFireWeaponClip.BulletsPerShot);
-
-            if (itemParticleEntity.hasItemFireWeaponSpread)
-                entity.ReplaceItemFireWeaponSpread(itemParticleEntity.itemFireWeaponSpread.SpreadAngle);
 
             itemParticleEntity.Destroy();
 

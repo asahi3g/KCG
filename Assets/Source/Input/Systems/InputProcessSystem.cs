@@ -181,6 +181,32 @@ namespace ECSInput
                     player.Walk(x);
                 }
 
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    var vehicles = contexts.vehicle.GetGroup(VehicleMatcher.VehicleID);
+
+                    foreach (var vehicle in vehicles)
+                    {
+                        if(Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 2.0f)
+                        {
+                            if(player.agentModel3D.GameObject.gameObject.active == true)
+                            {
+                                player.agentModel3D.GameObject.gameObject.SetActive(false);
+                                player.agentState.State = AgentState.Dead;
+                                GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(vehicle.vehiclePhysicsState2D.TempPosition.X + 2.5f,
+                                    vehicle.vehiclePhysicsState2D.Position.Y + 1.0f), new Vec2f(-6.0f, 0.3f));
+                            }
+                            else
+                            {
+                                player.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
+                                player.agentModel3D.GameObject.gameObject.SetActive(true);
+                                player.agentState.State = AgentState.Alive;
+                            }
+                            
+                        }
+                    }
+                }
+
                 // JetPack
                 if (Input.GetKey(KeyCode.F))
                 {
@@ -219,7 +245,7 @@ namespace ECSInput
 
                             Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
                         }
-                     }
+                    }
 
 
                     MechEntity[] meches = contexts.mech.GetEntities();
