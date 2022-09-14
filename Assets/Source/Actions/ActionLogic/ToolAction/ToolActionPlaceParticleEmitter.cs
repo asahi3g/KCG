@@ -17,7 +17,7 @@ namespace Action
 
         public struct Data
         {
-            public Material Material;
+            public Particle.ParticleEmitterType emitterType;
         }
 
         Data data;
@@ -34,7 +34,9 @@ namespace Action
             float y = worldPosition.y;
             int t = System.Math.Abs((int)KMath.Random.Mt19937.genrand_int32() % System.Enum.GetNames(typeof(Particle.ParticleType)).Length);
 
-            planet.AddDebris(new Vec2f(x, y), GameResources.ChestIconParticle, 1.5f, 1.0f);
+            //planet.AddDebris(new Vec2f(x, y), GameResources.ChestIconParticle, 1.5f, 1.0f);
+
+            planet.AddParticleEmitter(new Vec2f(x, y), data.emitterType);
 
             ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Success);
         }

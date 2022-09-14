@@ -48,7 +48,7 @@ public class ProjectileTest : MonoBehaviour
         //projectileVelocitySystem = new Projectile.ProcessVelocitySystem();
 
         // Initialize Projectile Spawner System
-        projectileSpawnerSystem = new Projectile.SpawnerSystem(GameState.ProjectileCreationApi);
+        projectileSpawnerSystem = new Projectile.SpawnerSystem();
 
         // Initialize Projectile Collision System
         projectileCollisionSystem = new Projectile.ProcessCollisionSystem();

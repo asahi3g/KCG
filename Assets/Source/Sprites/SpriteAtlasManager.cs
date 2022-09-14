@@ -141,9 +141,9 @@ namespace Sprites
             int result = 0;
             if (startColumn <= endColumn && startRow <= endRow)
             {
-                for(int x = startColumn; x <= endColumn; x++)
+                for(int y = startRow; y <= endRow; y++)
                 {
-                    for(int y = startRow; y <= endRow; y++)
+                    for(int x = startColumn; x <= endColumn; x++)
                     {
                         if (x == startColumn && y == startRow)
                         {
@@ -151,7 +151,7 @@ namespace Sprites
                         }
                         else
                         {
-                                CopySpriteToAtlas(spriteSheetId, x, y, type);
+                            CopySpriteToAtlas(spriteSheetId, x, y, type);
                         }
                     }
                 }

@@ -108,8 +108,21 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceParticle);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceParticleCreator());
             ToolActionPlaceParticleEmitter.Data placeParticleEmitterData = new ToolActionPlaceParticleEmitter.Data();
-            placeParticleEmitterData.Material = material;
+            placeParticleEmitterData.emitterType = Particle.ParticleEmitterType.ExplosionEmitter;
             GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Place Particle
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionSpawnExplosion);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceParticleCreator());
+            placeParticleEmitterData = new ToolActionPlaceParticleEmitter.Data();
+            placeParticleEmitterData.emitterType = Particle.ParticleEmitterType.ExplosionEmitter;
+            GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            // Create Tool Action Frag Grenade
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.FragGrenade);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionFragGrenadeCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
 
 

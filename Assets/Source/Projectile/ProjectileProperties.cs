@@ -1,10 +1,8 @@
-
 using KMath;
-using UnityEngine;
+using System;
 
 namespace Projectile
 {
-
     public struct ProjectileProperties
     {
         public int PropertiesId;
@@ -15,26 +13,29 @@ namespace Projectile
         public bool HasAnimation;
         public Animation.AnimationType AnimationType;
 
-        public float Speed;
-        public Vec2f Acceleration;
-        public float DeltaRotation;
-
-        public bool  CanRamp;
         public float StartVelocity;
-        public float MaxVelocity;
-        public float RampTime;
 
-        public bool  HasLinearDrag;
+        public float RampAcceleration;
+        public float MaxVelocity;
+
+        public float DeltaRotation; // Degrees/seconds.
+
         public float LinearDrag;
+
         public float LinearCutOff;
 
-        public bool  Bounce;
         public float BounceValue;
-
-        public bool  AffectedByGravity;
         public float GravityScale;
 
-        public Enums.DragType DragType;
+        public ProjFlags Flags;
+
+        [Flags]
+        public enum  ProjFlags : byte
+        {
+            CanRamp = 1 << 0,
+            HasLinearDrag = 1 << 1,
+            CanBounce = 1 << 2,
+            AffectedByGravity = 1 << 3
+        }
     }
 }
-
