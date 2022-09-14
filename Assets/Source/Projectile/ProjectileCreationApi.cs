@@ -19,7 +19,7 @@ namespace Projectile
         {
             NameToID = new Dictionary<string, int>();
             PropertiesArray = new ProjectileProperties[1024];
-            for(int i = 0; i < PropertiesArray.Length; i++)
+            for (int i = 0; i < PropertiesArray.Length; i++)
             {
                 PropertiesArray[i] = new ProjectileProperties();
             }
@@ -37,7 +37,7 @@ namespace Projectile
         }
 
         public ref ProjectileProperties GetRef(int Id)
-        {      
+        {
             return ref PropertiesArray[Id];
         }
 
@@ -68,7 +68,7 @@ namespace Projectile
         public void SetName(string name)
         {
             if (CurrentIndex == -1) return;
-            
+
             if (!NameToID.ContainsKey(name))
             {
                 NameToID.Add(name, CurrentIndex);
@@ -157,6 +157,24 @@ namespace Projectile
                 PropertiesArray[CurrentIndex].MaxVelocity = PropertiesArray[CurrentIndex].StartVelocity;
 
             CurrentIndex = -1;
+        }
+
+        public static int OreSpriteSheet;
+        public static int OreIcon;
+
+        public void InitializeResources()
+        {
+            OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
+
+            OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Arrow);
+            GameState.ProjectileCreationApi.SetName("arrow");
+            GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
         }
     }
 
