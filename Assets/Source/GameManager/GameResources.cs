@@ -133,6 +133,7 @@ public class GameResources
     // particle sprite ids used for icons
     // TODO(): create icons atlas
     public static int DustBaseSpriteId;
+    public static int ExplosionBaseSpriteId;
 
     public static int OreIcon;
     
@@ -240,6 +241,7 @@ public class GameResources
             PipeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pipesim\\pipesim.png", 16, 16);
             pipeIconSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
+            int ExplosionSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\explosion.png", 182, 182);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             GrenadeSprite5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades5.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
@@ -342,6 +344,7 @@ public class GameResources
             MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
+            ExplosionBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(ExplosionSpriteSheet, 0, 0, 4, 1, Enums.AtlasType.Particle);
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
             ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconItem, 0, 0, Enums.AtlasType.Particle);
             ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Particle);
@@ -660,6 +663,14 @@ public class GameResources
         GameState.AnimationManager.SetTimePerFrame(0.075f);
         GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
         GameState.AnimationManager.SetFrameCount(6);
+        GameState.AnimationManager.EndAnimation();
+
+
+        GameState.AnimationManager.CreateAnimation((int)Animation.AnimationType.Explosion);
+        GameState.AnimationManager.SetName("explosion");
+        GameState.AnimationManager.SetTimePerFrame(0.075f);
+        GameState.AnimationManager.SetBaseSpriteID(ExplosionBaseSpriteId);
+        GameState.AnimationManager.SetFrameCount(7);
         GameState.AnimationManager.EndAnimation();
     }
 
@@ -1143,6 +1154,23 @@ public class GameResources
         GameState.ItemCreationApi.SetStackable(99);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
         GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGasBomb);
+        GameState.ItemCreationApi.EndItem();
+
+        GameState.ItemCreationApi.CreateItem(Enums.ItemType.FragGrenade, "FragGrenade");
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
+        GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
+        GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+        GameState.ItemCreationApi.SetAction(Enums.ActionType.FragGrenade);
+        GameState.ItemCreationApi.EndItem();
+
     }
 
     private static void CreateAgents()
@@ -1152,7 +1180,7 @@ public class GameResources
         GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
         GameState.AgentCreationApi.SetHealth(300.0f);
         GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 1.8f));
+        GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.8f));
         GameState.AgentCreationApi.End();
 
         GameState.AgentCreationApi.Create((int)Enums.AgentType.Agent);
@@ -1381,6 +1409,20 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
         GameState.ParticleCreationApi.SetIsCollidable(true);
         GameState.ParticleCreationApi.End();
+
+        GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Explosion);
+        GameState.ParticleCreationApi.SetName("explosion");
+        GameState.ParticleCreationApi.SetDecayRate(2.0f);
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetDeltaRotation(0);
+        GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+        GameState.ParticleCreationApi.SetAnimationType(Animation.AnimationType.Explosion);
+        GameState.ParticleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+        GameState.ParticleCreationApi.SetStartingScale(1.0f);
+        GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.End();
     }
 
     private static void CreateParticleEmitters()
@@ -1432,6 +1474,16 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.SetParticleCount(30);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
+        GameState.ParticleEmitterCreationApi.End();
+
+        GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.ExplosionEmitter);
+        GameState.ParticleEmitterCreationApi.SetName("blood");
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Explosion);
+        GameState.ParticleEmitterCreationApi.SetDuration(4.0f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(5);
+        GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(10.0f);
+        GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0.0f), new Vec2f(0.0f, 0.0f));
         GameState.ParticleEmitterCreationApi.End();
     }
 

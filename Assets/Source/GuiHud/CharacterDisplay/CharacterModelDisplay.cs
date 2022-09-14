@@ -39,7 +39,7 @@ namespace KGui
             Material.mainTexture = _Texture;
 
             Camera OffscreenCamera = Camera.Instantiate(Camera.main);
-            OffscreenCamera.backgroundColor = new Color(0.75f, 0.75f, 0.75f, 0.0f);
+            OffscreenCamera.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.0f);
             OffscreenCamera.name = "OffScreen camera";
 
             foreach (var comp in OffscreenCamera.GetComponents<Component>())
@@ -82,7 +82,7 @@ namespace KGui
             AnimancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
             AnimancerComponent.Animator = Model.GetComponent<Animator>();
 
-            Model.transform.rotation = Quaternion.Euler(0, 140, 0);
+            Model.transform.rotation = Quaternion.Euler(0, 135, 0);
             if (AnimancerComponent)
             {
                 AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);

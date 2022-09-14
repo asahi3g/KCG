@@ -9,6 +9,7 @@ namespace Particle
         DustParticle,
         Debris,
         GasParticle,
-        Blood
+        Blood,
+        Explosion
     }
 }
