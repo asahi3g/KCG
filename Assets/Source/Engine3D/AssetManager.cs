@@ -110,10 +110,29 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/InsectHeavyDeath", AnimationType.InsectHeavyDie);
 
 
-            AnimationLoader.Load("ArtistAnimations/SpaceMarineWalk", AnimationType.SpaceMarineRun);
-            AnimationLoader.Load("ArtistAnimations/SpaceMarineStagger", AnimationType.SpaceMarineStagger);
-            AnimationLoader.Load("ArtistAnimations/SpaceMarineDeath", AnimationType.SpaceMarineDead);
-            AnimationLoader.Load("ArtistAnimations/SpaceMarineIdle", AnimationType.SpaceMarineIdle);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Idle", AnimationType.SpaceMarineIdle);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Run", AnimationType.SpaceMarineRun);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Walking", AnimationType.SpaceMarineWalk);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Jump", AnimationType.SpaceMarineJump);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_JumpRoll", AnimationType.SpaceMarineFlip);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Jog", AnimationType.SpaceMarineJog);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Sliding", AnimationType.SpaceMarineDash);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Roll", AnimationType.SpaceMarineRoll);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Crouch", AnimationType.SpaceMarineCrouch);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_CrouchWalk", AnimationType.SpaceMarineCrouch_Walk);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Limp", AnimationType.SpaceMarineLimp);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Drink", AnimationType.SpaceMarineDrink);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_FallLegs", AnimationType.SpaceMarineJumpFall);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_SwordAttack", AnimationType.SpaceMarineSwordSlash);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Shooting", AnimationType.SpaceMarineFireGun);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Throw", AnimationType.SpaceMarineUseTool);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_SlidingHandsFree", AnimationType.SpaceMarineSliding);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Jetpack", AnimationType.SpaceMarineJetPack);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Stagger", AnimationType.SpaceMarineStagger);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_DeathKnockback", AnimationType.SpaceMarineKnockedDownFront);
+            AnimationLoader.Load("ArtistAnimations/DEFORM_Death", AnimationType.SpaceMarineLyingFront);
+            //AnimationLoader.Load("ArtistAnimations/DEFORM_DeathKnockback", AnimationType.SpaceMarineKnockedDownBack);
+            //AnimationLoader.Load("ArtistAnimations/DEFORM_Death", AnimationType.SpaceMarineLyingBack);
         }
 
         private void LoadModels()

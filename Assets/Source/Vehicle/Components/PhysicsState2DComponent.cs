@@ -15,6 +15,8 @@ namespace Vehicle
         public Vec2f Scale = Vec2f.Zero;
         public Vec2f TempScale = Vec2f.Zero;
 
+        public float Rotation = 0.0f; 
+
         [Range(-1.0f, 1.0f)]
         public Vec2f angularVelocity = Vec2f.Zero;
 

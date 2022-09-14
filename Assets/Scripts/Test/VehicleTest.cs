@@ -100,6 +100,8 @@ namespace Planet.Unity
             CircleSmoke.DrawGizmos();
             Gizmos.color = Color.red;
 
+            GameState.VehicleCollisionSystem.DrawGizmos(ref Planet);
+
             // Draw lines around player if out of bounds
             if (Player != null)
                 if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)

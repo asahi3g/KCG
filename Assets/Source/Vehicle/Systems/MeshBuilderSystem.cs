@@ -37,7 +37,7 @@ namespace Vehicle
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x, y, width, height);
+                Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.vehiclePhysicsState2D.Rotation);
             }
         }
     }
