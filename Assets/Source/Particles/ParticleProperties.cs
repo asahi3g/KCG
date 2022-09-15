@@ -32,6 +32,7 @@ namespace Particle
 
         // Box Debris
         public bool IsCollidable;
+        public bool Bounce;
 
     }
 }
