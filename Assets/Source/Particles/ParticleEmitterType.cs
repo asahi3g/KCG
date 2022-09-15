@@ -7,6 +7,7 @@ namespace Particle
         OreExplosion,
         DustEmitter,
         GasEmitter,
-        Blood
+        Blood,
+        ExplosionEmitter
     }
 }

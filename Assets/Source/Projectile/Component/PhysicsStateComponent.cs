@@ -14,17 +14,6 @@ namespace Projectile
 
         public Vec2f Velocity;
         public Vec2f Acceleration; // Instantaneous, reset to zero at the end of the frame.
-
-        public bool AffectedByGravity;
-
-        [Range(-1.0f, 1.0f)]
-        public Vec2f angularVelocity = Vec2f.Zero;
-
-        public float angularMass = 1.0f;
-        public float angularAcceleration = 3.0f;
-
-        public float centerOfGravity = 0.0f;
-        public Vec2f centerOfRotation = Vec2f.One;
     }
 }
 

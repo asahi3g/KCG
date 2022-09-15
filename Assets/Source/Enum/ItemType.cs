@@ -30,6 +30,7 @@
         StunBaton,
         RiotShield,
         GasBomb,
+        FragGrenade,
 
         /// <summary>
         /// Equipment

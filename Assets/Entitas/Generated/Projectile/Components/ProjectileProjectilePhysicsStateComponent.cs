@@ -11,7 +11,7 @@ public partial class ProjectileEntity {
     public Projectile.PhysicsStateComponent projectilePhysicsState { get { return (Projectile.PhysicsStateComponent)GetComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
     public bool hasProjectilePhysicsState { get { return HasComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
 
-    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation) {
+    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -19,16 +19,10 @@ public partial class ProjectileEntity {
         component.Rotation = newRotation;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
-        component.AffectedByGravity = newAffectedByGravity;
-        component.angularVelocity = newAngularVelocity;
-        component.angularMass = newAngularMass;
-        component.angularAcceleration = newAngularAcceleration;
-        component.centerOfGravity = newCenterOfGravity;
-        component.centerOfRotation = newCenterOfRotation;
         AddComponent(index, component);
     }
 
-    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newAffectedByGravity, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation) {
+    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -36,12 +30,6 @@ public partial class ProjectileEntity {
         component.Rotation = newRotation;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
-        component.AffectedByGravity = newAffectedByGravity;
-        component.angularVelocity = newAngularVelocity;
-        component.angularMass = newAngularMass;
-        component.angularAcceleration = newAngularAcceleration;
-        component.centerOfGravity = newCenterOfGravity;
-        component.centerOfRotation = newCenterOfRotation;
         ReplaceComponent(index, component);
     }
 

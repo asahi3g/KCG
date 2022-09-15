@@ -1,5 +1,6 @@
 ﻿using KMath;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace Collisions
 {
@@ -18,6 +19,22 @@ namespace Collisions
         public Vec2f getPos()
         {
             return new Vec2f(meshRenderer.bounds.center.x, meshRenderer.bounds.center.y);
+        }
+
+        public void SetPos(Vec2f pos)
+        {
+            float newTheta = transform.rotation.eulerAngles.z;
+            transform.RotateAround(meshRenderer.bounds.center, Vector3.forward, -newTheta);
+
+            transform.position = new Vector3(pos.X - meshRenderer.bounds.size.x / 2.0f, 
+                pos.Y - meshRenderer.bounds.size.y / 2.0f);
+
+            transform.RotateAround(meshRenderer.bounds.center, Vector3.forward, newTheta);
+        }
+
+        public void Rotate(float theta)
+        {
+            transform.RotateAround(meshRenderer.bounds.center, Vector3.forward, theta);
         }
 
         private void Start()

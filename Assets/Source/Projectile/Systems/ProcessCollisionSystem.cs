@@ -19,12 +19,16 @@ namespace Projectile
             foreach (var entity in entities)
             {
                 float bounceValue = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).BounceValue;
-                bool bounce = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Bounce;
+                bool bounce = 
+                    GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Flags.HasFlag(ProjectileProperties.ProjFlags.CanBounce);
 
                 var physicsState = entity.projectilePhysicsState;
 
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
                 var box2dCollider = entity.physicsBox2DCollider;
+
+                if ((physicsState.Position - physicsState.PreviousPosition).Magnitude < 0.005f)
+                    continue;
 
                 // Collising with terrain with raycasting
                 var rayCastingResult =
@@ -43,8 +47,8 @@ namespace Projectile
                     }
                     if (entity.isProjectileFirstHIt)
                     {
-                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                         physicsState.Velocity = new Vec2f();
+                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                     }
                 }
 
@@ -70,9 +74,10 @@ namespace Projectile
 
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
                             if (!entity.hasProjectileOnHit)
-                                entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                                entity.AddProjectileOnHit(agentEntity.agentID.ID, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                             else
                             {
+                                entity.projectileOnHit.AgentID = agentEntity.agentID.ID;
                                 entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
                                 entity.projectileOnHit.LastHitTime = Time.time;
                             }
@@ -81,12 +86,12 @@ namespace Projectile
                 }
 
                 // Todo: Use only new collision system.
-                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.angularVelocity))
+                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
                 {
                     if (bounce)
                         entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
                 }
-                else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.angularVelocity))
+                else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.Velocity))
                 {
                     
                     if (bounce)
@@ -95,13 +100,13 @@ namespace Projectile
 
                 entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
 
-                if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.angularVelocity))
+                if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.Velocity))
                 {
                     if (bounce)
                         entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                     
                 }
-                else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.angularVelocity))
+                else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
                 {
                     if (bounce)
                         entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);

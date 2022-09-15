@@ -46,8 +46,27 @@ namespace Engine3D
 
 
         SpaceMarineIdle,
+        SpaceMarineWalk,
         SpaceMarineRun,
+        SpaceMarineJump,
+        SpaceMarineFlip,
+        SpaceMarineJog,
+        SpaceMarineDash,
+        SpaceMarineRoll,
+        SpaceMarineCrouch,
+        SpaceMarineCrouch_Walk,
+        SpaceMarineLimp,
+        SpaceMarineDrink,
         SpaceMarineStagger,
-        SpaceMarineDead,
+        SpaceMarineJumpFall,
+        SpaceMarineSwordSlash, 
+        SpaceMarineFireGun,
+        SpaceMarineUseTool,
+        SpaceMarineSliding,
+        SpaceMarineJetPack,
+        SpaceMarineKnockedDownFront,
+        SpaceMarineLyingFront,
+        SpaceMarineKnockedDownBack,
+        SpaceMarineLyingBack,
     }
 }

@@ -11,38 +11,25 @@ namespace Projectile
 {
     public class SpawnerSystem
     {
-        // Projectile ID
         private static int UniqueID;
-        ProjectileCreationApi ProjectileCreationApi;
-
-        public SpawnerSystem(ProjectileCreationApi projectileCreationApi)
-        {
-            ProjectileCreationApi = projectileCreationApi;
-        }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
             Enums.ProjectileType projectileType, bool isFirstHit = true)
         {
             ProjectileProperties projectileProperties = 
-                                    ProjectileCreationApi.GetRef((int)projectileType);
+                                    GameState.ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
+            entity.isProjectileFirstFrame = true;
             entity.AddProjectileID(UniqueID++, -1);
-            entity.AddProjectileRamp(projectileProperties.CanRamp, projectileProperties.StartVelocity, projectileProperties.StartVelocity, projectileProperties.RampTime);
             entity.AddProjectileLinearDrag(projectileProperties.LinearDrag, projectileProperties.LinearCutOff);
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
             entity.AddProjectilePhysicsState(
                 newPosition: position,
                 newPreviousPosition: position,
                 newRotation: 0.0f,
-                newVelocity: direction.Normalized * projectileProperties.Speed,
-                newAcceleration: projectileProperties.Acceleration,
-                newAffectedByGravity: projectileProperties.AffectedByGravity,
-                newAngularVelocity: Vec2f.Zero,
-                newAngularMass: 1.0f, 
-                newAngularAcceleration: 1.0f,
-                newCenterOfGravity: 0.5f,
-                newCenterOfRotation: Vec2f.Zero);
+                newVelocity: direction.Normalized * projectileProperties.StartVelocity,
+                newAcceleration: Vec2f.Zero);
             
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);

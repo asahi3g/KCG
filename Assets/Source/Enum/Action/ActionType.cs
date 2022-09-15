@@ -20,6 +20,10 @@
         /// </summary>
         OpenChestAction,
 
+
+        // grenade
+        FragGrenade,
+
         /// <summary>
         /// PlaceTileTool
         /// One for each type of tile
@@ -37,6 +41,7 @@
         /// </summary>
         ToolActionFireWeapon,
         ToolActionPlaceParticle,
+        ToolActionSpawnExplosion,
         ToolActionPlaceChest,
         ToolActionPlaceSmahableBox,
         ToolActionEnemySpawn,

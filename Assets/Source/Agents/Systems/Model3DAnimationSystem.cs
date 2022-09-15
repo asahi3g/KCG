@@ -18,7 +18,7 @@ namespace Agent
                 var model3d = entity.agentModel3D;
 
 
-               /* if (!entity.isAgentPlayer)
+                /*if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
                 }*/
@@ -326,14 +326,16 @@ namespace Agent
                     {
                         case AgentMovementState.Move:
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRun);  
-                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);  
-                            break;
-                        }
-                        case AgentMovementState.Limp:
-                        {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRun);
-                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            if (System.Math.Abs(physicsState.Velocity.X) > 7.0f)
+                            {
+                                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRun);
+                                currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            }
+                            else
+                            {
+                                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineJog);
+                                currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            }
                             break;
                         }
                         case AgentMovementState.Idle:
@@ -342,10 +344,60 @@ namespace Agent
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
                             break;
                         }
-                        case AgentMovementState.Falling:
+                        case AgentMovementState.Limp:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineLimp);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Drink:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineDrink);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.JetPackFlying:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineJetPack);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.SlidingLeft:
+                        case AgentMovementState.SlidingRight:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineSliding);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Dashing:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineDash);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.Rolling:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineRoll);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            currentClip.Speed = 1.0f;
+                            break;
+                        }
+                        case AgentMovementState.Crouch:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineCrouch);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Crouch_Move:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineCrouch_Walk);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.StandingUpAfterRolling:
                         {
                             AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
-                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 1.425f);
                             break;
                         }
                         case AgentMovementState.Stagger:
@@ -354,10 +406,120 @@ namespace Agent
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
                             break;
                         }
+                        case AgentMovementState.Falling:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineJumpFall);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.SwordSlash:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineSwordSlash);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.FireGun:
+                        {
+                            float speed =  0.6f / physicsState.ActionCooldown;
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineFireGun);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            currentClip.Speed = speed;
+                            break;
+                        }
+                        case AgentMovementState.UseTool:
+                        {
+                            float speed =  0.6f / physicsState.ActionCooldown;
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineUseTool);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            currentClip.Speed = speed;
+                            break;
+                        }
+                        case AgentMovementState.KnockedDownFront:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineKnockedDownFront);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.LyingFront:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineLyingFront);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.KnockedDownBack:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineKnockedDownBack);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.LyingBack:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineLyingBack);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        default:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                    }
+
+                    if (physicsState.MovementState != AgentMovementState.Falling && 
+                    physicsState.MovementState != AgentMovementState.Dashing)
+                    {
+                        if (physicsState.JumpCounter == 1)
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineJump);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                        }
+                        else if (physicsState.JumpCounter == 2)
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineFlip);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                        }
+                    }
+                }
+                else if (model3d.AnimationType == Enums.AgentAnimationType.GroundInsectAnimation)
+                {
+                    switch(physicsState.MovementState)
+                    {
+                        case AgentMovementState.Move:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);  
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);  
+                            break;
+                        }
+                        case AgentMovementState.Limp:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.Idle:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Idle);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                            break;
+                        }
+                        case AgentMovementState.MonsterAttack:
+                        case AgentMovementState.SwordSlash:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectAttack);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
+                        case AgentMovementState.Falling:
+                        {
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectRun);
+                            currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
+                            break;
+                        }
                         case AgentMovementState.LyingFront:
                         case AgentMovementState.LyingBack:
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineDead);
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectDie);
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.075f);
                             break;
                         }
@@ -368,12 +530,12 @@ namespace Agent
                     {
                         if (physicsState.JumpCounter == 1)
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectJump);
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
                         }
                         else if (physicsState.JumpCounter == 2)
                         {
-                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                            AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.InsectJump);
                             currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
                         }
                     }

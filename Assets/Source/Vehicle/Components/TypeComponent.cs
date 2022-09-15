@@ -11,6 +11,7 @@ namespace Vehicle
     public class TypeComponent : IComponent
     {
         public VehicleType Type;
+        public bool HasAgent;
     }
 }
 
