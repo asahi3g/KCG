@@ -29,7 +29,7 @@ public class PlanetVisualEffectsTest : MonoBehaviour
         if(Init)
         {
             // check if the sprite atlas textures needs to be updated
-            for (int type = 0; type < GameState.SpriteAtlasManager.Length; type++)
+            for (int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
             {
                 GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
             }

@@ -7,20 +7,13 @@ namespace Sprites
     public class SpriteAtlasManager
     {
         private SpriteLoader SpriteLoader;
-        private SpriteAtlas[] AtlasArray;
+        public SpriteAtlas[] AtlasArray;
 
-        public int Length
-        {
-            get
-            {
-                return AtlasArray.Length;
-            }
-        }
 
         public SpriteAtlasManager(SpriteLoader spriteLoader)
         {
             SpriteLoader = spriteLoader;
-            AtlasArray = new SpriteAtlas[Enum.GetNames(typeof(Enums.AtlasType)).Length - 1];
+            AtlasArray = new SpriteAtlas[Enum.GetNames(typeof(Enums.AtlasType)).Length];
 
             for (int i = 0; i < AtlasArray.Length; i++)
             {
@@ -53,7 +46,7 @@ namespace Sprites
 
         public ref SpriteAtlas GetSpriteAtlas(Enums.AtlasType type)
         {
-            return ref AtlasArray[(int)type - 1];
+            return ref AtlasArray[(int)type];
         }
         
 
