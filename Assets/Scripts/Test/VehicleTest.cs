@@ -227,7 +227,7 @@ namespace Planet.Unity
                                 int oreRandom = (int)KMath.Random.Mt19937.genrand_int32() % 3;
                                 if (oreRandom == 0)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.OreSprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.OreSprite;
                                 }
                                 else if (oreRandom == 1)
                                 {

@@ -124,17 +124,17 @@ namespace Action
                                         if (plant.mechType.mechType == Mech.MechType.MajestyPalm)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS1;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.MajestyPalm;
                                         }
                                         else if (plant.mechType.mechType == Mech.MechType.SagoPalm)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.SagoPalmS1;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.SagoPalm;
                                         }
                                         else if (plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS1;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.DracaenaTrifasciataS1;
                                         }
                                     }
 
@@ -143,17 +143,17 @@ namespace Action
                                         if (plant.mechType.mechType == Mech.MechType.MajestyPalm)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.MajestyPalmS2;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.MajestyPalmS2;
                                         }
                                         else if (plant.mechType.mechType == Mech.MechType.SagoPalm)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.SagoPalmS2;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.SagoPalmS2;
                                         }
                                         else if (plant.mechType.mechType == Mech.MechType.DracaenaTrifasciata)
                                         {
                                             // Increase Stage
-                                            plant.mechSprite2D.SpriteId = GameResources.DracaenaTrifasciataS2;
+                                            plant.mechSprite2D.SpriteId = GameState.MechCreationApi.DracaenaTrifasciataS2;
                                         }
                                     }
 

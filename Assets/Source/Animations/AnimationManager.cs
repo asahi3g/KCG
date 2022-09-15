@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Enums;
 
 namespace Animation
 {
@@ -95,6 +96,72 @@ namespace Animation
         public void EndAnimation()
         {
             CurrentIndex = -1;
+        }
+
+        public static int CharacterSpriteId;
+        public static int CharacterSpriteSheet;
+        public static int SlimeMoveLeftBaseSpriteId;
+        public static int SlimeSpriteSheet;
+        public static int DustBaseSpriteId;
+        public static int DustSpriteSheet;
+        public static int ExplosionBaseSpriteId;
+        public static int ExplosionSpriteSheet;
+
+        public void InitializeResources()
+        {
+            CharacterSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Characters\\Player\\character.png", 32, 48);
+            SlimeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Enemies\\Slime\\slime.png", 32, 32);
+            DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
+            ExplosionSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\explosion.png", 182, 182);
+
+
+            CharacterSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(CharacterSpriteSheet, 0, 0, Enums.AtlasType.Agent);
+            SlimeMoveLeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SlimeSpriteSheet, 0, 0, 3, 0, Enums.AtlasType.Agent);
+            DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
+            ExplosionBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(ExplosionSpriteSheet, 0, 0, 4, 1, Enums.AtlasType.Particle);
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.CharacterMoveLeft);
+            GameState.AnimationManager.SetName("character-move-left");
+            GameState.AnimationManager.SetTimePerFrame(0.15f);
+            GameState.AnimationManager.SetBaseSpriteID(CharacterSpriteId);
+            GameState.AnimationManager.SetFrameCount(1);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.CharacterMoveLeft);
+            GameState.AnimationManager.SetName("character-move-right");
+            GameState.AnimationManager.SetTimePerFrame(0.15f);
+            GameState.AnimationManager.SetBaseSpriteID(CharacterSpriteId);
+            GameState.AnimationManager.SetFrameCount(1);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SlimeMoveLeft);
+            GameState.AnimationManager.SetName("slime-move-left");
+            GameState.AnimationManager.SetTimePerFrame(0.35f);
+            GameState.AnimationManager.SetBaseSpriteID(SlimeMoveLeftBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(4);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.Dust);
+            GameState.AnimationManager.SetName("dust");
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(6);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.Smoke);
+            GameState.AnimationManager.SetName("smoke");
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(DustBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(6);
+            GameState.AnimationManager.EndAnimation();
+
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.Explosion);
+            GameState.AnimationManager.SetName("explosion");
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(ExplosionBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(7);
+            GameState.AnimationManager.EndAnimation();
         }
 
     }

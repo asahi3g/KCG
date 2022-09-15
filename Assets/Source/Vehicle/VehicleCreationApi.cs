@@ -180,7 +180,7 @@ namespace Vehicle
             CurrentIndex = -1;
         }
 
-        public static int JetChassis;
+        public int JetChassis;
 
         public void InitializeResources()
         {

@@ -160,13 +160,13 @@ namespace Projectile
         }
 
         // Sheets
-        public static int OreSpriteSheet;
-        public static int GrenadeSpriteSheet;
+        public int OreSpriteSheet;
+        public int GrenadeSpriteSheet;
 
         // ID's
-        public static int OreIcon;
-        public static int GrenadeSpriteId;
-        public static int GrenadeSprite5;
+        public int OreIcon;
+        public int GrenadeSpriteId;
+        public int GrenadeSprite5;
 
         public void InitializeResources()
         {
