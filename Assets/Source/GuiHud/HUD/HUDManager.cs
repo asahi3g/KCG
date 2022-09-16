@@ -13,11 +13,17 @@ namespace HUD
 
         public static bool ShowGUI = true;
 
-        // Constructor
-        public static void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public static void InitStage1()
         {
             // Create GUI Manager
             guiManager = new GUIManager();
+        }
+
+        // Constructor
+        public static void InitStage2(Planet.PlanetState planet, AgentEntity agentEntity)
+        {
+            if (guiManager == null)
+                return;
 
             // Initialize GUI Manager
             guiManager.Initialize(planet, agentEntity);
@@ -25,12 +31,18 @@ namespace HUD
 
         public static void Update(AgentEntity agentEntity)
         {
+            if (guiManager == null)
+                return;
+
             // Update GUI
             guiManager.Update(agentEntity);
         }
 
         public static void Draw()
         {
+            if (guiManager == null)
+                return;
+
             guiManager.Draw();
         }
     }

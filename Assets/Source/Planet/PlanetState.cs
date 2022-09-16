@@ -90,7 +90,8 @@ namespace Planet
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
-            HUDManager.Initialize(this, agentEntity);
+            HUDManager.InitStage1();
+            HUDManager.InitStage2(this, agentEntity);
         }
 
         // Note(Mahdi): Deprecated will be removed soon
@@ -343,6 +344,16 @@ namespace Planet
             return newEntity;
         }
 
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, Vec2f position, Vec3f scale,
+            AtlasType atlasType, Vec2f pos1, Vec2f pos2)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
+                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image, true, pos1, pos2));
+            return newEntity;
+        }
+
         public void KillAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);
@@ -509,7 +520,7 @@ namespace Planet
             }*/
 
             // check if the sprite atlas teSetTilextures needs to be updated
-            for(int type = 0; type < GameState.SpriteAtlasManager.Length; type++)
+            for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
             {
                 GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
             }

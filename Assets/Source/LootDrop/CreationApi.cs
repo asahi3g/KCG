@@ -74,5 +74,79 @@ namespace LootDrop
             CurrentEntry = 0;
             CurrentID = (int)LootTableType.None;
         }
+
+        public void InitializeResources()
+        {
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.SlimeEnemyDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Slime, 1);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Slime, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 30);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Food, 4);
+            GameState.LootTableCreationAPI.SetEntry(1, 25);
+            GameState.LootTableCreationAPI.SetEntry(2, 40);
+            GameState.LootTableCreationAPI.SetEntry(3, 25);
+            GameState.LootTableCreationAPI.SetEntry(4, 5);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Bone, 4);
+            GameState.LootTableCreationAPI.SetEntry(3, 50);
+            GameState.LootTableCreationAPI.SetEntry(4, 25);
+            GameState.LootTableCreationAPI.SetEntry(5, 15);
+            GameState.LootTableCreationAPI.SetEntry(6, 10);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.ChestDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Chest, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PlanterDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Planter, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LightDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Light, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.SmashableBoxDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableBox, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.SmashableEggDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.SmashableEgg, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.MoonTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Moon, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DirtTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Dirt, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DirtTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Dirt, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.BedrockTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Bedrock, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PipeTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Pipe, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.WireTileDrop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Wire, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+        }
     }
 }

@@ -22,6 +22,36 @@ namespace Particle
 
                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
+               /* // Collising with terrain with raycasting
+                var rayCastingResult =
+                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
+                new KMath.Line2D(physicsState.PreviousPosition + box2DCollider.Offset, physicsState.Position + box2DCollider.Offset), box2DCollider.Size.X, box2DCollider.Size.Y);
+                Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
+
+                if (rayCastingResult.Intersect)
+                {
+                    physicsState.Position = rayCastingResult.Point + oppositeDirection * box2DCollider.Size * 0.5f;
+
+                    if (physicsState.Bounce)
+                    {
+                        physicsState.Velocity *= 0.25f;
+                        if (System.Math.Abs(rayCastingResult.Normal.X) > 0)
+                        {
+                            physicsState.Velocity.X = -physicsState.Velocity.X;
+                        }
+                        else if (System.Math.Abs(rayCastingResult.Normal.Y) > 0)
+                        {
+                            physicsState.Velocity.Y = -physicsState.Velocity.Y;
+                        }
+                    }
+                    else
+                    {
+                        physicsState.Velocity = new Vec2f();
+                    }
+                    
+                }*/
+
+
                 if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
                 {
                     var tile = tileMap.GetTile((int)physicsState.Position.X, (int)physicsState.Position.Y);
