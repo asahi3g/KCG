@@ -125,7 +125,8 @@ public class InventoryTest : MonoBehaviour
     private void Initialize()
     {
         GameResources.Initialize();
-        GameState.InventoryCreationApi.Initialize();
+        GameState.InventoryCreationApi.InitStage1();
+        GameState.InventoryCreationApi.InitStage2();
 
         terrariaLikeInventoryModelID = GameState.InventoryCreationApi.Create();
         GameState.InventoryCreationApi.SetAllSlotsAsActive();

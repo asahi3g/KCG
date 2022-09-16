@@ -179,6 +179,30 @@ namespace Vehicle
         {
             CurrentIndex = -1;
         }
+
+        public int JetChassis;
+
+        public void InitializeResources()
+        {
+            JetChassis = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Jet\\Chassis\\Jet_chassis.png", 144, 96);
+            JetChassis = GameState.SpriteAtlasManager.CopySpriteToAtlas(JetChassis, 0, 0, Enums.AtlasType.Vehicle);
+
+            GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
+            GameState.VehicleCreationApi.SetName("Car");
+            GameState.VehicleCreationApi.SetSpriteId(JetChassis);
+            GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+            GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -3.0f));
+            GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+            GameState.VehicleCreationApi.SetRotation(-90.0f);
+            GameState.VehicleCreationApi.SetAngularVelocity(Vec2f.Zero);
+            GameState.VehicleCreationApi.SetAngularMass(14f);
+            GameState.VehicleCreationApi.SetAngularAcceleration(4f);
+            GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
+            GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
+            GameState.VehicleCreationApi.SetAffectedByGravity(true);
+            GameState.VehicleCreationApi.End();
+        }
     }
 
 }

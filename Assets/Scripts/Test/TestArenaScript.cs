@@ -69,7 +69,6 @@ namespace Planet.Unity
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
-            //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
@@ -135,13 +134,9 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(32, 32);
+            Vec2i mapSize = new Vec2i(256, 16);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-
-            /*var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-            Planet.TileMap = TileMapManager.Load("map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);*/
 
             GenerateMap();
             SpawnStuff();
@@ -183,7 +178,7 @@ namespace Planet.Unity
                 tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
             }
 
-            for (int j = 0; j < tileMap.MapSize.Y; j++)
+            for (int j = 0; j < tileMap.MapSize.Y ; j++)
             {
                 tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
                 tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
@@ -203,6 +198,73 @@ namespace Planet.Unity
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
+
+            Planet.AddFixedFloatingText("BASIC MOTIONS\n1>Use arrow keys to move aronud and jump.", new Vec2f(10, 5), Color.white, 20);
+
+            Planet.AddFixedFloatingText("Use Space Bar To Dash.", new Vec2f(30, 5), Color.white, 20);
+
+            Planet.AddFixedFloatingText("Use 'F' To Start Jetpack", new Vec2f(45, 5), Color.white, 20);
+
+            Planet.AddFixedFloatingText("Use 'Control' To Crouch\nPlayer also can move while crouching.", new Vec2f(60, 5), Color.white, 20);
+
+            Planet.AddFixedFloatingText("Use 'K' To Roll", new Vec2f(75, 5), Color.white, 20);
+
+            Planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
+            Planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
+
+            Planet.AddFixedFloatingText("BACK TILE PLACEMENT TOOL\n1>Select back tile placement tool from inventory.\n2>Place it anywhere with pressing 'LMB'.", new Vec2f(105, 5), Color.white, 20);
+            Planet.AddItemParticle(new Vec2f(105, 7), Enums.ItemType.PlacementToolBack);
+
+            Planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
+            Planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);
+
+            Planet.AddFixedFloatingText("Climb To Platforms Using Up Arrow", new Vec2f(140, 5), Color.white, 20);
+            tileMap.SetFrontTile(140, 2, TileID.Platform);
+            tileMap.SetFrontTile(141, 2, TileID.Platform);
+            tileMap.SetFrontTile(142, 2, TileID.Platform);
+            tileMap.SetFrontTile(143, 2, TileID.Platform);
+            tileMap.SetFrontTile(144, 2, TileID.Platform);
+
+            tileMap.SetFrontTile(145, 5, TileID.Platform);
+            tileMap.SetFrontTile(146, 5, TileID.Platform);
+            tileMap.SetFrontTile(147, 5, TileID.Platform);
+            tileMap.SetFrontTile(148, 5, TileID.Platform);
+            tileMap.SetFrontTile(149, 5, TileID.Platform);
+
+            tileMap.SetFrontTile(140, 7, TileID.Platform);
+            tileMap.SetFrontTile(141, 7, TileID.Platform);
+            tileMap.SetFrontTile(142, 7, TileID.Platform);
+            tileMap.SetFrontTile(143, 7, TileID.Platform);
+            tileMap.SetFrontTile(144, 7, TileID.Platform);
+
+            Planet.AddFixedFloatingText("PISTOL\n1>Take the gun.\n2>Shoot it using 'LMB'.\nPress 'R' to reload the clip.", new Vec2f(155, 5), Color.white, 20);
+            Planet.AddItemParticle(new Vec2f(155, 7), Enums.ItemType.Pistol);
+
+
+            Planet.AddFixedFloatingText("Eliminate the enemies.", new Vec2f(180, 5), Color.white, 20);
+            Planet.AddAgent(new Vec2f(180, 7), Enums.AgentType.EnemyGunner);
+            Planet.AddAgent(new Vec2f(185, 7), Enums.AgentType.EnemyHeavy);
+
+            tileMap.SetFrontTile(180, 3, TileID.Platform);
+            tileMap.SetFrontTile(181, 3, TileID.Platform);
+            tileMap.SetFrontTile(182, 3, TileID.Platform);
+            tileMap.SetFrontTile(183, 3, TileID.Platform);
+            tileMap.SetFrontTile(184, 3, TileID.Platform);
+                                 
+            tileMap.SetFrontTile(185, 5, TileID.Platform);
+            tileMap.SetFrontTile(186, 5, TileID.Platform);
+            tileMap.SetFrontTile(187, 5, TileID.Platform);
+            tileMap.SetFrontTile(188, 5, TileID.Platform);
+            tileMap.SetFrontTile(189, 5, TileID.Platform);
+                                 
+            tileMap.SetFrontTile(180, 7, TileID.Platform);
+            tileMap.SetFrontTile(181, 7, TileID.Platform);
+            tileMap.SetFrontTile(182, 7, TileID.Platform);
+            tileMap.SetFrontTile(183, 7, TileID.Platform);
+            tileMap.SetFrontTile(184, 7, TileID.Platform);
+
+            Planet.AddFixedFloatingText("ENEMY PLACEMENT TOOL.", new Vec2f(200, 5), Color.white, 20);
+            Planet.AddItemParticle(new Vec2f(200, 5), Enums.ItemType.SpawnEnemySwordmanTool);
         }
     }
 }
