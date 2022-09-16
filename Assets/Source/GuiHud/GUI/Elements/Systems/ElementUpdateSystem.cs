@@ -43,6 +43,21 @@ namespace KGUI.Elements
             }
             ToRemoveEntities.Clear();
         }
+
+        public int DefaultCursor_;
+        public int AimCursor_;
+        public int BuildCursor_;
+
+        public void InitializeResources()
+        {
+            DefaultCursor_ = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
+            AimCursor_ = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
+            BuildCursor_ = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Cursors\\cursors.png", 16, 16);
+
+            DefaultCursor_ = GameState.SpriteAtlasManager.CopySpriteToAtlas(DefaultCursor_, 0, 0, Enums.AtlasType.Particle);
+            AimCursor_ = GameState.SpriteAtlasManager.CopySpriteToAtlas(AimCursor_, 2, 0, Enums.AtlasType.Particle);
+            BuildCursor_ = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor_, 1, 1, Enums.AtlasType.Particle);
+        }
     }
 }
 

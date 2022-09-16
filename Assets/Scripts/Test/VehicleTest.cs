@@ -227,15 +227,15 @@ namespace Planet.Unity
                                 int oreRandom = (int)KMath.Random.Mt19937.genrand_int32() % 3;
                                 if (oreRandom == 0)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.OreSprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.OreSprite;
                                 }
                                 else if (oreRandom == 1)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore2Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore2Sprite;
                                 }
                                 else
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore3Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore3Sprite;
                                 }
 
                                 tileMap.GetTile(i, j).DrawType = TileDrawType.Composited;

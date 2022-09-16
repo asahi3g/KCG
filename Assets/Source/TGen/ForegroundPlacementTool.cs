@@ -36,15 +36,15 @@ namespace TGen
 
             initialY = 300;
 
-            PlaceBlockButtons = new Image[GameResources.TGenIsotypeSprites.Length];
+            PlaceBlockButtons = new Image[GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length];
 
             var row = 0;
             var column = 0;
 
-            for (int i = 0; i < GameResources.TGenIsotypeSprites.Length; i++)
+            for (int i = 0; i < GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length; i++)
             {
                 PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
-                    GameObject.Find("Canvas").transform, GameResources.TGenIsotypeSprites[i],
+                    GameObject.Find("Canvas").transform, GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i],
                     new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.Image;
 
                 column++;

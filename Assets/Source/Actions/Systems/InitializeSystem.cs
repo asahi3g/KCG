@@ -145,7 +145,7 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemySpawn);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemySpawnCreator());
             ToolActionEnemySpawn.Data data = new ToolActionEnemySpawn.Data();
-            data.CharacterSpriteId = GameResources.SlimeSpriteSheet;
+            data.CharacterSpriteId = GameState.ItemCreationApi.SlimeSpriteSheet;
             GameState.ActionPropertyManager.SetData(data);
             GameState.ActionPropertyManager.EndActionPropertyType();
 

@@ -77,7 +77,12 @@ namespace Inventory
             }
         }
 
-        public void Initialize()
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2()
         {
             Init = true;
             CreateDefaultPlayerInventoryModel();
@@ -253,33 +258,33 @@ namespace Inventory
         public int GetDefaultPlayerInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 0;
         }
         public int GetDefaultRestrictionInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 1;
         }
 
         public int GetDefaultChestInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 2;
         }
         public int GetDefaultCorpseInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 3;
         }
 
         public int GetDefaultMaterialBagInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 4;
         }
 
@@ -312,12 +317,12 @@ namespace Inventory
 
         public void SetDefaultRestrictionTexture()
         {
-            SetTextureRestriction(Enums.ItemGroups.Helmet, GameResources.HelmetSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Armour, GameResources.ArmourSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Gloves, GameResources.GlovesSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Ring, GameResources.RingSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Belt, GameResources.BeltSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Dye, GameResources.DyeSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Helmet, GameState.ItemCreationApi.HelmetSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Armour, GameState.ItemCreationApi.ArmourSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Gloves, GameState.ItemCreationApi.GlovesSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Ring, GameState.ItemCreationApi.RingSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Belt, GameState.ItemCreationApi.BeltSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Dye, GameState.ItemCreationApi.DyeSlotIcon);
         }
 
         public void SetTextureRestriction(Enums.ItemGroups itemGroup, int textureRestriction)
