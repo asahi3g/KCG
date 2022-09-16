@@ -41,7 +41,7 @@ namespace Particle
 
                 float newRotation = physicsState.Rotation + state.DeltaRotation * deltaTime;
                 
-                gameEntity.ReplaceParticlePhysicsState(newPosition, physicsState.Position, physicsState.Acceleration, newVelocity, newRotation, physicsState.Bounce);
+                gameEntity.ReplaceParticlePhysicsState(newPosition, physicsState.Position, physicsState.Acceleration, newVelocity, newRotation, physicsState.Bounce, physicsState.BounceFactor);
 
                 /*state.GameObject.transform.position = new Vector3(newPosition.x, newPosition.y, 0.0f);
                 state.GameObject.transform.Rotate(0.0f, 0.0f, state.DeltaRotation, Space.Self);*/

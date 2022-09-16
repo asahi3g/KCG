@@ -14,5 +14,6 @@ namespace Particle
         public Vec2f Velocity;
         public float Rotation;
         public bool Bounce;
+        public Vec2f BounceFactor;
     }
 }
