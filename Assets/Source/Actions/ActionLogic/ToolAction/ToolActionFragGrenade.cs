@@ -23,10 +23,6 @@ namespace Action
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
             WeaponProperty = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
 
-            if (ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
-                radius = 2.0f;
-            else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
-                radius = 4.0f;
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
@@ -35,24 +31,14 @@ namespace Action
 
             // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 0.5f;
+            StartPos.X += 1.0f * AgentEntity.agentPhysicsState.Direction;
             StartPos.Y += 1.5f;
 
-            if(ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
-            {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
-                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.5f, AgentEntity.agentPhysicsState.Position.Y));
-            }
-            else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
-            {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Rocket);
-            }
-             else
-            {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
-                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.5f, AgentEntity.agentPhysicsState.Position.Y));
-                AgentEntity.UseTool(1.0f);
-            }
+
+            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.FragGrenade);
+            ProjectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
+            planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.5f, AgentEntity.agentPhysicsState.Position.Y));
+            AgentEntity.UseTool(1.0f);
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
 

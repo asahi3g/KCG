@@ -3,6 +3,7 @@ using KMath;
 using Collisions;
 using Particle;
 using UnityEngine.UIElements;
+using System;
 
 namespace Projectile
 {
@@ -45,10 +46,11 @@ namespace Projectile
                         entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
                         entity.projectileOnHit.LastHitTime = Time.time;
                     }
+                    
                     if (entity.isProjectileFirstHIt)
                     {
-                        physicsState.Velocity = new Vec2f();
                         physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
+                        physicsState.Velocity = new Vec2f();
                     }
                 }
 

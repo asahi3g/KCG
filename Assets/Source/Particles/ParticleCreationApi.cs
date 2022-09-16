@@ -183,6 +183,14 @@ namespace Particle
             }
         }
 
+        public void SetBounce(bool bounce)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Bounce = bounce;
+            }
+        }
+
 
         public void End()
         {

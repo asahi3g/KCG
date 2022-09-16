@@ -27,6 +27,9 @@ namespace Projectile
 
                 switch (projectileEntity.projectileType.Type)
                 {
+                    case Enums.ProjectileType.FragGrenade:
+                        FragGrenadeExplosive(ref planet, projectileEntity);
+                        break;
                     case Enums.ProjectileType.Grenade:
                         Explosive(ref planet, projectileEntity);
                         break;
@@ -104,6 +107,43 @@ namespace Projectile
                     }
                 }
             }
+                // Todo: Do a circle collision test.
+                planet.RemoveProjectile(pEntity.projectileID.Index);
+        }
+
+
+        public void FragGrenadeExplosive(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        {
+            float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
+
+                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ExplosionEmitter);
+                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ShrapnelEmitter);
+
+            Vec2f pos = pEntity.projectileOnHit.LastHitPos;
+                float radius = pEntity.projectileExplosive.BlastRadius;
+                int damage = pEntity.projectileExplosive.MaxDamage;
+
+                Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
+
+                for (int i = 0; i < planet.AgentList.Length; i++)
+                {
+                    AgentEntity agentEntity = planet.AgentList.Get(i);
+                    if (!agentEntity.isAgentPlayer && agentEntity.agentState.State == Agent.AgentState.Alive)
+                    {
+                        var agentPhysicsState = agentEntity.agentPhysicsState;
+                        var agentBox2dCollider = agentEntity.physicsBox2DCollider;
+
+                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+
+                        AABox2D agentBox = new AABox2D(new Vec2f(agentPhysicsState.PreviousPosition.X, agentPhysicsState.Position.Y), agentBox2dCollider.Size);
+
+                        if (explosionCircle.InterSectionAABB(ref agentBox))
+                        {
+                            // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                            planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
+                        }
+                    }
+                }
                 // Todo: Do a circle collision test.
                 planet.RemoveProjectile(pEntity.projectileID.Index);
         }

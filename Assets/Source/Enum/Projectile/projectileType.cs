@@ -3,6 +3,7 @@ namespace Enums
     public enum ProjectileType
     {
         Grenade,
+        FragGrenade,
         Arrow,
         Bolt,
         Bullet,

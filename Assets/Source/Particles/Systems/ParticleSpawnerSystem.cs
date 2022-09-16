@@ -25,7 +25,7 @@ namespace Particle
             entity.AddParticleID(UniqueID++, -1);
             entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
-                             new Vec2f(velocity.X, velocity.Y), 0);
+                             new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce);
             
             entity.AddParticleSprite2D(particleProperties.SpriteId, null, null, particleProperties.Size);
 
@@ -52,7 +52,7 @@ namespace Particle
             entity.AddParticleID(UniqueID++, -1);
             entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
-                             new Vec2f(velocity.X, velocity.Y), 0);
+                             new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce);
             
             entity.AddParticleSprite2D(-1, triangles, textureCoords, particleProperties.Size);
 
