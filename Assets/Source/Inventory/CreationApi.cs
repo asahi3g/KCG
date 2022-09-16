@@ -77,7 +77,12 @@ namespace Inventory
             }
         }
 
-        public void Initialize()
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2()
         {
             Init = true;
             CreateDefaultPlayerInventoryModel();
@@ -253,33 +258,33 @@ namespace Inventory
         public int GetDefaultPlayerInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 0;
         }
         public int GetDefaultRestrictionInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 1;
         }
 
         public int GetDefaultChestInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 2;
         }
         public int GetDefaultCorpseInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 3;
         }
 
         public int GetDefaultMaterialBagInventoryModelID()
         {
             if (!Init)
-                Initialize();
+                InitStage2();
             return 4;
         }
 
