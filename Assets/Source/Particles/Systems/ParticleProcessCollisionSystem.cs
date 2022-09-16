@@ -28,12 +28,29 @@ namespace Particle
 
                 if (rayCastingResult.Intersect)
                 {
-                    physicsState.Position = rayCastingResult.Point + oppositeDirection * box2DCollider.Size * 0.5f;
-                    physicsState.Velocity = new Vec2f();
-                    
+                    physicsState.Position = rayCastingResult.Point;
+                    if (physicsState.Bounce)
+                    {
+                        physicsState.Velocity = physicsState.Velocity * physicsState.BounceFactor;
+                        if (System.Math.Abs(rayCastingResult.Normal.X) > 0)
+                        {
+                            physicsState.Velocity.X = -physicsState.Velocity.X;
+                        }
+                        else if (System.Math.Abs(rayCastingResult.Normal.Y) > 0)
+                        {
+                            physicsState.Velocity.Y = -physicsState.Velocity.Y;
+                        }
+                    }
+                    else
+                    {    
+                        physicsState.Velocity = new Vec2f();
+                    }
                 }
 
-                 var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
+                
+                //UnityEngine.Debug.Log(box2DCollider.Size.X + " " + box2DCollider.Size.Y);
+
+                 var entityBoxBorders = new AABox2D(physicsState.Position + box2DCollider.Offset, box2DCollider.Size);
 
 
 

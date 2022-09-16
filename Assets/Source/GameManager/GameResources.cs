@@ -1165,6 +1165,7 @@ public class GameResources
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.FragGrenade, "FragGrenade");
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetExplosion(3.0f, 15, 0f);
         GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
         GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
         GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
@@ -1374,10 +1375,13 @@ public class GameResources
         GameState.ParticleCreationApi.SetDecayRate(0.5f);
         GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -15.0f));
         GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
         GameState.ParticleCreationApi.SetIsCollidable(true);
+        GameState.ParticleCreationApi.SetBounce(true);
+        GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
         GameState.ParticleCreationApi.End();
 
         GameState.ParticleCreationApi.Create((int)Particle.ParticleType.GasParticle);
@@ -1422,6 +1426,24 @@ public class GameResources
         GameState.ParticleCreationApi.SetStartingRotation(0.0f);
         GameState.ParticleCreationApi.SetStartingScale(1.0f);
         GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.End();
+
+
+        GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Shrapnel);
+        GameState.ParticleCreationApi.SetName("Shrapnel");
+        GameState.ParticleCreationApi.SetDecayRate(2.0f);
+        GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
+        GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+        GameState.ParticleCreationApi.SetSpriteId(OreIcon);
+        GameState.ParticleCreationApi.SetSize(new Vec2f(0.125f, 0.125f));
+        GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+        GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+        GameState.ParticleCreationApi.SetStartingScale(1.0f);
+        GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+        GameState.ParticleCreationApi.SetIsCollidable(true);
+        GameState.ParticleCreationApi.SetBounce(true);
+        GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(0.75f, 0.75f));
         GameState.ParticleCreationApi.End();
     }
 
@@ -1477,13 +1499,23 @@ public class GameResources
         GameState.ParticleEmitterCreationApi.End();
 
         GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.ExplosionEmitter);
-        GameState.ParticleEmitterCreationApi.SetName("blood");
+        GameState.ParticleEmitterCreationApi.SetName("explosion");
         GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Explosion);
         GameState.ParticleEmitterCreationApi.SetDuration(4.0f);
-        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
-        GameState.ParticleEmitterCreationApi.SetParticleCount(5);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(1);
         GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(10.0f);
         GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0.0f), new Vec2f(0.0f, 0.0f));
+        GameState.ParticleEmitterCreationApi.End();
+
+        GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.ShrapnelEmitter);
+        GameState.ParticleEmitterCreationApi.SetName("shrapnel-emitter");
+        GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Shrapnel);
+        GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
+        GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
+        GameState.ParticleEmitterCreationApi.SetParticleCount(30);
+        GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.0f);
+        GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
         GameState.ParticleEmitterCreationApi.End();
     }
 
@@ -1531,6 +1563,14 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
         GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
         GameState.ProjectileCreationApi.SetAffectedByGravity();
+        GameState.ProjectileCreationApi.End();
+
+        GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.FragGrenade);
+        GameState.ProjectileCreationApi.SetName("frag-grenade");
+        GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
+        GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
+        GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+        GameState.ProjectileCreationApi.SetStartVelocity(10.0f);
         GameState.ProjectileCreationApi.End();
     }
 
