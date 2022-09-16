@@ -308,6 +308,22 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
             GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.End();
+
+            GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Shrapnel);
+            GameState.ParticleCreationApi.SetName("Shrapnel");
+            GameState.ParticleCreationApi.SetDecayRate(2.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+            GameState.ParticleCreationApi.SetSpriteId(OreIcon);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.125f, 0.125f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.End();
         }
 
         public void InitializeEmitterResources()
@@ -369,6 +385,16 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.SetParticleCount(5);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(10.0f);
             GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0.0f), new Vec2f(0.0f, 0.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)Particle.ParticleEmitterType.ShrapnelEmitter);
+            GameState.ParticleEmitterCreationApi.SetName("shrapnel-emitter");
+            GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Shrapnel);
+            GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(30);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
             GameState.ParticleEmitterCreationApi.End();
         }
     }

@@ -491,6 +491,17 @@ namespace Item
             GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionPulseWeapon);
             GameState.ItemCreationApi.EndItem();
 
+            GameState.ItemCreationApi.CreateItem(Enums.ItemType.AutoCannon, "AutoCannon");
+            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
+            GameState.ItemCreationApi.SetTexture(LongRifleIcon);
+            GameState.ItemCreationApi.SetInventoryTexture(LongRifleIcon);
+            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
+            GameState.ItemCreationApi.SetRangedWeaponClip(40, 3, 4f);
+            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
+            GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
+            GameState.ItemCreationApi.EndItem();
+
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.SMG, "SMG");
             GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
             GameState.ItemCreationApi.SetTexture(SMGIcon);

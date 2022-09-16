@@ -220,6 +220,14 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetStartVelocity(100.0f);
             GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
             GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.FragGrenade);
+            GameState.ProjectileCreationApi.SetName("frag-grenade");
+            GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
+            GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(10.0f);
+            GameState.ProjectileCreationApi.End();
         }
     }
 
