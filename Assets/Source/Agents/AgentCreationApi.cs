@@ -189,7 +189,7 @@ namespace Agent
 
         public void InitializeResources()
         {
-
+            
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");

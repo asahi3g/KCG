@@ -231,11 +231,11 @@ namespace Planet.Unity
                                 }
                                 else if (oreRandom == 1)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore2Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore2Sprite;
                                 }
                                 else
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore3Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore3Sprite;
                                 }
 
                                 tileMap.GetTile(i, j).DrawType = TileDrawType.Composited;

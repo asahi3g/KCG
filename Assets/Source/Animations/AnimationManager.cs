@@ -98,14 +98,14 @@ namespace Animation
             CurrentIndex = -1;
         }
 
-        public static int CharacterSpriteId;
-        public static int CharacterSpriteSheet;
-        public static int SlimeMoveLeftBaseSpriteId;
-        public static int SlimeSpriteSheet;
-        public static int DustBaseSpriteId;
-        public static int DustSpriteSheet;
-        public static int ExplosionBaseSpriteId;
-        public static int ExplosionSpriteSheet;
+        public int CharacterSpriteId;
+        public int CharacterSpriteSheet;
+        public int SlimeMoveLeftBaseSpriteId;
+        public int SlimeSpriteSheet;
+        public int DustBaseSpriteId;
+        public int DustSpriteSheet;
+        public int ExplosionBaseSpriteId;
+        public int ExplosionSpriteSheet;
 
         public void InitializeResources()
         {

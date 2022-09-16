@@ -312,12 +312,12 @@ namespace Inventory
 
         public void SetDefaultRestrictionTexture()
         {
-            SetTextureRestriction(Enums.ItemGroups.Helmet, GameResources.HelmetSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Armour, GameResources.ArmourSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Gloves, GameResources.GlovesSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Ring, GameResources.RingSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Belt, GameResources.BeltSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Dye, GameResources.DyeSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Helmet, GameState.ItemCreationApi.HelmetSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Armour, GameState.ItemCreationApi.ArmourSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Gloves, GameState.ItemCreationApi.GlovesSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Ring, GameState.ItemCreationApi.RingSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Belt, GameState.ItemCreationApi.BeltSlotIcon);
+            SetTextureRestriction(Enums.ItemGroups.Dye, GameState.ItemCreationApi.DyeSlotIcon);
         }
 
         public void SetTextureRestriction(Enums.ItemGroups itemGroup, int textureRestriction)
