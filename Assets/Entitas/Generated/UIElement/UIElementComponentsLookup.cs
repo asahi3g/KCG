@@ -10,15 +10,17 @@ public static class UIElementComponentsLookup {
 
     public const int KGUIElementsID = 0;
     public const int KGUIElementsImage = 1;
-    public const int KGUIElementsPosition2D = 2;
-    public const int KGUIElementsText = 3;
-    public const int KGUIElementsType = 4;
+    public const int KGUIElementsMultiplePosition = 2;
+    public const int KGUIElementsPosition2D = 3;
+    public const int KGUIElementsText = 4;
+    public const int KGUIElementsType = 5;
 
-    public const int TotalComponents = 5;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
         "KGUIElementsID",
         "KGUIElementsImage",
+        "KGUIElementsMultiplePosition",
         "KGUIElementsPosition2D",
         "KGUIElementsText",
         "KGUIElementsType"
@@ -27,6 +29,7 @@ public static class UIElementComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(KGUI.Elements.IDComponent),
         typeof(KGUI.Elements.ImageComponent),
+        typeof(KGUI.Elements.MultiplePositionComponent),
         typeof(KGUI.Elements.Position2DComponent),
         typeof(KGUI.Elements.TextComponent),
         typeof(KGUI.Elements.TypeComponent)
