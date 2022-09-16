@@ -90,7 +90,8 @@ namespace Planet
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
-            HUDManager.Initialize(this, agentEntity);
+            HUDManager.InitStage1();
+            HUDManager.InitStage2(this, agentEntity);
         }
 
         // Note(Mahdi): Deprecated will be removed soon
