@@ -32,7 +32,7 @@ namespace Action
             // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 1.0f * AgentEntity.agentPhysicsState.Direction;
-            StartPos.Y += 1.5f;
+            StartPos.Y += 2.0f;
 
 
             ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.FragGrenade);

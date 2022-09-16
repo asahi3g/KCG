@@ -1570,7 +1570,8 @@ public class GameResources
         GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
         GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
-        GameState.ProjectileCreationApi.SetStartVelocity(10.0f);
+        GameState.ProjectileCreationApi.SetStartVelocity(15.0f);
+        GameState.ProjectileCreationApi.SetAffectedByGravity();
         GameState.ProjectileCreationApi.End();
     }
 
