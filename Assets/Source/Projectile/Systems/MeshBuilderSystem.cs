@@ -39,8 +39,8 @@ namespace Projectile
                
                 var width = entity.projectileSprite2D.Size.X;
                 var height = entity.projectileSprite2D.Size.Y;
-                var x = entity.projectilePhysicsState.Position.X - width * 0.5f;
-                var y = entity.projectilePhysicsState.Position.Y - height * 0.5f;
+                var x = entity.projectilePhysicsState.Position.X;
+                var y = entity.projectilePhysicsState.Position.Y;
 
                 if (!Utility.ObjectMesh.isOnScreen(x, y))
                     continue;

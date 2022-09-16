@@ -20,7 +20,7 @@ namespace Agent
         {       
             PhysicsStateComponent physicsState = entity.agentPhysicsState;
             Box2DColliderComponent box2DCollider = entity.physicsBox2DCollider;
-            AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
+            AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
             
             if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
@@ -37,7 +37,6 @@ namespace Agent
                     }
                 }
 
-                entityBoxBorders.DrawBox();
 
                 if (!isPlatform || !physicsState.Droping)
                 {

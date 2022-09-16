@@ -11,6 +11,8 @@ namespace Collisions
         /// </summary>
         public static RayCastResult RayCastAgainstTileMapBox2d(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
         {
+            //if (line.A - line.B M < 0.005f)
+            //        return 
             // Form ray cast from A into B
             Vec2f vRayStart = line.A;
             Vec2f vRayDir = (line.B - line.A).Normalized;

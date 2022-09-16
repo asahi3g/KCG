@@ -3,6 +3,7 @@ using KMath;
 using Collisions;
 using Particle;
 using UnityEngine.UIElements;
+using Utility;
 
 namespace Projectile
 {
@@ -23,17 +24,17 @@ namespace Projectile
                     GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Flags.HasFlag(ProjectileProperties.ProjFlags.CanBounce);
 
                 var physicsState = entity.projectilePhysicsState;
+                var box2DCollider = entity.physicsBox2DCollider;
 
-                var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
-                var box2dCollider = entity.physicsBox2DCollider;
+                AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-                if ((physicsState.Position - physicsState.PreviousPosition).Magnitude < 0.005f)
+                if ((physicsState.Position - physicsState.PreviousPosition).Magnitude < 0.0001f)
                     continue;
 
-                // Collising with terrain with raycasting
+                // Collising with terrainr(raycasting)
                 var rayCastingResult =
-                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), box2dCollider.Size.X, box2dCollider.Size.Y);
+                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new KMath.Line2D(
+                    physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)
@@ -53,8 +54,8 @@ namespace Projectile
                 }
 
                 // Collision with Agent.
-                Vec2f position = physicsState.Position + box2dCollider.Offset;
-                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y };
+                Vec2f position = physicsState.Position + box2DCollider.Offset;
+                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2DCollider.Size.X, h = box2DCollider.Size.Y };
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
                 for (int i = 0; i < planet.AgentList.Length; i++)
                 {
@@ -70,7 +71,7 @@ namespace Projectile
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
                             if (entity.isProjectileFirstHIt)
-                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
+                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2DCollider.Offset;
 
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
                             if (!entity.hasProjectileOnHit)
@@ -111,6 +112,8 @@ namespace Projectile
                     if (bounce)
                         entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                 }
+
+                entityBoxBorders.DrawBox();
             }
 
             CircleSmoke.Update(ref planet.TileMap);

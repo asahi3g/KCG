@@ -27,8 +27,6 @@ namespace Particle
                     var tile = tileMap.GetTile((int)physicsState.Position.X, (int)physicsState.Position.Y);
                     var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
-                    entityBoxBorders.DrawBox();
-
                     physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                     physicsState.Velocity.Y = 0.0f;
                     physicsState.Acceleration.Y = 0.0f;

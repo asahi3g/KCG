@@ -45,8 +45,8 @@ namespace Particle
                     
                     var width = entity.particleSprite2D.Size.X;
                     var height = entity.particleSprite2D.Size.Y;
-                    var x = pos.X - width * 0.5f;
-                    var y = pos.Y - height * 0.5f;
+                    var x = pos.X;
+                    var y = pos.Y;
 
                     if (!Utility.ObjectMesh.isOnScreen(x, y))
                         continue;
