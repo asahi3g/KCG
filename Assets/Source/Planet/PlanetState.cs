@@ -509,7 +509,7 @@ namespace Planet
             }*/
 
             // check if the sprite atlas teSetTilextures needs to be updated
-            for(int type = 0; type < GameState.SpriteAtlasManager.Length; type++)
+            for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
             {
                 GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
             }
