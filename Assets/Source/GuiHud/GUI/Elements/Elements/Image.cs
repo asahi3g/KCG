@@ -373,6 +373,22 @@ namespace KGUI.Elements
             image.color = color;
         }
 
+        public void SetImagePosition1(UIElementEntity entity)
+        {
+            if(entity.hasKGUIElementsMultiplePosition)
+            {
+                entity.kGUIElementsPosition2D.Value = entity.kGUIElementsMultiplePosition.position1;
+            }
+        }
+
+        public void SetImagePosition2(UIElementEntity entity)
+        {
+            if (entity.hasKGUIElementsMultiplePosition)
+            {
+                entity.kGUIElementsPosition2D.Value = entity.kGUIElementsMultiplePosition.position2;
+            }
+        }
+
         public Transform GetTransform()
         {
             // Return Transform
