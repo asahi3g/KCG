@@ -221,104 +221,54 @@ namespace Collisions
 		
 		//QP - Quarter Platform
 		// R0
-		QP_R0_A000,
-		QP_R0_A001,
-		QP_R0_A010,
-		QP_R0_A011,
-		QP_R0_A100,
-		QP_R0_A101,
-		QP_R0_A110,
-		QP_R0_A111,
-		
+		QP_R0_A0,
+		QP_R0_A1,
+
 		// R1
-		QP_R1_A000,
-		QP_R1_A001,
-		QP_R1_A010,
-		QP_R1_A011,
-		QP_R1_A100,
-		QP_R1_A101,
-		QP_R1_A110,
-		QP_R1_A111,
-		
+		QP_R1_A0,
+		QP_R1_A1,
+
 		// R2
-		QP_R2_A000,
-		QP_R2_A001,
-		QP_R2_A010,
-		QP_R2_A011,
-		QP_R2_A100,
-		QP_R2_A101,
-		QP_R2_A110,
-		QP_R2_A111,
-		
+		QP_R2_A0,
+		QP_R2_A1,
+
 		// R3
-		QP_R3_A000,
-		QP_R3_A001,
-		QP_R3_A010,
-		QP_R3_A011,
-		QP_R3_A100,
-		QP_R3_A101,
-		QP_R3_A110,
-		QP_R3_A111,
-		
+		QP_R3_A0,
+		QP_R3_A1,
+
 		//HP - Half Platform
 		// R0
-		HP_R0_A000,
-		HP_R0_A001,
-		HP_R0_A010,
-		HP_R0_A011,
-		HP_R0_A100,
-		HP_R0_A101,
-		HP_R0_A110,
-		HP_R0_A111,
-		
+		HP_R0_A0,
+		HP_R0_A1,
+
 		// R1
-		HP_R1_A000,
-		HP_R1_A001,
-		HP_R1_A010,
-		HP_R1_A011,
-		HP_R1_A100,
-		HP_R1_A101,
-		HP_R1_A110,
-		HP_R1_A111,
-		
+		HP_R1_A0,
+		HP_R1_A1,
+
 		// R2
-		HP_R2_A000,
-		HP_R2_A001,
-		HP_R2_A010,
-		HP_R2_A011,
-		HP_R2_A100,
-		HP_R2_A101,
-		HP_R2_A110,
-		HP_R2_A111,
+		HP_R2_A0,
+		HP_R2_A1,
 		
 		// R3
-		HP_R3_A000,
-		HP_R3_A001,
-		HP_R3_A010,
-		HP_R3_A011,
-		HP_R3_A100,
-		HP_R3_A101,
-		HP_R3_A110,
-		HP_R3_A111,
+		HP_R3_A0,
+		HP_R3_A1,
 		
 		// FP - Full Platform
 		// R0
-		FP_R0_A0000,
-		FP_R0_A0001,
-		FP_R0_A0010,
-		FP_R0_A0011,
-		FP_R0_A0100,
-		FP_R0_A0101,
-		FP_R0_A0110,
-		FP_R0_A0111,
-		FP_R0_A1000,
-		FP_R0_A1001,
-		FP_R0_A1010,
-		FP_R0_A1011,
-		FP_R0_A1100,
-		FP_R0_A1101,
-		FP_R0_A1110,
-		FP_R0_A1111,
+		FP_R0_A0,
+		FP_R0_A1,
+		
+		// R1
+		FP_R1_A0,
+		FP_R1_A1,
+
+		// R2
+		FP_R2_A0,
+		FP_R2_A1,
+		
+		// R3
+		FP_R3_A0,
+		FP_R3_A1,
     }
 }
 
