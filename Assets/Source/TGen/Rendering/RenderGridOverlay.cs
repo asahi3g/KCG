@@ -15,7 +15,7 @@ namespace TGen
     {
         public Utility.FrameMesh Mesh;
 
-        private Color gridColor = new Color(0.5F, 0.5F, 0.5F, 0.5F);
+        private Color gridColor = new(0.5F, 0.5F, 0.5F, 0.5F);
 
         private float gridThickness = 0.1F;
 
@@ -88,22 +88,22 @@ namespace TGen
         }
 
         // Tile CollisionIsotope
-        public int SB_R0000Sheet;
-        public int SB_R0001Sheet;
-        public int SB_R0010Sheet;
-        public int SB_R0011Sheet;
-        public int SB_R0100Sheet;
-        public int SB_R0101Sheet;
-        public int SB_R0110Sheet;
-        public int SB_R0111Sheet;
-        public int SB_R1000Sheet;
-        public int SB_R1001Sheet;
-        public int SB_R1010Sheet;
-        public int SB_R1011Sheet;
-        public int SB_R1100Sheet;
-        public int SB_R1101Sheet;
-        public int SB_R1110Sheet;
-        public int SB_R1111Sheet;
+        public int FB_R0000Sheet;
+        public int FB_R0001Sheet;
+        public int FB_R0010Sheet;
+        public int FB_R0011Sheet;
+        public int FB_R0100Sheet;
+        public int FB_R0101Sheet;
+        public int FB_R0110Sheet;
+        public int FB_R0111Sheet;
+        public int FB_R1000Sheet;
+        public int FB_R1001Sheet;
+        public int FB_R1010Sheet;
+        public int FB_R1011Sheet;
+        public int FB_R1100Sheet;
+        public int FB_R1101Sheet;
+        public int FB_R1110Sheet;
+        public int FB_R1111Sheet;
         public int EmptyBlockSheet;
 
         //TGen
@@ -168,41 +168,41 @@ namespace TGen
 
         public void InitializeResources()
         {
-            SB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
-            SB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
-            SB_R0010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0010.png", 32, 32);
-            SB_R0011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0011.png", 32, 32);
-            SB_R0100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0100.png", 32, 32);
-            SB_R0101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0101.png", 32, 32);
-            SB_R0110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0110.png", 32, 32);
-            SB_R0111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0111.png", 32, 32);
-            SB_R1000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1000.png", 32, 32);
-            SB_R1001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1001.png", 32, 32);
-            SB_R1010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1010.png", 32, 32);
-            SB_R1011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1011.png", 32, 32);
-            SB_R1100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1100.png", 32, 32);
-            SB_R1101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1101.png", 32, 32);
-            SB_R1110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1110.png", 32, 32);
-            SB_R1111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1111.png", 32, 32);
+            FB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
+            FB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
+            FB_R0010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0010.png", 32, 32);
+            FB_R0011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0011.png", 32, 32);
+            FB_R0100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0100.png", 32, 32);
+            FB_R0101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0101.png", 32, 32);
+            FB_R0110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0110.png", 32, 32);
+            FB_R0111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0111.png", 32, 32);
+            FB_R1000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1000.png", 32, 32);
+            FB_R1001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1001.png", 32, 32);
+            FB_R1010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1010.png", 32, 32);
+            FB_R1011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1011.png", 32, 32);
+            FB_R1100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1100.png", 32, 32);
+            FB_R1101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1101.png", 32, 32);
+            FB_R1110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1110.png", 32, 32);
+            FB_R1111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1111.png", 32, 32);
             EmptyBlockSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
 
             // TileIsotypes.
-            SB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0000Sheet, 0, 0, 0);
-            SB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0001Sheet, 0, 0, 0);
-            SB_R0010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0010Sheet, 0, 0, 0);
-            SB_R0011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0011Sheet, 0, 0, 0);
-            SB_R0100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0100Sheet, 0, 0, 0);
-            SB_R0101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0101Sheet, 0, 0, 0);
-            SB_R0110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0110Sheet, 0, 0, 0);
-            SB_R0111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R0111Sheet, 0, 0, 0);
-            SB_R1000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1000Sheet, 0, 0, 0);
-            SB_R1001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1001Sheet, 0, 0, 0);
-            SB_R1010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1010Sheet, 0, 0, 0);
-            SB_R1011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1011Sheet, 0, 0, 0);
-            SB_R1100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1100Sheet, 0, 0, 0);
-            SB_R1101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1101Sheet, 0, 0, 0);
-            SB_R1110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1110Sheet, 0, 0, 0);
-            SB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(SB_R1111Sheet, 0, 0, 0);
+            FB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0000Sheet, 0, 0, 0);
+            FB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0001Sheet, 0, 0, 0);
+            FB_R0010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0010Sheet, 0, 0, 0);
+            FB_R0011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0011Sheet, 0, 0, 0);
+            FB_R0100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0100Sheet, 0, 0, 0);
+            FB_R0101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0101Sheet, 0, 0, 0);
+            FB_R0110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0110Sheet, 0, 0, 0);
+            FB_R0111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0111Sheet, 0, 0, 0);
+            FB_R1000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1000Sheet, 0, 0, 0);
+            FB_R1001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1001Sheet, 0, 0, 0);
+            FB_R1010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1010Sheet, 0, 0, 0);
+            FB_R1011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1011Sheet, 0, 0, 0);
+            FB_R1100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1100Sheet, 0, 0, 0);
+            FB_R1101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1101Sheet, 0, 0, 0);
+            FB_R1110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1110Sheet, 0, 0, 0);
+            FB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1111Sheet, 0, 0, 0);
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
             TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
