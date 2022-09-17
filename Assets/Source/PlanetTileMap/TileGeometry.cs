@@ -118,23 +118,23 @@ namespace PlanetTileMap
                 3, // TB_R3
                 3, // TB_R4
 
-                4, // LBT_R1
-                4, // LBT_R2
-                4, // LBT_R3
-                4, // LBT_R4
-                4, // LBT_R5
-                4, // LBT_R6
-                4, // LBT_R7
-                4, // LBT_R8
+                3, // L1_R1
+                3, // L1_R2
+                3, // L1_R3
+                3, // L1_R4
+                3, // L1_R5
+                3, // L1_R6
+                3, // L1_R7
+                3, // L1_R8
 
-                4, // LBB_R1
-                4, // LBB_R2
-                4, // LBB_R3
-                4, // LBB_R4
-                4, // LBB_R5
-                4, // LBB_R6
-                4, // LBB_R7
-                4, // LBB_R8
+                4, // L2_R1
+                4, // L2_R2
+                4, // L2_R3
+                4, // L2_R4
+                4, // L2_R5
+                4, // L2_R6
+                4, // L2_R7
+                4, // L2_R8
             };
         }
         
@@ -314,13 +314,13 @@ namespace PlanetTileMap
                 case TileShape.FullBlock:
                     return 4;
                 case TileShape.HalfBlock:
-                    return 4;
-                case TileShape.LBlockBottom:
-                    return 4;
-                case TileShape.LBlockTop:
+                    return 3;
+                case TileShape.L1Block:
+                    return 2;
+                case TileShape.L2Block:
                     return 3;
                 case TileShape.TriangleBlock:
-                    return 3;
+                    return 2;
                 default:
                     return 0;
             }
@@ -349,20 +349,12 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.HB_R1:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
-                    };
-                case TileShapeAndRotation.HB_R2:
-                    return new[]
-                    {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
                         GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.HB_R3:
+                case TileShapeAndRotation.HB_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
@@ -370,7 +362,7 @@ namespace PlanetTileMap
                         GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
                         GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
                     };
-                case TileShapeAndRotation.HB_R4:
+                case TileShapeAndRotation.HB_R3:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
@@ -378,131 +370,104 @@ namespace PlanetTileMap
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
                         GetTileLineSegmentPosition(TileLineSegment.L_M3_M1),
                     };
-                case TileShapeAndRotation.TB_R1:
+                case TileShapeAndRotation.HB_R4:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
                     };
-                case TileShapeAndRotation.TB_R2:
+                case TileShapeAndRotation.TB_R1:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.TB_R3:
+                case TileShapeAndRotation.TB_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_C1),
                     };
-                case TileShapeAndRotation.TB_R4:
+                case TileShapeAndRotation.TB_R3:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C2),
                     };
-                case TileShapeAndRotation.LBT_R1:
+
+                case TileShapeAndRotation.TB_R4:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.LBT_R2:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
-                    };
-                case TileShapeAndRotation.LBT_R3:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M2),
-                    };
-                case TileShapeAndRotation.LBT_R4:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M2),
-                    };
-                case TileShapeAndRotation.LBT_R5:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
-                    };
-                case TileShapeAndRotation.LBT_R6:
+                case TileShapeAndRotation.L1_R1:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
                         GetTileLineSegmentPosition(TileLineSegment.L_M1_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.LBT_R7:
+
+                case TileShapeAndRotation.L1_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
                         GetTileLineSegmentPosition(TileLineSegment.L_M2_C1),
                     };
-                case TileShapeAndRotation.LBT_R8:
+
+                case TileShapeAndRotation.L1_R3:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
                         GetTileLineSegmentPosition(TileLineSegment.L_M3_C2),
                     };
-                case TileShapeAndRotation.LBB_R1:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
-                    };
-                case TileShapeAndRotation.LBB_R2:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
-                    };
-                case TileShapeAndRotation.LBB_R3:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C1),
-                    };
-                case TileShapeAndRotation.LBB_R4:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
-                    };
-                case TileShapeAndRotation.LBB_R5:
+                case TileShapeAndRotation.L1_R4:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                    };
+
+                case TileShapeAndRotation.L1_R5:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.LBB_R6:
+                case TileShapeAndRotation.L1_R6:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                    };
+                case TileShapeAndRotation.L1_R7:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M2),
+                    };
+
+                case TileShapeAndRotation.L1_R8:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
+                    };
+                case TileShapeAndRotation.L2_R1:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
@@ -510,7 +475,7 @@ namespace PlanetTileMap
                         GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
                     };
-                case TileShapeAndRotation.LBB_R7:
+                case TileShapeAndRotation.L2_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
@@ -518,13 +483,88 @@ namespace PlanetTileMap
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_M4),
                         GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
                     };
-                case TileShapeAndRotation.LBB_R8:
+                case TileShapeAndRotation.L2_R3:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
                         GetTileLineSegmentPosition(TileLineSegment.L_C4_M1),
+                    };
+                case TileShapeAndRotation.L2_R4:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                    };
+
+                case TileShapeAndRotation.L2_R5:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C1),
+                    };
+ 
+                case TileShapeAndRotation.L2_R6:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
+                    };
+
+                case TileShapeAndRotation.L2_R7:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                    };
+                case TileShapeAndRotation.L2_R8:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                    };
+                case TileShapeAndRotation.QP_R1:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                    };
+                case TileShapeAndRotation.QP_R2:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                    };
+                case TileShapeAndRotation.QP_R3:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C1),
+                    };
+                case TileShapeAndRotation.QP_R4:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
                     };
                 default:
                     return null;
@@ -545,9 +585,11 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.EmptyBlock:
                     return TileShapeAndRotation.EmptyBlock;
                 
+                // Rotate FullBlock shape
                 case TileShapeAndRotation.FullBlock:
                     return TileShapeAndRotation.FullBlock;
                 
+                // Rotate Half Block shape
                 case TileShapeAndRotation.HB_R1:
                     return TileShapeAndRotation.HB_R2;
                 case TileShapeAndRotation.HB_R2:
@@ -557,6 +599,7 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.HB_R4:
                     return TileShapeAndRotation.HB_R1;
                 
+                // Rotate Triangle Block shape
                 case TileShapeAndRotation.TB_R1:
                     return TileShapeAndRotation.TB_R2;
                 case TileShapeAndRotation.TB_R2:
@@ -566,39 +609,51 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.TB_R4:
                     return TileShapeAndRotation.TB_R1;
                 
-                case TileShapeAndRotation.LBT_R1:
-                    return TileShapeAndRotation.LBT_R2;
-                case TileShapeAndRotation.LBT_R2:
-                    return TileShapeAndRotation.LBT_R3;
-                case TileShapeAndRotation.LBT_R3:
-                    return TileShapeAndRotation.LBT_R4;
-                case TileShapeAndRotation.LBT_R4:
-                    return TileShapeAndRotation.LBT_R1;
-                case TileShapeAndRotation.LBT_R5:
-                    return TileShapeAndRotation.LBT_R6;
-                case TileShapeAndRotation.LBT_R6:
-                    return TileShapeAndRotation.LBT_R7;
-                case TileShapeAndRotation.LBT_R7:
-                    return TileShapeAndRotation.LBT_R8;
-                case TileShapeAndRotation.LBT_R8:
-                    return TileShapeAndRotation.LBT_R5;
+                // // Rotate L1 shape
+                case TileShapeAndRotation.L1_R1:
+                    return TileShapeAndRotation.L1_R2;
+                case TileShapeAndRotation.L1_R2:
+                    return TileShapeAndRotation.L1_R3;
+                case TileShapeAndRotation.L1_R3:
+                    return TileShapeAndRotation.L1_R4;
+                case TileShapeAndRotation.L1_R4:
+                    return TileShapeAndRotation.L1_R1;
+                case TileShapeAndRotation.L1_R5:
+                    return TileShapeAndRotation.L1_R6;
+                case TileShapeAndRotation.L1_R6:
+                    return TileShapeAndRotation.L1_R7;
+                case TileShapeAndRotation.L1_R7:
+                    return TileShapeAndRotation.L1_R8;
+                case TileShapeAndRotation.L1_R8:
+                    return TileShapeAndRotation.L1_R5;
                 
-                case TileShapeAndRotation.LBB_R1:
-                    return TileShapeAndRotation.LBB_R2;
-                case TileShapeAndRotation.LBB_R2:
-                    return TileShapeAndRotation.LBB_R3;
-                case TileShapeAndRotation.LBB_R3:
-                    return TileShapeAndRotation.LBB_R4;
-                case TileShapeAndRotation.LBB_R4:
-                    return TileShapeAndRotation.LBB_R1;
-                case TileShapeAndRotation.LBB_R5:
-                    return TileShapeAndRotation.LBB_R6;
-                case TileShapeAndRotation.LBB_R6:
-                    return TileShapeAndRotation.LBB_R7;
-                case TileShapeAndRotation.LBB_R7:
-                    return TileShapeAndRotation.LBB_R8;
-                case TileShapeAndRotation.LBB_R8:
-                    return TileShapeAndRotation.LBB_R5;
+                // Rotate L2 shape
+                case TileShapeAndRotation.L2_R1:
+                    return TileShapeAndRotation.L2_R2;
+                case TileShapeAndRotation.L2_R2:
+                    return TileShapeAndRotation.L2_R3;
+                case TileShapeAndRotation.L2_R3:
+                    return TileShapeAndRotation.L2_R4;
+                case TileShapeAndRotation.L2_R4:
+                    return TileShapeAndRotation.L2_R1;
+                case TileShapeAndRotation.L2_R5:
+                    return TileShapeAndRotation.L2_R6;
+                case TileShapeAndRotation.L2_R6:
+                    return TileShapeAndRotation.L2_R7;
+                case TileShapeAndRotation.L2_R7:
+                    return TileShapeAndRotation.L2_R8;
+                case TileShapeAndRotation.L2_R8:
+                    return TileShapeAndRotation.L2_R5;
+                
+                // Rotate Quarter Platform shape
+                case TileShapeAndRotation.QP_R1:
+                    return TileShapeAndRotation.QP_R2;
+                case TileShapeAndRotation.QP_R2:
+                    return TileShapeAndRotation.QP_R3;
+                case TileShapeAndRotation.QP_R3:
+                    return TileShapeAndRotation.QP_R4;
+                case TileShapeAndRotation.QP_R4:
+                    return TileShapeAndRotation.QP_R1;
                 default:
                     return TileShapeAndRotation.Error;
             }
@@ -620,55 +675,65 @@ namespace PlanetTileMap
                     return TileShapeAndRotation.FullBlock;
                 
                 case TileShapeAndRotation.HB_R1:
-                    return TileShapeAndRotation.HB_R1;
-                case TileShapeAndRotation.HB_R2:
-                    return TileShapeAndRotation.HB_R4;
-                case TileShapeAndRotation.HB_R3:
                     return TileShapeAndRotation.HB_R3;
-                case TileShapeAndRotation.HB_R4:
+                case TileShapeAndRotation.HB_R2:
                     return TileShapeAndRotation.HB_R2;
+                case TileShapeAndRotation.HB_R3:
+                    return TileShapeAndRotation.HB_R1;
+                case TileShapeAndRotation.HB_R4:
+                    return TileShapeAndRotation.HB_R4;
                 
                 case TileShapeAndRotation.TB_R1:
-                    return TileShapeAndRotation.TB_R4;
-                case TileShapeAndRotation.TB_R2:
-                    return TileShapeAndRotation.TB_R3;
-                case TileShapeAndRotation.TB_R3:
                     return TileShapeAndRotation.TB_R2;
-                case TileShapeAndRotation.TB_R4:
+                case TileShapeAndRotation.TB_R2:
                     return TileShapeAndRotation.TB_R1;
-                case TileShapeAndRotation.LBT_R1:
-                    return TileShapeAndRotation.LBT_R8;
-                case TileShapeAndRotation.LBT_R2:
-                    return TileShapeAndRotation.LBT_R7;
-                case TileShapeAndRotation.LBT_R3:
-                    return TileShapeAndRotation.LBT_R6;
-                case TileShapeAndRotation.LBT_R4:
-                    return TileShapeAndRotation.LBT_R5;
-                case TileShapeAndRotation.LBT_R5:
-                    return TileShapeAndRotation.LBT_R4;
-                case TileShapeAndRotation.LBT_R6:
-                    return TileShapeAndRotation.LBT_R3;
-                case TileShapeAndRotation.LBT_R7:
-                    return TileShapeAndRotation.LBT_R2;
-                case TileShapeAndRotation.LBT_R8:
-                    return TileShapeAndRotation.LBT_R1;
+                case TileShapeAndRotation.TB_R3:
+                    return TileShapeAndRotation.TB_R4;
+                case TileShapeAndRotation.TB_R4:
+                    return TileShapeAndRotation.TB_R3;
                 
-                case TileShapeAndRotation.LBB_R1:
-                    return TileShapeAndRotation.LBB_R8;
-                case TileShapeAndRotation.LBB_R2:
-                    return TileShapeAndRotation.LBB_R7;
-                case TileShapeAndRotation.LBB_R3:
-                    return TileShapeAndRotation.LBB_R6;
-                case TileShapeAndRotation.LBB_R4:
-                    return TileShapeAndRotation.LBB_R5;
-                case TileShapeAndRotation.LBB_R5:
-                    return TileShapeAndRotation.LBB_R4;
-                case TileShapeAndRotation.LBB_R6:
-                    return TileShapeAndRotation.LBB_R3;
-                case TileShapeAndRotation.LBB_R7:
-                    return TileShapeAndRotation.LBB_R2;
-                case TileShapeAndRotation.LBB_R8:
-                    return TileShapeAndRotation.LBB_R1;
+                case TileShapeAndRotation.L1_R1:
+                    return TileShapeAndRotation.L1_R7;
+                case TileShapeAndRotation.L1_R2:
+                    return TileShapeAndRotation.L1_R6;
+                case TileShapeAndRotation.L1_R3:
+                    return TileShapeAndRotation.L1_R5;
+                case TileShapeAndRotation.L1_R4:
+                    return TileShapeAndRotation.L1_R8;
+                case TileShapeAndRotation.L1_R5:
+                    return TileShapeAndRotation.L1_R3;
+                case TileShapeAndRotation.L1_R6:
+                    return TileShapeAndRotation.L1_R2;
+                case TileShapeAndRotation.L1_R7:
+                    return TileShapeAndRotation.L1_R1;
+                case TileShapeAndRotation.L1_R8:
+                    return TileShapeAndRotation.L1_R4;
+                
+                case TileShapeAndRotation.L2_R1:
+                    return TileShapeAndRotation.L2_R5;
+                case TileShapeAndRotation.L2_R2:
+                    return TileShapeAndRotation.L2_R8;
+                case TileShapeAndRotation.L2_R3:
+                    return TileShapeAndRotation.L2_R7;
+                case TileShapeAndRotation.L2_R4:
+                    return TileShapeAndRotation.L2_R6;
+                case TileShapeAndRotation.L2_R5:
+                    return TileShapeAndRotation.L2_R1;
+                case TileShapeAndRotation.L2_R6:
+                    return TileShapeAndRotation.L2_R4;
+                case TileShapeAndRotation.L2_R7:
+                    return TileShapeAndRotation.L2_R3;
+                case TileShapeAndRotation.L2_R8:
+                    return TileShapeAndRotation.L2_R2;
+                
+                case TileShapeAndRotation.QP_R1:
+                    return TileShapeAndRotation.QP_R1;
+                case TileShapeAndRotation.QP_R2:
+                    return TileShapeAndRotation.QP_R4;
+                case TileShapeAndRotation.QP_R3:
+                    return TileShapeAndRotation.QP_R3;
+                case TileShapeAndRotation.QP_R4:
+                    return TileShapeAndRotation.QP_R2;
                 default:
                     return TileShapeAndRotation.Error;
             }

@@ -9,6 +9,7 @@ namespace Collisions
         
         // FullBlock
         FullBlock,
+        FullPlatform,
 
         // HalfBlock
         HB_R1,
@@ -21,25 +22,37 @@ namespace Collisions
         TB_R2,
         TB_R3,
         TB_R4,
+
+        //L1 - part 1 of L block
+        L1_R1,
+        L1_R2,
+        L1_R3,
+        L1_R4,
+        L1_R5,
+        L1_R6,
+        L1_R7,
+        L1_R8,
         
-        //LBlockTop
-        LBT_R1,
-        LBT_R2,
-        LBT_R3,
-        LBT_R4,
-        LBT_R5,
-        LBT_R6,
-        LBT_R7,
-        LBT_R8,
+        //L2 - part 2 of L block
+        L2_R1,
+        L2_R2,
+        L2_R3,
+        L2_R4,
+        L2_R5,
+        L2_R6,
+        L2_R7,
+        L2_R8,
         
-        //LBlockBottom
-        LBB_R1,
-        LBB_R2,
-        LBB_R3,
-        LBB_R4,
-        LBB_R5,
-        LBB_R6,
-        LBB_R7,
-        LBB_R8,
+        //QP - Quarter Platform
+        QP_R1,
+        QP_R2,
+        QP_R3,
+        QP_R4,
+
+        //HP - Half Platform
+        HP_R1,
+        HP_R2,
+        HP_R3,
+        HP_R4,
     }
 }

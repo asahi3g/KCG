@@ -8,7 +8,10 @@ namespace Collisions
         FullBlock,
         HalfBlock,
         TriangleBlock,
-        LBlockTop,
-        LBlockBottom,
+        L1Block, // part 1 of L block
+        L2Block, // part 2 of L block
+        QuarterPlatform,
+        HalfPlatform,
+        FullPlatform,
     }
 }
