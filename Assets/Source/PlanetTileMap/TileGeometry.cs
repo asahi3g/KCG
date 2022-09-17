@@ -654,6 +654,16 @@ namespace PlanetTileMap
                     return TileShapeAndRotation.QP_R4;
                 case TileShapeAndRotation.QP_R4:
                     return TileShapeAndRotation.QP_R1;
+                
+                // Rotate Half Platform shape
+                case TileShapeAndRotation.HP_R1:
+                    return TileShapeAndRotation.HP_R2;
+                case TileShapeAndRotation.HP_R2:
+                    return TileShapeAndRotation.HP_R3;
+                case TileShapeAndRotation.HP_R3:
+                    return TileShapeAndRotation.HP_R4;
+                case TileShapeAndRotation.HP_R4:
+                    return TileShapeAndRotation.HP_R1;
                 default:
                     return TileShapeAndRotation.Error;
             }
