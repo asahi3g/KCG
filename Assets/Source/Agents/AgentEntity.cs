@@ -3,6 +3,7 @@ using Agent;
 using Enums;
 using System;
 using KMath;
+using Inventory;
 
 public partial class AgentEntity 
 {

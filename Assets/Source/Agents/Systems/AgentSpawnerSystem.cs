@@ -162,6 +162,9 @@ namespace Agent
                 newRollCooldown: 0,
                 newRollImpactDuration: 0);
 
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
+
             switch (agentType)
             {
                 case Enums.AgentType.Player:
@@ -257,6 +260,7 @@ namespace Agent
                         entity.agentPhysicsState.Speed = 6.0f;
 
                         entity.SetAgentWeapon(Model3DWeapon.Gun);
+                        Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, entitasContext);
                         break;
                     }
                 case Enums.AgentType.EnemySwordman:
@@ -335,9 +339,6 @@ namespace Agent
                         break;
                     }
             }
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
             return entity;
         }

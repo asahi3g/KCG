@@ -185,12 +185,8 @@ namespace Agent
             CurrentIndex = -1;
         }
 
-
-
         public void InitializeResources()
         {
-            
-
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
