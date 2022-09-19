@@ -318,6 +318,13 @@ namespace Item
             fireWeapon.ProjectileType = projectileType;
         }
 
+        public void SetItemToolType(Enums.ItemToolType type)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)CurrentIndex].ToolType = type;
+        }
+
         public void EndItem()
         {
             // Todo: Check if ItemType is valid in debug mode.
@@ -531,6 +538,7 @@ namespace Item
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
             GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
+            GameState.ItemCreationApi.SetItemToolType(Enums.ItemToolType.Pistol);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.Shotgun, "Shotgun");

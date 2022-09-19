@@ -13,6 +13,7 @@ namespace Item
         public ItemGroups Group;
         public ActionType ToolActionType;
         public Mech.MechType MechType;          // Used only when item is a mech type.
+        public ItemToolType ToolType; // used for weapon/tool attachement
 
         public int InventorSpriteID;
         public int SpriteID;
