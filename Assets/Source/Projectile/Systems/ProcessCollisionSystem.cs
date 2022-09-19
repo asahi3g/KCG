@@ -81,7 +81,8 @@ namespace Projectile
                 }
 
                 // Collision with Agent.
-                Vec2f position = physicsState.Position + box2DCollider.Offset;
+                // Todo: Box2d uses center position. Change for leftmost button for consistency.
+                Vec2f position = physicsState.Position + box2DCollider.Offset  + box2DCollider.Size / 2.0f;
                 Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2DCollider.Size.X, h = box2DCollider.Size.Y };
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
                 for (int i = 0; i < planet.AgentList.Length; i++)
@@ -92,7 +93,7 @@ namespace Projectile
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
-                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset + agentBox2dCollider.Size/2;
 
                         Collisions.Box2D agentBox = new Collisions.Box2D{x = agentPosition.X, y = agentPosition.Y, w = agentBox2dCollider.Size.X, h = agentBox2dCollider.Size.Y};
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
