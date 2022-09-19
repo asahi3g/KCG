@@ -101,7 +101,7 @@ namespace Action
 
             foreach (var mech in ToRemoveMechs)
             {
-                planet.AddDebris(mech.mechPosition2D.Value, GameResources.ChestIconParticle, 1.5f, 1.0f);
+                planet.AddDebris(mech.mechPosition2D.Value, GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
                 planet.RemoveMech(mech.mechID.Index);
             }
             

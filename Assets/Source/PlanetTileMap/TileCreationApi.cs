@@ -294,5 +294,122 @@ namespace PlanetTileMap
         {
             CurrentTileIndex = TileID.Error;
         }
+
+        public int LoadingTilePlaceholderSpriteId;
+        public int LoadingTilePlaceholderSpriteSheet;
+        public int OreSpriteSheet;
+        public int MoonSpriteSheet;
+        public int StoneSpriteSheet;
+        public int ColoredNumberedWangSpriteSheet;
+        public int Ore2SpriteSheet;
+        public int Ore3SpriteSheet;
+        public int PipeSpriteSheet;
+        public int PlatformSpriteSheet;
+
+        public void InitializeResources()
+        {
+            LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
+            OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
+            MoonSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\Tiles_Moon.png", 16, 16);
+            StoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Stone\\stone.png", 16, 16);
+            ColoredNumberedWangSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\colored-numbered-wang.png", 16, 16);
+            Ore2SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Copper\\ore_copper_1.png", 16, 16);
+            Ore3SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Adamantine\\ore_adamantine_1.png", 16, 16);
+            PipeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pipesim\\pipesim.png", 16, 16);
+            PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png", 48, 48);
+
+
+            LoadingTilePlaceholderSpriteId =
+                    GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(LoadingTilePlaceholderSpriteSheet, 0, 0, 0);
+
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Ore1);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore1);
+            GameState.TileCreationApi.SetTilePropertyName("ore_1");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetTilePropertyTexture16(OreSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Glass);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Glass);
+            GameState.TileCreationApi.SetTilePropertyName("glass");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 11, 10);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Stone);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Stone);
+            GameState.TileCreationApi.SetTilePropertyName("stone");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet(StoneSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Moon);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Moon);
+            GameState.TileCreationApi.SetTilePropertyName("moon");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 0);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Background);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Background);
+            GameState.TileCreationApi.SetTilePropertyName("background");
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(ColoredNumberedWangSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Ore2);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore2);
+            GameState.TileCreationApi.SetTilePropertyName("ore_2");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetTilePropertyTexture16(Ore2SpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Ore3);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore3);
+            GameState.TileCreationApi.SetTilePropertyName("ore_3");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetTilePropertyTexture16(Ore3SpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Pipe);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Pipe);
+            GameState.TileCreationApi.SetTilePropertyName("pipe");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 0, 0);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PipeTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Wire);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Wire);
+            GameState.TileCreationApi.SetTilePropertyName("wire");
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R2);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 4, 12);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.WireTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Bedrock);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Bedrock);
+            GameState.TileCreationApi.SetTilePropertyName("Bedrock");
+            GameState.TileCreationApi.SetCannotBeRemoved(true);
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 10);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.BedrockTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Platform);
+            GameState.TileCreationApi.SetTilePropertyName("Platform");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
+            GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+        }
     }
 }

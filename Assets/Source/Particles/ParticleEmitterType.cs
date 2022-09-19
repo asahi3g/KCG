@@ -8,6 +8,7 @@ namespace Particle
         DustEmitter,
         GasEmitter,
         Blood,
-        ExplosionEmitter
+        ExplosionEmitter,
+        ShrapnelEmitter
     }
 }

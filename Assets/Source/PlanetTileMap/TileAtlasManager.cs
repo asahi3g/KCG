@@ -11,9 +11,13 @@ namespace PlanetTileMap
 
         public int Length => SpritesArray.Length;
 
-        public TileAtlasManager(Sprites.SpriteLoader spriteLoader)
+        public void InitStage1(Sprites.SpriteLoader spriteLoader)
         {
             SpriteLoader = spriteLoader;
+        }
+
+        public void InitStage2()
+        {
             SpritesArray = new Sprites.SpriteAtlas[1];
             SpriteCount = new int[1];
 
@@ -28,6 +32,12 @@ namespace PlanetTileMap
                 atlas.Data[j] = 255;
             }
             SpritesArray[0] = atlas;
+        }
+
+        public TileAtlasManager()
+        {
+            
+            
         }
 
         public void UpdateAtlasTexture(int id)

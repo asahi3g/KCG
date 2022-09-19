@@ -20,14 +20,11 @@ namespace Planet.Unity
 
         public PlanetState Planet;
         Inventory.InventoryManager inventoryManager;
-        Inventory.DrawSystem inventoryDrawSystem;
 
         GeometryBlockPlacementTool geometryPlacementTool;
 
         AgentEntity Player;
-        int PlayerID;
 
-        int CharacterSpriteId;
         int InventoryID;
         InventoryEntity MaterialBag;
 
@@ -44,34 +41,35 @@ namespace Planet.Unity
 
         public void Update()
         {
-        
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
-            if (item != null)
+            if(Init)
             {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                if (itemProperty.IsTool())
+                int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
+
+                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
+                if (item != null)
                 {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                    if (itemProperty.IsTool())
                     {
-                        if (!Inventory.InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
-                            Player.agentID.ID, item.itemID.ID);
-                    }   
+                        if (Input.GetKeyDown(KeyCode.Mouse0))
+                        {
+                            if (!Inventory.InventorySystemsState.MouseDown)
+                                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                                Player.agentID.ID, item.itemID.ID);
+                        }   
+                    }
                 }
+
+                Planet.Update(Time.deltaTime, Material, transform);
+                Planet.DrawHUD(Player);
+
+                if (enableGeometryPlacementTool)
+                {
+                    geometryPlacementTool.UpdateToolGrid();
+                }
+
+                MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
             }
-
-            Planet.Update(Time.deltaTime, Material, transform);
-            Planet.DrawHUD(Player);
-
-            if (enableGeometryPlacementTool)
-            {
-                geometryPlacementTool.UpdateToolGrid();
-            }
-            //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
-
-            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
@@ -79,10 +77,12 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
+            // Draw HUD
             Planet.DrawHUD(Player);
 
             if (Event.current.type != EventType.Repaint)
                 return;
+
             // Draw Statistics
             KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
         }
@@ -130,7 +130,6 @@ namespace Planet.Unity
             Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
-            inventoryDrawSystem = new Inventory.DrawSystem();
 
             GameResources.Initialize();
 
@@ -225,15 +224,15 @@ namespace Planet.Unity
                                 int oreRandom = (int) KMath.Random.Mt19937.genrand_int32() % 3;
                                 if (oreRandom == 0)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.OreSprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.OreSprite;
                                 }
                                 else if (oreRandom == 1)
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore2Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore2Sprite;
                                 }
                                 else
                                 {
-                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameResources.Ore3Sprite;
+                                    tileMap.GetTile(i, j).CompositeTileSpriteID = GameState.ItemCreationApi.Ore3Sprite;
                                 }
 
                                 tileMap.GetTile(i, j).DrawType = TileDrawType.Composited;
@@ -351,12 +350,10 @@ namespace Planet.Unity
         void SpawnStuff()
         {
             ref var tileMap = ref Planet.TileMap;
-            System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
-            PlayerID = Player.agentID.ID;
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));

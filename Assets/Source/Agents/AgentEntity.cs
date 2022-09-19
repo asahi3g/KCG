@@ -100,16 +100,19 @@ public partial class AgentEntity
                 }
 
                 GameObject hand = model3d.RightHand;
+                if (hand != null)
+                {
 
-                GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
-                GameObject gun = GameObject.Instantiate(prefab);
+                    GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
+                    GameObject gun = GameObject.Instantiate(prefab);
 
-                gun.transform.parent = hand.transform;
-                gun.transform.position = hand.transform.position;
-                gun.transform.rotation = hand.transform.rotation;
-                gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    gun.transform.parent = hand.transform;
+                    gun.transform.position = hand.transform.position;
+                    gun.transform.rotation = hand.transform.rotation;
+                    gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-                model3d.Weapon = gun;
+                    model3d.Weapon = gun;
+                }
             }
         }
         else

@@ -235,7 +235,7 @@ namespace PlanetTileMap
             var tileIndex = xTileIndex + (yTileIndex << 4);
 
             chunk.TileArray[tileIndex].BackTileID = backTileID;
-            chunk.TileArray[tileIndex].BackTileSpriteID = GameResources.LoadingTilePlaceholderSpriteId;
+            chunk.TileArray[tileIndex].BackTileSpriteID = GameState.TileCreationApi.LoadingTilePlaceholderSpriteId;
             chunk.Sequence++;
 
             TileSpriteUpdateQueue.Add(x, y, MapLayerType.Back);
@@ -256,7 +256,7 @@ namespace PlanetTileMap
             var tileIndex = xTileIndex + (yTileIndex << 4);
 
             chunk.TileArray[tileIndex].MidTileID = midTileID;
-            chunk.TileArray[tileIndex].MidTileSpriteID = GameResources.LoadingTilePlaceholderSpriteId;
+            chunk.TileArray[tileIndex].MidTileSpriteID = GameState.TileCreationApi.LoadingTilePlaceholderSpriteId;
             chunk.Sequence++;
 
             TileSpriteUpdateQueue.Add(x, y, MapLayerType.Mid);
@@ -282,7 +282,7 @@ namespace PlanetTileMap
             var tileIndex = xTileIndex + (yTileIndex << 4);
 
             chunk.TileArray[tileIndex].FrontTileID = frontTileID;
-            chunk.TileArray[tileIndex].FrontTileSpriteID = GameResources.LoadingTilePlaceholderSpriteId;
+            chunk.TileArray[tileIndex].FrontTileSpriteID = GameState.TileCreationApi.LoadingTilePlaceholderSpriteId;
             chunk.Sequence++;
 
             TileSpriteUpdateQueue.Add(x, y, MapLayerType.Front);

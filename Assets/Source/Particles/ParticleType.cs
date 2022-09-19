@@ -10,6 +10,7 @@ namespace Particle
         Debris,
         GasParticle,
         Blood,
-        Explosion
+        Explosion,
+        Shrapnel,
     }
 }

@@ -13,5 +13,7 @@ namespace Particle
         public Vec2f Acceleration;  // Instantaneous, reset to zero at the end of the frame.
         public Vec2f Velocity;
         public float Rotation;
+        public bool Bounce;
+        public Vec2f BounceFactor;
     }
 }

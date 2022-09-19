@@ -108,7 +108,7 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/InsectHeavyRun", AnimationType.InsectHeavyRun);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyAttack", AnimationType.InsectHeavyAttack);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyJump", AnimationType.InsectHeavyJump);
-            AnimationLoader.Load("ArtistAnimations/InsectHeavyDeath", AnimationType.InsectHeavyDie);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyDead", AnimationType.InsectHeavyDie);
 
 
             AnimationLoader.Load("ArtistAnimations/DEFORM_Idle", AnimationType.SpaceMarineIdle);

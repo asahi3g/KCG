@@ -32,6 +32,8 @@ namespace Particle
 
         // Box Debris
         public bool IsCollidable;
+        public bool Bounce;
+        public Vec2f BounceFactor;
 
     }
 }
