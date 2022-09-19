@@ -45,27 +45,19 @@ namespace Action
 
             StartPos = AgentEntity.agentPhysicsState.Position;
 
-            if (planet.Player != null)
-            {
-                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == -1)
-                {
-                    planet.Player.agentPhysicsState.Direction = 1;
-                }
-                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == 1)
-                {
-                    planet.Player.agentPhysicsState.Direction = -1;
-                }
+            if (worldPosition.x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.Direction == -1)
+                AgentEntity.agentPhysicsState.Direction = 1;
+            else if (worldPosition.x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.Direction == 1)
+                AgentEntity.agentPhysicsState.Direction = -1;
 
-                var player = planet.Player;
-                player.FireGun(WeaponProperty.CoolDown);
+            AgentEntity.FireGun(WeaponProperty.CoolDown);
 
-                StartPos.X += 0.3f * planet.Player.agentPhysicsState.Direction;
-                StartPos.Y += 1.75f;
-                
-                // Todo: Rotate player instead.
-                if (Math.Sign(x - StartPos.X) != Math.Sign(planet.Player.agentPhysicsState.Direction))
-                    x = StartPos.X + 0.5f * planet.Player.agentPhysicsState.Direction;
-            }
+            StartPos.X += 0.3f * AgentEntity.agentPhysicsState.Direction;
+            StartPos.Y += 1.75f;
+            
+            // Todo: Rotate agent instead.
+            if (Math.Sign(x - StartPos.X) != Math.Sign(AgentEntity.agentPhysicsState.Direction))
+                x = StartPos.X + 0.5f * AgentEntity.agentPhysicsState.Direction;
 
             var spread = WeaponProperty.SpreadAngle;
             for(int i = 0; i < bulletsPerShot; i++)

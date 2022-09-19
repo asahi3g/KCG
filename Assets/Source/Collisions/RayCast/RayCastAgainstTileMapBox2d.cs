@@ -118,7 +118,7 @@ namespace Collisions
                     {
                         Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
                         PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                        if (tileID != Enums.Tile.TileID.Air)
+                        if (tileID != Enums.Tile.TileID.Air && tileID != Enums.Tile.TileID.Platform)
                         {
                             float diffx = (x + 0.5f) - currentPoint.X;
                             float diffy = (y + 0.5f) - currentPoint.Y;

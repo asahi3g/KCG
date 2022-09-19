@@ -133,7 +133,9 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType));
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType, inventoryID));
             return newEntity;
         }
 
@@ -559,6 +561,8 @@ namespace Planet
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
             GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
             GameState.VehicleCollisionSystem.Update(ref this);
+
+            GameState.AgentProcessStats.Update(ref this);
 
             cameraFollow.Update(ref this);
 

@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using KMath;
 using Enums.Tile;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Planet.Unity
 {
@@ -13,6 +11,8 @@ namespace Planet.Unity
         AgentEntity Marine;
         AgentEntity Target;
         static bool Init = false;
+        const float SHOOT_COOL_DOWN = 3f;
+        float lastShootTime;
 
         public void Start()
         {
@@ -25,6 +25,18 @@ namespace Planet.Unity
 
         public void Update()
         {
+            float timeSinceStart = Time.realtimeSinceStartup;
+            
+            int inventoryID = Marine.agentInventory.InventoryID;
+            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+
+            if ((timeSinceStart - lastShootTime) >= SHOOT_COOL_DOWN)
+            {
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.ToolActionFireWeapon, Marine.agentID.ID, item.itemID.ID);
+                lastShootTime = Time.realtimeSinceStartup;
+            }
+            
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
@@ -33,7 +45,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             Vec2i mapSize = new Vec2i(32, 16);
-            Planet = new Planet.PlanetState();
+            Planet = new PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
 
@@ -43,6 +55,7 @@ namespace Planet.Unity
 
             Target = Planet.AddAgent(new Vec2f(x, y), Enums.AgentType.FlyingSlime);
             GenerateMap();
+            lastShootTime = Time.realtimeSinceStartup;
         }
 
         private void GenerateMap()

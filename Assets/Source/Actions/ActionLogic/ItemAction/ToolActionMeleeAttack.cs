@@ -49,8 +49,7 @@ namespace Action
                 GameState.AgentProcessPhysicalState.SwordSlash(player);
                 foreach (var agent in agents)
                 {
-                    var testState = agent.agentState;
-                    if (agent != player && testState.State == AgentState.Alive)
+                    if (agent != player && agent.isAgentAlive)
                     {
                         var testPhysicsState = agent.agentPhysicsState;
 
