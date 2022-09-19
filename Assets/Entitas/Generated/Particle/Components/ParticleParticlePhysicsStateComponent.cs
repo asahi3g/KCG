@@ -11,7 +11,7 @@ public partial class ParticleEntity {
     public Particle.PhysicsStateComponent particlePhysicsState { get { return (Particle.PhysicsStateComponent)GetComponent(ParticleComponentsLookup.ParticlePhysicsState); } }
     public bool hasParticlePhysicsState { get { return HasComponent(ParticleComponentsLookup.ParticlePhysicsState); } }
 
-    public void AddParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation, bool newBounce) {
+    public void AddParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation, bool newBounce, KMath.Vec2f newBounceFactor) {
         var index = ParticleComponentsLookup.ParticlePhysicsState;
         var component = (Particle.PhysicsStateComponent)CreateComponent(index, typeof(Particle.PhysicsStateComponent));
         component.Position = newPosition;
@@ -20,10 +20,11 @@ public partial class ParticleEntity {
         component.Velocity = newVelocity;
         component.Rotation = newRotation;
         component.Bounce = newBounce;
+        component.BounceFactor = newBounceFactor;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation, bool newBounce) {
+    public void ReplaceParticlePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, float newRotation, bool newBounce, KMath.Vec2f newBounceFactor) {
         var index = ParticleComponentsLookup.ParticlePhysicsState;
         var component = (Particle.PhysicsStateComponent)CreateComponent(index, typeof(Particle.PhysicsStateComponent));
         component.Position = newPosition;
@@ -32,6 +33,7 @@ public partial class ParticleEntity {
         component.Velocity = newVelocity;
         component.Rotation = newRotation;
         component.Bounce = newBounce;
+        component.BounceFactor = newBounceFactor;
         ReplaceComponent(index, component);
     }
 

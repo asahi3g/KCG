@@ -140,6 +140,18 @@ public class GameState
     #endregion
 
 
+    public static void InitStage1()
+    {
+        TileSpriteAtlasManager.InitStage1(SpriteLoader);
+        SpriteAtlasManager.InitStage1(SpriteLoader);
+    }
+
+    public static void InitStage2()
+    {
+        TileSpriteAtlasManager.InitStage2();
+        SpriteAtlasManager.InitStage2();
+    }
+
 
     static GameState()
     {
@@ -149,9 +161,10 @@ public class GameState
 
         SpriteLoader = new Sprites.SpriteLoader();
 
-        TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager(SpriteLoader);
+        TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
 
-        SpriteAtlasManager = new Sprites.SpriteAtlasManager(SpriteLoader);
+        SpriteAtlasManager = new Sprites.SpriteAtlasManager();
+        
 
         TileCreationApi = new PlanetTileMap.TileCreationApi();
         TileMapRenderer = new PlanetTileMap.TileMapRenderer();
@@ -244,5 +257,17 @@ public class GameState
         VehicleSpawnerSystem = new Vehicle.SpawnerSystem(VehicleCreationApi);
         VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
         VehicleAISystem = new Vehicle.AISystem(VehicleCreationApi);
+
+
+
+
+
+
+
+
+
+        //TODO(): move these out of here
+        InitStage1();
+        InitStage2();
     }
 }

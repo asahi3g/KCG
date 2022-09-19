@@ -16,13 +16,25 @@ namespace Collisions
         /// </summary>
         TB,
         /// <summary>
-        /// Lower part of L triangle block
+        /// Part 1 of L block
         /// </summary>
         L1,
         /// <summary>
-        /// Upper part of L triangle block
+        /// Part 2 of L block
         /// </summary>
-        L2
+        L2,
+        /// <summary>
+        /// Quarter Platform
+        /// </summary>
+        QP,
+        /// <summary>
+        /// Half Platform
+        /// </summary>
+        HP,
+        /// <summary>
+        /// Full Platform
+        /// </summary>
+        FP
     }
 }
 

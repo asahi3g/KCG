@@ -10,9 +10,13 @@ namespace Sprites
         public SpriteAtlas[] AtlasArray;
 
 
-        public SpriteAtlasManager(SpriteLoader spriteLoader)
+        public void InitStage1(SpriteLoader spriteLoader)
         {
             SpriteLoader = spriteLoader;
+        }
+
+        public void InitStage2()
+        {
             AtlasArray = new SpriteAtlas[Enum.GetNames(typeof(Enums.AtlasType)).Length];
 
             for (int i = 0; i < AtlasArray.Length; i++)
@@ -30,6 +34,11 @@ namespace Sprites
 
                 AtlasArray[i] = atlas;
             }
+        }
+
+        public SpriteAtlasManager()
+        {
+            
         }
 
         public void UpdateAtlasTexture(int id)

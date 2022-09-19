@@ -191,6 +191,14 @@ namespace Particle
             }
         }
 
+        public void SetBounceFactor(Vec2f bounceFactor)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].BounceFactor = bounceFactor;
+            }
+        }
+
 
         public void End()
         {
