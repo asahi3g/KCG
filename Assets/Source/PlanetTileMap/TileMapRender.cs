@@ -253,7 +253,7 @@ namespace PlanetTileMap
 
         public int GetSpriteIDWithCOllisionIsotype(Collisions.TileAdjacencyType tileIsoType)
         {
-            switch (tileIsoType)
+           /* switch (tileIsoType)
             {
                 case Collisions.TileAdjacencyType.FB_R0_A0000:
                     return GameState.TGenRenderGridOverlay.FB_R0000Sheet;
@@ -289,7 +289,9 @@ namespace PlanetTileMap
                     return GameState.TGenRenderGridOverlay.FB_R1111Sheet;
                 default:
                     return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
-            }
+            }*/
+
+            return 0;
         }
 
         public void DrawLayer(MapLayerType planetLayer)
