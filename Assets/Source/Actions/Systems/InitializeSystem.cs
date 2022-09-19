@@ -260,6 +260,10 @@ namespace Action
             GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPotion);
             GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPotionCreator());
             GameState.ActionPropertyManager.EndActionPropertyType();
+
+            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionGeometryPlacement);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionGeometryPlacementCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }
