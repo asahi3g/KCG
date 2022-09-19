@@ -557,7 +557,7 @@ namespace Planet
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
-            GameState.ProjectileCollisionSystem.UpdateEx(ref this);
+            GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
             GameState.VehicleCollisionSystem.Update(ref this);
 
             cameraFollow.Update(ref this);

@@ -3,7 +3,6 @@ using System;
 
 namespace KMath
 {
-
     public static class KMath
     {
         public static float LengthSquared(Vector2 vector)
@@ -24,6 +23,11 @@ namespace KMath
          public static float Clamp(float value, float min, float max) 
         {
             return Math.Max(min, Math.Min(max, value));
+        }
+
+        public static bool AlmostEquals(this float value1, float value2, float precision = 0.0000001f)
+        {
+            return (Math.Abs(value1 - value2) <= precision);
         }
     }
 }

@@ -1,10 +1,7 @@
 using UnityEngine;
 using KMath;
-using Collisions;
 using Particle;
-using UnityEngine.UIElements;
 using Utility;
-using System;
 
 namespace Projectile
 {
@@ -12,8 +9,9 @@ namespace Projectile
     {
         // new version of the update function
         // uses the planet state to remove the projectile
-        public void UpdateEx(ref Planet.PlanetState planet)
+        public void UpdateEx(ref Planet.PlanetState planet, float deltaTime)
         {
+            const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
             var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
@@ -29,17 +27,45 @@ namespace Projectile
 
                 AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-                if ((physicsState.Position - physicsState.PreviousPosition).Magnitude < 0.0001f)
-                    continue;
-
                 // Collising with terrainr(raycasting)
-                var rayCastingResult =
-                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new KMath.Line2D(
+                var rayCastingResult = Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new KMath.Line2D(
                     physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)
                 {
+                    if (bounce)
+                    {
+                        float r = (physicsState.Position.X - rayCastingResult.Point.X) / (physicsState.Position.X - physicsState.PreviousPosition.X);
+                        float t = deltaTime * r; // Aproximation. Doesn't deal with acceleration.
+
+                        if (KMath.KMath.AlmostEquals(rayCastingResult.Normal.X, 0.0f))
+                        {
+                            if (KMath.KMath.AlmostEquals(rayCastingResult.Normal.Y, 1.0f) && (Mathf.Abs(physicsState.Velocity.Y) < THRESHOLD_VERTICAL_SPEED))
+                            {
+                                physicsState.Velocity.Y = 0.0f;
+                                physicsState.Position.Y = rayCastingResult.Point.Y;
+                                physicsState.OnGrounded = true;
+                            }
+                            else
+                            {
+                                physicsState.Velocity.Y = -physicsState.Velocity.Y * bounceValue;
+                                physicsState.Position.Y = rayCastingResult.Point.Y + physicsState.Velocity.Y * t;
+                            }
+                        }
+                        else
+                        {
+                            physicsState.Velocity.X = -physicsState.Velocity.X * bounceValue;
+                            physicsState.Position.X = rayCastingResult.Point.X + physicsState.Velocity.X * t;
+                        }
+
+                    }
+                    else
+                    {
+                        physicsState.Position = rayCastingResult.Point;
+                        physicsState.Velocity = Vec2f.Zero;
+                    }
+
                     if (!entity.hasProjectileOnHit)
                         entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                     else 
@@ -47,10 +73,9 @@ namespace Projectile
                         entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
                         entity.projectileOnHit.LastHitTime = Time.time;
                     }
-                    
+
                     if (entity.isProjectileFirstHIt)
                     {
-                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                         physicsState.Velocity = new Vec2f();
                     }
                 }
@@ -86,33 +111,6 @@ namespace Projectile
                             }
                         }
                     }
-                }
-
-                // Todo: Use only new collision system.
-                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                }
-                else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.Velocity))
-                {
-                    
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                }
-
-                entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
-
-                if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
-                    
-                }
-                else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
                 }
 
                 entityBoxBorders.DrawBox();

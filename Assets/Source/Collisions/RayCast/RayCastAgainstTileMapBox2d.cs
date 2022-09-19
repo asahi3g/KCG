@@ -1,5 +1,6 @@
 using KMath;
 using System;
+using UnityEngine;
 
 namespace Collisions
 {
@@ -11,12 +12,13 @@ namespace Collisions
         /// </summary>
         public static RayCastResult RayCastAgainstTileMapBox2d(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
         {
-            //if (line.A - line.B M < 0.005f)
-            //        return 
+            if (line.A == line.B)
+                return new RayCastResult();
+
             // Form ray cast from A into B
             Vec2f vRayStart = line.A;
+            Vec2f offset = Vec2f.Zero;
             Vec2f vRayDir = (line.B - line.A).Normalized;
-
 
             Vec2f vRayUnitStepSize = new Vec2f( (float)Math.Sqrt(1 + (vRayDir.Y / vRayDir.X) * (vRayDir.Y / vRayDir.X)),
             (float)Math.Sqrt(1 + (vRayDir.X / vRayDir.Y) * (vRayDir.X / vRayDir.Y)) );
@@ -38,6 +40,9 @@ namespace Collisions
             }
             else
             {
+                offset.X = width;
+                vRayStart.X += offset.X;
+                vMapCheck.X = (int)vRayStart.X;
                 vStep.X = 1;
                 vRayLength1D.X = ((float)(vMapCheck.X + 1) - vRayStart.X) * vRayUnitStepSize.X;
             }
@@ -49,6 +54,9 @@ namespace Collisions
             }
             else
             {
+                offset.Y = height;
+                vRayStart.Y += offset.Y;
+                vMapCheck.Y = (int)vRayStart.Y;
                 vStep.Y = 1;
                 vRayLength1D.Y = ((float)(vMapCheck.Y + 1) - vRayStart.Y) * vRayUnitStepSize.Y;
             }
@@ -61,102 +69,102 @@ namespace Collisions
             float fDistance = 0.0f;
             int maxIterations = 1000;
             int i = 0;
-            while (!bTileFound && fDistance < fMaxDistance)
+            while (fDistance < fMaxDistance && !bTileFound && i < maxIterations)
             {
                 i++;
-                if (i >= maxIterations)
-                {
-                    break;
-                }
+                bool stepXdir = false; // False if step y and true if step x.
+                
                 // Walk along shortest path
                 if (vRayLength1D.X < vRayLength1D.Y)
                 {
+                    stepXdir = false;
                     vMapCheck.X += vStep.X;
                     fDistance = vRayLength1D.X;
                     vRayLength1D.X += vRayUnitStepSize.X;
                 }
                 else
                 {
+                    stepXdir = true;
                     vMapCheck.Y += vStep.Y;
                     fDistance = vRayLength1D.Y;
                     vRayLength1D.Y += vRayUnitStepSize.Y;
                 }
 
-                Vec2f currentPoint = vRayStart + vRayDir * fDistance;
+                if (fDistance > (line.B - line.A).Magnitude)
+                    break;
 
-                Vec2f min = currentPoint - new Vec2f(width / 2, height / 2);
-                Vec2f max = currentPoint + new Vec2f(width / 2, height / 2);
+                Vec2f currentPoint = vRayStart + vRayDir * fDistance - offset;
+                Vec2f limit = currentPoint + new Vec2f(width, height);
 
-                // Clamp min and max.
-                if (min.X < 0)
-                    min.X = 0;
-                if (min.Y < 0)
-                    min.Y = 0;
-                if (max.X >= tileMap.MapSize.X)
-                    max.X = tileMap.MapSize.X - 1;
-                if (max.Y >= tileMap.MapSize.Y)
-                    max.Y = tileMap.MapSize.Y - 1;
-
-                for (int y = (int)min.Y; y <= (int)max.Y; y++)
+                if ((currentPoint.X < 0 && limit.X < 0) ||
+                    (currentPoint.Y < 0 && limit.Y < 0) ||
+                    (currentPoint.X >= tileMap.MapSize.X && limit.X >= tileMap.MapSize.X) ||
+                    (currentPoint.Y >= tileMap.MapSize.Y && limit.Y >= tileMap.MapSize.Y))
                 {
-                    for(int x = (int)min.X; x <= (int)max.X; x++)
-                    {
-                        if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
-                        {
-                            Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
-                            PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                            if (tileID != Enums.Tile.TileID.Air)
-                            {
-
-                                float diffx = (x + 0.5f) - currentPoint.X;
-                                float diffy = (y + 0.5f) - currentPoint.Y;
-
-                                if (Math.Abs(diffx) > Math.Abs(diffy))
-                                {
-                                    if (diffx > 0)
-                                    {
-                                        surfaceNormal = new Vec2f(-1.0f, 0.0f);
-                                    }
-                                    else
-                                    {
-                                        surfaceNormal = new Vec2f(1.0f, 0.0f);
-                                    }
-                                    
-                                }
-                                else
-                                {
-                                    if (diffy > 0)
-                                    {
-                                        surfaceNormal = new Vec2f(0.0f, -1.0f);
-                                    }
-                                    else
-                                    {
-                                        surfaceNormal = new Vec2f(0.0f, 1.0f);
-                                    }
-                                }
-
-                                bTileFound = true;
-                            }
-                        }
-                    }
+                    continue;
                 }
 
+                int x = (int)currentPoint.X;
+                int y = (int)currentPoint.Y;
+                if (stepXdir)
+                    y = vMapCheck.Y;
+
+                else
+                    x = vMapCheck.X;
+
+                while (true)
+                {
+                    if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
+                    {
+                        Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
+                        PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
+                        if (tileID != Enums.Tile.TileID.Air)
+                        {
+                            float diffx = (x + 0.5f) - currentPoint.X;
+                            float diffy = (y + 0.5f) - currentPoint.Y;
+
+                            if (Math.Abs(diffx) > Math.Abs(diffy))
+                            {
+                                if (diffx > 0)
+                                    surfaceNormal = new Vec2f(-1.0f, 0.0f);
+                                else
+                                    surfaceNormal = new Vec2f(1.0f, 0.0f);
+                            }
+                            else
+                            {
+                                if (diffy > 0)
+                                    surfaceNormal = new Vec2f(0.0f, -1.0f);
+                                else
+                                    surfaceNormal = new Vec2f(0.0f, 1.0f);
+                            }
+
+                            bTileFound = true;
+                            break;
+                        }
+                    }
+
+                    if (stepXdir)
+                    {
+                        x++;
+                        if (x > (int)limit.X)
+                            break;
+                    }
+                    else
+                    {
+                        y++;
+                        if (y > (int)limit.Y)
+                            break;
+                    }
+                }
             }
 
-
             // Calculate intersection location
-
             Vec2f vIntersection = new Vec2f();
             if (bTileFound)
             {
                 vIntersection = vRayStart + vRayDir * fDistance;
+                vIntersection -= offset;
             }
-
-            if (fDistance > (line.B - line.A).Magnitude)
-            {
-                bTileFound = false;
-            }
-
 
             RayCastResult result = new RayCastResult();
             result.Intersect = bTileFound;
@@ -164,7 +172,6 @@ namespace Collisions
             result.Normal = surfaceNormal;
 
             return result;
-
         }
     }
 }

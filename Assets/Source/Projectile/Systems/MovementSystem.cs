@@ -30,8 +30,9 @@ namespace Projectile
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.CanRamp) && physicsState.Velocity.Magnitude < projectileProperties.MaxVelocity)
                 physicsState.Acceleration += dir * projectileProperties.RampAcceleration;
 
-            if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.HasLinearDrag))
-                physicsState.Acceleration += dir * projectileProperties.LinearDrag;
+            if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.HasLinearDrag) && physicsState.Velocity.Magnitude > projectileProperties.LinearCutOff 
+                && physicsState.Velocity.Magnitude > 0.005f)
+                physicsState.Acceleration -= dir * projectileProperties.LinearDrag;
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
@@ -39,6 +40,12 @@ namespace Projectile
             dir = newVelocity.Normalized;
             if (physicsState.Velocity.Magnitude > projectileProperties.MaxVelocity)
                 newVelocity = dir * projectileProperties.MaxVelocity;
+
+            // Perform fast deceleration.
+            if (physicsState.OnGrounded)
+            {
+                newVelocity *= 0.8f;
+            }
 
             Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
