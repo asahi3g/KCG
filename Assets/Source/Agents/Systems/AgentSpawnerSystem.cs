@@ -10,10 +10,8 @@ namespace Agent
     {
         private static int UniqueID = 0;
 
-        AgentCreationApi AgentCreationApi;
-        public AgentSpawnerSystem(AgentCreationApi agentCreationApi)
+        public AgentSpawnerSystem()
         {
-            AgentCreationApi = agentCreationApi;
         }
 
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
@@ -21,7 +19,7 @@ namespace Agent
             int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
-            ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)Enums.AgentType.Player);
+            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
 
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
@@ -29,7 +27,7 @@ namespace Agent
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player);
-            entity.AddAgentState(AgentState.Alive);
+            entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
@@ -77,7 +75,7 @@ namespace Agent
             int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
-            ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
+            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
             entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
@@ -127,15 +125,16 @@ namespace Agent
         {
             var entity = entitasContext.agent.CreateEntity();
 
-            ref Agent.AgentProperties properties = ref AgentCreationApi.GetRef((int)agentType);
+            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
             entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
-            entity.AddAgentState(AgentState.Alive);
+            entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
+            entity.AddAgentAgentAction(AgentAction.UnAlert);
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
-            // used for physics simulation
+
             entity.AddAgentPhysicsState(
                 position, 
                 newPreviousPosition: default, 
@@ -164,6 +163,9 @@ namespace Agent
                 newStaggerDuration: 0,
                 newRollCooldown: 0,
                 newRollImpactDuration: 0);
+
+            if (inventoryID != -1)
+                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
             switch (agentType)
             {
@@ -260,6 +262,7 @@ namespace Agent
                         entity.agentPhysicsState.Speed = 6.0f;
 
                         entity.SetAgentWeapon(Model3DWeapon.Gun);
+                        Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, entitasContext);
                         break;
                     }
                 case Enums.AgentType.EnemySwordman:
@@ -338,9 +341,6 @@ namespace Agent
                         break;
                     }
             }
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
             return entity;
         }

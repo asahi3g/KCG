@@ -22,7 +22,7 @@ namespace Action
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
 
             if(ItemEntity.itemMechCastData.data.MechID == null)
-                ItemEntity.itemMechCastData.data = (Mech.Data)ActionPropertyEntity.actionPropertyData.Data;
+                ItemEntity.itemMechCastData.data = (Mech.Data)ActionProperty.ObjectData;
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;

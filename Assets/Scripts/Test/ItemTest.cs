@@ -17,7 +17,6 @@ namespace Planet.Unity
 
         public void Start()
         {
-
             if (!Init)
             {
                 Initialize();

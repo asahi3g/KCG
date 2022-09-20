@@ -80,5 +80,6 @@
         PlanterTool,
         RemoveMech,
         PotionTool,
+        GeometryPlacementTool,
     }
 }

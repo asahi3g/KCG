@@ -185,12 +185,8 @@ namespace Agent
             CurrentIndex = -1;
         }
 
-
-
         public void InitializeResources()
         {
-            
-
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
@@ -249,7 +245,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.5f, 2.5f));
             GameState.AgentCreationApi.SetEnemyBehaviour(Agent.EnemyBehaviour.Gunner);
             GameState.AgentCreationApi.SetDetectionRadius(24.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);

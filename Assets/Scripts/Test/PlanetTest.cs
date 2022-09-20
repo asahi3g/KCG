@@ -165,6 +165,7 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
