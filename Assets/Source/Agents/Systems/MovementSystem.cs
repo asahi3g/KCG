@@ -38,11 +38,11 @@ namespace Agent
             {
                 if (newVelocity.X > 0)
                 {
-                    physicsState.Direction = 1;
+                    physicsState.MovingDirection = 1;
                 }
                 else if (newVelocity.X < 0)
                 {
-                    physicsState.Direction = -1;
+                    physicsState.MovingDirection = -1;
                 }
             }
 
@@ -126,11 +126,11 @@ namespace Agent
             {
                 if (newVelocity.X > 0)
                 {
-                    physicsState.Direction = 1;
+                    physicsState.MovingDirection = 1;
                 }
                 else if (newVelocity.X < 0)
                 {
-                    physicsState.Direction = -1;
+                    physicsState.MovingDirection = -1;
                 }
             }
 

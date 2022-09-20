@@ -34,13 +34,29 @@ namespace Agent
                         {
                             if (System.Math.Abs(physicsState.Velocity.X) > 7.0f)
                             {
-                                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
-                                currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                if (physicsState.MovingDirection != physicsState.FacingDirection)
+                                {
+                                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.WalkBack);
+                                    currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                }
+                                else
+                                {
+                                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Run);
+                                    currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                }
                             }
                             else
                             {
-                                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Jog);
-                                currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                if (physicsState.MovingDirection != physicsState.FacingDirection)
+                                {
+                                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.WalkBack);
+                                    currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                }
+                                else
+                                {
+                                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.Jog);
+                                    currentClip = model3d.AnimancerComponent.Play(animation, 0.125f);
+                                }
                             }
                             break;
                         }

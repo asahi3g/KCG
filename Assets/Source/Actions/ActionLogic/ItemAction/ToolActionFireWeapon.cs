@@ -45,19 +45,19 @@ namespace Action
 
             StartPos = AgentEntity.agentPhysicsState.Position;
 
-            if (worldPosition.x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.Direction == -1)
-                AgentEntity.agentPhysicsState.Direction = 1;
-            else if (worldPosition.x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.Direction == 1)
-                AgentEntity.agentPhysicsState.Direction = -1;
+            if (worldPosition.x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == -1)
+                AgentEntity.agentPhysicsState.MovingDirection  = 1;
+            else if (worldPosition.x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == 1)
+                AgentEntity.agentPhysicsState.MovingDirection  = -1;
 
             AgentEntity.FireGun(WeaponProperty.CoolDown);
 
-            StartPos.X += 0.3f * AgentEntity.agentPhysicsState.Direction;
+            StartPos.X += 0.3f * AgentEntity.agentPhysicsState.MovingDirection ;
             StartPos.Y += 1.75f;
             
             // Todo: Rotate agent instead.
-            if (Math.Sign(x - StartPos.X) != Math.Sign(AgentEntity.agentPhysicsState.Direction))
-                x = StartPos.X + 0.5f * AgentEntity.agentPhysicsState.Direction;
+            if (Math.Sign(x - StartPos.X) != Math.Sign(AgentEntity.agentPhysicsState.MovingDirection ))
+                x = StartPos.X + 0.5f * AgentEntity.agentPhysicsState.MovingDirection ;
 
             var spread = WeaponProperty.SpreadAngle;
             for(int i = 0; i < bulletsPerShot; i++)

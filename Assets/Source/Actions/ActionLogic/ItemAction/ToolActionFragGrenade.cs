@@ -31,7 +31,7 @@ namespace Action
 
             // Start position
             StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 1.0f * AgentEntity.agentPhysicsState.Direction;
+            StartPos.X += 1.0f * AgentEntity.agentPhysicsState.FacingDirection;
             StartPos.Y += 2.0f;
 
 
