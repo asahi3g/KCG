@@ -3,6 +3,7 @@ using KMath;
 
 namespace Action
 {
+    [Action]
     public class TagetComponent : IComponent
     {
         public int AgentTargetID;   // -1 If target is not agent.

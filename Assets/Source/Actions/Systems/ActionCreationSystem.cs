@@ -70,7 +70,7 @@ namespace Action
             if (actionID != -1)
             {
                 ActionEntity actionEntity = entitasContext.action.GetEntityWithActionIDID(actionID);
-                actionEntity.AddActionMoveTo(goalPosition);
+                actionEntity.AddActionTaget(-1, -1, target);
             }
             return actionID;
         }

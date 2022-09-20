@@ -6,13 +6,13 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class GameEntity {
+public partial class ActionEntity {
 
-    public Action.TagetComponent actionTaget { get { return (Action.TagetComponent)GetComponent(GameComponentsLookup.ActionTaget); } }
-    public bool hasActionTaget { get { return HasComponent(GameComponentsLookup.ActionTaget); } }
+    public Action.TagetComponent actionTaget { get { return (Action.TagetComponent)GetComponent(ActionComponentsLookup.ActionTaget); } }
+    public bool hasActionTaget { get { return HasComponent(ActionComponentsLookup.ActionTaget); } }
 
     public void AddActionTaget(int newAgentTargetID, int newMechTargetID, KMath.Vec2f newTargetPos) {
-        var index = GameComponentsLookup.ActionTaget;
+        var index = ActionComponentsLookup.ActionTaget;
         var component = (Action.TagetComponent)CreateComponent(index, typeof(Action.TagetComponent));
         component.AgentTargetID = newAgentTargetID;
         component.MechTargetID = newMechTargetID;
@@ -21,7 +21,7 @@ public partial class GameEntity {
     }
 
     public void ReplaceActionTaget(int newAgentTargetID, int newMechTargetID, KMath.Vec2f newTargetPos) {
-        var index = GameComponentsLookup.ActionTaget;
+        var index = ActionComponentsLookup.ActionTaget;
         var component = (Action.TagetComponent)CreateComponent(index, typeof(Action.TagetComponent));
         component.AgentTargetID = newAgentTargetID;
         component.MechTargetID = newMechTargetID;
@@ -30,7 +30,7 @@ public partial class GameEntity {
     }
 
     public void RemoveActionTaget() {
-        RemoveComponent(GameComponentsLookup.ActionTaget);
+        RemoveComponent(ActionComponentsLookup.ActionTaget);
     }
 }
 
@@ -42,15 +42,15 @@ public partial class GameEntity {
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed partial class GameMatcher {
+public sealed partial class ActionMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherActionTaget;
+    static Entitas.IMatcher<ActionEntity> _matcherActionTaget;
 
-    public static Entitas.IMatcher<GameEntity> ActionTaget {
+    public static Entitas.IMatcher<ActionEntity> ActionTaget {
         get {
             if (_matcherActionTaget == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.ActionTaget);
-                matcher.componentNames = GameComponentsLookup.componentNames;
+                var matcher = (Entitas.Matcher<ActionEntity>)Entitas.Matcher<ActionEntity>.AllOf(ActionComponentsLookup.ActionTaget);
+                matcher.componentNames = ActionComponentsLookup.componentNames;
                 _matcherActionTaget = matcher;
             }
 
