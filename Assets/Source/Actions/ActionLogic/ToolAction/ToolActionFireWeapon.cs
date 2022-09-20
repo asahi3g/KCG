@@ -47,24 +47,24 @@ namespace Action
 
             if (planet.Player != null)
             {
-                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == -1)
+                if (worldPosition.x > planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.MovingDirection == -1)
                 {
-                    planet.Player.agentPhysicsState.Direction = 1;
+                    planet.Player.agentPhysicsState.MovingDirection = 1;
                 }
-                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.Direction == 1)
+                else if (worldPosition.x < planet.Player.agentPhysicsState.Position.X && planet.Player.agentPhysicsState.MovingDirection == 1)
                 {
-                    planet.Player.agentPhysicsState.Direction = -1;
+                    planet.Player.agentPhysicsState.MovingDirection = -1;
                 }
 
                 var player = planet.Player;
                 player.FireGun(WeaponProperty.CoolDown);
 
-                StartPos.X += 0.3f * planet.Player.agentPhysicsState.Direction;
+                StartPos.X += 0.3f * planet.Player.agentPhysicsState.MovingDirection;
                 StartPos.Y += 1.75f;
                 
                 // Todo: Rotate player instead.
-                if (Math.Sign(x - StartPos.X) != Math.Sign(planet.Player.agentPhysicsState.Direction))
-                    x = StartPos.X + 0.5f * planet.Player.agentPhysicsState.Direction;
+                if (Math.Sign(x - StartPos.X) != Math.Sign(planet.Player.agentPhysicsState.MovingDirection))
+                    x = StartPos.X + 0.5f * planet.Player.agentPhysicsState.MovingDirection;
             }
 
             var spread = WeaponProperty.SpreadAngle;

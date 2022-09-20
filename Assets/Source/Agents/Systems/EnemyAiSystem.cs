@@ -263,7 +263,7 @@ namespace Agent
 
                             if (physicsState.ActionJustEnded)
                             {
-                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.Direction * box2DComponent.Size.X,
+                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.MovingDirection * box2DComponent.Size.X,
                                 physicsState.Position.Y + box2DComponent.Offset.Y);
 
                                 

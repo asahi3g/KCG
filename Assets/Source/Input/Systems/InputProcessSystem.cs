@@ -124,6 +124,17 @@ namespace ECSInput
 
                 var physicsState = player.agentPhysicsState;
 
+
+                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                if (mouseWorldPosition.x >= physicsState.Position.X)
+                {
+                    physicsState.FacingDirection = 1;
+                }
+                else
+                {
+                    physicsState.FacingDirection = -1;
+                }
+
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {

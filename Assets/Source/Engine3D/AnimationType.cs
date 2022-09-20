@@ -8,6 +8,7 @@ namespace Engine3D
     {
         Idle,
         Walk,
+        WalkBack,
         Run,
         Jump,
         Flip,
