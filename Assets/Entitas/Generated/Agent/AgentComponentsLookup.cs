@@ -10,15 +10,15 @@ public static class AgentComponentsLookup {
 
     public const int AgentAgentAction = 0;
     public const int AgentAIController = 1;
-    public const int AgentCorpse = 2;
-    public const int AgentEnemy = 3;
-    public const int AgentID = 4;
-    public const int AgentInventory = 5;
-    public const int AgentModel3D = 6;
-    public const int AgentPhysicsState = 7;
-    public const int AgentPlayer = 8;
-    public const int AgentSprite2D = 9;
-    public const int AgentState = 10;
+    public const int AgentAlive = 2;
+    public const int AgentCorpse = 3;
+    public const int AgentEnemy = 4;
+    public const int AgentID = 5;
+    public const int AgentInventory = 6;
+    public const int AgentModel3D = 7;
+    public const int AgentPhysicsState = 8;
+    public const int AgentPlayer = 9;
+    public const int AgentSprite2D = 10;
     public const int AgentStats = 11;
     public const int AgentsLineOfSight = 12;
     public const int AnimationState = 13;
@@ -32,6 +32,7 @@ public static class AgentComponentsLookup {
     public static readonly string[] componentNames = {
         "AgentAgentAction",
         "AgentAIController",
+        "AgentAlive",
         "AgentCorpse",
         "AgentEnemy",
         "AgentID",
@@ -40,7 +41,6 @@ public static class AgentComponentsLookup {
         "AgentPhysicsState",
         "AgentPlayer",
         "AgentSprite2D",
-        "AgentState",
         "AgentStats",
         "AgentsLineOfSight",
         "AnimationState",
@@ -53,6 +53,7 @@ public static class AgentComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(Agent.AgentActionComponent),
         typeof(Agent.AIController),
+        typeof(Agent.AliveComponent),
         typeof(Agent.CorpseComponent),
         typeof(Agent.EnemyComponent),
         typeof(Agent.IDComponent),
@@ -61,7 +62,6 @@ public static class AgentComponentsLookup {
         typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
         typeof(Agent.Sprite2DComponent),
-        typeof(Agent.StateComponent),
         typeof(Agent.StatsComponent),
         typeof(Agents.LineOfSightComponent),
         typeof(Animation.StateComponent),

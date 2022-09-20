@@ -15,9 +15,8 @@ namespace Collisions
             Vec2f vRayStart = line.A;
             Vec2f vRayDir = (line.B - line.A).Normalized;
 
-
             Vec2f vRayUnitStepSize = new Vec2f( (float)Math.Sqrt(1 + (vRayDir.Y / vRayDir.X) * (vRayDir.Y / vRayDir.X)), 
-            (float)Math.Sqrt(1 + (vRayDir.X / vRayDir.Y) * (vRayDir.X / vRayDir.Y)) );
+                (float)Math.Sqrt(1 + (vRayDir.X / vRayDir.Y) * (vRayDir.X / vRayDir.Y)));
             Vec2i vMapCheck = new Vec2i((int)vRayStart.X, (int)vRayStart.Y);
             Vec2f vRayLength1D;
             Vec2i vStep;
@@ -50,7 +49,7 @@ namespace Collisions
             bool bTileFound = false;
             float fMaxDistance = 100.0f;
             float fDistance = 0.0f;
-            while (!bTileFound && fDistance < fMaxDistance)
+            while (!bTileFound && fDistance < fMaxDistance && (fDistance < (line.B - line.A).Magnitude))
             {
                 // Walk along shortest path
                 if (vRayLength1D.X < vRayLength1D.Y)
@@ -86,12 +85,6 @@ namespace Collisions
             {
                 vIntersection = vRayStart + vRayDir * fDistance;
             }
-
-            if (fDistance > (line.B - line.A).Magnitude)
-            {
-                bTileFound = false;
-            }
-
 
             RayCastResult result = new RayCastResult();
             result.Intersect = bTileFound;

@@ -29,7 +29,8 @@ namespace Projectile
                 newPreviousPosition: position,
                 newRotation: 0.0f,
                 newVelocity: direction.Normalized * projectileProperties.StartVelocity,
-                newAcceleration: Vec2f.Zero);
+                newAcceleration: Vec2f.Zero,
+                newOnGrounded: false);
             
             entity.AddPhysicsBox2DCollider(projectileProperties.Size, Vec2f.Zero);
             entity.AddProjectileType(projectileType, Enums.ProjectileDrawType.Standard);

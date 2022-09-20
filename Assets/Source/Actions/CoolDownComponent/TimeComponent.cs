@@ -8,9 +8,7 @@ namespace Action.CoolDown
     [ActionCoolDown]
     public struct TimeComponent : IComponent
     {
-        /// <summary>
-        /// CoolDown End Time.
-        /// </summary>
+        /// <summary> CoolDown End Time. </summary>
         public float EndTime;
     }
 }

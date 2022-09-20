@@ -1,5 +1,6 @@
 using Collisions;
 using Enums.Tile;
+using UnityEngine.PlayerLoop;
 //MOST IMPORTANT TILE
 
 /*
@@ -306,6 +307,14 @@ namespace PlanetTileMap
         public int PipeSpriteSheet;
         public int PlatformSpriteSheet;
 
+        public int MetalGeometryTileSheet;
+
+        public int SQ_0;
+        public int SQ_1;
+        public int SQ_2;
+        public int SQ_3;
+        public int SQ_4;
+
         public void InitializeResources()
         {
             LoadingTilePlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Terrains\\placeholder_loadingSprite.png", 32, 32);
@@ -317,11 +326,10 @@ namespace PlanetTileMap
             Ore3SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Adamantine\\ore_adamantine_1.png", 16, 16);
             PipeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pipesim\\pipesim.png", 16, 16);
             PlatformSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Platform\\Platform1\\Platform_1.png", 48, 48);
-
+            MetalGeometryTileSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\GeometryMetal\\metal_tiles_geometry.png", 288, 736);
 
             LoadingTilePlaceholderSpriteId =
                     GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(LoadingTilePlaceholderSpriteSheet, 0, 0, 0);
-
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Ore1);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.Ore1);
@@ -409,6 +417,46 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
             GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
             GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.SQ_0);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
+            GameState.TileCreationApi.SetTilePropertyName("SQ_0");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 19, 21);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.SQ_1);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
+            GameState.TileCreationApi.SetTilePropertyName("SQ_1");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 21, 21);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.SQ_2);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
+            GameState.TileCreationApi.SetTilePropertyName("SQ_2");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 23, 21);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.SQ_3);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
+            GameState.TileCreationApi.SetTilePropertyName("SQ_3");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 25, 21);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.SQ_4);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
+            GameState.TileCreationApi.SetTilePropertyName("SQ_4");
+            GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 27, 21);
             GameState.TileCreationApi.EndTileProperty();
         }
     }

@@ -15,6 +15,11 @@
         Bedrock,
         Platform,
         Mech,
-        Stone
+        Stone,
+        SQ_0,
+        SQ_1,
+        SQ_2,
+        SQ_3,
+        SQ_4,
     }
 }

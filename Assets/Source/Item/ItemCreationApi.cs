@@ -578,7 +578,7 @@ namespace Item
             GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
             GameState.ItemCreationApi.SetTexture(PistolIcon);
             GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.4f, 10.0f, 25);
+            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
             GameState.ItemCreationApi.SetRangedWeaponClip(8, 1, 1f);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
@@ -984,6 +984,14 @@ namespace Item
             GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetAction(Enums.ActionType.FragGrenade);
+            GameState.ItemCreationApi.EndItem();
+
+            GameState.ItemCreationApi.CreateItem(Enums.ItemType.GeometryPlacementTool, "GeometryPlacementTool");
+            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+            GameState.ItemCreationApi.SetTexture(OreIcon);
+            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
+            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGeometryPlacement);
             GameState.ItemCreationApi.EndItem();
         }
     }

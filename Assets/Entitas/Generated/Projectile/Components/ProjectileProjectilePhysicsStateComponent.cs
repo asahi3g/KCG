@@ -11,7 +11,7 @@ public partial class ProjectileEntity {
     public Projectile.PhysicsStateComponent projectilePhysicsState { get { return (Projectile.PhysicsStateComponent)GetComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
     public bool hasProjectilePhysicsState { get { return HasComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
 
-    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration) {
+    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -19,10 +19,11 @@ public partial class ProjectileEntity {
         component.Rotation = newRotation;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
+        component.OnGrounded = newOnGrounded;
         AddComponent(index, component);
     }
 
-    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration) {
+    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -30,6 +31,7 @@ public partial class ProjectileEntity {
         component.Rotation = newRotation;
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
+        component.OnGrounded = newOnGrounded;
         ReplaceComponent(index, component);
     }
 

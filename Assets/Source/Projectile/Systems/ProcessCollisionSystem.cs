@@ -1,9 +1,7 @@
 using UnityEngine;
 using KMath;
-using Collisions;
 using Particle;
-using UnityEngine.UIElements;
-using System;
+using Utility;
 
 namespace Projectile
 {
@@ -11,8 +9,9 @@ namespace Projectile
     {
         // new version of the update function
         // uses the planet state to remove the projectile
-        public void UpdateEx(ref Planet.PlanetState planet)
+        public void UpdateEx(ref Planet.PlanetState planet, float deltaTime)
         {
+            const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
             var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
@@ -24,21 +23,49 @@ namespace Projectile
                     GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Flags.HasFlag(ProjectileProperties.ProjFlags.CanBounce);
 
                 var physicsState = entity.projectilePhysicsState;
+                var box2DCollider = entity.physicsBox2DCollider;
 
-                var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y), entity.projectileSprite2D.Size);
-                var box2dCollider = entity.physicsBox2DCollider;
+                AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-                if ((physicsState.Position - physicsState.PreviousPosition).Magnitude < 0.005f)
-                    continue;
-
-                // Collising with terrain with raycasting
-                var rayCastingResult =
-                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), box2dCollider.Size.X, box2dCollider.Size.Y);
+                // Collising with terrainr(raycasting)
+                var rayCastingResult = Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new KMath.Line2D(
+                    physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)
                 {
+                    if (bounce)
+                    {
+                        float r = (physicsState.Position.X - rayCastingResult.Point.X) / (physicsState.Position.X - physicsState.PreviousPosition.X);
+                        float t = deltaTime * r; // Aproximation. Doesn't deal with acceleration.
+
+                        if (KMath.KMath.AlmostEquals(rayCastingResult.Normal.X, 0.0f))
+                        {
+                            if (KMath.KMath.AlmostEquals(rayCastingResult.Normal.Y, 1.0f) && (Mathf.Abs(physicsState.Velocity.Y) < THRESHOLD_VERTICAL_SPEED))
+                            {
+                                physicsState.Velocity.Y = 0.0f;
+                                physicsState.Position.Y = rayCastingResult.Point.Y;
+                                physicsState.OnGrounded = true;
+                            }
+                            else
+                            {
+                                physicsState.Velocity.Y = -physicsState.Velocity.Y * bounceValue;
+                                physicsState.Position.Y = rayCastingResult.Point.Y + physicsState.Velocity.Y * t;
+                            }
+                        }
+                        else
+                        {
+                            physicsState.Velocity.X = -physicsState.Velocity.X * bounceValue;
+                            physicsState.Position.X = rayCastingResult.Point.X + physicsState.Velocity.X * t;
+                        }
+
+                    }
+                    else
+                    {
+                        physicsState.Position = rayCastingResult.Point;
+                        physicsState.Velocity = Vec2f.Zero;
+                    }
+
                     if (!entity.hasProjectileOnHit)
                         entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
                     else 
@@ -46,33 +73,33 @@ namespace Projectile
                         entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
                         entity.projectileOnHit.LastHitTime = Time.time;
                     }
-                    
+
                     if (entity.isProjectileFirstHIt)
                     {
-                        physicsState.Position = rayCastingResult.Point + oppositeDirection * entity.projectileSprite2D.Size * 0.5f;
                         physicsState.Velocity = new Vec2f();
                     }
                 }
 
                 // Collision with Agent.
-                Vec2f position = physicsState.Position + box2dCollider.Offset;
-                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2dCollider.Size.X, h = box2dCollider.Size.Y };
+                // Todo: Box2d uses center position. Change for leftmost button for consistency.
+                Vec2f position = physicsState.Position + box2DCollider.Offset  + box2DCollider.Size / 2.0f;
+                Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2DCollider.Size.X, h = box2DCollider.Size.Y };
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
                 for (int i = 0; i < planet.AgentList.Length; i++)
                 {
                     AgentEntity agentEntity = planet.AgentList.Get(i);
-                    if (!agentEntity.isAgentPlayer && agentEntity.agentState.State == Agent.AgentState.Alive)
+                    if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
                     {
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
-                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset + agentBox2dCollider.Size/2;
 
                         Collisions.Box2D agentBox = new Collisions.Box2D{x = agentPosition.X, y = agentPosition.Y, w = agentBox2dCollider.Size.X, h = agentBox2dCollider.Size.Y};
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
                             if (entity.isProjectileFirstHIt)
-                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2dCollider.Offset;
+                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2DCollider.Offset;
 
                             // Todo: Deals with case: colliding with an object and an agent at the same frame.
                             if (!entity.hasProjectileOnHit)
@@ -87,32 +114,7 @@ namespace Projectile
                     }
                 }
 
-                // Todo: Use only new collision system.
-                if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                }
-                else if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.Velocity))
-                {
-                    
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.Y = -entity.projectilePhysicsState.Velocity.Y * bounceValue;
-                }
-
-                entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y), entity.projectileSprite2D.Size);
-
-                if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
-                    
-                }
-                else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
-                {
-                    if (bounce)
-                        entity.projectilePhysicsState.Velocity.X = -entity.projectilePhysicsState.Velocity.X * (bounceValue - 0.1f);
-                }
+                entityBoxBorders.DrawBox();
             }
 
             CircleSmoke.Update(ref planet.TileMap);

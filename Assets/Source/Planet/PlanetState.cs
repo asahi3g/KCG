@@ -133,7 +133,9 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType));
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
+
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType, inventoryID));
             return newEntity;
         }
 
@@ -534,13 +536,15 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
+
             GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
             GameState.AgentMovementSystem.Update(EntitasContext.agent);
-            GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
-            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
+            GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
+            GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
+            GameState.ProjectileMovementSystem.Update(ref this);
+
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
-            GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.LootDropSystem.Update(EntitasContext);
             GameState.EnemyAiSystem.Update(ref this, frameTime);
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
@@ -550,12 +554,15 @@ namespace Planet
             GameState.ActionCoolDownSystem.Update(EntitasContext, deltaTime);
             GameState.ParticleEmitterUpdateSystem.Update(ref this);
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
-            GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
-            GameState.VehicleCollisionSystem.Update(ref this);
-            GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
             GameState.VehicleAISystem.Update(ref this);
-            GameState.ProjectileMovementSystem.Update(ref this);
-            GameState.ProjectileCollisionSystem.UpdateEx(ref this);
+
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
+            GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
+            GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
+            GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
+            GameState.VehicleCollisionSystem.Update(ref this);
+
+            GameState.AgentProcessStats.Update(ref this);
 
             cameraFollow.Update(ref this);
 

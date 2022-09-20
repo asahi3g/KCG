@@ -65,6 +65,17 @@ namespace ECSInput
 
                 var physicsState = player.agentPhysicsState;
 
+
+                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                if (mouseWorldPosition.x >= physicsState.Position.X)
+                {
+                    physicsState.FacingDirection = 1;
+                }
+                else
+                {
+                    physicsState.FacingDirection = -1;
+                }
+
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
@@ -135,7 +146,7 @@ namespace ECSInput
                                 // Player Gets inside of Rocket
                                 // Hide Agent/Player
                                 player.agentModel3D.GameObject.gameObject.SetActive(false);
-                                player.agentState.State = AgentState.Dead;
+                                player.isAgentAlive = false;
                                 vehicle.vehicleType.HasAgent = true;
 
                                 GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
@@ -148,7 +159,7 @@ namespace ECSInput
                                 vehicle.vehicleType.HasAgent = false;
                                 player.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
                                 player.agentModel3D.GameObject.gameObject.SetActive(true);
-                                player.agentState.State = AgentState.Alive;
+                                player.isAgentAlive = true;
 
                             }
                             
@@ -180,8 +191,7 @@ namespace ECSInput
                     for (int i =0; i < agents.Length; i++)
                     {
                         AgentEntity corpse = agents.Get(i);
-                        var state = corpse.agentState;
-                        if (state.State == AgentState.Dead)
+                        if (!corpse.isAgentAlive)
                         {
                             
                             var physicsState = corpse.agentPhysicsState;

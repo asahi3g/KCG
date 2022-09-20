@@ -1,12 +1,11 @@
 using Entitas;
+using Entitas.CodeGeneration;
 using Entitas.CodeGeneration.Attributes;
-using System.Diagnostics.Tracing;
 
 namespace Agent
 {
-    [Agent]
-    public class StateComponent : IComponent
+    [Agent, FlagPrefix("Is")]
+    public class AliveComponent : IComponent
     {
-        public AgentState State;
     }
 }

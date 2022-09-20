@@ -24,7 +24,7 @@ namespace Action
 
         public ToolActionPlaceParticleEmitter(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
-            data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+            data = (Data)ActionProperty.ObjectData;
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)

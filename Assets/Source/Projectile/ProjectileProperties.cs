@@ -14,14 +14,12 @@ namespace Projectile
         public Animation.AnimationType AnimationType;
 
         public float StartVelocity;
-
         public float RampAcceleration;
         public float MaxVelocity;
 
         public float DeltaRotation; // Degrees/seconds.
 
         public float LinearDrag;
-
         public float LinearCutOff;
 
         public float BounceValue;
