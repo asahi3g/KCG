@@ -970,6 +970,14 @@ namespace Item
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetAction(Enums.ActionType.FragGrenade);
             GameState.ItemCreationApi.EndItem();
+
+            GameState.ItemCreationApi.CreateItem(Enums.ItemType.GeometryPlacementTool, "GeometryPlacementTool");
+            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+            GameState.ItemCreationApi.SetTexture(OreIcon);
+            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
+            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGeometryPlacement);
+            GameState.ItemCreationApi.EndItem();
         }
     }
 }

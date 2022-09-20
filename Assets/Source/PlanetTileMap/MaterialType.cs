@@ -16,5 +16,6 @@ namespace PlanetTileMap
         Wire,
         Bedrock,
         Stone,
+        MetalGeometry,
     }
 }

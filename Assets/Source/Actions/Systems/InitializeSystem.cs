@@ -195,6 +195,11 @@ namespace Action
             GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPotion);
             GameState.ActionCreationApi.SetLogicFactory(new ToolActionPotionCreator());
             GameState.ActionCreationApi.EndActionPropertyType();
+            GameState.ActionPropertyManager.EndActionPropertyType();
+
+            GameState.ActionPropertyManager.CreateActionPropertyType(Enums.ActionType.ToolActionGeometryPlacement);
+            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionGeometryPlacementCreator());
+            GameState.ActionPropertyManager.EndActionPropertyType();
         }
     }
 }
