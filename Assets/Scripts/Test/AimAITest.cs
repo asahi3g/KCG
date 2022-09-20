@@ -38,6 +38,11 @@ namespace Planet.Unity
             }
             
             Planet.Update(Time.deltaTime, Material, transform);
+
+            if (!Target.isAgentAlive)
+            {
+                Target = SpawnTarget();
+            }
         }
 
         public void Initialize()
@@ -48,12 +53,8 @@ namespace Planet.Unity
             Planet = new PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
-
             Marine = Planet.AddAgent(new Vec2f(1.0f, 3.0f), Enums.AgentType.EnemyGunner);
-            float x = UnityEngine.Random.Range(16.0f, 31.0f);
-            float y = UnityEngine.Random.Range(2.0f, 15.0f);
-
-            Target = Planet.AddAgent(new Vec2f(x, y), Enums.AgentType.FlyingSlime);
+            Target = SpawnTarget();
             GenerateMap();
             lastShootTime = Time.realtimeSinceStartup;
         }
@@ -70,6 +71,14 @@ namespace Planet.Unity
                         tileMap.SetFrontTile(i, j, TileID.Moon);
                 }
             }
+        }
+
+        private AgentEntity SpawnTarget()
+        {
+            float x = Random.Range(16.0f, 31.0f);
+            float y = Random.Range(2.0f, 15.0f);
+
+            return Planet.AddAgent(new Vec2f(x, y), Enums.AgentType.FlyingSlime);
         }
     }
 }

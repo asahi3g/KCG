@@ -1,6 +1,8 @@
 ﻿using Planet;
 using UnityEngine;
 using KMath;
+using Action;
+using System.Web.WebPages;
 
 namespace Mech
 {
@@ -35,9 +37,9 @@ namespace Mech
 
                 if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.ActionType.None)
                 {
-                    var actionProprieties = planet.EntitasContext.actionProperties.GetEntityWithActionProperty(proprieties.Action);
-                    str = "Press E to " + (actionProprieties.hasActionPropertyDescription ? 
-                        actionProprieties.actionPropertyDescription.str : "interact");
+                    ActionProperties actionProprieties = GameState.ActionCreationApi.Get(proprieties.Action);
+                    str = "Press E to " + (!actionProprieties.Descripition.IsEmpty() ? 
+                        actionProprieties.Descripition : "interact");
                 }
                 else
                 {

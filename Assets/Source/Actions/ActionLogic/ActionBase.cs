@@ -6,15 +6,14 @@ namespace Action
     {
         protected Contexts EntitasContext;
         protected ActionEntity ActionEntity;
-        protected ActionPropertiesEntity ActionPropertyEntity;
+        protected ActionProperties ActionProperty;
         protected AgentEntity AgentEntity;
 
         public ActionBase(Contexts entitasContext, int actionID)
         {   
             EntitasContext = entitasContext;
             ActionEntity = entitasContext.action.GetEntityWithActionIDID(actionID);
-            ActionPropertyEntity = entitasContext.actionProperties.GetEntityWithActionProperty(
-                ActionEntity.actionID.TypeID);
+            ActionProperty = GameState.ActionCreationApi.Get(ActionEntity.actionID.TypeID);
             AgentEntity = entitasContext.agent.GetEntityWithAgentID(ActionEntity.actionOwner.AgentID);    
         }
 

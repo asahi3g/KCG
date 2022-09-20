@@ -16,7 +16,7 @@ namespace Action
 
         public void SetCoolDown(Contexts contexts, Enums.ActionType type, int agentID)
         {
-            float time = contexts.actionProperties.GetEntityWithActionProperty(type).actionPropertyCoolDown.CoolDownTime;
+            float time = GameState.ActionCreationApi.Get(type).CoolDownTime;
             SetCoolDown(contexts, type, agentID, time);
         }
 

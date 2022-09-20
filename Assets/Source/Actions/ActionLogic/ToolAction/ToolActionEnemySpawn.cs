@@ -10,11 +10,6 @@ namespace Action
     {
         // Todo create methods to instatiate Agents.
         // Data should only have something like:
-        // struct Data
-        // {
-        //      Enums.enemyType type
-        // }
-
         public struct Data
         {
             public int CharacterSpriteId;
@@ -24,7 +19,7 @@ namespace Action
 
         public ToolActionEnemySpawn(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
-            data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+            data = (Data)ActionProperty.ObjectData;
         }
 
         public override void OnEnter(ref Planet.PlanetState planet)

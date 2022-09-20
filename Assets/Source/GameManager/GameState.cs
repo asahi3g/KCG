@@ -17,7 +17,7 @@ public class GameState
     #endregion
 
     #region Action
-    public static readonly Action.ActionPropertyManager     ActionPropertyManager;
+    public static readonly Action.ActionCreationApi         ActionCreationApi;
     public static readonly Action.ActionCreationSystem      ActionCreationSystem;
     public static readonly Action.ActionSchedulerSystem     ActionSchedulerSystem;
     public static readonly Action.InitializeSystem          ActionInitializeSystem;
@@ -157,13 +157,10 @@ public class GameState
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
-
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
-
+        
         SpriteLoader = new Sprites.SpriteLoader();
-
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
-
         SpriteAtlasManager = new Sprites.SpriteAtlasManager();
         
 
@@ -216,7 +213,7 @@ public class GameState
         LootTableCreationAPI = new LootDrop.CreationApi();
         LootDropSystem = new LootDrop.LootDropSystem();
 
-        ActionPropertyManager = new Action.ActionPropertyManager();
+        ActionCreationApi = new Action.ActionCreationApi();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();
         ActionInitializeSystem = new Action.InitializeSystem();

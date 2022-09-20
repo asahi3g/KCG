@@ -10,256 +10,191 @@ namespace Action
     {
         public int CreatePickUpAction(Contexts entitasContext, int agentID, int itemID)
         {
-            // Pick Up action.
-            int actionID = GameState.ActionCreationSystem.CreateAction(entitasContext,
-                                Enums.ActionType.PickUpAction, agentID, itemID);
-            // Return Action ID
+            int actionID = GameState.ActionCreationSystem.CreateAction(entitasContext, Enums.ActionType.PickUpAction, 
+                agentID, itemID);
             return actionID;
         }
         
         private static void CreateToolActionPlaceTile(Contexts entitasContext, TileID tileID, MapLayerType layer)
         {
-            // Create Action Property Type
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.PlaceTilOre1Action + (int)tileID - (int)TileID.Ore1);
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.PlaceTilOre1Action + 
+                (int)tileID - (int)TileID.Ore1);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlaceTileCreator());
 
-            // Set Logic Factory
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceTileCreator());
-
-            // Set Data Struct
             var data = new Enums.Tile.Data
             {
-                // Set Tile ID
                 TileID = tileID,
-                
-                // Set Layer
                 Layer = layer
             };
 
-            // Set Data
-            GameState.ActionPropertyManager.SetData(data);
-
-            // Call End Action Property Type
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(data);
+            GameState.ActionCreationApi.EndActionPropertyType();
         }
 
         public void Initialize(Contexts entitasContext, Material material)
         {
-            // Create Drop Action Property
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.DropAction);
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.DropAction);
 
-            // Drop Action Creator
-            GameState.ActionPropertyManager.SetLogicFactory(new DropActionCreator());
-            GameState.ActionPropertyManager.SetTime(2.0f); // Time Component
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetLogicFactory(new DropActionCreator());
+            GameState.ActionCreationApi.SetTime(2.0f);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Pickup Action
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.PickUpAction);
-            GameState.ActionPropertyManager.SetLogicFactory(new PickUpActionCreator()); // Set Logic Factory
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.PickUpAction);
+            GameState.ActionCreationApi.SetLogicFactory(new PickUpActionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.MoveAction);
-            GameState.ActionPropertyManager.SetLogicFactory(new MoveActionCreator());
-            GameState.ActionPropertyManager.Movement();
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.MoveAction);
+            GameState.ActionCreationApi.SetLogicFactory(new MoveActionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.OpenChestAction);
-            GameState.ActionPropertyManager.SetDescription("open chest.");
-            GameState.ActionPropertyManager.SetLogicFactory(new ChestActionCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.OpenChestAction);
+            GameState.ActionCreationApi.SetDescription("open chest.");
+            GameState.ActionCreationApi.SetLogicFactory(new ChestActionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Ore1, MapLayerType.Front);
-
-            // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Ore2, MapLayerType.Front);
-
-            // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Ore3, MapLayerType.Front);
-
-            // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Glass, MapLayerType.Front);
-
-            // Create Place Tile Tool Front
             CreateToolActionPlaceTile(entitasContext, TileID.Moon, MapLayerType.Front);
-
-            // Create Place Tile Tool Back
             CreateToolActionPlaceTile(entitasContext, TileID.Background, MapLayerType.Back);
-
-            // Create Place Tile Tool Mid
             CreateToolActionPlaceTile(entitasContext, TileID.Pipe, MapLayerType.Mid);
 
-            // Create Action Fire Weapon
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionFireWeapon);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionFireWeaponCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionFireWeapon);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionFireWeaponCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Action Reload
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ReloadAction) ;
-            GameState.ActionPropertyManager.SetLogicFactory(new ReloadActionCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ReloadAction) ;
+            GameState.ActionCreationApi.SetLogicFactory(new ReloadActionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Shield Action
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ShieldAction);
-            GameState.ActionPropertyManager.SetLogicFactory(new ShieldActionCreator());
-            GameState.ActionPropertyManager.SetShieldActive(false);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ShieldAction);
+            GameState.ActionCreationApi.SetLogicFactory(new ShieldActionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Place Particle
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceParticle);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceParticleCreator());
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPlaceParticle);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlaceParticleCreator());
             ToolActionPlaceParticleEmitter.Data placeParticleEmitterData = new ToolActionPlaceParticleEmitter.Data();
             placeParticleEmitterData.emitterType = Particle.ParticleEmitterType.ExplosionEmitter;
-            GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(placeParticleEmitterData);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Place Particle
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionSpawnExplosion);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceParticleCreator());
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionSpawnExplosion);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlaceParticleCreator());
             placeParticleEmitterData = new ToolActionPlaceParticleEmitter.Data();
             placeParticleEmitterData.emitterType = Particle.ParticleEmitterType.ExplosionEmitter;
-            GameState.ActionPropertyManager.SetData(placeParticleEmitterData);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(placeParticleEmitterData);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Frag Grenade
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.FragGrenade);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionFragGrenadeCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.FragGrenade);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionFragGrenadeCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
 
-            // Create Tool Action Place Chest
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceChest);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceChestCreator());
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPlaceChest);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlaceChestCreator());
             ToolActionPlaceChest.Data placeChestData = new ToolActionPlaceChest.Data
             {
                 Material = material
             };
-            GameState.ActionPropertyManager.SetData(placeChestData);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(placeChestData);
+            GameState.ActionCreationApi.EndActionPropertyType();
             
-            // Create Tool Action Smashable Box Placement
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlaceSmahableBox);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionSmashableBoxCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPlaceSmahableBox);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionSmashableBoxCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Spawn Enemy
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemySpawn);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemySpawnCreator());
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionEnemySpawn);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionEnemySpawnCreator());
             ToolActionEnemySpawn.Data data = new ToolActionEnemySpawn.Data();
             data.CharacterSpriteId = GameState.ItemCreationApi.SlimeSpriteSheet;
-            GameState.ActionPropertyManager.SetData(data);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(data);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemyGunnerSpawn);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemyGunnerSpawnCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionEnemyGunnerSpawn);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionEnemyGunnerSpawnCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionEnemySwordmanSpawn);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionEnemySwordmanSpawnCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionEnemySwordmanSpawn);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionEnemySwordmanSpawnCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Mining Laser
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMiningLaser);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMiningLaserCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionMiningLaser);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionMiningLaserCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Remove Tile
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionRemoveTile);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionRemoveTileCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionRemoveTile);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionRemoveTileCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Throw Grenade
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionThrowGrenade);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionThrowableGrenadeCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionThrowGrenade);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionThrowableGrenadeCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Melee Attack
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMeleeAttack);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMeleeAttackCreator());
-            GameState.ActionPropertyManager.SetShieldActive(false);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionMeleeAttack);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionMeleeAttackCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Pulse Weapon
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPulseWeapon);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPulseWeaponCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPulseWeapon);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPulseWeaponCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Shield
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionShield);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionShieldCreator());
-            GameState.ActionPropertyManager.SetShieldActive(false);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionShield);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionShieldCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Planter
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPlanter);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlanterCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPlanter);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlanterCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Water
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionWater);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionWaterCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionWater);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionWaterCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Harvest
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionHarvest);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionHarvestCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionHarvest);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionHarvestCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Construction
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionConstruction);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionConstructionCreator());
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionConstruction);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionConstructionCreator());
             Mech.Data constructionToolData = new Mech.Data();
             constructionToolData.MechID = MechType.Storage;
-            GameState.ActionPropertyManager.SetData(constructionToolData);
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.SetData(constructionToolData);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Harvest
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionScanner);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionScannerCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionScanner);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionScannerCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Remove Mech
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionRemoveMech);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionRemoveMechCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionRemoveMech);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionRemoveMechCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Remove Mech
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMechPlacement);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionMechPlacementCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionMechPlacement);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionMechPlacementCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // create Use Potion
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.DrinkPotion);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionUsePotionCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.DrinkPotion);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionUsePotionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Create Tool Action Material Placement
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionMaterialPlacement);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPlaceMaterialCreator());
-
-            // Set Data Struct
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionMaterialPlacement);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPlaceMaterialCreator());
             var MaterialData = new Enums.Tile.Data
             {
-                // Set Tile ID
                 TileID = TileID.Error,
-
-                // Set Layer
                 Layer = MapLayerType.Front
             };
+            GameState.ActionCreationApi.SetData(MaterialData);
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            // Set Data
-            GameState.ActionPropertyManager.SetData(MaterialData);
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionGasBomb);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionGasBombCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
 
-            GameState.ActionPropertyManager.EndActionPropertyType();
-
-            // Create Gas Bomb Action
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionGasBomb);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionGasBombCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
-
-            // Create Potion Tool
-            GameState.ActionPropertyManager.CreateActionPropertyType(entitasContext, Enums.ActionType.ToolActionPotion);
-            GameState.ActionPropertyManager.SetLogicFactory(new ToolActionPotionCreator());
-            GameState.ActionPropertyManager.EndActionPropertyType();
+            GameState.ActionCreationApi.CreateActionPropertyType(Enums.ActionType.ToolActionPotion);
+            GameState.ActionCreationApi.SetLogicFactory(new ToolActionPotionCreator());
+            GameState.ActionCreationApi.EndActionPropertyType();
         }
     }
 }
