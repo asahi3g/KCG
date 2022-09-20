@@ -17,7 +17,7 @@ public class GameState
     #endregion
 
     #region Action
-    public static readonly Action.ActionPropertyManager     ActionPropertyManager;
+    public static readonly Action.ActionCreationApi         ActionCreationApi;
     public static readonly Action.ActionCreationSystem      ActionCreationSystem;
     public static readonly Action.ActionSchedulerSystem     ActionSchedulerSystem;
     public static readonly Action.InitializeSystem          ActionInitializeSystem;
@@ -67,6 +67,7 @@ public class GameState
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
     public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
+    public static readonly Agent.ProcessStats AgentProcessStats;
     #endregion
 
     #region Inventory
@@ -156,13 +157,10 @@ public class GameState
     static GameState()
     {
         PathFinding = new AI.Movement.PathFinding();
-
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
-
+        
         SpriteLoader = new Sprites.SpriteLoader();
-
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
-
         SpriteAtlasManager = new Sprites.SpriteAtlasManager();
         
 
@@ -174,7 +172,7 @@ public class GameState
         InputProcessSystem = new ECSInput.InputProcessSystem();
 
         AgentCreationApi = new Agent.AgentCreationApi();
-        AgentSpawnerSystem = new Agent.AgentSpawnerSystem(AgentCreationApi);
+        AgentSpawnerSystem = new Agent.AgentSpawnerSystem();
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
@@ -182,6 +180,7 @@ public class GameState
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
+        AgentProcessStats = new Agent.ProcessStats();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
@@ -214,7 +213,7 @@ public class GameState
         LootTableCreationAPI = new LootDrop.CreationApi();
         LootDropSystem = new LootDrop.LootDropSystem();
 
-        ActionPropertyManager = new Action.ActionPropertyManager();
+        ActionCreationApi = new Action.ActionCreationApi();
         ActionCreationSystem = new Action.ActionCreationSystem();
         ActionSchedulerSystem = new Action.ActionSchedulerSystem();
         ActionInitializeSystem = new Action.InitializeSystem();

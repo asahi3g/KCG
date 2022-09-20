@@ -253,43 +253,43 @@ namespace PlanetTileMap
 
         public int GetSpriteIDWithCOllisionIsotype(Collisions.TileAdjacencyType tileIsoType)
         {
-            //switch (tileIsoType)
-            //{
-            //    case Collisions.TileAdjacencyType.FB_R0_A0000:
-            //        return GameState.TGenRenderGridOverlay.FB_R0000Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0001:
-            //        return GameState.TGenRenderGridOverlay.FB_R0001Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0010:
-            //        return GameState.TGenRenderGridOverlay.FB_R0010Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0011:
-            //        return GameState.TGenRenderGridOverlay.FB_R0011Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0100:
-            //        return GameState.TGenRenderGridOverlay.FB_R0100Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0101:
-            //        return GameState.TGenRenderGridOverlay.FB_R0101Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0110:
-            //        return GameState.TGenRenderGridOverlay.FB_R0110Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A0111:
-            //        return GameState.TGenRenderGridOverlay.FB_R0111Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1000:
-            //        return GameState.TGenRenderGridOverlay.FB_R1000Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1001:
-            //        return GameState.TGenRenderGridOverlay.FB_R1001Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1010:
-            //        return GameState.TGenRenderGridOverlay.FB_R1010Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1011:
-            //        return GameState.TGenRenderGridOverlay.FB_R1011Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1100:
-            //        return GameState.TGenRenderGridOverlay.FB_R1100Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1101:
-            //        return GameState.TGenRenderGridOverlay.FB_R1101Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1110:
-            //        return GameState.TGenRenderGridOverlay.FB_R1110Sheet;
-            //    case Collisions.TileAdjacencyType.FB_R0_A1111:
-            //        return GameState.TGenRenderGridOverlay.FB_R1111Sheet;
-            //    default:
-            //        return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
-            //}
+            switch (tileIsoType)
+            {
+                case Collisions.TileAdjacencyType.FB_R0_A0000:
+                    return GameState.TGenRenderGridOverlay.FB_R0000Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0001:
+                    return GameState.TGenRenderGridOverlay.FB_R0001Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0010:
+                    return GameState.TGenRenderGridOverlay.FB_R0010Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0011:
+                    return GameState.TGenRenderGridOverlay.FB_R0011Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0100:
+                    return GameState.TGenRenderGridOverlay.FB_R0100Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0101:
+                    return GameState.TGenRenderGridOverlay.FB_R0101Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0110:
+                    return GameState.TGenRenderGridOverlay.FB_R0110Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A0111:
+                    return GameState.TGenRenderGridOverlay.FB_R0111Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1000:
+                    return GameState.TGenRenderGridOverlay.FB_R1000Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1001:
+                    return GameState.TGenRenderGridOverlay.FB_R1001Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1010:
+                    return GameState.TGenRenderGridOverlay.FB_R1010Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1011:
+                    return GameState.TGenRenderGridOverlay.FB_R1011Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1100:
+                    return GameState.TGenRenderGridOverlay.FB_R1100Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1101:
+                    return GameState.TGenRenderGridOverlay.FB_R1101Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1110:
+                    return GameState.TGenRenderGridOverlay.FB_R1110Sheet;
+                case Collisions.TileAdjacencyType.FB_R0_A1111:
+                    return GameState.TGenRenderGridOverlay.FB_R1111Sheet;
+                default:
+                    return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
+            }
 
             return 0;
         }

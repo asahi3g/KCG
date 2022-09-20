@@ -56,7 +56,7 @@ namespace Action
         {
             // Action is active untill itemParticle becomes pickable again.
             ActionEntity.ReplaceActionTime(ActionEntity.actionTime.StartTime + deltaTime);
-            if (ActionEntity.actionTime.StartTime < ActionPropertyEntity.actionPropertyTime.Duration)
+            if (ActionEntity.actionTime.StartTime < ActionProperty.Duration)
             {
                 return;
             }

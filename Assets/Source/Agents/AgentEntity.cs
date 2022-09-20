@@ -3,6 +3,7 @@ using Agent;
 using Enums;
 using System;
 using KMath;
+using Inventory;
 
 public partial class AgentEntity 
 {
@@ -22,9 +23,8 @@ public partial class AgentEntity
     public bool IsStateFree()
     {
         var physicsState = agentPhysicsState;
-        var state = agentState;
 
-        return state.State == AgentState.Alive &&
+        return isAgentAlive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
         //physicsState.MovementState != AgentMovementState.MonsterAttack &&
@@ -37,9 +37,8 @@ public partial class AgentEntity
     }
 
     public void DieInPlace()
-    {                
-        var state = agentState;
-        state.State = AgentState.Dead;
+    {
+        isAgentAlive = false;
         
         var physicsState = agentPhysicsState;
         physicsState.MovementState = AgentMovementState.KnockedDownFront;
@@ -48,9 +47,8 @@ public partial class AgentEntity
     }
 
     public void DieKnockBack()
-    {                
-        var state = agentState;
-        state.State = AgentState.Dead;
+    {
+        isAgentAlive = false;
         
         var physicsState = agentPhysicsState;
         physicsState.MovementState = AgentMovementState.KnockedDownBack;

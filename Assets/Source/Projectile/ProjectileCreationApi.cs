@@ -200,7 +200,7 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetSpriteId(GrenadeSprite5);
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
             GameState.ProjectileCreationApi.SetStartVelocity(15.0f);
-            GameState.ProjectileCreationApi.SetLinearDrag(0, 0);
+            GameState.ProjectileCreationApi.SetLinearDrag(8f, 0f);
             GameState.ProjectileCreationApi.SetBounce(0.4f);
             GameState.ProjectileCreationApi.SetAffectedByGravity();
             GameState.ProjectileCreationApi.End();
@@ -217,7 +217,7 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetName("bullet");
             GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.33f, 0.33f));
-            GameState.ProjectileCreationApi.SetStartVelocity(100.0f);
+            GameState.ProjectileCreationApi.SetStartVelocity(10.0f);
             GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
             GameState.ProjectileCreationApi.End();
 

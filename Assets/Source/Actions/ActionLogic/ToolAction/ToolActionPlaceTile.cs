@@ -18,13 +18,12 @@ namespace Action
 
         public override void OnEnter(ref Planet.PlanetState planet)
         {
-            // Item Entity
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
 
             if (ItemEntity.hasItemCastData)
             {
                 if(ItemEntity.itemCastData.data.TileID == TileID.Error)
-                    ItemEntity.itemCastData.data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+                    ItemEntity.itemCastData.data = (Data)ActionProperty.ObjectData;
 
                 if (ItemEntity.itemCastData.InputsActive)
                 {
@@ -52,7 +51,7 @@ namespace Action
             }
             else
             {
-                data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+                data = (Data)ActionProperty.ObjectData;
 
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 int x = (int)worldPosition.x;

@@ -7,7 +7,6 @@ namespace Agent
 {
     public class EnemyAiSystem
     {
-        List<AgentEntity> ToRemoveAgents = new List<AgentEntity>();
         public void Update(ref Planet.PlanetState planetState, float deltaTime)
         {
             var players = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
@@ -20,15 +19,13 @@ namespace Agent
 
                 foreach (var entity in entities)
                 {
-                    var state = entity.agentState;
                     var targetPhysicsState = closestPlayer.agentPhysicsState;
                     var enemyComponent = entity.agentEnemy;
                     var physicsState = entity.agentPhysicsState;
                     var box2DComponent = entity.physicsBox2DCollider;
 
-                    if (state.State == AgentState.Alive)
+                    if (entity.isAgentAlive)
                     {
-
                         enemyComponent.EnemyCooldown -= deltaTime;
 
                         Vec2f direction = targetPhysicsState.Position - physicsState.Position;
@@ -263,7 +260,7 @@ namespace Agent
 
                             if (physicsState.ActionJustEnded)
                             {
-                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.Direction * box2DComponent.Size.X,
+                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.MovingDirection * box2DComponent.Size.X,
                                 physicsState.Position.Y + box2DComponent.Offset.Y);
 
                                 
@@ -301,23 +298,11 @@ namespace Agent
                                 enemyComponent.EnemyCooldown = 1.0f;
                             }
                         }
-
-
-                        if (entity.hasAgentStats && entity.agentStats.Health <= 0.0f)
-                        {
-                            ToRemoveAgents.Add(entity);
-                        }
                     }
 
                     
                 }
             }
-
-            foreach (var entity in ToRemoveAgents)
-            {
-                planetState.KillAgent(entity.agentID.Index);             
-            }
-            ToRemoveAgents.Clear();
         }
     }
 }

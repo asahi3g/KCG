@@ -265,7 +265,7 @@ namespace Action
             else
             {
                 // Initialize Data
-                data = (Data)ActionPropertyEntity.actionPropertyData.Data;
+                data = (Data)ActionProperty.ObjectData;
 
                 // Get Cursor Position  
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

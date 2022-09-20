@@ -24,45 +24,27 @@ namespace Action
 
             if (inventoryModel.HasToolBar)
             {
-                // Set Selected Slot
                 int selectedSlot = inventory.SelectedSlotID;
-
-                // Set Item Entity
                 ItemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
-
-                // If Item In Slot Is A Melee Attack Weapon
                 if(ItemEntity.itemType.Type is Enums.ItemType.Sword or Enums.ItemType.StunBaton)
                 {
-                    // Toggle Shield
-                    ActionPropertyEntity.actionPropertyShield.ShieldActive = !ActionPropertyEntity.actionPropertyShield.ShieldActive;
-                    // Toggle Invulnerable
                     AgentEntity.agentPhysicsState.Invulnerable = !AgentEntity.agentPhysicsState.Invulnerable;
                 }
 
                 // Execute Update
-                ActionEntity.ReplaceActionExecution(this, Enums.ActionState.Running);
+                ActionEntity.actionExecution.State = Enums.ActionState.Success;
             }
 
             // Return Fail
             ActionEntity.actionExecution.State = Enums.ActionState.Fail;
         }
 
-        public override void OnUpdate(float deltaTime, ref PlanetState planet)
-        {
-            // Execute Exit
-            ActionEntity.actionExecution.State = Enums.ActionState.Success;
-        }
-
         public override void OnExit(ref PlanetState planet)
         {
-            // Exit()
             base.OnExit(ref planet);
         }
     }
 
-    /// <summary>
-    /// Factory Method
-    /// </summary>
     public class ShieldActionCreator : ActionCreator
     {
         public override ActionBase CreateAction(Contexts entitasContext, int actionID)

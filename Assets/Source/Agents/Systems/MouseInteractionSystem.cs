@@ -46,14 +46,14 @@ namespace Agent
                 }
 
                     
-                float h = 30;
+                float h = 55;
                 float w = 512;
-                int fontSize = 22;
+                int fontSize = 30;
 
                 float scale = Screen.height / 1080f;
 
                 GameState.Renderer.DrawStringGui(Input.mousePosition.x, Input.mousePosition.y, 
-                    w * scale, h * scale, str, fontSize, TextAnchor.LowerLeft, Color.white);
+                    w * scale, h * scale, str, (int)(fontSize* scale) ,TextAnchor.LowerLeft, Color.white);
                 return;
             }
         }

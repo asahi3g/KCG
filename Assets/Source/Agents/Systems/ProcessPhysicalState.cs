@@ -144,11 +144,11 @@ namespace Agent
                 }
 
                 Vec2f particlesSpawnPosition = physicsState.Position;
-                if (physicsState.Direction == 1)
+                if (physicsState.FacingDirection == 1)
                 {
                     particlesSpawnPosition += new Vec2f(-0.44f, 1.2f);
                 }
-                else if (physicsState.Direction == -1)
+                else if (physicsState.FacingDirection == -1)
                 {
                     particlesSpawnPosition += new Vec2f(0.44f, 1.2f);
                 }

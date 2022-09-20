@@ -23,7 +23,6 @@ public partial class Contexts : Entitas.IContexts {
 
     public ActionContext action { get; set; }
     public ActionCoolDownContext actionCoolDown { get; set; }
-    public ActionPropertiesContext actionProperties { get; set; }
     public AgentContext agent { get; set; }
     public AIContext aI { get; set; }
     public FloatingTextContext floatingText { get; set; }
@@ -38,12 +37,11 @@ public partial class Contexts : Entitas.IContexts {
     public UIElementContext uIElement { get; set; }
     public VehicleContext vehicle { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, actionProperties, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, particle, projectile, uIElement, vehicle }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { action, actionCoolDown, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, particle, projectile, uIElement, vehicle }; } }
 
     public Contexts() {
         action = new ActionContext();
         actionCoolDown = new ActionCoolDownContext();
-        actionProperties = new ActionPropertiesContext();
         agent = new AgentContext();
         aI = new AIContext();
         floatingText = new FloatingTextContext();
@@ -91,8 +89,6 @@ public partial class Contexts {
     public const string ActionIDID = "ActionIDID";
     public const string ActionIDTypeID = "ActionIDTypeID";
     public const string ActionOwner = "ActionOwner";
-    public const string ActionProperty = "ActionProperty";
-    public const string ActionPropertyName = "ActionPropertyName";
     public const string ActionTool = "ActionTool";
     public const string AgentAIController = "AgentAIController";
     public const string AgentID = "AgentID";
@@ -135,16 +131,6 @@ public partial class Contexts {
             ActionOwner,
             action.GetGroup(ActionMatcher.ActionOwner),
             (e, c) => ((Action.OwnerComponent)c).AgentID));
-
-        actionProperties.AddEntityIndex(new Entitas.PrimaryEntityIndex<ActionPropertiesEntity, Enums.ActionType>(
-            ActionProperty,
-            actionProperties.GetGroup(ActionPropertiesMatcher.ActionProperty),
-            (e, c) => ((Action.Property.Component)c).TypeID));
-
-        actionProperties.AddEntityIndex(new Entitas.PrimaryEntityIndex<ActionPropertiesEntity, string>(
-            ActionPropertyName,
-            actionProperties.GetGroup(ActionPropertiesMatcher.ActionPropertyName),
-            (e, c) => ((Action.Property.NameComponent)c).TypeName));
 
         action.AddEntityIndex(new Entitas.EntityIndex<ActionEntity, int>(
             ActionTool,
@@ -253,14 +239,6 @@ public static class ContextsExtensions {
         return ((Entitas.EntityIndex<ActionEntity, int>)context.GetEntityIndex(Contexts.ActionOwner)).GetEntities(AgentID);
     }
 
-    public static ActionPropertiesEntity GetEntityWithActionProperty(this ActionPropertiesContext context, Enums.ActionType TypeID) {
-        return ((Entitas.PrimaryEntityIndex<ActionPropertiesEntity, Enums.ActionType>)context.GetEntityIndex(Contexts.ActionProperty)).GetEntity(TypeID);
-    }
-
-    public static ActionPropertiesEntity GetEntityWithActionPropertyName(this ActionPropertiesContext context, string TypeName) {
-        return ((Entitas.PrimaryEntityIndex<ActionPropertiesEntity, string>)context.GetEntityIndex(Contexts.ActionPropertyName)).GetEntity(TypeName);
-    }
-
     public static System.Collections.Generic.HashSet<ActionEntity> GetEntitiesWithActionTool(this ActionContext context, int ItemID) {
         return ((Entitas.EntityIndex<ActionEntity, int>)context.GetEntityIndex(Contexts.ActionTool)).GetEntities(ItemID);
     }
@@ -346,7 +324,6 @@ public partial class Contexts {
         try {
             CreateContextObserver(action);
             CreateContextObserver(actionCoolDown);
-            CreateContextObserver(actionProperties);
             CreateContextObserver(agent);
             CreateContextObserver(aI);
             CreateContextObserver(floatingText);
