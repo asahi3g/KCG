@@ -325,6 +325,13 @@ namespace Item
             PropertiesArray[(int)CurrentIndex].ToolType = type;
         }
 
+        public void SetAnimationSet(Enums.ItemAnimationSet animationSet)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)CurrentIndex].AnimationSet = animationSet;
+        }
+
         public void EndItem()
         {
             // Todo: Check if ItemType is valid in debug mode.
