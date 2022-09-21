@@ -212,7 +212,9 @@ namespace Agent
                         entity.isAgentPlayer = true;
                         entity.isECSInput = true;
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-                        entity.AddAgentAgentAction(AgentAction.UnAlert);
+
+                        if(!entity.hasAgentAgentAction)
+                            entity.AddAgentAgentAction(AgentAction.UnAlert);
 
                         break;
                     }

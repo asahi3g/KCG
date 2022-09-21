@@ -66,7 +66,8 @@ namespace Item
 
             if (itemProperty.IsPlacementTool())
             {
-                if (entity.itemType.Type == ItemType.PlacementTool || entity.itemType.Type == ItemType.PlacementMaterialTool)
+                if (entity.itemType.Type == ItemType.PlacementTool || entity.itemType.Type == ItemType.PlacementMaterialTool ||
+                        entity.itemType.Type == ItemType.GeometryPlacementTool)
                 {
                     Enums.Tile.Data data = new Data();
                     entity.AddItemCastData(data, true);
