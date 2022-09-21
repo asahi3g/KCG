@@ -991,6 +991,7 @@ namespace Item
             GameState.ItemCreationApi.SetTexture(OreIcon);
             GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetFlags(ItemProprieties.Flags.PlacementTool);
             GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionGeometryPlacement);
             GameState.ItemCreationApi.EndItem();
         }

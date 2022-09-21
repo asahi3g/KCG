@@ -213,6 +213,10 @@ namespace Agent
                         entity.isECSInput = true;
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
+
+                        if(!entity.hasAgentAgentAction)
+                            entity.AddAgentAgentAction(AgentAction.UnAlert);
+
                         break;
                     }
             case Enums.AgentType.Agent:
