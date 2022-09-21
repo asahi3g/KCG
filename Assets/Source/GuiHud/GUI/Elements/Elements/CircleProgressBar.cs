@@ -19,10 +19,14 @@ namespace KGUI.Elements
             _fillValue = fillValue;
 
             // Create Gameobject
-            Bar = new GameObject(barName);
-
-            // Set Parent
-            Bar.transform.parent = parent;
+            Bar = new GameObject(barName)
+            {
+                transform =
+                {
+                    // Set Parent
+                    parent = parent
+                }
+            };
 
             // Add Rect Transform Component
             Bar.AddComponent<RectTransform>();
@@ -37,7 +41,7 @@ namespace KGUI.Elements
             Bar.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            Bar.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+            Bar.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
 
             // Set Sprite
             Bar.GetComponent<UnityEngine.UI.Image>().sprite = barTexture;

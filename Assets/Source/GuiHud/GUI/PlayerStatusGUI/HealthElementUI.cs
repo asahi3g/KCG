@@ -3,7 +3,7 @@ using KGUI.Elements;
 
 namespace KGUI
 {
-    public class HealthBarUI : UIElement
+    public class HealthElementUI : UIElement
     {
         // Fill Value
         float fillValue;
@@ -29,8 +29,12 @@ namespace KGUI
         // Health Bar
         private ProgressBar Bar;
 
-        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public override void Init()
         {
+            base.Init();
+            
+            ID = UIElementID.HealthElement;
+            
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
@@ -186,10 +190,8 @@ namespace KGUI
             Icon.SetImageTopLeft();
 
             // Create Fill Value
-            if(agentEntity != null)
-                fillValue = agentEntity.agentStats.Health;
-            else
-                fillValue = 0.0f;
+            fillValue = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Health : 0.0f;
+
 
             // Create Border
             Border = new Image("Border", Icon.GetTransform(), borderSprite);
@@ -285,7 +287,7 @@ namespace KGUI
 
         }
 
-        public override void Draw()
+        public void Draw()
         {
             Icon.Draw();
             BarDiv1.Draw();
@@ -295,13 +297,13 @@ namespace KGUI
         }
 
         // Health Bar OnMouseClick Event
-        public void OnMouseDown()
+        public override void OnMouseClick()
         {
             Debug.LogWarning("Health Bar Clicked");
         }
 
         // Health Bar OnMouseEnter Event
-        public void OnMouseEnter()
+        public override void OnMouseEntered()
         {
             Debug.LogWarning("Health Bar Mouse Enter");
 
@@ -331,13 +333,13 @@ namespace KGUI
         }
 
         // Health Bar OnMouseStay Event
-        public void OnMouseOver()
+        public override void OnMouseStay()
         {
             Debug.LogWarning("Health Bar Mouse Stay");
         }
 
         // Health Bar OnMouseExit Event
-        public void OnMouseExit()
+        public override void OnMouseExited()
         {
             Debug.LogWarning("Health Bar Mouse Exit");
 

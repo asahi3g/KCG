@@ -4,7 +4,7 @@ using KGUI.Elements;
 
 namespace KGUI
 {
-    public class FuelBarUI : UIElement
+    public class FuelElementUI : UIElement
     {
         // Fuel Bar Icon Sprite
         Sprites.Sprite icon;
@@ -22,8 +22,12 @@ namespace KGUI
         // Fill Amount Value
         private float fillValue;
 
-        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public override void Init()
         {
+            base.Init();
+            
+            ID = UIElementID.FuelElement;
+            
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
@@ -95,10 +99,7 @@ namespace KGUI
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            if(agentEntity != null)
-                fillValue = agentEntity.agentStats.Fuel;
-            else
-                fillValue = 0.0f;
+            fillValue = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Fuel : 0.0f;
 
             // Fuel Bar Initializon
             progressBar = new CircleProgressBar("Fuel Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
@@ -134,20 +135,20 @@ namespace KGUI
             progressBar.Update(fillValue / 100);
         }
 
-        public override void Draw()
+        public void Draw()
         {
             iconCanvas.Draw();
             progressBar.Draw();
         }
 
         // Food Bar OnMouseClick Event
-        public void OnMouseDown()
+        public override void OnMouseClick()
         {
             Debug.LogWarning("Fuel Bar Clicked");
         }
 
         // Food Bar OnMouseEnter Event
-        public void OnMouseEnter()
+        public override void OnMouseEntered()
         {
             Debug.LogWarning("Fuel Bar Mouse Enter");
 
@@ -177,13 +178,13 @@ namespace KGUI
         }
 
         // Fuel Bar OnMouseStay Event
-        public void OnMouseOver()
+        public override void OnMouseStay()
         {
             Debug.LogWarning("Fuel Bar Mouse Stay");
         }
 
         // Fuel Bar OnMouseExit Event
-        public void OnMouseExit()
+        public override void OnMouseExited()
         {
             Debug.LogWarning("Fuel Bar Mouse Exit");
 

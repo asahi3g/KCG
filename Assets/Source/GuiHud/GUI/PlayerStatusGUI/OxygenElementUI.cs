@@ -3,33 +3,37 @@ using KGUI.Elements;
 
 namespace KGUI
 {
-    public class FoodBarUI : UIElement
+    public class OxygenElementUI : UIElement
     {
-        // Fill Amount Value
-        float fillValue;
-        
-        // Food Bar Icon Sprite
+        // Oxygen Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
 
         // Bar
-        public CircleProgressBar foodBar;
+        public CircleProgressBar oxygenBar;
 
         // Icon
-        private Image Icon;
-
+        private Image iconCanvas;
+        
         // Hover Text
         private Text infoText = new Text();
-
-        public void Initialize(Planet.PlanetState planetState, AgentEntity agentEntity)
+        
+        // Fill Amount Value
+        private float fillValue;
+        
+        public override void Init()
         {
+            base.Init();
+            
+            ID = UIElementID.OxygenElement;
+            
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
             Vector2Int iconPngSize = new Vector2Int(IconWidth, IconHeight);
 
             // Load image from file
-            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", IconWidth, IconHeight);
+            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", IconWidth, IconHeight);
 
             // Set Sprite ID from Sprite Atlas
             int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
@@ -77,79 +81,78 @@ namespace KGUI
                 TextureCoords = new Vector4(0, 0, 1, 1)
             };
 
-            // Add Components and setup game object
+            // Add Components and setup agent object
             Sprite iconBar = Sprite.Create(icon.Texture, new Rect(0.0f, 0.0f, IconWidth, IconHeight), new Vector2(0.5f, 0.5f));
 
-            // Food Bar Initializon
-            Icon = new Image("Food Icon", iconBar);
-            Icon.SetImageTopLeft();
+            // Oxygen Bar Initializon
+            iconCanvas = new Image("Oxygen Icon", iconBar);
+            iconCanvas.SetImageTopLeft();
 
             // Set Icon Position Based On Aspect Ratio
-            Icon.SetPosition(new Vector3(-425.5f, 140.8f, 4.873917f));
+            iconCanvas.SetPosition(new Vector3(-425.5f, 20f, 4.873917f));
 
             // Set Icon Scale
-            Icon.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
+            iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
 
-            // Add Components and setup game object
+            // Add Components and setup agent object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            if (agentEntity != null)
-                fillValue = agentEntity.agentStats.Food;
-            else
-                fillValue = 0.0f;
+            fillValue = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Oxygen : 0.0f;
 
-            // Food Bar Initializon
-            foodBar = new CircleProgressBar("Food Bar", Icon.GetTransform(), bar, fillValue / 100);
+            // Oxygen Bar Initializon
+            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
 
             // Oxygen Bar Set Position
-            foodBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
+            oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
 
             // Oxygen Bar Set Scale
-            foodBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
+            oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
         }
 
         public void Update()
         {
-            Rect rect = ((RectTransform) Icon.GetTransform()).rect;
-            //ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
-            //ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
+            Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
 
-            /*// Update Fill Amount
-            if (agentEntity != null)
-                fillValue = agentEntity.agentStats.Food;
+            /*
+            // Update Fill Amount Value
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Oxygen;
             else
-                fillValue = 0.0f;*/
+                fillValue = 0.0f;
+            */
 
-            // Food Bar Update Fill Amount
-            foodBar.Update(fillValue / 100);
+            // Oxygen Bar Update Fill Amount
+            oxygenBar.Update(fillValue / 100);
 
             // Info Text Update
             infoText.Update();
         }
 
-        public override void Draw()
+        public void Draw()
         {
-            Icon.Draw();
-            foodBar.Draw();
+            iconCanvas.Draw();
+            oxygenBar.Draw();
         }
 
-        // Food Bar OnMouseClick Event
-        public void OnMouseDown()
+        // Oxygen Bar OnMouseClick Event
+        public override void OnMouseClick()
         {
-            Debug.LogWarning("Food Bar Clicked");
+            Debug.LogWarning("Oxygen Bar Clicked");
         }
 
-        // Food Bar OnMouseEnter Event
-        public void OnMouseEnter()
+        // Oxygen Bar OnMouseEnter Event
+        public override void OnMouseEntered()
         {
-            Debug.LogWarning("Food Bar Mouse Enter");
+            Debug.LogWarning("Oxygen Bar Mouse Enter");
 
-            // If Water level less than 50
+            // If Oxygen level less than 50
             if (fillValue < 50)
             {
                 // Create Hover Text
-                infoText.Create("Food Indicator", "Hunger Bar\nStatus: Low", Icon.GetTransform(), 2.0f);
+                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
 
                 // Set Size Delta
                 infoText.SetSizeDelta(new Vector2(250, 50));
@@ -157,10 +160,10 @@ namespace KGUI
                 // Set Position
                 infoText.SetPosition(new Vector3(260.0f, 0, 0));
             }
-            else 
+            else
             {
                 // Create Hover Text
-                infoText.Create("Food DeIndicator", "Hunger Bar\nStatus: Normal", Icon.GetTransform(), 2.0f);
+                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
 
                 // Set Size Delta
                 infoText.SetSizeDelta(new Vector2(250, 50));
@@ -168,19 +171,21 @@ namespace KGUI
                 // Set Position
                 infoText.SetPosition(new Vector3(260.0f, 0, 0));
             }
+
         }
 
-        // Food Bar OnMouseStay Event
-        public void OnMouseOver()
+        // Oxygen Bar OnMouseStay Event
+        public override void OnMouseStay()
         {
-            Debug.LogWarning("Food Bar Mouse Stay");
+            Debug.LogWarning("Oxygen Bar Mouse Stay");
         }
 
-        // Food Bar OnMouseExit Event
-        public void OnMouseExit()
+        // Oxygen Bar OnMouseExit Event
+        public override void OnMouseExited()
         {
-            Debug.LogWarning("Food Bar Mouse Exit");
+            Debug.LogWarning("Oxygen Bar Mouse Exit");
 
+            // Start Life Time Countdown
             infoText.startLifeTime = true;
         }
     }

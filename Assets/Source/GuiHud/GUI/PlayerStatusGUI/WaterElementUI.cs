@@ -1,35 +1,40 @@
 using UnityEngine;
+using Entitas;
 using KGUI.Elements;
 
 namespace KGUI
 {
-    public class OxygenBarUI : UIElement
+    public class WaterElementUI : UIElement
     {
-        // Oxygen Bar Icon Sprite
+        // Water Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
 
         // Bar
-        public CircleProgressBar oxygenBar;
+        public CircleProgressBar waterBar;
 
         // Icon
         private Image iconCanvas;
-        
+
         // Hover Text
         private Text infoText = new Text();
-        
+
         // Fill Amount Value
         private float fillValue;
-        
-        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+
+        public override void Init()
         {
+            base.Init();
+            
+            ID = UIElementID.WaterElement;
+            
             // Set Width and Height
             int IconWidth = 19;
             int IconHeight = 19;
             Vector2Int iconPngSize = new Vector2Int(IconWidth, IconHeight);
 
             // Load image from file
-            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", IconWidth, IconHeight);
+            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Icons\\Water\\hud_status_water.png", IconWidth, IconHeight);
 
             // Set Sprite ID from Sprite Atlas
             int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
@@ -77,79 +82,73 @@ namespace KGUI
                 TextureCoords = new Vector4(0, 0, 1, 1)
             };
 
-            // Add Components and setup agent object
+            // Add Components and setup game object
             Sprite iconBar = Sprite.Create(icon.Texture, new Rect(0.0f, 0.0f, IconWidth, IconHeight), new Vector2(0.5f, 0.5f));
 
-            // Oxygen Bar Initializon
-            iconCanvas = new Image("Oxygen Icon", iconBar);
-            iconCanvas.SetImageTopLeft();
+            // Water Bar Initializon
+            iconCanvas = new Image("Water Icon", iconBar);
 
-            // Set Icon Position Based On Aspect Ratio
-            iconCanvas.SetPosition(new Vector3(-425.5f, 20f, 4.873917f));
-
-            // Set Icon Scale
-            iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
-
-            // Add Components and setup agent object
+            // Add Components and setup game object
             Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
 
             // Set Fill Amount Value
-            if(agentEntity != null)
-                fillValue = agentEntity.agentStats.Oxygen;
-            else
-                fillValue = 0.0f;
+            fillValue = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Water : 0.0f;
 
-            // Oxygen Bar Initializon
-            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
+            // Water Bar Initializon
+            waterBar = new CircleProgressBar("Water Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
 
-            // Oxygen Bar Set Position
-            oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
+            // Water Bar Set Position
+            waterBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
 
-            // Oxygen Bar Set Scale
-            oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
+            // Water Bar Set Scale
+            waterBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
         }
 
         public void Update()
         {
+
             Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
             //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
             //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
 
-            /*// Update Fill Amount Value
+            /*
+            // Update Fill Amount
             if(agentEntity != null)
-                fillValue = agentEntity.agentStats.Oxygen;
+                fillValue = agentEntity.agentStats.Water;
             else
-                fillValue = 0.0f;*/
+                fillValue = 0.0f;
+            */
 
-            // Oxygen Bar Update Fill Amount
-            oxygenBar.Update(fillValue / 100);
+            // Water Bar Update Fill Amount
+            waterBar.Update(fillValue / 100);
 
             // Info Text Update
             infoText.Update();
+
         }
 
-        public override void Draw()
+        public void Draw()
         {
             iconCanvas.Draw();
-            oxygenBar.Draw();
+            waterBar.Draw();
         }
 
-        // Oxygen Bar OnMouseClick Event
-        public void OnMouseDown()
+        // Water Bar OnMouseClick Event
+        public override void OnMouseClick()
         {
-            Debug.LogWarning("Oxygen Bar Clicked");
+            Debug.LogWarning("Water Bar Clicked");
         }
 
-        // Oxygen Bar OnMouseEnter Event
-        public void OnMouseEnter()
+        // Water Bar OnMouseEnter Event
+        public override void OnMouseEntered()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Enter");
+            Debug.LogWarning("Water Bar Mouse Enter");
 
-            // If Oxygen level less than 50
+            // If Water level less than 50
             if (fillValue < 50)
             {
                 // Create Hover Text
-                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
+                infoText.Create("Water Indicator", "Water Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
 
                 // Set Size Delta
                 infoText.SetSizeDelta(new Vector2(250, 50));
@@ -160,7 +159,7 @@ namespace KGUI
             else
             {
                 // Create Hover Text
-                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
+                infoText.Create("Water DeIndicator", "Water Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
 
                 // Set Size Delta
                 infoText.SetSizeDelta(new Vector2(250, 50));
@@ -168,21 +167,19 @@ namespace KGUI
                 // Set Position
                 infoText.SetPosition(new Vector3(260.0f, 0, 0));
             }
-
         }
 
-        // Oxygen Bar OnMouseStay Event
-        public void OnMouseOver()
+        // Water Bar OnMouseStay Event
+        public override void OnMouseStay()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Stay");
+            Debug.LogWarning("Water Bar Mouse Stay");
         }
 
-        // Oxygen Bar OnMouseExit Event
-        public void OnMouseExit()
+        // Water Bar OnMouseExit Event
+        public override void OnMouseExited()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Exit");
+            Debug.LogWarning("Water Bar Mouse Exit");
 
-            // Start Life Time Countdown
             infoText.startLifeTime = true;
         }
     }

@@ -56,7 +56,7 @@ namespace KGUI.Elements
             rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0, 0);
 
             textComponent.enabled = false;
 
