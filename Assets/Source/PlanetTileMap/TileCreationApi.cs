@@ -453,7 +453,7 @@ namespace PlanetTileMap
 
             GameState.TileCreationApi.CreateTileProperty(TileID.SQNoSpecular_0);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.MetalGeometry);
-            GameState.TileCreationApi.SetTilePropertyName("SQ_3");
+            GameState.TileCreationApi.SetTilePropertyName("SQNoSpecular_0");
             GameState.TileCreationApi.SetTilePropertyShape(TileShape.FullBlock);
             GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertyTexture(MetalGeometryTileSheet, 1, 1);

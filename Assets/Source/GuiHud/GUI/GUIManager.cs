@@ -99,6 +99,8 @@ namespace KGUI
         // Initializon Condition
         static bool Init;
 
+        GeometryGUI GeometryGUI;
+
         // Initialize
         public virtual void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
@@ -128,6 +130,10 @@ namespace KGUI
 
             // Initialize Health Bar UI
             healthBarUI = new PlayerStatus.HealthBarUI();
+
+            GeometryGUI = new GeometryGUI();
+
+            GeometryGUI.Initialize(ref planet);
 
             // Initialize Bedrock Widget
             bedrockUIBackground = planet.AddUIImage("BedrockBackground", _Canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
@@ -217,6 +223,8 @@ namespace KGUI
 
                 // Update Scanner Text
                 scannerText.Update();
+
+                GeometryGUI.Update(ref _planet, agentEntity);
 
                 // Set Inventory Elements
                 Inventory = _planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
