@@ -1,13 +1,10 @@
 using UnityEngine;
 using KGUI.Elements;
 
-namespace KGUI.PlayerStatus
+namespace KGUI
 {
-    public class HealthBarUI : GUIManager
+    public class HealthBarUI : UIElement
     {
-        // Init Condition
-        private static bool Init;
-
         // Fill Value
         float fillValue;
 
@@ -32,7 +29,7 @@ namespace KGUI.PlayerStatus
         // Health Bar
         private ProgressBar Bar;
 
-        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -234,61 +231,58 @@ namespace KGUI.PlayerStatus
 
             // Set BarDiv3 Scale
             BarDiv3.SetScale(new Vector3(0.06024375f, 0.2906317f, 1));
-
-            Init = true;
         }
 
-        public override void Update(AgentEntity agentEntity)
+        public void Update()
         {
-            if (Init)
+
+            // Update Object Position and Size
+            Rect rect = ((RectTransform) Icon.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
+
+            // Update Fill Amount
+            /*if (agentEntity != null)
+                fillValue = agentEntity.agentStats.Health;
+            else
+                fillValue = 0.0f;*/
+
+            // Water Bar Update Fill Amount
+            Bar.Update(fillValue / 100);
+
+            // Info Text Update
+            infoText.Update();
+
+            // Update Div Textures for under 25
+            if (fillValue < 25)
             {
-                // Update Object Position and Size
-                Rect rect = ((RectTransform) Icon.GetTransform()).rect;
-                ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
-                ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
-
-                // Update Fill Amount
-                if (agentEntity != null)
-                    fillValue = agentEntity.agentStats.Health;
-                else
-                    fillValue = 0.0f;
-
-                // Water Bar Update Fill Amount
-                Bar.Update(fillValue / 100);
-
-                // Info Text Update
-                infoText.Update();
-
-                // Update Div Textures for under 25
-                if (fillValue < 25)
-                {
-                    BarDiv1.SetImage(barDiv2Sprite);
-                }
-                else
-                {
-                    BarDiv1.SetImage(barDiv1Sprite);
-                }
-
-                // Update Div Textures for under 50
-                if (fillValue < 50)
-                {
-                    BarDiv2.SetImage(barDiv2Sprite);
-                }
-                else
-                {
-                    BarDiv2.SetImage(barDiv1Sprite);
-                }
-
-                // Update Div Textures for under 75
-                if (fillValue < 75)
-                {
-                    BarDiv3.SetImage(barDiv2Sprite);
-                }
-                else
-                {
-                    BarDiv3.SetImage(barDiv1Sprite);
-                }
+                BarDiv1.SetImage(barDiv2Sprite);
             }
+            else
+            {
+                BarDiv1.SetImage(barDiv1Sprite);
+            }
+
+            // Update Div Textures for under 50
+            if (fillValue < 50)
+            {
+                BarDiv2.SetImage(barDiv2Sprite);
+            }
+            else
+            {
+                BarDiv2.SetImage(barDiv1Sprite);
+            }
+
+            // Update Div Textures for under 75
+            if (fillValue < 75)
+            {
+                BarDiv3.SetImage(barDiv2Sprite);
+            }
+            else
+            {
+                BarDiv3.SetImage(barDiv1Sprite);
+            }
+
         }
 
         public override void Draw()
@@ -301,13 +295,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Health Bar OnMouseClick Event
-        public override void OnMouseClick(AgentEntity agentEntity)
+        public void OnMouseDown()
         {
             Debug.LogWarning("Health Bar Clicked");
         }
 
         // Health Bar OnMouseEnter Event
-        public override void OnMouseEnter()
+        public void OnMouseEnter()
         {
             Debug.LogWarning("Health Bar Mouse Enter");
 
@@ -337,13 +331,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Health Bar OnMouseStay Event
-        public override void OnMouseStay()
+        public void OnMouseOver()
         {
             Debug.LogWarning("Health Bar Mouse Stay");
         }
 
         // Health Bar OnMouseExit Event
-        public override void OnMouseExit()
+        public void OnMouseExit()
         {
             Debug.LogWarning("Health Bar Mouse Exit");
 

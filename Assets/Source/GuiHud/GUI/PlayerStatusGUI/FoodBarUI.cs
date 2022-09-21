@@ -1,16 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Entitas;
 using KGUI.Elements;
 
-namespace KGUI.PlayerStatus
+namespace KGUI
 {
-    public class FoodBarUI : GUIManager
+    public class FoodBarUI : UIElement
     {
-        // Init
-        private static bool Init;
-
         // Fill Amount Value
         float fillValue;
         
@@ -27,7 +21,7 @@ namespace KGUI.PlayerStatus
         // Hover Text
         private Text infoText = new Text();
 
-        public override void Initialize(Planet.PlanetState planetState, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planetState, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -113,31 +107,25 @@ namespace KGUI.PlayerStatus
 
             // Oxygen Bar Set Scale
             foodBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
-
-            // Initializon Done
-            Init = true;
         }
 
-        public override void Update(AgentEntity agentEntity)
+        public void Update()
         {
-            if (Init)
-            {
-                Rect rect = ((RectTransform) Icon.GetTransform()).rect;
-                ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
-                ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
+            Rect rect = ((RectTransform) Icon.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(Icon.GetTransform().position.x + (rect.xMin * Icon.GetTransform().localScale.x), Icon.GetTransform().position.y + (rect.yMin * -Icon.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * Icon.GetTransform().localScale.x, rect.height * -Icon.GetTransform().localScale.y);
 
-                // Update Fill Amount
-                if (agentEntity != null)
-                    fillValue = agentEntity.agentStats.Food;
-                else
-                    fillValue = 0.0f;
+            /*// Update Fill Amount
+            if (agentEntity != null)
+                fillValue = agentEntity.agentStats.Food;
+            else
+                fillValue = 0.0f;*/
 
-                // Food Bar Update Fill Amount
-                foodBar.Update(fillValue / 100);
+            // Food Bar Update Fill Amount
+            foodBar.Update(fillValue / 100);
 
-                // Info Text Update
-                infoText.Update();
-            }
+            // Info Text Update
+            infoText.Update();
         }
 
         public override void Draw()
@@ -147,13 +135,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Food Bar OnMouseClick Event
-        public override void OnMouseClick(AgentEntity agentEntity)
+        public void OnMouseDown()
         {
             Debug.LogWarning("Food Bar Clicked");
         }
 
         // Food Bar OnMouseEnter Event
-        public override void OnMouseEnter()
+        public void OnMouseEnter()
         {
             Debug.LogWarning("Food Bar Mouse Enter");
 
@@ -183,13 +171,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Food Bar OnMouseStay Event
-        public override void OnMouseStay()
+        public void OnMouseOver()
         {
             Debug.LogWarning("Food Bar Mouse Stay");
         }
 
         // Food Bar OnMouseExit Event
-        public override void OnMouseExit()
+        public void OnMouseExit()
         {
             Debug.LogWarning("Food Bar Mouse Exit");
 

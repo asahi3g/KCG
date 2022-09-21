@@ -2,13 +2,10 @@ using UnityEngine;
 using Entitas;
 using KGUI.Elements;
 
-namespace KGUI.PlayerStatus
+namespace KGUI
 {
-    public class FuelBarUI : GUIManager
+    public class FuelBarUI : UIElement
     {
-        // Init
-        private static bool Init;
-
         // Fuel Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
@@ -25,7 +22,7 @@ namespace KGUI.PlayerStatus
         // Fill Amount Value
         private float fillValue;
 
-        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -111,35 +108,30 @@ namespace KGUI.PlayerStatus
 
             // Fuel Bar Set Scale
             progressBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
-            
-            // Initializon Done
-            Init = true;
         }
 
-        public override void Update(AgentEntity agentEntity)
+        public void Update()
         {
-            if(Init)
+            Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
+
+            // Info Text Update
+            infoText.Update();
+
+            // Check Fuel,           // Update Fill Amount
+            /*if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Fuel;
+            else
+                fillValue = 0.0f;*/
+
+            if (fillValue <= 0)
             {
-                Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
-                ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
-                ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
-               
-                // Info Text Update
-                infoText.Update();
-
-                // Check Fuel,           // Update Fill Amount
-                if(agentEntity != null)
-                    fillValue = agentEntity.agentStats.Fuel;
-                else
-                    fillValue = 0.0f;
-
-                if (fillValue <= 0)
-                {
-                    fillValue = 0;
-                }
-                // Water Bar Update Fill Amount
-                progressBar.Update(fillValue / 100);
+                fillValue = 0;
             }
+
+            // Water Bar Update Fill Amount
+            progressBar.Update(fillValue / 100);
         }
 
         public override void Draw()
@@ -149,13 +141,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Food Bar OnMouseClick Event
-        public override void OnMouseClick(AgentEntity agentEntity)
+        public void OnMouseDown()
         {
             Debug.LogWarning("Fuel Bar Clicked");
         }
 
         // Food Bar OnMouseEnter Event
-        public override void OnMouseEnter()
+        public void OnMouseEnter()
         {
             Debug.LogWarning("Fuel Bar Mouse Enter");
 
@@ -185,13 +177,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Fuel Bar OnMouseStay Event
-        public override void OnMouseStay()
+        public void OnMouseOver()
         {
             Debug.LogWarning("Fuel Bar Mouse Stay");
         }
 
         // Fuel Bar OnMouseExit Event
-        public override void OnMouseExit()
+        public void OnMouseExit()
         {
             Debug.LogWarning("Fuel Bar Mouse Exit");
 

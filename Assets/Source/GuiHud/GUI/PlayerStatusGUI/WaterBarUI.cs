@@ -2,13 +2,10 @@ using UnityEngine;
 using Entitas;
 using KGUI.Elements;
 
-namespace KGUI.PlayerStatus
+namespace KGUI
 {
-    public class WaterBarUI : GUIManager
+    public class WaterBarUI : UIElement
     {
-        // Init
-        private static bool Init;
-
         // Water Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
@@ -25,7 +22,7 @@ namespace KGUI.PlayerStatus
         // Fill Amount Value
         private float fillValue;
 
-        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -111,31 +108,29 @@ namespace KGUI.PlayerStatus
 
             // Water Bar Set Scale
             waterBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
-
-            // Initializon Done
-            Init = true;
         }
 
-        public override void Update(AgentEntity agentEntity)
+        public void Update()
         {
-            if (Init)
-            {
-                Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
-                ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
-                ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
 
-                // Update Fill Amount
-                if(agentEntity != null)
-                    fillValue = agentEntity.agentStats.Water;
-                else
-                    fillValue = 0.0f;
+            Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
 
-                // Water Bar Update Fill Amount
-                waterBar.Update(fillValue / 100);
+            /*
+            // Update Fill Amount
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Water;
+            else
+                fillValue = 0.0f;
+            */
 
-                // Info Text Update
-                infoText.Update();
-            }
+            // Water Bar Update Fill Amount
+            waterBar.Update(fillValue / 100);
+
+            // Info Text Update
+            infoText.Update();
+
         }
 
         public override void Draw()
@@ -145,13 +140,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Water Bar OnMouseClick Event
-        public override void OnMouseClick(AgentEntity agentEntity)
+        public void OnMouseDown()
         {
             Debug.LogWarning("Water Bar Clicked");
         }
 
         // Water Bar OnMouseEnter Event
-        public override void OnMouseEnter()
+        public void OnMouseEnter()
         {
             Debug.LogWarning("Water Bar Mouse Enter");
 
@@ -181,13 +176,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Water Bar OnMouseStay Event
-        public override void OnMouseStay()
+        public void OnMouseOver()
         {
             Debug.LogWarning("Water Bar Mouse Stay");
         }
 
         // Water Bar OnMouseExit Event
-        public override void OnMouseExit()
+        public void OnMouseExit()
         {
             Debug.LogWarning("Water Bar Mouse Exit");
 

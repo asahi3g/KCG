@@ -11,19 +11,19 @@ namespace KGUI
     public class GUIManager
     {
         // Food Bar
-        public PlayerStatus.FoodBarUI foodBarUI;
+        public KGUI.FoodBarUI foodBarUI;
 
         // Water Bar
-        public PlayerStatus.WaterBarUI waterBarUI;
+        public KGUI.WaterBarUI waterBarUI;
 
         // Oxygen Bar
-        public PlayerStatus.OxygenBarUI oxygenBarUI;
+        public KGUI.OxygenBarUI oxygenBarUI;
 
         // Fuel Bar
-        public PlayerStatus.FuelBarUI fuelBarUI;
+        public KGUI.FuelBarUI fuelBarUI;
 
         // Health Bar
-        public PlayerStatus.HealthBarUI healthBarUI;
+        public KGUI.HealthBarUI healthBarUI;
 
         // Bedrock
         public Image bedrockUI;
@@ -55,7 +55,7 @@ namespace KGUI
         public Image BuildCursor;
 
         // GUI Elements List
-        public List<GUIManager> UIList = new();
+        public List<UIPanel> UIList = new();
 
         // Cursor Screen Position from Unity Input Class
         public Vec2f CursorPosition;
@@ -116,6 +116,7 @@ namespace KGUI
             // Set HUD Scale
             _Canvas.scaleFactor = HUDScale;
 
+            /*
             // Initialize Food Bar UI
             foodBarUI = new PlayerStatus.FoodBarUI();
 
@@ -130,6 +131,7 @@ namespace KGUI
 
             // Initialize Health Bar UI
             healthBarUI = new PlayerStatus.HealthBarUI();
+            */
 
             GeometryGUI = new GeometryGUI();
 
@@ -175,27 +177,6 @@ namespace KGUI
             healthPotionUI = planet.AddUIImage("HealthPotion", healthPotionUIBackground.GetTransform(), "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 19, 19).kGUIElementsImage.Image;
 
-            // Add Food Bar To Draw Array
-            UIList.Add(foodBarUI);
-
-            // Add Water Bar To Draw Array
-            UIList.Add(waterBarUI);
-
-            // Add Oxygen Bar To Draw Array
-            UIList.Add(oxygenBarUI);
-
-            // Add Fuel Bar To Draw Array
-            UIList.Add(fuelBarUI);
-
-            // Add Health Bar To Draw Array
-            UIList.Add(healthBarUI);
-
-            // Init Elements
-            for (int i = 0; i < UIList.Count; i++)
-            {
-                UIList[i].Initialize(planet, agentEntity);
-            }
-
             // Init Done
             Init = true;
         }
@@ -211,12 +192,14 @@ namespace KGUI
 
                 _Canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
 
+                /*
                 // Update Elements
                 foreach (var uiObject in UIList)
                 {
                     uiObject.Update(agentEntity);
                     DrawDebug.DrawBox(uiObject.ObjectPosition, uiObject.ObjectSize);
                 }
+                */
 
                 // Assign New Cursor Position
                 CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
@@ -518,7 +501,7 @@ namespace KGUI
                 // Update Elements
                 for (int i = 0; i < UIList.Count; i++)
                 {
-                    UIList[i].Draw();
+                    //UIList[i].Draw();
                 }
             }
         }
@@ -561,14 +544,14 @@ namespace KGUI
                 // Handle Inputs
                 foreach (var uiObject in UIList)
                 {
-                    // Check The Distance Betweeen Cursor And Object
+                    /*// Check The Distance Betweeen Cursor And Object
                     if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y,
                             uiObject.ObjectPosition.X, uiObject.ObjectPosition.X + uiObject.ObjectSize.X,
                             uiObject.ObjectPosition.Y, uiObject.ObjectPosition.Y + uiObject.ObjectSize.Y))
                     {
                         // Call All Click Events
                         uiObject.OnMouseClick(agentEntity);
-                    }
+                    }*/
                 }
             }
 
@@ -680,7 +663,7 @@ namespace KGUI
             {
                 foreach (var uiObject in UIList)
                 {
-                    // Check If Cursor Is On UI Element
+                    /*// Check If Cursor Is On UI Element
                     if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y,
                             uiObject.ObjectPosition.X, uiObject.ObjectPosition.X + uiObject.ObjectSize.X, 
                             uiObject.ObjectPosition.Y, uiObject.ObjectPosition.Y + uiObject.ObjectSize.Y))
@@ -688,7 +671,7 @@ namespace KGUI
                         // Run Mouse Enter Event
                         uiObject.OnMouseEnter();
                         LastEnteredObject = uiObject;
-                    }
+                    }*/
                 }
             }
             else

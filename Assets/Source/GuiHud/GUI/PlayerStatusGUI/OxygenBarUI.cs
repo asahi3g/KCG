@@ -1,14 +1,10 @@
 using UnityEngine;
-using Entitas;
 using KGUI.Elements;
 
-namespace KGUI.PlayerStatus
+namespace KGUI
 {
-    public class OxygenBarUI : GUIManager
+    public class OxygenBarUI : UIElement
     {
-        // Init
-        private static bool Init;
-
         // Oxygen Bar Icon Sprite
         Sprites.Sprite icon;
         Sprites.Sprite fill;
@@ -25,7 +21,7 @@ namespace KGUI.PlayerStatus
         // Fill Amount Value
         private float fillValue;
         
-        public override void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Initialize(Planet.PlanetState planet, AgentEntity agentEntity)
         {
             // Set Width and Height
             int IconWidth = 19;
@@ -111,31 +107,25 @@ namespace KGUI.PlayerStatus
 
             // Oxygen Bar Set Scale
             oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
-
-            // Initializon Done
-            Init = true;
         }
 
-        public override void Update(AgentEntity agentEntity)
+        public void Update()
         {
-            if (Init)
-            {
-                Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
-                ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
-                ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
+            Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
+            //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
+            //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
 
-                // Update Fill Amount Value
-                if(agentEntity != null)
-                    fillValue = agentEntity.agentStats.Oxygen;
-                else
-                    fillValue = 0.0f;
+            /*// Update Fill Amount Value
+            if(agentEntity != null)
+                fillValue = agentEntity.agentStats.Oxygen;
+            else
+                fillValue = 0.0f;*/
 
-                // Oxygen Bar Update Fill Amount
-                oxygenBar.Update(fillValue / 100);
+            // Oxygen Bar Update Fill Amount
+            oxygenBar.Update(fillValue / 100);
 
-                // Info Text Update
-                infoText.Update();
-            }
+            // Info Text Update
+            infoText.Update();
         }
 
         public override void Draw()
@@ -145,13 +135,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Oxygen Bar OnMouseClick Event
-        public override void OnMouseClick(AgentEntity agentEntity)
+        public void OnMouseDown()
         {
             Debug.LogWarning("Oxygen Bar Clicked");
         }
 
         // Oxygen Bar OnMouseEnter Event
-        public override void OnMouseEnter()
+        public void OnMouseEnter()
         {
             Debug.LogWarning("Oxygen Bar Mouse Enter");
 
@@ -182,13 +172,13 @@ namespace KGUI.PlayerStatus
         }
 
         // Oxygen Bar OnMouseStay Event
-        public override void OnMouseStay()
+        public void OnMouseOver()
         {
             Debug.LogWarning("Oxygen Bar Mouse Stay");
         }
 
         // Oxygen Bar OnMouseExit Event
-        public override void OnMouseExit()
+        public void OnMouseExit()
         {
             Debug.LogWarning("Oxygen Bar Mouse Exit");
 
