@@ -1,25 +1,18 @@
+using Enums;
 using UnityEngine;
 using KGUI.Elements;
+using UnityEngine.UI;
+using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
     public class OxygenElementUI : UIElement
     {
-        // Oxygen Bar Icon Sprite
-        Sprites.Sprite icon;
-        Sprites.Sprite fill;
-
-        // Bar
-        public CircleProgressBar oxygenBar;
-
-        // Icon
-        private Image iconCanvas;
+        [SerializeField] private Image progressBarImage;
         
-        // Hover Text
-        private Text infoText = new Text();
-        
-        // Fill Amount Value
-        private float fillValue;
+        private ProgressBar progressBar;
+        private float oxygenAmount;
+        private readonly Text infoText = new();
         
         public override void Init()
         {
@@ -27,166 +20,64 @@ namespace KGUI
             
             ID = UIElementID.OxygenElement;
             
-            // Set Width and Height
-            int IconWidth = 19;
-            int IconHeight = 19;
-            Vector2Int iconPngSize = new Vector2Int(IconWidth, IconHeight);
+            oxygenAmount = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Oxygen : 0.0f;
 
-            // Load image from file
-            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", IconWidth, IconHeight);
+            Icon = new ImageWrapper(iconImage, 19, 19,
+                "Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", AtlasType.Gui);
 
-            // Set Sprite ID from Sprite Atlas
-            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, Enums.AtlasType.Particle);
-
-            // Set Sprite Data
-            byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
-
-            // Get Sprite Bytes
-            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, Enums.AtlasType.Particle);
-
-            // Set Texture
-            Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
-
-            // Create the sprite
-            icon = new Sprites.Sprite
-            {
-                Texture = iconTex,
-                TextureCoords = new Vector4(0, 0, 1, 1)
-            };
-
-            // Set Width and Height
-            int FillWidth = 19;
-            int FillHeight = 19;
-            Vector2Int FillPngSize = new Vector2Int(FillWidth, FillHeight);
-
-            // Load image from file
-            var FillSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", FillWidth, FillHeight);
-
-            // Set Sprite ID from Sprite Atlas
-            int FillID = GameState.SpriteAtlasManager.CopySpriteToAtlas(FillSheet, 0, 0, Enums.AtlasType.Particle);
-
-            // Set Sprite Data
-            byte[] FillSpriteData = new byte[FillPngSize.x * FillPngSize.y * 4];
-
-            // Get Sprite Bytes
-            GameState.SpriteAtlasManager.GetSpriteBytes(FillID, FillSpriteData, Enums.AtlasType.Particle);
-
-            // Set Texture
-            Texture2D FillTex = Utility.Texture.CreateTextureFromRGBA(FillSpriteData, FillPngSize.x, FillPngSize.y);
-
-            // Create the sprite
-            fill = new Sprites.Sprite
-            {
-                Texture = FillTex,
-                TextureCoords = new Vector4(0, 0, 1, 1)
-            };
-
-            // Add Components and setup agent object
-            Sprite iconBar = Sprite.Create(icon.Texture, new Rect(0.0f, 0.0f, IconWidth, IconHeight), new Vector2(0.5f, 0.5f));
-
-            // Oxygen Bar Initializon
-            iconCanvas = new Image("Oxygen Icon", iconBar);
-            iconCanvas.SetImageTopLeft();
-
-            // Set Icon Position Based On Aspect Ratio
-            iconCanvas.SetPosition(new Vector3(-425.5f, 20f, 4.873917f));
-
-            // Set Icon Scale
-            iconCanvas.SetScale(new Vector3(0.6f, -0.6f, 0.5203559f));
-
-            // Add Components and setup agent object
-            Sprite bar = Sprite.Create(fill.Texture, new Rect(0.0f, 0.0f, FillWidth, FillHeight), new Vector2(0.5f, 0.5f));
-
-            // Set Fill Amount Value
-            fillValue = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Oxygen : 0.0f;
-
-            // Oxygen Bar Initializon
-            oxygenBar = new CircleProgressBar("Oxygen Bar", iconCanvas.GetTransform(), bar, fillValue / 100);
-
-            // Oxygen Bar Set Position
-            oxygenBar.SetPosition(new Vector3(-0.4f, -0.1f, 4.873917f));
-
-            // Oxygen Bar Set Scale
-            oxygenBar.SetScale(new Vector3(0.8566527f, 0.8566527f, 0.3714702f));
+            var progressBarImageWrapper = new ImageWrapper(progressBarImage, 19, 19,
+                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", AtlasType.Gui);
+            
+            progressBar = new ProgressBar(progressBarImageWrapper, oxygenAmount, Image.FillMethod.Radial360);
         }
 
-        public void Update()
+        public override void Update()
         {
-            Rect rect = ((RectTransform) iconCanvas.GetTransform()).rect;
-            //ObjectPosition = new KMath.Vec2f(iconCanvas.GetTransform().position.x + (rect.xMin * iconCanvas.GetTransform().localScale.x), iconCanvas.GetTransform().position.y + (rect.yMin * -iconCanvas.GetTransform().localScale.y));
-            //ObjectSize = new KMath.Vec2f(rect.width * iconCanvas.GetTransform().localScale.x, rect.height * -iconCanvas.GetTransform().localScale.y);
-
-            /*
-            // Update Fill Amount Value
-            if(agentEntity != null)
-                fillValue = agentEntity.agentStats.Oxygen;
-            else
-                fillValue = 0.0f;
-            */
-
-            // Oxygen Bar Update Fill Amount
-            oxygenBar.Update(fillValue / 100);
-
-            // Info Text Update
+            base.Update();
+            oxygenAmount = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Oxygen : 0.0f;
+            progressBar.Update(oxygenAmount);
             infoText.Update();
         }
 
-        public void Draw()
+        public override void Draw()
         {
-            iconCanvas.Draw();
-            oxygenBar.Draw();
+            Icon.Draw();
+            progressBar.Draw();
         }
-
-        // Oxygen Bar OnMouseClick Event
+        
         public override void OnMouseClick()
         {
             Debug.LogWarning("Oxygen Bar Clicked");
         }
-
-        // Oxygen Bar OnMouseEnter Event
+        
         public override void OnMouseEntered()
         {
             Debug.LogWarning("Oxygen Bar Mouse Enter");
-
-            // If Oxygen level less than 50
-            if (fillValue < 50)
+            
+            if (oxygenAmount < 50)
             {
-                // Create Hover Text
-                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", iconCanvas.GetTransform(), 2.0f);
-
-                // Set Size Delta
+                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-
-                // Set Position
                 infoText.SetPosition(new Vector3(260.0f, 0, 0));
             }
             else
             {
-                // Create Hover Text
-                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", iconCanvas.GetTransform(), 2.0f);
-
-                // Set Size Delta
+                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-
-                // Set Position
                 infoText.SetPosition(new Vector3(260.0f, 0, 0));
             }
 
         }
-
-        // Oxygen Bar OnMouseStay Event
+        
         public override void OnMouseStay()
         {
             Debug.LogWarning("Oxygen Bar Mouse Stay");
         }
-
-        // Oxygen Bar OnMouseExit Event
+        
         public override void OnMouseExited()
         {
             Debug.LogWarning("Oxygen Bar Mouse Exit");
-
-            // Start Life Time Countdown
-            infoText.startLifeTime = true;
+            infoText.StartLifeTime = true;
         }
     }
 }

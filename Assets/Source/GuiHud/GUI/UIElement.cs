@@ -1,35 +1,50 @@
-using System;
+using KGUI.Elements;
 using KMath;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 namespace KGUI
 {
     [DefaultExecutionOrder (100)]
     public class UIElement : MonoBehaviour
     {
-        public UIElementID ID;
+        [SerializeField] protected Image iconImage;
         
-        public Vector3 Position;
-        public Vector2 Size;
+        protected ImageWrapper Icon;
+        private RectTransform rectTransform;
 
-        public Image Icon;
-        public AABox2D HitBox;
-
-        private bool isMouseEntered;
-        private bool useEvent = true;
-
+        public UIElementID ID { get; protected set; }
+        public Vector3 Position { get; private set; }
+        public Vector2 Size { get; private set; }
+        public AABox2D HitBox { get; private set; }
+        
         public void Start()
         {
             Init();
         }
 
+        public virtual void Update()
+        {
+            if (transform.hasChanged)
+            {
+                Position = transform.position;
+                Size = rectTransform.sizeDelta;
+                HitBox = new AABox2D(new Vec2f(Position.x, Position.y), new Vec2f(Size.x, Size.y));
+                transform.hasChanged = false;
+            }
+            HitBox.DrawBox();
+        }
+
         public virtual void Init()
         {
-            var rect = GetComponent<RectTransform>();
+            rectTransform = GetComponent<RectTransform>();
             Position = transform.position;
-            Size = rect.sizeDelta;
+            Size = rectTransform.sizeDelta;
+            HitBox = new AABox2D(new Vec2f(Position.x, Position.y), new Vec2f(Size.x, Size.y));
         }
+
+        public virtual void Draw() {}
 
         public virtual void OnMouseClick() { }
         public virtual void OnMouseStay() { }

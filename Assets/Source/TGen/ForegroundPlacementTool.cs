@@ -13,7 +13,7 @@ namespace TGen
 
         private float interval = 2F;
 
-        private Image[] PlaceBlockButtons;
+        private ImageWrapper[] PlaceBlockButtons;
 
         private int selectedTileIsotype;
 
@@ -29,7 +29,7 @@ namespace TGen
 
             initialY = 300;
 
-            PlaceBlockButtons = new Image[GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length];
+            PlaceBlockButtons = new ImageWrapper[GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length];
 
             var row = 0;
             var column = 0;
@@ -38,7 +38,7 @@ namespace TGen
             {
                 PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
                     GameObject.Find("Canvas").transform, GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i],
-                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.Image;
+                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.ImageWrapper;
 
                 column++;
 

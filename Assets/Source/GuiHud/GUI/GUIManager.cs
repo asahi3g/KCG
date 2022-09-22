@@ -14,33 +14,33 @@ namespace KGUI
         public AgentEntity AgentEntity;
 
         // Bedrock
-        public Image bedrockUI;
-        public Image bedrockUIBackground;
+        public ImageWrapper bedrockUI;
+        public ImageWrapper bedrockUIBackground;
 
         // Dirt
-        public Image dirtUI;
-        public Image dirtUIBackground;
+        public ImageWrapper dirtUI;
+        public ImageWrapper dirtUIBackground;
 
         // Wire
-        public Image wireUI;
-        public Image wireUIBackground;
+        public ImageWrapper wireUI;
+        public ImageWrapper wireUIBackground;
 
         // Pipe
-        public Image pipeUI;
-        public Image pipeUIBackground;
+        public ImageWrapper pipeUI;
+        public ImageWrapper pipeUIBackground;
 
         // Bedrock
-        public Image healthPotionUI;
-        public Image healthPotionUIBackground;
+        public ImageWrapper healthPotionUI;
+        public ImageWrapper healthPotionUIBackground;
 
         // Default Cursors
-        public Image DefaultCursor;
+        public ImageWrapper DefaultCursor;
 
         // Aim Cursor
-        public Image AimCursor;
+        public ImageWrapper AimCursor;
 
         // Aim Cursor
-        public Image BuildCursor;
+        public ImageWrapper BuildCursor;
 
         // GUI Elements List
         public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
@@ -85,49 +85,51 @@ namespace KGUI
             // Set Canvas
             canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
+            var playerStatusPrefab = Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI");
+            GameObject.Instantiate(playerStatusPrefab, canvas.transform);
             GeometryGUI = new GeometryGUI();
 
             GeometryGUI.Initialize(ref planet);
 
             // Initialize Bedrock Widget
             bedrockUIBackground = planet.AddUIImage("BedrockBackground", canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
-                new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+                new Vec2f(-600.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.ImageWrapper;
             bedrockUIBackground.SetImageMidBottom();
 
-            bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
+            bedrockUI = planet.AddUIImage("Bedrock", bedrockUIBackground.Transform, "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             // Initialize Dirt Widget
             dirtUIBackground = planet.AddUIImage("DirtBackground", canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
-                new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+                new Vec2f(-550.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.ImageWrapper;
             dirtUIBackground.SetImageMidBottom();
 
-            dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.GetTransform(), "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
+            dirtUI = planet.AddUIImage("DirtTile", dirtUIBackground.Transform, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             // Initialize Pipe Widget
             pipeUIBackground = planet.AddUIImage("PipeBackground", canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
-                new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+                new Vec2f(-500.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.ImageWrapper;
             pipeUIBackground.SetImageMidBottom();
 
-            pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.GetTransform(), "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.Image;
+            pipeUI = planet.AddUIImage("PipeTile", pipeUIBackground.Transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             // Initialize Wire Widget
             wireUIBackground = planet.AddUIImage("WireBackground", canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
-                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.ImageWrapper;
             wireUIBackground.SetImageMidBottom();
 
-            wireUI = planet.AddUIImage("WireTile", wireUIBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.Image;
+            wireUI = planet.AddUIImage("WireTile", wireUIBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, 0.8f, 0.8f), 128, 128).kGUIElementsImage.ImageWrapper;
 
             // Initialize Health Potion Widget
             healthPotionUIBackground = planet.AddUIImage("HealthPotionBackground", canvas.transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
-                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.Image;
+                new Vec2f(-450.0f, -80.2f), new Vec3f(0.4f, 0.4f, 0.4f), 225, 225).kGUIElementsImage.ImageWrapper;
             healthPotionUIBackground.SetImageMidBottom();
 
-            healthPotionUI = planet.AddUIImage("HealthPotion", healthPotionUIBackground.GetTransform(), "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 19, 19).kGUIElementsImage.Image;
+            healthPotionUI = planet.AddUIImage("HealthPotion", healthPotionUIBackground.Transform, "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), 19, 19).kGUIElementsImage.ImageWrapper;
         }
 
         public void InitStage2()
@@ -172,10 +174,10 @@ namespace KGUI
                 if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                 {
                     // If Mouse Over On Widgets
-                    if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active ||
-                        dirtUIBackground.IsMouseOver(CursorPosition) && dirtUIBackground.GetGameObject().active ||
-                        pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active ||
-                        wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GetGameObject().active)
+                    if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GameObject.active ||
+                        dirtUIBackground.IsMouseOver(CursorPosition) && dirtUIBackground.GameObject.active ||
+                        pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GameObject.active ||
+                        wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GameObject.active)
                     {
                         // If Item Is Placement Tool
                         if (Item.itemType.Type == Enums.ItemType.PlacementTool)
@@ -199,11 +201,11 @@ namespace KGUI
                 if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                 {
                     // Set All tiles Active
-                    dirtUIBackground.GetGameObject().SetActive(true);
-                    bedrockUIBackground.GetGameObject().SetActive(true);
-                    wireUIBackground.GetGameObject().SetActive(true);
-                    pipeUIBackground.GetGameObject().SetActive(true);
-                    healthPotionUIBackground.GetGameObject().SetActive(false);
+                    dirtUIBackground.GameObject.SetActive(true);
+                    bedrockUIBackground.GameObject.SetActive(true);
+                    wireUIBackground.GameObject.SetActive(true);
+                    pipeUIBackground.GameObject.SetActive(true);
+                    healthPotionUIBackground.GameObject.SetActive(false);
 
                     // If Selected     = Red
                     // If Not Selected = Yellow
@@ -223,11 +225,11 @@ namespace KGUI
                 else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                 {
                     // Set All Tiles Active To False
-                    dirtUIBackground.GetGameObject().SetActive(false);
-                    bedrockUIBackground.GetGameObject().SetActive(false);
-                    wireUIBackground.GetGameObject().SetActive(false);
-                    pipeUIBackground.GetGameObject().SetActive(false);
-                    healthPotionUIBackground.GetGameObject().SetActive(false);
+                    dirtUIBackground.GameObject.SetActive(false);
+                    bedrockUIBackground.GameObject.SetActive(false);
+                    wireUIBackground.GameObject.SetActive(false);
+                    pipeUIBackground.GameObject.SetActive(false);
+                    healthPotionUIBackground.GameObject.SetActive(false);
 
                     // Get Inventories
                     var entities =
@@ -267,29 +269,29 @@ namespace KGUI
                                                 if (MaterialBag.itemStack.Count >= 1)
                                                 {
                                                     // Set Active True
-                                                    dirtUIBackground.GetGameObject().SetActive(true);
+                                                    dirtUIBackground.GameObject.SetActive(true);
                                                 }
                                                 else
                                                 {
                                                     // Set Active False
-                                                    dirtUIBackground.GetGameObject().SetActive(false);
+                                                    dirtUIBackground.GameObject.SetActive(false);
                                                 }
                                             }
                                         }
                                         else if (MaterialBag.itemType.Type == Enums.ItemType.Bedrock)
                                         {
                                             // If Item Equals To Bedrock, Set Bedrock Active True
-                                            bedrockUIBackground.GetGameObject().SetActive(true);
+                                            bedrockUIBackground.GameObject.SetActive(true);
                                         }
                                         else if (MaterialBag.itemType.Type == Enums.ItemType.Pipe)
                                         {
                                             // If Item Equals To Pipe, Set Pipe Active True
-                                            pipeUIBackground.GetGameObject().SetActive(true);
+                                            pipeUIBackground.GameObject.SetActive(true);
                                         }
                                         else if (MaterialBag.itemType.Type == Enums.ItemType.Wire)
                                         {
                                             // If Item Equals To Wire, Set Wire Active True
-                                            wireUIBackground.GetGameObject().SetActive(true);
+                                            wireUIBackground.GameObject.SetActive(true);
                                         }
 
                                         // Check Item Has Stack
@@ -362,11 +364,11 @@ namespace KGUI
                 else if (Item.itemType.Type == Enums.ItemType.PotionTool)
                 {
                     // Set All Tiles Active To False
-                    healthPotionUIBackground.GetGameObject().SetActive(true);
-                    dirtUIBackground.GetGameObject().SetActive(false);
-                    bedrockUIBackground.GetGameObject().SetActive(false);
-                    wireUIBackground.GetGameObject().SetActive(false);
-                    pipeUIBackground.GetGameObject().SetActive(false);
+                    healthPotionUIBackground.GameObject.SetActive(true);
+                    dirtUIBackground.GameObject.SetActive(false);
+                    bedrockUIBackground.GameObject.SetActive(false);
+                    wireUIBackground.GameObject.SetActive(false);
+                    pipeUIBackground.GameObject.SetActive(false);
 
                     // Get Inventories
                     var entities =
@@ -403,12 +405,12 @@ namespace KGUI
                                             if (MaterialBag.hasItemStack)
                                             {
                                                 // Set Active True
-                                                healthPotionUIBackground.GetGameObject().SetActive(true);
+                                                healthPotionUIBackground.GameObject.SetActive(true);
                                             }
                                         }
                                         else
                                         {
-                                            healthPotionUIBackground.GetGameObject().SetActive(false);
+                                            healthPotionUIBackground.GameObject.SetActive(false);
                                         }
 
                                         // Check Item Has Stack
@@ -449,11 +451,11 @@ namespace KGUI
                 {
                     // If Item Is not equal to any placement tool,
                     // hide all of the widget tiles
-                    dirtUIBackground.GetGameObject().SetActive(false);
-                    bedrockUIBackground.GetGameObject().SetActive(false);
-                    wireUIBackground.GetGameObject().SetActive(false);
-                    pipeUIBackground.GetGameObject().SetActive(false);
-                    healthPotionUIBackground.GetGameObject().SetActive(false);
+                    dirtUIBackground.GameObject.SetActive(false);
+                    bedrockUIBackground.GameObject.SetActive(false);
+                    wireUIBackground.GameObject.SetActive(false);
+                    pipeUIBackground.GameObject.SetActive(false);
+                    healthPotionUIBackground.GameObject.SetActive(false);
                 }
             }
             
@@ -462,10 +464,12 @@ namespace KGUI
 
         public void Draw()
         {
-            // Update Elements
-            for (int i = 0; i < UIPanelList.Count; i++)
+            foreach (var panel in UIPanelList.Values)
             {
-                //UIList[i].Draw();
+                foreach (var element in panel.UIElementList.Values)
+                {
+                    element.Draw();
+                }
             }
         }
 
@@ -511,7 +515,7 @@ namespace KGUI
             // If Mosue 0 Button Down
             if (Input.GetMouseButton(0))
             {
-                if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GetGameObject().active)
+                if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GameObject.active)
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
@@ -531,7 +535,7 @@ namespace KGUI
                         }
                     }
                 }
-                if (dirtUIBackground.IsMouseOver(CursorPosition) && dirtUIBackground.GetGameObject().active)
+                if (dirtUIBackground.IsMouseOver(CursorPosition) && dirtUIBackground.GameObject.active)
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
@@ -554,7 +558,7 @@ namespace KGUI
                         }
                     }
                 }
-                if (pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GetGameObject().active)
+                if (pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GameObject.active)
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
@@ -577,7 +581,7 @@ namespace KGUI
                         }
                     }
                 }
-                if (wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GetGameObject().active)
+                if (wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GameObject.active)
                 {
                     // Set Inventory Elements
                     inventoryID = agentEntity.agentInventory.InventoryID;
@@ -609,7 +613,7 @@ namespace KGUI
             scannerText.Create("TempText", _text, canvas.transform, lifeTime);
             scannerText.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
             scannerText.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
-            scannerText.startLifeTime = true;
+            scannerText.StartLifeTime = true;
         }
 
         public Text AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
