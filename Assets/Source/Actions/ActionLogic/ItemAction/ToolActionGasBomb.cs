@@ -12,7 +12,6 @@ namespace Action
         private Item.FireWeaponPropreties WeaponProperty;
         private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
-        private Vec2f StartPos;
         private float elapsed = 0.0f;
 
         public ToolActionGasBomb(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
@@ -28,20 +27,19 @@ namespace Action
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 0.5f;
-            StartPos.Y += 0.5f;
+            Vec2f startPos = AgentEntity.agentPhysicsState.Position;
+            startPos.X += 0.5f;
+            startPos.Y += 0.5f;
 
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
             ItemEntity.Destroy();
 
-            ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
-
+            planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
-
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
 
+        // Todo: Move this out to a projectile system.
         public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
         {
             float damage = 0.1f;
@@ -52,11 +50,6 @@ namespace Action
                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
                 return;
             }
-
-            // Start position
-            StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 0.5f;
-            StartPos.Y += 0.5f;
 
             elapsed += Time.deltaTime;
 

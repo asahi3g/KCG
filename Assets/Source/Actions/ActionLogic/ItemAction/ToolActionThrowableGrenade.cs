@@ -9,9 +9,7 @@ namespace Action
     public class ToolActionThrowableGrenade : ActionBase
     {
         private Item.FireWeaponPropreties WeaponProperty;
-        private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
-        private Vec2f StartPos;
 
         public ToolActionThrowableGrenade(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -43,53 +41,33 @@ namespace Action
             if (ItemEntity.hasItemFireWeaponClip)
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
-            StartPos = AgentEntity.agentPhysicsState.Position;
+            Vec2f StartPos = AgentEntity.agentPhysicsState.Position;
             StartPos.X += 0.5f;
             StartPos.Y += 0.5f;
 
-            if(ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
+            ProjectileEntity projectileEntity = null;
+            if (ItemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
             {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
+                projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
                 planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(AgentEntity.agentPhysicsState.Position.X + 0.5f, AgentEntity.agentPhysicsState.Position.Y));
             }
             else if (ItemEntity.itemType.Type == Enums.ItemType.RPG)
             {
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Rocket);
+                projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Rocket);
             }
-            ProjectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
-            ActionEntity.actionExecution.State = Enums.ActionState.Running;
-
-            GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
-        }
-
-        public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
-        {
-            float range = WeaponProperty.Range;
-
-            // Check if projectile has hit something and was destroyed.
-            if (!ProjectileEntity.isEnabled)
+            else
             {
-                ActionEntity.actionExecution.State = Enums.ActionState.Success;
+                ActionEntity.actionExecution.State = Enums.ActionState.Fail;
                 return;
             }
 
-            // Check if projectile is inside in weapon range.
-            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
-            {
-
-                planet.AddParticleEmitter(ProjectileEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-            }
+            projectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
+            GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
+            ActionEntity.actionExecution.State = Enums.ActionState.Running;
         }
 
         public override void OnExit(ref PlanetState planet)
         {
-            if (ProjectileEntity != null)
-            {
-                if (ProjectileEntity.isEnabled)
-                {
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
-                }
-            }
             base.OnExit(ref planet);
         }
     }

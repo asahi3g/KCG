@@ -9,10 +9,7 @@ namespace Action
     public class ToolActionPulseWeapon : ActionBase
     {
         private Item.FireWeaponPropreties WeaponProperty;
-        private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
-        private Vec2f StartPos;
-        private List<ProjectileEntity> EndPointList = new List<ProjectileEntity>();
 
         public ToolActionPulseWeapon(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -73,9 +70,9 @@ namespace Action
                 }
             }
 
-            StartPos = AgentEntity.agentPhysicsState.Position;
-            StartPos.X += 0.3f;
-            StartPos.Y += 0.5f;
+            Vec2f startPos = AgentEntity.agentPhysicsState.Position;
+            startPos.X += 0.3f;
+            startPos.Y += 0.5f;
 
             if (!ItemEntity.itemPulseWeaponPulse.GrenadeMode)
             {
@@ -84,51 +81,18 @@ namespace Action
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
                     var random = UnityEngine.Random.Range(-spread, spread);
-                    ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f((x - StartPos.X) - random, y - StartPos.Y).Normalized, Enums.ProjectileType.Bullet);
-                    EndPointList.Add(ProjectileEntity);
+                    planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - random, y - startPos.Y).Normalized, Enums.ProjectileType.Bullet);
                 }
             }
             else
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade);
+                planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.Grenade);
 
-            EndPointList.Add(ProjectileEntity);
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
 
-        public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
-        {
-            float range = WeaponProperty.Range;
-            float damage = WeaponProperty.BasicDemage;
-
-            // Check if projectile has hit something and was destroyed.
-            if (!ProjectileEntity.isEnabled)
-            {
-                ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                return;
-            }
-
-            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
-                 ActionEntity.actionExecution.State = Enums.ActionState.Success;
-
-#if UNITY_EDITOR
-            for (int i = 0; i < EndPointList.Count; i++)
-            {
-                if (EndPointList[i].hasProjectilePhysicsState)
-                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePhysicsState.Position.X, EndPointList[i].projectilePhysicsState.Position.Y, 0), Color.red, 2.0f, false);
-            }
-#endif
-        }
-
         public override void OnExit(ref PlanetState planet)
         {
-            if (ProjectileEntity != null)
-            {
-                if (ProjectileEntity.isEnabled)
-                {
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
-                }
-            }
             base.OnExit(ref planet);
         }
     }

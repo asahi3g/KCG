@@ -9,10 +9,7 @@ namespace Action
     public class ToolActionFireWeapon : ActionBase
     {
         private Item.FireWeaponPropreties WeaponProperty;
-        private ProjectileEntity ProjectileEntity;
         private ItemInventoryEntity ItemEntity;
-        private Vec2f StartPos;
-        private List<ProjectileEntity> EndPointList = new List<ProjectileEntity>();
 
         public ToolActionFireWeapon(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -43,71 +40,39 @@ namespace Action
             if (ItemEntity.hasItemFireWeaponClip)
                 ItemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
 
-            StartPos = AgentEntity.agentPhysicsState.Position;
+            Vec2f startPos = AgentEntity.agentPhysicsState.Position;
 
             if (worldPosition.x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == -1)
-                AgentEntity.agentPhysicsState.MovingDirection  = 1;
+                AgentEntity.agentPhysicsState.MovingDirection = 1;
             else if (worldPosition.x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == 1)
-                AgentEntity.agentPhysicsState.MovingDirection  = -1;
+                AgentEntity.agentPhysicsState.MovingDirection = -1;
 
             AgentEntity.FireGun(WeaponProperty.CoolDown);
 
-            StartPos.X += 0.3f * AgentEntity.agentPhysicsState.MovingDirection ;
-            StartPos.Y += 1.75f;
+            startPos.X += 0.3f * AgentEntity.agentPhysicsState.MovingDirection ;
+            startPos.Y += 1.75f;
             
             // Todo: Rotate agent instead.
-            if (Math.Sign(x - StartPos.X) != Math.Sign(AgentEntity.agentPhysicsState.MovingDirection ))
-                x = StartPos.X + 0.5f * AgentEntity.agentPhysicsState.MovingDirection ;
+            if (Math.Sign(x - startPos.X) != Math.Sign(AgentEntity.agentPhysicsState.MovingDirection ))
+                x = startPos.X + 0.5f * AgentEntity.agentPhysicsState.MovingDirection;
 
             var spread = WeaponProperty.SpreadAngle;
             for(int i = 0; i < bulletsPerShot; i++)
             {
                 float randomSpread = UnityEngine.Random.Range(-spread, spread);
-                ProjectileEntity = planet.AddProjectile(StartPos, new Vec2f((x - StartPos.X) - randomSpread, y - StartPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage);
-                EndPointList.Add(ProjectileEntity);
-            }
+                ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - randomSpread, 
+                    y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage);
 
-            if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
-                ProjectileEntity.isProjectileFirstHIt = false;
+                if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
+                    projectileEntity.isProjectileFirstHIt = false;
+            }
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
 
-        public override void OnUpdate(float deltaTime, ref Planet.PlanetState planet)
-        {
-            float range = WeaponProperty.Range;
-
-            if (!ProjectileEntity.isEnabled)
-            {
-                ActionEntity.actionExecution.State = Enums.ActionState.Success;
-                return;
-            }
-
-            if ((ProjectileEntity.projectilePhysicsState.Position - StartPos).Magnitude > range)
-            {
-                ActionEntity.actionExecution.State = Enums.ActionState.Success;
-            }
-
-            // Draw Gizmos Start (Spread, Fire, Angle, Recoil Cone)
-#if UNITY_EDITOR
-            for (int i = 0; i < EndPointList.Count; i++)
-            {
-                if (EndPointList[i].hasProjectilePhysicsState)
-                    Debug.DrawLine(new Vector3(StartPos.X, StartPos.Y, 0), new Vector3(EndPointList[i].projectilePhysicsState.Position.X, EndPointList[i].projectilePhysicsState.Position.Y, 0), Color.red, 2.0f, false);
-            }
-#endif
-        }
-
         public override void OnExit(ref PlanetState planet)
         {
-            if (ProjectileEntity != null)
-            {
-                if (ProjectileEntity.isEnabled)
-                {
-                    planet.RemoveProjectile(ProjectileEntity.projectileID.Index);
-                } 
-            }
             base.OnExit(ref planet);
         }
     }

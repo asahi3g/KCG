@@ -99,6 +99,9 @@ public class GameState
     public static readonly Projectile.SpawnerSystem ProjectileSpawnerSystem;
     public static readonly Projectile.MeshBuilderSystem ProjectileMeshBuilderSystem;
     public static readonly Projectile.ProcessOnHit ProjectileProcessOnHit;
+    public static readonly Projectile.ProcessState ProjectileProcessState;
+    public static readonly Projectile.DeleteSystem ProjectileDeleteSystem;
+    public static readonly Projectile.DebugSystem ProjectileDebugSystem;
     #endregion
 
     #region FloatingText
@@ -234,6 +237,9 @@ public class GameState
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem();
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         ProjectileProcessOnHit = new Projectile.ProcessOnHit();
+        ProjectileProcessState = new Projectile.ProcessState();
+        ProjectileDeleteSystem = new Projectile.DeleteSystem();
+        ProjectileDebugSystem = new Projectile.DebugSystem();
 
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
