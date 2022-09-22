@@ -48,6 +48,7 @@ namespace Agent
                  newMovingDirection: 1,
                  newFacingDirection: 1,
                  newMovementState: Enums.AgentMovementState.None,
+                 
                  newSetMovementState: false,
                  newAffectedByGravity: true,
                  newAffectedByFriction: true,
@@ -56,6 +57,7 @@ namespace Agent
                  newDroping: false,
                  newActionInProgress: false,
                  newActionJustEnded: false,
+                 newIdleAfterShootingTime: 0,
                  newJumpCounter: 0,
                  newActionDuration: 0,
                  newActionCooldown: 0,
@@ -105,6 +107,7 @@ namespace Agent
                 newDroping: false,
                 newActionInProgress: false,
                 newActionJustEnded: false,
+                newIdleAfterShootingTime: 0,
                 newJumpCounter: 0,
                 newSlidingTime: 0,
                 newActionDuration: 0,
@@ -153,6 +156,7 @@ namespace Agent
                 newDroping: false,
                 newActionInProgress: false,
                 newActionJustEnded: false,
+                newIdleAfterShootingTime: 0,
                 newJumpCounter: 0,
                 newSlidingTime: 0,
                 newDyingDuration: 0,
@@ -181,8 +185,13 @@ namespace Agent
 
                         //var hand = model.transform.Find("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand");
 
-                        GameObject leftHand = null;
-                        GameObject rightHand = null;
+                        GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(3).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+
+                        Debug.Log(leftHand);
+                        Debug.Log(rightHand);
 
                        // GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
                        // GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
@@ -205,7 +214,8 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                         Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
 
 
                         entity.agentPhysicsState.Speed = 10.0f;
@@ -255,8 +265,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                          Enums.AgentAnimationType.HumanoidAnimation,
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -286,8 +297,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default);
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
+                        Enums.AgentAnimationType.HumanoidAnimation,
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
@@ -310,7 +322,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default);
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
+                         Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
+                         new Vec3f(0.6f, 0.6f, 0.6f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -334,8 +348,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,  Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                        Enums.ItemAnimationSet.Default);
+                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
+                         Enums.AgentAnimationType.GroundInsectHeavyAnimation,
+                        Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 4.0f;

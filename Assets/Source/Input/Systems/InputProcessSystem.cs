@@ -65,16 +65,7 @@ namespace ECSInput
 
                 var physicsState = player.agentPhysicsState;
 
-
-                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                if (mouseWorldPosition.x >= physicsState.Position.X)
-                {
-                    physicsState.FacingDirection = 1;
-                }
-                else
-                {
-                    physicsState.FacingDirection = -1;
-                }
+                
 
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -129,6 +120,25 @@ namespace ECSInput
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     player.Walk(x);
+                }
+
+
+                 Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (player.CanFaceMouseDirection())
+                {
+                    if (mouseWorldPosition.x >= physicsState.Position.X)
+                {
+                        physicsState.FacingDirection = 1;
+                    }
+                    else
+                    {
+                        physicsState.FacingDirection = -1;
+                    }
+                }
+                else
+                {
+                    physicsState.FacingDirection = physicsState.MovingDirection;
                 }
 
                 if (Input.GetKeyDown(KeyCode.L))
@@ -442,8 +452,9 @@ namespace ECSInput
 
                 if (selectedItemProperty.IsTool())
                 {
-
-                    if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
+                    if (selectedItemProperty.KeyUsage == Enums.ItemKeyUsage.KeyPressed)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
                     {
                         if (!Inventory.InventorySystemsState.MouseDown)
                         {
@@ -451,6 +462,18 @@ namespace ECSInput
                             entity.agentID.ID, item.itemID.ID);
                         }
                     } 
+                    }
+                    else if (selectedItemProperty.KeyUsage == Enums.ItemKeyUsage.KeyDown)
+                    {
+                        if (Input.GetKey(KeyCode.Mouse0) && entity.IsStateFree())
+                    {
+                        if (!Inventory.InventorySystemsState.MouseDown)
+                        {
+                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                            entity.agentID.ID, item.itemID.ID);
+                        }
+                    } 
+                    }
                 }
 
             // Remove Tile Back At Cursor Position.
