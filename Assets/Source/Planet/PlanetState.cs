@@ -342,7 +342,7 @@ namespace Planet
             Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
 
             UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
-                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image));
+                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image, false, Vec2f.Zero, Vec2f.Zero));
             return newEntity;
         }
 
@@ -353,6 +353,16 @@ namespace Planet
 
             UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
                 height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image, true, pos1, pos2));
+            return newEntity;
+        }
+
+        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, int atlasID, Vec2f position, Vec3f scale,
+            AtlasType atlasType)
+        {
+            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
+
+            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
+                height, tileSpriteID, position, scale, 0, -1, atlasType, ElementType.Image));
             return newEntity;
         }
 

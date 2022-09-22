@@ -271,6 +271,57 @@ namespace KGUI.Elements
             image.enabled = false;
         }
 
+        public Image(string imageName, Transform parent, int width, int height, int tileSpriteID, int atlasID)
+        {
+            // Set Width and Height
+            Vector2Int iconPngSize = new Vector2Int(width, height);
+
+            // Set Sprite Data
+            byte[] iconSpriteData = new byte[iconPngSize.x * iconPngSize.y * 4];
+
+            // Get Sprite Bytes
+            GameState.TileSpriteAtlasManager.GetSpriteBytes(tileSpriteID, iconSpriteData, atlasID);
+
+            // Set Texture
+            Texture2D iconTex = Utility.Texture.CreateTextureFromRGBA(iconSpriteData, iconPngSize.x, iconPngSize.y);
+
+            // Create Sprite
+            Sprite sprite = Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+
+            // Create Gameobject
+            iconCanvas = new GameObject(imageName)
+            {
+                transform =
+                {
+                    // Set Object Parent To Canvas
+                    parent = parent
+                }
+            };
+
+            // Add Rect Transform to Manage UI Scaling
+            rectTransform = iconCanvas.AddComponent<RectTransform>();
+
+            // Add Image Component to Render the Sprite
+            image = iconCanvas.AddComponent<UnityEngine.UI.Image>();
+
+            // Set Image Sprite
+            image.sprite = sprite;
+
+            // Set Anchor Min
+            rectTransform.anchorMin = new Vector2(0, 0);
+
+            // Set Anchor Min
+            rectTransform.position = new Vector3(0, 0, 0);
+
+            // Set Anchor Max
+            rectTransform.anchorMax = new Vector2(0, 0);
+
+            // Set Pivot
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+            image.enabled = false;
+        }
+
         public override void Update()
         {
              
