@@ -617,7 +617,7 @@ namespace Planet
 
         public void DrawDebug()
         {
-            GameState.AgentMovementSystem.Update(EntitasContext.agent);
+            GameState.PathFindingDebugSystem.Draw();
             GameState.ProjectileDebugSystem.Update(ref this);
         }
 

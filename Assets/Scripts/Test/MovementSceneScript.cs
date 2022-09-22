@@ -298,6 +298,8 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
+            Planet.DrawDebug();
+
             // Set the color of gizmos
             Gizmos.color = Color.green;
             

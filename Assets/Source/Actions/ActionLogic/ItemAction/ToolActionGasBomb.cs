@@ -34,7 +34,7 @@ namespace Action
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, AgentEntity.agentInventory.InventoryID, ItemEntity.itemInventory.SlotID);
             ItemEntity.Destroy();
 
-            planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
+            ProjectileEntity = planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
         }

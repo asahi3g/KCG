@@ -14,7 +14,10 @@ namespace Projectile
                 if (entityP.hasProjectileRange)
                 {
                     if ((entityP.projectilePhysicsState.Position - entityP.projectileStart.StarPos).Magnitude > entityP.projectileRange.Range)
+                    {
                         entityP.isProjectileDelete = true;
+                        planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                    }
                 }
             }
         }

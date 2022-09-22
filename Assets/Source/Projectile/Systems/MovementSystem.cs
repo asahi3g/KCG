@@ -43,9 +43,7 @@ namespace Projectile
 
             // Perform fast deceleration.
             if (physicsState.OnGrounded)
-            {
                 newVelocity *= 0.8f;
-            }
 
             Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;

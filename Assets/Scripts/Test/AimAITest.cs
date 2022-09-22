@@ -11,7 +11,7 @@ namespace Planet.Unity
         AgentEntity Marine;
         AgentEntity Target;
         static bool Init = false;
-        const float SHOOT_COOL_DOWN = 3f;
+        const float SHOOT_COOL_DOWN = 1f;
         float lastShootTime;
 
         public void Start()

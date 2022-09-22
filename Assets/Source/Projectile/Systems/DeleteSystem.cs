@@ -16,8 +16,7 @@ namespace Projectile
 
                 if (entityP.isProjectileDelete)
                 {
-                    planet.RemoveProjectile(entityP.projectileID.ID);
-                    planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                    planet.RemoveProjectile(entityP.projectileID.Index);
                 }
             }
         }

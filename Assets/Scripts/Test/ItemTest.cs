@@ -59,6 +59,11 @@ namespace Planet.Unity
             Planet.DrawHUD(Player);
         }
 
+        private void OnDrawGizmos()
+        {
+            Planet.DrawDebug();
+        }
+
         // Create the sprite atlas for testing purposes
         public void Initialize()
         {

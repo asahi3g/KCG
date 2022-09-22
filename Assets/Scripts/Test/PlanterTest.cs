@@ -107,6 +107,8 @@ class PlanterTest : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Planet.DrawDebug();
+
         // Set the color of gizmos
         Gizmos.color = Color.green;
 
