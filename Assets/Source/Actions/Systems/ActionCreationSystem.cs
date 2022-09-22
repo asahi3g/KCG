@@ -64,13 +64,25 @@ namespace Action
             return actionID;
         }
 
-        public int CreateTargetAction(Contexts entitasContext, ActionType actionTypeID, int agentID, Vec2f target)
+        public int CreateTargetAction(Contexts entitasContext, ActionType actionTypeID, int agentID, Vec2f target, int itemID)
         {
             int actionID = CreateAction(entitasContext, actionTypeID, agentID);
             if (actionID != -1)
             {
                 ActionEntity actionEntity = entitasContext.action.GetEntityWithActionIDID(actionID);
                 actionEntity.AddActionTaget(-1, -1, target);
+            }
+            return actionID;
+        }
+
+        public int CreateTargetAction(Contexts entitasContext, ActionType actionTypeID, int agentID, int agentTargetID, int itemID)
+        {
+            int actionID = CreateAction(entitasContext, actionTypeID, agentID);
+            if (actionID != -1)
+            {
+                ActionEntity actionEntity = entitasContext.action.GetEntityWithActionIDID(actionID);
+                actionEntity.AddActionTool(itemID);
+                actionEntity.AddActionTaget(agentTargetID, -1, Vec2f.Zero);
             }
             return actionID;
         }
