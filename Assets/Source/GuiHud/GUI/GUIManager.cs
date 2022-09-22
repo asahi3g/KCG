@@ -87,6 +87,7 @@ namespace KGUI
 
             var playerStatusPrefab = Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI");
             GameObject.Instantiate(playerStatusPrefab, canvas.transform);
+            
             GeometryGUI = new GeometryGUI();
 
             GeometryGUI.Initialize(ref planet);
@@ -158,6 +159,8 @@ namespace KGUI
 
             // Update Scanner Text
             scannerText.Update();
+            
+            GeometryGUI.Update(ref planet, agentEntity);
 
             // Set Inventory Elements
             Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);

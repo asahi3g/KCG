@@ -253,12 +253,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID, Enums.AtlasType.Error);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, tileSpriteID, Enums.AtlasType.Error);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
 
             return entity;

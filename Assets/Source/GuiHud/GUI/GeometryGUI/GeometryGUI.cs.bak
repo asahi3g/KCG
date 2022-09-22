@@ -730,46 +730,46 @@ public class GeometryGUI
         {
 
             if (SQNoSpecular_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQNoSpecular_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQNoSpecular_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQNoSpecular_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQNoSpecular_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                SSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TI_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TI_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TI_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TI_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TO_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TO_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TO_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                TO_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HTD_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HTL_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HTU_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                HTR_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RHTD_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RHTL_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RHTU_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RHTR_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                CSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                CSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                CSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                CSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RCSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RCSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RCSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition) ||
-                RCSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                SQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQNoSpecular_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQNoSpecular_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQNoSpecular_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQNoSpecular_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                SSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TI_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TI_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TI_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TI_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TO_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TO_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TO_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                TO_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HTD_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HTL_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HTU_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                HTR_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RHTD_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RHTL_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RHTU_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RHTR_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                CSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                CSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                CSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                CSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RCSQ_0.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RCSQ_1.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RCSQ_2.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition) ||
+                RCSQ_3.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
             {
                 if(item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                 {
@@ -785,7 +785,7 @@ public class GeometryGUI
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if(SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if(SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -797,7 +797,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -810,7 +810,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -823,7 +823,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -835,7 +835,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -847,7 +847,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -859,7 +859,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -872,7 +872,7 @@ public class GeometryGUI
 
                     }
                 }
-                if (HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -884,7 +884,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -896,7 +896,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -908,7 +908,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -920,7 +920,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -932,7 +932,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -944,7 +944,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -956,7 +956,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -968,7 +968,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -980,7 +980,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (SSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (SSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -992,7 +992,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TI_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TI_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1004,7 +1004,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TI_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TI_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1016,7 +1016,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TI_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TI_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1029,7 +1029,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TI_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TI_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1042,7 +1042,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TO_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TO_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1055,7 +1055,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TO_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TO_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1068,7 +1068,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TO_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TO_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1081,7 +1081,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (TO_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (TO_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1094,7 +1094,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HTD_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HTD_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1107,7 +1107,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HTL_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HTL_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1120,7 +1120,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HTU_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HTU_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1133,7 +1133,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (HTR_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (HTR_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1146,7 +1146,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RHTD_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RHTD_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1159,7 +1159,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RHTL_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RHTL_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1173,7 +1173,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RHTU_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RHTU_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1186,7 +1186,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RHTR_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RHTR_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1199,7 +1199,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (CSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (CSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1212,7 +1212,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (CSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (CSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1225,7 +1225,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (CSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (CSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1238,7 +1238,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (CSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (CSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1251,7 +1251,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RCSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RCSQ_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1264,7 +1264,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RCSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RCSQ_1Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1277,7 +1277,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RCSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RCSQ_2Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
@@ -1290,7 +1290,7 @@ public class GeometryGUI
                         }
                     }
                 }
-                if (RCSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
+                if (RCSQ_3Background.kGUIElementsImage.ImageWrapper.IsMouseOver(HUD.HUDManager.guiManager.CursorPosition))
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
