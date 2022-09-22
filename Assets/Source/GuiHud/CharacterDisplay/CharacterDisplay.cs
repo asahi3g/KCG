@@ -25,7 +25,7 @@ namespace KGui
 
         public CharacterDisplay()
         {
-            Enabled = true;
+            Enabled = false;
             DebugDraw = false;
 
             x = 800;

@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Material: {fileID: 2100000, guid: 4073de6af124b4f40bdce02691603836, type: 2}
+  pixelWidth: 20
+  pixelHeight: 20
 --- !u!1 &530959981
 GameObject:
   m_ObjectHideFlags: 0
