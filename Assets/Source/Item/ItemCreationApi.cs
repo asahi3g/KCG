@@ -592,6 +592,8 @@ namespace Item
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
             GameState.ItemCreationApi.SetAction(Enums.ActionType.ToolActionFireWeapon);
+             GameState.ItemCreationApi.SetItemToolType(Enums.ItemToolType.Pistol);
+            GameState.ItemCreationApi.SetAnimationSet(Enums.ItemAnimationSet.HoldingPistol);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.RPG, "RPG");

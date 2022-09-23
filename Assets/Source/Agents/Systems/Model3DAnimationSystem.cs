@@ -18,10 +18,10 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
-                if (entity.isAgentPlayer)
+                /*if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
-                }
+                }*/
 
                 Animancer.AnimancerState currentClip = null;
 
