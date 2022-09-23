@@ -547,7 +547,7 @@ namespace Item
             GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
             GameState.ItemCreationApi.SetTexture(SMGIcon);
             GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.25f, 20.0f, 15);
+            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
             GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);

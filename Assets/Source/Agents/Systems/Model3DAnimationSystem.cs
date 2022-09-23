@@ -18,10 +18,10 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;        
                 var model3d = entity.agentModel3D;
 
-                /*if (!entity.isAgentPlayer)
+                if (entity.isAgentPlayer)
                 {
                     Debug.Log(physicsState.MovementState);
-                }*/
+                }
 
                 Animancer.AnimancerState currentClip = null;
 
@@ -35,7 +35,7 @@ namespace Agent
 
                     if (currentClip.RemainingDuration <= 0.0f && agentAnimation.Looping)
                     {
-                        currentClip.Time = 0.0f;
+                        currentClip.Time = agentAnimation.StartTime;
                     }
 
                     if (agentAnimation.UseActionDurationForSpeed)
@@ -44,12 +44,16 @@ namespace Agent
                     }
 
 
-                    if (currentClip != null && physicsState.SetMovementState)
+                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation != agentAnimation))
                     {
                         physicsState.SetMovementState = false;
-                        currentClip.Time = 0.0f;
+                        currentClip.Time = agentAnimation.StartTime;
                     }
+
+                    physicsState.LastAgentAnimation = agentAnimation;
                 }
+
+                
                 
 
                 /*if (model3d.AnimationType == Enums.AgentAnimationType.HumanoidAnimation)

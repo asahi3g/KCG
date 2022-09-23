@@ -30,6 +30,7 @@ namespace Agent
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
                     else if (entity.IsStateFree() &&
+                    !entity.IsIdle() &&
                     physicsState.MovementState != AgentMovementState.JetPackFlying &&
                     physicsState.MovementState != AgentMovementState.Crouch &&
                     physicsState.MovementState != AgentMovementState.Crouch_Move)
@@ -310,7 +311,10 @@ namespace Agent
                     }
                     else
                     {
-                        physicsState.MovementState = AgentMovementState.Idle;
+                        if (!entity.IsIdle())
+                        {
+                            physicsState.MovementState = AgentMovementState.Idle;
+                        }
                     }
                 }
 

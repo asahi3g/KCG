@@ -18,6 +18,7 @@ namespace Agent
         public int FacingDirection;
 
         public Enums.AgentMovementState MovementState;
+        public AgentAnimation LastAgentAnimation;
         public bool SetMovementState;
 
         //public Flags MovementFlags; 

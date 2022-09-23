@@ -36,6 +36,16 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Drink;
     }
 
+    public bool IsIdle()
+    {
+        var physicsState = agentPhysicsState;
+
+        return isAgentAlive && (
+        physicsState.MovementState == AgentMovementState.Idle ||
+        physicsState.MovementState == AgentMovementState.IdleAfterShooting);
+
+    }
+
     public bool CanFaceMouseDirection()
     {
         var physicsState = agentPhysicsState;
@@ -235,6 +245,7 @@ public partial class AgentEntity
         if (IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.FireGun;
+            
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;

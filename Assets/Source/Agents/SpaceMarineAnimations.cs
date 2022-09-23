@@ -80,10 +80,10 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleIdle, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleIdle, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.IdleAfterShooting, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleIdleAlerted, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleIdleAlerted, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.43f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Crouch, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleCrouch, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -110,7 +110,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.FireGun, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=0.075f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 1.0f, UseActionDurationForSpeed = true});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=0.075f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 1.0f, UseActionDurationForSpeed = true});
 
             SetAnimation(Enums.AgentMovementState.JetPackFlying, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJetPack, FadeTime=0.125f, Looping = true, Speed = 3.0f, MovementSpeedFactor = 0.0f});
