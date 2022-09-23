@@ -13,8 +13,11 @@ namespace Action
         private ItemInventoryEntity ItemEntity;
         private Vec2f StartPos;
         private List<ProjectileEntity> EndPointList = new List<ProjectileEntity>();
-        private float fireDelay = 0.35f;
+        private float fireDelay = 0.25f;
         private bool fired = false;
+
+        float x = 0;
+        float y = 0;
 
         public ToolActionFireWeapon(Contexts entitasContext, int actionID) : base(entitasContext, actionID)
         {
@@ -24,10 +27,6 @@ namespace Action
         {
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
             WeaponProperty = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
-
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
 
             int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
@@ -47,12 +46,10 @@ namespace Action
 
             StartPos = AgentEntity.agentPhysicsState.Position;
 
-            if (worldPosition.x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == -1)
+            if (x > AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == -1)
                 AgentEntity.agentPhysicsState.MovingDirection  = 1;
-            else if (worldPosition.x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == 1)
+            else if (x < AgentEntity.agentPhysicsState.Position.X && AgentEntity.agentPhysicsState.MovingDirection  == 1)
                 AgentEntity.agentPhysicsState.MovingDirection  = -1;
-
-            AgentEntity.FireGun(WeaponProperty.CoolDown);
 
             StartPos = AgentEntity.GetGunFiringPosition();
             
@@ -76,6 +73,12 @@ namespace Action
         {
             ItemEntity = EntitasContext.itemInventory.GetEntityWithItemID(ActionEntity.actionTool.ItemID);
             WeaponProperty = GameState.ItemCreationApi.GetWeapon(ItemEntity.itemType.Type);
+
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            x = worldPosition.x;
+            y = worldPosition.y;
+
+            AgentEntity.FireGun(WeaponProperty.CoolDown);
 
             ActionEntity.actionExecution.State = Enums.ActionState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(EntitasContext, ActionEntity.actionID.TypeID, AgentEntity.agentID.ID, WeaponProperty.CoolDown);
