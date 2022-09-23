@@ -154,6 +154,9 @@ namespace Mech
         public int DracaenaTrifasciataS1;
         public int DracaenaTrifasciataS2;
 
+        public int surveillanceCamera;
+        public int roofScreen;
+
         public void InitializeResources()
         {
             ChestSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
@@ -168,6 +171,8 @@ namespace Mech
             SagoPalmS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7_v2.png", 16, 32);
             DracaenaTrifasciataS1 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6_v1.png", 16, 16);
             DracaenaTrifasciataS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6_v2.png", 16, 32);
+            surveillanceCamera = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Cameras\\Surveillance\\surveillanceCamera.png", 16, 16);
+            roofScreen = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Decorations\\RoofScreen\\roofScreen.png", 32, 16);
 
 
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
@@ -182,6 +187,8 @@ namespace Mech
             DracaenaTrifasciata = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciata, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
+            surveillanceCamera = GameState.SpriteAtlasManager.CopySpriteToAtlas(surveillanceCamera, 0, 0, Enums.AtlasType.Mech);
+            roofScreen = GameState.SpriteAtlasManager.CopySpriteToAtlas(roofScreen, 0, 0, Enums.AtlasType.Mech);
 
 
             GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
@@ -240,6 +247,18 @@ namespace Mech
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+            GameState.MechCreationApi.End();
+
+            GameState.MechCreationApi.Create((int)Mech.MechType.SurveillanceCamera);
+            GameState.MechCreationApi.SetName("SurveillanceCamera");
+            GameState.MechCreationApi.SetTexture(surveillanceCamera);
+            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
+            GameState.MechCreationApi.End();
+
+            GameState.MechCreationApi.Create((int)Mech.MechType.RoofScreen);
+            GameState.MechCreationApi.SetName("RoofScreen");
+            GameState.MechCreationApi.SetTexture(roofScreen);
+            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
         }
 

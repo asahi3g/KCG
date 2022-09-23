@@ -165,22 +165,12 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PipePlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GasBomb, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
         }
 
         void GenerateMap()
@@ -251,6 +241,83 @@ namespace Planet.Unity
             tileMap.SetFrontTile(16, 16, TileID.HSQ_0);
             tileMap.SetFrontTile(15, 16, TileID.HSQ_0);
 
+            tileMap.SetFrontTile(10, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(9, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(8, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(7, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(6, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(5, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(4, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(3, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(2, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(1, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(0, 16, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(23, 17, TileID.TO_3);
+            tileMap.SetFrontTile(24, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(25, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(26, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(27, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(28, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(29, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 17, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(24, 18, TileID.TO_3);
+            tileMap.SetFrontTile(25, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(26, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(27, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(28, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(29, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 18, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(25, 19, TileID.TO_3);
+            tileMap.SetFrontTile(26, 19, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(27, 19, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(28, 19, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(29, 19, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 19, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(26, 20, TileID.TO_3);
+            tileMap.SetFrontTile(27, 20, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(28, 20, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(29, 20, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 20, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(27, 21, TileID.TO_3);
+            tileMap.SetFrontTile(28, 21, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(29, 21, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 21, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(28, 22, TileID.TO_3);
+            tileMap.SetFrontTile(29, 22, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(30, 22, TileID.SQNoSpecular_0);
+
+            tileMap.SetFrontTile(24, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(23, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(22, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(21, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(20, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(19, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(18, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(17, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(16, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(15, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(14, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(13, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(12, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(11, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(10, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(9, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(8, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(7, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(6, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(5, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(4, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(3, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(2, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(1, 23, TileID.HSQ_0);
+            tileMap.SetFrontTile(0, 23, TileID.SQNoSpecular_0);
+
 
             tileMap.SetFrontTile(14, 12, TileID.RCSQ_3);
             tileMap.SetFrontTile(13, 11, TileID.RCSQ_3);
@@ -263,11 +330,6 @@ namespace Planet.Unity
             tileMap.SetFrontTile(12, 9, TileID.SQNoSpecular_0);
             tileMap.SetFrontTile(11, 8, TileID.SQNoSpecular_0);
             tileMap.SetFrontTile(12, 8, TileID.SQNoSpecular_0);
-
-            tileMap.SetFrontTile(10, 13, TileID.TO_2);
-            tileMap.SetFrontTile(9, 12, TileID.TO_2);
-
-
 
 
             tileMap.SetFrontTile(25, 8, TileID.SQNoSpecular_0);
@@ -295,7 +357,22 @@ namespace Planet.Unity
             tileMap.SetFrontTile(29, 12, TileID.SQNoSpecular_0);
             tileMap.SetFrontTile(30, 12, TileID.SQNoSpecular_0);
 
+            Planet.AddEnemy(new Vec2f(20, 10));
+            Planet.AddEnemy(new Vec2f(20, 15));
+            Planet.AddEnemy(new Vec2f(15, 15));
 
+            Planet.AddAgent(new Vec2f(10, 22), Enums.AgentType.EnemyInsect);
+            Planet.AddAgent(new Vec2f(20, 22), Enums.AgentType.EnemyInsect);
+            Planet.AddAgent(new Vec2f(5, 12), Enums.AgentType.EnemyInsect);
+
+            Planet.AddAgent(new Vec2f(5, 28), Enums.AgentType.EnemyGunner);
+            Planet.AddAgent(new Vec2f(10, 28), Enums.AgentType.EnemyGunner);
+
+            Planet.AddMech(new Vec2f(10, 2), Mech.MechType.SmashableBox);
+
+            Planet.AddMech(new Vec2f(11, 6.1f), Mech.MechType.SurveillanceCamera);
+
+            Planet.AddMech(new Vec2f(19, 6.1f), Mech.MechType.RoofScreen);
 
             for (int y = 0; y < 31; y++)
             {
@@ -323,10 +400,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
-
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            Player = Planet.AddPlayer(new Vec2f(2,3));
         }
     }
 }
