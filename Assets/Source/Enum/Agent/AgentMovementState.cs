@@ -17,6 +17,7 @@
         Limp,
         Drink,
         Crouch_Move,
+        Crouch_MoveBackward,
         StandingUpAfterRolling,  // standing up after rolling
         Stagger,        // Stagger
         SlidingLeft,    // Wall sliding down

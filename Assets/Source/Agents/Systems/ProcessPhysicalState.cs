@@ -31,8 +31,7 @@ namespace Agent
                     }
                     else if (entity.IsStateFree() &&
                     physicsState.MovementState != AgentMovementState.JetPackFlying &&
-                    physicsState.MovementState != AgentMovementState.Crouch &&
-                    physicsState.MovementState != AgentMovementState.Crouch_Move)
+                    !entity.IsCrouched())
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -105,7 +104,7 @@ namespace Agent
                         case AgentMovementState.FireGun:
                         {
                             physicsState.MovementState = AgentMovementState.IdleAfterShooting;
-                            physicsState.IdleAfterShootingTime = 1.5f;
+                            physicsState.IdleAfterShootingTime = 0.7f;
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
                             break;
@@ -321,13 +320,20 @@ namespace Agent
                     }
                 }
 
-                if (physicsState.MovementState == AgentMovementState.Crouch ||
-                physicsState.MovementState == AgentMovementState.Crouch_Move)
+                if (entity.IsCrouched())
                 {
                     if (physicsState.Velocity.X >= physicsState.Speed * 0.1f ||
                     physicsState.Velocity.X <= -physicsState.Speed * 0.1f)
                     {
-                        physicsState.MovementState = AgentMovementState.Crouch_Move;
+                        if (physicsState.MovingDirection != physicsState.FacingDirection)
+                        {
+                            physicsState.MovementState = AgentMovementState.Crouch_MoveBackward;
+                        }
+                        else
+                        {
+                            physicsState.MovementState = AgentMovementState.Crouch_Move;
+                        }
+
                     }
                     else
                     {
@@ -335,11 +341,7 @@ namespace Agent
                     }
                 }
 
-                if (physicsState.MovementState == AgentMovementState.Idle ||
-                physicsState.MovementState == AgentMovementState.None ||
-                physicsState.MovementState == AgentMovementState.Move ||
-                physicsState.MovementState == AgentMovementState.MoveBackward ||
-                physicsState.MovementState == AgentMovementState.JetPackFlying)
+                if (entity.IsAffectedByGravity())
                 {
                     physicsState.AffectedByGravity = true;
                 }
@@ -352,8 +354,7 @@ namespace Agent
 
                 AgentProperties properties = GameState.AgentCreationApi.Get((int)IDComponent.Type);
 
-                if (physicsState.MovementState == AgentMovementState.Crouch ||
-                physicsState.MovementState == AgentMovementState.Crouch_Move)
+                if (entity.IsCrouched())
                 {
                     box2DComponent.Size.Y = properties.CollisionDimensions.Y * 0.65f;
                 }

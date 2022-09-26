@@ -110,6 +110,7 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/InsectHeavyRun", AnimationType.InsectHeavyRun);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyAttack", AnimationType.InsectHeavyAttack);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyJump", AnimationType.InsectHeavyJump);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavyFall", AnimationType.InsectHeavyFall);
             AnimationLoader.Load("ArtistAnimations/InsectHeavyDead", AnimationType.InsectHeavyDie);
 
 
@@ -138,6 +139,8 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/CrouchWalk", AnimationType.SpaceMarineCrouch_Walk);
             AnimationLoader.Load("ArtistAnimations/GunCrouchWalk", AnimationType.SpaceMarineRifleCrouch_Walk);
             AnimationLoader.Load("ArtistAnimations/SpaceMarinePistolCrouchWalk2", AnimationType.SpaceMarinePistolCrouch_Walk);
+            AnimationLoader.Load("ArtistAnimations/CrouchWalkBackwards", AnimationType.SpaceMarineCrouch_WalkBackwards);
+            AnimationLoader.Load("ArtistAnimations/GunCrouchWalkBackwards", AnimationType.SpaceMarineRifleCrouch_WalkBackwards);
             AnimationLoader.Load("ArtistAnimations/Limp", AnimationType.SpaceMarineLimp);
             AnimationLoader.Load("ArtistAnimations/Drink", AnimationType.SpaceMarineDrink);
             AnimationLoader.Load("ArtistAnimations/JumpFall", AnimationType.SpaceMarineJumpFall);

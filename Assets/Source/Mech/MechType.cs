@@ -11,6 +11,8 @@ namespace Mech
         SagoPalm,
         DracaenaTrifasciata,
         SmashableBox,
-        SmashableEgg
+        SmashableEgg,
+        SurveillanceCamera,
+        RoofScreen
     }
 }

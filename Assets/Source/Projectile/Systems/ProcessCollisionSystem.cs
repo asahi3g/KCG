@@ -2,6 +2,7 @@ using UnityEngine;
 using KMath;
 using Particle;
 using Utility;
+using System.Collections.Generic;
 
 namespace Projectile
 {
@@ -13,6 +14,9 @@ namespace Projectile
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 
             var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
+
+            List < AgentEntity > CollidedWith = new List< AgentEntity >();
+            List < Vec2f > CollisionPosition = new List< Vec2f >();
 
             foreach (var entity in entities)
             {
@@ -65,7 +69,9 @@ namespace Projectile
                     }
 
                     if (!entity.hasProjectileOnHit)
+                    {
                         entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                    }
                     else 
                     {
                         entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
@@ -96,21 +102,51 @@ namespace Projectile
                         Collisions.Box2D agentBox = new Collisions.Box2D{x = agentPosition.X, y = agentPosition.Y, w = agentBox2dCollider.Size.X, h = agentBox2dCollider.Size.Y};
                         if (Collisions.Collisions.SweptBox2dCollision(ref entityBox, delta, agentBox, false))
                         {
-                            if (entity.isProjectileFirstHIt)
-                                physicsState.Position = new Vec2f(entityBox.x, entityBox.y) - box2DCollider.Offset;
-
-                            // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                            if (!entity.hasProjectileOnHit)
-                                entity.AddProjectileOnHit(agentEntity.agentID.ID, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
-                            else
-                            {
-                                entity.projectileOnHit.AgentID = agentEntity.agentID.ID;
-                                entity.projectileOnHit.LastHitPos = rayCastingResult.Point;
-                                entity.projectileOnHit.LastHitTime = Time.time;
-                            }
+                            CollidedWith.Add(agentEntity);
+                            CollisionPosition.Add(new Vec2f(entityBox.x, entityBox.y));
                         }
                     }
                 }
+
+                AgentEntity closestAgent = null;
+                float closestDistance = 999999.0f;
+                Vec2f collisionPosition = new Vec2f();
+
+
+                for(int i = 0; i < CollidedWith.Count; i++)
+                {
+                    AgentEntity agentEntity = CollidedWith[i];
+                    Vec2f testPosition = CollisionPosition[i];
+                    float testDistance = (agentEntity.agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                    if (testDistance < closestDistance)
+                    {
+                        closestAgent = agentEntity;
+                        closestDistance = testDistance;
+                        collisionPosition = testPosition;
+                    }
+                }
+
+
+                if (closestAgent != null)
+                {
+                    physicsState.Position = new Vec2f(collisionPosition.X, collisionPosition.Y) - box2DCollider.Offset;
+                    physicsState.Velocity = Vec2f.Zero;
+
+                    // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                    if (!entity.hasProjectileOnHit)
+                    {
+                        entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, collisionPosition, Time.time, collisionPosition);
+                    }
+                    else
+                    {
+                        entity.projectileOnHit.AgentID = closestAgent.agentID.ID;
+                        entity.projectileOnHit.LastHitPos = collisionPosition;
+                        entity.projectileOnHit.LastHitTime = Time.time;
+                    }
+                }
+
+                CollidedWith.Clear();
+                CollisionPosition.Clear();
 
                 entityBoxBorders.DrawBox();
             }

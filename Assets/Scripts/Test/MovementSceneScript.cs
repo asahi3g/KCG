@@ -402,7 +402,7 @@ namespace Planet.Unity
             bool testSweptCollision = true;
             if (testSweptCollision)
             {
-                var playerCollider = Player.physicsBox2DCollider;
+                //var playerCollider = Player.physicsBox2DCollider;
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
                 Gizmos.color = Color.green;
