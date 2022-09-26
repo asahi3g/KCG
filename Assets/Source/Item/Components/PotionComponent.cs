@@ -6,7 +6,7 @@ using Mech;
 namespace Item
 {
     [ItemInventory]
-    public class PotionCastDataComponent : IComponent
+    public class PotionComponent : IComponent
     {
         public PotionType potionType;
     }

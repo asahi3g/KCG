@@ -10,14 +10,10 @@ namespace Node
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            NodeProperties nodeProperties = GameState.ActionCreationApi.Get(nodeEntity.nodeID.TypeID);
 
-            if (itemInventory.hasItemCastData)
+            if (itemInventory.hasItemTile)
             {
-                if(itemInventory.itemCastData.data.TileID == TileID.Error)
-                    itemInventory.itemCastData.data = (Data)nodeProperties.ObjectData;
-
-                if (itemInventory.itemCastData.InputsActive)
+                if (itemInventory.itemTile.InputsActive)
                 {
                     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     int x = (int)worldPosition.x;
@@ -26,16 +22,16 @@ namespace Node
                     if (x >= 0 && x < planet.TileMap.MapSize.X &&
                             y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        switch (itemInventory.itemCastData.data.Layer)
+                        switch (itemInventory.itemTile.Layer)
                         {
                             case MapLayerType.Back:
-                                planet.TileMap.SetBackTile(x, y, itemInventory.itemCastData.data.TileID);
+                                planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Mid:
-                                planet.TileMap.SetMidTile(x, y, itemInventory.itemCastData.data.TileID);
+                                planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Front:
-                                planet.TileMap.SetFrontTile(x, y, itemInventory.itemCastData.data.TileID);
+                                planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                         }
                     }
@@ -43,9 +39,6 @@ namespace Node
             }
             else
             {
-
-                Data data = (Data)nodeProperties.ObjectData;
-
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
@@ -53,16 +46,16 @@ namespace Node
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&
                         y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    switch (data.Layer)
+                    switch (itemInventory.itemTile.Layer)
                     {
                         case MapLayerType.Back:
-                            planet.TileMap.SetBackTile(x, y, data.TileID);
+                            planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Mid:
-                            planet.TileMap.SetMidTile(x, y, data.TileID);
+                            planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Front:
-                            planet.TileMap.SetFrontTile(x, y, data.TileID);
+                            planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                             break;
                     }
                 }

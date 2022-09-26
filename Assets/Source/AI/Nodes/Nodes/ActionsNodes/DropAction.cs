@@ -54,10 +54,10 @@ namespace Node.Action
         // Todo: Create an unpickable system outside of here.
         public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
-            NodeProperties nodeProperties = GameState.ActionCreationApi.Get(nodeEntity.nodeID.TypeID);
+            const float DURATION = 2.0f;
 
             float deltaTime = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
-            if (deltaTime < nodeProperties.Duration)
+            if (deltaTime < DURATION)
                 return;
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;

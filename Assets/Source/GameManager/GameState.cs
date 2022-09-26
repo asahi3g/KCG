@@ -17,10 +17,8 @@ public class GameState
     #endregion
 
     #region Action
-    public static readonly Node.ActionCreationApi         ActionCreationApi;
     public static readonly Node.CreationSystem            ActionCreationSystem;
     public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
-    public static readonly Node.InitializeSystem          ActionInitializeSystem;
     public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
     #endregion
 
@@ -216,10 +214,8 @@ public class GameState
         LootTableCreationAPI = new LootDrop.CreationApi();
         LootDropSystem = new LootDrop.LootDropSystem();
 
-        ActionCreationApi = new Node.ActionCreationApi();
         ActionCreationSystem = new Node.CreationSystem();
         ActionSchedulerSystem = new Node.SchedulerSystem();
-        ActionInitializeSystem = new Node.InitializeSystem();
         ActionCoolDownSystem = new ActionCoolDown.CoolDownSystem();
 
         ParticleCreationApi = new Particle.ParticleCreationApi();

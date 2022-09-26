@@ -8,45 +8,45 @@
 //------------------------------------------------------------------------------
 public static class ItemInventoryComponentsLookup {
 
-    public const int ItemCastData = 0;
-    public const int ItemFireWeaponCharge = 1;
-    public const int ItemFireWeaponClip = 2;
-    public const int ItemID = 3;
-    public const int ItemInventory = 4;
-    public const int ItemLabel = 5;
-    public const int ItemMechCastData = 6;
-    public const int ItemPotionCastData = 7;
-    public const int ItemPulseWeaponPulse = 8;
-    public const int ItemStack = 9;
+    public const int ItemFireWeaponCharge = 0;
+    public const int ItemFireWeaponClip = 1;
+    public const int ItemID = 2;
+    public const int ItemInventory = 3;
+    public const int ItemLabel = 4;
+    public const int ItemMech = 5;
+    public const int ItemPotion = 6;
+    public const int ItemPulseWeaponPulse = 7;
+    public const int ItemStack = 8;
+    public const int ItemTile = 9;
     public const int ItemType = 10;
 
     public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
-        "ItemCastData",
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
         "ItemID",
         "ItemInventory",
         "ItemLabel",
-        "ItemMechCastData",
-        "ItemPotionCastData",
+        "ItemMech",
+        "ItemPotion",
         "ItemPulseWeaponPulse",
         "ItemStack",
+        "ItemTile",
         "ItemType"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Item.CastDataComponent),
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.IDComponent),
         typeof(Item.InventoryComponent),
         typeof(Item.LabelComponent),
-        typeof(Item.MechCastDataComponent),
-        typeof(Item.PotionCastDataComponent),
+        typeof(Item.MechComponent),
+        typeof(Item.PotionComponent),
         typeof(Item.PulseWeapon.PulseComponent),
         typeof(Item.StackComponent),
+        typeof(Item.TileComponent),
         typeof(Item.TypeComponent)
     };
 }

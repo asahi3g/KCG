@@ -37,9 +37,9 @@ namespace Mech
 
                 if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.NodeType.None)
                 {
-                    NodeProperties nodeProperties = GameState.ActionCreationApi.Get(proprieties.Action);
-                    str = "Press E to " + (!nodeProperties.Descripition.IsEmpty() ?
-                        nodeProperties.Descripition : "interact");
+                    string nodeDescription = "";
+                    str = "Press E to " + (!nodeDescription.IsEmpty() ?
+                        nodeDescription : "interact");
                 }
                 else
                 {

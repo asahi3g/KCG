@@ -9,11 +9,11 @@ namespace Node.Action
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            itemEntity.itemCastData.data.Layer = MapLayerType.Front;
+            itemEntity.itemTile.Layer = MapLayerType.Front;
 
             bool CanPlace = true;
 
-            if (itemEntity.hasItemCastData)
+            if (itemEntity.hasItemTile)
             {
                 var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
@@ -31,15 +31,15 @@ namespace Node.Action
                                 {
                                     if (item.hasItemStack)
                                     {
-                                        if (itemEntity.itemCastData.data.TileID == TileID.Error ||
-                                                        itemEntity.itemCastData.data.TileID == TileID.Air ||
-                                                        itemEntity.itemCastData.data.Layer != MapLayerType.Front)
+                                        if (itemEntity.itemTile.TileID == TileID.Error ||
+                                                        itemEntity.itemTile.TileID == TileID.Air ||
+                                                        itemEntity.itemTile.Layer != MapLayerType.Front)
                                         {
                                             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                             return;
                                         }
 
-                                        switch (itemEntity.itemCastData.data.TileID)
+                                        switch (itemEntity.itemTile.TileID)
                                         {
                                             case TileID.Moon:
                                                 if (item.itemType.Type == Enums.ItemType.Dirt)
@@ -59,7 +59,7 @@ namespace Node.Action
                                                         CanPlace = false;
                                                         GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
-                                                        itemEntity.itemCastData.data.TileID = TileID.Error;
+                                                        itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                                         return;
                                                     }
@@ -87,7 +87,7 @@ namespace Node.Action
                                                         CanPlace = false;
                                                         GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
-                                                        itemEntity.itemCastData.data.TileID = TileID.Error;
+                                                        itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                                         return;
                                                     }
@@ -113,7 +113,7 @@ namespace Node.Action
                                                         CanPlace = false;
                                                         GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
-                                                        itemEntity.itemCastData.data.TileID = TileID.Error;
+                                                        itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                                         return;
                                                     }
@@ -140,7 +140,7 @@ namespace Node.Action
                                                         CanPlace = false;
                                                         GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
-                                                        itemEntity.itemCastData.data.TileID = TileID.Error;
+                                                        itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                                         return;
                                                     }
@@ -154,7 +154,7 @@ namespace Node.Action
                     }
                 }
 
-                if (itemEntity.itemCastData.InputsActive && CanPlace)
+                if (itemEntity.itemTile.InputsActive && CanPlace)
                 {
                     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     int x = (int)worldPosition.x;
@@ -162,14 +162,11 @@ namespace Node.Action
 
                     // Check Map Size
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
-                        planet.TileMap.SetFrontTile(x, y, itemEntity.itemCastData.data.TileID);
+                        planet.TileMap.SetFrontTile(x, y, itemEntity.itemTile.TileID);
                 }
             }
             else
             {
-                NodeProperties nodeProperties = GameState.ActionCreationApi.Get(nodeEntity.nodeID.TypeID);
-                Data data = (Data)nodeProperties.ObjectData;
-
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
@@ -178,16 +175,16 @@ namespace Node.Action
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&
                         y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    switch (data.Layer)
+                    switch (itemEntity.itemTile.Layer)
                     {
                         case MapLayerType.Back:
-                            planet.TileMap.SetBackTile(x, y, data.TileID);
+                            planet.TileMap.SetBackTile(x, y, itemEntity.itemTile.TileID);
                             break;
                         case MapLayerType.Mid:
-                            planet.TileMap.SetMidTile(x, y, data.TileID);
+                            planet.TileMap.SetMidTile(x, y, itemEntity.itemTile.TileID);
                             break;
                         case MapLayerType.Front:
-                            planet.TileMap.SetFrontTile(x, y, data.TileID);
+                            planet.TileMap.SetFrontTile(x, y, itemEntity.itemTile.TileID);
                             break;
                     }
                 }

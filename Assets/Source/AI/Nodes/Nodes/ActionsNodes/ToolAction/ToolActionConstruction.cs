@@ -11,10 +11,6 @@ namespace Node.Action
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            NodeProperties nodeProperties = GameState.ActionCreationApi.Get(nodeEntity.nodeID.TypeID);
-
-            if (itemEntity.itemMechCastData.data.MechID == null)
-                itemEntity.itemMechCastData.data = (Mech.Data)nodeProperties.ObjectData;
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;

@@ -16,7 +16,7 @@
         ChargeAction,
         ShieldAction,
         MoveAction,
-        DrinkPotion,
+        DrinkPotionAction,
 
         /// Mech Actions
         OpenChestAction,
@@ -27,18 +27,9 @@
         ThrowGasBombAction,
         ThrowFragGrenadeAction,
 
-        /// PlaceTileTool
-        /// One for each type of tile
-        PlaceTilOre1Action,
-        PlaceTilOre2Action,
-        PlaceTilOre3Action,
-        PlaceTilGlassAction,
-        PlaceTilMoonAction,
-        PlaceTilPipeAction,
-        PlaceTilBackgroundAction,
-
-        /// Others tools actions
+        /// Ttools actions
         ToolActionPlaceParticle,
+        ToolActionPlaceTile,
         ToolActionSpawnExplosion,
         ToolActionPlaceChest,
         ToolActionPlaceSmahableBox,
@@ -47,7 +38,6 @@
         ToolActionEnemySwordmanSpawn,
         ToolActionMiningLaser,
         ToolActionRemoveTile,
-        ToolActionThrowGrenade,
         ToolActionMeleeAttack,
         ToolActionShield,
         ToolActionPlanter,

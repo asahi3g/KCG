@@ -1,13 +1,14 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
-using Mech;
+using Enums.Tile;
 
 namespace Item
 {
     [ItemInventory]
-    public class MechCastDataComponent : IComponent
+    public class TileComponent : IComponent
     {
-        public Data data;
+        public TileID TileID;
+        public MapLayerType Layer;
         public bool InputsActive;
     }
 }

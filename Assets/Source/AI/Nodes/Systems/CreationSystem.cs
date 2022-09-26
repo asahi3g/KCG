@@ -19,11 +19,9 @@ namespace Node
         /// </summary>
         public int CreateAction(Contexts entitasContext, NodeType NodeTypeID, int agentID)
         {
-            NodeProperties nodeProperties = GameState.ActionCreationApi.Get(NodeTypeID);
-
             if (GameState.ActionCoolDownSystem.InCoolDown(entitasContext, NodeTypeID, agentID))
             {
-                Debug.Log("Action " + nodeProperties.Name + " in CoolDown");
+                Debug.Log("Action " + NodeTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
@@ -31,12 +29,7 @@ namespace Node
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-
-            const float TIME_THRESHOLD = 0.05f;
-            if (nodeProperties.Duration > TIME_THRESHOLD)
-            {
-                nodeEntity.AddNodeTime(0f);
-            }
+            nodeEntity.AddNodeTime(0f);
 
             return ActionID++;
         }

@@ -14,12 +14,6 @@ namespace ActionCoolDown
             entity.AddActionCoolDownTime(currentTime + time);
         }
 
-        public void SetCoolDown(Contexts contexts, Enums.NodeType type, int agentID)
-        {
-            float time = GameState.ActionCreationApi.Get(type).CoolDownTime;
-            SetCoolDown(contexts, type, agentID, time);
-        }
-
         public bool InCoolDown(Contexts contexts, Enums.NodeType type, int agentID)
         {
             var coolDownList = contexts.actionCoolDown.GetEntitiesWithActionCoolDownAgentID(agentID);
