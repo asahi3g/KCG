@@ -591,12 +591,7 @@ namespace KGUI
                     Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                     if (Item != null)
                     {
-                        if (Item.itemType.Type == Enums.ItemType.PlacementTool)
-                        {
-                            // Set Data Tile ID to Pipe
-                            Item.itemTile.TileID = TileID.Wire;
-                        }
-                        else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        if (Item.itemType.Type == Enums.ItemType.PlacementTool || Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Wire;

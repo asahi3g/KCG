@@ -2,9 +2,9 @@ using Enums;
 
 namespace Node
 {
-    public class ToolActionUsePotion : NodeBase
+    public class ToolActionPotion : NodeBase
     {
-        public override NodeType Type { get { return NodeType.DrinkPotionAction; } }
+        public override NodeType Type { get { return NodeType.ToolActionPotion; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
