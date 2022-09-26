@@ -10,6 +10,8 @@ namespace Engine3D
         Stander,
         SpaceMarine,
         Pistol,
-        Rapier
+        Rapier,
+        Sword,
+        SpaceGun
     }
 }

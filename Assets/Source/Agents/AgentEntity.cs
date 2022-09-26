@@ -36,6 +36,28 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Drink;
     }
 
+    public bool IsIdle()
+    {
+        var physicsState = agentPhysicsState;
+
+        return isAgentAlive && (
+        physicsState.MovementState == AgentMovementState.Idle ||
+        physicsState.MovementState == AgentMovementState.IdleAfterShooting);
+
+    }
+
+    public bool CanFaceMouseDirection()
+    {
+        var physicsState = agentPhysicsState;
+
+        return isAgentAlive && 
+        physicsState.MovementState != AgentMovementState.Dashing &&
+        physicsState.MovementState != AgentMovementState.SlidingLeft &&
+        physicsState.MovementState != AgentMovementState.SlidingRight && 
+        physicsState.MovementState != AgentMovementState.Rolling &&
+        physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
+    }
+
     public void DieInPlace()
     {
         isAgentAlive = false;
@@ -43,7 +65,7 @@ public partial class AgentEntity
         var physicsState = agentPhysicsState;
         physicsState.MovementState = AgentMovementState.KnockedDownFront;
 
-        physicsState.DyingDuration = 1.5f;
+        physicsState.DyingDuration = 0.25f;
     }
 
     public void DieKnockBack()
@@ -56,14 +78,44 @@ public partial class AgentEntity
         physicsState.DyingDuration = 1.5f;
     }
 
+    public Vec2f GetGunFiringPosition()
+    {
+        var physicsState = agentPhysicsState;
+        var model3d = agentModel3D;
+
+        Vec2f position = physicsState.Position;
+        switch(model3d.ItemAnimationSet)
+        {
+            case Enums.ItemAnimationSet.HoldingRifle:
+            {
+                position += new Vec2f(0.5f * physicsState.FacingDirection, 1.0f);
+                break;
+            }
+            case Enums.ItemAnimationSet.HoldingPistol:
+            {
+                position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+
+        return position;
+    }
+
     
     public void HandleItemSelected(ItemInventoryEntity item)
     {
         Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-        var model3d = agentModel3D;
 
         if (hasAgentModel3D)
         {
+            var model3d = agentModel3D;
+
+            model3d.ItemAnimationSet = itemProperty.AnimationSet;
+
             if (model3d.Weapon != null)
             {
                 GameObject.Destroy(model3d.Weapon);
@@ -79,7 +131,7 @@ public partial class AgentEntity
                 }
                 case Enums.ItemToolType.Rifle:
                 {
-
+                    SetAgentWeapon(Model3DWeapon.Rifle);
                     break;
                 }
                 case Enums.ItemToolType.Sword:
@@ -112,9 +164,10 @@ public partial class AgentEntity
                     GameObject rapierPrefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Rapier);
                     GameObject rapier = GameObject.Instantiate(rapierPrefab);
 
+                    var gunRotation = rapier.transform.rotation;
                     rapier.transform.parent = hand.transform;
                     rapier.transform.position = hand.transform.position;
-                    rapier.transform.rotation = hand.transform.rotation;
+                    rapier.transform.localRotation = gunRotation;
                     rapier.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
                     model3d.Weapon = rapier;
@@ -130,9 +183,31 @@ public partial class AgentEntity
                         GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
                         GameObject gun = GameObject.Instantiate(prefab);
 
+                        var gunRotation = gun.transform.rotation;
                         gun.transform.parent = hand.transform;
                         gun.transform.position = hand.transform.position;
-                        gun.transform.rotation = hand.transform.rotation;
+                        gun.transform.localRotation = gunRotation;
+                        gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+                        model3d.Weapon = gun;
+
+                    }
+                    break;
+                }
+
+                case Model3DWeapon.Rifle:
+                {
+                    GameObject hand = model3d.RightHand;
+                    if (hand != null)
+                    {
+
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceGun);
+                        GameObject gun = GameObject.Instantiate(prefab);
+
+                        var gunRotation = gun.transform.rotation;
+                        gun.transform.parent = hand.transform;
+                        gun.transform.position = hand.transform.position;
+                        gun.transform.localRotation = gunRotation;
                         gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
                         model3d.Weapon = gun;
@@ -144,6 +219,28 @@ public partial class AgentEntity
         
     }
 
+    public void SlideRight()
+    {
+         var physicsState = agentPhysicsState;
+
+        if (IsStateFree() && isAgentPlayer)
+        {
+            physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
+            physicsState.JumpCounter = 0;
+        }
+    }
+
+    public void SlideLeft()
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree() && isAgentPlayer)
+        {
+            physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
+            physicsState.JumpCounter = 0;
+        }
+    }
+
 
     public void FireGun(float cooldown)
     {
@@ -152,6 +249,7 @@ public partial class AgentEntity
         if (IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.FireGun;
+            
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
@@ -227,10 +325,9 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (
-        IsStateFree() && PhysicsState.OnGrounded)
+        if (IsStateFree() && PhysicsState.OnGrounded)
         {
-            PhysicsState.Velocity.X = 1.35f * PhysicsState.Speed * horizontalDir;
+            PhysicsState.Velocity.X = 1.75f * PhysicsState.Speed * horizontalDir;
             PhysicsState.Velocity.Y = 0.0f;
 
             PhysicsState.Invulnerable = true;
@@ -280,7 +377,15 @@ public partial class AgentEntity
             }
             else
             {
-                PhysicsState.MovementState = AgentMovementState.Move;
+
+                if (PhysicsState.MovingDirection != PhysicsState.FacingDirection)
+                {
+                    PhysicsState.MovementState = AgentMovementState.MoveBackward;
+                }
+                else
+                {
+                    PhysicsState.MovementState = AgentMovementState.Move;
+                }
             }
         }
     }

@@ -213,8 +213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Material: {fileID: 2100000, guid: 4073de6af124b4f40bdce02691603836, type: 2}
-  pixelWidth: 20
-  pixelHeight: 20
 --- !u!1 &530959981
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +225,8 @@ GameObject:
   - component: {fileID: 530959988}
   - component: {fileID: 530959987}
   - component: {fileID: 530959986}
+  - component: {fileID: 530959990}
+  - component: {fileID: 530959991}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -282,7 +282,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 1.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -313,6 +313,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &530959990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530959981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5e1a395ea488d4c90ac4fcfd6b81af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelWidth: 1
+  pixelHeight: 1
+--- !u!114 &530959991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530959981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed771354369887441a8200653af6b229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCameraHalfWidthEnabled: 0
+  maxCameraHalfHeightEnabled: 0
+  maxCameraHalfWidth: 3
+  maxCameraHalfHeight: 2
+  targetDimension: 1
+  targetCameraHalfWidth: 2
+  targetCameraHalfHeight: 1.5
+  pixelPerfect: 0
+  assetsPixelsPerUnit: 100
 --- !u!1 &872716214
 GameObject:
   m_ObjectHideFlags: 0

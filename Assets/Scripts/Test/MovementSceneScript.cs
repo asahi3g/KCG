@@ -50,7 +50,6 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            
             Application.targetFrameRate = 60;
 
             GameResources.Initialize();
@@ -93,6 +92,8 @@ namespace Planet.Unity
 
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
+
+            UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -420,8 +421,9 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
+           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
         }
 
 
@@ -515,5 +517,16 @@ namespace Planet.Unity
             tileMap.GetTile(27, 22).FrontTileID = TileID.Moon;
         }
 
+            private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
+        {
+            agentEntity.agentPhysicsState.Invulnerable = false;
+            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            planetState.cameraFollow.canFollow = false;
+
+            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            planetState.cameraFollow.canFollow = true;
+        }
+
     }
+
 }

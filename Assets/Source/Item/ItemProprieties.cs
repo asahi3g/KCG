@@ -17,6 +17,8 @@ namespace Item
         public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet; // used to change agent animations (like walking with rifle)
 
+        public Enums.ItemKeyUsage KeyUsage;
+
         public int InventorSpriteID;
         public int SpriteID;
         public Vec2f SpriteSize;

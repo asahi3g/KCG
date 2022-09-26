@@ -237,6 +237,7 @@ namespace Agent
                                 // to move the enemy we have to add acceleration 
                                 // towards the player (Equal two time the drag.)
                                 entity.Walk((int)direction.X);
+                                entity.agentPhysicsState.FacingDirection = (int)direction.X;
                                 //physicsState.Acceleration = direction * 2f * physicsState.Speed / Physics.Constants.TimeToMax;
 
                                 // jumping is just an increase in velocity

@@ -66,6 +66,8 @@ public class GameState
     public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
     public static readonly Agent.ProcessStats AgentProcessStats;
+
+    public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
     #region Inventory
@@ -146,12 +148,14 @@ public class GameState
     {
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
+        AgentMovementAnimationTable.InitStage1();
     }
 
     public static void InitStage2()
     {
         TileSpriteAtlasManager.InitStage2();
         SpriteAtlasManager.InitStage2();
+        AgentMovementAnimationTable.InitStage2();
     }
 
 
@@ -182,6 +186,7 @@ public class GameState
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessStats = new Agent.ProcessStats();
+        AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
