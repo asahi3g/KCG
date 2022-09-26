@@ -221,7 +221,6 @@ namespace Agent
 
                         if(!entity.hasAgentAction)
                             entity.AddAgentAction(AgentAction.UnAlert);
-
                         break;
                     }
             case Enums.AgentType.Agent:

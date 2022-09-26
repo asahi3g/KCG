@@ -2,7 +2,7 @@
 /// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 /// </summary>
 
-public class GameState
+public static class GameState
 {
     //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
 
@@ -138,6 +138,8 @@ public class GameState
     #endregion
 
     #region GUI/HUD
+
+    public static readonly KGUI.GUIManager GUIManager;
     public static KGUI.Elements.ElementSpawnerSystem ElementSpawnerSystem;
     public static KGUI.Elements.ElementDrawSystem ElementDrawSystem;
     public static KGUI.Elements.ElementUpdateSystem ElementUpdateSystem;
@@ -253,6 +255,7 @@ public class GameState
         TGenRenderMapBorder = new TGen.RenderMapBorder();
         TGenRenderMapMesh = new TGen.RenderMapMesh();
 
+        GUIManager = new KGUI.GUIManager();
         ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
         ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
         ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();

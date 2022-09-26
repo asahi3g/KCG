@@ -10,8 +10,7 @@ using Item;
 using Inventory;
 using KMath;
 using UnityEngine;
-using HUD;
-using KGUI.Elements;
+ using KGUI.Elements;
 
 namespace Planet
 {
@@ -90,8 +89,8 @@ namespace Planet
         public void InitializeHUD(AgentEntity agentEntity)
         {
             // GUI/HUD
-            HUDManager.InitStage1();
-            HUDManager.InitStage2(this, agentEntity);
+            GameState.GUIManager.InitStage1(this, agentEntity);
+            GameState.GUIManager.InitStage2();
         }
 
         // Note(Mahdi): Deprecated will be removed soon
@@ -643,10 +642,10 @@ namespace Planet
             GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
             GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
 
-            if (agentEntity != null && HUDManager.ShowGUI && HUDManager.guiManager != null)
+            if (agentEntity != null && GameState.GUIManager.ShowGUI)
             {
-                HUDManager.Update(agentEntity);
-                HUDManager.Draw();
+                GameState.GUIManager.Update(agentEntity);
+                GameState.GUIManager.Draw();
                 GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
                 GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
             }

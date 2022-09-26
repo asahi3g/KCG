@@ -11,12 +11,12 @@ public partial class UIElementEntity {
     public KGUI.Elements.ImageComponent kGUIElementsImage { get { return (KGUI.Elements.ImageComponent)GetComponent(UIElementComponentsLookup.KGUIElementsImage); } }
     public bool hasKGUIElementsImage { get { return HasComponent(UIElementComponentsLookup.KGUIElementsImage); } }
 
-    public void AddKGUIElementsImage(string newName, UnityEngine.Sprite newSprite, KGUI.Elements.Image newImage, KMath.Vec3f newScale, int newWidth, int newHeight, string newPath, int newTileSpriteID) {
+    public void AddKGUIElementsImage(string newName, UnityEngine.Sprite newSprite, KGUI.Elements.ImageWrapper newImageWrapper, KMath.Vec3f newScale, int newWidth, int newHeight, string newPath, int newTileSpriteID) {
         var index = UIElementComponentsLookup.KGUIElementsImage;
         var component = (KGUI.Elements.ImageComponent)CreateComponent(index, typeof(KGUI.Elements.ImageComponent));
         component.Name = newName;
         component.Sprite = newSprite;
-        component.Image = newImage;
+        component.ImageWrapper = newImageWrapper;
         component.Scale = newScale;
         component.Width = newWidth;
         component.Height = newHeight;
@@ -25,12 +25,12 @@ public partial class UIElementEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceKGUIElementsImage(string newName, UnityEngine.Sprite newSprite, KGUI.Elements.Image newImage, KMath.Vec3f newScale, int newWidth, int newHeight, string newPath, int newTileSpriteID) {
+    public void ReplaceKGUIElementsImage(string newName, UnityEngine.Sprite newSprite, KGUI.Elements.ImageWrapper newImageWrapper, KMath.Vec3f newScale, int newWidth, int newHeight, string newPath, int newTileSpriteID) {
         var index = UIElementComponentsLookup.KGUIElementsImage;
         var component = (KGUI.Elements.ImageComponent)CreateComponent(index, typeof(KGUI.Elements.ImageComponent));
         component.Name = newName;
         component.Sprite = newSprite;
-        component.Image = newImage;
+        component.ImageWrapper = newImageWrapper;
         component.Scale = newScale;
         component.Width = newWidth;
         component.Height = newHeight;
