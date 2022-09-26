@@ -14,6 +14,6 @@ public class IKTestSceneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        aim.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+       //aim.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
     }
 }

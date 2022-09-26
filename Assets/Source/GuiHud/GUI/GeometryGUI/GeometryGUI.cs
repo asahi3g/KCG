@@ -118,8 +118,8 @@ public class GeometryGUI
         SQNoSpecular_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        SQNoSpecular_0 = planet.AddUIImage("SQNoSpecular_0", SQNoSpecular_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQNoSpecularID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SQNoSpecular_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SQNoSpecular_0 = planet.AddUIImage("SQNoSpecular_0", SQNoSpecular_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQNoSpecularID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SQNoSpecular_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 19, 21, 0);
 
@@ -132,8 +132,8 @@ public class GeometryGUI
         SQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         SQ_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        SQ_0 = planet.AddUIImage("SQ_0", SQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SQ_0 = planet.AddUIImage("SQ_0", SQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 21, 21, 0);
 
@@ -146,8 +146,8 @@ public class GeometryGUI
         SQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         SQ_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        SQ_1 = planet.AddUIImage("SQ_1", SQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SQ_1 = planet.AddUIImage("SQ_1", SQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 23, 21, 0);
 
@@ -160,8 +160,8 @@ public class GeometryGUI
         SQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         SQ_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        SQ_2 = planet.AddUIImage("SQ_2", SQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SQ_2 = planet.AddUIImage("SQ_2", SQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 25, 21, 0);
 
@@ -174,8 +174,8 @@ public class GeometryGUI
         SQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         SQ_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        SQ_3 = planet.AddUIImage("SQ_3", SQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SQ_3 = planet.AddUIImage("SQ_3", SQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQNoSpecular_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 3, 0);
 
@@ -188,8 +188,8 @@ public class GeometryGUI
         HSQNoSpecular_0Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         HSQNoSpecular_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        HSQNoSpecular_0 = planet.AddUIImage("HSQNoSpecular_0", HSQNoSpecular_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQNoSpecular_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQNoSpecular_0 = planet.AddUIImage("HSQNoSpecular_0", HSQNoSpecular_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQNoSpecular_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQNoSpecular_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 3, 0);
 
@@ -202,8 +202,8 @@ public class GeometryGUI
         HSQNoSpecular_1Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         HSQNoSpecular_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        HSQNoSpecular_1 = planet.AddUIImage("HSQNoSpecular_1", HSQNoSpecular_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQNoSpecular_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQNoSpecular_1 = planet.AddUIImage("HSQNoSpecular_1", HSQNoSpecular_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQNoSpecular_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQNoSpecular_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 3, 0);
 
@@ -216,8 +216,8 @@ public class GeometryGUI
         HSQNoSpecular_2Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         HSQNoSpecular_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        HSQNoSpecular_2 = planet.AddUIImage("HSQNoSpecular_2", HSQNoSpecular_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQNoSpecular_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQNoSpecular_2 = planet.AddUIImage("HSQNoSpecular_2", HSQNoSpecular_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQNoSpecular_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQNoSpecular_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 3, 0);
 
@@ -230,8 +230,8 @@ public class GeometryGUI
         HSQNoSpecular_3Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         HSQNoSpecular_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        HSQNoSpecular_3 = planet.AddUIImage("HSQNoSpecular_3", HSQNoSpecular_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQNoSpecular_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQNoSpecular_3 = planet.AddUIImage("HSQNoSpecular_3", HSQNoSpecular_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQNoSpecular_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQNoSpecular_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 19, 19, 0);
 
@@ -244,8 +244,8 @@ public class GeometryGUI
         HSQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.yellow);
         HSQ_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
-        HSQ_0 = planet.AddUIImage("HSQ_0", HSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQ_0 = planet.AddUIImage("HSQ_0", HSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 21, 19, 0);
 
@@ -259,8 +259,8 @@ public class GeometryGUI
         HSQ_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HSQ_1 = planet.AddUIImage("HSQ_1", HSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQ_1 = planet.AddUIImage("HSQ_1", HSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 23, 19, 0);
 
@@ -274,8 +274,8 @@ public class GeometryGUI
         HSQ_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HSQ_2 = planet.AddUIImage("HSQ_2", HSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQ_2 = planet.AddUIImage("HSQ_2", HSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 25, 19, 0);
 
@@ -289,8 +289,8 @@ public class GeometryGUI
         HSQ_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HSQ_3 = planet.AddUIImage("HSQ_3", HSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HSQ_3 = planet.AddUIImage("HSQ_3", HSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 10, 17, 0);
 
@@ -304,8 +304,8 @@ public class GeometryGUI
         SSQ_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        SSQ_0 = planet.AddUIImage("SSQ_0", SSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SSQ_0 = planet.AddUIImage("SSQ_0", SSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 12, 17, 0);
 
@@ -319,8 +319,8 @@ public class GeometryGUI
         SSQ_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        SSQ_1 = planet.AddUIImage("SSQ_1", SSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SSQ_1 = planet.AddUIImage("SSQ_1", SSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 14, 17, 0);
 
@@ -334,8 +334,8 @@ public class GeometryGUI
         SSQ_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        SSQ_2 = planet.AddUIImage("SSQ_2", SSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SSQ_2 = planet.AddUIImage("SSQ_2", SSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int SSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 16, 17, 0);
 
@@ -349,8 +349,8 @@ public class GeometryGUI
         SSQ_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        SSQ_3 = planet.AddUIImage("SSQ_3", SSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        SSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        SSQ_3 = planet.AddUIImage("SSQ_3", SSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, SSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        SSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TI_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 5, 0);
 
@@ -364,8 +364,8 @@ public class GeometryGUI
         TI_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TI_0 = planet.AddUIImage("TI_0", TI_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TI_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TI_0 = planet.AddUIImage("TI_0", TI_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TI_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TI_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 5, 0);
 
@@ -379,8 +379,8 @@ public class GeometryGUI
         TI_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TI_1 = planet.AddUIImage("TI_1", TI_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TI_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TI_1 = planet.AddUIImage("TI_1", TI_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TI_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TI_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 7, 0);
 
@@ -394,8 +394,8 @@ public class GeometryGUI
         TI_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TI_2 = planet.AddUIImage("TI_2", TI_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TI_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TI_2 = planet.AddUIImage("TI_2", TI_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TI_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TI_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 7, 0);
 
@@ -409,8 +409,8 @@ public class GeometryGUI
         TI_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TI_3 = planet.AddUIImage("TI_3", TI_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TI_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TI_3 = planet.AddUIImage("TI_3", TI_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TI_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TI_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TO_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 5, 0);
 
@@ -424,8 +424,8 @@ public class GeometryGUI
         TO_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TO_0 = planet.AddUIImage("TO_0", TO_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TO_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TO_0 = planet.AddUIImage("TO_0", TO_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TO_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TO_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 5, 0);
 
@@ -439,8 +439,8 @@ public class GeometryGUI
         TO_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TO_1 = planet.AddUIImage("TO_1", TO_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TO_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TO_1 = planet.AddUIImage("TO_1", TO_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TO_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TO_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 7, 0);
 
@@ -454,8 +454,8 @@ public class GeometryGUI
         TO_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TO_2 = planet.AddUIImage("TO_2", TO_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TO_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TO_2 = planet.AddUIImage("TO_2", TO_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TO_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int TO_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 7, 0);
 
@@ -469,8 +469,8 @@ public class GeometryGUI
         TO_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        TO_3 = planet.AddUIImage("TO_3", TO_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        TO_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        TO_3 = planet.AddUIImage("TO_3", TO_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, TO_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        TO_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HTD_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 9, 0);
 
@@ -484,8 +484,8 @@ public class GeometryGUI
         HTD_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HTD_0 = planet.AddUIImage("HTD_0", HTD_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTD_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HTD_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HTD_0 = planet.AddUIImage("HTD_0", HTD_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTD_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HTD_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HTL_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 9, 0);
 
@@ -499,8 +499,8 @@ public class GeometryGUI
         HTL_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HTL_1 = planet.AddUIImage("HTL_1", HTL_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTL_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HTL_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HTL_1 = planet.AddUIImage("HTL_1", HTL_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTL_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HTL_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HTU_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 11, 0);
 
@@ -514,8 +514,8 @@ public class GeometryGUI
         HTU_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HTU_2 = planet.AddUIImage("HTU_2", HTU_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTU_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HTU_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HTU_2 = planet.AddUIImage("HTU_2", HTU_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTU_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HTU_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int HTR_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 11, 0);
 
@@ -529,8 +529,8 @@ public class GeometryGUI
         HTR_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        HTR_3 = planet.AddUIImage("HTR_3", HTR_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTR_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        HTR_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        HTR_3 = planet.AddUIImage("HTR_3", HTR_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, HTR_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        HTR_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RHTD_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 11, 0);
 
@@ -544,8 +544,8 @@ public class GeometryGUI
         RHTD_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RHTD_0 = planet.AddUIImage("RHTD_0", RHTD_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTD_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RHTD_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RHTD_0 = planet.AddUIImage("RHTD_0", RHTD_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTD_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RHTD_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RHTL_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 11, 0);
 
@@ -559,8 +559,8 @@ public class GeometryGUI
         RHTL_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RHTL_1 = planet.AddUIImage("RHTL_1", RHTL_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTL_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RHTL_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RHTL_1 = planet.AddUIImage("RHTL_1", RHTL_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTL_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RHTL_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RHTU_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 9, 0);
 
@@ -574,8 +574,8 @@ public class GeometryGUI
         RHTU_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RHTU_2 = planet.AddUIImage("RHTU_2", RHTU_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTU_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RHTU_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RHTU_2 = planet.AddUIImage("RHTU_2", RHTU_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTU_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RHTU_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RHTR_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 9, 0);
 
@@ -589,8 +589,8 @@ public class GeometryGUI
         RHTR_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RHTR_3 = planet.AddUIImage("RHTR_3", RHTR_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTR_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RHTR_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RHTR_3 = planet.AddUIImage("RHTR_3", RHTR_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RHTR_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RHTR_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int CSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 13, 0);
 
@@ -604,8 +604,8 @@ public class GeometryGUI
         CSQ_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        CSQ_0 = planet.AddUIImage("CSQ_0", CSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        CSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        CSQ_0 = planet.AddUIImage("CSQ_0", CSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        CSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int CSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 13, 0);
 
@@ -619,8 +619,8 @@ public class GeometryGUI
         CSQ_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        CSQ_1 = planet.AddUIImage("CSQ_1", CSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        CSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        CSQ_1 = planet.AddUIImage("CSQ_1", CSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        CSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int CSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 15, 0);
 
@@ -634,8 +634,8 @@ public class GeometryGUI
         CSQ_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        CSQ_2 = planet.AddUIImage("CSQ_2", CSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        CSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        CSQ_2 = planet.AddUIImage("CSQ_2", CSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        CSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int CSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 15, 0);
 
@@ -649,8 +649,8 @@ public class GeometryGUI
         CSQ_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        CSQ_3 = planet.AddUIImage("CSQ_3", CSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        CSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        CSQ_3 = planet.AddUIImage("CSQ_3", CSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, CSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        CSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RCSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 13, 0);
 
@@ -664,8 +664,8 @@ public class GeometryGUI
         RCSQ_0Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RCSQ_0 = planet.AddUIImage("RCSQ_0", RCSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RCSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RCSQ_0 = planet.AddUIImage("RCSQ_0", RCSQ_0Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RCSQ_0.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RCSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 13, 0);
 
@@ -679,8 +679,8 @@ public class GeometryGUI
         RCSQ_1Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RCSQ_1 = planet.AddUIImage("RCSQ_1", RCSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RCSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RCSQ_1 = planet.AddUIImage("RCSQ_1", RCSQ_1Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RCSQ_1.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RCSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 15, 0);
 
@@ -694,8 +694,8 @@ public class GeometryGUI
         RCSQ_2Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RCSQ_2 = planet.AddUIImage("RCSQ_2", RCSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RCSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RCSQ_2 = planet.AddUIImage("RCSQ_2", RCSQ_2Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RCSQ_2.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
 
         int RCSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 15, 0);
 
@@ -709,8 +709,8 @@ public class GeometryGUI
         RCSQ_3Background.kGUIElementsImage.Image.GetGameObject().SetActive(false);
 
 
-        RCSQ_3 = planet.AddUIImage("RCSQ_3", RCSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
-        RCSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, 0.4f, 0.4f));
+        RCSQ_3 = planet.AddUIImage("RCSQ_3", RCSQ_3Background.kGUIElementsImage.Image.GetTransform(), 32, 32, RCSQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, -0.8f, 0.8f), Enums.AtlasType.Gui);
+        RCSQ_3.kGUIElementsImage.Image.SetScale(new UnityEngine.Vector3(0.4f, -0.4f, 0.4f));
     }
 
     public void Update(ref Planet.PlanetState planet, AgentEntity agentEntity)
