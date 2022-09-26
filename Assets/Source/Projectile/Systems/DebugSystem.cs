@@ -9,6 +9,8 @@ namespace Projectile
         public void Update(ref Planet.PlanetState planet)
         {
 #if UNITY_EDITOR
+            if (planet.ProjectileList == null)
+                return;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
                 ProjectileEntity entityP = planet.ProjectileList.Get(i);
