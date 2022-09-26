@@ -182,22 +182,18 @@ namespace KGUI
                         pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GameObject.active ||
                         wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GameObject.active)
                     {
-                        // If Item Is Placement Tool
                         if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
-                            // DeActivate Inputs
-                            Item.itemCastData.InputsActive = false;
+                            Item.itemTile.InputsActive = false;
                         }
                         else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool) // If Item Is Material Tool
                         {
-                            // Activate Inputs
-                            Item.itemCastData.InputsActive = false;
+                            Item.itemTile.InputsActive = false;
                         }
                     }
                     else
                     {
-                        // If not, DeActivate Inputs
-                        Item.itemCastData.InputsActive = true;
+                        Item.itemTile.InputsActive = true;
                     }
                 }
 
@@ -212,16 +208,16 @@ namespace KGUI
 
                     // If Selected     = Red
                     // If Not Selected = Yellow
-                    bedrockUIBackground.SetImageColor(Item.itemCastData.data.TileID == TileID.Bedrock
+                    bedrockUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Bedrock
                         ? Color.red
                         : Color.yellow);
-                    dirtUIBackground.SetImageColor(Item.itemCastData.data.TileID == TileID.Moon
+                    dirtUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Moon
                         ? Color.red
                         : Color.yellow);
-                    pipeUIBackground.SetImageColor(Item.itemCastData.data.TileID == TileID.Pipe
+                    pipeUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Pipe
                         ? Color.red
                         : Color.yellow);
-                    wireUIBackground.SetImageColor(Item.itemCastData.data.TileID == TileID.Wire
+                    wireUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Wire
                         ? Color.red
                         : Color.yellow);
                 }
@@ -313,7 +309,7 @@ namespace KGUI
                                             // Check If Item Is Available
                                             if (Item != null)
                                             {
-                                                if (Item.itemCastData.data.TileID == TileID.Bedrock)
+                                                if (Item.itemTile.TileID == TileID.Bedrock)
                                                 {
                                                     // Set Red After Selected
                                                     bedrockUIBackground.SetImageColor(Color.red);
@@ -324,7 +320,7 @@ namespace KGUI
                                                     bedrockUIBackground.SetImageColor(Color.yellow);
                                                 }
 
-                                                if (Item.itemCastData.data.TileID == TileID.Moon)
+                                                if (Item.itemTile.TileID == TileID.Moon)
                                                 {
                                                     // Set Red After Selected
                                                     dirtUIBackground.SetImageColor(Color.red);
@@ -335,7 +331,7 @@ namespace KGUI
                                                     dirtUIBackground.SetImageColor(Color.yellow);
                                                 }
 
-                                                if (Item.itemCastData.data.TileID == TileID.Pipe)
+                                                if (Item.itemTile.TileID == TileID.Pipe)
                                                 {
                                                     // Set Red After Selected
                                                     pipeUIBackground.SetImageColor(Color.red);
@@ -346,7 +342,7 @@ namespace KGUI
                                                     pipeUIBackground.SetImageColor(Color.yellow);
                                                 }
 
-                                                if (Item.itemCastData.data.TileID == TileID.Wire)
+                                                if (Item.itemTile.TileID == TileID.Wire)
                                                 {
                                                     // Set Red After Selected
                                                     wireUIBackground.SetImageColor(Color.red);
@@ -432,7 +428,7 @@ namespace KGUI
                                             // Check If Item Is Available
                                             if (Item != null)
                                             {
-                                                if (Item.itemPotionCastData.potionType == Enums.PotionType.HealthPotion)
+                                                if (Item.itemPotion.potionType == Enums.PotionType.HealthPotion)
                                                 {
                                                     // Set Red After Selected
                                                     healthPotionUIBackground.SetImageColor(Color.red);
@@ -533,7 +529,7 @@ namespace KGUI
                         {
                             case Enums.ItemType.PlacementTool:
                             case Enums.ItemType.PlacementMaterialTool:
-                                Item.itemCastData.data.TileID = TileID.Bedrock;
+                                Item.itemTile.TileID = TileID.Bedrock;
                                 break;
                         }
                     }
@@ -552,12 +548,12 @@ namespace KGUI
                         if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Moon;
+                            Item.itemTile.TileID = TileID.Moon;
                         }
                         else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Moon;
+                            Item.itemTile.TileID = TileID.Moon;
                         }
                     }
                 }
@@ -575,12 +571,12 @@ namespace KGUI
                         if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Pipe;
+                            Item.itemTile.TileID = TileID.Pipe;
                         }
                         else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Pipe;
+                            Item.itemTile.TileID = TileID.Pipe;
                         }
                     }
                 }
@@ -598,12 +594,12 @@ namespace KGUI
                         if (Item.itemType.Type == Enums.ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Wire;
+                            Item.itemTile.TileID = TileID.Wire;
                         }
                         else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
-                            Item.itemCastData.data.TileID = TileID.Wire;
+                            Item.itemTile.TileID = TileID.Wire;
                         }
                     }
                 }
