@@ -18,6 +18,7 @@ namespace Agent
         public int FacingDirection;
 
         public Enums.AgentMovementState MovementState;
+        public AgentAnimation LastAgentAnimation;
         public bool SetMovementState;
 
         //public Flags MovementFlags; 
@@ -28,6 +29,8 @@ namespace Agent
         public bool Droping;            // dropping
 
         public int   JumpCounter;
+
+        public float IdleAfterShootingTime;
         public float SlidingTime;
         public float DyingDuration;
         public bool ActionInProgress;

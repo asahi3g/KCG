@@ -23,7 +23,6 @@ namespace Action
 
             if (GameState.ActionCoolDownSystem.InCoolDown(entitasContext, actionTypeID, agentID))
             {
-                Debug.Log("Action " + actionProperties.Name + " in CoolDown");
                 return -1;
             }
 

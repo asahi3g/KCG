@@ -381,7 +381,7 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.SetParticleType(Particle.ParticleType.Blood);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(30);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
             GameState.ParticleEmitterCreationApi.End();

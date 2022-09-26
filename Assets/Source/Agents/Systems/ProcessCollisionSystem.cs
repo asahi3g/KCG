@@ -73,20 +73,14 @@ namespace Agent
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree() && !physicsState.OnGrounded && entity.isAgentPlayer)
-                {
-                    physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
-                }
+                entity.SlideLeft();
             }
             else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                if (entity.IsStateFree() && !physicsState.OnGrounded && entity.isAgentPlayer)
-                {
-                    physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
-                }
+                entity.SlideRight();
             }
 
             Vec2f position = physicsState.Position;

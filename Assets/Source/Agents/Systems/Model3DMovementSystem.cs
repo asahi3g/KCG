@@ -48,10 +48,12 @@ namespace Agent
                 if (physicsState.FacingDirection == 1)
                 {
                     model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
                 }
                 else if (physicsState.FacingDirection == -1)
                 {
-                    model3d.GameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
+                    model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, -model3d.ModelScale.Z);
                 }
             }
         }

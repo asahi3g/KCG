@@ -1,100 +1,217 @@
 fileFormatVersion: 2
-guid: b9ff50fbeeb1fd4428437811dbd0401f
+guid: 6824094fa33113b4d81f084ade0b17f9
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: 3075806547497603873
-    second: DEFORM_Crouch
+      74: -7813635296899823279
+    second: Crouch
   - first:
-      74: 3033039032215927464
-    second: DEFORM_CrouchSimple
+      74: 4749916858553617154
+    second: CrouchIdle
   - first:
-      74: 3615355897637467734
-    second: DEFORM_CrouchWalk
+      74: -7180294270926287462
+    second: CrouchWalk
   - first:
-      74: 2497072220903478765
-    second: DEFORM_Death
+      74: 2031526093453808449
+    second: Death1
   - first:
-      74: -5272339112775300247
-    second: DEFORM_DeathKnockback
+      74: 7451765699022430901
+    second: Death2
   - first:
-      74: 5829801140996681879
-    second: DEFORM_DodgeDash
+      74: -2957417470477789276
+    second: Death3
   - first:
-      74: -594171746558694542
-    second: DEFORM_Drink
+      74: -2133140106779658419
+    second: DeathKnockback
   - first:
-      74: -8629607479076784557
-    second: DEFORM_FailLegs
+      74: -6474528733652899161
+    second: Drink
   - first:
-      74: -4804319787235620321
-    second: DEFORM_Idle
+      74: 944148003297654189
+    second: GunAlerted
   - first:
-      74: 6280747386712437489
-    second: DEFORM_Jetpack
+      74: 3285726309862009831
+    second: GunCrouch
   - first:
-      74: 8085776837712612827
-    second: DEFORM_Jog
+      74: -831053803614731152
+    second: GunCrouchIdle
   - first:
-      74: 7164931697608752780
-    second: DEFORM_Jump
+      74: 5247908246185524959
+    second: GunCrouchWalk
   - first:
-      74: -2438437378055641909
-    second: DEFORM_JumpDown
+      74: -4968027780944176798
+    second: GunDodge
   - first:
-      74: 7756789297189863786
-    second: DEFORM_JumpFailFlat
+      74: 4339206412922523724
+    second: GunIdle
   - first:
-      74: 2253772893882169045
-    second: DEFORM_JumpFailLegs
+      74: -5810512592859939639
+    second: GunJump
   - first:
-      74: -385893870134402376
-    second: DEFORM_JumpFall
+      74: -7866622764301685297
+    second: GunJumpFall
   - first:
-      74: -5026471210368973037
-    second: DEFORM_JumpRoll
+      74: 1122269466399454959
+    second: GunJumpRoll
   - first:
-      74: 8828103646270681124
-    second: DEFORM_JumpUp
+      74: -1628620192045692343
+    second: GunPull
   - first:
-      74: -2683398169166439324
-    second: DEFORM_Roll
+      74: 2067617859188193786
+    second: GunRoll
   - first:
-      74: -593491884475123212
-    second: DEFORM_Run
+      74: -5802446696568688704
+    second: GunRun
   - first:
-      74: 6091111437804646129
-    second: DEFORM_Shooting
+      74: 6018845730732312562
+    second: GunShoot
   - first:
-      74: 704207948486211217
-    second: DEFORM_Sliding
+      74: -7523799387860143440
+    second: Dodge
   - first:
-      74: -6240921369225488293
-    second: DEFORM_SlidingHandsFree
+      74: 2790456985628449068
+    second: GunWalking
   - first:
-      74: -6941114804354726591
-    second: DEFORM_Stagger
+      74: -2533479742820308482
+    second: GunWalkingBackwards
   - first:
-      74: 5448133965377139563
-    second: DEFORM_SwordAttack
+      74: -3100369314251171874
+    second: Idle
   - first:
-      74: -5589042474418545497
-    second: DEFORM_Throw
+      74: -1208452785204269159
+    second: Jetpack
   - first:
-      74: 4738268196817612612
-    second: DEFORM_Walking
+      74: 5539831331247536789
+    second: Jump
   - first:
-      74: -3207759613285185134
-    second: DEFORM_Limp
+      74: -5155775420716587741
+    second: JumpFall
   - first:
-      74: 9112791655919320339
-    second: DEFORM_WalkingGun
+      74: 5464403925804442340
+    second: JumpRoll
+  - first:
+      74: -3512560922411751930
+    second: Limp
+  - first:
+      74: 4973875215505007627
+    second: PistolAlerted
+  - first:
+      74: -7606572288272915850
+    second: PistolAlerted2
+  - first:
+      74: -3692548811142782000
+    second: PistolCrouch
+  - first:
+      74: 1747961301653495808
+    second: PistolCrouch2
+  - first:
+      74: -5445958958616525864
+    second: PistolCrouchIdle
+  - first:
+      74: -9070780200727391049
+    second: PistolCrouchIdle2
+  - first:
+      74: -3838504182320716182
+    second: PistolCrouchWalk
+  - first:
+      74: -1001660624357942317
+    second: PistolCrouchWalk2
+  - first:
+      74: 1621233603686337395
+    second: PistolDodge
+  - first:
+      74: -3854417491354540859
+    second: PistolDodge2
+  - first:
+      74: 10251683181971137
+    second: PistolIdle
+  - first:
+      74: -3191051774030654290
+    second: PistolIdle2
+  - first:
+      74: -907168872795204250
+    second: PistolJump
+  - first:
+      74: -716832236830123503
+    second: PistolJump2
+  - first:
+      74: 3388827249827370251
+    second: PistolJumpFall
+  - first:
+      74: 8551508312733685969
+    second: PistolJumpFall2
+  - first:
+      74: -4467732896517766750
+    second: PistolJumpRoll
+  - first:
+      74: -2624904812583127683
+    second: PistolJumpRoll2
+  - first:
+      74: 3997732340723795556
+    second: PistolPull
+  - first:
+      74: 4289324847742113483
+    second: PistolPull2
+  - first:
+      74: -5545734615143633809
+    second: PistolRoll
+  - first:
+      74: 421116134846599036
+    second: PistolRoll2
+  - first:
+      74: 2785462924859767976
+    second: PistolRun
+  - first:
+      74: -7975770236824677448
+    second: PistolRun2
+  - first:
+      74: 2409975013183413432
+    second: PistolShoot
+  - first:
+      74: -8813789521267808539
+    second: PistolShoot2
+  - first:
+      74: 8355677847109940512
+    second: PistolWalking
+  - first:
+      74: 8644986054976798149
+    second: PistolWalking2
+  - first:
+      74: 1790214705663862285
+    second: PistolWalkingBackwards
+  - first:
+      74: -6583228496015939338
+    second: PistolWalkingBackwards2
+  - first:
+      74: -2341027594253812581
+    second: Roll
+  - first:
+      74: 5522812681064789136
+    second: Run
+  - first:
+      74: -1192840080986744117
+    second: Slide
+  - first:
+      74: -4784048632722871850
+    second: Stagger
+  - first:
+      74: -8519270181867604690
+    second: SwordAttack
+  - first:
+      74: -6185155371445809522
+    second: Throw
+  - first:
+      74: -1610863427237328480
+    second: Walking
+  - first:
+      74: -4696577498856080811
+    second: WalkingBackwards
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.003
+      name: LowRes
     second: {fileID: 2100000, guid: 8f689dab7bb49e941bdcc386b17816eb, type: 2}
   materials:
     materialImportMode: 2
