@@ -14,6 +14,7 @@ namespace Agent
         public GameObject Weapon;
         public AnimancerComponent AnimancerComponent;
         public Enums.AgentAnimationType AnimationType;
+        public Enums.ItemAnimationSet ItemAnimationSet;
     }
 
         
