@@ -2,6 +2,7 @@
 using UnityEngine;
 using KMath;
 using Enums;
+using static UnityEditor.PlayerSettings;
 
 namespace Node.Action
 {
@@ -39,8 +40,9 @@ namespace Node.Action
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
                 ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
-                itemParticle.itemPhysicsState.Velocity = new Vec2f(-8.0f, 8.0f);
+                itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.MovingDirection * 8.0f, 8.0f);
                 itemParticle.isItemUnpickable = true;
+                nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);
 
                 nodeEntity.nodeExecution.State = Enums.NodeState.Running;
                 return;
@@ -51,7 +53,6 @@ namespace Node.Action
         }
 
         // Action is active untill itemParticle becomes pickable again.
-        // Todo: Create an unpickable system outside of here.
         public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             const float DURATION = 2.0f;
@@ -65,8 +66,9 @@ namespace Node.Action
 
         public override void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
-            //if (nodeEntity.nodeExecution.State == Enums.NodeState.Success)
-            //    ItemParticle.isItemUnpickable = false;
+            ItemParticleEntity itemParticle = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            if (nodeEntity.nodeExecution.State == Enums.NodeState.Success)
+                itemParticle.isItemUnpickable = false;
 
             base.OnExit(ref planet, nodeEntity);
         }

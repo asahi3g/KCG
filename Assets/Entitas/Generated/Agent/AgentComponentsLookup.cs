@@ -8,30 +8,28 @@
 //------------------------------------------------------------------------------
 public static class AgentComponentsLookup {
 
-    public const int AgentAgentAction = 0;
-    public const int AgentAIController = 1;
-    public const int AgentAlive = 2;
-    public const int AgentCorpse = 3;
-    public const int AgentEnemy = 4;
-    public const int AgentID = 5;
-    public const int AgentInventory = 6;
-    public const int AgentModel3D = 7;
-    public const int AgentPhysicsState = 8;
-    public const int AgentPlayer = 9;
-    public const int AgentSprite2D = 10;
-    public const int AgentStats = 11;
-    public const int AgentsLineOfSight = 12;
-    public const int AnimationState = 13;
-    public const int ECSInput = 14;
-    public const int ECSInputXY = 15;
-    public const int PhysicsBox2DCollider = 16;
-    public const int PhysicsSphere2DCollider = 17;
+    public const int AgentAction = 0;
+    public const int AgentAlive = 1;
+    public const int AgentCorpse = 2;
+    public const int AgentEnemy = 3;
+    public const int AgentID = 4;
+    public const int AgentInventory = 5;
+    public const int AgentModel3D = 6;
+    public const int AgentPhysicsState = 7;
+    public const int AgentPlayer = 8;
+    public const int AgentSprite2D = 9;
+    public const int AgentStats = 10;
+    public const int AgentsLineOfSight = 11;
+    public const int AnimationState = 12;
+    public const int ECSInput = 13;
+    public const int ECSInputXY = 14;
+    public const int PhysicsBox2DCollider = 15;
+    public const int PhysicsSphere2DCollider = 16;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
-        "AgentAgentAction",
-        "AgentAIController",
+        "AgentAction",
         "AgentAlive",
         "AgentCorpse",
         "AgentEnemy",
@@ -51,8 +49,7 @@ public static class AgentComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Agent.AgentActionComponent),
-        typeof(Agent.AIController),
+        typeof(Agent.ActionComponent),
         typeof(Agent.AliveComponent),
         typeof(Agent.CorpseComponent),
         typeof(Agent.EnemyComponent),

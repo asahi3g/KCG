@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Node
 {
-    public class ToolActionThrowableGrenade : NodeBase
+    public class ShootGrenadeAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.None; } }
+        public override NodeType Type { get { return NodeType.ShootGrenadeAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

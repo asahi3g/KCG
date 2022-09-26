@@ -11,19 +11,21 @@ public partial class ItemParticleEntity {
     public Item.DrawPosition2DComponent itemDrawPosition2D { get { return (Item.DrawPosition2DComponent)GetComponent(ItemParticleComponentsLookup.ItemDrawPosition2D); } }
     public bool hasItemDrawPosition2D { get { return HasComponent(ItemParticleComponentsLookup.ItemDrawPosition2D); } }
 
-    public void AddItemDrawPosition2D(KMath.Vec2f newValue, KMath.Vec2f newPreviousValue) {
+    public void AddItemDrawPosition2D(KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, KMath.Vec2f newPosition) {
         var index = ItemParticleComponentsLookup.ItemDrawPosition2D;
         var component = (Item.DrawPosition2DComponent)CreateComponent(index, typeof(Item.DrawPosition2DComponent));
-        component.Value = newValue;
-        component.PreviousValue = newPreviousValue;
+        component.Acceleration = newAcceleration;
+        component.Velocity = newVelocity;
+        component.Position = newPosition;
         AddComponent(index, component);
     }
 
-    public void ReplaceItemDrawPosition2D(KMath.Vec2f newValue, KMath.Vec2f newPreviousValue) {
+    public void ReplaceItemDrawPosition2D(KMath.Vec2f newAcceleration, KMath.Vec2f newVelocity, KMath.Vec2f newPosition) {
         var index = ItemParticleComponentsLookup.ItemDrawPosition2D;
         var component = (Item.DrawPosition2DComponent)CreateComponent(index, typeof(Item.DrawPosition2DComponent));
-        component.Value = newValue;
-        component.PreviousValue = newPreviousValue;
+        component.Acceleration = newAcceleration;
+        component.Velocity = newVelocity;
+        component.Position = newPosition;
         ReplaceComponent(index, component);
     }
 

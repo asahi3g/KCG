@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.PhysicsStateComponent agentPhysicsState { get { return (Agent.PhysicsStateComponent)GetComponent(AgentComponentsLookup.AgentPhysicsState); } }
     public bool hasAgentPhysicsState { get { return HasComponent(AgentComponentsLookup.AgentPhysicsState); } }
 
-    public void AddAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, float newInitialJumpVelocity, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newMovingDirection, int newFacingDirection, Enums.AgentMovementState newMovementState, bool newSetMovementState, bool newAffectedByGravity, bool newAffectedByFriction, bool newInvulnerable, bool newOnGrounded, bool newDroping, int newJumpCounter, float newIdleAfterShootingTime, float newSlidingTime, float newDyingDuration, bool newActionInProgress, bool newActionJustEnded, float newActionDuration, float newActionCooldown, float newDashCooldown, float newSlashCooldown, float newStaggerDuration, float newRollCooldown, float newRollImpactDuration) {
+    public void AddAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, float newInitialJumpVelocity, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newMovingDirection, int newFacingDirection, Enums.AgentMovementState newMovementState, Agent.AgentAnimation newLastAgentAnimation, bool newSetMovementState, bool newAffectedByGravity, bool newAffectedByFriction, bool newInvulnerable, bool newOnGrounded, bool newDroping, int newJumpCounter, float newIdleAfterShootingTime, float newSlidingTime, float newDyingDuration, bool newActionInProgress, bool newActionJustEnded, float newActionDuration, float newActionCooldown, float newDashCooldown, float newSlashCooldown, float newStaggerDuration, float newRollCooldown, float newRollImpactDuration) {
         var index = AgentComponentsLookup.AgentPhysicsState;
         var component = (Agent.PhysicsStateComponent)CreateComponent(index, typeof(Agent.PhysicsStateComponent));
         component.Position = newPosition;
@@ -23,6 +23,7 @@ public partial class AgentEntity {
         component.MovingDirection = newMovingDirection;
         component.FacingDirection = newFacingDirection;
         component.MovementState = newMovementState;
+        component.LastAgentAnimation = newLastAgentAnimation;
         component.SetMovementState = newSetMovementState;
         component.AffectedByGravity = newAffectedByGravity;
         component.AffectedByFriction = newAffectedByFriction;
@@ -45,7 +46,7 @@ public partial class AgentEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, float newInitialJumpVelocity, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newMovingDirection, int newFacingDirection, Enums.AgentMovementState newMovementState, bool newSetMovementState, bool newAffectedByGravity, bool newAffectedByFriction, bool newInvulnerable, bool newOnGrounded, bool newDroping, int newJumpCounter, float newIdleAfterShootingTime, float newSlidingTime, float newDyingDuration, bool newActionInProgress, bool newActionJustEnded, float newActionDuration, float newActionCooldown, float newDashCooldown, float newSlashCooldown, float newStaggerDuration, float newRollCooldown, float newRollImpactDuration) {
+    public void ReplaceAgentPhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newSpeed, float newInitialJumpVelocity, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, int newMovingDirection, int newFacingDirection, Enums.AgentMovementState newMovementState, Agent.AgentAnimation newLastAgentAnimation, bool newSetMovementState, bool newAffectedByGravity, bool newAffectedByFriction, bool newInvulnerable, bool newOnGrounded, bool newDroping, int newJumpCounter, float newIdleAfterShootingTime, float newSlidingTime, float newDyingDuration, bool newActionInProgress, bool newActionJustEnded, float newActionDuration, float newActionCooldown, float newDashCooldown, float newSlashCooldown, float newStaggerDuration, float newRollCooldown, float newRollImpactDuration) {
         var index = AgentComponentsLookup.AgentPhysicsState;
         var component = (Agent.PhysicsStateComponent)CreateComponent(index, typeof(Agent.PhysicsStateComponent));
         component.Position = newPosition;
@@ -57,6 +58,7 @@ public partial class AgentEntity {
         component.MovingDirection = newMovingDirection;
         component.FacingDirection = newFacingDirection;
         component.MovementState = newMovementState;
+        component.LastAgentAnimation = newLastAgentAnimation;
         component.SetMovementState = newSetMovementState;
         component.AffectedByGravity = newAffectedByGravity;
         component.AffectedByFriction = newAffectedByFriction;

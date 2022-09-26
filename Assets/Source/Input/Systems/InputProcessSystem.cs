@@ -407,20 +407,16 @@ namespace ECSInput
                 // If, Item is a weapon or gun.
                 if(itemProperty.Group == ItemGroups.Gun || itemProperty.Group == ItemGroups.Weapon)
                 {
-                    // Has Action Component?
-                    if(entity.hasAgentAgentAction)
+                    if(entity.hasAgentAction)
                     {
-                        // Set Action Mode To Alert
-                        entity.agentAgentAction.Action = AgentAction.Alert;
+                        entity.agentAction.Action = AgentAction.Alert;
                     }
                 }
                 else
                 {
-                    // Has Action Component?
-                    if (entity.hasAgentAgentAction)
+                    if (entity.hasAgentAction)
                     {
-                        // Set Action Mode To Un Alert
-                        entity.agentAgentAction.Action = AgentAction.UnAlert;
+                        entity.agentAction.Action = AgentAction.UnAlert;
                     }
                 }
                 

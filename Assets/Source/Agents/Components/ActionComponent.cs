@@ -5,7 +5,7 @@ using System.Diagnostics.Tracing;
 namespace Agent
 {
     [Agent]
-    public class AgentActionComponent : IComponent
+    public class ActionComponent : IComponent
     {
         public AgentAction Action;
     }

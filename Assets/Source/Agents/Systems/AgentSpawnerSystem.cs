@@ -10,10 +10,6 @@ namespace Agent
     {
         private static int UniqueID = 0;
 
-        public AgentSpawnerSystem()
-        {
-        }
-
         public AgentEntity SpawnPlayer(Contexts entitasContext, int spriteId, int width, int height, Vec2f position,
             int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
             int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
@@ -32,7 +28,7 @@ namespace Agent
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
-            entity.AddAgentAgentAction(AgentAction.UnAlert);
+            entity.AddAgentAction(AgentAction.UnAlert);
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown, false);
 
             if (inventoryID != -1)
@@ -48,7 +44,7 @@ namespace Agent
                  newMovingDirection: 1,
                  newFacingDirection: 1,
                  newMovementState: Enums.AgentMovementState.None,
-                 
+                 newLastAgentAnimation: new AgentAnimation(),
                  newSetMovementState: false,
                  newAffectedByGravity: true,
                  newAffectedByFriction: true,
@@ -96,9 +92,10 @@ namespace Agent
                 newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
                 newVelocity: Vec2f.Zero,
                 newAcceleration: Vec2f.Zero,
-                 newMovingDirection: 1,
-                 newFacingDirection: 1,
+                newMovingDirection: 1,
+                newFacingDirection: 1,
                 newMovementState: Enums.AgentMovementState.None,
+                newLastAgentAnimation: new AgentAnimation(),
                 newSetMovementState: false,
                 newAffectedByGravity: true,
                 newAffectedByFriction: true,
@@ -135,19 +132,20 @@ namespace Agent
             entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
-            entity.AddAgentAgentAction(AgentAction.UnAlert);
+            entity.AddAgentAction(AgentAction.UnAlert);
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
 
             entity.AddAgentPhysicsState(
-                position, 
+                newPosition: position, 
                 newPreviousPosition: default, 
                 newSpeed: properties.MovProperties.DefaultSpeed,
                 newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
                 newVelocity: Vec2f.Zero, 
                 newAcceleration: Vec2f.Zero, 
-                 newMovingDirection: 1,
-                 newFacingDirection: 1,
+                newMovingDirection: 1,
+                newFacingDirection: 1,
                 newMovementState: Enums.AgentMovementState.None,
+                newLastAgentAnimation: new AgentAnimation(),
                 newSetMovementState: false,
                 newAffectedByGravity: true,
                 newAffectedByFriction: true,
@@ -223,27 +221,27 @@ namespace Agent
                         entity.isECSInput = true;
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
-                        if(!entity.hasAgentAgentAction)
-                            entity.AddAgentAgentAction(AgentAction.UnAlert);
+                        if(!entity.hasAgentAction)
+                            entity.AddAgentAction(AgentAction.UnAlert);
 
                         break;
                     }
             case Enums.AgentType.Agent:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
             case Enums.AgentType.Slime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
+                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
                         break;
                     }

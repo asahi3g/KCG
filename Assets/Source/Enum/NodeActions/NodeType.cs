@@ -24,6 +24,7 @@
         // Items
         ShootFireWeaponAction,
         ShootPulseWeaponAction,
+        ShootGrenadeAction,
         ThrowGasBombAction,
         ThrowFragGrenadeAction,
         WaterAction,

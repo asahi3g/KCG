@@ -86,7 +86,6 @@ public partial class Contexts {
 
     public const string ActionCoolDownTypeID = "ActionCoolDownTypeID";
     public const string ActionCoolDownAgentID = "ActionCoolDownAgentID";
-    public const string AgentAIController = "AgentAIController";
     public const string AgentID = "AgentID";
     public const string AIGoal = "AIGoal";
     public const string FloatingTextID = "FloatingTextID";
@@ -116,11 +115,6 @@ public partial class Contexts {
             ActionCoolDownAgentID,
             actionCoolDown.GetGroup(ActionCoolDownMatcher.ActionCoolDown),
             (e, c) => ((ActionCoolDown.Component)c).AgentID));
-
-        agent.AddEntityIndex(new Entitas.PrimaryEntityIndex<AgentEntity, int>(
-            AgentAIController,
-            agent.GetGroup(AgentMatcher.AgentAIController),
-            (e, c) => ((Agent.AIController)c).AgentPlannerID));
 
         agent.AddEntityIndex(new Entitas.PrimaryEntityIndex<AgentEntity, int>(
             AgentID,
@@ -225,10 +219,6 @@ public static class ContextsExtensions {
 
     public static System.Collections.Generic.HashSet<ActionCoolDownEntity> GetEntitiesWithActionCoolDownAgentID(this ActionCoolDownContext context, int AgentID) {
         return ((Entitas.EntityIndex<ActionCoolDownEntity, int>)context.GetEntityIndex(Contexts.ActionCoolDownAgentID)).GetEntities(AgentID);
-    }
-
-    public static AgentEntity GetEntityWithAgentAIController(this AgentContext context, int AgentPlannerID) {
-        return ((Entitas.PrimaryEntityIndex<AgentEntity, int>)context.GetEntityIndex(Contexts.AgentAIController)).GetEntity(AgentPlannerID);
     }
 
     public static AgentEntity GetEntityWithAgentID(this AgentContext context, int ID) {

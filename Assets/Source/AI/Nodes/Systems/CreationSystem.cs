@@ -51,7 +51,7 @@ namespace Node
             if (nodeID != -1)
             {
                 NodeEntity nodeEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
-                nodeEntity.AddNodeMoveTo(goalPosition);
+                nodeEntity.AddNodeMoveTo(goalPosition, new Vec2f[1], 0, false, false);
             }
             return nodeID;
         }

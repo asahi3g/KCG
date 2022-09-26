@@ -11,17 +11,25 @@ public partial class NodeEntity {
     public Node.MoveToComponent nodeMoveTo { get { return (Node.MoveToComponent)GetComponent(NodeComponentsLookup.NodeMoveTo); } }
     public bool hasNodeMoveTo { get { return HasComponent(NodeComponentsLookup.NodeMoveTo); } }
 
-    public void AddNodeMoveTo(KMath.Vec2f newGoalPosition) {
+    public void AddNodeMoveTo(KMath.Vec2f newGoalPosition, KMath.Vec2f[] newPath, int newPathLength, bool newReachedX, bool newReachedY) {
         var index = NodeComponentsLookup.NodeMoveTo;
         var component = (Node.MoveToComponent)CreateComponent(index, typeof(Node.MoveToComponent));
         component.GoalPosition = newGoalPosition;
+        component.path = newPath;
+        component.pathLength = newPathLength;
+        component.reachedX = newReachedX;
+        component.reachedY = newReachedY;
         AddComponent(index, component);
     }
 
-    public void ReplaceNodeMoveTo(KMath.Vec2f newGoalPosition) {
+    public void ReplaceNodeMoveTo(KMath.Vec2f newGoalPosition, KMath.Vec2f[] newPath, int newPathLength, bool newReachedX, bool newReachedY) {
         var index = NodeComponentsLookup.NodeMoveTo;
         var component = (Node.MoveToComponent)CreateComponent(index, typeof(Node.MoveToComponent));
         component.GoalPosition = newGoalPosition;
+        component.path = newPath;
+        component.pathLength = newPathLength;
+        component.reachedX = newReachedX;
+        component.reachedY = newReachedY;
         ReplaceComponent(index, component);
     }
 

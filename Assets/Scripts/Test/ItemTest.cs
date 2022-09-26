@@ -48,7 +48,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(16, 16);
+            Vec2i mapSize = new Vec2i(16, 64);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
@@ -93,43 +93,10 @@ namespace Planet.Unity
         {
             ref var tileMap = ref Planet.TileMap;
 
-            for (int j = 0; j < tileMap.MapSize.Y; j++)
-            {
-                for (int i = 0; i < tileMap.MapSize.X; i++)
-                {
-                    TileID frontTile;
-
-                    if (i >= tileMap.MapSize.X / 2)
-                    {
-                        if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
-                        {
-                            frontTile = TileID.Moon;
-                        }
-                        else
-                        {
-                            frontTile = TileID.Glass;
-                        }
-                    }
-                    else
-                    {
-                        if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
-                        {
-                            frontTile = TileID.Glass;
-                        }
-                        else
-                        {
-                            frontTile = TileID.Moon;
-                        }
-                    }
-
-                    if (j is > 1 and < 6 || (j > 8 + i))
-                    {
-                        frontTile = TileID.Air;
-                    }
-
-
-                    tileMap.SetFrontTile(i, j, frontTile);
-                }
+             for (int i = 0; i < tileMap.MapSize.X; i++)
+             {
+                 TileID frontTile = TileID.Moon;
+                 tileMap.SetFrontTile(i, 0, frontTile);
             }
         }
     }

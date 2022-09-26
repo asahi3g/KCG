@@ -51,6 +51,7 @@ namespace Node
 
         }
 
+        // Todo Urgent: move this out of to a system outside actions.
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
             List<MechEntity> lights = new List<MechEntity>();
