@@ -212,9 +212,6 @@ namespace Planet.Unity
             Planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
             Planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
 
-            Planet.AddFixedFloatingText("BACK TILE PLACEMENT TOOL\n1>Select back tile placement tool from inventory.\n2>Place it anywhere with pressing 'LMB'.", new Vec2f(105, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(105, 7), Enums.ItemType.PlacementToolBack);
-
             Planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
             Planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);
 

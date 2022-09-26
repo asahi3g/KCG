@@ -7,7 +7,7 @@ namespace Node
 {
     public class ThrowGasBombAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ThrowFragGrenadeAction; } }
+        public override NodeType Type { get { return NodeType.ThrowGasBombAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

@@ -8,6 +8,7 @@ using Enums;
 using Planet;
 using Sprites;
 using System.Drawing;
+using Enums.Tile;
 
 /*
     How To use it:
@@ -100,6 +101,13 @@ namespace Item
             IsItemTypeValid();
 
             PropertiesArray[(int)CurrentIndex].MechType = mech;
+        }
+
+        public void SetTile(TileID tile)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)CurrentIndex].TileType = tile;
         }
 
         public void SetSpriteSize(Vec2f size)
@@ -726,15 +734,6 @@ namespace Item
             GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
             GameState.ItemCreationApi.EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementToolBack, "BackgroundPlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPlaceTile);
-            GameState.ItemCreationApi.EndItem();
-
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveTileTool, "RemoveTileTool");
             GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
             GameState.ItemCreationApi.SetTexture(RemoveToolIcon);
@@ -765,14 +764,6 @@ namespace Item
             GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionEnemySwordmanSpawn);
-            GameState.ItemCreationApi.EndItem();
-
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PipePlacementTool, "PipePlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(PipePlacementToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PipePlacementToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPlaceTile);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.MiningLaserTool, "MiningLaserTool");
@@ -924,6 +915,8 @@ namespace Item
             GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
             GameState.ItemCreationApi.SetStackable(99);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
+            GameState.ItemCreationApi.SetTile(TileID.Moon);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.Dirt, "Dirt");
@@ -933,6 +926,8 @@ namespace Item
             GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
             GameState.ItemCreationApi.SetStackable(99);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
+            GameState.ItemCreationApi.SetTile(TileID.Stone);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bedrock, "Bedrock");
@@ -942,6 +937,8 @@ namespace Item
             GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
             GameState.ItemCreationApi.SetStackable(99);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
+            GameState.ItemCreationApi.SetTile(TileID.Bedrock);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pipe, "Pipe");
@@ -951,6 +948,8 @@ namespace Item
             GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
             GameState.ItemCreationApi.SetStackable(99);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
+            GameState.ItemCreationApi.SetTile(TileID.Pipe);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wire, "Wire");
@@ -960,6 +959,8 @@ namespace Item
             GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
             GameState.ItemCreationApi.SetStackable(99);
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetTile(TileID.Wire);
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
             GameState.ItemCreationApi.EndItem();
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");

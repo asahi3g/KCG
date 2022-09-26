@@ -726,6 +726,9 @@ public class GeometryGUI
         // Create Item
         item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
 
+        if (item == null)
+            return;
+
         if(item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
         {
 

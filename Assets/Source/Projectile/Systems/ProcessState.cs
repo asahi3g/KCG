@@ -21,20 +21,20 @@ namespace Projectile
                         entityP.isProjectileDelete = true;
                         planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
                     }
+                }
 
-                    if (entityP.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                if (entityP.projectileType.Type == Enums.ProjectileType.GasGrenade)
+                {
+                    float elapsed = Time.realtimeSinceStartup - entityP.projectileStart.StartTime;
+
+                    if (elapsed > 3.0f)
                     {
-                        float elapsed = Time.realtimeSinceStartup - entityP.projectileStart.StartTime;
+                        CircleSmoke.Spawn(1, entityP.projectilePhysicsState.Position, new Vec2f(0.1f, 0.2f), new Vec2f(0.1f, 0.2f));
+                    }
 
-                        if (elapsed > 3.0f)
-                        {
-                            CircleSmoke.Spawn(1, entityP.projectilePhysicsState.Position, new Vec2f(0.1f, 0.2f), new Vec2f(0.1f, 0.2f));
-                        }
-
-                        if (elapsed > 8.0f)
-                        {
-                            entityP.isProjectileDelete = true;
-                        }
+                    if (elapsed > 8.0f)
+                    {
+                        entityP.isProjectileDelete = true;
                     }
                 }
             }

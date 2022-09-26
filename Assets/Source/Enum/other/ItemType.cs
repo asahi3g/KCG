@@ -65,13 +65,11 @@
         /// </summary>
         PlacementTool,
         PlacementMaterialTool,
-        PlacementToolBack,
         RemoveTileTool,
         MiningLaserTool,
         SpawnEnemySlimeTool,
         SpawnEnemyGunnerTool,
         SpawnEnemySwordmanTool,
-        PipePlacementTool,
         ParticleEmitterPlacementTool,
         ChestPlacementTool,
         HarvestTool,
