@@ -162,23 +162,6 @@ namespace Planet.Unity
                 Debug.Log("loaded!");
             }
 
-            Inventory.EntityComponent inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
-            
-            int selectedSlot = inventory.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-            if (itemProperty.IsTool())
-            {
-                showMechInventory = itemProperty.ToolActionType == Enums.ActionType.ToolActionConstruction;
-                showMechInventory = false;
-
-                if (Input.GetKeyDown(KeyCode.Mouse0) && Player.IsStateFree())
-                {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, 
-                       Player.agentID.ID, item.itemID.ID);
-                } 
-            }
 
             CharacterDisplay.Update();
             Planet.Update(Time.deltaTime, Material, transform);

@@ -41,66 +41,7 @@ namespace ECSInput
             }
         }
 
-        public void SetAgentWeapon(AgentEntity agentEntity, Model3DWeapon weapon)
-        {
-            if (!agentEntity.hasAgentModel3D)
-                return;
-
-            var model3d = agentEntity.agentModel3D;
-            if (weapon == Model3DWeapon.Sword)
-            {        
-                if (model3d.CurrentWeapon != Model3DWeapon.Sword)
-                {
-                    if (model3d.Weapon != null)
-                    {
-                        GameObject.Destroy(model3d.Weapon);
-                    }
-
-                    GameObject hand = model3d.LeftHand;
-
-                    GameObject rapierPrefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Rapier);
-                    GameObject rapier = GameObject.Instantiate(rapierPrefab);
-
-                    rapier.transform.parent = hand.transform;
-                    rapier.transform.position = hand.transform.position;
-                    rapier.transform.rotation = hand.transform.rotation;
-                    rapier.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-
-                    model3d.Weapon = rapier;
-                }
-            }
-            else if (weapon == Model3DWeapon.Gun)
-            {        
-                if (model3d.CurrentWeapon != Model3DWeapon.Gun)
-                {
-                    if (model3d.Weapon != null)
-                    {
-                        GameObject.Destroy(model3d.Weapon);
-                    }
-
-                    GameObject hand = model3d.RightHand;
-
-                    GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
-                    GameObject gun = GameObject.Instantiate(prefab);
-
-                    gun.transform.parent = hand.transform;
-                    gun.transform.position = hand.transform.position;
-                    gun.transform.rotation = hand.transform.rotation;
-                    gun.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-
-                    model3d.Weapon = gun;
-                }
-            }
-            else
-            {
-                if (model3d.Weapon != null)
-                {
-                    GameObject.Destroy(model3d.Weapon);
-                }
-            }
-
-            model3d.CurrentWeapon = weapon;
-        }
+       
 
         public void Update(ref Planet.PlanetState planet)
         {
@@ -481,32 +422,35 @@ namespace ECSInput
                     {
                         inventory.inventoryEntity.SelectedSlotID = i;
                         item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+
                         if (item == null)
                             return;
-                        itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
-                        switch(itemProperty.Group)
-                        {
-                            case Enums.ItemGroups.Gun:
-                            {
-                                entity.SetAgentWeapon(Model3DWeapon.Gun);
-                                break;
-                            }
-                            case Enums.ItemGroups.Weapon:
-                            {
-                                entity.SetAgentWeapon(Model3DWeapon.Sword);
-                                break;
-                            }
-                            default:
-                            {
-                                entity.SetAgentWeapon(Model3DWeapon.None);
-                                break;
-                            }
-                        }
+
+                        entity.HandleItemSelected(item);
                         
                         planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
                                     entity.agentPhysicsState.Position.Y));
                     }
+                }
+
+
+                int selectedSlot = inventory.inventoryEntity.SelectedSlotID;
+                ItemInventoryEntity selectedItem = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                Item.ItemProprieties selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
+
+
+                if (selectedItemProperty.IsTool())
+                {
+
+                    if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
+                    {
+                        if (!Inventory.InventorySystemsState.MouseDown)
+                        {
+                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                            entity.agentID.ID, item.itemID.ID);
+                        }
+                    } 
                 }
 
             // Remove Tile Back At Cursor Position.

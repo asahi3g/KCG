@@ -5,6 +5,6 @@ namespace Agent
     {
         None,
         Sword,
-        Gun
+        Pistol
     }
 }

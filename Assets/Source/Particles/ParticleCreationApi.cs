@@ -331,6 +331,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
             GameState.ParticleCreationApi.End();
         }
 
