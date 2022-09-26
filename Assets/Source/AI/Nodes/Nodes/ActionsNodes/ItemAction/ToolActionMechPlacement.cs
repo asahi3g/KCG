@@ -18,7 +18,7 @@ namespace Node.Action
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            planet.AddMech(new Vec2f(x, y), itemEntity.itemMechCastData.data.MechID);
+            planet.AddMech(new Vec2f(x, y), itemEntity.itemMech.MechID);
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }

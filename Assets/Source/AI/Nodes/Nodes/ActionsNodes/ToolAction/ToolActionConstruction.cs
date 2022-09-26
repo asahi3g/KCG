@@ -16,12 +16,12 @@ namespace Node.Action
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            if(itemEntity.itemMechCastData.InputsActive)
+            if(itemEntity.itemMech.InputsActive)
             {
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&
                 y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    var mech = GameState.MechCreationApi.Get((int)itemEntity.itemMechCastData.data.MechID);
+                    var mech = GameState.MechCreationApi.Get((int)itemEntity.itemMech.MechID);
 
                     var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                     var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
@@ -42,7 +42,7 @@ namespace Node.Action
 
                     if (allTilesAir)
                     {
-                        planet.AddMech(new KMath.Vec2f(x, y), itemEntity.itemMechCastData.data.MechID);
+                        planet.AddMech(new KMath.Vec2f(x, y), itemEntity.itemMech.MechID);
 
                         for (int i = 0; i < xRange; i++)
                         {

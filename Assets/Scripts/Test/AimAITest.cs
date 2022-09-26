@@ -33,7 +33,7 @@ namespace Planet.Unity
 
             if ((timeSinceStart - lastShootTime) >= SHOOT_COOL_DOWN)
             {
-                GameState.ActionCreationSystem.CreateTargetAction(Planet.EntitasContext, Enums.NodeType.ToolActionFireWeapon, Marine.agentID.ID, Target.agentID.ID, item.itemID.ID);
+                GameState.ActionCreationSystem.CreateTargetAction(Planet.EntitasContext, Enums.NodeType.ShootFireWeaponAction, Marine.agentID.ID, Target.agentID.ID, item.itemID.ID);
                 lastShootTime = Time.realtimeSinceStartup;
             }
             

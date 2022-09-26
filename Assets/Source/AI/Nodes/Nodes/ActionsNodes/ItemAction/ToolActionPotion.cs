@@ -11,11 +11,11 @@ namespace Node
         {
             ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            if (ItemEntity.itemPotionCastData.potionType == Enums.PotionType.Error)
-                ItemEntity.itemPotionCastData.potionType = Enums.PotionType.HealthPotion;
+            if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
+                ItemEntity.itemPotion.potionType = Enums.PotionType.HealthPotion;
 
             var player = planet.Player;
-            if (ItemEntity.hasItemPotionCastData)
+            if (ItemEntity.hasItemPotion)
             {
                 var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
@@ -34,13 +34,13 @@ namespace Node
                                 {
                                     if (item.hasItemStack)
                                     {
-                                        if (ItemEntity.itemPotionCastData.potionType == Enums.PotionType.Error)
+                                        if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
                                         {
                                             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                             return;
                                         }
 
-                                        switch (ItemEntity.itemPotionCastData.potionType)
+                                        switch (ItemEntity.itemPotion.potionType)
                                         {
                                             case Enums.PotionType.HealthPotion:
                                                 if (item.itemType.Type == Enums.ItemType.HealthPositon)

@@ -15,7 +15,7 @@ namespace Node
 
         public void Initialize()
         {
-            int length = Enum.GetNames(typeof(Enums.ItemGroups)).Length;
+            int length = Enum.GetNames(typeof(Enums.NodeType)).Length;
             Nodes = new NodeBase[length];
 
             foreach (Type type in Assembly.GetAssembly(typeof(NodeBase)).GetTypes()
