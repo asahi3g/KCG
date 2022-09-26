@@ -49,23 +49,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
-            if (item != null)
-            {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                if (itemProperty.IsTool())
-                {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        if (!Inventory.InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
-                            Player.agentID.ID, item.itemID.ID);
-                    }
-                }
-            }
-
             Planet.Update(Time.deltaTime, Material, transform);
         }
 

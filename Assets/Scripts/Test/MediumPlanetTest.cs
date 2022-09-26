@@ -30,19 +30,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
-
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-            Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-            if (itemProperty.IsTool())
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType, Player.agentID.ID);
-                }
-            }
-
             Planet.Update(Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
@@ -87,7 +74,6 @@ namespace Planet.Unity
             ItemInventoryEntity removeTileTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.RemoveTileTool);
             ItemInventoryEntity spawnEnemySlimeTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             ItemInventoryEntity miningLaserTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MiningLaserTool);
-            ItemInventoryEntity pipePlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PipePlacementTool);
             ItemInventoryEntity particleEmitterPlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ParticleEmitterPlacementTool);
 
 
@@ -95,7 +81,6 @@ namespace Planet.Unity
             inventoryManager.AddItem(Planet.EntitasContext, removeTileTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, spawnEnemySlimeTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, miningLaserTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, pipePlacementTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, particleEmitterPlacementTool, inventoryID);
         }
 

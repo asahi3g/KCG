@@ -105,11 +105,11 @@ namespace Mech
             }
         }
 
-        public void SetAction(Enums.ActionType actionType)
+        public void SetAction(Enums.NodeType NodeType)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].Action = actionType;
+                PropertiesArray[CurrentIndex].Action = NodeType;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Mech
             GameState.MechCreationApi.SetName("smashableBox");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableBoxDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
-            GameState.MechCreationApi.SetAction(Enums.ActionType.OpenChestAction);
+            GameState.MechCreationApi.SetAction(Enums.NodeType.OpenChestAction);
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));

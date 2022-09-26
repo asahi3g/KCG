@@ -131,6 +131,11 @@ public class LineOfSightTest : MonoBehaviour
         CircleSector.color = standard;
     }
 
+    private void OnDrawGizmos()
+    {
+        Planet.DrawDebug();
+    }
+
     void GenerateMap()
     {
         DateTime date = DateTime.Now;

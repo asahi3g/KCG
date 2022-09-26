@@ -67,7 +67,7 @@ namespace Planet
 
         public void InitializeSystems(Material material, Transform transform)
         {
-            GameState.ActionInitializeSystem.Initialize(EntitasContext, material);
+            GameState.ActionSchedulerSystem.Initialize();
             GameState.PathFinding.Initialize();
 
             // Mesh builders
@@ -546,7 +546,7 @@ namespace Planet
             // calling all the systems we have
 
             GameState.InputProcessSystem.Update(ref this);
-
+            // Movement Systems
             GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
             GameState.AgentMovementSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
@@ -564,8 +564,10 @@ namespace Planet
             GameState.ActionCoolDownSystem.Update(EntitasContext, deltaTime);
             GameState.ParticleEmitterUpdateSystem.Update(ref this);
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
+            GameState.ProjectileProcessState.Update(ref this);
             GameState.VehicleAISystem.Update(ref this);
 
+            // Collision systems.
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
@@ -608,6 +610,15 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
             GameState.FloatingTextDrawSystem.Draw(EntitasContext.floatingText, transform, 10000);
+
+            // Delete Entities.
+            GameState.ProjectileDeleteSystem.Update(ref this);
+        }
+
+        public void DrawDebug()
+        {
+            GameState.PathFindingDebugSystem.Draw();
+            GameState.ProjectileDebugSystem.Update(ref this);
         }
 
         public void DrawHUD(AgentEntity agentEntity)

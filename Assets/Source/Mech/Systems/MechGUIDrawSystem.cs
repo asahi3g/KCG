@@ -129,58 +129,58 @@ namespace Mech
                     SmashableBoxBackground.GetGameObject().SetActive(true);
                     SmashableEggBackground.GetGameObject().SetActive(true);
 
-                    ChestBackground.SetImageColor(item.itemMechCastData.data.MechID 
+                    ChestBackground.SetImageColor(item.itemMech.MechID 
                                                                 == MechType.Storage ? Color.red : Color.yellow);
-                    PlanterBackground.SetImageColor(item.itemMechCastData.data.MechID 
+                    PlanterBackground.SetImageColor(item.itemMech.MechID 
                                                                 == MechType.Planter ? Color.red : Color.yellow);
-                    LightBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    LightBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.Light ? Color.red : Color.yellow);
-                    MajestyPalmBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    MajestyPalmBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.MajestyPalm ? Color.red : Color.yellow);
-                    SagoPalmBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    SagoPalmBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.SagoPalm ? Color.red : Color.yellow);
-                    DracaenaTrifasciataBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    DracaenaTrifasciataBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.DracaenaTrifasciata ? Color.red : Color.yellow);
-                    SmashableBoxBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    SmashableBoxBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.SmashableBox ? Color.red : Color.yellow);
-                    SmashableEggBackground.SetImageColor(item.itemMechCastData.data.MechID
+                    SmashableEggBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.SmashableEgg ? Color.red : Color.yellow);
 
                     if (ChestBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (PlanterBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (LightBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (MajestyPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (SagoPalmBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (DracaenaTrifasciataBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (SmashableBoxBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else if (SmashableEggBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
-                        item.itemMechCastData.InputsActive = false;
+                        item.itemMech.InputsActive = false;
                     }
                     else
                     {
-                        item.itemMechCastData.InputsActive = true;
+                        item.itemMech.InputsActive = true;
 
                     }
 
@@ -199,7 +199,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.Storage;
+                                    item.itemMech.MechID = MechType.Storage;
                                 }
                         }
                         
@@ -216,7 +216,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.Planter;
+                                    item.itemMech.MechID = MechType.Planter;
                                 }
                         }
 
@@ -233,7 +233,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.Light;
+                                    item.itemMech.MechID = MechType.Light;
                                 }
 
                         }
@@ -251,7 +251,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.MajestyPalm;
+                                    item.itemMech.MechID = MechType.MajestyPalm;
                                 }
                         }
 
@@ -268,7 +268,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.SagoPalm;
+                                    item.itemMech.MechID = MechType.SagoPalm;
                                 }
                         }
 
@@ -285,7 +285,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.DracaenaTrifasciata;
+                                    item.itemMech.MechID = MechType.DracaenaTrifasciata;
                                 }
                         }
 
@@ -303,7 +303,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.SmashableBox;
+                                    item.itemMech.MechID = MechType.SmashableBox;
                                 }
                             }
                         }
@@ -322,7 +322,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMechCastData.data.MechID = MechType.SmashableEgg;
+                                    item.itemMech.MechID = MechType.SmashableEgg;
                                 }
                             }
                         }

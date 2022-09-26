@@ -1,7 +1,4 @@
-﻿using Action;
-using Entitas;
-using UnityEngine;
-using KMath;
+﻿using KMath;
 using Enums;
 
 namespace Item
@@ -13,10 +10,7 @@ namespace Item
         //  Only call this after an item or an agent has changed position. 
         public void Update(Contexts contexts)
         {
-            // Get agents able to pick an object.
             var agents = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentInventory));
-
-            // Get all pickable items.
             var pickableItems = contexts.itemParticle.GetGroup(
                 ItemParticleMatcher.AllOf(ItemParticleMatcher.ItemID, ItemParticleMatcher.ItemPhysicsState).NoneOf(ItemParticleMatcher.ItemUnpickable));
 
@@ -31,9 +25,7 @@ namespace Item
                         continue;
                     // Todo: Use action center Position.
                     if ((agent.agentPhysicsState.Position - centerPos).Magnitude <= 1.25f)
-                    {
-                        GameState.ActionInitializeSystem.CreatePickUpAction(contexts, agent.agentID.ID, item.itemID.ID);
-                    }
+                        GameState.ActionCreationSystem.CreateAction(contexts, Enums.NodeType.PickUpAction, agent.agentID.ID, item.itemID.ID);
                 }    
             }
         }

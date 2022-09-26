@@ -726,6 +726,9 @@ public class GeometryGUI
         // Create Item
         item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
 
+        if (item == null)
+            return;
+
         if(item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
         {
 
@@ -773,14 +776,14 @@ public class GeometryGUI
             {
                 if(item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                 {
-                    if(item.hasItemCastData)
-                        item.itemCastData.InputsActive = false;
+                    if(item.hasItemTile)
+                        item.itemTile.InputsActive = false;
                 }
             }
             else
             {
-                if (item.hasItemCastData)
-                    item.itemCastData.InputsActive = true;
+                if (item.hasItemTile)
+                    item.itemTile.InputsActive = true;
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -789,9 +792,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SQNoSpecular_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.SQNoSpecular_0;
                             ResetColors();
                             SQNoSpecular_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -801,9 +804,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.SQ_0;
                             ResetColors();
 
                             SQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -814,9 +817,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.SQ_1;
                             ResetColors();
                             SQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
 
@@ -827,9 +830,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.SQ_2;
                             ResetColors();
                             SQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -839,9 +842,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.SQ_3;
                             ResetColors();
                             SQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -851,9 +854,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQNoSpecular_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_0;
                             ResetColors();
                             HSQNoSpecular_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -863,9 +866,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQNoSpecular_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_1;
                             ResetColors();
                             HSQNoSpecular_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -876,9 +879,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQNoSpecular_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_2;
                             ResetColors();
                             HSQNoSpecular_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -888,9 +891,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQNoSpecular_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_3;
                             ResetColors();
                             HSQNoSpecular_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -900,9 +903,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_0;
                             ResetColors();
                             HSQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -912,9 +915,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_1;
                             ResetColors();
                             HSQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -924,9 +927,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_2;
                             ResetColors();
                             HSQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -936,9 +939,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_3;
                             ResetColors();
                             HSQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -948,9 +951,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_0;
                             ResetColors();
                             SSQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -960,9 +963,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_1;
                             ResetColors();
                             SSQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -972,9 +975,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_2;
                             ResetColors();
                             SSQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -984,9 +987,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.SSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_3;
                             ResetColors();
                             SSQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -996,9 +999,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TI_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.TI_0;
                             ResetColors();
                             TI_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -1008,9 +1011,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TI_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.TI_1;
                             ResetColors();
                             TI_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
                         }
@@ -1020,9 +1023,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TI_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.TI_2;
                             ResetColors();
 
                             TI_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1033,9 +1036,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TI_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.TI_3;
                             ResetColors();
 
                             TI_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1046,9 +1049,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TO_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.TO_0;
                             ResetColors();
 
                             TO_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1059,9 +1062,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TO_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.TO_1;
                             ResetColors();
 
                             TO_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1072,9 +1075,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TO_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.TO_2;
                             ResetColors();
 
                             TO_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1085,9 +1088,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.TO_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.TO_3;
                             ResetColors();
 
                             TO_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1098,9 +1101,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HTD_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.HTD_0;
                             ResetColors();
 
                             HTD_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1111,9 +1114,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HTL_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.HTL_1;
                             ResetColors();
 
                             HTL_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1124,9 +1127,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HTU_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.HTU_2;
                             ResetColors();
 
                             HTU_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1137,9 +1140,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.HTR_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.HTR_3;
                             ResetColors();
 
                             HTR_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1150,9 +1153,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RHTD_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.RHTD_0;
                             ResetColors();
 
                             RHTD_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1163,9 +1166,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RHTL_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.RHTL_1;
                             ResetColors();
 
                             RHTL_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1177,9 +1180,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RHTU_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.RHTU_2;
                             ResetColors();
 
                             RHTU_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1190,9 +1193,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RHTR_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.RHTR_3;
                             ResetColors();
 
                             RHTR_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1203,9 +1206,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.CSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_0;
                             ResetColors();
 
                             CSQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1216,9 +1219,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.CSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_1;
                             ResetColors();
 
                             CSQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1229,9 +1232,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.CSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_2;
                             ResetColors();
 
                             CSQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1242,9 +1245,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.CSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_3;
                             ResetColors();
 
                             CSQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1255,9 +1258,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RCSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_0;
                             ResetColors();
 
                             RCSQ_0Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1268,9 +1271,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RCSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_1;
                             ResetColors();
 
                             RCSQ_1Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1281,9 +1284,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RCSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_2;
                             ResetColors();
 
                             RCSQ_2Background.kGUIElementsImage.Image.SetImageColor(Color.red);
@@ -1294,9 +1297,9 @@ public class GeometryGUI
                 {
                     if (item.itemType.Type == Enums.ItemType.GeometryPlacementTool)
                     {
-                        if (item.hasItemCastData)
+                        if (item.hasItemTile)
                         {
-                            item.itemCastData.data.TileID = Enums.Tile.TileID.RCSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_3;
                             ResetColors();
 
                             RCSQ_3Background.kGUIElementsImage.Image.SetImageColor(Color.red);

@@ -8,20 +8,20 @@
 //------------------------------------------------------------------------------
 public partial class ActionCoolDownEntity {
 
-    public Action.CoolDown.Component actionCoolDown { get { return (Action.CoolDown.Component)GetComponent(ActionCoolDownComponentsLookup.ActionCoolDown); } }
+    public ActionCoolDown.Component actionCoolDown { get { return (ActionCoolDown.Component)GetComponent(ActionCoolDownComponentsLookup.ActionCoolDown); } }
     public bool hasActionCoolDown { get { return HasComponent(ActionCoolDownComponentsLookup.ActionCoolDown); } }
 
-    public void AddActionCoolDown(Enums.ActionType newTypeID, int newAgentID) {
+    public void AddActionCoolDown(Enums.NodeType newTypeID, int newAgentID) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDown;
-        var component = (Action.CoolDown.Component)CreateComponent(index, typeof(Action.CoolDown.Component));
+        var component = (ActionCoolDown.Component)CreateComponent(index, typeof(ActionCoolDown.Component));
         component.TypeID = newTypeID;
         component.AgentID = newAgentID;
         AddComponent(index, component);
     }
 
-    public void ReplaceActionCoolDown(Enums.ActionType newTypeID, int newAgentID) {
+    public void ReplaceActionCoolDown(Enums.NodeType newTypeID, int newAgentID) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDown;
-        var component = (Action.CoolDown.Component)CreateComponent(index, typeof(Action.CoolDown.Component));
+        var component = (ActionCoolDown.Component)CreateComponent(index, typeof(ActionCoolDown.Component));
         component.TypeID = newTypeID;
         component.AgentID = newAgentID;
         ReplaceComponent(index, component);

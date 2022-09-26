@@ -107,6 +107,8 @@ class PlanterTest : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Planet.DrawDebug();
+
         // Set the color of gizmos
         Gizmos.color = Color.green;
 
@@ -214,7 +216,6 @@ class PlanterTest : MonoBehaviour
 
         // Admin API Add Items
         Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementToolBack, Planet.EntitasContext);
         Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.WaterBottle, Planet.EntitasContext);
         Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.MajestyPalm, Planet.EntitasContext);
         Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SagoPalm, Planet.EntitasContext);

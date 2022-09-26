@@ -8,19 +8,19 @@
 //------------------------------------------------------------------------------
 public partial class ActionCoolDownEntity {
 
-    public Action.CoolDown.TimeComponent actionCoolDownTime { get { return (Action.CoolDown.TimeComponent)GetComponent(ActionCoolDownComponentsLookup.ActionCoolDownTime); } }
+    public ActionCoolDown.TimeComponent actionCoolDownTime { get { return (ActionCoolDown.TimeComponent)GetComponent(ActionCoolDownComponentsLookup.ActionCoolDownTime); } }
     public bool hasActionCoolDownTime { get { return HasComponent(ActionCoolDownComponentsLookup.ActionCoolDownTime); } }
 
     public void AddActionCoolDownTime(float newEndTime) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDownTime;
-        var component = (Action.CoolDown.TimeComponent)CreateComponent(index, typeof(Action.CoolDown.TimeComponent));
+        var component = (ActionCoolDown.TimeComponent)CreateComponent(index, typeof(ActionCoolDown.TimeComponent));
         component.EndTime = newEndTime;
         AddComponent(index, component);
     }
 
     public void ReplaceActionCoolDownTime(float newEndTime) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDownTime;
-        var component = (Action.CoolDown.TimeComponent)CreateComponent(index, typeof(Action.CoolDown.TimeComponent));
+        var component = (ActionCoolDown.TimeComponent)CreateComponent(index, typeof(ActionCoolDown.TimeComponent));
         component.EndTime = newEndTime;
         ReplaceComponent(index, component);
     }

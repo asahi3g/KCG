@@ -26,28 +26,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
-            }
-
-            int inventoryID = Player.agentInventory.InventoryID;
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-            if (item != null)
-            {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                if (itemProperty.IsTool())
-                {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        if (!InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
-                                Player.agentID.ID, item.itemID.ID);
-                    }
-                }
-            }
             Planet.Update(Time.deltaTime, Material, transform);
         }
 
@@ -59,13 +37,18 @@ namespace Planet.Unity
             Planet.DrawHUD(Player);
         }
 
+        private void OnDrawGizmos()
+        {
+            Planet.DrawDebug();
+        }
+
         // Create the sprite atlas for testing purposes
         public void Initialize()
         {
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(16, 16);
+            Vec2i mapSize = new Vec2i(16, 64);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
@@ -110,43 +93,10 @@ namespace Planet.Unity
         {
             ref var tileMap = ref Planet.TileMap;
 
-            for (int j = 0; j < tileMap.MapSize.Y; j++)
-            {
-                for (int i = 0; i < tileMap.MapSize.X; i++)
-                {
-                    TileID frontTile;
-
-                    if (i >= tileMap.MapSize.X / 2)
-                    {
-                        if (j % 2 == 0 && i == tileMap.MapSize.X / 2)
-                        {
-                            frontTile = TileID.Moon;
-                        }
-                        else
-                        {
-                            frontTile = TileID.Glass;
-                        }
-                    }
-                    else
-                    {
-                        if (j % 3 == 0 && i == tileMap.MapSize.X / 2 + 1)
-                        {
-                            frontTile = TileID.Glass;
-                        }
-                        else
-                        {
-                            frontTile = TileID.Moon;
-                        }
-                    }
-
-                    if (j is > 1 and < 6 || (j > 8 + i))
-                    {
-                        frontTile = TileID.Air;
-                    }
-
-
-                    tileMap.SetFrontTile(i, j, frontTile);
-                }
+             for (int i = 0; i < tileMap.MapSize.X; i++)
+             {
+                 TileID frontTile = TileID.Moon;
+                 tileMap.SetFrontTile(i, 0, frontTile);
             }
         }
     }

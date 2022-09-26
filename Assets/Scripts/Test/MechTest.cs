@@ -60,32 +60,10 @@ namespace Planet.Unity
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
             }
 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
-
-            int inventoryID = Player.agentInventory.InventoryID;
-            InventoryEntity inventoryEntity = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            int selectedSlot = inventoryEntity.inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-
-            if (item != null)
-            {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-
-                if (itemProperty.IsTool())
-                {
-                    showMechInventory = itemProperty.ToolActionType == Enums.ActionType.ToolActionConstruction;
-
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
-                            Player.agentID.ID, item.itemID.ID);
-                    }
-                }
-            }
 
             Planet.Update(Time.deltaTime, Material, transform);
             

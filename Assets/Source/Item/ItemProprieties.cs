@@ -11,9 +11,10 @@ namespace Item
     {
         public ItemType ItemType;
         public ItemGroups Group;
-        public ActionType ToolActionType;
+        public NodeType ToolActionType;
         public Mech.MechType MechType;          // Used only when item is a mech type.
-        public ItemToolType ToolType; // used for weapon/tool attachement
+        public Enums.Tile.TileID TileType;       // Used only when item is a material type.
+        public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet; // used to change agent animations (like walking with rifle)
 
         public Enums.ItemKeyUsage KeyUsage;

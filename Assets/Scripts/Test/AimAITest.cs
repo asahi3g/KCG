@@ -11,7 +11,7 @@ namespace Planet.Unity
         AgentEntity Marine;
         AgentEntity Target;
         static bool Init = false;
-        const float SHOOT_COOL_DOWN = 3f;
+        const float SHOOT_COOL_DOWN = 1f;
         float lastShootTime;
 
         public void Start()
@@ -33,7 +33,7 @@ namespace Planet.Unity
 
             if ((timeSinceStart - lastShootTime) >= SHOOT_COOL_DOWN)
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.ToolActionFireWeapon, Marine.agentID.ID, item.itemID.ID);
+                GameState.ActionCreationSystem.CreateTargetAction(Planet.EntitasContext, Enums.NodeType.ShootFireWeaponAction, Marine.agentID.ID, Target.agentID.ID, item.itemID.ID);
                 lastShootTime = Time.realtimeSinceStartup;
             }
             

@@ -17,11 +17,9 @@ public class GameState
     #endregion
 
     #region Action
-    public static readonly Action.ActionCreationApi         ActionCreationApi;
-    public static readonly Action.ActionCreationSystem      ActionCreationSystem;
-    public static readonly Action.ActionSchedulerSystem     ActionSchedulerSystem;
-    public static readonly Action.InitializeSystem          ActionInitializeSystem;
-    public static readonly Action.CoolDownSystem            ActionCoolDownSystem;
+    public static readonly Node.CreationSystem            ActionCreationSystem;
+    public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
+    public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
     #endregion
 
     #region Tile
@@ -101,6 +99,9 @@ public class GameState
     public static readonly Projectile.SpawnerSystem ProjectileSpawnerSystem;
     public static readonly Projectile.MeshBuilderSystem ProjectileMeshBuilderSystem;
     public static readonly Projectile.ProcessOnHit ProjectileProcessOnHit;
+    public static readonly Projectile.ProcessState ProjectileProcessState;
+    public static readonly Projectile.DeleteSystem ProjectileDeleteSystem;
+    public static readonly Projectile.DebugSystem ProjectileDebugSystem;
     #endregion
 
     #region FloatingText
@@ -218,11 +219,9 @@ public class GameState
         LootTableCreationAPI = new LootDrop.CreationApi();
         LootDropSystem = new LootDrop.LootDropSystem();
 
-        ActionCreationApi = new Action.ActionCreationApi();
-        ActionCreationSystem = new Action.ActionCreationSystem();
-        ActionSchedulerSystem = new Action.ActionSchedulerSystem();
-        ActionInitializeSystem = new Action.InitializeSystem();
-        ActionCoolDownSystem = new Action.CoolDownSystem();
+        ActionCreationSystem = new Node.CreationSystem();
+        ActionSchedulerSystem = new Node.SchedulerSystem();
+        ActionCoolDownSystem = new ActionCoolDown.CoolDownSystem();
 
         ParticleCreationApi = new Particle.ParticleCreationApi();
         ParticleEmitterCreationApi = new Particle.ParticleEmitterCreationApi();
@@ -239,6 +238,9 @@ public class GameState
         ProjectileSpawnerSystem = new Projectile.SpawnerSystem();
         ProjectileMeshBuilderSystem = new Projectile.MeshBuilderSystem();
         ProjectileProcessOnHit = new Projectile.ProcessOnHit();
+        ProjectileProcessState = new Projectile.ProcessState();
+        ProjectileDeleteSystem = new Projectile.DeleteSystem();
+        ProjectileDebugSystem = new Projectile.DebugSystem();
 
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();

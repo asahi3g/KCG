@@ -88,7 +88,6 @@ namespace Planet.Unity
             ItemInventoryEntity removeTileTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.RemoveTileTool);
             ItemInventoryEntity spawnEnemySlimeTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             ItemInventoryEntity miningLaserTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MiningLaserTool);
-            ItemInventoryEntity pipePlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PipePlacementTool);
             ItemInventoryEntity particleEmitterPlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ParticleEmitterPlacementTool);
 
 
@@ -96,7 +95,6 @@ namespace Planet.Unity
             inventoryManager.AddItem(Planet.EntitasContext, removeTileTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, spawnEnemySlimeTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, miningLaserTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, pipePlacementTool, inventoryID);
             inventoryManager.AddItem(Planet.EntitasContext, particleEmitterPlacementTool, inventoryID);
         }
 

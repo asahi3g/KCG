@@ -81,7 +81,6 @@ namespace Inventory
                 }
 
                 // Move to first empty slot:
-                itemEntity.RemoveItemInventory();
                 if (!AddItemAtFirstEmptySlot(contexts, currentItem, inventoryID))
                     return false;
             }

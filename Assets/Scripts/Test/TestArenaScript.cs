@@ -44,24 +44,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
-            if (item != null)
-            {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                if (itemProperty.IsTool())
-                {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        if (!Inventory.InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
-                            Player.agentID.ID, item.itemID.ID);
-                    }
-                }
-            }
-
             Planet.Update(Time.deltaTime, Material, transform);
             Planet.DrawHUD(Player);
 
@@ -211,9 +193,6 @@ namespace Planet.Unity
 
             Planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
             Planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
-
-            Planet.AddFixedFloatingText("BACK TILE PLACEMENT TOOL\n1>Select back tile placement tool from inventory.\n2>Place it anywhere with pressing 'LMB'.", new Vec2f(105, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(105, 7), Enums.ItemType.PlacementToolBack);
 
             Planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
             Planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);

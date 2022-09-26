@@ -1,7 +1,7 @@
 ﻿using Planet;
 using UnityEngine;
 using KMath;
-using Action;
+using Node;
 using System.Web.WebPages;
 
 namespace Mech
@@ -35,11 +35,11 @@ namespace Mech
                 var proprieties = GameState.MechCreationApi.Get((int)planet.MechList.Get(i).mechType.mechType);
                 string str;
 
-                if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.ActionType.None)
+                if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.NodeType.None)
                 {
-                    ActionProperties actionProprieties = GameState.ActionCreationApi.Get(proprieties.Action);
-                    str = "Press E to " + (!actionProprieties.Descripition.IsEmpty() ? 
-                        actionProprieties.Descripition : "interact");
+                    string nodeDescription = "";
+                    str = "Press E to " + (!nodeDescription.IsEmpty() ?
+                        nodeDescription : "interact");
                 }
                 else
                 {

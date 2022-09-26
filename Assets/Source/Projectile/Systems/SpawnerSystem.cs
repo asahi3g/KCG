@@ -1,11 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Entitas;
-using Enums;
-using Enums.Tile;
 using KMath;
-using Unity.VisualScripting;
-using Sprites;
 
 namespace Projectile
 {
@@ -22,6 +16,7 @@ namespace Projectile
             ProjectileEntity entity = projectileContext.CreateEntity();
             entity.isProjectileFirstFrame = true;
             entity.AddProjectileID(UniqueID++, -1);
+            entity.AddProjectileStart(position, Time.realtimeSinceStartup);
             entity.AddProjectileLinearDrag(projectileProperties.LinearDrag, projectileProperties.LinearCutOff);
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
             entity.AddProjectilePhysicsState(

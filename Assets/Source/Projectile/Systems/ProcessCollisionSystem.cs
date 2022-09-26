@@ -8,8 +8,6 @@ namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        // new version of the update function
-        // uses the planet state to remove the projectile
         public void UpdateEx(ref Planet.PlanetState planet, float deltaTime)
         {
             const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.

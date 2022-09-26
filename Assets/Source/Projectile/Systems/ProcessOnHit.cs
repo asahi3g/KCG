@@ -71,7 +71,7 @@ namespace Projectile
         {
             planet.AddParticleEmitter(
                 pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
-            planet.RemoveProjectile(pEntity.projectileID.Index);
+            pEntity.isProjectileDelete = true;
         }
 
         public void Explosive(ref Planet.PlanetState planet, ProjectileEntity pEntity)
@@ -109,8 +109,8 @@ namespace Projectile
                     }
                 }
             }
-                // Todo: Do a circle collision test.
-                planet.RemoveProjectile(pEntity.projectileID.Index);
+            // Todo: Do a circle collision test.
+            pEntity.isProjectileDelete = true;
         }
 
 
@@ -118,36 +118,36 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ExplosionEmitter);
-                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ShrapnelEmitter);
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ExplosionEmitter);
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ShrapnelEmitter);
 
             Vec2f pos = pEntity.projectileOnHit.LastHitPos;
-                float radius = pEntity.projectileExplosive.BlastRadius;
-                int damage = pEntity.projectileExplosive.MaxDamage;
+            float radius = pEntity.projectileExplosive.BlastRadius;
+            int damage = pEntity.projectileExplosive.MaxDamage;
 
-                Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
+            Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
 
-                for (int i = 0; i < planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
+            {
+                AgentEntity agentEntity = planet.AgentList.Get(i);
+                if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
                 {
-                    AgentEntity agentEntity = planet.AgentList.Get(i);
-                    if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
+                    var agentPhysicsState = agentEntity.agentPhysicsState;
+                    var agentBox2dCollider = agentEntity.physicsBox2DCollider;
+
+                    Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+
+                    AABox2D agentBox = new AABox2D(new Vec2f(agentPhysicsState.PreviousPosition.X, agentPhysicsState.Position.Y), agentBox2dCollider.Size);
+
+                    if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
-                        var agentPhysicsState = agentEntity.agentPhysicsState;
-                        var agentBox2dCollider = agentEntity.physicsBox2DCollider;
-
-                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
-
-                        AABox2D agentBox = new AABox2D(new Vec2f(agentPhysicsState.PreviousPosition.X, agentPhysicsState.Position.Y), agentBox2dCollider.Size);
-
-                        if (explosionCircle.InterSectionAABB(ref agentBox))
-                        {
-                            // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                            planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
-                        }
+                        // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                        planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
                     }
                 }
-                // Todo: Do a circle collision test.
-                planet.RemoveProjectile(pEntity.projectileID.Index);
+            }
+            // Todo: Do a circle collision test.
+            pEntity.isProjectileDelete = true;
         }
 
         public void Arrow(ref Planet.PlanetState planet, ProjectileEntity pEntity)
@@ -163,7 +163,7 @@ namespace Projectile
             }
 
             if (elapse >= 12.0f)
-                planet.RemoveProjectile(pEntity.projectileID.Index);
+                pEntity.isProjectileDelete = true;
         }
 
         public void GasGrenade(ref Planet.PlanetState planet, ProjectileEntity pEntity)
@@ -171,7 +171,7 @@ namespace Projectile
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
             if (elapse >= 12.0f)
-                planet.RemoveProjectile(pEntity.projectileID.Index);
+                pEntity.isProjectileDelete = true;
         }
     }
 }

@@ -69,25 +69,20 @@ namespace Item
                 if (entity.itemType.Type == ItemType.PlacementTool || entity.itemType.Type == ItemType.PlacementMaterialTool ||
                         entity.itemType.Type == ItemType.GeometryPlacementTool)
                 {
-                    Enums.Tile.Data data = new Data();
-                    entity.AddItemCastData(data, true);
+                    entity.AddItemTile(TileID.Error, MapLayerType.Error, true);
                 }
 
                 if (entity.itemType.Type == ItemType.ConstructionTool ||
                     entity.itemType.Type == ItemType.RemoveMech ||
                     itemProperty.Group == ItemGroups.Mech)
                 {
-                    Mech.Data data = new Mech.Data();
-                    entity.AddItemMechCastData(data, true);
-
-                    if(itemProperty.MechType != Mech.MechType.Error)
-                        entity.itemMechCastData.data.MechID = itemProperty.MechType;
+                    entity.AddItemMech(itemProperty.MechType, true);
                 }
 
                 if(entity.itemType.Type == ItemType.PotionTool)
                 {
                     Enums.PotionType potionType = PotionType.Error;
-                    entity.AddItemPotionCastData(potionType);
+                    entity.AddItemPotion(potionType);
                 }
             }
 

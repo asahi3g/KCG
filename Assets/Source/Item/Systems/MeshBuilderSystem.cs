@@ -33,8 +33,8 @@ namespace Item
                 float x, y;
                 if (entity.hasItemDrawPosition2D)
                 {
-                    x = entity.itemDrawPosition2D.Value.X;
-                    y = entity.itemDrawPosition2D.Value.Y;
+                    x = entity.itemDrawPosition2D.Position.X;
+                    y = entity.itemDrawPosition2D.Position.Y;
                 }
                 else
                 {
