@@ -30,19 +30,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
-
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-            Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-            if (itemProperty.IsTool())
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType, Player.agentID.ID);
-                }
-            }
-
             Planet.Update(Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 

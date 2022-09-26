@@ -26,28 +26,6 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
-            }
-
-            int inventoryID = Player.agentInventory.InventoryID;
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
-
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-            if (item != null)
-            {
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                if (itemProperty.IsTool())
-                {
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        if (!InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType,
-                                Player.agentID.ID, item.itemID.ID);
-                    }
-                }
-            }
             Planet.Update(Time.deltaTime, Material, transform);
         }
 

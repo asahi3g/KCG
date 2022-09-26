@@ -6,15 +6,9 @@ using Enums;
 
 namespace Node.Action
 {
-    public class MoveAction : NodeBase
+    public class MoveToAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.MoveAction; } }
-
-        // Todo: Move this to a blackboard/whiteboard?
-        Vec2f[] path;
-        int pathLength;
-        bool reachedX = false;
-        bool reachedY = false;
+        public override NodeType Type { get { return NodeType.MoveToAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
@@ -27,53 +21,55 @@ namespace Node.Action
                 agentEntity.agentPhysicsState.Speed, MAX_FALL_HEIGHT, agentEntity.physicsBox2DCollider.Size);
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
-            Vec2f goalPosition = nodeEntity.nodeMoveTo.GoalPosition;
-            path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, goalPosition, movProperties.MovType, characterMov);
+            var movTo = nodeEntity.nodeMoveTo;
+            movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
             deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
             Debug.Log("Found time in " + deltaTime.ToString() + "ms");
 #endif
 
-            if (path == null)
+            if (movTo.path == null)
             {
                 nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                 return;
             }
 
-            pathLength = path.Length;
+            movTo.pathLength = movTo.path.Length;
             nodeEntity.nodeExecution.State = Enums.NodeState.Running;
         }
 
         // Todo: Improve path following algorithm
         public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
-            Vec2f targetPos = path[pathLength - 1];
+            var movTo = nodeEntity.nodeMoveTo;
+
+            Vec2f targetPos = movTo.path[movTo.pathLength - 1];
 
 #if DEBUG
-            GameState.PathFindingDebugSystem.AddPath(ref path, pathLength);
+            GameState.PathFindingDebugSystem.AddPath(ref movTo.path, movTo.pathLength);
 #endif
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             Vec2f direction = targetPos - agentEntity.agentPhysicsState.Position;
             if (Math.Abs(direction.X) < 0.2)
             {
-                reachedX = true;
+                movTo.reachedX = true;
             }
             if (Math.Abs(direction.Y) < 0.2f)
             {
-                reachedY = true;
+                movTo.reachedY = true;
             }
 
-            if (reachedX && reachedY)
+            if (movTo.reachedX && movTo.reachedY)
             {
-                if (--pathLength == 0)
+                if (--movTo.pathLength == 0)
                 {
                     nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                     return;
                 }
-                reachedX = false;
-                reachedY = false;
+                movTo.reachedX = false;
+                movTo.reachedY = false;
             }
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);

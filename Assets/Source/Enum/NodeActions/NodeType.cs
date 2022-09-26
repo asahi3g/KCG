@@ -15,7 +15,7 @@
         ReloadAction,
         ChargeAction,
         ShieldAction,
-        MoveAction,
+        MoveToAction,
         DrinkPotionAction,
 
         /// Mech Actions

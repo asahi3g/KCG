@@ -458,7 +458,7 @@ namespace ECSInput
                     {
                         if (!Inventory.InventorySystemsState.MouseDown)
                         {
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolNodeType, 
+                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
                             entity.agentID.ID, item.itemID.ID);
                         }
                     } 

@@ -136,7 +136,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ToolNodeType = nodeID;
+            PropertiesArray[(int)CurrentIndex].ToolActionType = nodeID;
             PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Tool;
         }
 

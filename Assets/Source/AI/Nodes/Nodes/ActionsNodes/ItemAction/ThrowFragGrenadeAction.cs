@@ -35,11 +35,6 @@ namespace Node
 
             GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
-
-        public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
-        {
-            base.OnExit(ref planet, nodeEntity);
-        }
     }
 }
 
