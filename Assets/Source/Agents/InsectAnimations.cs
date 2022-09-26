@@ -40,11 +40,17 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.Jump, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.InsectHeavyJump, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
+             SetAnimation(Enums.AgentMovementState.Falling, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default, 
+            new AgentAnimation{Animation=Engine3D.AnimationType.InsectHeavyFall, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+
             SetAnimation(Enums.AgentMovementState.Falling, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.InsectHeavyJump, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.MonsterAttack, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.InsectHeavyAttack, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+
+            SetAnimation(Enums.AgentMovementState.LyingFront, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default, 
+            new AgentAnimation{Animation=Engine3D.AnimationType.InsectHeavyDie, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
         }
     }

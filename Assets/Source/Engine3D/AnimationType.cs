@@ -44,6 +44,7 @@ namespace Engine3D
         InsectHeavyRun,
         InsectHeavyAttack,
         InsectHeavyJump,
+        InsectHeavyFall,
         InsectHeavyDie,
 
 
@@ -76,6 +77,8 @@ namespace Engine3D
         SpaceMarineCrouch_Walk,
         SpaceMarineRifleCrouch_Walk,
         SpaceMarinePistolCrouch_Walk,
+        SpaceMarineCrouch_WalkBackwards,
+        SpaceMarineRifleCrouch_WalkBackwards,
         SpaceMarineLimp,
         SpaceMarineDrink,
         SpaceMarineStagger,

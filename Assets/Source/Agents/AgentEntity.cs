@@ -20,6 +20,12 @@ public partial class AgentEntity
         }
     }
 
+    public bool CanMove()
+    {
+        var physicsState = agentPhysicsState;
+        return physicsState.MovementState != AgentMovementState.IdleAfterShooting;
+    }
+
     public bool IsStateFree()
     {
         var physicsState = agentPhysicsState;
@@ -34,6 +40,29 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling &&
         physicsState.MovementState != AgentMovementState.UseTool &&
         physicsState.MovementState != AgentMovementState.Drink;
+    }
+
+    public bool IsCrouched()
+    {
+        var physicsState = agentPhysicsState;
+
+        return physicsState.MovementState == AgentMovementState.Crouch ||
+                physicsState.MovementState == AgentMovementState.Crouch_Move ||
+                physicsState.MovementState == AgentMovementState.Crouch_MoveBackward;
+    }
+
+    public bool IsAffectedByGravity()
+    {
+        var physicsState = agentPhysicsState;
+
+        return physicsState.MovementState == AgentMovementState.Idle ||
+                physicsState.MovementState == AgentMovementState.None ||
+                physicsState.MovementState == AgentMovementState.Move ||
+                physicsState.MovementState == AgentMovementState.MoveBackward ||
+                physicsState.MovementState == AgentMovementState.Crouch ||
+                physicsState.MovementState == AgentMovementState.Crouch_Move ||
+                physicsState.MovementState == AgentMovementState.Crouch_MoveBackward ||
+                physicsState.MovementState == AgentMovementState.JetPackFlying;
     }
 
     public bool IsIdle()
@@ -359,7 +388,14 @@ public partial class AgentEntity
             } 
             else
             {
-                PhysicsState.MovementState = AgentMovementState.Crouch_Move;
+                if (PhysicsState.MovingDirection != PhysicsState.FacingDirection)
+                {
+                    PhysicsState.MovementState = AgentMovementState.Crouch_MoveBackward;
+                }
+                else
+                {
+                    PhysicsState.MovementState = AgentMovementState.Crouch_Move;
+                }
             }
         }
     }
@@ -397,7 +433,7 @@ public partial class AgentEntity
         var PhysicsState = agentPhysicsState;
         var stats = agentStats;
 
-        if (IsStateFree() && !stats.IsLimping)
+        if (IsStateFree() && !stats.IsLimping && CanMove())
         {
             // handling horizontal movement (left/right)
             if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
@@ -426,10 +462,9 @@ public partial class AgentEntity
         var PhysicsState = agentPhysicsState;
         var stats = agentStats;
         
-        if (IsStateFree())
+        if (IsStateFree() && CanMove())
         {
-            if (PhysicsState.MovementState == AgentMovementState.Crouch ||
-            PhysicsState.MovementState == AgentMovementState.Crouch_Move)
+            if (IsCrouched())
             {
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
                 {
