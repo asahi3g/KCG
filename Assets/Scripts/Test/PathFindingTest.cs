@@ -56,7 +56,7 @@ namespace Planet.Unity
             {
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vec2f goalPos = new Vec2f(worldPosition.x, worldPosition.y);
-                GameState.ActionCreationSystem.CreateMovementAction(Planet.EntitasContext, Enums.ActionType.MoveAction,
+                GameState.ActionCreationSystem.CreateMovementAction(Planet.EntitasContext, Enums.NodeType.MoveAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
 

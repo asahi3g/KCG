@@ -222,7 +222,7 @@ namespace ECSInput
 
                         // Get proprietis.
                         ref Mech.MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
-                        if (mechProperties.Action != Enums.ActionType.None)
+                        if (mechProperties.Action != Enums.NodeType.None)
                             GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
                     }
 
@@ -256,7 +256,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,Enums.ActionType.ChargeAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,Enums.NodeType.ChargeAction, player.agentID.ID);
             }
 
             // Drop Action. 
@@ -264,7 +264,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.ActionType.DropAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.DropAction, player.agentID.ID);
             }
 
             // Reload Weapon.
@@ -272,7 +272,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.ActionType.ReloadAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.ReloadAction, player.agentID.ID);
             }
 
             // Shield Action.
@@ -280,7 +280,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.ActionType.ShieldAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.ShieldAction, player.agentID.ID);
 
             }
 
@@ -447,7 +447,7 @@ namespace ECSInput
                     {
                         if (!Inventory.InventorySystemsState.MouseDown)
                         {
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolNodeType, 
                             entity.agentID.ID, item.itemID.ID);
                         }
                     } 

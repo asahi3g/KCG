@@ -56,7 +56,7 @@ namespace Planet.Unity
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         if (!Inventory.InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType,
                             Player.agentID.ID, item.itemID.ID);
                     }
                 }

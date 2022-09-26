@@ -16,7 +16,7 @@ namespace Mech
 
         public int XMin, XMax, YMin, YMax;
 
-        public ActionType Action;
+        public NodeType Action;
         public Flags MechFlags;
 
         public Enums.LootTableType DropTableID;

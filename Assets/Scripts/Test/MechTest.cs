@@ -60,7 +60,7 @@ namespace Planet.Unity
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
             }
 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
@@ -77,11 +77,11 @@ namespace Planet.Unity
 
                 if (itemProperty.IsTool())
                 {
-                    showMechInventory = itemProperty.ToolActionType == Enums.ActionType.ToolActionConstruction;
+                    showMechInventory = itemProperty.ToolNodeType == Enums.NodeType.ToolActionConstruction;
 
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                        GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType,
                             Player.agentID.ID, item.itemID.ID);
                     }
                 }

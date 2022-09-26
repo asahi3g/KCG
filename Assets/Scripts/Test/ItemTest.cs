@@ -28,7 +28,7 @@ namespace Planet.Unity
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.ActionType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
             }
 
             int inventoryID = Player.agentInventory.InventoryID;
@@ -43,7 +43,7 @@ namespace Planet.Unity
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         if (!InventorySystemsState.MouseDown)
-                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
+                            GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType,
                                 Player.agentID.ID, item.itemID.ID);
                     }
                 }

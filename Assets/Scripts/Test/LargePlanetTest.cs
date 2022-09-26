@@ -40,7 +40,7 @@ namespace Planet.Unity
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, 
-                        itemProperty.ToolActionType, Player.agentID.ID);
+                        itemProperty.ToolNodeType, Player.agentID.ID);
                 }
             }
 

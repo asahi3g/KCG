@@ -19,7 +19,7 @@ public static class ActionCoolDownComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Action.CoolDown.Component),
-        typeof(Action.CoolDown.TimeComponent)
+        typeof(ActionCoolDown.Component),
+        typeof(ActionCoolDown.TimeComponent)
     };
 }
