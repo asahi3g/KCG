@@ -4,7 +4,7 @@ namespace Node
 {
     public class ToolActionUsePotion : NodeBase
     {
-        public override NodeType Type { get { return NodeType.None; } }
+        public override NodeType Type { get { return NodeType.DrinkPotionAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

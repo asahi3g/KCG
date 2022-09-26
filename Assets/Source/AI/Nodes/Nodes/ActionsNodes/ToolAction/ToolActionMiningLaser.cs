@@ -1,10 +1,13 @@
 ﻿using KMath;
 using UnityEngine;
+using Enums;
 
 namespace Node
 {
     public class ToolActionMiningLaser : NodeBase
     {
+        public override NodeType Type { get { return NodeType.ToolActionMiningLaser; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeID.ID);

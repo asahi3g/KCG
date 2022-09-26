@@ -1,4 +1,4 @@
-using System;
+using Enums;
 using UnityEngine;
 using Enums.Tile;
 
@@ -6,6 +6,8 @@ namespace Node.Action
 {
     public class ToolActionGeometryPlacement : NodeBase
     {
+        public override NodeType Type { get { return NodeType.ToolActionGeometryPlacement; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

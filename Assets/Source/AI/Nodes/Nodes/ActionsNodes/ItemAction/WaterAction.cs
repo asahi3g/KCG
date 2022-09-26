@@ -6,9 +6,9 @@ using Enums;
 
 namespace Node
 {
-    public class ToolActionWater : NodeBase
+    public class WaterAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionWater; } }
+        public override NodeType Type { get { return NodeType.WaterAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

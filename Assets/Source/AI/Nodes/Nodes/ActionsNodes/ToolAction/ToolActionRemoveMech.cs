@@ -1,14 +1,12 @@
-using System;
 using UnityEngine;
-using PlanetTileMap;
-using Mech;
-using Enums.Tile;
-using KMath;
+using Enums;
 
 namespace Node
 {
     public class ToolActionRemoveMech : NodeBase
     {
+        public override NodeType Type { get { return NodeType.ToolActionRemoveMech; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

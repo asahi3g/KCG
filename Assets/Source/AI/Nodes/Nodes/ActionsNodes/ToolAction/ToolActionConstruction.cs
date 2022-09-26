@@ -1,13 +1,13 @@
-using System;
 using UnityEngine;
-using PlanetTileMap;
-using Mech;
+using Enums;
 using Enums.Tile;
 
 namespace Node.Action
 {
     public class ToolActionConstruction : NodeBase
     {
+        public override NodeType Type { get { return NodeType.ToolActionConstruction; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

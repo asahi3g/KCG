@@ -1,10 +1,13 @@
 using UnityEngine;
+using Enums;
 using KMath;
 
 namespace Node
 {
-    public class ToolActionPlanter : NodeBase
+    public class PlantAction : NodeBase
     {
+        public override NodeType Type { get { return NodeType.PlantAction; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

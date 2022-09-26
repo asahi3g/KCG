@@ -1,15 +1,14 @@
-using System;
 using KMath;
-using Planet;
 using UnityEngine;
-using System.Collections.Generic;
-using Agent;
+using Enums;
 using Item;
 
 namespace Node
 {
-    public class ToolActionMeleeAttack : NodeBase
+    public class MeleeAtackAction : NodeBase
     {
+        public override NodeType Type { get { return NodeType.MeleeAttackAction; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

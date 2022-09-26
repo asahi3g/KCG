@@ -7,6 +7,7 @@ namespace Node
 {
     public class ToolActionThrowableGrenade : NodeBase
     {
+        public override NodeType Type { get { return NodeType.None; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

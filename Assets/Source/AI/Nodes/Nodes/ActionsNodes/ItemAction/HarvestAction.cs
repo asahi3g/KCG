@@ -1,10 +1,13 @@
 using UnityEngine;
 using KMath;
+using Enums;
 
 namespace Node.Action
 {
-    public class ToolActionHarvest : NodeBase
+    public class HarvestAction : NodeBase
     {
+        public override NodeType Type { get { return NodeType.MechPlacementAction; } }
+
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

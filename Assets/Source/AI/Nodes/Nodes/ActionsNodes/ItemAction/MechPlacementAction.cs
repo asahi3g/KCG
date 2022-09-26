@@ -1,14 +1,12 @@
-using System;
 using UnityEngine;
-using PlanetTileMap;
-using Mech;
-using Enums.Tile;
+using Enums;
 using KMath;
 
 namespace Node.Action
 {
-    public class ToolActionMechPlacement : NodeBase
+    public class MechPlacementAction : NodeBase
     {
+        public override NodeType Type { get { return NodeType.MechPlacementAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
