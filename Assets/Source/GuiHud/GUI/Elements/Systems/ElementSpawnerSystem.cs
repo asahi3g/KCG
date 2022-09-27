@@ -15,14 +15,14 @@ namespace KGUI.Elements
             entity.AddKGUIElementsPosition2D(position, position);
 
             Text textObj = new Text();
-            textObj.entity = entity;
+            textObj.Entity = entity;
 
             entity.AddKGUIElementsText(text, timeToLive, textObj, areaSize);
             entity.AddKGUIElementsType(elementType);
 
             textObj.Create("UIElementText", entity.kGUIElementsText.Text, GameObject.Find("Canvas").transform, entity.kGUIElementsText.TimeToLive);
             textObj.SetSizeDelta(new Vector2(areaSize.X, areaSize.Y));
-            entity.kGUIElementsText.GameObject.startLifeTime = true;
+            entity.kGUIElementsText.GameObject.StartLifeTime = true;
 
             return entity;
         }
@@ -36,7 +36,7 @@ namespace KGUI.Elements
             entity.AddKGUIElementsPosition2D(position, position);
 
             Text textObj = new Text();
-            textObj.entity = entity;
+            textObj.Entity = entity;
 
             entity.AddKGUIElementsText(text, 50.0f, textObj, areaSize);
             entity.AddKGUIElementsType(elementType);
@@ -57,13 +57,13 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", -1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Sprite);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetImageType(type);
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetImageType(type);
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -78,14 +78,14 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", - 1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Sprite);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetImageType(type);
-            entity.kGUIElementsImage.Image.SetImageColor(color);
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetImageType(type);
+            entity.kGUIElementsImage.ImageWrapper.SetImageColor(color);
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -100,15 +100,15 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", - 1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Sprite);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetImageType(type);
-            entity.kGUIElementsImage.Image.SetImageColor(color);
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
-            entity.kGUIElementsImage.Image.SetSize(new Vector2(size.X, size.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetImageType(type);
+            entity.kGUIElementsImage.ImageWrapper.SetImageColor(color);
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetSize(new Vector2(size.X, size.Y));
 
             return entity;
         }
@@ -123,12 +123,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, sprite, null, scale, 0, 0, "", -1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Sprite);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Sprite);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -143,12 +143,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, path, -1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, image.Path);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, image.Path);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -163,13 +163,13 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, path, -1);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, image.Path);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, image.Path);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
-            entity.kGUIElementsImage.Image.SetSize(new Vector2(size.X, size.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetSize(new Vector2(size.X, size.Y));
 
             return entity;
         }
@@ -184,12 +184,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, tileSpriteID);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -205,12 +205,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID, 0);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, tileSpriteID, atlasType);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             return entity;
         }
@@ -226,12 +226,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID, atlasType);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, tileSpriteID, atlasType);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
             if(hasMultiplePositions)
             {
@@ -253,12 +253,12 @@ namespace KGUI.Elements
 
             entity.AddKGUIElementsImage(Name, null, null, scale, width, height, "", tileSpriteID);
             var image = entity.kGUIElementsImage;
-            entity.kGUIElementsImage.Image = new Image(image.Name, parent, image.Width, image.Height, tileSpriteID, Enums.AtlasType.Error);
+            entity.kGUIElementsImage.ImageWrapper = new ImageWrapper(image.Name, parent, image.Width, image.Height, tileSpriteID, Enums.AtlasType.Error);
 
             entity.AddKGUIElementsType(elementType);
 
-            entity.kGUIElementsImage.Image.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
-            entity.kGUIElementsImage.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+            entity.kGUIElementsImage.ImageWrapper.SetPosition(new Vector3(entity.kGUIElementsPosition2D.Value.X, entity.kGUIElementsPosition2D.Value.Y));
+            entity.kGUIElementsImage.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
 
 
             return entity;

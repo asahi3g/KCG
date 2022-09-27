@@ -7,29 +7,29 @@ namespace Mech
 
     public class MechGUIDrawSystem
     {
-        private Image Chest;
-        private Image ChestBackground;
+        private ImageWrapper Chest;
+        private ImageWrapper ChestBackground;
 
-        private Image Planter;
-        private Image PlanterBackground;
+        private ImageWrapper Planter;
+        private ImageWrapper PlanterBackground;
 
-        private Image Light;
-        private Image LightBackground;
+        private ImageWrapper Light;
+        private ImageWrapper LightBackground;
 
-        private Image MajestyPalm;
-        private Image MajestyPalmBackground;
+        private ImageWrapper MajestyPalm;
+        private ImageWrapper MajestyPalmBackground;
 
-        private Image SagoPalm;
-        private Image SagoPalmBackground;
+        private ImageWrapper SagoPalm;
+        private ImageWrapper SagoPalmBackground;
 
-        private Image DracaenaTrifasciata;
-        private Image DracaenaTrifasciataBackground;
+        private ImageWrapper DracaenaTrifasciata;
+        private ImageWrapper DracaenaTrifasciataBackground;
 
-        private Image SmashableBox;
-        private Image SmashableBoxBackground;
+        private ImageWrapper SmashableBox;
+        private ImageWrapper SmashableBoxBackground;
         
-        private Image SmashableEgg;
-        private Image SmashableEggBackground;
+        private ImageWrapper SmashableEgg;
+        private ImageWrapper SmashableEggBackground;
 
         int inventoryID;
         InventoryEntity Inventory;
@@ -46,65 +46,65 @@ namespace Mech
 
 
             ChestBackground = planet.AddUIImage("ChestBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Chest = planet.AddUIImage("Chest", ChestBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.Image;
+            Chest = planet.AddUIImage("Chest", ChestBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
 
             PlanterBackground = planet.AddUIImage("PlanterBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Planter = planet.AddUIImage("Planter", PlanterBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f),  32, 16).kGUIElementsImage.Image;
+            Planter = planet.AddUIImage("Planter", PlanterBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f),  32, 16).kGUIElementsImage.ImageWrapper;
 
             LightBackground = planet.AddUIImage("LightBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Light = planet.AddUIImage("Light", LightBackground.GetTransform(), "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 48, 16).kGUIElementsImage.Image;
+            Light = planet.AddUIImage("Light", LightBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 48, 16).kGUIElementsImage.ImageWrapper;
 
             MajestyPalmBackground = planet.AddUIImage("MajestyPalmBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            MajestyPalm = planet.AddUIImage("MajestyPalm", MajestyPalmBackground.GetTransform(),
+            MajestyPalm = planet.AddUIImage("MajestyPalm", MajestyPalmBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.Image;
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             SagoPalmBackground = planet.AddUIImage("SagoPalmBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            SagoPalm = planet.AddUIImage("SagoPalm", SagoPalmBackground.GetTransform(),
+            SagoPalm = planet.AddUIImage("SagoPalm", SagoPalmBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.Image;
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             DracaenaTrifasciataBackground = planet.AddUIImage("DracaenaTrifasciataBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            DracaenaTrifasciata = planet.AddUIImage("DracaenaTrifasciata", DracaenaTrifasciataBackground.GetTransform(),
+            DracaenaTrifasciata = planet.AddUIImage("DracaenaTrifasciata", DracaenaTrifasciataBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.Image;
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
             SmashableBoxBackground = planet.AddUIImage("SmashableBoxBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            SmashableBox = planet.AddUIImage("SmashableBox", SmashableBoxBackground.GetTransform(),
+            SmashableBox = planet.AddUIImage("SmashableBox", SmashableBoxBackground.Transform,
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
-                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.Image;
+                    new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
             
             SmashableEggBackground = planet.AddUIImage("SmashableEggBackground", canvas, backgroundSprite,
-                new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.Image;
+                new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
             
-            SmashableEgg = planet.AddUIImage("SmashableEgg", SmashableEggBackground.GetTransform(),
+            SmashableEgg = planet.AddUIImage("SmashableEgg", SmashableEggBackground.Transform,
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.Image;
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
         }
 
         public void Draw(ref Planet.PlanetState planet, AgentEntity agentEntity)
@@ -120,14 +120,14 @@ namespace Mech
             {
                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                 {
-                    ChestBackground.GetGameObject().SetActive(true);
-                    PlanterBackground.GetGameObject().SetActive(true);
-                    LightBackground.GetGameObject().SetActive(true);
-                    MajestyPalmBackground.GetGameObject().SetActive(true);
-                    SagoPalmBackground.GetGameObject().SetActive(true);
-                    DracaenaTrifasciataBackground.GetGameObject().SetActive(true);
-                    SmashableBoxBackground.GetGameObject().SetActive(true);
-                    SmashableEggBackground.GetGameObject().SetActive(true);
+                    ChestBackground.GameObject.SetActive(true);
+                    PlanterBackground.GameObject.SetActive(true);
+                    LightBackground.GameObject.SetActive(true);
+                    MajestyPalmBackground.GameObject.SetActive(true);
+                    SagoPalmBackground.GameObject.SetActive(true);
+                    DracaenaTrifasciataBackground.GameObject.SetActive(true);
+                    SmashableBoxBackground.GameObject.SetActive(true);
+                    SmashableEggBackground.GameObject.SetActive(true);
 
                     ChestBackground.SetImageColor(item.itemMech.MechID 
                                                                 == MechType.Storage ? Color.red : Color.yellow);
@@ -331,14 +331,14 @@ namespace Mech
                 }
                 else
                 {
-                    ChestBackground.GetGameObject().SetActive(false);
-                    PlanterBackground.GetGameObject().SetActive(false);
-                    LightBackground.GetGameObject().SetActive(false);
-                    MajestyPalmBackground.GetGameObject().SetActive(false);
-                    SagoPalmBackground.GetGameObject().SetActive(false);
-                    DracaenaTrifasciataBackground.GetGameObject().SetActive(false);
-                    SmashableBoxBackground.GetGameObject().SetActive(false);
-                    SmashableEggBackground.GetGameObject().SetActive(false);
+                    ChestBackground.GameObject.SetActive(false);
+                    PlanterBackground.GameObject.SetActive(false);
+                    LightBackground.GameObject.SetActive(false);
+                    MajestyPalmBackground.GameObject.SetActive(false);
+                    SagoPalmBackground.GameObject.SetActive(false);
+                    DracaenaTrifasciataBackground.GameObject.SetActive(false);
+                    SmashableBoxBackground.GameObject.SetActive(false);
+                    SmashableEggBackground.GameObject.SetActive(false);
                 }
             }
         }

@@ -19,22 +19,16 @@ namespace Node
 
             // Todo: Move target selection to an agent system.
             Vec2f target = Vec2f.Zero;
-            if(nodeEntity.hasNodeTaget)
+            if(nodeEntity.hasNodeBlackboardData)
             {
-                int agentTargetID = nodeEntity.nodeTaget.AgentTargetID;
-                if (agentTargetID != -1)
-                {
-                    AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentTargetID);
-                    target = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size.Y * 0.7f;
-                }
-                else
-                    target = nodeEntity.nodeTaget.TargetPos;
+                //target = // Get from blackboard.
             }
             else
             {
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 target.X = worldPosition.x;
                 target.Y = worldPosition.y;
+                nodeEntity.AddNodeTarget(target);
             }
 
             int bulletsPerShot = WeaponProperty.BulletsPerShot;
@@ -48,10 +42,9 @@ namespace Node
                     nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                     return;
                 }
-            }
 
-            if (itemEntity.hasItemFireWeaponClip)
                 itemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
+            }
 
 
             if (target.X > agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == -1)
@@ -81,7 +74,7 @@ namespace Node
                 Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
                 Vec2f startPos = agentEntity.GetGunFiringPosition();
-                Vec2f target = Vec2f.Zero;
+                Vec2f target = nodeEntity.nodeTarget.TargetPos;
                 int bulletsPerShot = WeaponProperty.BulletsPerShot;
                 var spread = WeaponProperty.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)

@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-
 using Enums;
 using KMath;
-using Entitas;
-using Unity.VisualScripting;
 
 namespace Node
 {
@@ -12,6 +8,16 @@ namespace Node
     {
 
         private static int ActionID;
+
+        public NodeEntity CreateBehaviorTreeNode(Contexts entitasContext, NodeType NodeTypeID, int agentID)
+        {
+            NodeEntity nodeEntity = entitasContext.node.CreateEntity();
+            nodeEntity.AddNodeID(ActionID++, NodeTypeID);
+            nodeEntity.AddNodeOwner(agentID);
+            nodeEntity.AddNodeExecution(NodeState.Entry);
+
+            return nodeEntity;
+        }
 
         /// <summary>
         /// Create action and schedule it. Later we will be able to create action without scheduling immediately.
@@ -52,29 +58,6 @@ namespace Node
             {
                 NodeEntity nodeEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
                 nodeEntity.AddNodeMoveTo(goalPosition, new Vec2f[1], 0, false, false);
-            }
-            return nodeID;
-        }
-
-        public int CreateTargetAction(Contexts entitasContext, NodeType NodeTypeID, int agentID, Vec2f target, int itemID)
-        {
-            int nodeID = CreateAction(entitasContext, NodeTypeID, agentID);
-            if (nodeID != -1)
-            {
-                NodeEntity nodeEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
-                nodeEntity.AddNodeTaget(-1, -1, target);
-            }
-            return nodeID;
-        }
-
-        public int CreateTargetAction(Contexts entitasContext, NodeType NodeTypeID, int agentID, int agentTargetID, int itemID)
-        {
-            int nodeID = CreateAction(entitasContext, NodeTypeID, agentID);
-            if (nodeID != -1)
-            {
-                NodeEntity actionEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
-                actionEntity.AddNodeTool(itemID);
-                actionEntity.AddNodeTaget(agentTargetID, -1, Vec2f.Zero);
             }
             return nodeID;
         }
