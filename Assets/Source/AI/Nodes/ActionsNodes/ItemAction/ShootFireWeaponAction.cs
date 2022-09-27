@@ -20,57 +20,80 @@ namespace Node
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
+            var physicsState = agentEntity.agentPhysicsState;
 
-
-            // Todo: Move target selection to an agent system.
-            if(nodeEntity.hasNodeTaget)
+            if (physicsState.MovementState != AgentMovementState.Falling &&
+            physicsState.MovementState != AgentMovementState.Jump &&
+            physicsState.MovementState != AgentMovementState.Flip &&
+            physicsState.MovementState != AgentMovementState.JetPackFlying &&
+            physicsState.MovementState != AgentMovementState.SlidingLeft &&
+            physicsState.MovementState != AgentMovementState.SlidingRight)
             {
-                int agentTargetID = nodeEntity.nodeTaget.AgentTargetID;
-                if (agentTargetID != -1)
+
+                // Todo: Move target selection to an agent system.
+                if(nodeEntity.hasNodeTaget)
                 {
-                    AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentTargetID);
-                    Target = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size.Y * 0.7f;
+                    int agentTargetID = nodeEntity.nodeTaget.AgentTargetID;
+                    if (agentTargetID != -1)
+                    {
+                        AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentTargetID);
+                        Target = targetAgentEntity.agentPhysicsState.Position + targetAgentEntity.physicsBox2DCollider.Size.Y * 0.7f;
+                    }
+                    else
+                    {
+                        Target = nodeEntity.nodeTaget.TargetPos;
+                    }
                 }
                 else
-                    Target = nodeEntity.nodeTaget.TargetPos;
+                {
+                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Target.X = worldPosition.x;
+                    Target.Y = worldPosition.y;
+                }
+
+                int bulletsPerShot = WeaponProperty.BulletsPerShot;
+
+                if (itemEntity.hasItemFireWeaponClip)
+                {
+                    int numBullet = itemEntity.itemFireWeaponClip.NumOfBullets;
+                    if (numBullet <= 0)
+                    {
+                        Debug.Log("Clip is empty. Press R to reload.");
+                        nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                        return;
+                    }
+                }
+
+                if (itemEntity.hasItemFireWeaponClip)
+                {
+                    itemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
+                }
+
+
+                if (Target.X > agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == -1)
+                {
+                    agentEntity.agentPhysicsState.MovingDirection = 1;
+                }
+                else if (Target.X < agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == 1)
+                {
+                    agentEntity.agentPhysicsState.MovingDirection = -1;
+                }
+
+                agentEntity.FireGun(WeaponProperty.CoolDown);
+                Vec2f startPos = agentEntity.GetGunFiringPosition();
+
+                if (Math.Sign(Target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.MovingDirection ))
+                {
+                    agentEntity.agentPhysicsState.MovingDirection *= -1;
+                }
+
+                GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+                nodeEntity.nodeExecution.State = Enums.NodeState.Running;
             }
             else
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Target.X = worldPosition.x;
-                Target.Y = worldPosition.y;
+                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
             }
-
-            int bulletsPerShot = WeaponProperty.BulletsPerShot;
-
-            if (itemEntity.hasItemFireWeaponClip)
-            {
-                int numBullet = itemEntity.itemFireWeaponClip.NumOfBullets;
-                if (numBullet <= 0)
-                {
-                    Debug.Log("Clip is empty. Press R to reload.");
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
-                    return;
-                }
-            }
-
-            if (itemEntity.hasItemFireWeaponClip)
-                itemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
-
-
-            if (Target.X > agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == -1)
-                agentEntity.agentPhysicsState.MovingDirection = 1;
-            else if (Target.X < agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == 1)
-                agentEntity.agentPhysicsState.MovingDirection = -1;
-
-            agentEntity.FireGun(WeaponProperty.CoolDown);
-            Vec2f startPos = agentEntity.GetGunFiringPosition();
-
-            if (Math.Sign(Target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.MovingDirection ))
-                agentEntity.agentPhysicsState.MovingDirection *= -1;
-
-            GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
         }
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
@@ -94,7 +117,9 @@ namespace Node
                         Target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage);
 
                     if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
+                    {
                         projectileEntity.isProjectileFirstHIt = false;
+                    }
 
                     projectileEntity.AddProjectileRange(WeaponProperty.Range);
                 }

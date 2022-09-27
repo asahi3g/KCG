@@ -378,45 +378,7 @@ namespace Agent
             physicsState.StaggerDuration = 1.0f;
         }
 
-        public void Jump(AgentEntity agentEntity)
-        {
-            var physicsState = agentEntity.agentPhysicsState;
-            if (agentEntity.IsStateFree())
-            {
-                // we can start jumping only if the jump counter is 0
-                if (physicsState.JumpCounter == 0)
-                {
-                    
-                        // first jump
-
-                        // if we are sticking to a wall 
-                        // throw the agent in the opphysicsStateite direction
-                        // Inpulse so use immediate speed intead of acceleration.
-                        if (physicsState.MovementState == AgentMovementState.SlidingLeft)
-                        {
-                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
-                        }
-                        else if (physicsState.MovementState == AgentMovementState.SlidingRight)
-                        {
-                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
-                        }
-
-                        // jumping
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
-                        physicsState.JumpCounter++;
-                }
-                else
-                {
-                    // double jump
-                    if (physicsState.JumpCounter <= 1)
-                    {
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
-                        physicsState.JumpCounter++;
-                    }
-                }
-            }
-        }
-
+    
         public void SwordSlash(AgentEntity agentEntity)
         {
             var PhysicsState = agentEntity.agentPhysicsState;
