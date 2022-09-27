@@ -5,10 +5,11 @@ using AI;
 
 namespace Node
 {
-    public class DecoratorNode : NodeBase
+    public class RepeatedNode : NodeBase
     {
-        public override NodeType Type { get { return NodeType.DecoratorNode; } }
+        public override NodeType Type { get { return NodeType.RepeatedNode; } }
         public override bool IsActionNode { get { return false; } }
+
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -25,11 +26,15 @@ namespace Node
                     nodes[index].OnUpdate(ref planet, child);
                     break;
                 case NodeState.Success:
-                    nodes[index].OnExit(ref planet, child);
+                    nodes[index].OnEnter(ref planet, child);
+                    child.nodeExecution.State = Enums.NodeState.Running;
+                    //nodes[index].OnExit(ref planet, child);
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnExit(ref planet, child);
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                    nodes[index].OnEnter(ref planet, child);
+                    child.nodeExecution.State = Enums.NodeState.Running;
+                    //nodes[index].OnExit(ref planet, child);
+                    //nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                     break;
                 default:
                     Debug.Log("Not valid Action state.");

@@ -5,11 +5,10 @@ public class Utils
 
     public static void Assert(bool condition, string message = "")
     {
-        UnityEngine.Assertions.Assert.IsTrue(condition);
+        UnityEngine.Assertions.Assert.IsTrue(condition, message);
 
         if (!condition)
         {
-            Debug.LogError(message);
             Application.Quit();
         }
     }

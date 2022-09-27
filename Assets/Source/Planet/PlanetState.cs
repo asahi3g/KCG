@@ -66,7 +66,6 @@ namespace Planet
 
         public void InitializeSystems(Material material, Transform transform)
         {
-            GameState.ActionSchedulerSystem.Initialize();
             GameState.PathFinding.Initialize();
 
             // Mesh builders
