@@ -24,8 +24,9 @@ namespace Node
                         {
                             if (entity.hasMechPlanter)
                             {
-                                HUD.HUDManager.guiManager.AddScannerText("Got Seed: " + entity.mechPlanter.GotSeed + " \n" + "Light Status: " + entity.mechPlanter.LightLevel + " \n" + "Water Status: " + (int)entity.mechPlanter.WaterLevel + " \n" + "Growth Status: " + (int)entity.mechPlanter.PlantGrowth, new Vec2f(-160f, 90.0f),
-                                    new Vec2f(350, 120), 3.0f);
+                                GameState.GUIManager.AddScannerText("Got Seed: " + entity.mechPlanter.GotSeed + " \n" + "Light Status: " + 
+                                    entity.mechPlanter.LightLevel + " \n" + "Water Status: " + (int)entity.mechPlanter.WaterLevel + " \n" + 
+                                    "Growth Status: " + (int)entity.mechPlanter.PlantGrowth, new Vec2f(-160f, 90.0f), new Vec2f(350, 120), 3.0f);
                             }
                         }
                     }

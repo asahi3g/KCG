@@ -41,7 +41,7 @@ namespace KGUI.Statistics
                 }
 
                 // Render Position Info in 16:09
-                text = HUD.HUDManager.guiManager.AddText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + planet.TileMap.MapSize.X + ", Y: " + planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps, new KMath.Vec2f(350.0f, 150.0f), new KMath.Vec2f(250,120));
+                text = GameState.GUIManager.AddText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + planet.TileMap.MapSize.X + ", Y: " + planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps, new KMath.Vec2f(350.0f, 150.0f), new KMath.Vec2f(250,120));
             }
             // Render Position Info in 16:09
             text.UpdateText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + planet.TileMap.MapSize.X + ", Y: " + planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps);

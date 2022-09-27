@@ -1,19 +1,21 @@
 ﻿using Entitas;
 using Enums;
-using System.Diagnostics;
 
 namespace Node
 { 
     public class NodeBase
     {
         public virtual NodeType Type { get { return NodeType.None; } }
+        public virtual bool IsActionNode { get { return true; } }
 
         public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
+            nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         public virtual void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
-        {      
+        {
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
         /// <summary>

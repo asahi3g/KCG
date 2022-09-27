@@ -31,9 +31,9 @@ namespace KGUI.Elements
                     var image = entity.kGUIElementsImage;
                     var position = entity.kGUIElementsPosition2D;
 
-                    image.Image.Update();
+                    image.ImageWrapper.Update();
                     //image.Image.SetPosition(new Vector3(position.Value.X, position.Value.Y, 0.0f));
-                    image.Image.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+                    image.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
                 }
             }
 

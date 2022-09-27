@@ -8,8 +8,9 @@ namespace Projectile
     {
         public void Update(ref Planet.PlanetState planet)
         {
-            if(planet.TileMap != null)
-            {
+            if (planet.ProjectileList == null)
+                return;
+                
     #if UNITY_EDITOR
                 for (int i = 0; i < planet.ProjectileList.Length; i++)
                 {
@@ -22,8 +23,6 @@ namespace Projectile
                     endPos.y += entityP.physicsBox2DCollider.Size.Y / 2.0f;
                     Debug.DrawLine(startPos, endPos, Color.red, 2.0f, false);
                 }
-    #endif
-            }
         }
     }
 }
