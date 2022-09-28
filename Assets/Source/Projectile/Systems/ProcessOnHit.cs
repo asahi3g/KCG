@@ -58,7 +58,7 @@ namespace Projectile
             if (projectileEntity.hasProjectileDamage)
             {
                 int damage = projectileEntity.projectileDamage.Damage;
-                stats.Health -= damage;
+                //stats.Health -= damage;
 
                 // Debug floating Text
                 //planet.AddFloatingText(damage.ToString(), 1.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position, new Color(1.0f, 0, 0, 1.0f), 12);

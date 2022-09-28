@@ -113,6 +113,13 @@ namespace Projectile
                 float closestDistance = 999999.0f;
                 Vec2f collisionPosition = new Vec2f();
 
+                if (CollidedWith.Count > 0)
+                {
+                    closestAgent = CollidedWith[0];
+                    closestDistance = (CollidedWith[0].agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                    collisionPosition = CollisionPosition[0];
+                }
+
 
                 for(int i = 0; i < CollidedWith.Count; i++)
                 {
