@@ -7,6 +7,7 @@ namespace Enums
         Slime,
         FlyingSlime,
         Corpse,
+        EnemyMarine,
         EnemyGunner,
         EnemySwordman,
         EnemyInsect,

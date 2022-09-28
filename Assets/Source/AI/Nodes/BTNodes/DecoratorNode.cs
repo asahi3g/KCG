@@ -10,6 +10,13 @@ namespace Node
         public override NodeType Type { get { return NodeType.DecoratorNode; } }
         public override bool IsActionNode { get { return false; } }
 
+        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
+        {
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);
+            child.nodeExecution.State = NodeState.Entry;
+            nodeEntity.nodeExecution.State = NodeState.Running;
+        }
+
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);

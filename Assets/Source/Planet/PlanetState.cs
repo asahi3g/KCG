@@ -558,7 +558,7 @@ namespace Planet
             GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);
-            GameState.ActionSchedulerSystem.Update(EntitasContext, frameTime, ref this);
+            GameState.ActionSchedulerSystem.Update(ref this);
             GameState.ActionCoolDownSystem.Update(EntitasContext, deltaTime);
             GameState.ParticleEmitterUpdateSystem.Update(ref this);
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);

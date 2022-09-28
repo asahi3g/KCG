@@ -2,7 +2,7 @@
 namespace Node
 {
     [Node]
-    public class BTComponentcs : IComponent
+    public class BTComponent : IComponent
     {
     }
 }

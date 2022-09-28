@@ -28,7 +28,6 @@ namespace Agent
             // the capacity
             ExpandArray();
 
-
             int LastIndex = Length;
             entity.agentID.Index = LastIndex;
             List[LastIndex] = entity;

@@ -36,35 +36,15 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if(Init)
+            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.DrawHUD(Player);
+
+            if (enableGeometryPlacementTool)
             {
-                int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
-
-                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, InventoryID, selectedSlot);
-                if (item != null)
-                {
-                    ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-                    if (itemProperty.IsTool())
-                    {
-                        if (Input.GetKeyDown(KeyCode.Mouse0))
-                        {
-                            /*if (!Inventory.InventorySystemsState.MouseDown)
-                                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolNodeType,
-                                Player.agentID.ID, item.itemID.ID);*/
-                        }   
-                    }
-                }
-
-                Planet.Update(Time.deltaTime, Material, transform);
-                Planet.DrawHUD(Player);
-
-                if (enableGeometryPlacementTool)
-                {
-                    geometryPlacementTool.UpdateToolGrid();
-                }
-
-                MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+                geometryPlacementTool.UpdateToolGrid();
             }
+
+            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
