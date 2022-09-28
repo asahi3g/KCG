@@ -8,7 +8,19 @@ namespace Node
     // Todo(Urgent): Implement this.
     public class SelectorNode : NodeBase
     {
-        public override NodeType Type { get { return NodeType.SequenceNode; } }
+        public override NodeType Type { get { return NodeType.SelectorNode; } }
+
+        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
+        {
+            nodeEntity.nodeComposite.CurrentID = 0;
+            var children = nodeEntity.nodeComposite.Children;
+            foreach (int childID in children)
+            {
+                NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(childID);
+                child.nodeExecution.State = NodeState.Entry;
+            }
+            nodeEntity.nodeExecution.State = NodeState.Running;
+        }
 
         // Todo: Allow selection between more than two nodes.
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
@@ -33,15 +45,12 @@ namespace Node
                     nodes[index].OnUpdate(ref planet, child);
                     break;
                 case NodeState.Success:
-                    nodes[index].OnEnter(ref planet, child);
-                    child.nodeExecution.State = Enums.NodeState.Running;
-                    //nodes[index].OnExit(ref planet, child);
+                    nodes[index].OnExit(ref planet, child);
+                    nodeEntity.nodeExecution.State = NodeState.Success;
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnEnter(ref planet, child);
-                    child.nodeExecution.State = Enums.NodeState.Running;
-                    //nodes[index].OnExit(ref planet, child);
-                    //nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                    nodes[index].OnExit(ref planet, child);
+                    nodeEntity.nodeExecution.State = NodeState.Fail;
                     break;
                 default:
                     Debug.Log("Not valid Action state.");

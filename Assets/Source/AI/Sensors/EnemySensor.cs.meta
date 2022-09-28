@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Entitas/Generated/Agent/Components/AgentAgentControllerComponent.cs.meta
+guid: 4489bbd2b4ca5d64c86f36a41524defc
+========
+guid: da166fc228e445145a13d550cd0ae92d
+>>>>>>>> main:Assets/Source/AI/Sensors/EnemySensor.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

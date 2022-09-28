@@ -8,14 +8,14 @@ namespace Projectile
         private static int UniqueID;
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
-            Enums.ProjectileType projectileType, bool isFirstHit = true)
+            Enums.ProjectileType projectileType, int agentOwnerId, bool isFirstHit = true)
         {
             ProjectileProperties projectileProperties = 
                                     GameState.ProjectileCreationApi.GetRef((int)projectileType);
 
             ProjectileEntity entity = projectileContext.CreateEntity();
             entity.isProjectileFirstFrame = true;
-            entity.AddProjectileID(UniqueID++, -1);
+            entity.AddProjectileID(UniqueID++, -1, agentOwnerId);
             entity.AddProjectileStart(position, Time.realtimeSinceStartup);
             entity.AddProjectileLinearDrag(projectileProperties.LinearDrag, projectileProperties.LinearCutOff);
             entity.AddProjectileSprite2D(projectileProperties.SpriteId, projectileProperties.Size);
@@ -40,9 +40,9 @@ namespace Projectile
         }
 
         public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction,
-            Enums.ProjectileType projectileType, int damage, bool isFirstHit = true)
+            Enums.ProjectileType projectileType, int damage, int agentOwnerId, bool isFirstHit = true)
         {
-            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType, isFirstHit);
+            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType, agentOwnerId, isFirstHit);
             entity.AddProjectileDamage(damage);
 
             return entity;

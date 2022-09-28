@@ -85,7 +85,7 @@ namespace Agent
                                 // jumping is just an increase in velocity
                                 if (jump)
                                 {
-                                    GameState.AgentProcessPhysicalState.Jump(entity);
+                                    entity.Jump();
                                 }
 
                             }
@@ -140,7 +140,7 @@ namespace Agent
                                 // jumping is just an increase in velocity
                                 if (jump)
                                 {
-                                    GameState.AgentProcessPhysicalState.Jump(entity);
+                                    entity.Jump();
                                 }
 
                             }
@@ -195,7 +195,7 @@ namespace Agent
                                 // jumping is just an increase in velocity
                                 if (jump)
                                 {
-                                    GameState.AgentProcessPhysicalState.Jump(entity);
+                                    entity.Jump();
                                 }
 
                             }
@@ -243,7 +243,7 @@ namespace Agent
                                 // jumping is just an increase in velocity
                                 if (jump)
                                 {
-                                    GameState.AgentProcessPhysicalState.Jump(entity);
+                                    entity.Jump();
                                 }
 
                             }

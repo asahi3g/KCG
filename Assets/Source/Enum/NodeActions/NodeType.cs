@@ -9,8 +9,10 @@
         DecoratorNode,
         RepeatedNode,
         SequenceNode,
+        SelectorNode,
 
         // General Actions
+        SelectClosestTarget,
         WaitAction,
         DropAction,
         PickUpAction,

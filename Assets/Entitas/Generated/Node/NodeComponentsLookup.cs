@@ -9,7 +9,7 @@
 public static class NodeComponentsLookup {
 
     public const int NodeBlackboardData = 0;
-    public const int NodeBTComponentcs = 1;
+    public const int NodeBT = 1;
     public const int NodeComposite = 2;
     public const int NodeDuration = 3;
     public const int NodeExecution = 4;
@@ -26,7 +26,7 @@ public static class NodeComponentsLookup {
 
     public static readonly string[] componentNames = {
         "NodeBlackboardData",
-        "NodeBTComponentcs",
+        "NodeBT",
         "NodeComposite",
         "NodeDuration",
         "NodeExecution",
@@ -42,7 +42,7 @@ public static class NodeComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(Node.BlackboardDataComponent),
-        typeof(Node.BTComponentcs),
+        typeof(Node.BTComponent),
         typeof(Node.CompositeComponent),
         typeof(Node.DurationComponent),
         typeof(Node.ExecutionComponent),

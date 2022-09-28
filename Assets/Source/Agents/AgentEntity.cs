@@ -337,7 +337,7 @@ public partial class AgentEntity
         var PhysicsState = agentPhysicsState;
 
         if (PhysicsState.DashCooldown <= 0.0f &&
-        IsStateFree())
+        IsStateFree() && CanMove())
         {
             PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
             PhysicsState.Velocity.Y = 0.0f;
@@ -354,7 +354,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (IsStateFree() && PhysicsState.OnGrounded)
+        if (IsStateFree() && PhysicsState.OnGrounded && CanMove())
         {
             PhysicsState.Velocity.X = 1.75f * PhysicsState.Speed * horizontalDir;
             PhysicsState.Velocity.Y = 0.0f;
@@ -376,7 +376,8 @@ public partial class AgentEntity
 
         if (IsStateFree() && PhysicsState.OnGrounded && 
         PhysicsState.MovementState != AgentMovementState.Crouch &&
-        PhysicsState.MovementState != AgentMovementState.Crouch_Move)
+        PhysicsState.MovementState != AgentMovementState.Crouch_Move &&
+        CanMove())
         {
             
             PhysicsState.Invulnerable = false;
@@ -515,4 +516,45 @@ public partial class AgentEntity
             }
         }
     }
+
+
+    public void Jump()
+        {
+            var physicsState = agentPhysicsState;
+            if (IsStateFree() && CanMove())
+            {
+                // we can start jumping only if the jump counter is 0
+                if (physicsState.JumpCounter == 0)
+                {
+                    
+                        // first jump
+
+                        // if we are sticking to a wall 
+                        // throw the agent in the opphysicsStateite direction
+                        // Inpulse so use immediate speed intead of acceleration.
+                        if (physicsState.MovementState == AgentMovementState.SlidingLeft)
+                        {
+                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
+                        }
+                        else if (physicsState.MovementState == AgentMovementState.SlidingRight)
+                        {
+                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
+                        }
+
+                        // jumping
+                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
+                        physicsState.JumpCounter++;
+                }
+                else
+                {
+                    // double jump
+                    if (physicsState.JumpCounter <= 1)
+                    {
+                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
+                        physicsState.JumpCounter++;
+                    }
+                }
+            }
+        }
+
 }

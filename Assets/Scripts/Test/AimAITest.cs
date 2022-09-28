@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using KMath;
 using Enums.Tile;
+using AI.BehaviorTree;
 
 namespace Planet.Unity
 {
     public class AimAITest : MonoBehaviour
     {
         [SerializeField] Material Material;
-        public Planet.PlanetState Planet;
+        public PlanetState Planet;
         AgentEntity Marine;
-        AgentEntity Target;
-        static bool Init = false;
-        const float SHOOT_COOL_DOWN = 1f;
-        float lastShootTime;
+        bool Init = false;
+        float LastSpawn = 0;
 
         public void Start()
         {
@@ -25,23 +24,13 @@ namespace Planet.Unity
 
         public void Update()
         {
-            float timeSinceStart = Time.realtimeSinceStartup;
-            
-            int inventoryID = Marine.agentInventory.InventoryID;
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
-
-            if ((timeSinceStart - lastShootTime) >= SHOOT_COOL_DOWN)
-            {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.ShootFireWeaponAction, Marine.agentID.ID, item.itemID.ID);
-                lastShootTime = Time.realtimeSinceStartup;
-            }
-            
             Planet.Update(Time.deltaTime, Material, transform);
 
-            if (!Target.isAgentAlive)
+            const float SPAWN_DELAY = 2.0f;
+            if ((Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY)
             {
-                Target = SpawnTarget();
+                SpawnTarget();
+                LastSpawn = Time.realtimeSinceStartup;
             }
         }
 
@@ -53,10 +42,10 @@ namespace Planet.Unity
             Planet = new PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
-            Marine = Planet.AddAgent(new Vec2f(1.0f, 3.0f), Enums.AgentType.EnemyGunner);
-            Target = SpawnTarget();
+            Marine = Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
+            
             GenerateMap();
-            lastShootTime = Time.realtimeSinceStartup;
+            LastSpawn = Time.realtimeSinceStartup;
         }
 
         private void GenerateMap()
@@ -73,12 +62,10 @@ namespace Planet.Unity
             }
         }
 
-        private AgentEntity SpawnTarget()
+        private void SpawnTarget()
         {
-            float x = Random.Range(16.0f, 31.0f);
-            float y = Random.Range(2.0f, 15.0f);
-
-            return Planet.AddAgent(new Vec2f(x, y), Enums.AgentType.FlyingSlime);
+            float x = Random.Range(1.0f, 31.0f);
+            Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
         }
     }
 }

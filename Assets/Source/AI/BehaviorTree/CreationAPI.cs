@@ -28,7 +28,9 @@ namespace AI.BehaviorTree
         {
             EntitasContext = entitasContext;
             AgentID = agentID;
-            return GameState.ActionCreationSystem.CreateBehaviorTreeNode(entitasContext, NodeType.DecoratorNode, agentID);
+            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(entitasContext, NodeType.DecoratorNode, agentID);
+            newEntity.AddNodesDecorator(-1);
+            return newEntity;
         }
 
         public NodeEntity AddDecoratorNode(NodeEntity nodeEntity)
@@ -44,6 +46,15 @@ namespace AI.BehaviorTree
         {
             NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
                 NodeType.SequenceNode, AgentID);
+            newEntity.AddNodeComposite(new List<int>(), 0);
+            AddToParent(nodeEntity, newEntity.nodeID.ID);
+            return newEntity;
+        }
+
+        public NodeEntity AddSelector(NodeEntity nodeEntity)
+        {
+            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
+                NodeType.SelectorNode, AgentID);
             newEntity.AddNodeComposite(new List<int>(), 0);
             AddToParent(nodeEntity, newEntity.nodeID.ID);
             return newEntity;
