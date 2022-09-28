@@ -93,7 +93,7 @@ namespace Node
                 {
                     float randomSpread = UnityEngine.Random.Range(-spread, spread);
                     ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((Target.X - startPos.X) - randomSpread,
-                        Target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage);
+                        Target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
 
                     if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
                     {

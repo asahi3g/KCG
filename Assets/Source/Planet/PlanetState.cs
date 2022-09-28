@@ -111,7 +111,7 @@ namespace Planet
             return newEntity;
         }
 
-        public AgentEntity AddPlayer(Vec2f position)
+        public AgentEntity AddPlayer(Vec2f position, int faction = 0)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -120,20 +120,20 @@ namespace Planet
                 AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
-                    Enums.AgentType.Player, inventoryID, equipmentInventoryID));
+                    Enums.AgentType.Player, faction, inventoryID, equipmentInventoryID));
 
             Player = newEntity;
 
             return newEntity;
         }
 
-        public AgentEntity AddAgent(Vec2f position, Enums.AgentType agentType = Enums.AgentType.Agent)
+        public AgentEntity AddAgent(Vec2f position, Enums.AgentType agentType = Enums.AgentType.Agent, int faction = 0)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
             int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType, inventoryID));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, agentType, faction, inventoryID));
             return newEntity;
         }
 
@@ -141,7 +141,7 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Enums.AgentType.Slime));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Enums.AgentType.Slime, 1));
             return newEntity;
         }
 
@@ -452,20 +452,20 @@ namespace Planet
             ParticleList.Remove(index);
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, bool isFirstHit = true)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int agentOwnerId, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
-                EntitasContext.projectile, position, direction, projectileType, isFirstHit));
+                EntitasContext.projectile, position, direction, projectileType, agentOwnerId, isFirstHit));
             
             return newEntity;
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int damage, bool isFirstHit = true)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int damage, int agentOwnerId, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
-                EntitasContext.projectile, position, direction, projectileType, damage, isFirstHit));
+                EntitasContext.projectile, position, direction, projectileType, damage, agentOwnerId, isFirstHit));
             
             return newEntity;
         }

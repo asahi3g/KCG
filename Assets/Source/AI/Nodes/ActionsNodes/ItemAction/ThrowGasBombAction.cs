@@ -26,7 +26,7 @@ namespace Node
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
             itemEntity.Destroy();
 
-            ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.GasGrenade, false);
+            ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.GasGrenade, agentEntity.agentID.ID, false);
             GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }

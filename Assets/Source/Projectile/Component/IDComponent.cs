@@ -10,5 +10,6 @@ namespace Projectile
         // This is not the index of ProjectileList. It should never reuse values.
         public int ID;
         public int Index;
+        public int AgentOwnerID;
     }
 }

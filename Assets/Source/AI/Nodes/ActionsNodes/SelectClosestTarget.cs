@@ -29,12 +29,16 @@ namespace Node.Action
             }
 
             if (target == null)
+            {
                 nodeEntity.nodeExecution.State = NodeState.Fail;
+            }
             else
+            {
                 nodeEntity.nodeExecution.State = NodeState.Success;
 
             BlackBoard blackBoard = agent.agentController.Controller.BlackBoard;
             blackBoard.Set(nodeEntity.nodeBlackboardData.DataID, target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f/2f);
+            }
         }
     }
 }

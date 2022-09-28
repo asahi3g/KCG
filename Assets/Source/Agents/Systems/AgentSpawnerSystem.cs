@@ -23,7 +23,7 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player);
+            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
             entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
@@ -77,7 +77,7 @@ namespace Agent
             ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
@@ -121,7 +121,7 @@ namespace Agent
         }
 
 
-        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, Enums.AgentType agentType, 
+        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, Enums.AgentType agentType, int faction,
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
@@ -130,7 +130,7 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAction.UnAlert);

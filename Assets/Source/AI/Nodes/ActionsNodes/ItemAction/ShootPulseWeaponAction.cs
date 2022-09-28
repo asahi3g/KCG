@@ -76,11 +76,11 @@ namespace Node
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
                     var random = UnityEngine.Random.Range(-spread, spread);
-                    planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - random, y - startPos.Y).Normalized, Enums.ProjectileType.Bullet);
+                    planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - random, y - startPos.Y).Normalized, Enums.ProjectileType.Bullet, agentEntity.agentID.ID);
                 }
             }
             else
-                planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.Grenade);
+                planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.Grenade, agentEntity.agentID.ID);
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Running;
             GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);

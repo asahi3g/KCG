@@ -43,7 +43,7 @@ public class LineOfSightTest : MonoBehaviour
         Planet = new Planet.PlanetState();
         Planet.Init(mapSize);
         Planet.InitializeSystems(Material, transform);
-        Player = Planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime);
+        Player = Planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime, 0);
         Player.AddAgentsLineOfSight(new CircleSector());
 
         GenerateMap();
