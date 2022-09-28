@@ -117,7 +117,7 @@ public partial class AgentEntity
         {
             case Enums.ItemAnimationSet.HoldingRifle:
             {
-                position += new Vec2f(0.5f * physicsState.FacingDirection, 1.0f);
+                position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
                 break;
             }
             case Enums.ItemAnimationSet.HoldingPistol:

@@ -10,12 +10,11 @@ namespace AI.Sensor
         }
         public override void Update(BlackBoard blackboard, ref PlanetState planet)
         {
-            const float MAX_DIST = 10f;
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.OwnerAgentID);
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity entity = planet.AgentList.Get(i);
-                if (entity.agentID.ID == agent.agentID.ID)
+                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
                     continue;
 
                 blackboard.Set(VariableID, true);

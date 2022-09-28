@@ -92,7 +92,7 @@ namespace Projectile
                 for (int i = 0; i < planet.AgentList.Length; i++)
                 {
                     AgentEntity agentEntity = planet.AgentList.Get(i);
-                    if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
+                    if (agentEntity.isAgentAlive)
                     {
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;

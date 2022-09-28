@@ -56,6 +56,7 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
+            Planet.AddAgent(new Vec2f(8.0f, 20), Enums.AgentType.EnemyMarine);
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
 
@@ -152,7 +153,6 @@ namespace Planet.Unity
 
                Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;
-
                inventoryID = Player.agentInventory.InventoryID;
 
                AddItemsToPlayer();
