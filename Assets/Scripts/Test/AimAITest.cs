@@ -9,7 +9,6 @@ namespace Planet.Unity
     {
         [SerializeField] Material Material;
         public PlanetState Planet;
-        AgentEntity Marine;
         bool Init = false;
         float LastSpawn = 0;
 
@@ -42,7 +41,7 @@ namespace Planet.Unity
             Planet = new PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
-            Marine = Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
+            Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
             LastSpawn = Time.realtimeSinceStartup;
