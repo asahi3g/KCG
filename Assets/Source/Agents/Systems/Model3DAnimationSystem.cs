@@ -29,6 +29,8 @@ namespace Agent
                     AgentAnimation agentAnimation = 
                         GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, model3d.AnimationType, model3d.ItemAnimationSet);
 
+                        Debug.Log(physicsState.MovementState + " " + model3d.AnimationType + " " +model3d.ItemAnimationSet);
+
                     AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
                     currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
