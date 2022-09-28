@@ -3,7 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using Enums;
-using static UnityEngine.GraphicsBuffer;
+using AI;
 
 namespace Node
 {
@@ -21,15 +21,16 @@ namespace Node
             Vec2f target = Vec2f.Zero;
             if(nodeEntity.hasNodeBlackboardData)
             {
-                //target = // Get from blackboard.
+                BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
+                blackBoard.Get(nodeEntity.nodeBlackboardData.DataID, ref target);
             }
             else
             {
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 target.X = worldPosition.x;
                 target.Y = worldPosition.y;
-                nodeEntity.AddNodeTarget(target);
             }
+            nodeEntity.ReplaceNodeTarget(target);
 
             int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
@@ -46,17 +47,11 @@ namespace Node
                 itemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
             }
 
-
-            if (target.X > agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == -1)
-                agentEntity.agentPhysicsState.MovingDirection = 1;
-            else if (target.X < agentEntity.agentPhysicsState.Position.X && agentEntity.agentPhysicsState.MovingDirection  == 1)
-                agentEntity.agentPhysicsState.MovingDirection = -1;
-
             agentEntity.FireGun(WeaponProperty.CoolDown);
             Vec2f startPos = agentEntity.GetGunFiringPosition();
 
-            if (Math.Sign(target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.MovingDirection ))
-                agentEntity.agentPhysicsState.MovingDirection *= -1;
+            if (Math.Sign(target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.FacingDirection))
+                agentEntity.agentPhysicsState.FacingDirection *= -1;
 
             GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
             nodeEntity.nodeExecution.State = Enums.NodeState.Running;

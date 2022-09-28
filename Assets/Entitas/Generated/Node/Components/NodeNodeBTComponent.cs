@@ -8,18 +8,18 @@
 //------------------------------------------------------------------------------
 public partial class NodeEntity {
 
-    static readonly Node.BTComponentcs nodeBTComponentcsComponent = new Node.BTComponentcs();
+    static readonly Node.BTComponent nodeBTComponent = new Node.BTComponent();
 
-    public bool isNodeBTComponentcs {
-        get { return HasComponent(NodeComponentsLookup.NodeBTComponentcs); }
+    public bool isNodeBT {
+        get { return HasComponent(NodeComponentsLookup.NodeBT); }
         set {
-            if (value != isNodeBTComponentcs) {
-                var index = NodeComponentsLookup.NodeBTComponentcs;
+            if (value != isNodeBT) {
+                var index = NodeComponentsLookup.NodeBT;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
                             ? componentPool.Pop()
-                            : nodeBTComponentcsComponent;
+                            : nodeBTComponent;
 
                     AddComponent(index, component);
                 } else {
@@ -40,17 +40,17 @@ public partial class NodeEntity {
 //------------------------------------------------------------------------------
 public sealed partial class NodeMatcher {
 
-    static Entitas.IMatcher<NodeEntity> _matcherNodeBTComponentcs;
+    static Entitas.IMatcher<NodeEntity> _matcherNodeBT;
 
-    public static Entitas.IMatcher<NodeEntity> NodeBTComponentcs {
+    public static Entitas.IMatcher<NodeEntity> NodeBT {
         get {
-            if (_matcherNodeBTComponentcs == null) {
-                var matcher = (Entitas.Matcher<NodeEntity>)Entitas.Matcher<NodeEntity>.AllOf(NodeComponentsLookup.NodeBTComponentcs);
+            if (_matcherNodeBT == null) {
+                var matcher = (Entitas.Matcher<NodeEntity>)Entitas.Matcher<NodeEntity>.AllOf(NodeComponentsLookup.NodeBT);
                 matcher.componentNames = NodeComponentsLookup.componentNames;
-                _matcherNodeBTComponentcs = matcher;
+                _matcherNodeBT = matcher;
             }
 
-            return _matcherNodeBTComponentcs;
+            return _matcherNodeBT;
         }
     }
 }

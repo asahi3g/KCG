@@ -269,14 +269,6 @@ public static class GameState
         VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
         VehicleAISystem = new Vehicle.AISystem(VehicleCreationApi);
 
-
-
-
-
-
-
-
-
         //TODO(): move these out of here
         InitStage1();
         InitStage2();

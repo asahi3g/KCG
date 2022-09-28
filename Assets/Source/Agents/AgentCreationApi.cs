@@ -273,6 +273,15 @@ namespace Agent
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
+
+            GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyMarine);
+            GameState.AgentCreationApi.SetName("Marine");
+            GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
+            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.End();
         }
     }
 

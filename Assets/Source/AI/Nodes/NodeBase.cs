@@ -18,12 +18,9 @@ namespace Node
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
-        /// <summary>
-        /// We should always delete actions after executed.
-        /// </summary>
+        /// <summary> We should always delete actions after executed.</summary>
         public virtual void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
-            nodeEntity.Destroy();
         }
 
         public virtual void CheckProceduralPrecondition(ref Planet.PlanetState planet, NodeEntity nodeEntity)

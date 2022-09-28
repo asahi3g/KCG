@@ -22,22 +22,9 @@ namespace AI
                 if (node.IsActionNode)
                     actionNodesLength++;
             }
-            
-            ActionNodes =   new NodeType[actionNodesLength];
-            BTNodes =       new NodeType[length - actionNodesLength];
-
-            for (int i = 0, actionIndex = 0, btIndex = 0; i < actionNodesLength; i++)
-            {
-                if (Nodes[i].IsActionNode)
-                    ActionNodes[actionIndex++] = Nodes[i].Type;
-                else
-                    BTNodes[btIndex++] = Nodes[i].Type;
-            }
         }
 
         // Todo: Make it ReadOnly.
         public static NodeBase[] Nodes;
-        public static NodeType[] ActionNodes;
-        public static NodeType[] BTNodes;
     }
 }

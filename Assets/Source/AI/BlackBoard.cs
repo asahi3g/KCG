@@ -54,21 +54,25 @@ namespace AI
             {
                 id = 1 << 31;
                 id += BoolEntries.Count;
+                BoolEntries.Add(new bool());
             }
             else if (type == typeof(float))
             {
                 id = 1 << 30;
                 id += FloatEnties.Count;
+                FloatEnties.Add(new float());
             }
             else if (type == typeof(int))
             {
                 id = 1 << 29;
                 id += IntEntries.Count;
+                IntEntries.Add(new int());
             }
             else if (type == typeof(Vec2f))
             {
                 id = 1 << 28;
                 id += VecEntries.Count;
+                VecEntries.Add(new Vec2f());
             }
 
             IDsToIndex.Add(id, Length++);
