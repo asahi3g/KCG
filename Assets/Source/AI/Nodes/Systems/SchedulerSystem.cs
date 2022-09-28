@@ -47,7 +47,7 @@ namespace Node
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity agent = planet.AgentList.Get(i);
-                if (!agent.hasAgentController)
+                if (!agent.hasAgentController || !agent.isAgentAlive)
                     continue;
 
                 AgentController controller = agent.agentController.Controller;
