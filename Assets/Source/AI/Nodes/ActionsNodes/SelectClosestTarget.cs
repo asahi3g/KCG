@@ -29,7 +29,9 @@ namespace Node.Action
             }
 
             if (target == null)
+            {
                 nodeEntity.nodeExecution.State = NodeState.Fail;
+            }
             else
             {
                 nodeEntity.nodeExecution.State = NodeState.Success;

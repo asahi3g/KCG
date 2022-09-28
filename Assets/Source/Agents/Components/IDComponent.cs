@@ -14,5 +14,6 @@ namespace Agent
         public int ID;
         public int Index;
         public Enums.AgentType Type;
+        public int Faction;
     }
 }

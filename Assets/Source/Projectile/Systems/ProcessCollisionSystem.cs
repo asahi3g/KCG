@@ -20,6 +20,7 @@ namespace Projectile
 
             foreach (var entity in entities)
             {
+               AgentEntity ownerEntity = planet.EntitasContext.agent.GetEntityWithAgentID(entity.projectileID.AgentOwnerID);
                 float bounceValue = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).BounceValue;
                 bool bounce = 
                     GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Flags.HasFlag(ProjectileProperties.ProjFlags.CanBounce);
@@ -92,7 +93,7 @@ namespace Projectile
                 for (int i = 0; i < planet.AgentList.Length; i++)
                 {
                     AgentEntity agentEntity = planet.AgentList.Get(i);
-                    if (agentEntity.isAgentAlive)
+                    if (agentEntity.agentID.Faction != ownerEntity.agentID.Faction && agentEntity.isAgentAlive)
                     {
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;
