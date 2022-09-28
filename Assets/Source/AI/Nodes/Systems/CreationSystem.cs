@@ -15,6 +15,8 @@ namespace Node
             nodeEntity.AddNodeID(ActionID++, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
+            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.isNodeBT = true;
 
             return nodeEntity;
         }
@@ -35,7 +37,7 @@ namespace Node
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(0f);
+            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
 
             return ActionID++;
         }

@@ -13,12 +13,18 @@ namespace Node
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
             nodeEntity.nodeComposite.CurrentID = 0;
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
+            var children = nodeEntity.nodeComposite.Children;
+            foreach (int childID in children)
+            {
+                NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(childID);
+                child.nodeExecution.State = NodeState.Entry;
+            }
+            nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            var childern = nodeEntity.nodeComposite.Children;          
+            var childern = nodeEntity.nodeComposite.Children;
             if (nodeEntity.nodeComposite.CurrentID >= childern.Count)
             {
                 nodeEntity.nodeExecution.State = NodeState.Fail;

@@ -3,6 +3,7 @@ using KMath;
 using UnityEngine;
 using Animancer;
 using UnityEngine.Animations.Rigging;
+using AI.BehaviorTree;
 
 namespace Agent
 {
@@ -22,7 +23,7 @@ namespace Agent
             entity.isAgentPlayer = true;
             entity.isECSInput = true;
             entity.AddECSInputXY(new Vec2f(0, 0), false, false);
-            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player);
+            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
             entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
@@ -76,7 +77,7 @@ namespace Agent
             ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
-            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
             entity.isAgentCorpse = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
@@ -120,7 +121,7 @@ namespace Agent
         }
 
 
-        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, Enums.AgentType agentType, 
+        public AgentEntity Spawn(Contexts entitasContext, Vec2f position, Enums.AgentType agentType, int faction,
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
@@ -129,7 +130,7 @@ namespace Agent
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
-            entity.AddAgentID(UniqueID++, -1, agentType); // agent id 
+            entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAction.UnAlert);
@@ -211,7 +212,7 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                         Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
 
 
                         entity.agentPhysicsState.Speed = 10.0f;
@@ -223,13 +224,13 @@ namespace Agent
                             entity.AddAgentAction(AgentAction.UnAlert);
                         break;
                     }
-            case Enums.AgentType.Agent:
+                case Enums.AgentType.Agent:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
-            case Enums.AgentType.Slime:
+                case Enums.AgentType.Slime:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
@@ -303,7 +304,7 @@ namespace Agent
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
                         break;
                     }
-                    case Enums.AgentType.EnemyInsect:
+                case Enums.AgentType.EnemyInsect:
                     {
                         GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SmallInsect);
                         GameObject model = GameObject.Instantiate(prefab);
@@ -321,15 +322,15 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
-                         Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
-                         new Vec3f(0.6f, 0.6f, 0.6f));
+                            Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
+                            new Vec3f(0.6f, 0.6f, 0.6f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
                         break;
                     }
-                    case Enums.AgentType.EnemyHeavy:
+                case Enums.AgentType.EnemyHeavy:
                     {
                         GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.HeavyInsect);
                         GameObject model = GameObject.Instantiate(prefab);
@@ -347,11 +348,45 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
-                         Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
+                            Enums.AgentAnimationType.GroundInsectHeavyAnimation,
+                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 4.0f;
+
+                        break;
+                    }
+                case Enums.AgentType.EnemyMarine:
+                    {
+                        Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
+
+                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
+                        GameObject model = GameObject.Instantiate(prefab);
+
+                        GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(3).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+
+                        GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+                        animancerComponentGO.transform.parent = model.transform;
+
+                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
+                        animancerComponent.Animator = model.GetComponent<Animator>();
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+
+                        entity.agentPhysicsState.Speed = 10.0f;
+
+                        if (!entity.hasAgentAction)
+                            entity.AddAgentAction(AgentAction.Alert);
+                        else
+                            entity.agentAction.Action = AgentAction.Alert;
+
+                        ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(entitasContext, Enums.ItemType.SMG);
+                        GameState.InventoryManager.AddItem(entitasContext, item, inventoryID);
+                        entity.AddAgentController(MarineBehavior.GetAgentController(entitasContext, entity.agentID.ID));
+                        entity.HandleItemSelected(item);
 
                         break;
                     }

@@ -271,7 +271,7 @@ class PlanterTest : MonoBehaviour
 
         float spawnHeight = tileMap.MapSize.Y - 2;
 
-        Player = Planet.AddPlayer(new Vec2f(2, 2));
+        Player = Planet.AddPlayer(new Vec2f(2, 2), 0);
         PlayerID = Player.agentID.ID;
 
         Planet.AddMech(new Vec2f(4, 2), Mech.MechType.Planter);

@@ -70,7 +70,7 @@ namespace ECSInput
                 // Jump
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    GameState.AgentProcessPhysicalState.Jump(player);
+                    player.Jump();
                 }
                 // Dash
                 if (Input.GetKeyDown(KeyCode.Space))
