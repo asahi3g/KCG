@@ -3,7 +3,6 @@ using Enums.Tile;
 using KMath;
 using Item;
 using Animancer;
-using HUD;
 using PlanetTileMap;
 using System.Linq;
 using System.Collections.Generic;
@@ -55,7 +54,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(128, 32);
+            Vec2i mapSize = new Vec2i(128, 96);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
@@ -72,10 +71,10 @@ namespace Planet.Unity
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                Debug.Log("loaded!");*/
+            Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                Debug.Log("loaded!");
 
-            GenerateMap();
+            //GenerateMap();
 
             Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
@@ -414,9 +413,10 @@ namespace Planet.Unity
         public void AddItemsToPlayer()
         {
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
+                        Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool, Planet.EntitasContext);
+           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
+           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon, Planet.EntitasContext);
@@ -435,17 +435,6 @@ namespace Planet.Unity
             ref var tileMap = ref Planet.TileMap;
 
             
-            for (int j = 0; j < tileMap.MapSize.Y / 2; j++)
-            {
-                for(int i = 0; i < tileMap.MapSize.X; i++)
-                {
-                    tileMap.GetTile(i, j).FrontTileID = TileID.Moon;
-                    tileMap.GetTile(i, j).BackTileID = TileID.Background;
-                }
-            }
-
-            
-
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
                 tileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
@@ -457,64 +446,6 @@ namespace Planet.Unity
                 tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
                 tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
             }
-
-            tileMap.GetTile(8, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(9, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(10, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(11, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(12, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(13, 18).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(12, 21).FrontTileID = TileID.Platform;
-            tileMap.GetTile(13, 21).FrontTileID = TileID.Platform;
-            tileMap.GetTile(14, 21).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(14, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(15, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(16, 24).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(19, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(20, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(21, 24).FrontTileID = TileID.Platform;
-
-
-
-            tileMap.GetTile(26, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(29, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(32, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(36, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(40, 26).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(16, 26).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(12, 27).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(8, 27).FrontTileID = TileID.Platform;
-            tileMap.GetTile(7, 27).FrontTileID = TileID.Platform;
-
-
-            for(int i = 0; i < 5; i++)
-            {
-                tileMap.GetTile(20, i + 16).FrontTileID = TileID.Moon;
-            }
-
-            for(int i = 0; i < 10; i++)
-            {
-                tileMap.GetTile(24, i + 16).FrontTileID = TileID.Moon;
-            }
-
-
-            tileMap.GetTile(26, 21).FrontTileID = TileID.Moon;
-            tileMap.GetTile(27, 21).FrontTileID = TileID.Moon;
-            tileMap.GetTile(26, 22).FrontTileID = TileID.Moon;
-            tileMap.GetTile(27, 22).FrontTileID = TileID.Moon;
         }
 
             private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)

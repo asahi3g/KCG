@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace KGUI.Elements
@@ -8,17 +6,17 @@ namespace KGUI.Elements
     {
         // Image Gameobject
         private GameObject textCanvas;
-        RectTransform rectTransform;
-        UnityEngine.UI.Text textComponent;
+        private RectTransform rectTransform;
+        private UnityEngine.UI.Text textComponent;
 
         // Countdown
-        float timeLeft;
+        private float timeLeft;
 
         // Start Life Time Condition
-        public bool startLifeTime;
+        public bool StartLifeTime;
 
         // Start Life Time Condition
-        public UIElementEntity entity;
+        public UIElementEntity Entity;
 
         // Constructor
         public void Create(string objectName, string text, Transform parent, float lifeTime)
@@ -29,13 +27,16 @@ namespace KGUI.Elements
             timeLeft = lifeTime;
 
             // Create Gameobject
-            textCanvas = new GameObject(objectName);
-
-            // Set Object Parent To Canvas
-            textCanvas.transform.parent = parent;
-
-            textCanvas.transform.position = Vector3.zero;
-            textCanvas.transform.rotation = Quaternion.identity;
+            textCanvas = new GameObject(objectName)
+            {
+                transform =
+                {
+                    // Set Object Parent To Canvas
+                    parent = parent,
+                    position = Vector3.zero,
+                    rotation = Quaternion.identity
+                }
+            };
 
             // Add Rect Transform to Manage UI Scaling
             rectTransform = textCanvas.AddComponent<RectTransform>();
@@ -56,7 +57,7 @@ namespace KGUI.Elements
             rectTransform.anchorMax = new Vector2(0, 0);
 
             // Set Pivot
-            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0, 0);
 
             textComponent.enabled = false;
 
@@ -66,7 +67,10 @@ namespace KGUI.Elements
 
         public override void Draw()
         {
-            textComponent.enabled = true;
+            if (!textComponent.enabled)
+            {
+                textComponent.enabled = true;
+            }
         }
 
         public GameObject GetGameObject()
@@ -105,25 +109,20 @@ namespace KGUI.Elements
 
         public override void Update()
         {
-            if(startLifeTime)
+            if(StartLifeTime)
             {
                 timeLeft -= Time.deltaTime;
                 if(timeLeft <= 0)
                 {
                     GameObject.Destroy(textCanvas);
-                    if(entity != null)
-                        entity.Destroy();
+                    Entity?.Destroy();
                 }
             }
         }
 
         public Transform GetTransform()
         {
-            if (textCanvas == null)
-                return null;
-
-            // Return Transform
-            return textCanvas.transform;
+            return textCanvas == null ? null : textCanvas.transform;
         }
     }
 }

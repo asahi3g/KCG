@@ -69,7 +69,7 @@ namespace Item
                 if (entity.itemType.Type == ItemType.PlacementTool || entity.itemType.Type == ItemType.PlacementMaterialTool ||
                         entity.itemType.Type == ItemType.GeometryPlacementTool)
                 {
-                    entity.AddItemTile(TileID.Error, MapLayerType.Error, true);
+                    entity.AddItemTile(TileID.Error, MapLayerType.Front, true);
                 }
 
                 if (entity.itemType.Type == ItemType.ConstructionTool ||

@@ -3,13 +3,15 @@
     // Todo: Procedural generate enums and Intialize functions.
     public enum NodeType
     {
-        None,
+        None = -1,
 
         // Behaviour tree Nodes
         DecoratorNode,
+        RepeatedNode,
         SequenceNode,
 
-        /// General Actions
+        // General Actions
+        WaitAction,
         DropAction,
         PickUpAction,
         ReloadAction,

@@ -11,7 +11,7 @@ namespace KGUI.Elements
     {
         public string Name;
         public Sprite Sprite;
-        public Image Image;
+        public ImageWrapper ImageWrapper;
         public Vec3f Scale;
         public int Width;
         public int Height;
