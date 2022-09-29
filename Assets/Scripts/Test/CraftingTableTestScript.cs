@@ -196,7 +196,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
-            Planet.AddMech(new Vec2f(15.0f, 16.07f), Mech.MechType.CraftingTable);
+            Planet.AddMech(Planet, new Vec2f(15.0f, 16.07f), Mech.MechType.CraftingTable);
         }
     }
 }
