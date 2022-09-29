@@ -25,4 +25,5 @@ namespace Projectile
                 }
         }
     }
+#endif
 }
