@@ -56,11 +56,14 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
-            Planet.AddAgent(new Vec2f(8.0f, 20), Enums.AgentType.EnemyMarine);
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+            int PlayerFaction = 0;
+            int EnemyFaction = 1;
+
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
+            Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;

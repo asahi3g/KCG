@@ -35,7 +35,37 @@ namespace Collisions
         {
             
            /* bool collided = false;
-            Vec2f d = delta;
+
+            Vec2f targetPosition = new Vec2f(b1.x, b1.y) + delta;
+            Vec2f moveDir = targetPosition - new Vec2f(b1.x, b1.y);
+
+            float stepSize = 0.01f;
+
+            for(float i = stepSize; i <= 1.0f; i+=stepSize)
+            {
+                AABox2D b1AABB = new AABox2D(new Vec2f(b1.x, b1.y) + moveDir * i, new Vec2f(b1.w, b1.h));
+                AABox2D b2AABB = new AABox2D(new Vec2f(b2.x, b2.y), new Vec2f(b2.w, b2.h));
+
+                 if (Collisions.RectOverlapRect(b1AABB.xmin, b1AABB.xmax, b1AABB.ymin, b1AABB.ymax,
+                        b2AABB.xmin, b2AABB.xmax, b2AABB.ymin, b2AABB.ymax))
+                {
+                    Vec2f centerB2 = new Vec2f(b2AABB.xmin + b2.w * 0.5f, b2AABB.ymin + b2.h * 0.5f);
+                    Vec2f centerB1 = new Vec2f(b1AABB.xmin + b1.w * 0.5f, b1AABB.ymax + b1.h * 0.5f);
+
+                    b1.x = b1.x + moveDir.X * (i - stepSize);
+                    b1.y = b1.y + moveDir.Y * (i - stepSize);
+                    collided = true;
+                }
+            }
+            
+             if (collided)
+            {
+                return true;
+            }*/
+            
+
+
+           /* Vec2f d = delta;
             float stepSize = 0.1f;
             while(d.X > 0 && d.Y > 0)
             {
@@ -58,12 +88,9 @@ namespace Collisions
 
                 d -= stepSize;
 
-            }
-
-            if (collided)
-            {
-                return true;
             }*/
+
+
 
             // Swept collision  detection using Minkowski sum
 
@@ -119,6 +146,11 @@ namespace Collisions
                 b1.y += delta.Y * tMin * timeRemaining;
                 delta = delta - 1.0f * Vec2f.Dot(delta, normal) * normal;
                 timeRemaining -= tMin * timeRemaining;
+
+                if (hit)
+                {
+                    UnityEngine.Debug.Log(normal.X + " " + normal.Y);
+                }
                 
             }
             return hit;
