@@ -56,8 +56,12 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
-            const int PlayerFaction = 0;
-            const int EnemyFaction = 1;
+            int PlayerFaction = 0;
+            int EnemyFaction = 1;
+
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
+            PlayerID = Player.agentID.ID;
+
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
             Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
