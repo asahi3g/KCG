@@ -90,6 +90,8 @@ namespace Inventory
             CreateDefaultChestInventoryModel();
             CreateDefaultCorpseInventoryModel();
             CreateDefaultMaterialBagInventoryModel();
+            CreateDefaultCraftingBenchInputInventoryModel();
+            CreateDefaultCraftingBenchOutputInventoryModel();
         }
 
         public ref InventoryModel Get(int id)
@@ -255,6 +257,38 @@ namespace Inventory
             End();
         }
 
+        private void CreateDefaultCraftingBenchInputInventoryModel()
+        {
+            Create();
+            SetInventoryPos(400f, 800f);
+            SetSize(3, 3);
+            SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
+            SetInventoryBoderOffset(0, 0, 30, 0);
+            End();
+        }
+
+        private void CreateDefaultCraftingBenchOutputInventoryModel()
+        {
+            Create();
+            SetInventoryPos(750f, 900f);
+            SetSize(1, 1);
+            SetAllSlotsAsActive();
+            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(Color.yellow);
+            SetDefaultSlotColor(Color.gray);
+            SetTileSize(80);
+            SetSlotBorderOffset(8);
+            SetSlotOffset(16);
+            SetInventoryBoderOffset(0, 0, 30, 0);
+            End();
+        }
+
         public int GetDefaultPlayerInventoryModelID()
         {
             if (!Init)
@@ -286,6 +320,20 @@ namespace Inventory
             if (!Init)
                 InitStage2();
             return 4;
+        }
+
+        public int GetDefaultCraftingBenchInputInventoryModelID()
+        {
+            if (!Init)
+                InitStage2();
+            return 5;
+        }
+
+        public int GetDefaultCraftingBenchOutputInventoryModelID()
+        {
+            if (!Init)
+                InitStage2();
+            return 6;
         }
 
         public void SetBackgroundTexture(int spriteID)

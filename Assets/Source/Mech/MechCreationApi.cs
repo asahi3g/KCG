@@ -131,6 +131,23 @@ namespace Mech
             }
         }
 
+        public void SetHealth(int health)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].TreeHealth = health;
+                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
+            }
+        }
+
+        public void SetTreeSize(int treeSize)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].TreeSize = treeSize;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -157,6 +174,10 @@ namespace Mech
         public int surveillanceCamera;
         public int roofScreen;
 
+        public int craftingTable;
+
+        public int Tree;
+
         public void InitializeResources()
         {
             ChestSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
@@ -173,6 +194,8 @@ namespace Mech
             DracaenaTrifasciataS2 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6_v2.png", 16, 32);
             surveillanceCamera = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Cameras\\Surveillance\\surveillanceCamera.png", 16, 16);
             roofScreen = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Decorations\\RoofScreen\\roofScreen.png", 32, 16);
+            craftingTable = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Tables\\Table\\table10.png", 48, 32);
+            Tree = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7_v2.png", 16, 32);
 
 
             ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
@@ -189,6 +212,8 @@ namespace Mech
             DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
             surveillanceCamera = GameState.SpriteAtlasManager.CopySpriteToAtlas(surveillanceCamera, 0, 0, Enums.AtlasType.Mech);
             roofScreen = GameState.SpriteAtlasManager.CopySpriteToAtlas(roofScreen, 0, 0, Enums.AtlasType.Mech);
+            craftingTable = GameState.SpriteAtlasManager.CopySpriteToAtlas(craftingTable, 0, 0, Enums.AtlasType.Mech);
+            Tree = GameState.SpriteAtlasManager.CopySpriteToAtlas(Tree, 0, 0, Enums.AtlasType.Mech);
 
 
             GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
@@ -260,7 +285,21 @@ namespace Mech
             GameState.MechCreationApi.SetTexture(roofScreen);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
-        }
 
+            GameState.MechCreationApi.Create((int)Mech.MechType.CraftingTable);
+            GameState.MechCreationApi.SetName("CraftingTable");
+            GameState.MechCreationApi.SetTexture(craftingTable);
+            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
+            GameState.MechCreationApi.End();
+
+            GameState.MechCreationApi.Create((int)Mech.MechType.Tree);
+            GameState.MechCreationApi.SetName("Tree");
+            GameState.MechCreationApi.SetTexture(Tree);
+            GameState.MechCreationApi.SetHealth(100);
+            GameState.MechCreationApi.SetTreeSize(5);
+            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 3.0f));
+            GameState.MechCreationApi.End();
+        }
+         
     }
 }

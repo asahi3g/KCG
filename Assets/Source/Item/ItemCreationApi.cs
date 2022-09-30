@@ -424,6 +424,8 @@ namespace Item
         public int Ore2Sprite;
         public int Ore3Sprite;
         public int ChestIconParticle;
+        public int MixedTileSet;
+        public int Wood;
 
         public void InitializeResources()
         {
@@ -465,6 +467,7 @@ namespace Item
             GlovesSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Gloves.png", 64, 64);
             RingSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Ring.png", 64, 64);
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
+            MixedTileSet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\MixedTileset\\mixed-tileset_00.png", 256, 256);
 
 
             SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, Enums.AtlasType.Particle);
@@ -505,6 +508,8 @@ namespace Item
             GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, Enums.AtlasType.Gui);
             RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, Enums.AtlasType.Gui);
             BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, Enums.AtlasType.Gui);
+            Wood = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(MixedTileSet, 6, 0, 0);
+
 
 
             GameState.ItemCreationApi.CreateItem(Enums.ItemType.SniperRifle, "SniperRifle");
@@ -998,6 +1003,22 @@ namespace Item
             GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.SetFlags(ItemProprieties.Flags.PlacementTool);
             GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionGeometryPlacement);
+            GameState.ItemCreationApi.EndItem();
+
+            GameState.ItemCreationApi.CreateItem(Enums.ItemType.AxeTool, "AxeTool");
+            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
+            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
+            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionAxe);
+            GameState.ItemCreationApi.EndItem();
+
+            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wood, "Wood");
+            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
+            GameState.ItemCreationApi.SetTexture(OreSprite);
+            GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
+            GameState.ItemCreationApi.SetFlags(ItemProprieties.Flags.Stackable);
+            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
             GameState.ItemCreationApi.EndItem();
         }
     }

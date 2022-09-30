@@ -6,13 +6,14 @@ namespace Mech
         Planter,
         Light,
         Storage,
-        Crafting,
         MajestyPalm,
         SagoPalm,
         DracaenaTrifasciata,
         SmashableBox,
         SmashableEgg,
         SurveillanceCamera,
-        RoofScreen
+        RoofScreen,
+        CraftingTable,
+        Tree
     }
 }
