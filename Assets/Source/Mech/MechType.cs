@@ -13,6 +13,7 @@ namespace Mech
         SmashableEgg,
         SurveillanceCamera,
         RoofScreen,
-        CraftingTable
+        CraftingTable,
+        Tree
     }
 }

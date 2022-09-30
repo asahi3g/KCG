@@ -59,6 +59,7 @@
         Bedrock,
         Pipe,
         Wire,
+        Wood,
 
         /// <summary>
         /// Tools
@@ -79,5 +80,6 @@
         RemoveMech,
         PotionTool,
         GeometryPlacementTool,
+        AxeTool
     }
 }

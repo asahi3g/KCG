@@ -142,6 +142,7 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.AxeTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
@@ -197,6 +198,9 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
             Planet.AddMech(Planet, new Vec2f(15.0f, 16.07f), Mech.MechType.CraftingTable);
+
+            Planet.AddMech(Planet, new Vec2f(10.0f, 16.07f), Mech.MechType.Tree);
+
         }
     }
 }

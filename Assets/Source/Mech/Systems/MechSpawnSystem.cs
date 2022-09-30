@@ -45,6 +45,11 @@ namespace Mech
                     planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "BenchOutput"));
             }
 
+            if (mechType == MechType.Tree)
+            {
+                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
+            }
+
             return entity;
         }
 
@@ -71,6 +76,11 @@ namespace Mech
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.MechID);
+
+            if (mechType == MechType.Tree)
+            {
+                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
+            }
 
             return entity;
         }
@@ -103,6 +113,11 @@ namespace Mech
             {
                 entity.AddMechCraftingTable(planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
                     planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
+            }
+
+            if (mechType == MechType.Tree)
+            {
+                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
             }
 
             return entity;
