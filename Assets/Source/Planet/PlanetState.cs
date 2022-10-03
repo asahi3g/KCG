@@ -160,6 +160,20 @@ namespace Planet
             return newEntity;
         }
 
+        public MechEntity AddMech(Planet.PlanetState planet, Vec2f position, MechType mechType)
+        {
+            Utils.Assert(MechList.Length < PlanetEntityLimits.MechLimit);
+
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(ref planet, position, mechType));
+            if (newEntity.hasMechInventory)
+            {
+                InventoryEntity inventory = EntitasContext.inventory.GetEntityWithInventoryID(newEntity.mechInventory.InventoryID);
+                AddInventory(inventory);
+            }
+
+            return newEntity;
+        }
+
         public void RemoveMech(int index)
         {
             MechEntity entity = MechList.Get(index);

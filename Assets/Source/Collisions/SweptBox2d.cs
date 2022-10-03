@@ -34,8 +34,38 @@ namespace Collisions
         public static bool SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
             
-           /* bool collided = false;
-            Vec2f d = delta;
+            bool collided = false;
+
+            Vec2f targetPosition = new Vec2f(b1.x, b1.y) + delta;
+            Vec2f moveDir = targetPosition - new Vec2f(b1.x, b1.y);
+
+            float stepSize = 1.0f;
+
+            for(float i = 0; i <= 1.0f; i+=stepSize)
+            {
+                AABox2D b1AABB = new AABox2D(new Vec2f(b1.x, b1.y) + moveDir * i, new Vec2f(b1.w, b1.h));
+                AABox2D b2AABB = new AABox2D(new Vec2f(b2.x, b2.y), new Vec2f(b2.w, b2.h));
+
+                 if (Collisions.RectOverlapRect(b1AABB.xmin, b1AABB.xmax, b1AABB.ymin, b1AABB.ymax,
+                        b2AABB.xmin, b2AABB.xmax, b2AABB.ymin, b2AABB.ymax))
+                {
+                    Vec2f centerB2 = new Vec2f(b2AABB.xmin + b2.w * 0.5f, b2AABB.ymin + b2.h * 0.5f);
+                    Vec2f centerB1 = new Vec2f(b1AABB.xmin + b1.w * 0.5f, b1AABB.ymax + b1.h * 0.5f);
+
+                    b1.x = b1.x + moveDir.X * (i);
+                    b1.y = b1.y + moveDir.Y * (i);
+                    collided = true;
+                }
+            }
+            
+             if (collided)
+            {
+                return true;
+            }
+            
+
+
+           /* Vec2f d = delta;
             float stepSize = 0.1f;
             while(d.X > 0 && d.Y > 0)
             {
@@ -58,12 +88,9 @@ namespace Collisions
 
                 d -= stepSize;
 
-            }
-
-            if (collided)
-            {
-                return true;
             }*/
+
+
 
             // Swept collision  detection using Minkowski sum
 
@@ -91,11 +118,14 @@ namespace Collisions
                 float tMin = 1.0f;
 
                 // raycasting the point across all box2d lines
-                if (TestLine(minCorner.X, b1Center.X, b1Center.Y, delta.X, delta.Y, ref tMin, minCorner.Y, maxCorner.Y))
+                /*if (TestLine(minCorner.X, b1Center.X, b1Center.Y, delta.X, delta.Y, ref tMin, minCorner.Y, maxCorner.Y))
                 {
                     normal = new Vec2f(-1.0f, 0.0f);
                     hit = true;
-                }
+                }*/
+
+                //UnityEngine.Debug.Log("1." + delta.X + " " + delta.Y);
+                //UnityEngine.Debug.Log("2." + b1Center.X + " " + b1Center.Y);
 
                 if (TestLine(maxCorner.X, b1Center.X, b1Center.Y, delta.X, delta.Y, ref tMin, minCorner.Y, maxCorner.Y))
                 {
@@ -103,7 +133,7 @@ namespace Collisions
                     hit = true;
                 }
 
-                if (TestLine(minCorner.Y, b1Center.Y, b1Center.X, delta.Y, delta.X, ref tMin, minCorner.X, maxCorner.X))
+                /*if (TestLine(minCorner.Y, b1Center.Y, b1Center.X, delta.Y, delta.X, ref tMin, minCorner.X, maxCorner.X))
                 {
                     normal = new Vec2f(0.0f, -1.0f);
                     hit = true;
@@ -113,12 +143,13 @@ namespace Collisions
                 {
                     normal = new Vec2f(0.0f, 1.0f);
                     hit = true;
-                }
+                }*/
 
                 b1.x += delta.X * tMin * timeRemaining;
                 b1.y += delta.Y * tMin * timeRemaining;
                 delta = delta - 1.0f * Vec2f.Dot(delta, normal) * normal;
                 timeRemaining -= tMin * timeRemaining;
+
                 
             }
             return hit;

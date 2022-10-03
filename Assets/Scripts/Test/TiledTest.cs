@@ -4,10 +4,11 @@ using KMath;
 using Item;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Planet.Unity
 {
-    class MovementSceneScript : MonoBehaviour
+    class TiledTest : MonoBehaviour
     {
         [SerializeField] Material Material;
 
@@ -47,22 +48,31 @@ namespace Planet.Unity
         public void Initialize()
         {
 
+            Tiled.TiledTileset tileset = Tiled.TiledTileset.FromJson("generated-maps/metal_tiles_geometry.tsj");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/untitled.tmj");
+
             Application.targetFrameRate = 60;
 
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(128, 32);
+            int mapWidth = tileMap.width;
+            int mapHeight = tileMap.height;
+
+            mapWidth = ((mapWidth + 16 - 1) / 16) * 16; // multiple of 16
+            mapHeight = ((mapHeight + 16 - 1) / 16) * 16; // multiple of 16
+
+            Debug.Log(mapWidth + " " + mapHeight);
+            Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 4), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
 
             PlayerID = Player.agentID.ID;
@@ -75,7 +85,35 @@ namespace Planet.Unity
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-            GenerateMap();
+            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                Debug.Log("loaded!");*/
+
+            for(int j = 0; j < tileMap.height; j++)
+            {
+                for(int i = 0; i < tileMap.width; i++)
+                {
+                    int tileIndex = tileMap.layers[0].data[i + ((tileMap.height - 1) - j) * tileMap.width] - 1;
+                    if (tileIndex >= 0)
+                    {
+                        TileID tileID = GetTileId(tileset.Tiles[tileIndex].properties[0].value);
+                        Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
+                    }
+                }
+            }
+
+            /*for(int i = 0; i < Planet.TileMap.MapSize.X; i++)
+            {
+                Planet.TileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
+                Planet.TileMap.GetTile(i, Planet.TileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
+            }
+
+            for(int j = 0; j < Planet.TileMap.MapSize.Y; j++)
+            {
+                Planet.TileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
+                Planet.TileMap.GetTile(Planet.TileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
+            }*/
+
+            //GenerateMap();
 
             Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
@@ -93,7 +131,7 @@ namespace Planet.Unity
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
 
-            UpdateMode(ref Planet, Player);
+            //UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -171,7 +209,7 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            if (!Init)
+            /*if (!Init)
                 return;
 
             Planet.DrawHUD(Player); 
@@ -183,7 +221,7 @@ namespace Planet.Unity
             }
 
             
-            CharacterDisplay.Draw();
+            CharacterDisplay.Draw();*/
 
                  
         }
@@ -425,148 +463,6 @@ namespace Planet.Unity
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
         }
 
-
-
-        void GenerateMap()
-        {
-            KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
-            
-            ref var tileMap = ref Planet.TileMap;
-
-            
-            for (int j = 0; j < tileMap.MapSize.Y / 2; j++)
-            {
-                for(int i = 0; i < tileMap.MapSize.X; i++)
-                {
-                    tileMap.GetTile(i, j).FrontTileID = TileID.Moon;
-                    tileMap.GetTile(i, j).BackTileID = TileID.Background;
-                }
-            }
-
-            
-
-            for(int i = 0; i < tileMap.MapSize.X; i++)
-            {
-                tileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
-                tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
-            }
-
-            for(int j = 0; j < tileMap.MapSize.Y; j++)
-            {
-                tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
-                tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
-            }
-
-            tileMap.GetTile(8, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(9, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(10, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(11, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(12, 18).FrontTileID = TileID.Platform;
-            tileMap.GetTile(13, 18).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(12, 21).FrontTileID = TileID.Platform;
-            tileMap.GetTile(13, 21).FrontTileID = TileID.Platform;
-            tileMap.GetTile(14, 21).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(14, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(15, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(16, 24).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(19, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(20, 24).FrontTileID = TileID.Platform;
-            tileMap.GetTile(21, 24).FrontTileID = TileID.Platform;
-
-
-
-            tileMap.GetTile(26, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(29, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(32, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(36, 26).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(40, 26).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(16, 26).FrontTileID = TileID.Platform;
-
-
-            tileMap.GetTile(12, 27).FrontTileID = TileID.Platform;
-
-            tileMap.GetTile(8, 27).FrontTileID = TileID.Platform;
-            tileMap.GetTile(7, 27).FrontTileID = TileID.Platform;
-
-
-
-            tileMap.GetTile(15, 15).FrontTileID = TileID.SQNoSpecular_0;
-            tileMap.GetTile(16, 15).FrontTileID = TileID.SQ_0;
-            tileMap.GetTile(17, 15).FrontTileID = TileID.SQ_1;
-            tileMap.GetTile(18, 15).FrontTileID = TileID.SQ_2;
-            tileMap.GetTile(19, 15).FrontTileID = TileID.SQ_3;
-            tileMap.GetTile(20, 15).FrontTileID = TileID.HSQNoSpecular_0;
-            tileMap.GetTile(21, 15).FrontTileID = TileID.HSQNoSpecular_1;
-            tileMap.GetTile(22, 15).FrontTileID = TileID.HSQNoSpecular_2;
-            tileMap.GetTile(23, 15).FrontTileID = TileID.HSQNoSpecular_3;
-            tileMap.GetTile(24, 15).FrontTileID = TileID.HSQ_0;
-            tileMap.GetTile(25, 15).FrontTileID = TileID.HSQ_1;
-            tileMap.GetTile(26, 15).FrontTileID = TileID.HSQ_2;
-            tileMap.GetTile(27, 15).FrontTileID = TileID.HSQ_3;
-            tileMap.GetTile(28, 15).FrontTileID = TileID.SSQ_0;
-            tileMap.GetTile(29, 15).FrontTileID = TileID.SSQ_1;
-            tileMap.GetTile(30, 15).FrontTileID = TileID.SSQ_2;
-            tileMap.GetTile(31, 15).FrontTileID = TileID.SSQ_3;
-
-            tileMap.GetTile(32, 15).FrontTileID = TileID.TI_0;
-            tileMap.GetTile(33, 15).FrontTileID = TileID.TI_1;
-            tileMap.GetTile(34, 15).FrontTileID = TileID.TI_2;
-            tileMap.GetTile(35, 15).FrontTileID = TileID.TI_3;
-            tileMap.GetTile(36, 15).FrontTileID = TileID.TO_0;
-            tileMap.GetTile(37, 15).FrontTileID = TileID.TO_1;
-            tileMap.GetTile(38, 15).FrontTileID = TileID.TO_2;
-            tileMap.GetTile(39, 15).FrontTileID = TileID.TO_3;
-
-
-            tileMap.GetTile(40, 15).FrontTileID = TileID.HTD_0;
-            tileMap.GetTile(41, 15).FrontTileID = TileID.HTL_1;
-            tileMap.GetTile(42, 15).FrontTileID = TileID.HTU_2;
-            tileMap.GetTile(43, 15).FrontTileID = TileID.HTR_3;
-
-            tileMap.GetTile(44, 15).FrontTileID = TileID.RHTD_0;
-            tileMap.GetTile(45, 15).FrontTileID = TileID.RHTL_1;
-            tileMap.GetTile(46, 15).FrontTileID = TileID.RHTU_2;
-            tileMap.GetTile(47, 15).FrontTileID = TileID.RHTR_3;
-
-            tileMap.GetTile(48, 15).FrontTileID = TileID.CSQ_0;
-            tileMap.GetTile(49, 15).FrontTileID = TileID.CSQ_1;
-            tileMap.GetTile(50, 15).FrontTileID = TileID.CSQ_2;
-            tileMap.GetTile(51, 15).FrontTileID = TileID.CSQ_3;
-
-            tileMap.GetTile(52, 15).FrontTileID = TileID.RCSQ_0;
-            tileMap.GetTile(53, 15).FrontTileID = TileID.RCSQ_1;
-            tileMap.GetTile(54, 15).FrontTileID = TileID.RCSQ_2;
-            tileMap.GetTile(55, 15).FrontTileID = TileID.RCSQ_3;
-
-
-
-            for(int i = 0; i < 5; i++)
-            {
-                tileMap.GetTile(20, i + 16).FrontTileID = TileID.Moon;
-            }
-
-            for(int i = 0; i < 10; i++)
-            {
-                tileMap.GetTile(24, i + 16).FrontTileID = TileID.Moon;
-            }
-
-
-            tileMap.GetTile(26, 21).FrontTileID = TileID.Moon;
-            tileMap.GetTile(27, 21).FrontTileID = TileID.Moon;
-            tileMap.GetTile(26, 22).FrontTileID = TileID.Moon;
-            tileMap.GetTile(27, 22).FrontTileID = TileID.Moon;
-        }
-
             private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
         {
             agentEntity.agentPhysicsState.Invulnerable = false;
@@ -577,6 +473,22 @@ namespace Planet.Unity
             planetState.cameraFollow.canFollow = true;
         }
 
+
+        
+        public TileID GetTileId(string geometry)
+        {
+            TileID result = TileID.Air;
+            if (!Enum.TryParse<TileID>(geometry, out result))
+            {
+                result = TileID.Air;
+            }
+
+
+
+            return result;
+        }
+
     }
+
 
 }

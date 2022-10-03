@@ -130,7 +130,7 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Walking", AnimationType.SpaceMarineJog);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/WalkingBackwards", AnimationType.SpaceMarineWalkBackward);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/GunWalking", AnimationType.SpaceMarineRifleJog);
-            AnimationLoader.Load("ArtistAnimations/SpaceMarinePistolWalking2", AnimationType.SpaceMarinePistolJog);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarine/SpaceMarinePistolWalking2", AnimationType.SpaceMarinePistolJog);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Dodge", AnimationType.SpaceMarineDash);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Roll", AnimationType.SpaceMarineRoll);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/CrouchIdle", AnimationType.SpaceMarineCrouch);

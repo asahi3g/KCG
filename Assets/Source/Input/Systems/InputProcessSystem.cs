@@ -3,6 +3,7 @@ using UnityEngine;
 using Agent;
 using Enums;
 using UnityEngine.Animations.Rigging;
+using Entitas;
 
 namespace ECSInput
 {
@@ -189,9 +190,52 @@ namespace ECSInput
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
+                var mechs = contexts.mech.GetGroup(MechMatcher.MechID);
+
+                foreach (var player in players)
+                {
+                    if (player.isAgentPlayer)
+                    {
+                        int inventoryID = player.agentInventory.InventoryID;
+                        InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                        InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+
+                        foreach (var mech in mechs)
+                        {
+                            if (mech.mechType.mechType == Mech.MechType.CraftingTable)
+                            {
+                                if(mech.mechCraftingTable.InputInventory.hasInventoryDraw || 
+                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
+                                {
+                                    mech.mechCraftingTable.InputInventory.hasInventoryDraw = false;
+                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw = false;
+
+                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
+                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                                }
+
+                                if (Vec2f.Distance(player.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
+                                {
+                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, inventory);
+                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+
+                                    mech.mechCraftingTable.InputInventory.hasInventoryDraw = true;
+                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw = true;
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
+                var mechs = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 foreach (var player in players)
                 {
