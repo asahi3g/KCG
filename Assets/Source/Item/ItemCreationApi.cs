@@ -499,19 +499,30 @@ namespace Item
             PotIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIconItem, 0, 0, AtlasType.Particle);
             Light2IconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2IconItem, 0, 0, AtlasType.Particle);
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
-            HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            SuitSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SuitsSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, Enums.AtlasType.Particle);
-            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
-            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, Enums.AtlasType.Particle);
-            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, Enums.AtlasType.Particle);
-            WoodTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodTile, 6, 0, Enums.AtlasType.Particle);
-            DyeSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DyeSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            HelmetSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            ArmourSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ArmourSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, Enums.AtlasType.Gui);
+            HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, AtlasType.Particle);
+            SuitSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SuitsSpriteSheet, 0, 0, AtlasType.Particle);
+            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, AtlasType.Particle);
+            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, AtlasType.Particle);
+            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, AtlasType.Particle);
+            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, AtlasType.Particle);
+            WoodTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodTile, 6, 0, AtlasType.Particle);
+            DyeSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DyeSlotIcon, 0, 0, AtlasType.Gui);
+            HelmetSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetSlotIcon, 0, 0, AtlasType.Gui);
+            ArmourSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ArmourSlotIcon, 0, 0, AtlasType.Gui);
+            GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, AtlasType.Gui);
+            RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, AtlasType.Gui);
+            BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, AtlasType.Gui);
+            
+            CreateItem(ItemType.SniperRifle, "SniperRifle");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(SniperRifleIcon);
+            SetInventoryTexture(SniperRifleIcon);
+            SetRangedWeapon(200.0f, 1f, 350.0f, 60);
+            SetRangedWeaponClip(6, 1, 1.3f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
 
             CreateItem(ItemType.LongRifle, "LongRifle");
             SetGroup(ItemGroups.Gun);
@@ -1077,16 +1088,16 @@ namespace Item
             SetAction(NodeType.ToolActionAxe);
             EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wood, "Wood");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(WoodTile);
-            GameState.ItemCreationApi.SetInventoryTexture(WoodTile);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Stone);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Wood, "Wood");
+            SetGroup(ItemGroups.None);
+            SetTexture(WoodTile);
+            SetInventoryTexture(WoodTile);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Stone);
+            EndItem();
         }
     }
 }
