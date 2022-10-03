@@ -84,6 +84,7 @@ public class GameResources
     private static void CreateVehicles()
     {
         GameState.VehicleCreationApi.InitializeResources();
+        GameState.PodCreationApi.InitializeResources();
     }
 
     private static void CreateGUI()

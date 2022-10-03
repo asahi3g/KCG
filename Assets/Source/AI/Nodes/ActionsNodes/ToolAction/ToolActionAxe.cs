@@ -29,7 +29,7 @@ namespace Node
                                 {
                                     for(int i = 0; i < mech.mechTree.TreeSize; i++)
                                     {
-                                        planet.AddItemParticle(mech.mechPosition2D.Value, ItemType.Wood);
+                                       // planet.AddItemParticle(mech.mechPosition2D.Value, ItemType.Wood);
                                     }
 
                                     planet.RemoveMech(mech.creationIndex);
