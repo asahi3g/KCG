@@ -1,22 +1,18 @@
-﻿using Entitas;
-using UnityEngine;
-using System;
-using KMath;
-using Agent;
-using System.Collections.Generic;
+﻿using System;
 using Enums;
-using Planet;
-using Sprites;
-using System.Drawing;
 using Enums.Tile;
+using KGUI;
+using KMath;
+using Mech;
+using UnityEngine;
 
 /*
     How To use it:
-        Item.CreationApi.CreateItem(Item Type, Item Type Name);
-        Item.CreationApi.SetTexture(SpriteSheetID);
-        Item.CreationApi.SetInventoryTexture(SpriteSheetID);
-        Item.CreationApi.MakeStackable(Max number of items in a stack.);
-        Item.CreationApi.EndItem();
+        CreateItem(Item Type, Item Type Name);
+        SetTexture(SpriteSheetID);
+        SetInventoryTexture(SpriteSheetID);
+        MakeStackable(Max number of items in a stack.);
+        EndItem();
 */
 
 namespace Item
@@ -30,8 +26,8 @@ namespace Item
         private FireWeaponPropreties[] WeaponList;
         private string[] ItemTypeLabels;
 
-        ItemType CurrentIndex;
-        int WeaponListSize;
+        private ItemType currentIndex;
+        private int weaponListSize;
 
         public ItemCreationApi()
         {
@@ -39,16 +35,16 @@ namespace Item
             PropertiesArray = new ItemProprieties[length];
             ItemTypeLabels = new string[length];
             WeaponList = new FireWeaponPropreties[16];
-            CurrentIndex = ItemType.Error;
-            WeaponListSize = 0;
+            currentIndex = ItemType.Error;
+            weaponListSize = 0;
 
             for (int i = 0; i < PropertiesArray.Length; i++)
             {
-                PropertiesArray[i].ItemType = CurrentIndex;
+                PropertiesArray[i].ItemType = currentIndex;
             }
         }
 
-        public string GetLabel(Enums.ItemType type)
+        public string GetLabel(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -57,7 +53,7 @@ namespace Item
         }
 
 
-        public ItemProprieties Get(Enums.ItemType type)
+        public ItemProprieties Get(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -65,7 +61,7 @@ namespace Item
             return PropertiesArray[(int)type];
         }
 
-        public FireWeaponPropreties GetWeapon(Enums.ItemType type)
+        public FireWeaponPropreties GetWeapon(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -73,12 +69,12 @@ namespace Item
             return WeaponList[PropertiesArray[(int)type].FireWeaponID];
         }
 
-        public void CreateItem(Enums.ItemType itemType, string name)
+        public void CreateItem(ItemType itemType, string name)
         {
-            CurrentIndex = itemType;
+            currentIndex = itemType;
 
             PropertiesArray[(int)itemType].ItemType = itemType;
-            PropertiesArray[(int)itemType].MechType = Mech.MechType.Error;
+            PropertiesArray[(int)itemType].MechType = MechType.Error;
             ItemTypeLabels[(int)itemType] = name;
         }
 
@@ -86,42 +82,42 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ItemTypeLabels[(int)CurrentIndex] = name;
+            ItemTypeLabels[(int)currentIndex] = name;
         }
 
-        public void SetGroup(Enums.ItemGroups group)
+        public void SetGroup(ItemGroups group)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].Group = group;
+            PropertiesArray[(int)currentIndex].Group = group;
         }
 
-        public void SetMech(Mech.MechType mech)
+        public void SetMech(MechType mech)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].MechType = mech;
+            PropertiesArray[(int)currentIndex].MechType = mech;
         }
 
         public void SetTile(TileID tile)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].TileType = tile;
+            PropertiesArray[(int)currentIndex].TileType = tile;
         }
 
         public void SetSpriteSize(Vec2f size)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].SpriteSize = size;
+            PropertiesArray[(int)currentIndex].SpriteSize = size;
         }
 
         public void SetTexture(int spriteId)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].SpriteID = spriteId;
+            PropertiesArray[(int)currentIndex].SpriteID = spriteId;
         }
 
 
@@ -129,43 +125,49 @@ namespace Item
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].InventorSpriteID = spriteId;
+            PropertiesArray[(int)currentIndex].InventorSpriteID = spriteId;
         }
 
-        public void SetAction(Enums.NodeType nodeID)
+        public void SetAction(NodeType nodeID)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ToolActionType = nodeID;
-            PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Tool;
+            PropertiesArray[(int)currentIndex].ToolActionType = nodeID;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Tool;
         }
 
         public void SetConsumable()
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Consumable;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Consumable;
         }
 
         public void SetStackable(int maxStackCount = 99)
         {
             IsItemTypeValid();
-            PropertiesArray[(int)CurrentIndex].MaxStackCount = maxStackCount;
-            PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
+            PropertiesArray[(int)currentIndex].MaxStackCount = maxStackCount;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
+        }
+
+        public void SetUIPanel(UIPanelID uiPanelID)
+        {
+            PropertiesArray[(int) currentIndex].ItemFlags |= ItemProprieties.Flags.UI;
+            PropertiesArray[(int) currentIndex].ItemUIPanelID = uiPanelID;
         }
 
         public void SetPlaceable()
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ItemFlags |= ItemProprieties.Flags.Placeable;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Placeable;
         }
 
         public void SetSpreadAngle(float spreadAngle)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.SpreadAngle = spreadAngle;
         }
 
@@ -173,7 +175,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties()
+            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -181,15 +183,15 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[WeaponListSize] = fireWeapon;
-            PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
+            WeaponList[weaponListSize] = fireWeapon;
+            PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
         public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, bool isLaunchGrenade, int basicDamage)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties()
+            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -198,15 +200,15 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[WeaponListSize] = fireWeapon;
-            PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
+            WeaponList[weaponListSize] = fireWeapon;
+            PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
         public void SetRangedWeaponClip(int clipSize, int bulletsPerShot, float reloadTime)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.ClipSize = clipSize;
             fireWeapon.BulletsPerShot = bulletsPerShot;
             fireWeapon.ReloadTime = reloadTime;
@@ -217,7 +219,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.ClipSize = bulletClipSize;
             fireWeapon.GrenadeClipSize = greandeClipSize;
             fireWeapon.NumberOfGrenades = greandeClipSize;
@@ -230,7 +232,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.SpreadAngle = speadAngle;
             fireWeapon.NumOfBullets = numOfBullet;
         }
@@ -239,7 +241,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.MaxRecoilAngle = maxRecoilAngle;
             fireWeapon.MinRecoilAngle = minRecoilAngle;
             fireWeapon.RateOfChange = rateOfChange;
@@ -251,7 +253,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties()
+            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
             {
                 CoolDown = coolDown,
                 Range = range,
@@ -260,28 +262,28 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[WeaponListSize] = fireWeapon;
-            PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
+            WeaponList[weaponListSize] = fireWeapon;
+            PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
         public void SetShield(bool ShieldActive)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties()
+            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
             {
                 ShieldActive = ShieldActive,
             }; 
 
-            WeaponList[WeaponListSize] = fireWeapon;
-            PropertiesArray[(int)CurrentIndex].FireWeaponID = WeaponListSize++;
+            WeaponList[weaponListSize] = fireWeapon;
+            PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
         public void SetExplosion(float radius, int maxDamage, float elapse)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.BlastRadius = radius;
             fireWeapon.MaxDamage = maxDamage;
             fireWeapon.Elapse = elapse;
@@ -291,7 +293,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.MeleeAttackFlags |= flags;
         }
 
@@ -299,7 +301,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.WeaponFlags |= flags;
         }
 
@@ -307,7 +309,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.GrenadeFlags |= flags;
         }
 
@@ -315,42 +317,42 @@ namespace Item
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ItemFlags |= flags;
+            PropertiesArray[(int)currentIndex].ItemFlags |= flags;
         }
 
-        public void SetProjectileType(Enums.ProjectileType projectileType)
+        public void SetProjectileType(ProjectileType projectileType)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)CurrentIndex].FireWeaponID];
+            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.ProjectileType = projectileType;
         }
 
-        public void SetItemToolType(Enums.ItemToolType type)
+        public void SetItemToolType(ItemToolType type)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].ToolType = type;
+            PropertiesArray[(int)currentIndex].ToolType = type;
         }
 
-        public void SetAnimationSet(Enums.ItemAnimationSet animationSet)
+        public void SetAnimationSet(ItemAnimationSet animationSet)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].AnimationSet = animationSet;
+            PropertiesArray[(int)currentIndex].AnimationSet = animationSet;
         }
 
-        public void SetItemKeyUsage(Enums.ItemKeyUsage usage)
+        public void SetItemKeyUsage(ItemKeyUsage usage)
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)CurrentIndex].KeyUsage = usage;
+            PropertiesArray[(int)currentIndex].KeyUsage = usage;
         }
 
         public void EndItem()
         {
             // Todo: Check if ItemType is valid in debug mode.
-            CurrentIndex = ItemType.Error;
+            currentIndex = ItemType.Error;
         }
 
         private void IsItemTypeValid(ItemType itemType)
@@ -366,7 +368,7 @@ namespace Item
 
         private void IsItemTypeValid()
         {
-            IsItemTypeValid(CurrentIndex);
+            IsItemTypeValid(currentIndex);
         }
 
         public int SniperRifleIcon;
@@ -426,6 +428,8 @@ namespace Item
         public int ChestIconParticle;
         public int WoodTile;
 
+        public UIPanel PlacementToolPrefab;
+
         public void InitializeResources()
         {
             SniperRifleIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun8.png", 48, 16);
@@ -469,559 +473,631 @@ namespace Item
             WoodTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\MixedTileset\\mixed-tileset_00.png", 32, 32);
 
 
-            SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, Enums.AtlasType.Particle);
-            LongRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LongRifleIcon, 0, 0, Enums.AtlasType.Particle);
-            PulseIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PulseIcon, 0, 0, Enums.AtlasType.Particle);
-            SMGIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SMGIcon, 0, 0, Enums.AtlasType.Particle);
-            ShotgunIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ShotgunIcon, 0, 0, Enums.AtlasType.Particle);
-            PistolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GunSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, Enums.AtlasType.Particle);
-            SwordSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SwordSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            SlimeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SlimeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            FoodIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(FoodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            BoneIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BoneSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            PlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RockSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            RemoveToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Ore2SpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            MajestyPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmIcon, 0, 0, Enums.AtlasType.Particle);
-            SagoPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmIcon, 0, 0, Enums.AtlasType.Particle);
-            DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, Enums.AtlasType.Particle);
-            WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, Enums.AtlasType.Particle);
-            ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, Enums.AtlasType.Particle);
-            ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconItem, 0, 0, Enums.AtlasType.Particle);
-            PotIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIconItem, 0, 0, Enums.AtlasType.Particle);
-            Light2IconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2IconItem, 0, 0, Enums.AtlasType.Particle);
+            SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, AtlasType.Particle);
+            LongRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LongRifleIcon, 0, 0, AtlasType.Particle);
+            PulseIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PulseIcon, 0, 0, AtlasType.Particle);
+            SMGIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SMGIcon, 0, 0, AtlasType.Particle);
+            ShotgunIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ShotgunIcon, 0, 0, AtlasType.Particle);
+            PistolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GunSpriteSheet, 0, 0, AtlasType.Particle);
+            GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, AtlasType.Particle);
+            GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, AtlasType.Particle);
+            SwordSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(SwordSpriteSheet, 0, 0, AtlasType.Particle);
+            OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, AtlasType.Particle);
+            SlimeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SlimeSpriteSheet, 0, 0, AtlasType.Particle);
+            FoodIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(FoodSpriteSheet, 0, 0, AtlasType.Particle);
+            BoneIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BoneSpriteSheet, 0, 0, AtlasType.Particle);
+            PlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RockSpriteSheet, 0, 0, AtlasType.Particle);
+            RemoveToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Ore2SpriteSheet, 0, 0, AtlasType.Particle);
+            PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, AtlasType.Particle);
+            MiningLaserToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(LaserSpriteSheet, 0, 0, AtlasType.Particle);
+            MajestyPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmIcon, 0, 0, AtlasType.Particle);
+            SagoPalmIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmIcon, 0, 0, AtlasType.Particle);
+            DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, AtlasType.Particle);
+            WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, AtlasType.Particle);
+            ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, AtlasType.Particle);
+            ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconItem, 0, 0, AtlasType.Particle);
+            PotIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIconItem, 0, 0, AtlasType.Particle);
+            Light2IconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2IconItem, 0, 0, AtlasType.Particle);
             OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
-            HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            SuitSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SuitsSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, Enums.AtlasType.Particle);
-            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, Enums.AtlasType.Particle);
-            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, Enums.AtlasType.Particle);
-            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, Enums.AtlasType.Particle);
-            WoodTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodTile, 6, 0, Enums.AtlasType.Particle);
-            DyeSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DyeSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            HelmetSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            ArmourSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ArmourSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, Enums.AtlasType.Gui);
-            BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, Enums.AtlasType.Gui);
+            HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, AtlasType.Particle);
+            SuitSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SuitsSpriteSheet, 0, 0, AtlasType.Particle);
+            BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, AtlasType.Particle);
+            DirtIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DirtIcon, 0, 0, AtlasType.Particle);
+            PipeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PipeIcon, 0, 0, AtlasType.Particle);
+            WireIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WireIcon, 0, 0, AtlasType.Particle);
+            WoodTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodTile, 6, 0, AtlasType.Particle);
+            DyeSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DyeSlotIcon, 0, 0, AtlasType.Gui);
+            HelmetSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetSlotIcon, 0, 0, AtlasType.Gui);
+            ArmourSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ArmourSlotIcon, 0, 0, AtlasType.Gui);
+            GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, AtlasType.Gui);
+            RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, AtlasType.Gui);
+            BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, AtlasType.Gui);
+            
+            CreateItem(ItemType.SniperRifle, "SniperRifle");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(SniperRifleIcon);
+            SetInventoryTexture(SniperRifleIcon);
+            SetRangedWeapon(200.0f, 1f, 350.0f, 60);
+            SetRangedWeaponClip(6, 1, 1.3f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
+
+            CreateItem(ItemType.LongRifle, "LongRifle");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(LongRifleIcon);
+            SetInventoryTexture(LongRifleIcon);
+            SetRangedWeapon(50.0f, 1f, 20.0f, 40);
+            SetRangedWeaponClip(25, 1, 2f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
+
+            CreateItem(ItemType.PulseWeapon, "PulseWeapon");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(PulseIcon);
+            SetInventoryTexture(PulseIcon);
+            SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25);
+            SetRangedWeaponClip(25, 4, 1, 1);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootPulseWeaponAction);
+            EndItem();
+
+            CreateItem(ItemType.AutoCannon, "AutoCannon");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(LongRifleIcon);
+            SetInventoryTexture(LongRifleIcon);
+            SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
+            SetRangedWeaponClip(40, 3, 4f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
+
+            CreateItem(ItemType.SMG, "SMG");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(SMGIcon);
+            SetInventoryTexture(SMGIcon);
+            SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
+            SetRangedWeaponClip(99999, 1, 1f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            SetItemToolType(ItemToolType.Pistol);
+            SetItemToolType(ItemToolType.Rifle);
+            SetAnimationSet(ItemAnimationSet.HoldingRifle);
+            SetItemKeyUsage(ItemKeyUsage.KeyDown);
+            EndItem();
+
+            CreateItem(ItemType.Shotgun, "Shotgun");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(ShotgunIcon);
+            SetInventoryTexture(ShotgunIcon);
+            SetRangedWeapon(30.0f, 1f, 10.0f, 35);
+            SetSpreadAngle(1.0f);
+            SetRangedWeaponClip(6, 2, 2.5f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
+
+            CreateItem(ItemType.PumpShotgun, "PumpShotgun");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(ShotgunIcon);
+            SetInventoryTexture(ShotgunIcon);
+            SetRangedWeapon(20.0f, 2f, 5.0f, 30);
+            SetSpreadAngle(1.0f);
+            SetRangedWeaponClip(8, 4, 2.5f);
+            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
 
 
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SniperRifle, "SniperRifle");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(SniperRifleIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SniperRifleIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(200.0f, 1f, 350.0f, 60);
-            GameState.ItemCreationApi.SetRangedWeaponClip(6, 1, 1.3f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Moon, "Moon");
+            SetGroup(ItemGroups.None);
+            SetTexture(BedrockIcon);
+            SetInventoryTexture(BedrockIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Moon);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.LongRifle, "LongRifle");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(LongRifleIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(LongRifleIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 1f, 20.0f, 40);
-            GameState.ItemCreationApi.SetRangedWeaponClip(25, 1, 2f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Dirt, "Dirt");
+            SetGroup(ItemGroups.None);
+            SetTexture(DirtIcon);
+            SetInventoryTexture(DirtIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Stone);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PulseWeapon, "PulseWeapon");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(PulseIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PulseIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25);
-            GameState.ItemCreationApi.SetRangedWeaponClip(25, 4, 1, 1);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootPulseWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Bedrock, "Bedrock");
+            SetGroup(ItemGroups.None);
+            SetTexture(BedrockIcon);
+            SetInventoryTexture(BedrockIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Bedrock);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.AutoCannon, "AutoCannon");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(LongRifleIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(LongRifleIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
-            GameState.ItemCreationApi.SetRangedWeaponClip(40, 3, 4f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Pipe, "Pipe");
+            SetGroup(ItemGroups.None);
+            SetTexture(PipeIcon);
+            SetInventoryTexture(PipeIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Pipe);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SMG, "SMG");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(SMGIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SMGIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
-            GameState.ItemCreationApi.SetRangedWeaponClip(99999, 1, 1f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.SetItemToolType(Enums.ItemToolType.Pistol);
-            GameState.ItemCreationApi.SetItemToolType(Enums.ItemToolType.Rifle);
-            GameState.ItemCreationApi.SetAnimationSet(Enums.ItemAnimationSet.HoldingRifle);
-            GameState.ItemCreationApi.SetItemKeyUsage(Enums.ItemKeyUsage.KeyDown);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Wire, "Wire");
+            SetGroup(ItemGroups.None);
+            SetTexture(WireIcon);
+            SetInventoryTexture(WireIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetTile(TileID.Wire);
+            SetAction(NodeType.MaterialPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Shotgun, "Shotgun");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(ShotgunIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(ShotgunIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(30.0f, 1f, 10.0f, 35);
-            GameState.ItemCreationApi.SetSpreadAngle(1.0f);
-            GameState.ItemCreationApi.SetRangedWeaponClip(6, 2, 2.5f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.Flags.ShouldSpread);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.GasBomb, "GasBomb");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSprite5);
+            SetInventoryTexture(GrenadeSprite5);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowGasBombAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PumpShotgun, "PumpShotgun");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(ShotgunIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(ShotgunIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(20.0f, 2f, 5.0f, 30);
-            GameState.ItemCreationApi.SetSpreadAngle(1.0f);
-            GameState.ItemCreationApi.SetRangedWeaponClip(8, 4, 2.5f);
-            GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.Flags.ShouldSpread);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.FragGrenade, "FragGrenade");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSpriteId);
+            SetInventoryTexture(GrenadeSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pistol, "Pistol");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(PistolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
-            GameState.ItemCreationApi.SetRangedWeaponClip(8, 1, 1f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Bullet);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.SetItemToolType(Enums.ItemToolType.Pistol);
-            GameState.ItemCreationApi.SetAnimationSet(Enums.ItemAnimationSet.HoldingPistol);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Pistol, "Pistol");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(PistolIcon);
+            SetInventoryTexture(PistolIcon);
+            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
+            SetRangedWeaponClip(8, 1, 1f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            SetItemToolType(ItemToolType.Pistol);
+            SetAnimationSet(ItemAnimationSet.HoldingPistol);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.RPG, "RPG");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetTexture(RPGIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(RPGIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(50.0f, 3f, 50.0f, 100);
-            GameState.ItemCreationApi.SetRangedWeaponClip(2, 1, 3);
-            GameState.ItemCreationApi.SetExplosion(3.0f, 15, 0f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Rocket);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ThrowFragGrenadeAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.RPG, "RPG");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(RPGIcon);
+            SetInventoryTexture(RPGIcon);
+            SetRangedWeapon(50.0f, 3f, 50.0f, 100);
+            SetRangedWeaponClip(2, 1, 3);
+            SetExplosion(3.0f, 15, 0f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Rocket);
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.GrenadeLauncher, "GrenadeLauncher");
-            GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Gun);
-            GameState.ItemCreationApi.SetRangedWeapon(20.0f, 1f, 20.0f, 25);
-            GameState.ItemCreationApi.SetRangedWeaponClip(4, 1, 2);
-            GameState.ItemCreationApi.SetExplosion(4.0f, 15, 0f);
-            GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.GrenadesFlags.Flame);
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Grenade);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ThrowFragGrenadeAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
+            SetTexture(GrenadeSpriteId);
+            SetInventoryTexture(GrenadeSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetGroup(ItemGroups.Gun);
+            SetRangedWeapon(20.0f, 1f, 20.0f, 25);
+            SetRangedWeaponClip(4, 1, 2);
+            SetExplosion(4.0f, 15, 0f);
+            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
+            SetProjectileType(ProjectileType.Grenade);
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bow, "Bow");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(PistolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PistolIcon);
-            GameState.ItemCreationApi.SetRangedWeapon(70.0f, 3f, 100.0f, 30);
-            GameState.ItemCreationApi.SetRangedWeaponClip(1, 1, 2f);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetProjectileType(Enums.ProjectileType.Arrow);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ShootFireWeaponAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Bow, "Bow");
+            SetGroup(ItemGroups.None);
+            SetTexture(PistolIcon);
+            SetInventoryTexture(PistolIcon);
+            SetRangedWeapon(70.0f, 3f, 100.0f, 30);
+            SetRangedWeaponClip(1, 1, 2f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Arrow);
+            SetAction(NodeType.ShootFireWeaponAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Sword, "Sword");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Weapon);
-            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
-            GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.MeleeFlags.Stab);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MeleeAttackAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Sword, "Sword");
+            SetGroup(ItemGroups.Weapon);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
+            SetFlags(FireWeaponPropreties.MeleeFlags.Stab);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MeleeAttackAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.StunBaton, "StunBaton");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Weapon);
-            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
-            GameState.ItemCreationApi.SetFlags(Item.FireWeaponPropreties.MeleeFlags.Slash);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MeleeAttackAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.StunBaton, "StunBaton");
+            SetGroup(ItemGroups.Weapon);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
+            SetFlags(FireWeaponPropreties.MeleeFlags.Slash);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MeleeAttackAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.RiotShield, "RiotShield");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetShield(false);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.UseShieldAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.RiotShield, "RiotShield");
+            SetGroup(ItemGroups.None);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetShield(false);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.UseShieldAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(OreIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Ore, "Ore");
+            SetGroup(ItemGroups.None);
+            SetTexture(OreIcon);
+            SetInventoryTexture(OreIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Slime, "Slime");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Slime, "Slime");
+            SetGroup(ItemGroups.None);
+            SetTexture(SlimeIcon);
+            SetInventoryTexture(SlimeIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Food, "Food");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(FoodIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(FoodIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Food, "Food");
+            SetGroup(ItemGroups.None);
+            SetTexture(FoodIcon);
+            SetInventoryTexture(FoodIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bone, "Bone");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(BoneIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Bone, "Bone");
+            SetGroup(ItemGroups.None);
+            SetTexture(BoneIcon);
+            SetInventoryTexture(BoneIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PotionTool, "PotionTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(BoneIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPotion);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.PotionTool, "PotionTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(BoneIcon);
+            SetInventoryTexture(BoneIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.ToolActionPotion);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.HealthPositon, "HealthPosition");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Potion);
-            GameState.ItemCreationApi.SetTexture(BoneIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(BoneIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.DrinkPotionAction);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.HealthPositon, "HealthPosition");
+            SetGroup(ItemGroups.Potion);
+            SetTexture(BoneIcon);
+            SetInventoryTexture(BoneIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.DrinkPotionAction);
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Ore, "Ore");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(OreIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Ore, "Ore");
+            SetGroup(ItemGroups.None);
+            SetTexture(OreIcon);
+            SetInventoryTexture(OreIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetStackable();
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementTool, "PlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
-            GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPlaceTile);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.PlacementTool, "PlacementTool");
+            SetGroup(ItemGroups.BuildTools);
+            SetTexture(PlacementToolIcon);
+            SetInventoryTexture(PlacementToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(UIPanelID.PlacementTool);
+            SetAction(NodeType.ToolActionPlaceTile);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.PlacementMaterialTool, "PlaceMaterial");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.BuildTools);
-            GameState.ItemCreationApi.SetTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PlacementToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
+            SetGroup(ItemGroups.BuildTools);
+            SetTexture(PlacementToolIcon);
+            SetInventoryTexture(PlacementToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MaterialPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveTileTool, "RemoveTileTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(RemoveToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(RemoveToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionRemoveTile);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(RemoveToolIcon);
+            SetInventoryTexture(RemoveToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionRemoveTile);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionEnemySpawn);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(SlimeIcon);
+            SetInventoryTexture(SlimeIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionEnemySpawn);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionEnemyGunnerSpawn);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(SlimeIcon);
+            SetInventoryTexture(SlimeIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionEnemyGunnerSpawn);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SlimeIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionEnemySwordmanSpawn);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(SlimeIcon);
+            SetInventoryTexture(SlimeIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionEnemySwordmanSpawn);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.MiningLaserTool, "MiningLaserTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(MiningLaserToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(MiningLaserToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionMiningLaser);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(MiningLaserToolIcon);
+            SetInventoryTexture(MiningLaserToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionMiningLaser);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(OreIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPlaceParticleEmitter);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(OreIcon);
+            SetInventoryTexture(OreIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionPlaceParticleEmitter);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.ChestPlacementTool, "ChestPlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(OreIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionPlaceChest);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(OreIcon);
+            SetInventoryTexture(OreIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionPlaceChest);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.MajestyPalm, "MajestyPlant");
-            GameState.ItemCreationApi.SetTexture(MajestyPalmIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(MajestyPalmIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.PlantAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.MajestyPalm, "MajestyPlant");
+            SetTexture(MajestyPalmIcon);
+            SetInventoryTexture(MajestyPalmIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.PlantAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SagoPalm, "SagoPlant");
-            GameState.ItemCreationApi.SetTexture(SagoPalmIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(SagoPalmIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.PlantAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SagoPalm, "SagoPlant");
+            SetTexture(SagoPalmIcon);
+            SetInventoryTexture(SagoPalmIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.PlantAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
-            GameState.ItemCreationApi.SetTexture(DracaenaTrifasciataIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(DracaenaTrifasciataIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.PlantAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
+            SetTexture(DracaenaTrifasciataIcon);
+            SetInventoryTexture(DracaenaTrifasciataIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.PlantAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.WaterBottle, "Water");
-            GameState.ItemCreationApi.SetTexture(WaterIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(WaterIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.WaterAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.WaterBottle, "Water");
+            SetTexture(WaterIcon);
+            SetInventoryTexture(WaterIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.WaterAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.HarvestTool, "HarvestTool");
-            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.HarvestAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.HarvestTool, "HarvestTool");
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.HarvestAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.ConstructionTool, "ConstructionTool");
-            GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionConstruction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.ConstructionTool, "ConstructionTool");
+            SetTexture(ConstructionToolIcon);
+            SetInventoryTexture(ConstructionToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.ToolActionConstruction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Chest, "Chest");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
-            GameState.ItemCreationApi.SetTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MechPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Chest, "Chest");
+            SetGroup(ItemGroups.Mech);
+            SetTexture(ChestIconItem);
+            SetInventoryTexture(ChestIconItem);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MechPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SmashableBox, "SmashableBox");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
-            GameState.ItemCreationApi.SetTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MechPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SmashableBox, "SmashableBox");
+            SetGroup(ItemGroups.Mech);
+            SetTexture(ChestIconItem);
+            SetInventoryTexture(ChestIconItem);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MechPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.SmashableEgg, "SmashableEgg");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
-            GameState.ItemCreationApi.SetTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetInventoryTexture(ChestIconItem);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MechPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.SmashableEgg, "SmashableEgg");
+            SetGroup(ItemGroups.Mech);
+            SetTexture(ChestIconItem);
+            SetInventoryTexture(ChestIconItem);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MechPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Planter, "Planter");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
-            GameState.ItemCreationApi.SetTexture(PotIconItem);
-            GameState.ItemCreationApi.SetInventoryTexture(PotIconItem);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MechPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Planter, "Planter");
+            SetGroup(ItemGroups.Mech);
+            SetTexture(PotIconItem);
+            SetInventoryTexture(PotIconItem);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MechPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Light, "Light");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Mech);
-            GameState.ItemCreationApi.SetTexture(Light2IconItem);
-            GameState.ItemCreationApi.SetInventoryTexture(Light2IconItem);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MechPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Light, "Light");
+            SetGroup(ItemGroups.Mech);
+            SetTexture(Light2IconItem);
+            SetInventoryTexture(Light2IconItem);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.MechPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.RemoveMech, "RemoveMech");
-            GameState.ItemCreationApi.SetTexture(ConstructionToolIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(ConstructionToolIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionRemoveMech);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.RemoveMech, "RemoveMech");
+            SetTexture(ConstructionToolIcon);
+            SetInventoryTexture(ConstructionToolIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.ToolActionRemoveMech);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.ScannerTool, "ScannerTool");
-            GameState.ItemCreationApi.SetTexture(OreSprite);
-            GameState.ItemCreationApi.SetInventoryTexture(OreSprite);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionScanner);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.ScannerTool, "ScannerTool");
+            SetTexture(OreSprite);
+            SetInventoryTexture(OreSprite);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionScanner);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Helmet, "Helmet");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Helmet);
-            GameState.ItemCreationApi.SetTexture(HemeltSprite);
-            GameState.ItemCreationApi.SetInventoryTexture(HemeltSprite);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Helmet, "Helmet");
+            SetGroup(ItemGroups.Helmet);
+            SetTexture(HemeltSprite);
+            SetInventoryTexture(HemeltSprite);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Suit, "Suit");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.Armour);
-            GameState.ItemCreationApi.SetTexture(SuitSprite);
-            GameState.ItemCreationApi.SetInventoryTexture(SuitSprite);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Suit, "Suit");
+            SetGroup(ItemGroups.Armour);
+            SetTexture(SuitSprite);
+            SetInventoryTexture(SuitSprite);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
 
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Moon, "Moon");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(BedrockIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(BedrockIcon);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Moon);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Moon, "Moon");
+            SetGroup(ItemGroups.None);
+            SetTexture(BedrockIcon);
+            SetInventoryTexture(BedrockIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Moon);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Dirt, "Dirt");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(DirtIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(DirtIcon);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Stone);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Dirt, "Dirt");
+            SetGroup(ItemGroups.None);
+            SetTexture(DirtIcon);
+            SetInventoryTexture(DirtIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Stone);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Bedrock, "Bedrock");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(BedrockIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(BedrockIcon);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Bedrock);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Bedrock, "Bedrock");
+            SetGroup(ItemGroups.None);
+            SetTexture(BedrockIcon);
+            SetInventoryTexture(BedrockIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Bedrock);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Pipe, "Pipe");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(PipeIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(PipeIcon);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Pipe);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Pipe, "Pipe");
+            SetGroup(ItemGroups.None);
+            SetTexture(PipeIcon);
+            SetInventoryTexture(PipeIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Pipe);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wire, "Wire");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(WireIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(WireIcon);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetTile(TileID.Wire);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Wire, "Wire");
+            SetGroup(ItemGroups.None);
+            SetTexture(WireIcon);
+            SetInventoryTexture(WireIcon);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetTile(TileID.Wire);
+            SetAction(NodeType.MaterialPlacementAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.GasBomb, "GasBomb");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(GrenadeSprite5);
-            GameState.ItemCreationApi.SetInventoryTexture(GrenadeSprite5);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ThrowGasBombAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.GasBomb, "GasBomb");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSprite5);
+            SetInventoryTexture(GrenadeSprite5);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowGasBombAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.FragGrenade, "FragGrenade");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(GrenadeSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(GrenadeSpriteId);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ThrowFragGrenadeAction);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.FragGrenade, "FragGrenade");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSpriteId);
+            SetInventoryTexture(GrenadeSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.GeometryPlacementTool, "GeometryPlacementTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(OreIcon);
-            GameState.ItemCreationApi.SetInventoryTexture(OreIcon);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetFlags(ItemProprieties.Flags.PlacementTool);
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionGeometryPlacement);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(OreIcon);
+            SetInventoryTexture(OreIcon);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetAction(NodeType.ToolActionGeometryPlacement);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.AxeTool, "AxeTool");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetInventoryTexture(SwordSpriteId);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.ToolActionAxe);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.AxeTool, "AxeTool");
+            SetGroup(ItemGroups.None);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ToolActionAxe);
+            EndItem();
 
-            GameState.ItemCreationApi.CreateItem(Enums.ItemType.Wood, "Wood");
-            GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
-            GameState.ItemCreationApi.SetTexture(WoodTile);
-            GameState.ItemCreationApi.SetInventoryTexture(WoodTile);
-            GameState.ItemCreationApi.SetFlags(Item.ItemProprieties.Flags.Stackable);
-            GameState.ItemCreationApi.SetStackable(99);
-            GameState.ItemCreationApi.SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            GameState.ItemCreationApi.SetAction(Enums.NodeType.MaterialPlacementAction);
-            GameState.ItemCreationApi.SetTile(TileID.Stone);
-            GameState.ItemCreationApi.EndItem();
+            CreateItem(ItemType.Wood, "Wood");
+            SetGroup(ItemGroups.None);
+            SetTexture(WoodTile);
+            SetInventoryTexture(WoodTile);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.MaterialPlacementAction);
+            SetTile(TileID.Stone);
+            EndItem();
         }
     }
 }

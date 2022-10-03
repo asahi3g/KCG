@@ -1,5 +1,6 @@
 using KGUI.Elements;
 using KMath;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -10,15 +11,16 @@ namespace KGUI
     public class UIElement : MonoBehaviour
     {
         [SerializeField] protected Image iconImage;
-        
+
         protected ImageWrapper Icon;
-        private RectTransform rectTransform;
+        // Set this to any initialized image
+        protected GameObject HitBoxObject;
 
         public UIElementID ID { get; protected set; }
-        public Vector3 Position { get; private set; }
-        public Vector2 Size { get; private set; }
+        public Vector3 HitBoxPosition { get; private set; }
+        public Vector2 HitBoxSize { get; private set; }
         public AABox2D HitBox { get; private set; }
-        
+
         public void Start()
         {
             Init();
@@ -28,9 +30,10 @@ namespace KGUI
         {
             if (transform.hasChanged)
             {
-                Position = transform.position;
-                Size = rectTransform.sizeDelta;
-                HitBox = new AABox2D(new Vec2f(Position.x, Position.y), new Vec2f(Size.x, Size.y));
+                var hitBoxTransform = HitBoxObject.transform;
+                HitBoxPosition = hitBoxTransform.position - hitBoxTransform.localPosition;
+                HitBoxSize = HitBoxObject.GetComponent<RectTransform>().sizeDelta;
+                HitBox = new AABox2D(new Vec2f(HitBoxPosition.x, HitBoxPosition.y), new Vec2f(HitBoxSize.x, HitBoxSize.y));
                 transform.hasChanged = false;
             }
             HitBox.DrawBox();
@@ -38,10 +41,8 @@ namespace KGUI
 
         public virtual void Init()
         {
-            rectTransform = GetComponent<RectTransform>();
-            Position = transform.position;
-            Size = rectTransform.sizeDelta;
-            HitBox = new AABox2D(new Vec2f(Position.x, Position.y), new Vec2f(Size.x, Size.y));
+            HitBoxObject = iconImage.gameObject;
+            transform.hasChanged = true;
         }
 
         public virtual void Draw() {}

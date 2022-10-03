@@ -1,9 +1,11 @@
-using UnityEngine;
-using Agent;
-using Enums;
 using System;
+using Agent;
+using Engine3D;
+using Enums;
+using Item;
 using KMath;
-using Inventory;
+using Physics;
+using UnityEngine;
 
 public partial class AgentEntity 
 {
@@ -115,18 +117,14 @@ public partial class AgentEntity
         Vec2f position = physicsState.Position;
         switch(model3d.ItemAnimationSet)
         {
-            case Enums.ItemAnimationSet.HoldingRifle:
+            case ItemAnimationSet.HoldingRifle:
             {
                 position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
                 break;
             }
-            case Enums.ItemAnimationSet.HoldingPistol:
+            case ItemAnimationSet.HoldingPistol:
             {
                 position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
-                break;
-            }
-            default:
-            {
                 break;
             }
         }
@@ -137,7 +135,7 @@ public partial class AgentEntity
     
     public void HandleItemSelected(ItemInventoryEntity item)
     {
-        Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
         if (hasAgentModel3D)
         {
@@ -152,23 +150,38 @@ public partial class AgentEntity
 
             switch(itemProperty.ToolType)
             {
-                case Enums.ItemToolType.Pistol:
+                case ItemToolType.Pistol:
                 {
                     SetAgentWeapon(Model3DWeapon.Pistol);
 
                     break;
                 }
-                case Enums.ItemToolType.Rifle:
+                case ItemToolType.Rifle:
                 {
                     SetAgentWeapon(Model3DWeapon.Rifle);
                     break;
                 }
-                case Enums.ItemToolType.Sword:
+                case ItemToolType.Sword:
                 {
                     SetAgentWeapon(Model3DWeapon.Sword);
                     break;
                 }
             }
+        }
+
+        if (isAgentPlayer && itemProperty.HasUI())
+        {
+            GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID);
+        }
+    }
+    
+    public void HandleItemDeselected(ItemInventoryEntity item)
+    {
+        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+        if (isAgentPlayer && itemProperty.HasUI())
+        {
+            GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID, false);
         }
     }
 
@@ -190,7 +203,7 @@ public partial class AgentEntity
                 {
                     GameObject hand = model3d.LeftHand;
 
-                    GameObject rapierPrefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Rapier);
+                    GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
                     GameObject rapier = GameObject.Instantiate(rapierPrefab);
 
                     var gunRotation = rapier.transform.rotation;
@@ -209,7 +222,7 @@ public partial class AgentEntity
                     if (hand != null)
                     {
 
-                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Pistol);
+                        GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
                         GameObject gun = GameObject.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
@@ -230,7 +243,7 @@ public partial class AgentEntity
                     if (hand != null)
                     {
 
-                        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceGun);
+                        GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
                         GameObject gun = GameObject.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
@@ -254,7 +267,7 @@ public partial class AgentEntity
 
         if (IsStateFree() && isAgentPlayer)
         {
-            physicsState.MovementState = Enums.AgentMovementState.SlidingRight;
+            physicsState.MovementState = AgentMovementState.SlidingRight;
             physicsState.JumpCounter = 0;
         }
     }
@@ -265,7 +278,7 @@ public partial class AgentEntity
 
         if (IsStateFree() && isAgentPlayer)
         {
-            physicsState.MovementState = Enums.AgentMovementState.SlidingLeft;
+            physicsState.MovementState = AgentMovementState.SlidingLeft;
             physicsState.JumpCounter = 0;
         }
     }
@@ -439,7 +452,7 @@ public partial class AgentEntity
             // handling horizontal movement (left/right)
             if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
             {
-                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Constants.TimeToMax;
             }
 
             if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
@@ -469,11 +482,11 @@ public partial class AgentEntity
             {
                 if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
                 {
-                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                 }
                 else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
                 {
-                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                 }
             }
             else
@@ -482,22 +495,22 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
                 }
                 else
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Physics.Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
                 }
             }

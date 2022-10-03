@@ -1,40 +1,47 @@
-using KMath;
-using UnityEngine;
 using Agent;
 using Enums;
 using UnityEngine.Animations.Rigging;
 using Entitas;
+using Inventory;
+using Item;
+using KGUI.Statistics;
+using KMath;
+using Mech;
+using Planet;
+using PlanetTileMap;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ECSInput
 {
     public class InputProcessSystem
     {
-        private Enums.Mode mode = Enums.Mode.CameraOnly;
+        private Mode mode = Mode.CameraOnly;
 
-        private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
+        private void UpdateMode(ref PlanetState planetState, AgentEntity agentEntity)
         {
             agentEntity.agentPhysicsState.Invulnerable = false;
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = false;
 
-            if (mode == Enums.Mode.Agent)
+            if (mode == Mode.Agent)
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
                 planetState.cameraFollow.canFollow = true;
 
             }
-            else if (mode == Enums.Mode.Camera)
+            else if (mode == Mode.Camera)
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
 
             }
-            else if(mode == Enums.Mode.CameraOnly)
+            else if(mode == Mode.CameraOnly)
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             }
-            else if (mode == Enums.Mode.Creative)
+            else if (mode == Mode.Creative)
             {
                 Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
@@ -44,7 +51,7 @@ namespace ECSInput
 
        
 
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(ref PlanetState planet)
         {
             Contexts contexts = planet.EntitasContext;
 
@@ -124,12 +131,12 @@ namespace ECSInput
                 }
 
 
-                 Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                 if (player.CanFaceMouseDirection())
                 {
                     if (mouseWorldPosition.x >= physicsState.Position.X)
-                {
+                    {
                         physicsState.FacingDirection = 1;
                     }
                     else
@@ -150,7 +157,7 @@ namespace ECSInput
                     {
                         if(Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
                         {
-                            if(player.agentModel3D.GameObject.gameObject.active == true)
+                            if(player.agentModel3D.GameObject.gameObject.active)
                             {
                                 GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
 
@@ -235,7 +242,6 @@ namespace ECSInput
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
-                var mechs = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 foreach (var player in players)
                 {
@@ -261,8 +267,8 @@ namespace ECSInput
                     }
 
 
-                    MechEntity[] meches = contexts.mech.GetEntities();
-                    foreach (var mech in meches)
+                    var mechs = contexts.mech.GetEntities();
+                    foreach (var mech in mechs)
                     {
                         float distance = Vec2f.Distance(mech.mechPosition2D.Value, player.agentPhysicsState.Position);
                         if (!(distance < smallestDistance))
@@ -275,8 +281,8 @@ namespace ECSInput
                             Inventory = contexts.inventory.GetEntityWithInventoryID(mech.mechInventory.InventoryID);
 
                         // Get proprietis.
-                        ref Mech.MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
-                        if (mechProperties.Action != Enums.NodeType.None)
+                        ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
+                        if (mechProperties.Action != NodeType.None)
                             GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
                     }
 
@@ -310,7 +316,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,Enums.NodeType.ChargeAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,NodeType.ChargeAction, player.agentID.ID);
             }
 
             // Drop Action. 
@@ -318,7 +324,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.DropAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.DropAction, player.agentID.ID);
             }
 
             // Reload Weapon.
@@ -326,7 +332,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.ReloadAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.ReloadAction, player.agentID.ID);
             }
 
             // Shield Action.
@@ -334,17 +340,17 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, Enums.NodeType.ShieldAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.ShieldAction, player.agentID.ID);
 
             }
 
             // Show/Hide Statistics
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
-                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = false;
-                else if (!KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled)
-                    KGUI.Statistics.StatisticsDisplay.text.GetGameObject().GetComponent<UnityEngine.UI.Text>().enabled = true;
+                if (StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled)
+                    StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled = false;
+                else if (!StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled)
+                    StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled = true;
 
             }
 
@@ -365,7 +371,7 @@ namespace ECSInput
             // Enable tile collision isotype rendering.
             if (Input.GetKeyDown(KeyCode.F4))
             {
-                PlanetTileMap.TileMapRenderer.TileCollisionDebugging = !PlanetTileMap.TileMapRenderer.TileCollisionDebugging;
+                TileMapRenderer.TileCollisionDebugging = !TileMapRenderer.TileCollisionDebugging;
             }
 
             //  Open Inventory with Tab.        
@@ -409,13 +415,13 @@ namespace ECSInput
                 {
                     int inventoryID = entity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryEntity.InventoryModelID);
+                    ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryEntity.InventoryModelID);
                     if (!inventoryModel.HasToolBar)
                         return;
 
                     var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
 
-                    if (item.itemType.Type == Enums.ItemType.PulseWeapon)
+                    if (item.itemType.Type == ItemType.PulseWeapon)
                     {
                         if (!item.itemPulseWeaponPulse.GrenadeMode)
                         {
@@ -432,24 +438,23 @@ namespace ECSInput
             }
 
             // Change Item Selection with nums.
-            var PlayerWithToolBar = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-            foreach (var entity in PlayerWithToolBar)
+            var playerWithToolBar = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+            foreach (var entity in playerWithToolBar)
             {
                 int inventoryID = entity.agentInventory.InventoryID;
                 InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
                     inventory.inventoryEntity.InventoryModelID);
                 if (!inventoryModel.HasToolBar)
                     return;
 
                 // Get Inventory
-                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
-                if (item == null)
-                    return;
-                Item.ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                if (item == null) return;
+                var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
-                if(itemProperty.Group == ItemGroups.Gun || itemProperty.Group == ItemGroups.Weapon)
+                if(itemProperty.Group is ItemGroups.Gun or ItemGroups.Weapon)
                 {
                     if(entity.hasAgentAction)
                     {
@@ -467,15 +472,16 @@ namespace ECSInput
 
                 for (int i = 0; i < inventoryModel.Width; i++)
                 {
-                    KeyCode keyCode = KeyCode.Alpha1 + i;
+                    var keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
+                        if (inventory.inventoryEntity.SelectedSlotID != i)
+                        {
+                            entity.HandleItemDeselected(item);
+                        }
                         inventory.inventoryEntity.SelectedSlotID = i;
                         item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
-
-                        if (item == null)
-                            return;
-
+                        if (item == null) return;
 
                         entity.HandleItemSelected(item);
                         
@@ -486,51 +492,58 @@ namespace ECSInput
 
 
                 int selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-                ItemInventoryEntity selectedItem = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
-                Item.ItemProprieties selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
+                var selectedItem = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                var selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
 
 
                 if (selectedItemProperty.IsTool())
                 {
-                    if (selectedItemProperty.KeyUsage == Enums.ItemKeyUsage.KeyPressed)
+                    switch (selectedItemProperty.KeyUsage)
                     {
-                        if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
-                    {
-                        if (!Inventory.InventorySystemsState.MouseDown)
+                        case ItemKeyUsage.KeyPressed:
                         {
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
-                            entity.agentID.ID, item.itemID.ID);
+                            if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                                        entity.agentID.ID, item.itemID.ID);
+                                }
+                            }
+
+                            break;
                         }
-                    } 
-                    }
-                    else if (selectedItemProperty.KeyUsage == Enums.ItemKeyUsage.KeyDown)
-                    {
-                        if (Input.GetKey(KeyCode.Mouse0) && entity.IsStateFree())
-                    {
-                        if (!Inventory.InventorySystemsState.MouseDown)
+                        case ItemKeyUsage.KeyDown:
                         {
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
-                            entity.agentID.ID, item.itemID.ID);
+                            if (Input.GetKey(KeyCode.Mouse0) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                                        entity.agentID.ID, item.itemID.ID);
+                                }
+                            }
+
+                            break;
                         }
-                    } 
                     }
                 }
 
-            // Remove Tile Back At Cursor Position.
-            if (Input.GetKeyDown(KeyCode.BackQuote))
-            {
-                if (mode == Enums.Mode.Agent)
-                    mode = Enums.Mode.Camera;
-                else if (mode == Enums.Mode.Camera)
-                    mode = Enums.Mode.CameraOnly;
-                else if (mode == Enums.Mode.CameraOnly)
-                    mode = Enums.Mode.Creative;
-                else if (mode == Enums.Mode.Creative)
-                    mode = Enums.Mode.Agent;
+                // Remove Tile Back At Cursor Position.
+                if (Input.GetKeyDown(KeyCode.BackQuote))
+                {
+                    if (mode == Mode.Agent)
+                        mode = Mode.Camera;
+                    else if (mode == Mode.Camera)
+                        mode = Mode.CameraOnly;
+                    else if (mode == Mode.CameraOnly)
+                        mode = Mode.Creative;
+                    else if (mode == Mode.Creative)
+                        mode = Mode.Agent;
 
-                UpdateMode(ref planet, entity);
+                    UpdateMode(ref planet, entity);
 
-            }
+                }
             }
         }
     }

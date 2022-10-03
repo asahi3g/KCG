@@ -16,7 +16,6 @@ namespace KMath
     /// <summary>
     /// Axis-aligned Bounding Box 2D
     /// </summary>
-    [Serializable]
     public struct AABox2D
     {
         public Vec2f center => new(xmin + halfSize.X, ymin + halfSize.Y);
