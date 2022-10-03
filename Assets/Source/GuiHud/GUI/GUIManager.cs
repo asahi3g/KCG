@@ -1,9 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
+using Enums;
+using Enums.Tile;
 using KGUI.Elements;
 using KMath;
-using Enums.Tile;
-using Utility;
+using Planet;
+using UnityEngine;
+using UnityEngine.UI;
+using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
@@ -41,10 +44,10 @@ namespace KGUI
 
         // Aim Cursor
         public ImageWrapper BuildCursor;
-
-        // GUI Elements List
-        public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
         
+        public Dictionary<UIPanelID, UIPanel> UIPanelPrefabList = new();
+        public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
+
         public Vec2f CursorPosition;
         public UIElement CursorElement;
 
@@ -52,7 +55,7 @@ namespace KGUI
         private Canvas canvas;
 
         // Planet
-        private Planet.PlanetState planet;
+        private PlanetState planet;
 
         // Scanner Tool Text
         Text scannerText = new();
@@ -72,7 +75,7 @@ namespace KGUI
         GeometryGUI GeometryGUI;
 
         // Initialize
-        public void InitStage1(Planet.PlanetState planet, AgentEntity agentEntity)
+        public void InitStage1(PlanetState planet, AgentEntity agentEntity)
         {
             // Set Planet
             this.planet = planet;
@@ -85,9 +88,9 @@ namespace KGUI
             // Set Canvas
             canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
-            var playerStatusPrefab = Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI");
-            GameObject.Instantiate(playerStatusPrefab, canvas.transform);
-            
+            UIPanelPrefabList.Add(UIPanelID.PlayerStatus, Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI"));
+            UIPanelPrefabList.Add(UIPanelID.PlacementTool, null);
+
             GeometryGUI = new GeometryGUI();
 
             GeometryGUI.Initialize(ref planet);
@@ -135,46 +138,43 @@ namespace KGUI
 
         public void InitStage2()
         {
-            
+            SetPanelActive(UIPanelID.PlayerStatus);
+        }
+
+        public void SetPanelActive(UIPanelID panelID, bool active = true)
+        {
+            if (UIPanelList.TryGetValue(panelID, out var panel))
+            {
+                panel.gameObject.SetActive(active);
+            }
+            else if(UIPanelPrefabList.TryGetValue(panelID, out var panelPrefab))
+            {
+                Object.Instantiate(panelPrefab, canvas.transform);
+            }
+            else
+            {
+                Debug.LogError("No such panel in prefab list");
+            }
         }
 
         public void Update(AgentEntity agentEntity)
         {
-            inventoryID = agentEntity.agentInventory.InventoryID;
-
-            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
+            canvas.GetComponent<CanvasScaler>().referenceResolution =
                 new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
-
-            /*
-            // Update Elements
-            foreach (var uiObject in UIList)
-            {
-                uiObject.Update(agentEntity);
-                DrawDebug.DrawBox(uiObject.ObjectPosition, uiObject.ObjectSize);
-            }
-            */
-
-            // Assign New Cursor Position
-            CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
-
-            // Update Scanner Text
-            scannerText.Update();
             
+            CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
+            
+            scannerText.Update();
             GeometryGUI.Update(ref planet, agentEntity);
-
-            // Set Inventory Elements
+            
+            inventoryID = agentEntity.agentInventory.InventoryID;
             Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-
-            // Set Selected Slot
             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
-
-            // Create Item
             Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
 
             if (Item != null)
             {
-
-                if (Item.itemType.Type == Enums.ItemType.PlacementTool)
+                if (Item.itemType.Type is ItemType.PlacementTool or ItemType.PlacementMaterialTool)
                 {
                     // If Mouse Over On Widgets
                     if (bedrockUIBackground.IsMouseOver(CursorPosition) && bedrockUIBackground.GameObject.active ||
@@ -182,14 +182,7 @@ namespace KGUI
                         pipeUIBackground.IsMouseOver(CursorPosition) && pipeUIBackground.GameObject.active ||
                         wireUIBackground.IsMouseOver(CursorPosition) && wireUIBackground.GameObject.active)
                     {
-                        if (Item.itemType.Type == Enums.ItemType.PlacementTool)
-                        {
-                            Item.itemTile.InputsActive = false;
-                        }
-                        else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool) // If Item Is Material Tool
-                        {
-                            Item.itemTile.InputsActive = false;
-                        }
+                        Item.itemTile.InputsActive = false;
                     }
                     else
                     {
@@ -197,264 +190,172 @@ namespace KGUI
                     }
                 }
 
-                if (Item.itemType.Type == Enums.ItemType.PlacementTool)
+                switch (Item.itemType.Type)
                 {
-                    // Set All tiles Active
-                    dirtUIBackground.GameObject.SetActive(true);
-                    bedrockUIBackground.GameObject.SetActive(true);
-                    wireUIBackground.GameObject.SetActive(true);
-                    pipeUIBackground.GameObject.SetActive(true);
-                    healthPotionUIBackground.GameObject.SetActive(false);
+                    case ItemType.PlacementTool:
+                        dirtUIBackground.GameObject.SetActive(true);
+                        bedrockUIBackground.GameObject.SetActive(true);
+                        wireUIBackground.GameObject.SetActive(true);
+                        pipeUIBackground.GameObject.SetActive(true);
+                        healthPotionUIBackground.GameObject.SetActive(false);
 
-                    // If Selected     = Red
-                    // If Not Selected = Yellow
-                    bedrockUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Bedrock
-                        ? Color.red
-                        : Color.yellow);
-                    dirtUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Moon
-                        ? Color.red
-                        : Color.yellow);
-                    pipeUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Pipe
-                        ? Color.red
-                        : Color.yellow);
-                    wireUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Wire
-                        ? Color.red
-                        : Color.yellow);
-                }
-                else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
-                {
-                    // Set All Tiles Active To False
-                    dirtUIBackground.GameObject.SetActive(false);
-                    bedrockUIBackground.GameObject.SetActive(false);
-                    wireUIBackground.GameObject.SetActive(false);
-                    pipeUIBackground.GameObject.SetActive(false);
-                    healthPotionUIBackground.GameObject.SetActive(false);
-
-                    // Get Inventories
-                    var entities =
-                        planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
-
-                    // Iterate All Inventories
-                    foreach (var entity in entities)
+                        // If Selected     = Red
+                        // If Not Selected = Yellow
+                        bedrockUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Bedrock
+                            ? Color.red
+                            : Color.yellow);
+                        dirtUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Moon
+                            ? Color.red
+                            : Color.yellow);
+                        pipeUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Pipe
+                            ? Color.red
+                            : Color.yellow);
+                        wireUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Wire
+                            ? Color.red
+                            : Color.yellow);
+                        break;
+                    case ItemType.PlacementMaterialTool:
                     {
-                        // Check Component Availble
-                        if (entity.hasInventoryName)
+                        dirtUIBackground.GameObject.SetActive(false);
+                        bedrockUIBackground.GameObject.SetActive(false);
+                        wireUIBackground.GameObject.SetActive(false);
+                        pipeUIBackground.GameObject.SetActive(false);
+                        healthPotionUIBackground.GameObject.SetActive(false);
+                    
+                        var inventories = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID, InventoryMatcher.InventoryName));
+                    
+                        foreach (var inventory in inventories)
                         {
-                            // Check Entity Name Is Equals To Material Bag
-                            if (entity.inventoryName.Name == "MaterialBag")
+                            if (inventory.inventoryName.Name != "MaterialBag") continue;
+                            
+                            var inventorySlots = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryEntity.Slots;
+                            
+                            for (int i = 0; i < inventorySlots.Length; i++)
                             {
-                                // Get All Slots
-                                var Slots = planet.EntitasContext.inventory
-                                    .GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
-
-                                // Iterate All Slots
-                                for (int i = 0; i < Slots.Length; i++)
+                                var materialBag = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventory.inventoryID.ID, i);
+                                if (materialBag == null) continue;
+                                
+                                switch (materialBag.itemType.Type)
                                 {
-                                    // Get Item
-                                    ItemInventoryEntity MaterialBag =
-                                        GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
-                                            entity.inventoryID.ID, i);
-
-                                    // Check Item Is Available
-                                    if (MaterialBag != null)
+                                    case ItemType.Dirt:
                                     {
-                                        // Item Equals To Dirt?
-                                        if (MaterialBag.itemType.Type == Enums.ItemType.Dirt)
+                                        if (materialBag.hasItemStack)
                                         {
-                                            // Entity Has Item Stack?
-                                            if (MaterialBag.hasItemStack)
-                                            {
-                                                // Check Count Of The Item
-                                                if (MaterialBag.itemStack.Count >= 1)
-                                                {
-                                                    // Set Active True
-                                                    dirtUIBackground.GameObject.SetActive(true);
-                                                }
-                                                else
-                                                {
-                                                    // Set Active False
-                                                    dirtUIBackground.GameObject.SetActive(false);
-                                                }
-                                            }
-                                        }
-                                        else if (MaterialBag.itemType.Type == Enums.ItemType.Bedrock)
-                                        {
-                                            // If Item Equals To Bedrock, Set Bedrock Active True
-                                            bedrockUIBackground.GameObject.SetActive(true);
-                                        }
-                                        else if (MaterialBag.itemType.Type == Enums.ItemType.Pipe)
-                                        {
-                                            // If Item Equals To Pipe, Set Pipe Active True
-                                            pipeUIBackground.GameObject.SetActive(true);
-                                        }
-                                        else if (MaterialBag.itemType.Type == Enums.ItemType.Wire)
-                                        {
-                                            // If Item Equals To Wire, Set Wire Active True
-                                            wireUIBackground.GameObject.SetActive(true);
+                                            dirtUIBackground.GameObject.SetActive(materialBag.itemStack.Count >= 1);
                                         }
 
-                                        // Check Item Has Stack
-                                        if (MaterialBag.hasItemStack)
-                                        {
-                                            // Set Inventory Elements
-                                            inventoryID = agentEntity.agentInventory.InventoryID;
-                                            Inventory =
-                                                planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-                                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+                                        break;
+                                    }
+                                    case ItemType.Bedrock:
+                                        bedrockUIBackground.GameObject.SetActive(true);
+                                        break;
+                                    case ItemType.Pipe:
+                                        pipeUIBackground.GameObject.SetActive(true);
+                                        break;
+                                    case ItemType.Wire:
+                                        wireUIBackground.GameObject.SetActive(true);
+                                        break;
+                                }
+                                
+                                if (materialBag.hasItemStack)
+                                {
+                                    inventoryID = agentEntity.agentInventory.InventoryID;
+                                    Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+                                    
+                                    Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
+                                        inventoryID, selectedSlot);
+                                    
+                                    if (Item != null)
+                                    {
+                                        bedrockUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Bedrock
+                                            ? Color.red
+                                            : Color.yellow);
 
-                                            // Create Item
-                                            Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
-                                                inventoryID, selectedSlot);
+                                        dirtUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Moon
+                                            ? Color.red
+                                            : Color.yellow);
 
-                                            // Check If Item Is Available
-                                            if (Item != null)
-                                            {
-                                                if (Item.itemTile.TileID == TileID.Bedrock)
-                                                {
-                                                    // Set Red After Selected
-                                                    bedrockUIBackground.SetImageColor(Color.red);
-                                                }
-                                                else
-                                                {
-                                                    // Set Yellow After Unselected
-                                                    bedrockUIBackground.SetImageColor(Color.yellow);
-                                                }
+                                        pipeUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Pipe
+                                            ? Color.red
+                                            : Color.yellow);
 
-                                                if (Item.itemTile.TileID == TileID.Moon)
-                                                {
-                                                    // Set Red After Selected
-                                                    dirtUIBackground.SetImageColor(Color.red);
-                                                }
-                                                else
-                                                {
-                                                    // Set Yellow After Unselected
-                                                    dirtUIBackground.SetImageColor(Color.yellow);
-                                                }
-
-                                                if (Item.itemTile.TileID == TileID.Pipe)
-                                                {
-                                                    // Set Red After Selected
-                                                    pipeUIBackground.SetImageColor(Color.red);
-                                                }
-                                                else
-                                                {
-                                                    // Set Yellow After Unselected
-                                                    pipeUIBackground.SetImageColor(Color.yellow);
-                                                }
-
-                                                if (Item.itemTile.TileID == TileID.Wire)
-                                                {
-                                                    // Set Red After Selected
-                                                    wireUIBackground.SetImageColor(Color.red);
-                                                }
-                                                else
-                                                {
-                                                    // Set Yellow After Unselected
-                                                    wireUIBackground.SetImageColor(Color.yellow);
-                                                }
-                                            }
-                                        }
+                                        wireUIBackground.SetImageColor(Item.itemTile.TileID == TileID.Wire
+                                            ? Color.red
+                                            : Color.yellow);
                                     }
                                 }
                             }
                         }
+
+                        break;
                     }
-                }
-                else if (Item.itemType.Type == Enums.ItemType.PotionTool)
-                {
-                    // Set All Tiles Active To False
-                    healthPotionUIBackground.GameObject.SetActive(true);
-                    dirtUIBackground.GameObject.SetActive(false);
-                    bedrockUIBackground.GameObject.SetActive(false);
-                    wireUIBackground.GameObject.SetActive(false);
-                    pipeUIBackground.GameObject.SetActive(false);
-
-                    // Get Inventories
-                    var entities =
-                        planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
-
-                    // Iterate All Inventories
-                    foreach (var entity in entities)
+                    case ItemType.PotionTool:
                     {
-                        // Check Component Availble
-                        if (entity.hasInventoryName)
+                        // Set All Tiles Active To False
+                        healthPotionUIBackground.GameObject.SetActive(true);
+                        dirtUIBackground.GameObject.SetActive(false);
+                        bedrockUIBackground.GameObject.SetActive(false);
+                        wireUIBackground.GameObject.SetActive(false);
+                        pipeUIBackground.GameObject.SetActive(false);
+                        
+                        var inventories = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID, InventoryMatcher.InventoryName));
+                        
+                        foreach (var inventory in inventories)
                         {
-                            // Check Entity Name Is Equals To Material Bag
-                            if (entity.inventoryName.Name == "MaterialBag")
+                            if (inventory.inventoryName.Name != "MaterialBag") continue;
+                            
+                            var inventorySlots = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryEntity.Slots;
+
+                            for (int i = 0; i < inventorySlots.Length; i++)
                             {
-                                // Get All Slots
-                                var Slots = planet.EntitasContext.inventory
-                                    .GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
-
-                                // Iterate All Slots
-                                for (int i = 0; i < Slots.Length; i++)
+                                var materialBag = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventory.inventoryID.ID, i);
+                                if (materialBag == null) continue;
+                                    
+                                if (materialBag.itemType.Type == ItemType.HealthPositon)
                                 {
-                                    // Get Item
-                                    ItemInventoryEntity MaterialBag =
-                                        GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
-                                            entity.inventoryID.ID, i);
-
-                                    // Check Item Is Available
-                                    if (MaterialBag != null)
+                                    // Entity Has Item Stack?
+                                    if (materialBag.hasItemStack)
                                     {
-                                        // Item Equals To Dirt?
-                                        if (MaterialBag.itemType.Type == Enums.ItemType.HealthPositon)
-                                        {
-                                            // Entity Has Item Stack?
-                                            if (MaterialBag.hasItemStack)
-                                            {
-                                                // Set Active True
-                                                healthPotionUIBackground.GameObject.SetActive(true);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            healthPotionUIBackground.GameObject.SetActive(false);
-                                        }
-
-                                        // Check Item Has Stack
-                                        if (MaterialBag.hasItemStack)
-                                        {
-                                            // Set Inventory Elements
-                                            inventoryID = agentEntity.agentInventory.InventoryID;
-                                            Inventory =
-                                                planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-                                            selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
-
-                                            // Create Item
-                                            Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
-                                                inventoryID, selectedSlot);
-
-                                            // Check If Item Is Available
-                                            if (Item != null)
-                                            {
-                                                if (Item.itemPotion.potionType == Enums.PotionType.HealthPotion)
-                                                {
-                                                    // Set Red After Selected
-                                                    healthPotionUIBackground.SetImageColor(Color.red);
-                                                }
-                                                else
-                                                {
-                                                    // Set Yellow After Unselected
-                                                    healthPotionUIBackground.SetImageColor(Color.yellow);
-                                                }
-                                            }
-                                        }
+                                        // Set Active True
+                                        healthPotionUIBackground.GameObject.SetActive(true);
+                                    }
+                                }
+                                else
+                                {
+                                    healthPotionUIBackground.GameObject.SetActive(false);
+                                }
+                                    
+                                if (materialBag.hasItemStack)
+                                {
+                                    // Set Inventory Elements
+                                    inventoryID = agentEntity.agentInventory.InventoryID;
+                                    Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                                    selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
+                                        
+                                    Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                                        
+                                    if (Item != null)
+                                    {
+                                        healthPotionUIBackground.SetImageColor(Item.itemPotion.potionType == PotionType.HealthPotion
+                                            ? Color.red
+                                            : Color.yellow);
                                     }
                                 }
                             }
                         }
+
+                        break;
                     }
-                }
-                else
-                {
-                    // If Item Is not equal to any placement tool,
-                    // hide all of the widget tiles
-                    dirtUIBackground.GameObject.SetActive(false);
-                    bedrockUIBackground.GameObject.SetActive(false);
-                    wireUIBackground.GameObject.SetActive(false);
-                    pipeUIBackground.GameObject.SetActive(false);
-                    healthPotionUIBackground.GameObject.SetActive(false);
+                    default:
+                        // If Item Is not equal to any placement tool,
+                        // hide all of the widget tiles
+                        dirtUIBackground.GameObject.SetActive(false);
+                        bedrockUIBackground.GameObject.SetActive(false);
+                        wireUIBackground.GameObject.SetActive(false);
+                        pipeUIBackground.GameObject.SetActive(false);
+                        healthPotionUIBackground.GameObject.SetActive(false);
+                        break;
                 }
             }
             
@@ -527,8 +428,8 @@ namespace KGUI
                     {
                         switch (Item.itemType.Type)
                         {
-                            case Enums.ItemType.PlacementTool:
-                            case Enums.ItemType.PlacementMaterialTool:
+                            case ItemType.PlacementTool:
+                            case ItemType.PlacementMaterialTool:
                                 Item.itemTile.TileID = TileID.Bedrock;
                                 break;
                         }
@@ -545,12 +446,12 @@ namespace KGUI
                     Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                     if (Item != null)
                     {
-                        if (Item.itemType.Type == Enums.ItemType.PlacementTool)
+                        if (Item.itemType.Type == ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Moon;
                         }
-                        else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        else if (Item.itemType.Type == ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Moon;
@@ -568,12 +469,12 @@ namespace KGUI
                     Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                     if (Item != null)
                     {
-                        if (Item.itemType.Type == Enums.ItemType.PlacementTool)
+                        if (Item.itemType.Type == ItemType.PlacementTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Pipe;
                         }
-                        else if (Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        else if (Item.itemType.Type == ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Pipe;
@@ -591,7 +492,7 @@ namespace KGUI
                     Item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
                     if (Item != null)
                     {
-                        if (Item.itemType.Type == Enums.ItemType.PlacementTool || Item.itemType.Type == Enums.ItemType.PlacementMaterialTool)
+                        if (Item.itemType.Type == ItemType.PlacementTool || Item.itemType.Type == ItemType.PlacementMaterialTool)
                         {
                             // Set Data Tile ID to Pipe
                             Item.itemTile.TileID = TileID.Wire;
