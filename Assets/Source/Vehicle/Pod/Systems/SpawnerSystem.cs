@@ -41,6 +41,9 @@ namespace Pod
 
             entity.AddPodType(podType);
 
+            PodState podState = PodState.None;
+            entity.AddPodState(podState);
+
 
             // Increase ID per object statically
             UniqueID++;

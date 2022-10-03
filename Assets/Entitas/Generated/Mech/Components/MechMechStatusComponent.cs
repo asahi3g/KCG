@@ -8,27 +8,27 @@
 //------------------------------------------------------------------------------
 public partial class MechEntity {
 
-    public Mech.TreeComponent mechTree { get { return (Mech.TreeComponent)GetComponent(MechComponentsLookup.MechTree); } }
-    public bool hasMechTree { get { return HasComponent(MechComponentsLookup.MechTree); } }
+    public Mech.StatusComponent mechStatus { get { return (Mech.StatusComponent)GetComponent(MechComponentsLookup.MechStatus); } }
+    public bool hasMechStatus { get { return HasComponent(MechComponentsLookup.MechStatus); } }
 
-    public void AddMechTree(int newHealth, int newTreeSize) {
-        var index = MechComponentsLookup.MechTree;
-        var component = (Mech.TreeComponent)CreateComponent(index, typeof(Mech.TreeComponent));
+    public void AddMechStatus(int newHealth, int newTreeSize) {
+        var index = MechComponentsLookup.MechStatus;
+        var component = (Mech.StatusComponent)CreateComponent(index, typeof(Mech.StatusComponent));
         component.Health = newHealth;
         component.TreeSize = newTreeSize;
         AddComponent(index, component);
     }
 
-    public void ReplaceMechTree(int newHealth, int newTreeSize) {
-        var index = MechComponentsLookup.MechTree;
-        var component = (Mech.TreeComponent)CreateComponent(index, typeof(Mech.TreeComponent));
+    public void ReplaceMechStatus(int newHealth, int newTreeSize) {
+        var index = MechComponentsLookup.MechStatus;
+        var component = (Mech.StatusComponent)CreateComponent(index, typeof(Mech.StatusComponent));
         component.Health = newHealth;
         component.TreeSize = newTreeSize;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveMechTree() {
-        RemoveComponent(MechComponentsLookup.MechTree);
+    public void RemoveMechStatus() {
+        RemoveComponent(MechComponentsLookup.MechStatus);
     }
 }
 
@@ -42,17 +42,17 @@ public partial class MechEntity {
 //------------------------------------------------------------------------------
 public sealed partial class MechMatcher {
 
-    static Entitas.IMatcher<MechEntity> _matcherMechTree;
+    static Entitas.IMatcher<MechEntity> _matcherMechStatus;
 
-    public static Entitas.IMatcher<MechEntity> MechTree {
+    public static Entitas.IMatcher<MechEntity> MechStatus {
         get {
-            if (_matcherMechTree == null) {
-                var matcher = (Entitas.Matcher<MechEntity>)Entitas.Matcher<MechEntity>.AllOf(MechComponentsLookup.MechTree);
+            if (_matcherMechStatus == null) {
+                var matcher = (Entitas.Matcher<MechEntity>)Entitas.Matcher<MechEntity>.AllOf(MechComponentsLookup.MechStatus);
                 matcher.componentNames = MechComponentsLookup.componentNames;
-                _matcherMechTree = matcher;
+                _matcherMechStatus = matcher;
             }
 
-            return _matcherMechTree;
+            return _matcherMechStatus;
         }
     }
 }
