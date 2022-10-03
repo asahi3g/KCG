@@ -24,7 +24,6 @@ namespace AI
             }
         }
 
-        // Todo: Make it ReadOnly.
         public static NodeBase[] Nodes;
     }
 }

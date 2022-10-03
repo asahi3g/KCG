@@ -142,8 +142,8 @@ namespace KGUI
         {
             inventoryID = agentEntity.agentInventory.InventoryID;
 
-            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
-                new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+            //canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
+             //   new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
 
             /*
             // Update Elements
