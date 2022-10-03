@@ -18,15 +18,14 @@ namespace KGUI
         public override void Init()
         {
             base.Init();
-            
+
             ID = UIElementID.FuelElement;
             fuelLevel = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Fuel : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", AtlasType.Gui);
             
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", AtlasType.Gui);
+            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
             
             progressBar = new ProgressBar(progressBarImageWrapper, fuelLevel, Image.FillMethod.Radial360);
         }
@@ -66,13 +65,13 @@ namespace KGUI
             {
                 infoText.Create("Fuel Indicator", "Fuel Bar\nStatus: Low", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(Position.x + Size.x + 20f, 0, 0));
+                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
             else
             {
                 infoText.Create("Fuel DeIndicator", "Fuel Bar\nStatus: Normal", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(Position.x + Size.x + 20f, 0, 0));
+                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
         }
         public override void OnMouseStay()

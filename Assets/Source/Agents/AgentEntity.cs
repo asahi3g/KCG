@@ -174,6 +174,16 @@ public partial class AgentEntity
             GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID);
         }
     }
+    
+    public void HandleItemDeselected(ItemInventoryEntity item)
+    {
+        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+        if (isAgentPlayer && itemProperty.HasUI())
+        {
+            GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID, false);
+        }
+    }
 
     public void SetAgentWeapon(Model3DWeapon weapon)
     {

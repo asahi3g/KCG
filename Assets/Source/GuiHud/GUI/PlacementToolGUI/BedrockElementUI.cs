@@ -14,14 +14,41 @@ namespace KGUI
         public override void Init()
         {
             base.Init();
+
+            HitBoxObject = borderImage.gameObject;
             
             ID = UIElementID.BedrockElement;
 
             Icon = new ImageWrapper(iconImage, 16, 16,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", AtlasType.Gui);
-            
-            Border = new ImageWrapper(borderImage, 225, 225,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", AtlasType.Gui);
+                "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png", AtlasType.Gui);
+
+            Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+        }
+
+        public override void Draw()
+        {
+            Icon.Draw();
+            Border.Draw();
+        }
+
+        public override void OnMouseStay()
+        {
+            GameState.GUIManager.InventorySlotItem.itemTile.InputsActive = !gameObject.activeSelf;
+        }
+
+        public override void OnMouseClick()
+        {
+            var item = GameState.GUIManager.InventorySlotItem;
+            if(item != null)
+            {
+                switch (item.itemType.Type)
+                {
+                    case ItemType.PlacementTool:
+                    case ItemType.PlacementMaterialTool:
+                        item.itemTile.TileID = Enums.Tile.TileID.Bedrock;
+                        break;
+                }
+            }
         }
     }
 }

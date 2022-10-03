@@ -449,10 +449,9 @@ namespace ECSInput
                     return;
 
                 // Get Inventory
-                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
-                if (item == null)
-                    return;
-                ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                if (item == null) return;
+                var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
                 if(itemProperty.Group is ItemGroups.Gun or ItemGroups.Weapon)
@@ -476,6 +475,10 @@ namespace ECSInput
                     var keyCode = KeyCode.Alpha1 + i;
                     if (Input.GetKeyDown(keyCode))
                     {
+                        if (inventory.inventoryEntity.SelectedSlotID != i)
+                        {
+                            entity.HandleItemDeselected(item);
+                        }
                         inventory.inventoryEntity.SelectedSlotID = i;
                         item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
                         if (item == null) return;

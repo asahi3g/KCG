@@ -15,7 +15,8 @@ namespace KGUI
         BedrockElement,
         DirtElement,
         PipeElement,
-        WireElement
+        WireElement,
+        HealthPotionElement
     }
 }
 

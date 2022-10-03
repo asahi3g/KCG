@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class WireElementUI : UIElement
+    public class HealthPotionElementUI : UIElement
     {
         [SerializeField] private Image borderImage;
 
@@ -16,10 +16,11 @@ namespace KGUI
             base.Init();
 
             HitBoxObject = borderImage.gameObject;
-            
-            ID = UIElementID.WireElement;
 
-            Icon = new ImageWrapper(iconImage, 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", AtlasType.Gui);
+            ID = UIElementID.HealthPotionElement;
+
+            Icon = new ImageWrapper(iconImage, 19, 19,
+                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
 
             Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
@@ -37,17 +38,6 @@ namespace KGUI
 
         public override void OnMouseClick()
         {
-            var item = GameState.GUIManager.InventorySlotItem;
-            if(item != null)
-            {
-                switch (item.itemType.Type)
-                {
-                    case ItemType.PlacementTool:
-                    case ItemType.PlacementMaterialTool:
-                        item.itemTile.TileID = Enums.Tile.TileID.Wire;
-                        break;
-                }
-            }
         }
     }
 }
