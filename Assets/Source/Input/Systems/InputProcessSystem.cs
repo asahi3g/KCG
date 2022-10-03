@@ -2,6 +2,15 @@ using Agent;
 using Enums;
 using UnityEngine.Animations.Rigging;
 using Entitas;
+using Inventory;
+using Item;
+using KGUI.Statistics;
+using KMath;
+using Mech;
+using Planet;
+using PlanetTileMap;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ECSInput
 {
@@ -233,7 +242,6 @@ namespace ECSInput
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
-                var mechs = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 foreach (var player in players)
                 {
