@@ -47,7 +47,7 @@ namespace Mech
 
             if (mechType == MechType.Tree)
             {
-                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
+                entity.AddMechStatus(mechProperties.TreeHealth, mechProperties.TreeSize);
             }
 
             return entity;
@@ -79,7 +79,7 @@ namespace Mech
 
             if (mechType == MechType.Tree)
             {
-                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
+                entity.AddMechStatus(mechProperties.TreeHealth, mechProperties.TreeSize);
             }
 
             return entity;
@@ -117,7 +117,7 @@ namespace Mech
 
             if (mechType == MechType.Tree)
             {
-                entity.AddMechTree(mechProperties.TreeHealth, mechProperties.TreeSize);
+                entity.AddMechStatus(mechProperties.TreeHealth, mechProperties.TreeSize);
             }
 
             return entity;

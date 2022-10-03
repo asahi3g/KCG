@@ -118,6 +118,12 @@ public static class GameState
     public static readonly Vehicle.SpawnerSystem VehicleSpawnerSystem;
     public static readonly Vehicle.MeshBuilderSystem VehicleMeshBuilderSystem;
     public static readonly Vehicle.AISystem VehicleAISystem;
+
+    public static readonly Pod.PodCreationApi PodCreationApi;
+    public static readonly Pod.ProcessCollisionSystem PodCollisionSystem;
+    public static readonly Pod.MovementSystem PodMovementSystem;
+    public static readonly Pod.SpawnerSystem PodSpawnerSystem;
+    public static readonly Pod.MeshBuilderSystem PodMeshBuilderSystem;
     #endregion
 
     public static readonly Utility.FileLoadingManager FileLoadingManager;
@@ -268,6 +274,12 @@ public static class GameState
         VehicleSpawnerSystem = new Vehicle.SpawnerSystem(VehicleCreationApi);
         VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
         VehicleAISystem = new Vehicle.AISystem(VehicleCreationApi);
+
+        PodCreationApi = new Pod.PodCreationApi();
+        PodCollisionSystem = new Pod.ProcessCollisionSystem();
+        PodMovementSystem = new Pod.MovementSystem(PodCreationApi);
+        PodSpawnerSystem = new Pod.SpawnerSystem(PodCreationApi);
+        PodMeshBuilderSystem = new Pod.MeshBuilderSystem();
 
         //TODO(): move these out of here
         InitStage1();

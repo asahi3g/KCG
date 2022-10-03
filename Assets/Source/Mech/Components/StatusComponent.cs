@@ -8,7 +8,7 @@ namespace Mech
     /// Makes item destructable.
     /// </summary>
     [Mech]
-    public class TreeComponent : IComponent
+    public class StatusComponent : IComponent
     {
         [Range(0,100)]
         public int Health;

@@ -33,11 +33,12 @@ public partial class Contexts : Entitas.IContexts {
     public MechContext mech { get; set; }
     public NodeContext node { get; set; }
     public ParticleContext particle { get; set; }
+    public PodContext pod { get; set; }
     public ProjectileContext projectile { get; set; }
     public UIElementContext uIElement { get; set; }
     public VehicleContext vehicle { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { actionCoolDown, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, node, particle, projectile, uIElement, vehicle }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { actionCoolDown, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, node, particle, pod, projectile, uIElement, vehicle }; } }
 
     public Contexts() {
         actionCoolDown = new ActionCoolDownContext();
@@ -52,6 +53,7 @@ public partial class Contexts : Entitas.IContexts {
         mech = new MechContext();
         node = new NodeContext();
         particle = new ParticleContext();
+        pod = new PodContext();
         projectile = new ProjectileContext();
         uIElement = new UIElementContext();
         vehicle = new VehicleContext();
@@ -101,6 +103,7 @@ public partial class Contexts {
     public const string NodeTool = "NodeTool";
     public const string ParticleEmitterID = "ParticleEmitterID";
     public const string ParticleID = "ParticleID";
+    public const string PodID = "PodID";
     public const string ProjectileID = "ProjectileID";
     public const string VehicleID = "VehicleID";
 
@@ -199,6 +202,11 @@ public partial class Contexts {
             particle.GetGroup(ParticleMatcher.ParticleID),
             (e, c) => ((Particle.IDComponent)c).ID));
 
+        pod.AddEntityIndex(new Entitas.PrimaryEntityIndex<PodEntity, int>(
+            PodID,
+            pod.GetGroup(PodMatcher.PodID),
+            (e, c) => ((Pod.IDComponent)c).ID));
+
         projectile.AddEntityIndex(new Entitas.PrimaryEntityIndex<ProjectileEntity, int>(
             ProjectileID,
             projectile.GetGroup(ProjectileMatcher.ProjectileID),
@@ -289,6 +297,10 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<ParticleEntity, long>)context.GetEntityIndex(Contexts.ParticleID)).GetEntity(ID);
     }
 
+    public static PodEntity GetEntityWithPodID(this PodContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<PodEntity, int>)context.GetEntityIndex(Contexts.PodID)).GetEntity(ID);
+    }
+
     public static ProjectileEntity GetEntityWithProjectileID(this ProjectileContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<ProjectileEntity, int>)context.GetEntityIndex(Contexts.ProjectileID)).GetEntity(ID);
     }
@@ -324,6 +336,7 @@ public partial class Contexts {
             CreateContextObserver(mech);
             CreateContextObserver(node);
             CreateContextObserver(particle);
+            CreateContextObserver(pod);
             CreateContextObserver(projectile);
             CreateContextObserver(uIElement);
             CreateContextObserver(vehicle);
