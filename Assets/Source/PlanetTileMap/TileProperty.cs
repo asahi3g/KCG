@@ -13,8 +13,6 @@ namespace PlanetTileMap
     /// </summary>
     public struct TileProperty
     {
-        public string Name; //later use string pool
-        public string Description; //later use string pool
         
         public TileID TileID;
         public MaterialType MaterialType;
@@ -34,7 +32,7 @@ namespace PlanetTileMap
 
         public SpriteRuleType SpriteRuleType;
         public CollisionType CollisionIsoType;
-        public TileShape BlockShapeType;
+        public Enums.GeometryTileShape BlockShapeType;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
         public bool IsAPlatform => CollisionIsoType == CollisionType.Platform;

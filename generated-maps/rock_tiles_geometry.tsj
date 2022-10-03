@@ -1,14 +1,14 @@
 { "columns":9,
- "image":"..\/Downloads\/Telegram Desktop\/metal_tiles_geometry.png",
+ "image":"..\/Downloads\/Telegram Desktop\/rock_tiles_geometry.png",
  "imageheight":736,
  "imagewidth":288,
  "margin":0,
- "name":"metal_tiles_geometry",
+ "name":"rock_tiles_geometry",
  "properties":[
         {
          "name":"Material",
          "type":"string",
-         "value":"Metal"
+         "value":"Stone"
         }],
  "spacing":0,
  "tilecount":207,
@@ -19,7 +19,7 @@
          "id":10,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"SB_R0"
                 }]
@@ -28,7 +28,7 @@
          "id":28,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HB_R0"
                 }]
@@ -37,7 +37,7 @@
          "id":30,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HB_R1"
                 }]
@@ -46,7 +46,7 @@
          "id":32,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HB_R2"
                 }]
@@ -55,7 +55,7 @@
          "id":34,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HB_R3"
                 }]
@@ -64,7 +64,7 @@
          "id":46,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R0"
                 }]
@@ -73,7 +73,7 @@
          "id":48,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R1"
                 }]
@@ -82,7 +82,7 @@
          "id":50,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R2"
                 }]
@@ -91,7 +91,7 @@
          "id":52,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R3"
                 }]
@@ -100,7 +100,7 @@
          "id":64,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R4"
                 }]
@@ -109,7 +109,7 @@
          "id":66,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R5"
                 }]
@@ -118,7 +118,7 @@
          "id":68,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R6"
                 }]
@@ -127,7 +127,7 @@
          "id":70,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"TB_R7"
                 }]
@@ -136,7 +136,7 @@
          "id":82,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R0"
                 }]
@@ -145,7 +145,7 @@
          "id":84,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R1"
                 }]
@@ -154,7 +154,7 @@
          "id":86,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R2"
                 }]
@@ -163,7 +163,7 @@
          "id":88,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R3"
                 }]
@@ -172,7 +172,7 @@
          "id":100,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R4"
                 }]
@@ -181,7 +181,7 @@
          "id":102,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R5"
                 }]
@@ -190,7 +190,7 @@
          "id":104,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R6"
                 }]
@@ -199,7 +199,7 @@
          "id":106,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L1_R7"
                 }]
@@ -208,7 +208,7 @@
          "id":118,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R0"
                 }]
@@ -217,7 +217,7 @@
          "id":120,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R1"
                 }]
@@ -226,7 +226,7 @@
          "id":122,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R2"
                 }]
@@ -235,7 +235,7 @@
          "id":124,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R3"
                 }]
@@ -244,7 +244,7 @@
          "id":136,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R4"
                 }]
@@ -253,7 +253,7 @@
          "id":138,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R5"
                 }]
@@ -262,7 +262,7 @@
          "id":140,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R6"
                 }]
@@ -271,7 +271,7 @@
          "id":142,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"L2_R7"
                 }]
@@ -280,7 +280,7 @@
          "id":154,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"QP_R0"
                 }]
@@ -289,7 +289,7 @@
          "id":156,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"QP_R1"
                 }]
@@ -298,7 +298,7 @@
          "id":158,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"QP_R2"
                 }]
@@ -307,7 +307,7 @@
          "id":160,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"QP_R3"
                 }]
@@ -316,7 +316,7 @@
          "id":172,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HP_R0"
                 }]
@@ -325,7 +325,7 @@
          "id":174,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HP_R1"
                 }]
@@ -334,7 +334,7 @@
          "id":176,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HP_R2"
                 }]
@@ -343,7 +343,7 @@
          "id":178,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"HP_R3"
                 }]
@@ -352,7 +352,7 @@
          "id":190,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"FP_R0"
                 }]
@@ -361,7 +361,7 @@
          "id":192,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"FP_R1"
                 }]
@@ -370,7 +370,7 @@
          "id":194,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"FP_R2"
                 }]
@@ -379,7 +379,7 @@
          "id":196,
          "properties":[
                 {
-                 "name":"Type",
+                 "name":"Shape",
                  "type":"string",
                  "value":"FP_R3"
                 }]

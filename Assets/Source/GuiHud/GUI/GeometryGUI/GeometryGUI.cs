@@ -794,7 +794,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SQNoSpecular_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.SB_R0_Metal;
                             ResetColors();
                             SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -806,7 +806,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.FP_R0_Metal;
                             ResetColors();
 
                             SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -819,7 +819,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.FP_R1_Metal;
                             ResetColors();
                             SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
 
@@ -832,7 +832,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.FP_R2_Metal;
                             ResetColors();
                             SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -844,7 +844,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.FP_R3_Metal;
                             ResetColors();
                             SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -856,7 +856,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.HB_R0_Metal;
                             ResetColors();
                             HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -868,7 +868,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.HB_R1_Metal;
                             ResetColors();
                             HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -881,7 +881,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.HB_R2_Metal;
                             ResetColors();
                             HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -893,7 +893,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQNoSpecular_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.HB_R3_Metal;
                             ResetColors();
                             HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -905,7 +905,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.HP_R0_Metal;
                             ResetColors();
                             HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -917,7 +917,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.HP_R1_Metal;
                             ResetColors();
                             HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -929,7 +929,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.HP_R2_Metal;
                             ResetColors();
                             HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -941,7 +941,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.HP_R3_Metal;
                             ResetColors();
                             HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -953,7 +953,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.QP_R0_Metal;
                             ResetColors();
                             SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -965,7 +965,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.QP_R1_Metal;
                             ResetColors();
                             SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -977,7 +977,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.QP_R2_Metal;
                             ResetColors();
                             SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -989,7 +989,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.SSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.QP_R3_Metal;
                             ResetColors();
                             SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -1001,7 +1001,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TI_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R0_Metal;
                             ResetColors();
                             TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -1013,7 +1013,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TI_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R1_Metal;
                             ResetColors();
                             TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
                         }
@@ -1025,7 +1025,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TI_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R4_Metal;
                             ResetColors();
 
                             TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1038,7 +1038,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TI_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R5_Metal;
                             ResetColors();
 
                             TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1051,7 +1051,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TO_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R6_Metal;
                             ResetColors();
 
                             TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1064,7 +1064,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TO_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R7_Metal;
                             ResetColors();
 
                             TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1077,7 +1077,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TO_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R2_Metal;
                             ResetColors();
 
                             TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1090,7 +1090,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.TO_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.TB_R3_Metal;
                             ResetColors();
 
                             TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1103,7 +1103,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HTD_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R0_Metal;
                             ResetColors();
 
                             HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1116,7 +1116,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HTL_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R1_Metal;
                             ResetColors();
 
                             HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1129,7 +1129,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HTU_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R2_Metal;
                             ResetColors();
 
                             HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1142,7 +1142,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.HTR_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R3_Metal;
                             ResetColors();
 
                             HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1155,7 +1155,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RHTD_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R4_Metal;
                             ResetColors();
 
                             RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1168,7 +1168,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RHTL_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R5_Metal;
                             ResetColors();
 
                             RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1182,7 +1182,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RHTU_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R6_Metal;
                             ResetColors();
 
                             RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1195,7 +1195,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RHTR_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.L1_R7_Metal;
                             ResetColors();
 
                             RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1208,7 +1208,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R0_Metal;
                             ResetColors();
 
                             CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1221,7 +1221,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R1_Metal;
                             ResetColors();
 
                             CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1234,7 +1234,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R2_Metal;
                             ResetColors();
 
                             CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1247,7 +1247,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.CSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R3_Metal;
                             ResetColors();
 
                             CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1260,7 +1260,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_0;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R4_Metal;
                             ResetColors();
 
                             RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1273,7 +1273,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_1;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R5_Metal;
                             ResetColors();
 
                             RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1286,7 +1286,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_2;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R6_Metal;
                             ResetColors();
 
                             RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
@@ -1299,7 +1299,7 @@ public class GeometryGUI
                     {
                         if (item.hasItemTile)
                         {
-                            item.itemTile.TileID = Enums.Tile.TileID.RCSQ_3;
+                            item.itemTile.TileID = Enums.Tile.TileID.L2_R7_Metal;
                             ResetColors();
 
                             RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);

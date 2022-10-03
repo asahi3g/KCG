@@ -176,181 +176,181 @@ namespace Planet.Unity
 
             for (int i = 0; i < 31; i++)
             {
-                tileMap.SetFrontTile(i, 0, TileID.HSQNoSpecular_3);
-                tileMap.SetFrontTile(i, 31, TileID.HSQNoSpecular_3);
+                tileMap.SetFrontTile(i, 0, TileID.HB_R3_Metal);
+                tileMap.SetFrontTile(i, 31, TileID.HB_R3_Metal);
             }
 
             for (int i = 0; i < 31; i++)
             {
-                tileMap.SetFrontTile(31, i, TileID.HSQNoSpecular_0);
-                tileMap.SetFrontTile(0, i, TileID.HSQNoSpecular_0);
+                tileMap.SetFrontTile(31, i, TileID.HB_R0_Metal);
+                tileMap.SetFrontTile(0, i, TileID.HB_R0_Metal);
             }
 
             for (int i = 0; i < 31; i++)
             {
-                tileMap.SetFrontTile(i, 1, TileID.SQNoSpecular_0);
+                tileMap.SetFrontTile(i, 1, TileID.SB_R0_Metal);
             }
 
             for (int i = 0; i < 13; i++)
             {
-                tileMap.SetFrontTile(i, 7, TileID.SQNoSpecular_0);
+                tileMap.SetFrontTile(i, 7, TileID.SB_R0_Metal);
             }
 
             for (int i = 19; i < 31; i++)
             {
-                tileMap.SetFrontTile(i, 7, TileID.SQNoSpecular_0);
+                tileMap.SetFrontTile(i, 7, TileID.SB_R0_Metal);
             }
 
-            tileMap.SetFrontTile(24, 8, TileID.TO_3);
-            tileMap.SetFrontTile(25, 9, TileID.TO_3);
-            tileMap.SetFrontTile(26, 10, TileID.TO_3);
-            tileMap.SetFrontTile(27, 11, TileID.TO_3);
-            tileMap.SetFrontTile(28, 12, TileID.TO_3);
+            tileMap.SetFrontTile(24, 8, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(25, 9, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(26, 10, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(27, 11, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(28, 12, TileID.TB_R3_Metal);
 
 
-            tileMap.SetFrontTile(24, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(23, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(22, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(21, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(20, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(19, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(18, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(17, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(16, 12, TileID.HSQ_0);
-            tileMap.SetFrontTile(15, 12, TileID.HSQ_0);
+            tileMap.SetFrontTile(24, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(23, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(22, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(21, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(20, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(19, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(18, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(17, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(16, 12, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(15, 12, TileID.HP_R0_Metal);
 
-            tileMap.SetFrontTile(30, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(29, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(28, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(27, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(26, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(25, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(24, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(23, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(22, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(21, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(20, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(19, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(18, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(17, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(16, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(15, 16, TileID.HSQ_0);
+            tileMap.SetFrontTile(30, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(29, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(28, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(27, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(26, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(25, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(24, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(23, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(22, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(21, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(20, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(19, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(18, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(17, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(16, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(15, 16, TileID.HP_R0_Metal);
 
-            tileMap.SetFrontTile(10, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(9, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(8, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(7, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(6, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(5, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(4, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(3, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(2, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(1, 16, TileID.HSQ_0);
-            tileMap.SetFrontTile(0, 16, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(10, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(9, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(8, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(7, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(6, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(5, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(4, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(3, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(2, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(1, 16, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(0, 16, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(23, 17, TileID.TO_3);
-            tileMap.SetFrontTile(24, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(25, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(26, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(27, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 17, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 17, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(23, 17, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(24, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(25, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(26, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(27, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 17, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 17, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(24, 18, TileID.TO_3);
-            tileMap.SetFrontTile(25, 18, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(26, 18, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(27, 18, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 18, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 18, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 18, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(24, 18, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(25, 18, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(26, 18, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(27, 18, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 18, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 18, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 18, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(25, 19, TileID.TO_3);
-            tileMap.SetFrontTile(26, 19, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(27, 19, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 19, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 19, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 19, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(25, 19, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(26, 19, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(27, 19, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 19, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 19, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 19, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(26, 20, TileID.TO_3);
-            tileMap.SetFrontTile(27, 20, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 20, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 20, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 20, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(26, 20, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(27, 20, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 20, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 20, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 20, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(27, 21, TileID.TO_3);
-            tileMap.SetFrontTile(28, 21, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 21, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 21, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(27, 21, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(28, 21, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 21, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 21, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(28, 22, TileID.TO_3);
-            tileMap.SetFrontTile(29, 22, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 22, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(28, 22, TileID.TB_R3_Metal);
+            tileMap.SetFrontTile(29, 22, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 22, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(24, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(23, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(22, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(21, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(20, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(19, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(18, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(17, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(16, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(15, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(14, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(13, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(12, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(11, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(10, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(9, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(8, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(7, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(6, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(5, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(4, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(3, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(2, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(1, 23, TileID.HSQ_0);
-            tileMap.SetFrontTile(0, 23, TileID.SQNoSpecular_0);
-
-
-            tileMap.SetFrontTile(14, 12, TileID.RCSQ_3);
-            tileMap.SetFrontTile(13, 11, TileID.RCSQ_3);
-            tileMap.SetFrontTile(12, 10, TileID.RCSQ_3);
-            tileMap.SetFrontTile(11, 9, TileID.RCSQ_3);
-            tileMap.SetFrontTile(10, 8, TileID.RCSQ_3);
-
-            tileMap.SetFrontTile(14, 11, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(13, 10, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(12, 9, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(11, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(12, 8, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(24, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(23, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(22, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(21, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(20, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(19, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(18, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(17, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(16, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(15, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(14, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(13, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(12, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(11, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(10, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(9, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(8, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(7, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(6, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(5, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(4, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(3, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(2, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(1, 23, TileID.HP_R0_Metal);
+            tileMap.SetFrontTile(0, 23, TileID.SB_R0_Metal);
 
 
-            tileMap.SetFrontTile(25, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(26, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(27, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 8, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 8, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(14, 12, TileID.L2_R7_Metal);
+            tileMap.SetFrontTile(13, 11, TileID.L2_R7_Metal);
+            tileMap.SetFrontTile(12, 10, TileID.L2_R7_Metal);
+            tileMap.SetFrontTile(11, 9, TileID.L2_R7_Metal);
+            tileMap.SetFrontTile(10, 8, TileID.L2_R7_Metal);
 
-            tileMap.SetFrontTile(26, 9, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(27, 9, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 9, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 9, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 9, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(14, 11, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(13, 10, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(12, 9, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(11, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(12, 8, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(27, 10, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(28, 10, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 10, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 10, TileID.SQNoSpecular_0);
 
-            tileMap.SetFrontTile(28, 11, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(29, 11, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 11, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(25, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(26, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(27, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 8, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 8, TileID.SB_R0_Metal);
 
-            tileMap.SetFrontTile(29, 12, TileID.SQNoSpecular_0);
-            tileMap.SetFrontTile(30, 12, TileID.SQNoSpecular_0);
+            tileMap.SetFrontTile(26, 9, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(27, 9, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 9, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 9, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 9, TileID.SB_R0_Metal);
+
+            tileMap.SetFrontTile(27, 10, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(28, 10, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 10, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 10, TileID.SB_R0_Metal);
+
+            tileMap.SetFrontTile(28, 11, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(29, 11, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 11, TileID.SB_R0_Metal);
+
+            tileMap.SetFrontTile(29, 12, TileID.SB_R0_Metal);
+            tileMap.SetFrontTile(30, 12, TileID.SB_R0_Metal);
 
             Planet.AddEnemy(new Vec2f(20, 10));
             Planet.AddEnemy(new Vec2f(20, 15));

@@ -14,6 +14,8 @@ namespace Tiled
         public int rows;
         public TiledTile[] Tiles;
 
+        public TiledProperty[] properties;
+
 
 
         public static TiledTileset FromJson(string filename)
@@ -27,7 +29,7 @@ namespace Tiled
             for(int i = 0; i < newTiles.Length; i++)
             {
                 newTiles[i].id = (i + 1);
-                newTiles[i].properties = new TiledTileProperty[] { new TiledTileProperty{name="", type="", value=""} };
+                newTiles[i].properties = new TiledProperty[] { new TiledProperty{name="", type="", value=""} };
             }
 
             for(int i = 0; i < newObject.Tiles.Length; i++)

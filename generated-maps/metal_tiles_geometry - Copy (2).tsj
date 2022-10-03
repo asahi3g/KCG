@@ -4,12 +4,6 @@
  "imagewidth":288,
  "margin":0,
  "name":"metal_tiles_geometry",
- "properties":[
-        {
-         "name":"Material",
-         "type":"string",
-         "value":"Metal"
-        }],
  "spacing":0,
  "tilecount":207,
  "tiledversion":"1.9.1",
@@ -21,7 +15,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"SB_R0"
+                 "value":"SQNoSpecular_0"
                 }]
         }, 
         {
@@ -30,7 +24,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"HB_R0"
+                 "value":"HSQNoSpecular_0"
                 }]
         }, 
         {
@@ -39,7 +33,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"HB_R1"
+                 "value":"HSQNoSpecular_1"
                 }]
         }, 
         {
@@ -48,7 +42,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"HB_R2"
+                 "value":"HSQNoSpecular_2"
                 }]
         }, 
         {
@@ -57,7 +51,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"HB_R3"
+                 "value":"HSQNoSpecular_3"
                 }]
         }, 
         {
@@ -66,7 +60,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R0"
+                 "value":"TI_0"
                 }]
         }, 
         {
@@ -75,7 +69,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R1"
+                 "value":"TI_1"
                 }]
         }, 
         {
@@ -84,7 +78,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R2"
+                 "value":"TO_0"
                 }]
         }, 
         {
@@ -93,7 +87,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R3"
+                 "value":"TO_1"
                 }]
         }, 
         {
@@ -102,7 +96,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R4"
+                 "value":"TI_2"
                 }]
         }, 
         {
@@ -111,7 +105,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R5"
+                 "value":"TI_3"
                 }]
         }, 
         {
@@ -120,7 +114,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R6"
+                 "value":"TO_2"
                 }]
         }, 
         {
@@ -129,7 +123,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R7"
+                 "value":"TO_3"
                 }]
         }, 
         {
@@ -138,7 +132,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R0"
+                 "value":"HTD_0"
                 }]
         }, 
         {
@@ -147,7 +141,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R1"
+                 "value":"HTL_1"
                 }]
         }, 
         {
@@ -156,7 +150,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R2"
+                 "value":"RHTU_2"
                 }]
         }, 
         {
@@ -165,7 +159,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R3"
+                 "value":"RHTR_3"
                 }]
         }, 
         {
@@ -174,7 +168,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R4"
+                 "value":"HTU_2"
                 }]
         }, 
         {
@@ -183,7 +177,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R5"
+                 "value":"HTR_3"
                 }]
         }, 
         {
@@ -192,7 +186,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R6"
+                 "value":"RHTD_0"
                 }]
         }, 
         {
@@ -201,7 +195,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L1_R7"
+                 "value":"RHTL_1"
                 }]
         }, 
         {
@@ -210,7 +204,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R0"
+                 "value":"CSQ_0"
                 }]
         }, 
         {
@@ -219,7 +213,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R1"
+                 "value":"CSQ_1"
                 }]
         }, 
         {
@@ -228,7 +222,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R2"
+                 "value":"RCSQ_0"
                 }]
         }, 
         {
@@ -237,7 +231,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R3"
+                 "value":"RCSQ_1"
                 }]
         }, 
         {
@@ -246,7 +240,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R4"
+                 "value":"CSQ_2"
                 }]
         }, 
         {
@@ -255,7 +249,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R5"
+                 "value":"CSQ_3"
                 }]
         }, 
         {
@@ -264,7 +258,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R6"
+                 "value":"RCSQ_2"
                 }]
         }, 
         {
@@ -273,7 +267,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"L2_R7"
+                 "value":"RCSQ_3"
                 }]
         }, 
         {
