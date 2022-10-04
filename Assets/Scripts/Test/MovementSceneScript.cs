@@ -31,6 +31,15 @@ namespace Planet.Unity
 
         KGui.CharacterDisplay CharacterDisplay;
 
+        Vec2f[] Shape1;
+
+        Vec2f[] ShapeTemp;
+        Vec2f[] Shape2;
+
+        Vec2f LastMousePosition;
+
+        bool IsShapeColliding = false;
+
         static bool Init = false;
 
         public void Start()
@@ -46,6 +55,19 @@ namespace Planet.Unity
                 // create the sprite atlas for testing purposes
         public void Initialize()
         {
+
+            Shape1 = new Vec2f[3];
+            ShapeTemp = new Vec2f[3];
+            Shape1[0] = new Vec2f(0.0f, 0.0f);
+            Shape1[1] = new Vec2f(1.0f, 0.0f);
+            Shape1[2] = new Vec2f(1.0f, 1.0f);
+            //Shape1[3] = new Vec2f(0.0f, 1.0f);
+
+            Shape2 = new Vec2f[4];
+            Shape2[0] = new Vec2f(10.0f, 10.0f);
+            Shape2[1] = new Vec2f(11.0f, 10.0f);
+            Shape2[2] = new Vec2f(11.0f, 11.0f);
+            Shape2[3] = new Vec2f(10.0f, 11.0f);
 
             Application.targetFrameRate = 60;
 
@@ -96,7 +118,7 @@ namespace Planet.Unity
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
 
-            UpdateMode(ref Planet, Player);
+          //  UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -107,6 +129,30 @@ namespace Planet.Unity
             Vector3 p = Input.mousePosition;
             p.z = 20;
             Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+
+            Vec2f shapeVelocity = new Vec2f(mouse.x, mouse.y) - LastMousePosition;
+            LastMousePosition = new Vec2f(mouse.x, mouse.y);
+
+            for( int i = 0; i < Shape1.Length; i++)
+            {
+                Shape1[i] += shapeVelocity;
+                ShapeTemp[i] = Shape1[i];
+            }
+
+           
+
+            Collisions.MinimumMagnitudeVector mtv = Collisions.SAT.CollisionDetection(Shape1, Shape2);
+            if (mtv.Value > 0.0f)
+            {
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i] -= shapeVelocity.Normalize() * mtv.Value;
+                }
+            }
+
+            LastMousePosition = Shape1[0];
+
+
             
             var playerPhysicsState = Player.agentPhysicsState;
             Vec2f playerPosition = playerPhysicsState.Position;
@@ -401,7 +447,7 @@ namespace Planet.Unity
             }
 
 
-            bool testSweptCollision = true;
+            bool testSweptCollision = false;
             if (testSweptCollision)
             {
                 //var playerCollider = Player.physicsBox2DCollider;
@@ -409,6 +455,45 @@ namespace Planet.Unity
                 Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(new Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
+            }
+
+
+            bool shapeCollision = true;
+
+            if (shapeCollision)
+            {
+                Gizmos.color = Color.green;
+                if (IsShapeColliding)
+                {
+                    Gizmos.color = Color.red;
+                }
+
+                for(int i = 0; i < Shape1.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape1.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(new Vector3(Shape1[i].X, Shape1[i].Y, 1), new Vector3(Shape1[nextPosition].X, Shape1[nextPosition].Y, 1));
+
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(new Vector3(ShapeTemp[i].X, ShapeTemp[i].Y, 1), new Vector3(ShapeTemp[nextPosition].X, ShapeTemp[nextPosition].Y, 1));
+                }
+
+                Gizmos.color = Color.green;
+
+                for(int i = 0; i < Shape2.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape2.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                }
+                
             }
         }
 
@@ -427,8 +512,6 @@ namespace Planet.Unity
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword, Planet.EntitasContext);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
 
-
-           Planet.AddItemParticle(new Vec2f(10.0f, 16.0f), Enums.ItemType.Chest);
         }
 
 
@@ -503,56 +586,6 @@ namespace Planet.Unity
 
             tileMap.GetTile(8, 27).FrontTileID = TileID.Platform;
             tileMap.GetTile(7, 27).FrontTileID = TileID.Platform;
-
-
-
-            tileMap.GetTile(15, 15).FrontTileID = TileID.SB_R0_Metal;
-            tileMap.GetTile(16, 15).FrontTileID = TileID.FP_R0_Metal;
-            tileMap.GetTile(17, 15).FrontTileID = TileID.FP_R1_Metal;
-            tileMap.GetTile(18, 15).FrontTileID = TileID.FP_R2_Metal;
-            tileMap.GetTile(19, 15).FrontTileID = TileID.FP_R3_Metal;
-            tileMap.GetTile(20, 15).FrontTileID = TileID.HB_R0_Metal;
-            tileMap.GetTile(21, 15).FrontTileID = TileID.HB_R1_Metal;
-            tileMap.GetTile(22, 15).FrontTileID = TileID.HB_R2_Metal;
-            tileMap.GetTile(23, 15).FrontTileID = TileID.HB_R3_Metal;
-            tileMap.GetTile(24, 15).FrontTileID = TileID.HP_R0_Metal;
-            tileMap.GetTile(25, 15).FrontTileID = TileID.HP_R1_Metal;
-            tileMap.GetTile(26, 15).FrontTileID = TileID.HP_R2_Metal;
-            tileMap.GetTile(27, 15).FrontTileID = TileID.HP_R3_Metal;
-            tileMap.GetTile(28, 15).FrontTileID = TileID.QP_R0_Metal;
-            tileMap.GetTile(29, 15).FrontTileID = TileID.QP_R1_Metal;
-            tileMap.GetTile(30, 15).FrontTileID = TileID.QP_R2_Metal;
-            tileMap.GetTile(31, 15).FrontTileID = TileID.QP_R3_Metal;
-
-            tileMap.GetTile(32, 15).FrontTileID = TileID.TB_R0_Metal;
-            tileMap.GetTile(33, 15).FrontTileID = TileID.TB_R1_Metal;
-            tileMap.GetTile(34, 15).FrontTileID = TileID.TB_R4_Metal;
-            tileMap.GetTile(35, 15).FrontTileID = TileID.TB_R5_Metal;
-            tileMap.GetTile(36, 15).FrontTileID = TileID.TB_R6_Metal;
-            tileMap.GetTile(37, 15).FrontTileID = TileID.TB_R7_Metal;
-            tileMap.GetTile(38, 15).FrontTileID = TileID.TB_R2_Metal;
-            tileMap.GetTile(39, 15).FrontTileID = TileID.TB_R3_Metal;
-
-
-            tileMap.GetTile(40, 15).FrontTileID = TileID.L1_R0_Metal;
-            tileMap.GetTile(41, 15).FrontTileID = TileID.L1_R1_Metal;
-            tileMap.GetTile(42, 15).FrontTileID = TileID.L1_R2_Metal;
-            tileMap.GetTile(43, 15).FrontTileID = TileID.L1_R3_Metal;
-
-            tileMap.GetTile(44, 15).FrontTileID = TileID.L1_R4_Metal;
-            tileMap.GetTile(45, 15).FrontTileID = TileID.L1_R5_Metal;
-            tileMap.GetTile(46, 15).FrontTileID = TileID.L1_R6_Metal;
-            tileMap.GetTile(47, 15).FrontTileID = TileID.L1_R7_Metal;
-
-            tileMap.GetTile(48, 15).FrontTileID = TileID.L2_R0_Metal;
-            tileMap.GetTile(49, 15).FrontTileID = TileID.L2_R1_Metal;
-            tileMap.GetTile(50, 15).FrontTileID = TileID.L2_R2_Metal;
-            tileMap.GetTile(51, 15).FrontTileID = TileID.L2_R3_Metal;
-
-            tileMap.GetTile(52, 15).FrontTileID = TileID.L2_R4_Metal;
-            tileMap.GetTile(53, 15).FrontTileID = TileID.L2_R5_Metal;
-            tileMap.GetTile(54, 15).FrontTileID = TileID.L2_R6_Metal;
-            tileMap.GetTile(55, 15).FrontTileID = TileID.L2_R7_Metal;
 
 
 
