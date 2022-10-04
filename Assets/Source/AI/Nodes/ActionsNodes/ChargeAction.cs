@@ -8,6 +8,8 @@ namespace Node.Action
     public class ChargeAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ChargeAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         ItemInventoryEntity GetItem(ref PlanetState planet, NodeEntity nodeEntity)
         {

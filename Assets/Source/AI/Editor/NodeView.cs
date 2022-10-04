@@ -2,16 +2,23 @@
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
+using UnityEngine.UIElements;
 
-namespace AI.Editor
+namespace AI
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {
-        public NodeView(NodeEntity nodeEntity) : base("Assets/Source/AI/Editor/NodeEditorView.uxml") 
+        public Vector2 position;
+        public int NodeID;
+
+        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/NodeEditorView.uxml") 
         {
             CreatePorts(nodeEntity);
             SetupClasses(nodeEntity);
             title = nodeEntity.nodeID.TypeID.ToString();
+            position = pos;
+            style.left = position.x;
+            style.top = position.y;
         }
 
         private void CreatePorts(NodeEntity nodeEntity)
@@ -31,6 +38,7 @@ namespace AI.Editor
             port.portName = "";
             port.name = "input-port";
             port.portColor = Color.gray;
+            port.style.flexDirection = FlexDirection.Column;
             return port;
         }
 
@@ -44,6 +52,13 @@ namespace AI.Editor
                 AddToClassList("decorator");
             else
                 AddToClassList("action");
+        }
+
+        public override void SetPosition(Rect newPos)
+        {
+            base.SetPosition(newPos);
+            position.x = newPos.xMin;
+            position.y = newPos.yMin;
         }
     }
 }

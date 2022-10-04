@@ -5,16 +5,16 @@ using AI;
 
 namespace Node
 {
-    public class RepeatedNode : NodeBase
+    public class RepeaterNode : NodeBase
     {
-        public override NodeType Type { get { return NodeType.RepeatedNode; } }
-        public override bool IsActionNode { get { return false; } }
+        public override NodeType Type { get { return NodeType.RepeaterNode; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.DecoratorNode; } }
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);
 
-            ref var nodes = ref SystemState.Nodes;
+            ref var nodes = ref AISystemState.Nodes;
             int index = (int)child.nodeID.TypeID;
             switch (child.nodeExecution.State)
             {

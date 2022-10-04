@@ -6,7 +6,7 @@ namespace Node
     public class NodeBase
     {
         public virtual NodeType Type { get { return NodeType.None; } }
-        public virtual bool IsActionNode { get { return true; } }
+        public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
 
         public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

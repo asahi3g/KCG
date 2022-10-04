@@ -7,6 +7,8 @@ namespace Node.Action
     public class ShieldAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ShieldAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity) 
         {

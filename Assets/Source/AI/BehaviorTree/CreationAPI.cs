@@ -63,7 +63,7 @@ namespace AI.BehaviorTree
         public NodeEntity AddReapterNode(NodeEntity nodeEntity)
         {
             NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-                NodeType.RepeatedNode, AgentID);
+                NodeType.RepeaterNode, AgentID);
             newEntity.AddNodesDecorator(-1);
             AddToParent(nodeEntity, newEntity.nodeID.ID);
             return newEntity;
@@ -73,7 +73,7 @@ namespace AI.BehaviorTree
         //public NodeEntity AddBTNodes(NodeEntity nodeEntity, NodeType type)
         //{
         //    NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-        //        NodeType.RepeatedNode, AgentID);
+        //        NodeType.RepeaterNode, AgentID);
         //    if (SystemState.Nodes[(int)].)
         //    newEntity.AddNodesDecorator(-1);
         //    AddToParent(nodeEntity, newEntity.nodeID.ID);

@@ -7,6 +7,7 @@ namespace Node
     public class PlantAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.PlantAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

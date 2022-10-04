@@ -8,7 +8,7 @@ namespace Node
     public class DecoratorNode : NodeBase
     {
         public override NodeType Type { get { return NodeType.DecoratorNode; } }
-        public override bool IsActionNode { get { return false; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.DecoratorNode; } }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -21,7 +21,7 @@ namespace Node
         {
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);
 
-            ref var nodes = ref SystemState.Nodes;
+            ref var nodes = ref AISystemState.Nodes;
             int index = (int)child.nodeID.TypeID;
             switch (child.nodeExecution.State)
             {

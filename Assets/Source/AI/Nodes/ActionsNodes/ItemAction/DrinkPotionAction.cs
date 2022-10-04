@@ -6,6 +6,8 @@ namespace Node
     public class DrinkPotionAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.DrinkPotionAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

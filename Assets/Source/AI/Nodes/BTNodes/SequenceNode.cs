@@ -8,7 +8,7 @@ namespace Node
     public class SequenceNode : NodeBase
     {
         public override NodeType Type { get { return NodeType.SequenceNode; } }
-        public override bool IsActionNode { get { return false; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.CompositeNode; } }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -34,7 +34,7 @@ namespace Node
             int nodeID = childern[nodeEntity.nodeComposite.CurrentID];
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
 
-            ref var nodes = ref SystemState.Nodes;
+            ref var nodes = ref AISystemState.Nodes;
             int index = (int)child.nodeID.TypeID;
             switch (child.nodeExecution.State)
             {

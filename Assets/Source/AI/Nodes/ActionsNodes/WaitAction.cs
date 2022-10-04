@@ -7,6 +7,7 @@ namespace Node
     public class WaitAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.WaitAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {

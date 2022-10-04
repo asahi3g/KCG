@@ -13,6 +13,7 @@ namespace Node
         Vec2f Target = Vec2f.Zero;
 
         public override NodeType Type { get { return NodeType.ShootFireWeaponAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

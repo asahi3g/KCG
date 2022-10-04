@@ -8,6 +8,7 @@ namespace Node
     public class ShootGrenadeAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ShootGrenadeAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

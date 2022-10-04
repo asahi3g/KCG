@@ -9,6 +9,7 @@ namespace Node.Action
     public class ReloadAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ReloadAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         private ItemInventoryEntity GetItem(ref PlanetState planet, NodeEntity nodeEntity)
         {

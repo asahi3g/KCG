@@ -9,6 +9,8 @@ namespace Node
     public class WaterAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.WaterAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         // Todo urgent: Action in infinite loop. Fix it.
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)

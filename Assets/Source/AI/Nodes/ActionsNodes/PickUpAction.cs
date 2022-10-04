@@ -7,6 +7,8 @@ namespace Node.Action
     public class PickUpAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.PickUpAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

@@ -8,6 +8,8 @@ namespace Node
     public class MeleeAtackAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.MeleeAttackAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
