@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using System.Linq;
+using System;
 
 namespace AI
 {
@@ -13,8 +14,7 @@ namespace AI
             UxmlFactory<BehaviorTreeView, UxmlTraits>
         { }
 
-        NodeView RootNode;
-        List<NodeView> Nodes = new List<NodeView>();
+        public Action<NodeView> OnNodeSelected;
 
         public BehaviorTreeView()
         {
@@ -26,6 +26,34 @@ namespace AI
 
             PopulateView();
         }
+
+        private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
+        {
+            if (graphViewChange.elementsToRemove != null)
+            {
+                graphViewChange.elementsToRemove.ForEach(elem => {
+                    Edge edge = elem as Edge;
+                    if (edge != null)
+                    {
+                        NodeView parentView = edge.output.node as NodeView;
+                        NodeView childView = edge.input.node as NodeView;
+                        parentView.RemoveChild(childView);
+                    }
+                });
+            }
+
+            if (graphViewChange.edgesToCreate != null)
+            {
+                graphViewChange.edgesToCreate.ForEach(edge => {
+                    NodeView parentView = edge.output.node as NodeView;
+                    NodeView childView = edge.input.node as NodeView;
+                    parentView.AddChild(childView);
+                });
+            }
+
+            return graphViewChange;
+        }
+
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
@@ -49,11 +77,14 @@ namespace AI
                         break;
                 }
             }
+            evt.menu.AppendSeparator();
+            evt.menu.AppendAction($"Delete", (a) => DeleteSelection());
         }
 
         public void PopulateView()
         {
             CreateNodeView(NodeType.DecoratorNode, Vector2.zero, true);
+            graphViewChanged += OnGraphViewChanged;
         }
 
         static int i = 0;
@@ -72,6 +103,7 @@ namespace AI
             }
             nodeEntity.isNodeRoot = isRoot;
             NodeView nodeView = new NodeView(nodeEntity, pos);
+            nodeView.OnNodeSelected = OnNodeSelected;
             AddElement(nodeView);
         }
 

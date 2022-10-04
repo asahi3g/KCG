@@ -7,7 +7,6 @@ namespace AI
 
     public class AIEditor : EditorWindow
     {
-
         [MenuItem("AI/BehaviorTreeEditor")]
         static void Init()
         {
@@ -24,6 +23,10 @@ namespace AI
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/BehaviorTreeEditor.uxml");
             VisualElement labelFromUXML = visualTree.CloneTree();
             root.Add(labelFromUXML);
+
+            InspectorView inspectorView = root.Q<InspectorView>();
+            BehaviorTreeView bt = root.Q<BehaviorTreeView>();
+            bt.OnNodeSelected = inspectorView.UpdateSelection;
 
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/BehaviorTreeEditorStyle.uss");
             root.styleSheets.Add(styleSheet);

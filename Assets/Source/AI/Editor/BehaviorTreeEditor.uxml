@@ -15,6 +15,7 @@
                     <ui:Label text="Sensor" display-tooltip-when-elided="true" class="unity-label-title" />
                     <ui:VisualElement name="Inspector" class="Container-Inspector" style="height: auto; flex-grow: 1; width: auto;">
                         <ui:Label text="Inspector" display-tooltip-when-elided="true" style="-unity-text-align: middle-left; background-color: rgb(0, 0, 0); white-space: normal; width: auto; height: auto; justify-content: flex-start;" />
+                        <AI.InspectorView class="InspectorView" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </Utility.SplitView>
