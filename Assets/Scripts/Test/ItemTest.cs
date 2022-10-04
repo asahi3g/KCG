@@ -52,8 +52,9 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
-
             Player = Planet.AddPlayer(new Vec2f(6.0f, 4.0f));
+            Planet.InitializeHUD(Player);
+
             int inventoryID = Player.agentInventory.InventoryID;
 
             GenerateMap();
@@ -75,18 +76,18 @@ namespace Planet.Unity
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
             var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
-            //var SpawnPumpShotgun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Shotgun);
-            //var SpawnWaterBottle = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.WaterBottle);
-            //var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MajestyPalm);
-            //var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
-            //var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
+            var SpawnPumpShotgun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Shotgun);
+            var SpawnWaterBottle = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.WaterBottle);
+            var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MajestyPalm);
+            var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
+            var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
             GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, inventoryID);
-            //GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, inventoryID);
-            //GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, inventoryID);
-            //GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, inventoryID);
-            //GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, inventoryID);
-            //GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, inventoryID);
+            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, inventoryID);
         }
 
         void GenerateMap()

@@ -17,12 +17,13 @@ public static class NodeComponentsLookup {
     public const int NodeInterrupt = 6;
     public const int NodeMoveTo = 7;
     public const int NodeOwner = 8;
-    public const int NodeTarget = 9;
-    public const int NodeTime = 10;
-    public const int NodeTool = 11;
-    public const int NodesDecorator = 12;
+    public const int NodeRoot = 9;
+    public const int NodeTarget = 10;
+    public const int NodeTime = 11;
+    public const int NodeTool = 12;
+    public const int NodesDecorator = 13;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "NodeBlackboardData",
@@ -34,6 +35,7 @@ public static class NodeComponentsLookup {
         "NodeInterrupt",
         "NodeMoveTo",
         "NodeOwner",
+        "NodeRoot",
         "NodeTarget",
         "NodeTime",
         "NodeTool",
@@ -50,6 +52,7 @@ public static class NodeComponentsLookup {
         typeof(Node.InterruptComponent),
         typeof(Node.MoveToComponent),
         typeof(Node.OwnerComponent),
+        typeof(Node.RootComponent),
         typeof(Node.TargetComponent),
         typeof(Node.TimeComponent),
         typeof(Node.ToolComponent),

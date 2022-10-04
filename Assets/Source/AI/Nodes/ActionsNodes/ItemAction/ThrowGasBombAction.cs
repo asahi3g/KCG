@@ -8,6 +8,8 @@ namespace Node
     public class ThrowGasBombAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ThrowGasBombAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

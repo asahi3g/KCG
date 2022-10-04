@@ -8,6 +8,7 @@ namespace Node.Action
     public class SelectClosestTarget : NodeBase
     {
         public override NodeType Type { get { return NodeType.SelectClosestTarget; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {

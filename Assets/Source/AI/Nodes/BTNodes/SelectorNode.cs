@@ -9,6 +9,7 @@ namespace Node
     public class SelectorNode : NodeBase
     {
         public override NodeType Type { get { return NodeType.SelectorNode; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.CompositeNode; } }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -34,7 +35,7 @@ namespace Node
                 index = 0;
 
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeComposite.Children[index]);
-            ref var nodes = ref SystemState.Nodes;
+            ref var nodes = ref AISystemState.Nodes;
             index = (int)child.nodeID.TypeID;
             switch (child.nodeExecution.State)
             {

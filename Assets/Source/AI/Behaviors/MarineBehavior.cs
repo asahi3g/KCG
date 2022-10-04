@@ -19,7 +19,7 @@ namespace AI.BehaviorTree
 
             return marineController;
         }
-        static int GetBehaviorTree(Contexts entitasContext, AgentController agentController, int agentID)
+        public static int GetBehaviorTree(Contexts entitasContext, AgentController agentController, int agentID)
         {
             int targetID = agentController.BlackBoard.Register(typeof(Vec2f), "Target");
 

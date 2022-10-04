@@ -1,0 +1,22 @@
+.stretch {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.unity-label-title {
+    background-color: rgb(0, 0, 0);
+    flex-grow: 0;
+}
+
+.Container {
+    align-items: stretch;
+    flex-direction: column;
+    height: auto;
+    min-height: 30%;
+}
+
+.unity-two-pane-split-view {
+}

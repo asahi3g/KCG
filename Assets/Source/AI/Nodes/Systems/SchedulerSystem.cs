@@ -20,17 +20,17 @@ namespace Node
                 switch (nodes[i].nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        SystemState.Nodes[index].OnEnter(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnEnter(ref planet, nodes[i]);
                         break;
                     case Enums.NodeState.Running:
-                        SystemState.Nodes[index].OnUpdate(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnUpdate(ref planet, nodes[i]);
                         break;
                     case Enums.NodeState.Success:
-                        SystemState.Nodes[index].OnExit(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnExit(ref planet, nodes[i]);
                         nodes[i].Destroy();
                         break;
                     case Enums.NodeState.Fail:
-                        SystemState.Nodes[index].OnExit(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnExit(ref planet, nodes[i]);
                         nodes[i].Destroy();
                         break;
                     default:
@@ -59,16 +59,16 @@ namespace Node
                 switch (nodeEntity.nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        SystemState.Nodes[index].OnEnter(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnEnter(ref planet, nodeEntity);
                         break;
                     case Enums.NodeState.Running:
-                        SystemState.Nodes[index].OnUpdate(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnUpdate(ref planet, nodeEntity);
                         break;
                     case Enums.NodeState.Success:
-                        SystemState.Nodes[index].OnExit(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnExit(ref planet, nodeEntity);
                         break;
                     case Enums.NodeState.Fail:
-                        SystemState.Nodes[index].OnExit(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnExit(ref planet, nodeEntity);
                         break;
                     default:
                         Debug.Log("Not valid Action state.");

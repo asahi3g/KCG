@@ -9,6 +9,8 @@ namespace Node
     public class ThrowFragGrenadeAction : NodeBase
     {
         public override NodeType Type { get { return NodeType.ThrowFragGrenadeAction; } }
+        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

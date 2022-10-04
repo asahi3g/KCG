@@ -7,7 +7,7 @@
 
         // Behaviour tree Nodes
         DecoratorNode,
-        RepeatedNode,
+        RepeaterNode,
         SequenceNode,
         SelectorNode,
 
