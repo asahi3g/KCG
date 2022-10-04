@@ -5,7 +5,7 @@ using Entitas;
 using KMath;
 using Enums;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     [Pod]
     public class StateComponent : IComponent

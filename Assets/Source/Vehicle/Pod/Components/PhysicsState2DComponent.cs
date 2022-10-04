@@ -4,7 +4,7 @@ using UnityEngine;
 using Entitas;
 using KMath;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     [Pod]
     public class PhysicsState2DComponent : IComponent

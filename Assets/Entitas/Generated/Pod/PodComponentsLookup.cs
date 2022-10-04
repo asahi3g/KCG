@@ -9,29 +9,35 @@
 public static class PodComponentsLookup {
 
     public const int PhysicsBox2DCollider = 0;
-    public const int PodID = 1;
-    public const int PodPhysicsState2D = 2;
-    public const int PodSprite2D = 3;
-    public const int PodState = 4;
-    public const int PodType = 5;
+    public const int VehiclePodID = 1;
+    public const int VehiclePodPhysicsState2D = 2;
+    public const int VehiclePodRadar = 3;
+    public const int VehiclePodSprite2D = 4;
+    public const int VehiclePodState = 5;
+    public const int VehiclePodStatus = 6;
+    public const int VehiclePodType = 7;
 
-    public const int TotalComponents = 6;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "PhysicsBox2DCollider",
-        "PodID",
-        "PodPhysicsState2D",
-        "PodSprite2D",
-        "PodState",
-        "PodType"
+        "VehiclePodID",
+        "VehiclePodPhysicsState2D",
+        "VehiclePodRadar",
+        "VehiclePodSprite2D",
+        "VehiclePodState",
+        "VehiclePodStatus",
+        "VehiclePodType"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(Physics.Box2DColliderComponent),
-        typeof(Pod.IDComponent),
-        typeof(Pod.PhysicsState2DComponent),
-        typeof(Pod.Sprite2DComponent),
-        typeof(Pod.StateComponent),
-        typeof(Pod.TypeComponent)
+        typeof(Vehicle.Pod.IDComponent),
+        typeof(Vehicle.Pod.PhysicsState2DComponent),
+        typeof(Vehicle.Pod.RadarComponent),
+        typeof(Vehicle.Pod.Sprite2DComponent),
+        typeof(Vehicle.Pod.StateComponent),
+        typeof(Vehicle.Pod.StatusComponent),
+        typeof(Vehicle.Pod.TypeComponent)
     };
 }

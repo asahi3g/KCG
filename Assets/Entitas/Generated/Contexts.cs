@@ -103,9 +103,9 @@ public partial class Contexts {
     public const string NodeTool = "NodeTool";
     public const string ParticleEmitterID = "ParticleEmitterID";
     public const string ParticleID = "ParticleID";
-    public const string PodID = "PodID";
     public const string ProjectileID = "ProjectileID";
     public const string VehicleID = "VehicleID";
+    public const string VehiclePodID = "VehiclePodID";
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
@@ -202,11 +202,6 @@ public partial class Contexts {
             particle.GetGroup(ParticleMatcher.ParticleID),
             (e, c) => ((Particle.IDComponent)c).ID));
 
-        pod.AddEntityIndex(new Entitas.PrimaryEntityIndex<PodEntity, int>(
-            PodID,
-            pod.GetGroup(PodMatcher.PodID),
-            (e, c) => ((Pod.IDComponent)c).ID));
-
         projectile.AddEntityIndex(new Entitas.PrimaryEntityIndex<ProjectileEntity, int>(
             ProjectileID,
             projectile.GetGroup(ProjectileMatcher.ProjectileID),
@@ -216,6 +211,11 @@ public partial class Contexts {
             VehicleID,
             vehicle.GetGroup(VehicleMatcher.VehicleID),
             (e, c) => ((Vehicle.IDComponent)c).ID));
+
+        pod.AddEntityIndex(new Entitas.PrimaryEntityIndex<PodEntity, int>(
+            VehiclePodID,
+            pod.GetGroup(PodMatcher.VehiclePodID),
+            (e, c) => ((Vehicle.Pod.IDComponent)c).ID));
     }
 }
 
@@ -297,16 +297,16 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<ParticleEntity, long>)context.GetEntityIndex(Contexts.ParticleID)).GetEntity(ID);
     }
 
-    public static PodEntity GetEntityWithPodID(this PodContext context, int ID) {
-        return ((Entitas.PrimaryEntityIndex<PodEntity, int>)context.GetEntityIndex(Contexts.PodID)).GetEntity(ID);
-    }
-
     public static ProjectileEntity GetEntityWithProjectileID(this ProjectileContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<ProjectileEntity, int>)context.GetEntityIndex(Contexts.ProjectileID)).GetEntity(ID);
     }
 
     public static VehicleEntity GetEntityWithVehicleID(this VehicleContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<VehicleEntity, int>)context.GetEntityIndex(Contexts.VehicleID)).GetEntity(ID);
+    }
+
+    public static PodEntity GetEntityWithVehiclePodID(this PodContext context, int ID) {
+        return ((Entitas.PrimaryEntityIndex<PodEntity, int>)context.GetEntityIndex(Contexts.VehiclePodID)).GetEntity(ID);
     }
 }
 //------------------------------------------------------------------------------

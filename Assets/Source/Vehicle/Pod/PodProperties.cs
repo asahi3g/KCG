@@ -1,7 +1,7 @@
 using KMath;
 using UnityEngine;
 
-namespace Pod
+namespace Vehicle.Pod
 {
 
     public struct PodProperties
@@ -27,6 +27,11 @@ namespace Pod
         public Vec2f CenterOfRotation;
 
         public bool AffectedByGravity;
+
+        public Vec2f RadarSize;
+
+        public int PodValue;
+        public int Score;
     }
 }
 

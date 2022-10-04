@@ -4,5 +4,7 @@ namespace Enums
     {
         Error = -1,
         Default,
+        Insect,
+        Marine
     }
 }

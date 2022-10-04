@@ -2,7 +2,7 @@ using Entitas;
 using KMath;
 using UnityEngine;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     [Pod]
     public class Sprite2DComponent : IComponent

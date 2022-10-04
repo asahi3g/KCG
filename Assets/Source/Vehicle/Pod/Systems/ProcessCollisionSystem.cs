@@ -2,7 +2,7 @@ using Collisions;
 using KMath;
 using UnityEngine;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public class ProcessCollisionSystem
     {
@@ -12,12 +12,12 @@ namespace Pod
             float deltaTime = Time.deltaTime;
 
             // Get Vehicle Physics Entity
-            var entities = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.PhysicsBox2DCollider, PodMatcher.PodPhysicsState2D));
+            var entities = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.PhysicsBox2DCollider, PodMatcher.VehiclePodPhysicsState2D));
 
             foreach (var entity in entities)
             {
                 // Set Vehicle Physics to variable
-                var pos = entity.podPhysicsState2D;
+                var pos = entity.vehiclePodPhysicsState2D;
 
                 var size = entity.physicsBox2DCollider.Size;
 
@@ -34,7 +34,7 @@ namespace Pod
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
                 }
 
-                pos = entity.podPhysicsState2D;
+                pos = entity.vehiclePodPhysicsState2D;
 
                 size = entity.physicsBox2DCollider.Size;
 

@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Entitas;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public class PodList
     {
+
         // array for storing entities
         public PodEntity[] List;
 
@@ -30,7 +31,7 @@ namespace Pod
 
             int LastIndex = Length;
             List[LastIndex] = entity;
-            entity.podID.Index = LastIndex;
+            entity.vehiclePodID.Index = LastIndex;
             Length++;
 
             return List[LastIndex];
@@ -55,10 +56,11 @@ namespace Pod
             if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.podID.Index = index;
+                entity.vehiclePodID.Index = index;
             }
             Length--;
         }
+
 
 
 

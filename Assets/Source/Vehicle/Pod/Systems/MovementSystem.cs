@@ -6,7 +6,7 @@ using Projectile;
 using Enums;
 using UnityEngine.UIElements;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public sealed class MovementSystem
     {
@@ -22,17 +22,17 @@ namespace Pod
         {
             // Get Vehicle Entites
             IGroup<PodEntity> entities =
-            podContexts.GetGroup(PodMatcher.PodPhysicsState2D);
+            podContexts.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var vehicle in entities)
             {
                 PodProperties podProperties =
-                        PodCreationApi.GetRef((int)vehicle.podType.Type);
+                        PodCreationApi.GetRef((int)vehicle.vehiclePodType.Type);
 
                 // Process Gravity
-                if (vehicle.podPhysicsState2D.AffectedByGravity)
-                    vehicle.podPhysicsState2D.angularVelocity.Y += vehicle.podPhysicsState2D.centerOfGravity * Time.deltaTime;
+                if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
+                    vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * Time.deltaTime;
 
-                vehicle.podPhysicsState2D.Position += vehicle.podPhysicsState2D.angularVelocity * Time.deltaTime;
+                vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * Time.deltaTime;
             }
         }
     }

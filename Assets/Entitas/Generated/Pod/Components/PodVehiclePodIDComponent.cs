@@ -8,27 +8,27 @@
 //------------------------------------------------------------------------------
 public partial class PodEntity {
 
-    public Pod.IDComponent podID { get { return (Pod.IDComponent)GetComponent(PodComponentsLookup.PodID); } }
-    public bool hasPodID { get { return HasComponent(PodComponentsLookup.PodID); } }
+    public Vehicle.Pod.IDComponent vehiclePodID { get { return (Vehicle.Pod.IDComponent)GetComponent(PodComponentsLookup.VehiclePodID); } }
+    public bool hasVehiclePodID { get { return HasComponent(PodComponentsLookup.VehiclePodID); } }
 
-    public void AddPodID(int newID, int newIndex) {
-        var index = PodComponentsLookup.PodID;
-        var component = (Pod.IDComponent)CreateComponent(index, typeof(Pod.IDComponent));
+    public void AddVehiclePodID(int newID, int newIndex) {
+        var index = PodComponentsLookup.VehiclePodID;
+        var component = (Vehicle.Pod.IDComponent)CreateComponent(index, typeof(Vehicle.Pod.IDComponent));
         component.ID = newID;
         component.Index = newIndex;
         AddComponent(index, component);
     }
 
-    public void ReplacePodID(int newID, int newIndex) {
-        var index = PodComponentsLookup.PodID;
-        var component = (Pod.IDComponent)CreateComponent(index, typeof(Pod.IDComponent));
+    public void ReplaceVehiclePodID(int newID, int newIndex) {
+        var index = PodComponentsLookup.VehiclePodID;
+        var component = (Vehicle.Pod.IDComponent)CreateComponent(index, typeof(Vehicle.Pod.IDComponent));
         component.ID = newID;
         component.Index = newIndex;
         ReplaceComponent(index, component);
     }
 
-    public void RemovePodID() {
-        RemoveComponent(PodComponentsLookup.PodID);
+    public void RemoveVehiclePodID() {
+        RemoveComponent(PodComponentsLookup.VehiclePodID);
     }
 }
 
@@ -42,17 +42,17 @@ public partial class PodEntity {
 //------------------------------------------------------------------------------
 public sealed partial class PodMatcher {
 
-    static Entitas.IMatcher<PodEntity> _matcherPodID;
+    static Entitas.IMatcher<PodEntity> _matcherVehiclePodID;
 
-    public static Entitas.IMatcher<PodEntity> PodID {
+    public static Entitas.IMatcher<PodEntity> VehiclePodID {
         get {
-            if (_matcherPodID == null) {
-                var matcher = (Entitas.Matcher<PodEntity>)Entitas.Matcher<PodEntity>.AllOf(PodComponentsLookup.PodID);
+            if (_matcherVehiclePodID == null) {
+                var matcher = (Entitas.Matcher<PodEntity>)Entitas.Matcher<PodEntity>.AllOf(PodComponentsLookup.VehiclePodID);
                 matcher.componentNames = PodComponentsLookup.componentNames;
-                _matcherPodID = matcher;
+                _matcherVehiclePodID = matcher;
             }
 
-            return _matcherPodID;
+            return _matcherVehiclePodID;
         }
     }
 }

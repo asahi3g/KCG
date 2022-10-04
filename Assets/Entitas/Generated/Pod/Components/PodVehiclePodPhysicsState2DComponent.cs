@@ -8,12 +8,12 @@
 //------------------------------------------------------------------------------
 public partial class PodEntity {
 
-    public Pod.PhysicsState2DComponent podPhysicsState2D { get { return (Pod.PhysicsState2DComponent)GetComponent(PodComponentsLookup.PodPhysicsState2D); } }
-    public bool hasPodPhysicsState2D { get { return HasComponent(PodComponentsLookup.PodPhysicsState2D); } }
+    public Vehicle.Pod.PhysicsState2DComponent vehiclePodPhysicsState2D { get { return (Vehicle.Pod.PhysicsState2DComponent)GetComponent(PodComponentsLookup.VehiclePodPhysicsState2D); } }
+    public bool hasVehiclePodPhysicsState2D { get { return HasComponent(PodComponentsLookup.VehiclePodPhysicsState2D); } }
 
-    public void AddPodPhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, float newRotation, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
-        var index = PodComponentsLookup.PodPhysicsState2D;
-        var component = (Pod.PhysicsState2DComponent)CreateComponent(index, typeof(Pod.PhysicsState2DComponent));
+    public void AddVehiclePodPhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, float newRotation, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
+        var index = PodComponentsLookup.VehiclePodPhysicsState2D;
+        var component = (Vehicle.Pod.PhysicsState2DComponent)CreateComponent(index, typeof(Vehicle.Pod.PhysicsState2DComponent));
         component.Position = newPosition;
         component.TempPosition = newTempPosition;
         component.Scale = newScale;
@@ -28,9 +28,9 @@ public partial class PodEntity {
         AddComponent(index, component);
     }
 
-    public void ReplacePodPhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, float newRotation, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
-        var index = PodComponentsLookup.PodPhysicsState2D;
-        var component = (Pod.PhysicsState2DComponent)CreateComponent(index, typeof(Pod.PhysicsState2DComponent));
+    public void ReplaceVehiclePodPhysicsState2D(KMath.Vec2f newPosition, KMath.Vec2f newTempPosition, KMath.Vec2f newScale, KMath.Vec2f newTempScale, float newRotation, KMath.Vec2f newAngularVelocity, float newAngularMass, float newAngularAcceleration, float newCenterOfGravity, KMath.Vec2f newCenterOfRotation, bool newAffectedByGravity) {
+        var index = PodComponentsLookup.VehiclePodPhysicsState2D;
+        var component = (Vehicle.Pod.PhysicsState2DComponent)CreateComponent(index, typeof(Vehicle.Pod.PhysicsState2DComponent));
         component.Position = newPosition;
         component.TempPosition = newTempPosition;
         component.Scale = newScale;
@@ -45,8 +45,8 @@ public partial class PodEntity {
         ReplaceComponent(index, component);
     }
 
-    public void RemovePodPhysicsState2D() {
-        RemoveComponent(PodComponentsLookup.PodPhysicsState2D);
+    public void RemoveVehiclePodPhysicsState2D() {
+        RemoveComponent(PodComponentsLookup.VehiclePodPhysicsState2D);
     }
 }
 
@@ -60,17 +60,17 @@ public partial class PodEntity {
 //------------------------------------------------------------------------------
 public sealed partial class PodMatcher {
 
-    static Entitas.IMatcher<PodEntity> _matcherPodPhysicsState2D;
+    static Entitas.IMatcher<PodEntity> _matcherVehiclePodPhysicsState2D;
 
-    public static Entitas.IMatcher<PodEntity> PodPhysicsState2D {
+    public static Entitas.IMatcher<PodEntity> VehiclePodPhysicsState2D {
         get {
-            if (_matcherPodPhysicsState2D == null) {
-                var matcher = (Entitas.Matcher<PodEntity>)Entitas.Matcher<PodEntity>.AllOf(PodComponentsLookup.PodPhysicsState2D);
+            if (_matcherVehiclePodPhysicsState2D == null) {
+                var matcher = (Entitas.Matcher<PodEntity>)Entitas.Matcher<PodEntity>.AllOf(PodComponentsLookup.VehiclePodPhysicsState2D);
                 matcher.componentNames = PodComponentsLookup.componentNames;
-                _matcherPodPhysicsState2D = matcher;
+                _matcherVehiclePodPhysicsState2D = matcher;
             }
 
-            return _matcherPodPhysicsState2D;
+            return _matcherVehiclePodPhysicsState2D;
         }
     }
 }
