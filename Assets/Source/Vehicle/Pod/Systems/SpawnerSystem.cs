@@ -5,7 +5,7 @@ using KMath;
 using Projectile;
 using Enums;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public class SpawnerSystem
     {
@@ -27,23 +27,27 @@ namespace Pod
             var entity = contexts.CreateEntity();
 
             // Add ID Component
-            entity.AddPodID(UniqueID, -1);
+            entity.AddVehiclePodID(UniqueID, -1);
 
             // Add Sprite Component
-            entity.AddPodSprite2D(podProperties.SpriteId, podProperties.SpriteSize);
+            entity.AddVehiclePodSprite2D(podProperties.SpriteId, podProperties.SpriteSize);
 
             // Add Physics State 2D Component
-            entity.AddPodPhysicsState2D(position, position, podProperties.Scale, podProperties.Scale, podProperties.Rotation, podProperties.AngularVelocity, podProperties.AngularMass,
+            entity.AddVehiclePodPhysicsState2D(position, position, podProperties.Scale, podProperties.Scale, podProperties.Rotation, podProperties.AngularVelocity, podProperties.AngularMass,
                 podProperties.AngularAcceleration, podProperties.CenterOfGravity, podProperties.CenterOfRotation, podProperties.AffectedByGravity);
 
             // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(podProperties.CollisionSize, podProperties.CollisionOffset);
 
-            entity.AddPodType(podType);
+            entity.AddVehiclePodType(podType);
 
             PodState podState = PodState.None;
-            entity.AddPodState(podState);
+            entity.AddVehiclePodState(podState);
 
+            List<AgentEntity> agents = new List<AgentEntity>();
+            entity.AddVehiclePodRadar(podProperties.RadarSize, agents, agents.Count);
+
+            entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score);
 
             // Increase ID per object statically
             UniqueID++;

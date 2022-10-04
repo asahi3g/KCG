@@ -4,7 +4,7 @@ using Entitas;
 using KMath;
 using Sprites;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public class MeshBuilderSystem
     {
@@ -18,18 +18,18 @@ namespace Pod
 
         public void UpdateMesh(PodContext contexts)
         {
-            var PodsWithSprite = contexts.GetGroup(PodMatcher.AllOf(PodMatcher.PodID));
+            var PodsWithSprite = contexts.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
 
             Mesh.Clear();
             int index = 0;
             foreach (var entity in PodsWithSprite)
             {
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.podSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehiclePodSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
-                var x = entity.podPhysicsState2D.Position.X;
-                var y = entity.podPhysicsState2D.Position.Y;
-                var width = entity.podSprite2D.Size.X;
-                var height = entity.podSprite2D.Size.Y;
+                var x = entity.vehiclePodPhysicsState2D.Position.X;
+                var y = entity.vehiclePodPhysicsState2D.Position.Y;
+                var width = entity.vehiclePodSprite2D.Size.X;
+                var height = entity.vehiclePodSprite2D.Size.Y;
 
                 if (!Utility.ObjectMesh.isOnScreen(x, y))
                     continue;
@@ -38,7 +38,7 @@ namespace Pod
                 Mesh.UpdateUV(textureCoords, (index) * 4);
 
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.podPhysicsState2D.Rotation);
+                Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.vehiclePodPhysicsState2D.Rotation);
             }
         }
     }

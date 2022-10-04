@@ -4,7 +4,7 @@ using UnityEngine;
 using KMath;
 
 
-namespace Pod
+namespace Vehicle.Pod
 {
     public class PodCreationApi
     {
@@ -175,16 +175,52 @@ namespace Pod
             }
         }
 
+        public void SetRadarSize(Vec2f RadarSize)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].RadarSize = RadarSize;
+            }
+        }
+
+        public void SetStatus(int podValue, int Score)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].PodValue = podValue;
+                PropertiesArray[CurrentIndex].Score = Score;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
         }
 
-        public int Pod;
+        public int PodSprite;
 
         public void InitializeResources()
         {
-            
+            PodSprite = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225);
+            PodSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(PodSprite, 0, 0, Enums.AtlasType.Vehicle);
+
+            GameState.PodCreationApi.Create((int)Enums.PodType.Default);
+            GameState.PodCreationApi.SetName("DefaultPod");
+            GameState.PodCreationApi.SetSpriteId(PodSprite);
+            GameState.PodCreationApi.SetSize(new Vec2f(1.0f, 1.0f));
+            GameState.PodCreationApi.SetCollisionSize(new Vec2f(1.0f, 1.0f));
+            GameState.PodCreationApi.SetCollisionOffset(new Vec2f(0.0f, 0.0f));
+            GameState.PodCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+            GameState.PodCreationApi.SetRotation(0.0f);
+            GameState.PodCreationApi.SetAngularVelocity(Vec2f.Zero);
+            GameState.PodCreationApi.SetAngularMass(14f);
+            GameState.PodCreationApi.SetAngularAcceleration(4f);
+            GameState.PodCreationApi.SetCenterOfGravity(-6f);
+            GameState.PodCreationApi.SetCenterOfRotation(Vec2f.Zero);
+            GameState.PodCreationApi.SetAffectedByGravity(true);
+            GameState.PodCreationApi.SetRadarSize(new Vec2f(10f, 10f));
+            GameState.PodCreationApi.SetStatus(2, 4);
+            GameState.PodCreationApi.End();
         }
     }
 

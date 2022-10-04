@@ -2,7 +2,7 @@ using Entitas;
 using Entitas.CodeGeneration.Attributes;
 using UnityEngine;
 
-namespace Pod
+namespace Vehicle.Pod
 {
     [Pod]
     public class IDComponent : IComponent
