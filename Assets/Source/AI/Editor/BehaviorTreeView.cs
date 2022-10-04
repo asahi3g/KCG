@@ -8,8 +8,7 @@ namespace AI
     public class BehaviorTreeView : GraphView
     {
         public new class UxmlFactory :
-            UxmlFactory<BehaviorTreeView,
-                        GraphView.UxmlTraits>
+            UxmlFactory<BehaviorTreeView, UxmlTraits>
         { }
 
         NodeView RootNode;
@@ -31,10 +30,15 @@ namespace AI
             CreateNodeView();
         }
 
+        static int i = 0;
         private void CreateNodeView()
         {
-            //NodeView nodeView = NodeView.CreateNewNode();
-            //AddElement(nodeView);
+            NodeEntity nodeEntity = Contexts.sharedInstance.node.CreateEntity();
+            nodeEntity.AddNodeID(i++, Enums.NodeType.SelectorNode);
+            nodeEntity.AddNodeComposite(new List<int>(), -1);
+            nodeEntity.isNodeRoot = false;
+            NodeView nodeView = new NodeView(nodeEntity);
+            AddElement(nodeView);
         }
     }
 }

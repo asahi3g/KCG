@@ -69,6 +69,7 @@ namespace Mech
             if (CurrentIndex != -1)
             {
                 PropertiesArray[CurrentIndex].MechID = CurrentIndex;
+                PropertiesArray[CurrentIndex].Action = NodeType.None;
             }
         }
 
