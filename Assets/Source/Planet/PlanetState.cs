@@ -11,6 +11,7 @@ using Inventory;
 using KMath;
 using UnityEngine;
  using KGUI.Elements;
+using Vehicle.Pod;
 
 namespace Planet
 {
@@ -23,6 +24,7 @@ namespace Planet
         public AgentList AgentList;
         public MechList MechList;
         public VehicleList VehicleList;
+        public PodList PodList;
         public ProjectileList ProjectileList;
         public FloatingTextList FloatingTextList;
         public ParticleEmitterList ParticleEmitterList;
@@ -42,6 +44,7 @@ namespace Planet
             AgentList = new AgentList();
             MechList = new MechList();
             VehicleList = new VehicleList();
+            PodList = new PodList();
             ProjectileList = new ProjectileList();
             FloatingTextList = new FloatingTextList();
             ParticleEmitterList = new ParticleEmitterList();
@@ -73,6 +76,7 @@ namespace Planet
             GameState.AgentMeshBuilderSystem.Initialize(material, transform, 11);
             GameState.ItemMeshBuilderSystem.Initialize(material, transform, 12);
             GameState.VehicleMeshBuilderSystem.Initialize(material, transform, 14);
+            GameState.PodMeshBuilderSystem.Initialize(material, transform, 14);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
@@ -378,6 +382,14 @@ namespace Planet
             return newEntity;
         }
 
+        public PodEntity AddPod(Vec2f position, PodType podType)
+        {
+            Utils.Assert(PodList.Length < PlanetEntityLimits.VehicleLimit);
+
+            PodEntity newEntity = PodList.Add(GameState.PodSpawnerSystem.Spawn(EntitasContext.pod, podType, position));
+            return newEntity;
+        }
+
         public void KillAgent(int agentIndex)
         {
             AgentEntity entity = AgentList.Get(agentIndex);
@@ -564,6 +576,7 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
+            GameState.PodMovementSystem.UpdateEx(EntitasContext.pod);
             GameState.ProjectileMovementSystem.Update(ref this);
 
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
@@ -578,6 +591,7 @@ namespace Planet
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ProjectileProcessState.Update(ref this);
             GameState.VehicleAISystem.Update(ref this);
+            GameState.PodAISystem.Update(ref this);
 
             // Collision systems.
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
@@ -585,6 +599,7 @@ namespace Planet
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
             GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
             GameState.VehicleCollisionSystem.Update(ref this);
+            GameState.PodCollisionSystem.Update(ref this);
 
             GameState.AgentProcessStats.Update(ref this);
 
@@ -606,6 +621,7 @@ namespace Planet
             GameState.ItemMeshBuilderSystem.UpdateMesh(EntitasContext);
             GameState.AgentMeshBuilderSystem.UpdateMesh(EntitasContext.agent);
             GameState.VehicleMeshBuilderSystem.UpdateMesh(EntitasContext.vehicle);
+            GameState.PodMeshBuilderSystem.UpdateMesh(EntitasContext.pod);
             GameState.ProjectileMeshBuilderSystem.UpdateMesh(EntitasContext.projectile);
             GameState.ParticleMeshBuilderSystem.UpdateMesh(EntitasContext.particle);
             GameState.MechMeshBuilderSystem.UpdateMesh(EntitasContext.mech);
@@ -617,6 +633,7 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
             GameState.Renderer.DrawFrame(ref GameState.VehicleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle));
+            GameState.Renderer.DrawFrame(ref GameState.PodMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle));
             GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));

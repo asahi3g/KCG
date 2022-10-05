@@ -26,8 +26,7 @@ namespace KGUI
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", AtlasType.Gui);
 
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", AtlasType.Gui);
+            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
             
             progressBar = new ProgressBar(progressBarImageWrapper, foodAmount, Image.FillMethod.Radial360);
         }
@@ -58,14 +57,14 @@ namespace KGUI
             {
                 infoText.Create("Food Indicator", "Hunger Bar\nStatus: Low", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(Position.x + Size.x + 20f, 0, 0));
+                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
                 infoText.Draw();
             }
             else 
             {
                 infoText.Create("Food DeIndicator", "Hunger Bar\nStatus: Normal", transform, 2.0f);
                 infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(Position.x + Size.x + 20f, 0, 0));
+                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
                 infoText.Draw();
             }
         }

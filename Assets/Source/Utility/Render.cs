@@ -1,23 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using KMath;
-using Sprites;
-using UnityEditor;
 
 namespace Utility
 {
 
     public class Render
     {
-        private static Render instance;
-        public static Render Instance => instance ??= new Render();
-
         /// Materials are used by immediate draw calls.
         Material[] Materials;
 
         // Update materials once every frame.
         int CurrentFrame = 0;
+
         // ID of next material used by immediate drawing.
         int CurrentTexMaterialID = 0;
 
@@ -31,6 +26,7 @@ namespace Utility
                 Materials[i] = Material.Instantiate(material);
             }
         }
+
         void ExpandArray()
         {
             int currentLegnth = Materials.Length;
@@ -40,6 +36,7 @@ namespace Utility
                 Materials[currentLegnth + i] = Material.Instantiate(Materials[0]);
             }
         }
+
         public void DrawFrame(ref FrameMesh frameMesh, Sprites.SpriteAtlas Atlassprite)
         {
             var mesh = frameMesh.obj.GetComponent<MeshFilter>().sharedMesh;
@@ -72,8 +69,10 @@ namespace Utility
 
             var p0 = new Vector3(x, y, 0);
             var p1 = new Vector3((w), (h), 0);
-            var p2 = p0; p2.y = p1.y;
-            var p3 = p1; p3.y = p0.y;
+            var p2 = p0;
+            p2.y = p1.y;
+            var p3 = p1;
+            p3.y = p0.y;
 
             vertices.Add(p0);
             vertices.Add(p1);
@@ -89,8 +88,10 @@ namespace Utility
 
             var uv0 = new Vector2(sprite.TextureCoords.x, sprite.TextureCoords.y + sprite.TextureCoords.w);
             var uv1 = new Vector2(sprite.TextureCoords.x + sprite.TextureCoords.z, sprite.TextureCoords.y);
-            var uv2 = uv0; uv2.y = uv1.y;
-            var uv3 = uv1; uv3.y = uv0.y;
+            var uv2 = uv0;
+            uv2.y = uv1.y;
+            var uv3 = uv1;
+            uv3.y = uv0.y;
 
 
             uvs.Add(uv0);
@@ -120,8 +121,10 @@ namespace Utility
 
             var p0 = new Vector3(x, y, 0);
             var p1 = new Vector3((w), (h), 0);
-            var p2 = p0; p2.y = p1.y;
-            var p3 = p1; p3.y = p0.y;
+            var p2 = p0;
+            p2.y = p1.y;
+            var p3 = p1;
+            p3.y = p0.y;
 
             verticies.Add(p0);
             verticies.Add(p1);
@@ -140,7 +143,8 @@ namespace Utility
         }
 
 
-        public void DrawString(GameObject gameObject, float x, float y, float characterSize, string label, int fontSize, Color color, int sortOrder)
+        public void DrawString(GameObject gameObject, float x, float y, float characterSize, string label, int fontSize,
+            Color color, int sortOrder)
         {
             var textMesh = gameObject.GetComponent<TextMesh>();
             var mr = gameObject.GetComponent<MeshRenderer>();
@@ -180,7 +184,7 @@ namespace Utility
             Rect pos = new Rect(x, y, w, h);
 
             Vector4 texCoord = sprite.TextureCoords;
-            Rect textCoord = new Rect(texCoord.x, texCoord.y + texCoord.w, texCoord.z, - texCoord.w);
+            Rect textCoord = new Rect(texCoord.x, texCoord.y + texCoord.w, texCoord.z, -texCoord.w);
 
             GUI.DrawTextureWithTexCoords(pos, sprite.Texture, textCoord);
         }
@@ -196,7 +200,7 @@ namespace Utility
             texture.SetPixel(0, 0, color);
             texture.Apply();
 
-            GUI.DrawTexture(pos , texture);
+            GUI.DrawTexture(pos, texture);
         }
 
         public void DrawStringGui(float x, float y, float w, float h, string label, int fontSize = 16,
@@ -208,7 +212,7 @@ namespace Utility
             Rect pos = new Rect(x, y, w, h);
 
             GUI.contentColor = color;
-            GUI.skin.label.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+            GUI.skin.label.font = (Font) Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
             GUI.skin.label.fontSize = fontSize;
             GUI.skin.label.alignment = alignment;
             GUI.Label(pos, label);
@@ -233,8 +237,10 @@ namespace Utility
             Vector4 texCoord = sprite.TextureCoords;
             var uv0 = new Vector2(texCoord.x, texCoord.y + texCoord.w);
             var uv2 = new Vector2(texCoord.x + texCoord.z, texCoord.y);
-            var uv1 = uv0; uv1.y = uv2.y;
-            var uv3 = uv2; uv3.y = uv0.y;
+            var uv1 = uv0;
+            uv1.y = uv2.y;
+            var uv3 = uv2;
+            uv3.y = uv0.y;
 
             var mat = Materials[CurrentTexMaterialID++];
             mat.SetTexture("_MainTex", sprite.Texture);
@@ -283,6 +289,22 @@ namespace Utility
             GL.End();
         }
 
-
+        public Sprite CreateSprite(string path, int width, int height, Enums.AtlasType atlasType)
+        {
+            var iconSheet = GameState.SpriteLoader.GetSpriteSheetID(path, width, height);
+            int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, atlasType);
+            var iconSpriteData = new byte[width * height * 4];
+            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, atlasType);
+            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+        }
+        
+        public Sprite CreateSprite(int iconID, int width, int height, Enums.AtlasType atlasType)
+        {
+            var iconSpriteData = new byte[width * height * 4];
+            GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, atlasType);
+            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+        }
     }
 }

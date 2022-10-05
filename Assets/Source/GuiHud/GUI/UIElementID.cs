@@ -9,7 +9,14 @@ namespace KGUI
         FuelElement,
         HealthElement,
         WaterElement,
-        OxygenElement
+        OxygenElement,
+        
+        // Placement Tool
+        BedrockElement,
+        DirtElement,
+        PipeElement,
+        WireElement,
+        HealthPotionElement
     }
 }
 

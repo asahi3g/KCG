@@ -8,7 +8,7 @@ namespace Collisions
         EmptyBlock,
         
         // FullBlock
-        FullBlock,
+        FB_R0,
 
         // HalfBlock
         HB_R0,

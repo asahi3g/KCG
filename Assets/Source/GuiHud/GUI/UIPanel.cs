@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +13,15 @@ namespace KGUI
         {
             Init();
         }
+        
+        public virtual void Update() { }
 
         public virtual void Init()
         {
             GameState.GUIManager.UIPanelList.Add(ID, this);
         }
+        
+        public virtual void OnDeactivate() { }
     }
 }
 

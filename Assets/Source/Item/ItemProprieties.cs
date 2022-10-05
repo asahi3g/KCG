@@ -1,8 +1,10 @@
-﻿using Enums;
+﻿using System;
+using Enums;
+using Enums.Tile;
+using KGUI;
 using KMath;
-using System;
+using Mech;
 using UnityEngine;
-
 
 namespace Item
 {
@@ -12,12 +14,13 @@ namespace Item
         public ItemType ItemType;
         public ItemGroups Group;
         public NodeType ToolActionType;
-        public Mech.MechType MechType;          // Used only when item is a mech type.
-        public Enums.Tile.TileID TileType;       // Used only when item is a material type.
+        public MechType MechType;          // Used only when item is a mech type.
+        public TileID TileType;       // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet; // used to change agent animations (like walking with rifle)
+        public UIPanelID ItemUIPanelID;
 
-        public Enums.ItemKeyUsage KeyUsage;
+        public ItemKeyUsage KeyUsage;
 
         public int InventorSpriteID;
         public int SpriteID;
@@ -35,11 +38,13 @@ namespace Item
             Stackable = 1 << 2,
             Tool = 1 << 3,
             PlacementTool = 1 << 4,
+            UI = 1 << 5
         }
 
-        public bool IsStackable() { return ItemFlags.HasFlag(Flags.Stackable); }
-        public bool IsTool() { return ItemFlags.HasFlag(Flags.Tool); }
-        public bool IsPlacementTool() { return ItemFlags.HasFlag(Flags.PlacementTool); }
+        public bool IsStackable() => ItemFlags.HasFlag(Flags.Stackable);
+        public bool IsTool() => ItemFlags.HasFlag(Flags.Tool);
+        public bool IsPlacementTool() => ItemFlags.HasFlag(Flags.PlacementTool);
+        public bool HasUI() => ItemFlags.HasFlag(Flags.UI);
     }
 
     public struct FireWeaponPropreties
@@ -52,7 +57,7 @@ namespace Item
         public int BulletsPerShot;
         public int ClipSize;
         public float ReloadTime;
-        public Enums.ProjectileType ProjectileType;
+        public ProjectileType ProjectileType;
 
         // Charge propreties.
         public bool  CanCharge;
@@ -125,6 +130,7 @@ namespace Item
         /// Fragmentation -> Fragmentation Bombs
         /// </summary>
         public GrenadesFlags GrenadeFlags;
+        [Flags]
         public enum GrenadesFlags : byte
         {
             Cocussions = 1 << 0,
@@ -138,6 +144,7 @@ namespace Item
         /// Slash -> If Melee Weapon Slashes
         /// </summary>
         public MeleeFlags MeleeAttackFlags;
+        [Flags]
         public enum MeleeFlags : byte
         {
             Stab = 1 << 0,

@@ -25,8 +25,7 @@ namespace KGUI
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", AtlasType.Gui);
 
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", AtlasType.Gui);
+            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
             
             progressBar = new ProgressBar(progressBarImageWrapper, oxygenAmount, Image.FillMethod.Radial360);
         }

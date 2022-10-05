@@ -244,7 +244,7 @@ namespace PlanetTileMap
                     return null;
                 case TileShapeAndRotation.EmptyBlock:
                     return null;
-                case TileShapeAndRotation.FullBlock:
+                case TileShapeAndRotation.FB_R0:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
@@ -534,8 +534,8 @@ namespace PlanetTileMap
                     return TileShapeAndRotation.Error;
                 case TileShapeAndRotation.EmptyBlock:
                     return TileShapeAndRotation.EmptyBlock;
-                case TileShapeAndRotation.FullBlock:
-                    return TileShapeAndRotation.FullBlock;
+                case TileShapeAndRotation.FB_R0:
+                    return TileShapeAndRotation.FB_R0;
 
                 #region Rotate Half Block shape
                 
@@ -661,8 +661,8 @@ namespace PlanetTileMap
                     return TileShapeAndRotation.Error;
                 case TileShapeAndRotation.EmptyBlock:
                     return TileShapeAndRotation.EmptyBlock;
-                case TileShapeAndRotation.FullBlock:
-                    return TileShapeAndRotation.FullBlock;
+                case TileShapeAndRotation.FB_R0:
+                    return TileShapeAndRotation.FB_R0;
 
                 #region Mirror Half Block Shape
 

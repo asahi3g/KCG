@@ -23,16 +23,13 @@ namespace Node
                     {
                         if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 1.3f)
                         {
-                            if(mech.hasMechTree)
+                            if(mech.hasMechStatus)
                             {
-                                if(mech.mechTree.Health <= 0)
+                                if(mech.mechStatus.Health <= 0)
                                 {
-                                    for(int i = 0; i < mech.mechTree.TreeSize; i++)
-                                    {
-                                        //planet.AddItemParticle(mech.mechPosition2D.Value, ItemType.Wood);
-                                    }
+                                    planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
 
-                                    mech.Destroy();
+                                    planet.RemoveMech(mech.creationIndex);
 
                                     nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                     return;
@@ -42,7 +39,13 @@ namespace Node
                                 planet.AddParticleEmitter(mech.mechPosition2D.Value + Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
                                 planet.AddParticleEmitter(mech.mechPosition2D.Value + Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
 
-                                mech.mechTree.Health -= 20;
+                                mech.mechStatus.Health -= 20;
+                                
+                                if(mech.mechStatus.TreeSize > 0)
+                                {
+                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
+                                }
+
                             }
                         }
                     }

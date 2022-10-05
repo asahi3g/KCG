@@ -423,6 +423,9 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword, Planet.EntitasContext);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
+
+
+           Planet.AddItemParticle(new Vec2f(10.0f, 16.0f), Enums.ItemType.Chest);
         }
 
 
@@ -500,53 +503,53 @@ namespace Planet.Unity
 
 
 
-            tileMap.GetTile(15, 15).FrontTileID = TileID.SQNoSpecular_0;
-            tileMap.GetTile(16, 15).FrontTileID = TileID.SQ_0;
-            tileMap.GetTile(17, 15).FrontTileID = TileID.SQ_1;
-            tileMap.GetTile(18, 15).FrontTileID = TileID.SQ_2;
-            tileMap.GetTile(19, 15).FrontTileID = TileID.SQ_3;
-            tileMap.GetTile(20, 15).FrontTileID = TileID.HSQNoSpecular_0;
-            tileMap.GetTile(21, 15).FrontTileID = TileID.HSQNoSpecular_1;
-            tileMap.GetTile(22, 15).FrontTileID = TileID.HSQNoSpecular_2;
-            tileMap.GetTile(23, 15).FrontTileID = TileID.HSQNoSpecular_3;
-            tileMap.GetTile(24, 15).FrontTileID = TileID.HSQ_0;
-            tileMap.GetTile(25, 15).FrontTileID = TileID.HSQ_1;
-            tileMap.GetTile(26, 15).FrontTileID = TileID.HSQ_2;
-            tileMap.GetTile(27, 15).FrontTileID = TileID.HSQ_3;
-            tileMap.GetTile(28, 15).FrontTileID = TileID.SSQ_0;
-            tileMap.GetTile(29, 15).FrontTileID = TileID.SSQ_1;
-            tileMap.GetTile(30, 15).FrontTileID = TileID.SSQ_2;
-            tileMap.GetTile(31, 15).FrontTileID = TileID.SSQ_3;
+            tileMap.GetTile(15, 15).FrontTileID = TileID.SB_R0_Metal;
+            tileMap.GetTile(16, 15).FrontTileID = TileID.FP_R0_Metal;
+            tileMap.GetTile(17, 15).FrontTileID = TileID.FP_R1_Metal;
+            tileMap.GetTile(18, 15).FrontTileID = TileID.FP_R2_Metal;
+            tileMap.GetTile(19, 15).FrontTileID = TileID.FP_R3_Metal;
+            tileMap.GetTile(20, 15).FrontTileID = TileID.HB_R0_Metal;
+            tileMap.GetTile(21, 15).FrontTileID = TileID.HB_R1_Metal;
+            tileMap.GetTile(22, 15).FrontTileID = TileID.HB_R2_Metal;
+            tileMap.GetTile(23, 15).FrontTileID = TileID.HB_R3_Metal;
+            tileMap.GetTile(24, 15).FrontTileID = TileID.HP_R0_Metal;
+            tileMap.GetTile(25, 15).FrontTileID = TileID.HP_R1_Metal;
+            tileMap.GetTile(26, 15).FrontTileID = TileID.HP_R2_Metal;
+            tileMap.GetTile(27, 15).FrontTileID = TileID.HP_R3_Metal;
+            tileMap.GetTile(28, 15).FrontTileID = TileID.QP_R0_Metal;
+            tileMap.GetTile(29, 15).FrontTileID = TileID.QP_R1_Metal;
+            tileMap.GetTile(30, 15).FrontTileID = TileID.QP_R2_Metal;
+            tileMap.GetTile(31, 15).FrontTileID = TileID.QP_R3_Metal;
 
-            tileMap.GetTile(32, 15).FrontTileID = TileID.TI_0;
-            tileMap.GetTile(33, 15).FrontTileID = TileID.TI_1;
-            tileMap.GetTile(34, 15).FrontTileID = TileID.TI_2;
-            tileMap.GetTile(35, 15).FrontTileID = TileID.TI_3;
-            tileMap.GetTile(36, 15).FrontTileID = TileID.TO_0;
-            tileMap.GetTile(37, 15).FrontTileID = TileID.TO_1;
-            tileMap.GetTile(38, 15).FrontTileID = TileID.TO_2;
-            tileMap.GetTile(39, 15).FrontTileID = TileID.TO_3;
+            tileMap.GetTile(32, 15).FrontTileID = TileID.TB_R0_Metal;
+            tileMap.GetTile(33, 15).FrontTileID = TileID.TB_R1_Metal;
+            tileMap.GetTile(34, 15).FrontTileID = TileID.TB_R4_Metal;
+            tileMap.GetTile(35, 15).FrontTileID = TileID.TB_R5_Metal;
+            tileMap.GetTile(36, 15).FrontTileID = TileID.TB_R6_Metal;
+            tileMap.GetTile(37, 15).FrontTileID = TileID.TB_R7_Metal;
+            tileMap.GetTile(38, 15).FrontTileID = TileID.TB_R2_Metal;
+            tileMap.GetTile(39, 15).FrontTileID = TileID.TB_R3_Metal;
 
 
-            tileMap.GetTile(40, 15).FrontTileID = TileID.HTD_0;
-            tileMap.GetTile(41, 15).FrontTileID = TileID.HTL_1;
-            tileMap.GetTile(42, 15).FrontTileID = TileID.HTU_2;
-            tileMap.GetTile(43, 15).FrontTileID = TileID.HTR_3;
+            tileMap.GetTile(40, 15).FrontTileID = TileID.L1_R0_Metal;
+            tileMap.GetTile(41, 15).FrontTileID = TileID.L1_R1_Metal;
+            tileMap.GetTile(42, 15).FrontTileID = TileID.L1_R2_Metal;
+            tileMap.GetTile(43, 15).FrontTileID = TileID.L1_R3_Metal;
 
-            tileMap.GetTile(44, 15).FrontTileID = TileID.RHTD_0;
-            tileMap.GetTile(45, 15).FrontTileID = TileID.RHTL_1;
-            tileMap.GetTile(46, 15).FrontTileID = TileID.RHTU_2;
-            tileMap.GetTile(47, 15).FrontTileID = TileID.RHTR_3;
+            tileMap.GetTile(44, 15).FrontTileID = TileID.L1_R4_Metal;
+            tileMap.GetTile(45, 15).FrontTileID = TileID.L1_R5_Metal;
+            tileMap.GetTile(46, 15).FrontTileID = TileID.L1_R6_Metal;
+            tileMap.GetTile(47, 15).FrontTileID = TileID.L1_R7_Metal;
 
-            tileMap.GetTile(48, 15).FrontTileID = TileID.CSQ_0;
-            tileMap.GetTile(49, 15).FrontTileID = TileID.CSQ_1;
-            tileMap.GetTile(50, 15).FrontTileID = TileID.CSQ_2;
-            tileMap.GetTile(51, 15).FrontTileID = TileID.CSQ_3;
+            tileMap.GetTile(48, 15).FrontTileID = TileID.L2_R0_Metal;
+            tileMap.GetTile(49, 15).FrontTileID = TileID.L2_R1_Metal;
+            tileMap.GetTile(50, 15).FrontTileID = TileID.L2_R2_Metal;
+            tileMap.GetTile(51, 15).FrontTileID = TileID.L2_R3_Metal;
 
-            tileMap.GetTile(52, 15).FrontTileID = TileID.RCSQ_0;
-            tileMap.GetTile(53, 15).FrontTileID = TileID.RCSQ_1;
-            tileMap.GetTile(54, 15).FrontTileID = TileID.RCSQ_2;
-            tileMap.GetTile(55, 15).FrontTileID = TileID.RCSQ_3;
+            tileMap.GetTile(52, 15).FrontTileID = TileID.L2_R4_Metal;
+            tileMap.GetTile(53, 15).FrontTileID = TileID.L2_R5_Metal;
+            tileMap.GetTile(54, 15).FrontTileID = TileID.L2_R6_Metal;
+            tileMap.GetTile(55, 15).FrontTileID = TileID.L2_R7_Metal;
 
 
 

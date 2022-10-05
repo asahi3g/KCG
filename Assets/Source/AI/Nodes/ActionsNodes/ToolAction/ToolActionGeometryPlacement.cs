@@ -17,7 +17,7 @@ namespace Node.Action
                 ItemEntity.itemTile.Layer = MapLayerType.Front;
 
                 if (ItemEntity.itemTile.TileID == TileID.Error)
-                    ItemEntity.itemTile.TileID = TileID.TI_1;
+                    ItemEntity.itemTile.TileID = TileID.TB_R1_Metal;
 
                 if (ItemEntity.itemTile.InputsActive)
                 {
