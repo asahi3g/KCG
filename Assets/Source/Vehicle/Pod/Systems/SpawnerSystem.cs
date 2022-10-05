@@ -49,9 +49,6 @@ namespace Vehicle.Pod
 
             entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score);
 
-            entity.AddVehiclePodPatrol(new Vec2f(entity.vehiclePodPhysicsState2D.Position.X - 4,
-                entity.vehiclePodPhysicsState2D.Position.Y), new Vec2f(entity.vehiclePodPhysicsState2D.Position.X + 4, entity.vehiclePodPhysicsState2D.Position.Y));
-
             // Increase ID per object statically
             UniqueID++;
 

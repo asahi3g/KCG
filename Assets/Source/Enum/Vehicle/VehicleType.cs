@@ -8,6 +8,7 @@ namespace Enums
         Fighter,
         FlyingVan,
         Jet,
-        Speeder
+        Speeder,
+        DropShip
     }
 }

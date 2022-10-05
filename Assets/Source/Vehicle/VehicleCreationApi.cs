@@ -202,6 +202,22 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(true);
             GameState.VehicleCreationApi.End();
+
+            GameState.VehicleCreationApi.Create((int)Enums.VehicleType.DropShip);
+            GameState.VehicleCreationApi.SetName("DropShip");
+            GameState.VehicleCreationApi.SetSpriteId(JetChassis);
+            GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
+            GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -3.0f));
+            GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
+            GameState.VehicleCreationApi.SetRotation(-90.0f);
+            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.1f));
+            GameState.VehicleCreationApi.SetAngularMass(14f);
+            GameState.VehicleCreationApi.SetAngularAcceleration(4f);
+            GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
+            GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
+            GameState.VehicleCreationApi.SetAffectedByGravity(false);
+            GameState.VehicleCreationApi.End();
         }
     }
 

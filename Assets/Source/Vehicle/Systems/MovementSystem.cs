@@ -33,6 +33,8 @@ namespace Vehicle
                     vehicle.vehiclePhysicsState2D.angularVelocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
 
                 vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+
+
             }
         }
     }
