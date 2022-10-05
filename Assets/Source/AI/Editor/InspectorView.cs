@@ -13,15 +13,11 @@ namespace AI
         {
         }
 
-        public void OnGUI()
-        { 
-        }
-
-
         internal void UpdateSelection(NodeView nodeView)
         {
-            Clear();
-            AddChildrenAttributes(Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeView.NodeID), this);
+            ScrollView scrollView = this.Q<ScrollView>();
+            scrollView.contentViewport.Clear();
+            AddChildrenAttributes(Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeView.NodeID), scrollView.contentViewport);
         }
 
         void AddChildrenAttributes(NodeEntity nodeEntity, VisualElement visualElement)
@@ -30,7 +26,7 @@ namespace AI
             var nodes = nodeEntity.GetChildren(Contexts.sharedInstance.node);
             foreach (var node in nodes)
             {
-                AddChildrenAttributes(nodeEntity, newVisualElement);
+                AddChildrenAttributes(node, newVisualElement);
             }
         }
 

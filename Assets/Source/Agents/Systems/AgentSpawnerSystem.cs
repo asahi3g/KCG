@@ -4,6 +4,7 @@ using UnityEngine;
 using Animancer;
 using UnityEngine.Animations.Rigging;
 using AI.BehaviorTree;
+using AI;
 
 namespace Agent
 {
@@ -367,7 +368,7 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(entitasContext, Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(entitasContext, item, inventoryID);
-                        entity.AddAgentController(MarineBehavior.GetAgentController(entitasContext, entity.agentID.ID));
+                        entity.AddAgentController(AISystemState.Behaviors[(int)Enums.BehaviorType.Marine].InstatiateBehavior());
                         entity.HandleItemSelected(item);
 
                         break;

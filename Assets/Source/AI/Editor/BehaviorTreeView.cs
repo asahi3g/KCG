@@ -5,6 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using System.Linq;
 using System;
+using UnityEngine.Networking.Types;
 
 namespace AI
 {
@@ -24,7 +25,7 @@ namespace AI
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            PopulateView();
+            DefaultPopulateView();
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -54,7 +55,6 @@ namespace AI
             return graphViewChange;
         }
 
-
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             foreach (var node in AISystemState.Nodes)
@@ -81,27 +81,50 @@ namespace AI
             evt.menu.AppendAction($"Delete", (a) => DeleteSelection());
         }
 
-        public void PopulateView()
+        public void PopulateView(int nodeID)
         {
-            CreateNodeView(NodeType.DecoratorNode, Vector2.zero, true);
+            graphViewChanged -= OnGraphViewChanged;
+            DeleteElements(graphElements);
+            NodeEntity nodeEntity = Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeID);
+            NodeView nodeView = CreateNodeView(nodeEntity, SetRootPos());
+
+            PopulateChildren(nodeView, nodeEntity);
             graphViewChanged += OnGraphViewChanged;
         }
 
-        static int i = 0;
-        private void CreateNodeView(NodeType type, Vector2 pos, bool isRoot = false)
+        private void PopulateChildren(NodeView nodeView, NodeEntity nodeEntity)
         {
-            NodeEntity nodeEntity = Contexts.sharedInstance.node.CreateEntity();
-            nodeEntity.AddNodeID(i++, type);
-            switch (AISystemState.Nodes[(int)type].NodeGroup)
+            var children = nodeEntity.GetChildren(Contexts.sharedInstance.node);
+            Vector2 pos = nodeView.Postion + new Vector2(-NodeView.Width * (children.Count - 1) * 0.6f, NodeView.Height * 1.2f);
+            foreach (var child in children)
             {
-                case NodeGroup.DecoratorNode:
-                    nodeEntity.AddNodesDecorator(-1);
-                    break;
-                case NodeGroup.CompositeNode:
-                    nodeEntity.AddNodeComposite(new List<int>(), -1);
-                    break;
+                NodeView childNodeView = CreateNodeView(child, pos);
+                PopulateChildren(childNodeView, child);
+                pos += new Vector2(NodeView.Width * 1.2f, 0f);
             }
-            nodeEntity.isNodeRoot = isRoot;
+        }
+
+        public void DefaultPopulateView()
+        {
+            graphViewChanged -= OnGraphViewChanged;
+            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
+            GameState.BehaviorTreeCreationAPI.EndTree();
+            NodeEntity nodeEntity = Contexts.sharedInstance.node.GetEntityWithNodeIDID(rootID);
+            CreateNodeView(nodeEntity, SetRootPos());
+            graphViewChanged += OnGraphViewChanged;
+        }
+
+        private NodeView CreateNodeView(NodeEntity nodeEntity, Vector2 pos)
+        {
+            NodeView nodeView = new NodeView(nodeEntity, pos);
+            nodeView.OnNodeSelected = OnNodeSelected;
+            AddElement(nodeView);
+            return nodeView;
+        }
+
+        private void CreateNodeView(NodeType nodeType, Vector2 pos)
+        {
+            NodeEntity nodeEntity = GameState.BehaviorTreeCreationAPI.CreateBehaviorTreeNode(nodeType);
             NodeView nodeView = new NodeView(nodeEntity, pos);
             nodeView.OnNodeSelected = OnNodeSelected;
             AddElement(nodeView);
@@ -113,5 +136,7 @@ namespace AI
                           endPort.direction != startPort.direction &&
                           endPort.node != startPort.node).ToList();
         }
+
+        private Vector2 SetRootPos() => new Vector2((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
     }
 }

@@ -11,8 +11,10 @@ namespace AI
         public Vector2 Postion;
         public int NodeID;
         public Action<NodeView> OnNodeSelected;
+        public const int Width = 128;
+        public const int Height = 80;
 
-        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/NodeEditorView.uxml") 
+        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
             CreatePorts(nodeEntity);
             SetupClasses(nodeEntity);

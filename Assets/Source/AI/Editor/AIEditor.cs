@@ -1,4 +1,6 @@
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,7 +22,7 @@ namespace AI
         {
             VisualElement root = rootVisualElement;
         
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/BehaviorTreeEditor.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditor.uxml");
             VisualElement labelFromUXML = visualTree.CloneTree();
             root.Add(labelFromUXML);
 
@@ -28,7 +30,14 @@ namespace AI
             BehaviorTreeView bt = root.Q<BehaviorTreeView>();
             bt.OnNodeSelected = inspectorView.UpdateSelection;
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/BehaviorTreeEditorStyle.uss");
+            ToolbarMenu toolbarMenu = root.Q<ToolbarMenu>();
+            foreach (var behavior in AISystemState.Behaviors)
+            {
+                if (behavior.TypeID != Enums.BehaviorType.Error)
+                    toolbarMenu.menu.AppendAction($"{behavior.TypeID.ToString()}", (a) =>{ bt.PopulateView(behavior.RootID); });
+            }
+
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
             root.styleSheets.Add(styleSheet);
         }
 

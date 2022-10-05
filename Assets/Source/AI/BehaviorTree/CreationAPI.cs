@@ -5,87 +5,85 @@ namespace AI.BehaviorTree
 {
     public class CreationAPI
     {
-        Contexts EntitasContext;
-        int AgentID;
-
-        private void AddToParent(NodeEntity parent, int childID)
+        class Node
         {
-            if (parent.hasNodesDecorator)
-            {
-                parent.nodesDecorator.ChildID = childID;
-                return;
-            }
-            if (parent.hasNodeComposite)
-            {
-                parent.nodeComposite.Children.Add(childID);
-                return;
+            public Node(Node p, NodeEntity entity)
+            { 
+                parent = p;
+                nodeEntity = entity;
             }
 
-            Utils.Assert(true, "Error: You can't attach node to a leaf node.");
+            public Node parent;
+            public NodeEntity nodeEntity;
         }
 
-        public NodeEntity CreateTree(Contexts entitasContext, int agentID)
+        int NextNodeID = 0;
+        Node Current;
+
+        public NodeEntity CreateBehaviorTreeNode(NodeType NodeTypeID)
         {
-            EntitasContext = entitasContext;
-            AgentID = agentID;
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(entitasContext, NodeType.DecoratorNode, agentID);
-            newEntity.AddNodesDecorator(-1);
-            return newEntity;
+            NodeEntity nodeEntity = Contexts.sharedInstance.node.CreateEntity();
+            nodeEntity.AddNodeID(NextNodeID++, NodeTypeID);
+            switch(AISystemState.Nodes[(int)NodeTypeID].NodeGroup)
+            {
+                case NodeGroup.CompositeNode:
+                    nodeEntity.AddNodeComposite(new List<int>(), 0);
+                    break;
+                case NodeGroup.DecoratorNode:
+                    nodeEntity.AddNodesDecorator(-1);
+                    break;
+            }
+
+            return nodeEntity;
         }
 
-        public NodeEntity AddDecoratorNode(NodeEntity nodeEntity)
+        private void AddToParent(NodeEntity child)
         {
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext, 
-                NodeType.DecoratorNode, AgentID);
-            newEntity.AddNodesDecorator(-1);
-            AddToParent(nodeEntity, newEntity.nodeID.ID);
-            return newEntity;
+            NodeEntity parent = Current.nodeEntity;
+            switch (AISystemState.Nodes[(int)parent.nodeID.TypeID].NodeGroup)
+            {
+                case NodeGroup.CompositeNode:
+                    parent.nodeComposite.Children.Add(child.nodeID.ID);
+                    if (AISystemState.Nodes[(int)child.nodeID.TypeID].NodeGroup != NodeGroup.ActionNode)
+                        Current = new Node(Current, child);
+                    break;
+                case NodeGroup.DecoratorNode:
+                    parent.nodesDecorator.ChildID = child.nodeID.ID;
+                    if (AISystemState.Nodes[(int)child.nodeID.TypeID].NodeGroup == NodeGroup.ActionNode)
+                        Current = Current.parent;
+                    else
+                        Current = new Node(Current, child);
+                    break;
+                default:
+                    Utils.Assert(false, "Error: You can't attach node to a leaf node.");
+                    break;
+
+            }
+
         }
 
-        public NodeEntity AddSequence(NodeEntity nodeEntity)
+        public int CreateTree()
         {
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-                NodeType.SequenceNode, AgentID);
-            newEntity.AddNodeComposite(new List<int>(), 0);
-            AddToParent(nodeEntity, newEntity.nodeID.ID);
-            return newEntity;
+            NodeEntity root = CreateBehaviorTreeNode(NodeType.DecoratorNode);
+            root.isNodeRoot = true;
+            Current = new Node(null, root);
+            return root.nodeID.ID;
         }
 
-        public NodeEntity AddSelector(NodeEntity nodeEntity)
+        public void AddChild(NodeType type)
         {
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-                NodeType.SelectorNode, AgentID);
-            newEntity.AddNodeComposite(new List<int>(), 0);
-            AddToParent(nodeEntity, newEntity.nodeID.ID);
-            return newEntity;
+            NodeEntity newEntity = CreateBehaviorTreeNode(type);
+            AddToParent(newEntity);
         }
 
-        public NodeEntity AddReapterNode(NodeEntity nodeEntity)
+        public void EndNode()
         {
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-                NodeType.RepeaterNode, AgentID);
-            newEntity.AddNodesDecorator(-1);
-            AddToParent(nodeEntity, newEntity.nodeID.ID);
-            return newEntity;
+            Current = Current.parent;
         }
 
-        // Todo: Single function for BTNodes
-        //public NodeEntity AddBTNodes(NodeEntity nodeEntity, NodeType type)
-        //{
-        //    NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext,
-        //        NodeType.RepeaterNode, AgentID);
-        //    if (SystemState.Nodes[(int)].)
-        //    newEntity.AddNodesDecorator(-1);
-        //    AddToParent(nodeEntity, newEntity.nodeID.ID);
-        //    return newEntity;
-        //}
-
-        /// <summary>Leafs </summary>
-        public NodeEntity AddLeaf(NodeEntity nodeEntity, NodeType type)
+        public void EndTree()
         {
-            NodeEntity newEntity = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext, type, AgentID);
-            AddToParent(nodeEntity, newEntity.nodeID.ID);
-            return newEntity;
+            Current = null;
         }
     }
 }
