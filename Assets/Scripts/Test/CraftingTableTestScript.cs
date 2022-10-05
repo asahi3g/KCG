@@ -201,7 +201,9 @@ namespace Planet.Unity
 
             Planet.AddMech(Planet, new Vec2f(10.0f, 16.07f), Mech.MechType.Tree);
 
-            Planet.AddPod(new Vec2f(5, 16.07f), Enums.PodType.Default);
+            Planet.AddEnemy(new Vec2f(7.0f, 16.07f));
+
+            Planet.AddPod(new Vec2f(12, 17.07f), Enums.PodType.Default);
 
         }
     }

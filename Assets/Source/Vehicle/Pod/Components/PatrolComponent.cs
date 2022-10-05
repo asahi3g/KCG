@@ -7,11 +7,9 @@ using UnityEngine;
 namespace Vehicle.Pod
 {
     [Pod]
-    public class RadarComponent : IComponent
+    public class PatrolComponent : IComponent
     {
-        public Vec2f RadarSize;
-
-        public List<AgentEntity> Members;
-        public int AgentCount;
+        public Vec2f PatrolStart;
+        public Vec2f PatrolEnd;
     }
 }

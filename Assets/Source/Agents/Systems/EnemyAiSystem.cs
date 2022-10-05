@@ -69,8 +69,10 @@ namespace Agent
 
                             // if the enemy is close to the player
                             // the enemy will move towards the player
-                            if (Len <= enemyComponent.DetectionRadius && Len >= 0.5f)
+                            if ((Len <= enemyComponent.DetectionRadius && Len >= 0.5f) || entity.agentAction.Action == AgentAction.Alert)
                             {
+                                entity.agentAction.Action = AgentAction.Alert;
+
                                 // if the enemy is stuck
                                 // trigger the jump
                                 bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
@@ -93,6 +95,8 @@ namespace Agent
                             {
                                 //Idle
                                 physicsState.Acceleration = new Vec2f();
+
+                                entity.agentAction.Action = AgentAction.UnAlert;
                             }
                         }
 
@@ -122,8 +126,10 @@ namespace Agent
                             float shootingRange = 6.0f;
                             // if the enemy is close to the player
                             // the enemy will move towards the player
-                            if (Len <= enemyComponent.DetectionRadius && Len >= shootingRange)
+                            if ((Len <= enemyComponent.DetectionRadius && Len >= shootingRange) || entity.agentAction.Action == AgentAction.Alert)
                             {
+                                entity.agentAction.Action = AgentAction.Alert;
+
                                 // if the enemy is stuck
                                 // trigger the jump
                                 bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
@@ -148,6 +154,8 @@ namespace Agent
                             {
                                 //Idle
                                 physicsState.Acceleration = new Vec2f();
+
+                                entity.agentAction.Action = AgentAction.UnAlert;
                             }
                         }
 
@@ -177,9 +185,11 @@ namespace Agent
                             float swordRange = 1.5f;
                             // if the enemy is close to the player
                             // the enemy will move towards the player
-                            if (Len <= enemyComponent.DetectionRadius && Len >= swordRange && 
-                            enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
+                            if ((Len <= enemyComponent.DetectionRadius && Len >= swordRange && 
+                            enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree()) || entity.agentAction.Action == AgentAction.Alert)
                             {
+                                entity.agentAction.Action = AgentAction.Alert;
+
                                 // if the enemy is stuck
                                 // trigger the jump
                                 bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
@@ -203,6 +213,8 @@ namespace Agent
                             {
                                 //Idle
                                 physicsState.Acceleration = new Vec2f();
+
+                                entity.agentAction.Action = AgentAction.UnAlert;
                             }
 
                             if (Len <= swordRange && enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
@@ -224,9 +236,12 @@ namespace Agent
                             float swordRange = 1.5f;
                             // if the enemy is close to the player
                             // the enemy will move towards the player
-                            if (Len <= enemyComponent.DetectionRadius && Len >= swordRange && 
-                            enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
+                            if ((Len <= enemyComponent.DetectionRadius && Len >= swordRange && 
+                            enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree()) || entity.agentAction.Action == AgentAction.Alert)
                             {
+                                entity.agentAction.Action = AgentAction.Alert;
+
+
                                 // if the enemy is stuck
                                 // trigger the jump
                                 bool jump = Math.Abs(physicsState.Velocity.X) <= 0.05f && 
@@ -251,6 +266,8 @@ namespace Agent
                             {
                                 //Idle
                                 physicsState.Acceleration = new Vec2f();
+
+                                entity.agentAction.Action = AgentAction.UnAlert;
                             }
 
                             if (Len <= swordRange && enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
