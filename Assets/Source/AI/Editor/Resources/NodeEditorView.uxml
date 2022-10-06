@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <Style src="project://database/Assets/Source/AI/Editor/NodeEditorStyle.uss?fileID=7433441132597879392&amp;guid=a3e0fdfe70efc6c44a47cb5a556df239&amp;type=3#NodeEditorStyle" />
+    <Style src="project://database/Assets/Source/AI/Editor/Resources/NodeEditorStyle.uss?fileID=7433441132597879392&amp;guid=a6a32b192381b07408c1bf09945f5583&amp;type=3#NodeEditorStyle" />
     <ui:VisualElement name="node-state" style="right: -13px;">
         <ui:VisualElement name="node-border" style="width: 128px;">
             <ui:VisualElement name="contents">

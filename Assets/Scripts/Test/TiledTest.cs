@@ -48,9 +48,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            Tiled.TiledTileset tileset = Tiled.TiledTileset.FromJson("generated-maps/metal_tiles_geometry.tsj");
-            Tiled.TiledTileset stoneTileset = Tiled.TiledTileset.FromJson("generated-maps/stone_tiles_geometry.tsj");
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/untitled.tmj");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/untitled.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(PlanetTileMap.MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.GeometryTileShape)).Length;
@@ -121,23 +119,11 @@ namespace Planet.Unity
                     int tileIndex = tileMap.layers[0].data[i + ((tileMap.height - 1) - j) * tileMap.width] - 1;
                     if (tileIndex >= 0)
                     {
-                        Utils.Assert(tileset.properties.Length > 0);
-                        Utils.Assert(tileset.Tiles[tileIndex].properties.Length > 0);
-                        if (tileset.properties.Length > 0 && tileset.Tiles[tileIndex].properties.Length > 0)
-                        {
-                            PlanetTileMap.MaterialType material = PlanetTileMap.MaterialType.Metal;
-                            Enum.TryParse<PlanetTileMap.MaterialType>(tileset.properties[0].value, out material);
-                            Debug.Log(tileset.properties[0].value + " " + material);
+                        Tiled.TiledMaterialAndShape tileMaterialAndShape = tileMap.GetTile(tileIndex);
 
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.SB_R0;
-                            Enum.TryParse<Enums.GeometryTileShape>(tileset.Tiles[tileIndex].properties[0].value, out shape);
-                            Debug.Log(tileset.Tiles[tileIndex].properties[0].value + " " + shape);
+                        TileID tileID = MaterialGeometryMap[(int)tileMaterialAndShape.Material][(int)tileMaterialAndShape.Shape].TileID;
 
-                            TileID tileID = MaterialGeometryMap[(int)material][(int)shape].TileID;
-
-                            Debug.Log(tileID);
-                            Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
-                        }
+                        Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
                     }
                 }
             }
