@@ -9,18 +9,6 @@ namespace Node
 
         private static int ActionID;
 
-        public NodeEntity CreateBehaviorTreeNode(Contexts entitasContext, NodeType NodeTypeID, int agentID)
-        {
-            NodeEntity nodeEntity = entitasContext.node.CreateEntity();
-            nodeEntity.AddNodeID(ActionID++, NodeTypeID);
-            nodeEntity.AddNodeOwner(agentID);
-            nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
-            nodeEntity.isNodeBT = true;
-
-            return nodeEntity;
-        }
-
         /// <summary>
         /// Create action and schedule it. Later we will be able to create action without scheduling immediately.
         /// If actions is in cool down returns -1. 

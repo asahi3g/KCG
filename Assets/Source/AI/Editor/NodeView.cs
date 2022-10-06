@@ -8,17 +8,21 @@ namespace AI
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {
-        public Vector2 position;
+        public Vector2 Postion;
         public int NodeID;
+        public Action<NodeView> OnNodeSelected;
+        public const int Width = 128;
+        public const int Height = 80;
 
-        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/NodeEditorView.uxml") 
+        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
             CreatePorts(nodeEntity);
             SetupClasses(nodeEntity);
+            NodeID = nodeEntity.nodeID.ID;
             title = nodeEntity.nodeID.TypeID.ToString();
-            position = pos;
-            style.left = position.x;
-            style.top = position.y;
+            Postion = pos;
+            style.left = Postion.x;
+            style.top = Postion.y;
         }
 
         private void CreatePorts(NodeEntity nodeEntity)
@@ -42,6 +46,15 @@ namespace AI
             return port;
         }
 
+        public override void OnSelected()
+        {
+            base.OnSelected();
+            if (OnNodeSelected != null)
+            {
+                OnNodeSelected.Invoke(this);
+            }
+        }
+
         private void SetupClasses(NodeEntity nodeEntity)
         { 
             if (nodeEntity.isNodeRoot)
@@ -57,8 +70,26 @@ namespace AI
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-            position.x = newPos.xMin;
-            position.y = newPos.yMin;
+            Postion.x = newPos.xMin;
+            Postion.y = newPos.yMin;
+        }
+
+        public void RemoveAll(NodeView other)
+        {
+            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
+            node.RemoveAllChildren();
+        }
+
+        public void RemoveChild(NodeView other)
+        {
+            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
+            node.RemoveChild(other.NodeID);
+        }
+
+        public void AddChild(NodeView other)
+        {
+            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
+            node.AddChild(other.NodeID);
         }
     }
 }

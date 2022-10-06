@@ -1,4 +1,6 @@
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,7 +9,6 @@ namespace AI
 
     public class AIEditor : EditorWindow
     {
-
         [MenuItem("AI/BehaviorTreeEditor")]
         static void Init()
         {
@@ -21,11 +22,22 @@ namespace AI
         {
             VisualElement root = rootVisualElement;
         
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/BehaviorTreeEditor.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditor.uxml");
             VisualElement labelFromUXML = visualTree.CloneTree();
             root.Add(labelFromUXML);
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/BehaviorTreeEditorStyle.uss");
+            InspectorView inspectorView = root.Q<InspectorView>();
+            BehaviorTreeView bt = root.Q<BehaviorTreeView>();
+            bt.OnNodeSelected = inspectorView.UpdateSelection;
+
+            ToolbarMenu toolbarMenu = root.Q<ToolbarMenu>();
+            foreach (var behavior in AISystemState.Behaviors)
+            {
+                if (behavior.TypeID != Enums.BehaviorType.Error)
+                    toolbarMenu.menu.AppendAction($"{behavior.TypeID.ToString()}", (a) =>{ bt.PopulateView(behavior.RootID); });
+            }
+
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
             root.styleSheets.Add(styleSheet);
         }
 
