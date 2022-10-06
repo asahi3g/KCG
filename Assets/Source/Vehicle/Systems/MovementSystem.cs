@@ -34,7 +34,15 @@ namespace Vehicle
                 if(vehicle.vehiclePhysicsState2D.AffectedByGravity)
                     velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
 
-                vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                if(vehicle.hasVehicleThruster)
+                {
+                    if(vehicle.vehicleThruster.Jet)
+                        vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                }
+                else
+                {
+                    vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                }
 
             }
         }

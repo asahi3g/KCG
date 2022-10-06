@@ -44,7 +44,9 @@ namespace Vehicle
             List<PodEntity> pods = new List<PodEntity>();
             entity.AddVehicleRadar(pods);
 
-            if(vehicleType == VehicleType.DropShip)
+            entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None);
+
+            if (vehicleType == VehicleType.DropShip)
             {
                 List<AgentEntity> agentsInside = new List<AgentEntity>();
                 entity.AddVehicleCapacity(agentsInside);

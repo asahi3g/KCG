@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using KMath;
-
+using Enums;
 
 namespace Vehicle
 {
@@ -183,6 +183,16 @@ namespace Vehicle
             }
         }
 
+        public void SetThruster(bool Jet, float angle, JetSize jetSize)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Jet = Jet;
+                PropertiesArray[CurrentIndex].JetAngle = angle;
+                PropertiesArray[CurrentIndex].JetSize = jetSize;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -226,6 +236,7 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
             GameState.VehicleCreationApi.SetDefaultAgentCount(5);
+            GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
             GameState.VehicleCreationApi.End();
         }
     }

@@ -16,9 +16,10 @@ public static class VehicleComponentsLookup {
     public const int VehiclePhysicsState2D = 5;
     public const int VehicleRadar = 6;
     public const int VehicleSprite2D = 7;
-    public const int VehicleType = 8;
+    public const int VehicleThruster = 8;
+    public const int VehicleType = 9;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
         "ECSInput",
@@ -29,6 +30,7 @@ public static class VehicleComponentsLookup {
         "VehiclePhysicsState2D",
         "VehicleRadar",
         "VehicleSprite2D",
+        "VehicleThruster",
         "VehicleType"
     };
 
@@ -41,6 +43,7 @@ public static class VehicleComponentsLookup {
         typeof(Vehicle.PhysicsState2DComponent),
         typeof(Vehicle.RadarComponent),
         typeof(Vehicle.Sprite2DComponent),
+        typeof(Vehicle.ThrusterComponent),
         typeof(Vehicle.TypeComponent)
     };
 }

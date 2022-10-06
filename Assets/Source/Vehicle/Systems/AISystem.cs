@@ -84,8 +84,6 @@ namespace Vehicle
                             agentsInside[j].isAgentAlive = true;
                         }
                     }
-
-                    GameState.VehicleAISystem.StopAI();
                 }
 
                 var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
