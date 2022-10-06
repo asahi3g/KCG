@@ -1,6 +1,4 @@
-﻿
-
-using Enums;
+﻿using Enums;
 using KMath;
 using Node;
 using System.Collections.Generic;
