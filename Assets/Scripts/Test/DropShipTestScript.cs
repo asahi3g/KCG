@@ -6,7 +6,7 @@ using Particle;
 
 namespace Planet.Unity
 {
-    class CraftingTableTestScript : MonoBehaviour
+    class DropShipTestScript : MonoBehaviour
     {
         [SerializeField] Material Material;
 
@@ -103,7 +103,6 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
-          
             Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
@@ -111,13 +110,9 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(32, 32);
+            Vec2i mapSize = new Vec2i(64, 64);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-            
-            /*var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-            Planet.TileMap = TileMapManager.Load("map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);*/
 
             GenerateMap();
             SpawnStuff();
@@ -165,7 +160,7 @@ namespace Planet.Unity
             
             ref var tileMap = ref Planet.TileMap;
 
-            for (int y = 0; y < 32; y++)
+            for (int y = 0; y < 16; y++)
             {
                 for (int x = 0; x < 32; x++)
                 {
@@ -179,7 +174,42 @@ namespace Planet.Unity
                 tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
             }
 
-            for(int j = 0; j < tileMap.MapSize.Y; j++)
+            tileMap.SetFrontTile(1, 7, TileID.Moon);
+            tileMap.SetFrontTile(1, 8, TileID.Moon);
+            tileMap.SetFrontTile(1, 9, TileID.Moon);
+            tileMap.SetFrontTile(1, 10, TileID.Moon);
+            tileMap.SetFrontTile(1, 11, TileID.Moon);
+            tileMap.SetFrontTile(1, 12, TileID.Moon);
+            tileMap.SetFrontTile(1, 13, TileID.Moon);
+            tileMap.SetFrontTile(1, 14, TileID.Moon);
+            tileMap.SetFrontTile(1, 15, TileID.Moon);
+            tileMap.SetFrontTile(1, 16, TileID.Moon);
+
+            tileMap.SetFrontTile(2, 16, TileID.Moon);
+            tileMap.SetFrontTile(3, 16, TileID.Moon);
+            tileMap.SetFrontTile(4, 16, TileID.Moon);
+            tileMap.SetFrontTile(5, 16, TileID.Moon);
+            tileMap.SetFrontTile(6, 16, TileID.Moon);
+            tileMap.SetFrontTile(7, 16, TileID.Moon);
+
+
+            tileMap.SetFrontTile(10, 16, TileID.Moon);
+            tileMap.SetFrontTile(11, 16, TileID.Moon);
+            tileMap.SetFrontTile(12, 16, TileID.Moon);
+            tileMap.SetFrontTile(13, 16, TileID.Moon);
+
+            tileMap.SetFrontTile(13, 16, TileID.Moon);
+            tileMap.SetFrontTile(13, 15, TileID.Moon);
+            tileMap.SetFrontTile(13, 14, TileID.Moon);
+            tileMap.SetFrontTile(13, 13, TileID.Moon);
+            tileMap.SetFrontTile(13, 12, TileID.Moon);
+            tileMap.SetFrontTile(13, 11, TileID.Moon);
+            tileMap.SetFrontTile(13, 10, TileID.Moon);
+            tileMap.SetFrontTile(13, 9, TileID.Moon);
+            tileMap.SetFrontTile(13, 8, TileID.Moon);
+            tileMap.SetFrontTile(13, 7, TileID.Moon);
+
+            for (int j = 0; j < tileMap.MapSize.Y; j++)
             {
                 tileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
                 tileMap.GetTile(tileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
@@ -197,11 +227,13 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
-            Planet.AddMech(Planet, new Vec2f(15.0f, 16.07f), Mech.MechType.CraftingTable);
+            Planet.AddMech(Planet, new Vec2f(11.9f, 17), Mech.MechType.CraftingTable);
 
-            Planet.AddMech(Planet, new Vec2f(10.0f, 16.07f), Mech.MechType.Tree);
+            Planet.AddMech(Planet, new Vec2f(3.0f, 17.0f), Mech.MechType.Tree);
 
-            Planet.AddPod(new Vec2f(5, 16.07f), Enums.PodType.Default);
+            Planet.AddPod(new Vec2f(2, 9.0f), Enums.PodType.Default);
+
+            Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
 
         }
     }

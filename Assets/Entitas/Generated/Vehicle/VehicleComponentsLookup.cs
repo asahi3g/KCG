@@ -11,17 +11,19 @@ public static class VehicleComponentsLookup {
     public const int ECSInput = 0;
     public const int PhysicsBox2DCollider = 1;
     public const int PhysicsSphere2DCollider = 2;
-    public const int VehicleID = 3;
-    public const int VehiclePhysicsState2D = 4;
-    public const int VehicleSprite2D = 5;
-    public const int VehicleType = 6;
+    public const int VehicleCapacity = 3;
+    public const int VehicleID = 4;
+    public const int VehiclePhysicsState2D = 5;
+    public const int VehicleSprite2D = 6;
+    public const int VehicleType = 7;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "ECSInput",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
+        "VehicleCapacity",
         "VehicleID",
         "VehiclePhysicsState2D",
         "VehicleSprite2D",
@@ -32,6 +34,7 @@ public static class VehicleComponentsLookup {
         typeof(ECSInput.Component),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
+        typeof(Vehicle.CapacityComponent),
         typeof(Vehicle.IDComponent),
         typeof(Vehicle.PhysicsState2DComponent),
         typeof(Vehicle.Sprite2DComponent),

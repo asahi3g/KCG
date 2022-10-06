@@ -5,6 +5,5 @@ namespace Enums
         None,
         UnAlerted,
         Alerted,
-        Sleep
     }
 }

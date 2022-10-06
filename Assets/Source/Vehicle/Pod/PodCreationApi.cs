@@ -212,12 +212,12 @@ namespace Vehicle.Pod
             GameState.PodCreationApi.SetCollisionOffset(new Vec2f(0.0f, 0.0f));
             GameState.PodCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
             GameState.PodCreationApi.SetRotation(0.0f);
-            GameState.PodCreationApi.SetAngularVelocity(Vec2f.Zero);
+            GameState.PodCreationApi.SetAngularVelocity(new Vec2f(0.15f, 0.0f));
             GameState.PodCreationApi.SetAngularMass(14f);
             GameState.PodCreationApi.SetAngularAcceleration(4f);
             GameState.PodCreationApi.SetCenterOfGravity(-6f);
             GameState.PodCreationApi.SetCenterOfRotation(Vec2f.Zero);
-            GameState.PodCreationApi.SetAffectedByGravity(true);
+            GameState.PodCreationApi.SetAffectedByGravity(false);
             GameState.PodCreationApi.SetRadarSize(new Vec2f(10f, 10f));
             GameState.PodCreationApi.SetStatus(2, 4);
             GameState.PodCreationApi.End();
