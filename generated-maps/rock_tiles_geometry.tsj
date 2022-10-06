@@ -8,7 +8,7 @@
         {
          "name":"Material",
          "type":"string",
-         "value":"Stone"
+         "value":"Rock"
         }],
  "spacing":0,
  "tilecount":207,
