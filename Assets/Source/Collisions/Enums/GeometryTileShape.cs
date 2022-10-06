@@ -4,6 +4,7 @@ namespace Enums
     public enum GeometryTileShape
     {
         SB_R0,
+        SA_R0,
         HB_R0,
         HB_R1,
         HB_R2,
