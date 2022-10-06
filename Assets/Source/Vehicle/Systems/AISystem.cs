@@ -9,6 +9,7 @@ using Particle;
 using static UnityEditor.PlayerSettings;
 using System.Drawing;
 using Collisions;
+using Unity.Mathematics;
 
 namespace Vehicle
 {
@@ -54,27 +55,72 @@ namespace Vehicle
             if (vehicle == null || particlePosition == null || movementSpeed == null)
                 return;
 
-            vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * Time.deltaTime;
-
-            CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
-
-            entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
-                new Vec2f(1.0f, 5));
-
-            if (GameState.VehicleAISystem.IsPathEmpty(ref planet))
+            if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
-                vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
-                GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
-            }
-            else
-            {
-                Debug.Log("LANDING");
-                movementSpeed = new Vec2f(movementSpeed.X, -25f);
+                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
 
-                if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
+                    new Vec2f(1.0f, -5));
+
+                var skyCheck = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) +                vehicle.physicsBox2DCollider.Offset,
+                            new Vec2f(1.0f, 20));
+
+                if(skyCheck.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
                 {
-                    vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                    return;
+                }
+
+                if (!GameState.VehicleAISystem.IsPathEmpty(ref planet))
+                {
+                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
+
+                    if (vehicle.hasVehicleCapacity)
+                    {
+                        var agentsInside = vehicle.vehicleCapacity.agentsInside;
+                        for (int j = 0; j < agentsInside.Count; j++)
+                        {
+                            agentsInside[j].agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
+                            agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+                            agentsInside[j].isAgentAlive = true;
+                        }
+                    }
+
                     GameState.VehicleAISystem.StopAI();
+                }
+
+                var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+                foreach (var pod in pods)
+                {
+                    if(Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
+                    {
+                        vehicle.vehicleRadar.podEntities.Add(pod);
+                    }
+                }
+            }
+            else if(vehicle.vehicleType.Type == VehicleType.Jet)
+            {
+                vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * Time.deltaTime;
+
+                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
+
+                entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
+                    new Vec2f(1.0f, 5));
+
+                if (GameState.VehicleAISystem.IsPathEmpty(ref planet))
+                {
+                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
+                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                }
+                else
+                {
+                    Debug.Log("LANDING");
+                    movementSpeed = new Vec2f(movementSpeed.X, -25f);
+
+                    if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                    {
+                        vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                        GameState.VehicleAISystem.StopAI();
+                    }
                 }
             }
         }

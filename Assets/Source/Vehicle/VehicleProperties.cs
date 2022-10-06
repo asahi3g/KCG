@@ -27,6 +27,8 @@ namespace Vehicle
         public Vec2f CenterOfRotation;
 
         public bool AffectedByGravity;
+
+        public int DefaultAgentCount;
     }
 }
 

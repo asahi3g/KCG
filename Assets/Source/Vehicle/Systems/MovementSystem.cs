@@ -28,12 +28,13 @@ namespace Vehicle
                 VehicleProperties vehicleProperties =
                         VehicleCreationApi.GetRef((int)vehicle.vehicleType.Type);
 
+                var velocity = vehicle.vehiclePhysicsState2D.angularVelocity;
+
                 // Process Gravity
                 if(vehicle.vehiclePhysicsState2D.AffectedByGravity)
-                    vehicle.vehiclePhysicsState2D.angularVelocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
+                    velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
 
                 vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
-
 
             }
         }
