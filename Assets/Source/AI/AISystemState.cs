@@ -34,7 +34,8 @@ namespace AI
 
             for (int i = 0; i < length; i++)
             {
-                Behaviors[i].TypeID = BehaviorType.Error;
+                Behaviors[i].TypeID = (BehaviorType)i;
+                Behaviors[i].RootID = -1;
             }
 
             foreach (Type type in Assembly.GetAssembly(typeof(BehaviorBase)).GetTypes()
@@ -42,9 +43,16 @@ namespace AI
             {
                 BehaviorBase behavior = (BehaviorBase)Activator.CreateInstance(type);
                 BehaviorProperties behaviorProperties = new BehaviorProperties();
-                behaviorProperties.TypeID = behavior.Type;
-                behaviorProperties.RootID = behavior.BehaviorTreeGenerator();
-                Behaviors[(int)behaviorProperties.TypeID] = behaviorProperties;
+                Behaviors[(int)behaviorProperties.TypeID].RootID = behavior.BehaviorTreeGenerator();
+            }
+
+            {
+                BehaviorBase behavior = new BehaviorBase();
+                for (int i = 0; i < length; i++)
+                {
+                    if (Behaviors[i].RootID == -1)
+                        Behaviors[i].RootID = behavior.BehaviorTreeGenerator();
+                }
             }
         }
 

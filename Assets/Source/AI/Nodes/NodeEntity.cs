@@ -1,4 +1,5 @@
 ﻿using AI;
+using Node;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -79,10 +80,16 @@ public partial class NodeEntity
         }
         if (hasNodesDecorator)
         {
-            children.Add(context.GetEntityWithNodeIDID(nodesDecorator.ChildID));
+            if (nodesDecorator.ChildID != -1)
+                children.Add(context.GetEntityWithNodeIDID(nodesDecorator.ChildID));
         }
 
         return children;
+    }
+
+    public NodeBase GetNodeSystem()
+    {
+        return AISystemState.Nodes[(int)nodeID.TypeID];
     }
 }
 

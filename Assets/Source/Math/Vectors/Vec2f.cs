@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace KMath
@@ -20,6 +21,8 @@ namespace KMath
         
         public float X;
         public float Y;
+
+        public Vector2 GetVector2() => new Vector2(X, Y);
 
         public Vec2f(float x, float y)
         {

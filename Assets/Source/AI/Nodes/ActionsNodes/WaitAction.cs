@@ -1,5 +1,8 @@
-﻿using Enums;
+﻿using Entitas;
+using Enums;
 using Planet;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Node
@@ -8,6 +11,13 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.WaitAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+
+        public override List<Type> RegisterComponents()
+        {
+            List<Type> components = new List<Type>();
+            components.Add(typeof(DurationComponent));
+            return components;
+        }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {

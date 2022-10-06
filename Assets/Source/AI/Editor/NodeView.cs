@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
 using UnityEngine.UIElements;
+using Entitas;
 
 namespace AI
 {
@@ -13,6 +14,8 @@ namespace AI
         public Action<NodeView> OnNodeSelected;
         public const int Width = 128;
         public const int Height = 80;
+        public Port Input = null;
+        public Port Output = null;
 
         public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
@@ -28,11 +31,15 @@ namespace AI
         private void CreatePorts(NodeEntity nodeEntity)
         {
             if (!nodeEntity.isNodeRoot)
-                inputContainer.Add(CreatePort(Direction.Input, Capacity.Single));
+            {
+                Input = CreatePort(Direction.Input, Capacity.Single);
+                inputContainer.Add(Input);
+            }
             if (nodeEntity.hasNodeComposite)
-                outputContainer.Add(CreatePort(Direction.Output, Capacity.Multi));
+                Output = CreatePort(Direction.Output, Capacity.Multi);
             else if (nodeEntity.hasNodesDecorator)
-                outputContainer.Add(CreatePort(Direction.Output, Capacity.Single));
+                Output = CreatePort(Direction.Output, Capacity.Multi);
+            outputContainer.Add(Output);
         }
 
         private Port CreatePort(Direction dir, Capacity capacity)
