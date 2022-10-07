@@ -38,6 +38,7 @@
         HarvestAction,
         MechPlacementAction,
         MaterialPlacementAction,
+        ThrowFlareAction,
 
 
         /// Ttools actions
@@ -56,6 +57,6 @@
         ToolActionRemoveMech,
         ToolActionPotion,
         ToolActionGeometryPlacement,
-        ToolActionAxe
+        ToolActionAxe,
     }
 }

@@ -70,6 +70,12 @@ namespace Vehicle
                     return;
                 }
 
+                if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                {
+                    vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                    vehicle.vehicleThruster.Jet = false;
+                }
+
                 if (!GameState.VehicleAISystem.IsPathEmpty(ref planet))
                 {
                     vehicle.vehiclePhysicsState2D.AffectedByGravity = false;

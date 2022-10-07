@@ -42,6 +42,9 @@ namespace Projectile
                     case Enums.ProjectileType.GasGrenade:
                         GasGrenade(ref planet, projectileEntity);
                         break;
+                    case Enums.ProjectileType.Flare:
+                        FlareGrenade(ref planet, projectileEntity);
+                        break;
                     default:
                         Default(ref planet, projectileEntity);
                         break;
@@ -58,10 +61,6 @@ namespace Projectile
             if (projectileEntity.hasProjectileDamage)
             {
                 int damage = projectileEntity.projectileDamage.Damage;
-                //stats.Health -= damage;
-
-                // Debug floating Text
-                //planet.AddFloatingText(damage.ToString(), 1.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position, new Color(1.0f, 0, 0, 1.0f), 12);
 
                 planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
             }
@@ -171,6 +170,19 @@ namespace Projectile
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
             if (elapse >= 12.0f)
+                pEntity.isProjectileDelete = true;
+        }
+
+        public void FlareGrenade(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        {
+            float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
+
+            if (elapse >= 3.0f && elapse <= 3.1f)
+            {
+                planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
+            }
+
+            if (elapse >= 7.0f)
                 pEntity.isProjectileDelete = true;
         }
     }

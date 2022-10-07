@@ -31,6 +31,7 @@
         RiotShield,
         GasBomb,
         FragGrenade,
+        Flare,
 
         /// <summary>
         /// Equipment
