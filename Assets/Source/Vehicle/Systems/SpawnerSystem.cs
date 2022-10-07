@@ -42,7 +42,8 @@ namespace Vehicle
             entity.AddVehicleType(vehicleType, false);
 
             List<PodEntity> pods = new List<PodEntity>();
-            entity.AddVehicleRadar(pods);
+            List<PodEntity> DeadMembers = new List<PodEntity>();
+            entity.AddVehicleRadar(pods, DeadMembers);
 
             entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None);
 

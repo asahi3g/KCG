@@ -9,5 +9,6 @@ namespace Vehicle
     public class RadarComponent : IComponent
     {
         public List<PodEntity> podEntities;
+        public List<PodEntity> DeadMembers;
     }
 }

@@ -159,15 +159,34 @@ namespace ECSInput
                         {
                             if(player.agentModel3D.GameObject.gameObject.active)
                             {
-                                GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                if(vehicle.vehicleType.Type == VehicleType.DropShip)
+                                {
+                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
 
-                                // Player Gets inside of Rocket
-                                // Hide Agent/Player
-                                player.agentModel3D.GameObject.gameObject.SetActive(false);
-                                player.isAgentAlive = false;
-                                vehicle.vehicleType.HasAgent = true;
+                                    // Player Gets inside of Rocket
+                                    // Hide Agent/Player
+                                    player.agentModel3D.GameObject.gameObject.SetActive(false);
+                                    player.isAgentAlive = false;
+                                    vehicle.vehicleType.HasAgent = true;
 
-                                GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+
+                                    vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
+                                    vehicle.vehicleThruster.Jet = true;
+                                }
+                                else
+                                {
+                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+
+                                    // Player Gets inside of Rocket
+                                    // Hide Agent/Player
+                                    player.agentModel3D.GameObject.gameObject.SetActive(false);
+                                    player.isAgentAlive = false;
+                                    vehicle.vehicleType.HasAgent = true;
+
+                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                }
+
                             }
                             else
                             {
