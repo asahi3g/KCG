@@ -44,8 +44,9 @@ namespace Vehicle.Pod
             PodState podState = PodState.None;
             entity.AddVehiclePodState(podState);
 
-            List<AgentEntity> agents = new List<AgentEntity>();
-            entity.AddVehiclePodRadar(podProperties.RadarSize, agents, agents.Count);
+            List<AgentEntity> Members = new List<AgentEntity>();
+            List<AgentEntity> DeadMembers = new List<AgentEntity>();
+            entity.AddVehiclePodRadar(podProperties.RadarSize, Members, DeadMembers, Members.Count);
 
             entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score);
 

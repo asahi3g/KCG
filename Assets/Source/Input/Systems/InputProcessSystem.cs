@@ -173,6 +173,7 @@ namespace ECSInput
 
                                     vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
                                     vehicle.vehicleThruster.Jet = true;
+                                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
                                 }
                                 else
                                 {
@@ -183,6 +184,13 @@ namespace ECSInput
                                     player.agentModel3D.GameObject.gameObject.SetActive(false);
                                     player.isAgentAlive = false;
                                     vehicle.vehicleType.HasAgent = true;
+
+                                    if(vehicle.hasVehicleThruster)
+                                    {
+                                        vehicle.vehicleThruster.Jet = false;
+                                        vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                                        vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 0.0f);
+                                    }
 
                                     GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
                                 }

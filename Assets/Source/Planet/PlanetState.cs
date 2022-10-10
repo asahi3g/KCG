@@ -591,6 +591,7 @@ namespace Planet
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ProjectileProcessState.Update(ref this);
             GameState.PodAISystem.Update(ref this);
+            GameState.VehicleAISystem.Update(ref this);
 
             // Collision systems.
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);

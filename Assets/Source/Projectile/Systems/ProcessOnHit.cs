@@ -177,9 +177,10 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            if (elapse > 3.0f && elapse < 3.01)
+            if(!pEntity.projectileOnHit.ParticleSpawned)
             {
-                planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
+                pEntity.projectileOnHit.ParticleSpawned = true;
+                planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(0,0));
             }
 
             if (elapse >= 7.0f)

@@ -42,10 +42,11 @@ namespace Vehicle
             entity.AddVehicleType(vehicleType, false);
 
             List<PodEntity> pods = new List<PodEntity>();
-            List<PodEntity> DeadMembers = new List<PodEntity>();
-            entity.AddVehicleRadar(pods, DeadMembers);
+            entity.AddVehicleRadar(pods);
 
-            entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None);
+            entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None, true);
+
+            entity.AddVehicleHeightMap(false, Vec2f.Zero);
 
             if (vehicleType == VehicleType.DropShip)
             {

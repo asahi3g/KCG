@@ -43,7 +43,10 @@ namespace Vehicle.Pod
                     {
                         if (!pod.vehiclePodRadar.Members.Contains(agent))
                         {
-                            pod.vehiclePodRadar.Members.Add(agent);
+                            if(agent.isAgentAlive)
+                                pod.vehiclePodRadar.Members.Add(agent);
+                            else
+                                pod.vehiclePodRadar.DeadMembers.Add(agent);
                         }
 
                         if (pod.vehiclePodRadar.Members.Contains(planet.Player))

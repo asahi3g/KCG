@@ -11,21 +11,23 @@ public partial class VehicleEntity {
     public Vehicle.ThrusterComponent vehicleThruster { get { return (Vehicle.ThrusterComponent)GetComponent(VehicleComponentsLookup.VehicleThruster); } }
     public bool hasVehicleThruster { get { return HasComponent(VehicleComponentsLookup.VehicleThruster); } }
 
-    public void AddVehicleThruster(bool newJet, float newAngle, Enums.JetSize newJetSize) {
+    public void AddVehicleThruster(bool newJet, float newAngle, Enums.JetSize newJetSize, bool newIsLaunched) {
         var index = VehicleComponentsLookup.VehicleThruster;
         var component = (Vehicle.ThrusterComponent)CreateComponent(index, typeof(Vehicle.ThrusterComponent));
         component.Jet = newJet;
         component.Angle = newAngle;
         component.JetSize = newJetSize;
+        component.isLaunched = newIsLaunched;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehicleThruster(bool newJet, float newAngle, Enums.JetSize newJetSize) {
+    public void ReplaceVehicleThruster(bool newJet, float newAngle, Enums.JetSize newJetSize, bool newIsLaunched) {
         var index = VehicleComponentsLookup.VehicleThruster;
         var component = (Vehicle.ThrusterComponent)CreateComponent(index, typeof(Vehicle.ThrusterComponent));
         component.Jet = newJet;
         component.Angle = newAngle;
         component.JetSize = newJetSize;
+        component.isLaunched = newIsLaunched;
         ReplaceComponent(index, component);
     }
 
