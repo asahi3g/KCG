@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using KMath;
 using Enums.Tile;
-using AI.BehaviorTree;
 
 namespace Planet.Unity
 {

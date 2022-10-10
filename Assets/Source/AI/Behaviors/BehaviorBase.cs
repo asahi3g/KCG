@@ -1,4 +1,6 @@
 ﻿using Enums;
+using System.Collections.Generic;
+using KMath;
 
 namespace AI
 {
@@ -6,11 +8,22 @@ namespace AI
     {
         public virtual BehaviorType Type { get { return BehaviorType.Error; } }
 
-        public virtual int BehaviorTreeGenerator()
+        NodeInfo Root = new NodeInfo
         {
-            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
-            GameState.BehaviorTreeCreationAPI.EndTree();
-            return rootID;
+            index = 0,
+            pos = new Vec2f(0, 0),
+            type = NodeType.DecoratorNode,
+            children = new List<int>()
+        };
+        public virtual string Name { get { return Type.ToString(); } }
+        public virtual List<NodeInfo> Nodes
+        {
+            get
+            {
+                List<NodeInfo> nodes = new List<NodeInfo>();
+                nodes.Add(Root);
+                return nodes;
+            }
         }
     }
 }

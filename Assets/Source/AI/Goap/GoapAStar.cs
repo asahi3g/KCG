@@ -5,30 +5,30 @@ using UnityEngine;
 
 namespace AI
 {
-    internal class Node
-    {
-        public Node(Node parent, GoapState states, int ActionID, int PCost, int HCost)
-        {
-            Parent = parent;
-            WorldState = states;
-            LinkedActionID = ActionID;
-            PathCost = PCost;
-            HeuristicCost = HCost;
-            TotalCost = PathCost + HeuristicCost;
-        }
-
-        public Node                 Parent;
-
-        public readonly GoapState   WorldState;
-        public int                  LinkedActionID;
-
-        public int                  PathCost;
-        public int                  HeuristicCost;
-        public int                  TotalCost;
-    }
-    // Todo: update this for new action system.
-
-    /*
+ //   internal class Node
+ //   {
+ //       public Node(Node parent, GoapState states, int ActionID, int PCost, int HCost)
+ //       {
+ //           Parent = parent;
+ //           WorldState = states;
+ //           LinkedActionID = ActionID;
+ //           PathCost = PCost;
+ //           HeuristicCost = HCost;
+ //           TotalCost = PathCost + HeuristicCost;
+ //       }
+ //
+ //       public Node                 Parent;
+ //
+ //       public readonly GoapState   WorldState;
+ //       public int                  LinkedActionID;
+ //
+ //       public int                  PathCost;
+ //       public int                  HeuristicCost;
+ //       public int                  TotalCost;
+ //   }
+ //   // Todo: update this for new action system.
+ //
+ /*
     public class GoapAStar
     {
         List<Node> OpenList = new List<Node>();

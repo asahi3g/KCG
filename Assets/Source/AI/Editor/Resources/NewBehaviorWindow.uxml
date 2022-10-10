@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="Container" style="height: 56px; width: 200px;">
+        <ui:Label text="New Behavior" display-tooltip-when-elided="true" style="font-size: 11px;" />
+        <ui:TextField picking-mode="Ignore" label="Name:" text="filler text" max-length="1" is-delayed="false" password="false" style="font-size: 10px;" />
+    </ui:VisualElement>
+</ui:UXML>

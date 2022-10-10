@@ -5,7 +5,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using System.Linq;
 using System;
-using UnityEngine.Networking.Types;
+using KMath;
+using static Unity.VisualScripting.Metadata;
 
 namespace AI
 {
@@ -16,6 +17,7 @@ namespace AI
         { }
 
         public Action<NodeView> OnNodeSelected;
+        public List<NodeView> NodeViews;
 
         public BehaviorTreeView()
         {
@@ -67,69 +69,75 @@ namespace AI
                 switch (node.NodeGroup)
                 {
                     case NodeGroup.DecoratorNode:
-                        evt.menu.AppendAction($"Add Decorator Node/{node.Type.ToString()}", (a) => CreateNodeView(node.Type, nodePosition));
+                        evt.menu.AppendAction($"Add Decorator Node/{node.Type.ToString()}", (a) => 
+                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
                         break;
                     case NodeGroup.CompositeNode:
-                        evt.menu.AppendAction($"Add Composite Node/{node.Type.ToString()}", (a) => CreateNodeView(node.Type, nodePosition));
+                        evt.menu.AppendAction($"Add Composite Node/{node.Type.ToString()}", (a) => 
+                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
                         break;
                     case NodeGroup.ActionNode:
-                        evt.menu.AppendAction($"Add Action Node/{node.Type.ToString()}", (a) => CreateNodeView(node.Type, nodePosition));
+                        evt.menu.AppendAction($"Add Action Node/{node.Type.ToString()}", (a) => 
+                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
                         break;
                 }
             }
             evt.menu.AppendSeparator();
-            evt.menu.AppendAction($"Delete", (a) => DeleteSelection());
+            evt.menu.AppendAction($"Delete", (a) => DeleteSelected());
         }
 
-        public void PopulateView(int nodeID)
+        public void PopulateView(int i)
         {
             graphViewChanged -= OnGraphViewChanged;
             DeleteElements(graphElements);
-            NodeEntity nodeEntity = Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeID);
-            NodeView nodeView = CreateNodeView(nodeEntity, SetRootPos());
-
-            PopulateChildren(nodeView, nodeEntity);
-            graphViewChanged += OnGraphViewChanged;
-        }
-
-        private void PopulateChildren(NodeView nodeView, NodeEntity nodeEntity)
-        {
-            var children = nodeEntity.GetChildren(Contexts.sharedInstance.node);
-            Vector2 pos = nodeView.Postion + new Vector2(-NodeView.Width * (children.Count - 1) * 0.6f, NodeView.Height * 1.5f);
-            foreach (var child in children)
+            for (int j = 0; j < AISystemState.Behaviors[i].Nodes.Count; j++)
             {
-                NodeView childNodeView = CreateNodeView(child, pos);
-                PopulateChildren(childNodeView, child);
-                pos += new Vector2(NodeView.Width * 1.2f, 0f);
-                Edge edge = nodeView.Output.ConnectTo(childNodeView.Input);
-                AddElement(edge);
+                CreateNodeView(AISystemState.Behaviors[i].Nodes[j]);
+            }
+
+            for (int j = 0; j < AISystemState.Behaviors[i].Nodes.Count; j++)
+            {
+                foreach (var index in NodeViews[j].Node.children)
+                {
+                    Edge edge = NodeViews[j].Output.ConnectTo(NodeViews[index].Input);
+                    AddElement(edge);
+                }
             }
         }
 
         public void DefaultPopulateView()
         {
-            graphViewChanged -= OnGraphViewChanged;
-            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
-            GameState.BehaviorTreeCreationAPI.EndTree();
-            NodeEntity nodeEntity = Contexts.sharedInstance.node.GetEntityWithNodeIDID(rootID);
-            CreateNodeView(nodeEntity, SetRootPos());
+            // Clear elements
+            graphViewChanged -= OnGraphViewChanged;        
+            CreateNodeView(NodeType.DecoratorNode, SetRootPos());
             graphViewChanged += OnGraphViewChanged;
         }
 
-        private NodeView CreateNodeView(NodeEntity nodeEntity, Vector2 pos)
+        private NodeView CreateNodeView(NodeInfo node)
         {
-            NodeView nodeView = new NodeView(nodeEntity, pos);
+            NodeView nodeView = new NodeView(node);
             nodeView.OnNodeSelected = OnNodeSelected;
             AddElement(nodeView);
+            NodeViews.Add(nodeView);
             return nodeView;
         }
 
-        private void CreateNodeView(NodeType nodeType, Vector2 pos)
+        private void CreateNodeView(NodeType nodeType, Vec2f position)
         {
-            NodeEntity nodeEntity = GameState.BehaviorTreeCreationAPI.CreateBehaviorTreeNode(nodeType);
-            NodeView nodeView = new NodeView(nodeEntity, pos);
-            nodeView.OnNodeSelected = OnNodeSelected;
-            AddElement(nodeView);
+            NodeInfo node = new NodeInfo
+            {
+                index = NodeViews.Count,
+                type = nodeType,
+                pos = position,
+                children = (AISystemState.GetNodeGroup(nodeType) == NodeGroup.ActionNode) ? null : new List<int>()
+            };
+            CreateNodeView(node);
+        }
+
+        private void DeleteSelected()
+        {
+            // Delete selected.
+            DeleteSelection();
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -139,6 +147,6 @@ namespace AI
                           endPort.node != startPort.node).ToList();
         }
 
-        private Vector2 SetRootPos() => new Vector2((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
+        private Vec2f SetRootPos() => new Vec2f((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
     }
 }

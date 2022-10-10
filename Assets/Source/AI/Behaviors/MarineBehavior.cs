@@ -1,6 +1,5 @@
 ﻿using Enums;
 using KMath;
-using Node;
 using System.Collections.Generic;
 
 namespace AI
@@ -9,60 +8,91 @@ namespace AI
     {
         public override BehaviorType Type { get { return BehaviorType.Marine; } }
 
-        /// <returns> return Id of root</returns>
-        public AgentController GetAgentController(Contexts enititasContext, int agentID)
+        NodeInfo Root = new NodeInfo
         {
-            AgentController marineController = new AgentController();
-            marineController.BlackBoard = new BlackBoard(agentID);
-            marineController.Sensors = new List<Sensor.SensorBase>();
-            marineController.AttachSensors(new Sensor.EnemySensor());
-            marineController.BehaviorTreeRoot = BehaviorTreeGenerator();
+            index = 0,
+            pos = new Vec2f(0, 0),
+            type = NodeType.DecoratorNode,
+            children = new List<int>() { 1 }
+        };
+        NodeInfo node1 = new NodeInfo
+        {
+            index = 1,
+            pos = new Vec2f(0, 0),
+            type = NodeType.RepeaterNode,
+            children = new List<int>() { 2 }
+        };
+        NodeInfo node2 = new NodeInfo
+        {
+            index = 2,
+            pos = new Vec2f(0, 0),
+            type = NodeType.SelectorNode,
+            children = new List<int>() { 3, 8 }
+        };
+        NodeInfo node3 = new NodeInfo
+        {
+            index = 3,
+            pos = new Vec2f(0, 0),
+            type = NodeType.SequenceNode,
+            children = new List<int>() { 4, 5, 6, 7 }
+        };
+        NodeInfo node4 = new NodeInfo
+        {
+            index = 4,
+            pos = new Vec2f(0, 0),
+            type = NodeType.SelectClosestTarget,
+        };
+        NodeInfo node5 = new NodeInfo
+        {
+            index = 5,
+            pos = new Vec2f(0, 0),
+            type = NodeType.ShootFireWeaponAction,
+        };
+        NodeInfo node6 = new NodeInfo
+        {
+            index = 6,
+            pos = new Vec2f(0, 0),
+            type = NodeType.WaitAction,
+        };
+        NodeInfo node7 = new NodeInfo
+        {
+            index = 7,
+            pos = new Vec2f(0, 0),
+            type = NodeType.WaitAction,
+            children = new List<int>()
+        };
+        NodeInfo node8 = new NodeInfo
+        {
+            index = 8,
+            pos = new Vec2f(0, 0),
+            type = NodeType.SequenceNode,
+            children = new List<int>() { 9 }
+        };
+        NodeInfo node9 = new NodeInfo
+        {
+            index = 9,
+            pos = new Vec2f(0, 0),
+            type = NodeType.WaitAction,
+        };
 
-            return marineController;
-        }
-        public override int BehaviorTreeGenerator()
+
+        public override List<NodeInfo> Nodes
         {
-            List<NodeEntity> nodes = new List<NodeEntity>();
-            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
+            get
             {
-                nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.RepeaterNode));
-                {
-                    nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.SelectorNode));
-                    {
-                        nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.SequenceNode));
-                        {
-                            nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.SelectClosestTarget));
-                            nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.ShootFireWeaponAction));
-                            nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.WaitAction));
-                            nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.WaitAction));
-
-                        }
-                        GameState.BehaviorTreeCreationAPI.EndNode();
-                        nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.SequenceNode));
-                        {
-                            nodes.Add(GameState.BehaviorTreeCreationAPI.AddChild(Enums.NodeType.WaitAction));
-                        }
-                        GameState.BehaviorTreeCreationAPI.EndNode();
-                    }
-                    GameState.BehaviorTreeCreationAPI.EndNode();
-                }
+                List<NodeInfo> nodes = new List<NodeInfo>();
+                nodes.Add(Root);
+                nodes.Add(node1);
+                nodes.Add(node2);
+                nodes.Add(node3);
+                nodes.Add(node4);
+                nodes.Add(node5);
+                nodes.Add(node6);
+                nodes.Add(node7);
+                nodes.Add(node8);
+                nodes.Add(node9);
+                return nodes;
             }
-
-            AddData(nodes);
-            return rootID;
-        }
-
-        public void AddData(List<NodeEntity> nodes)
-        {
-            DurationComponent comp1 = new DurationComponent();
-            comp1.Duration = 5f;
-            nodes[5].AddComponent(3, comp1);
-            DurationComponent comp2 = new DurationComponent();
-            comp2.Duration = 3f;
-            nodes[6].AddComponent(3, comp2);
-            DurationComponent comp3 = new DurationComponent();
-            comp3.Duration = 1f;
-            nodes[8].AddComponent(3, comp3);
         }
     }
 }
