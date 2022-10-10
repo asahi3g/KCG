@@ -57,6 +57,23 @@ namespace Vehicle
 
             if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
+                if(!vehicle.vehicleHeightMap.OpenSky)
+                {
+                    for(int i = 0; i < planet.TileMap.MapSize.X; i++)
+                    {
+                        var tile = planet.TileMap.GetTile(i, 30);
+                        if(tile.FrontTileID == Enums.Tile.TileID.Air)
+                        {
+                            vehicle.vehicleHeightMap.OpenSky = true;
+                            vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);
+
+                            vehicle.vehiclePhysicsState2D.Position = vehicle.vehicleHeightMap.SpawnPosition;
+
+                        }
+                    }
+                }
+
+
                 if(vehicle.hasVehicleThruster)
                 {
                     if(vehicle.vehicleThruster.Jet)
@@ -75,12 +92,14 @@ namespace Vehicle
                     return;
                 }
 
-                if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
+                if((entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
                     entityBoxBorders.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
-                        entityBoxBorders.IsCollidingRight(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                        entityBoxBorders.IsCollidingRight(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity)) && 
+                            vehicle.vehicleThruster.isLaunched)
                 {
                     vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
                     vehicle.vehicleThruster.Jet = false;
+                    vehicle.vehicleThruster.isLaunched = false;
 
                     var agentsInside = vehicle.vehicleCapacity.agentsInside;
                     if (vehicle.hasVehicleCapacity)

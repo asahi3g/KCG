@@ -11,19 +11,17 @@ public partial class VehicleEntity {
     public Vehicle.RadarComponent vehicleRadar { get { return (Vehicle.RadarComponent)GetComponent(VehicleComponentsLookup.VehicleRadar); } }
     public bool hasVehicleRadar { get { return HasComponent(VehicleComponentsLookup.VehicleRadar); } }
 
-    public void AddVehicleRadar(System.Collections.Generic.List<PodEntity> newPodEntities, System.Collections.Generic.List<PodEntity> newDeadMembers) {
+    public void AddVehicleRadar(System.Collections.Generic.List<PodEntity> newPodEntities) {
         var index = VehicleComponentsLookup.VehicleRadar;
         var component = (Vehicle.RadarComponent)CreateComponent(index, typeof(Vehicle.RadarComponent));
         component.podEntities = newPodEntities;
-        component.DeadMembers = newDeadMembers;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehicleRadar(System.Collections.Generic.List<PodEntity> newPodEntities, System.Collections.Generic.List<PodEntity> newDeadMembers) {
+    public void ReplaceVehicleRadar(System.Collections.Generic.List<PodEntity> newPodEntities) {
         var index = VehicleComponentsLookup.VehicleRadar;
         var component = (Vehicle.RadarComponent)CreateComponent(index, typeof(Vehicle.RadarComponent));
         component.podEntities = newPodEntities;
-        component.DeadMembers = newDeadMembers;
         ReplaceComponent(index, component);
     }
 

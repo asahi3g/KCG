@@ -6,8 +6,9 @@ using UnityEngine;
 namespace Vehicle
 {
     [Vehicle]
-    public class RadarComponent : IComponent
+    public class HeightMapComponent : IComponent
     {
-        public List<PodEntity> podEntities;
+        public bool OpenSky;
+        public Vec2f SpawnPosition;
     }
 }

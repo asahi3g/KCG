@@ -12,5 +12,6 @@ namespace Vehicle
         public bool Jet;
         public float Angle;
         public JetSize JetSize;
+        public bool isLaunched;
     }
 }
