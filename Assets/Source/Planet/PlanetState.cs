@@ -507,7 +507,7 @@ namespace Planet
         {
             Utils.Assert(VehicleList.Length < PlanetEntityLimits.VehicleLimit);
 
-            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(EntitasContext.vehicle, vehicleType, position));
+            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(ref this, vehicleType, position));
             return newEntity;
         }
 
@@ -590,7 +590,6 @@ namespace Planet
             GameState.ParticleEmitterUpdateSystem.Update(ref this);
             GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
             GameState.ProjectileProcessState.Update(ref this);
-            GameState.VehicleAISystem.Update(ref this);
             GameState.PodAISystem.Update(ref this);
 
             // Collision systems.

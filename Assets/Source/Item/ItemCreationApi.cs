@@ -1063,6 +1063,14 @@ namespace Item
             SetAction(NodeType.ThrowGasBombAction);
             EndItem();
 
+            CreateItem(ItemType.Flare, "Flare");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSprite5);
+            SetInventoryTexture(GrenadeSprite5);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowFlareAction);
+            EndItem();
+
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
