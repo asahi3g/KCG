@@ -13,7 +13,6 @@ namespace AI
         public void AttachSensors(SensorBase sensor)
         {
             Sensors.Add(sensor);
-            sensor.RegisterInBlackBoard(BlackBoard);
         }
 
         public void Update(ref PlanetState planet)

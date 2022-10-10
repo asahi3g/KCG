@@ -95,12 +95,14 @@ namespace AI
         private void PopulateChildren(NodeView nodeView, NodeEntity nodeEntity)
         {
             var children = nodeEntity.GetChildren(Contexts.sharedInstance.node);
-            Vector2 pos = nodeView.Postion + new Vector2(-NodeView.Width * (children.Count - 1) * 0.6f, NodeView.Height * 1.2f);
+            Vector2 pos = nodeView.Postion + new Vector2(-NodeView.Width * (children.Count - 1) * 0.6f, NodeView.Height * 1.5f);
             foreach (var child in children)
             {
                 NodeView childNodeView = CreateNodeView(child, pos);
                 PopulateChildren(childNodeView, child);
                 pos += new Vector2(NodeView.Width * 1.2f, 0f);
+                Edge edge = nodeView.Output.ConnectTo(childNodeView.Input);
+                AddElement(edge);
             }
         }
 

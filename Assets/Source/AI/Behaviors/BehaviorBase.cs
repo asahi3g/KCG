@@ -8,7 +8,9 @@ namespace AI
 
         public virtual int BehaviorTreeGenerator()
         {
-            return -1;
+            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
+            GameState.BehaviorTreeCreationAPI.EndTree();
+            return rootID;
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<#@ template language="C#" debug="false" hostspecfic="false"#>
+<#@ assembly name="System.Core" #>
+<#@ paramter name="BehaviorType", type="System.String"#>
+
+using Enums;
+using KMath;
+using Node;
+using UnityEditor;
+using System.Collections.Generic;
+
+namespace AI
+{
+	public class <#=BehaviorType#> : BehaviorBase
+	{
+		public override BehaviorType Type { get { return BehaviorType.Error; } }
+
+		public virtual int BehaviorTreeGenerator()
+        {
+            int rootID = GameState.BehaviorTreeCreationAPI.CreateTree();
+            GameState.BehaviorTreeCreationAPI.EndTree();
+            return rootID;
+        }
+	}
+}

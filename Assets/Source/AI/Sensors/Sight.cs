@@ -6,10 +6,6 @@ namespace AI.Sensor
 {
     public class Sight : SensorBase
     {
-        public override void RegisterInBlackBoard(BlackBoard blackboard)
-        {
-            VariableID = blackboard.Register(typeof(bool), "Has Enemy on Sight");
-        }
         public override void Update(BlackBoard blackboard, ref PlanetState planet)
         {
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.OwnerAgentID);
@@ -22,11 +18,11 @@ namespace AI.Sensor
                 bool intersect = LineOfSight.CanSee(ref planet, agent.agentID.ID, entity.agentID.ID);
                 if (intersect)
                 {
-                    blackboard.Set(VariableID, true);
+                    blackboard.Set(-1, true);
                     return;
                 }
             }
-            blackboard.Set(VariableID, false);
+            blackboard.Set(-1, false);
         }
     }
 }

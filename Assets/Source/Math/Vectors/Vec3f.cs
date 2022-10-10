@@ -13,6 +13,8 @@ namespace KMath
         public float Y;
         public float Z;
 
+        public Vector3 GetVector3() => new Vector3(X, Y, Z);
+
         public Vec3f(float x, float y)
         {
             X = x;

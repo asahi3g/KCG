@@ -4,10 +4,10 @@ namespace AI.Sensor
 {
     public class EnemySensor : SensorBase
     {
-        public override void RegisterInBlackBoard(BlackBoard blackboard)
-        {
-            VariableID = blackboard.Register(typeof(bool), "Enemies-alive");
-        }
+        //public override void RegisterInBlackBoard(BlackBoard blackboard)
+        //{
+        //    VariableID = blackboard.Register(typeof(bool), "Enemies-alive");
+        //}
         public override void Update(BlackBoard blackboard, ref PlanetState planet)
         {
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.OwnerAgentID);
@@ -17,10 +17,10 @@ namespace AI.Sensor
                 if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
                     continue;
 
-                blackboard.Set(VariableID, true);
+                blackboard.Set(-1, true);
                 return;
             }
-            blackboard.Set(VariableID, false);
+            blackboard.Set(-1, false);
         }
     }
 }

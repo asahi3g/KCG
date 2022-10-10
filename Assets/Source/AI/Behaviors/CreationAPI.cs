@@ -32,6 +32,9 @@ namespace AI.BehaviorTree
                 case NodeGroup.DecoratorNode:
                     nodeEntity.AddNodesDecorator(-1);
                     break;
+                case NodeGroup.ActionNode:
+                    nodeEntity.AddNodeBlackboardData(-1);
+                    break;
             }
 
             return nodeEntity;
@@ -59,7 +62,6 @@ namespace AI.BehaviorTree
                     break;
 
             }
-
         }
 
         public int CreateTree()
@@ -70,10 +72,11 @@ namespace AI.BehaviorTree
             return root.nodeID.ID;
         }
 
-        public void AddChild(NodeType type)
+        public NodeEntity AddChild(NodeType type)
         {
             NodeEntity newEntity = CreateBehaviorTreeNode(type);
             AddToParent(newEntity);
+            return newEntity;
         }
 
         public void EndNode()
