@@ -7,10 +7,9 @@ using UnityEngine;
 namespace Vehicle.Pod
 {
     [Pod]
-    public class StatusComponent : IComponent
+    public class CoverComponent : IComponent
     {
-        public int PodValue;
-        public int Score;
-        public bool Freeze;
+        public List<Vec2f> CoverPositions;
+        public List<Vec2f> FirePositions;
     }
 }

@@ -23,20 +23,21 @@ namespace Vehicle
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);
 
-            // Create Entity
+            // Create Entity.
+            // Add components to entity. (id, sprite, physics,
+            //  collider, type, radar, thruster, height map, capacity).
+            // Add default agents 
+
+
             var entity = planet.EntitasContext.vehicle.CreateEntity();
 
-            // Add ID Component
             entity.AddVehicleID(UniqueID, -1);
 
-            // Add Sprite Component
             entity.AddVehicleSprite2D(vehicleProperties.SpriteId, vehicleProperties.SpriteSize);
 
-            // Add Physics State 2D Component
             entity.AddVehiclePhysicsState2D(position, position, vehicleProperties.Scale, vehicleProperties.Scale, vehicleProperties.Rotation, vehicleProperties.AngularVelocity, vehicleProperties.AngularMass,
                 vehicleProperties.AngularAcceleration, vehicleProperties.CenterOfGravity, vehicleProperties.CenterOfRotation, vehicleProperties.AffectedByGravity);
 
-            // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(vehicleProperties.CollisionSize, vehicleProperties.CollisionOffset);
 
             entity.AddVehicleType(vehicleType, false);
