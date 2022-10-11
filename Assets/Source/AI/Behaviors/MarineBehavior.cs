@@ -11,7 +11,7 @@ namespace AI
         NodeInfo Root = new NodeInfo
         {
             index = 0,
-            pos = new Vec2f(598.2f, 88.8f),
+            pos = new Vec2f(579.2f, 160.8704f),
             type = NodeType.DecoratorNode,
          
             children = new List<int>(){1}
@@ -20,7 +20,7 @@ namespace AI
         NodeInfo Child1 = new NodeInfo
         {
             index = 1,
-            pos = new Vec2f(598.2f, 239.2f),
+            pos = new Vec2f(579.2f, 268.0175f),
             type = NodeType.RepeaterNode,
             children = new List<int>(){ 8}
         };
@@ -28,7 +28,7 @@ namespace AI
         NodeInfo Child2 = new NodeInfo
         {
             index = 2,
-            pos = new Vec2f(699f, 502.4f),
+            pos = new Vec2f(691.2001f, 502.4f),
             type = NodeType.SelectorNode,
             children = new List<int>(){ 9,  7}
         };
@@ -36,7 +36,7 @@ namespace AI
         NodeInfo Child3 = new NodeInfo
         {
             index = 3,
-            pos = new Vec2f(473.4f, 502.4f),
+            pos = new Vec2f(447.9999f, 502.4f),
             type = NodeType.SequenceNode,
             children = new List<int>(){ 4,  5,  6}
         };
@@ -73,7 +73,7 @@ namespace AI
         NodeInfo Child8 = new NodeInfo
         {
             index = 8,
-            pos = new Vec2f(598.2f, 387.2f),
+            pos = new Vec2f(579.3494f, 381.5209f),
             type = NodeType.SequenceNode,
             children = new List<int>(){ 3,  2}
         };

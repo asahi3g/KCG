@@ -1,6 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement name="Container" style="height: 56px; width: 200px;">
-        <ui:Label text="New Behavior" display-tooltip-when-elided="true" style="font-size: 11px;" />
-        <ui:TextField picking-mode="Ignore" label="Name:" text="filler text" max-length="1" is-delayed="false" password="false" style="font-size: 10px;" />
-    </ui:VisualElement>
+    <ui:IMGUIContainer style="flex-shrink: 0; flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.47); flex-direction: column; width: auto; height: auto; position: relative; left: auto; top: auto; right: auto; bottom: auto;">
+        <ui:VisualElement name="CreateWindow" style="height: 80px; width: 200px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-bottom-color: rgb(48, 48, 48); border-left-color: rgb(48, 48, 48); border-right-color: rgb(48, 48, 48); border-top-color: rgb(48, 48, 48); background-color: rgb(56, 56, 56);">
+            <ui:Label text="New Behavior" display-tooltip-when-elided="true" style="font-size: 11px; height: 23px;" />
+            <ui:TextField picking-mode="Ignore" label="Name:" text="filler text" max-length="1" is-delayed="false" password="false" style="font-size: 10px; height: 17px;" />
+            <ui:VisualElement />
+            <ui:Button text="Create Tree" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:IMGUIContainer>
 </ui:UXML>

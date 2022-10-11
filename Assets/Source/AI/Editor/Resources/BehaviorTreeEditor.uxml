@@ -1,17 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" schemaLocation="                           UnityEngine.UIElements ../../../UIElementsSchema/UnityEngine.UIElements.xsd                           UnityEditor.UIElements ../../../UIElementsSchema/UnityEditor.UIElements.xsd                           UnityEditor.PackageManager.UI ../../../UIElementsSchema/UnityEditor.PackageManager.UI.xsd   " editor-extension-mode="False">
-    <Style src="project://database/Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss?fileID=7433441132597879392&amp;guid=78e5fd7dcbdde004099a5b97ee4a3071&amp;type=3#BehaviorTreeEditorStyle" />
-    <uie:Toolbar>
-        <uie:ToolbarMenu display-tooltip-when-elided="true" text="Assets " />
-    </uie:Toolbar>
-    <ui:VisualElement name="Container" class="Container" style="flex-grow: 1; flex-shrink: 0;">
-        <Utility.SplitView name="SplitView-Container" focusable="false" fixed-pane-initial-dimension="200">
+    <Style src="project://database/Assets/Source/AI/Editor/Resources/AIEditorStyle.uss?fileID=7433441132597879392&amp;guid=78e5fd7dcbdde004099a5b97ee4a3071&amp;type=3#AIEditorStyle" />
+    <ui:VisualElement name="Container" class="stretch" style="flex-grow: 1; flex-shrink: 0; min-height: auto; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <uie:Toolbar>
+            <uie:ToolbarMenu display-tooltip-when-elided="true" text="Assets " />
+        </uie:Toolbar>
+        <Utility.SplitView name="SplitView-Container" focusable="false" fixed-pane-initial-dimension="200" style="position: relative;">
             <Utility.SplitView name="SplitView-Left-Container" orientation="Vertical" fixed-pane-initial-dimension="200" style="flex-grow: 1; width: auto; justify-content: flex-start; align-items: stretch; height: auto;">
                 <ui:VisualElement name="Blackboard" class="Container" style="min-height: auto; height: auto; flex-grow: 1;">
                     <ui:Label text="Blackboard" display-tooltip-when-elided="true" class="unity-label-title" style="align-items: auto; justify-content: space-between; width: auto;" />
                     <ui:DropdownField label="Custom Variables" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Dropdown-Custom-Variables" />
                     <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="DropDown-Static-Variables" />
                 </ui:VisualElement>
-                <ui:VisualElement name="Sensor" class="Container" style="height: auto; flex-grow: 1; flex-basis: auto;">
+                <ui:VisualElement name="Sensor" class="Container" style="height: auto; flex-grow: 1; flex-basis: auto; min-height: auto;">
                     <ui:Label text="Sensor" display-tooltip-when-elided="true" class="unity-label-title" />
                     <ui:VisualElement name="Inspector" class="Container-Inspector" style="height: auto; flex-grow: 1; width: auto;">
                         <ui:Label text="Inspector" display-tooltip-when-elided="true" style="-unity-text-align: middle-left; background-color: rgb(0, 0, 0); white-space: normal; width: auto; height: auto; justify-content: flex-start;" />
@@ -21,7 +21,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </Utility.SplitView>
-            <ui:VisualElement name="BehaviorTree-Container" class="Container" style="flex-grow: 1; flex-shrink: 0; height: auto;">
+            <ui:VisualElement name="BehaviorTree-Container" class="Container" style="flex-grow: 1; flex-shrink: 0; height: auto; min-height: auto;">
                 <AI.BehaviorTreeView focusable="true" name="BehaviorTreeView" class="Container" style="height: auto; width: auto; flex-direction: column; align-items: stretch; flex-grow: 1; flex-shrink: 0;">
                     <ui:Label text="View Tree" display-tooltip-when-elided="true" style="-unity-text-align: middle-left; background-color: rgb(0, 0, 0); white-space: normal; width: auto; height: auto; justify-content: flex-start;" />
                 </AI.BehaviorTreeView>

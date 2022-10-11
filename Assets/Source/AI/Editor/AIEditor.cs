@@ -1,6 +1,7 @@
 using Assets.Source.Utility.Editor.Generation;
 using Enums;
 using UnityEditor;
+using UnityEditor.Overlays;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,6 +15,8 @@ namespace AI
         InspectorView inspectorView;
         BehaviorTreeView behaviorTree;
         ToolbarMenu toolbarMenu;
+        VisualElement root;
+        VisualElement OverlayWindow;
 
 
         [MenuItem("AI/BehaviorTreeEditor")]
@@ -23,6 +26,14 @@ namespace AI
             AIEditor window = (AIEditor)EditorWindow.GetWindow(typeof(AIEditor));
             window.minSize = new Vector2(800, 600);
             window.Show();
+        }
+
+        void OpenPopUp()
+        {
+            OverlayWindow.style.visibility = Visibility.Visible;
+            Button button = OverlayWindow.Q<Button>();
+            TextField treeNameField = root.Q<TextField>("TreeName");
+            button.clicked += () => CreateNewBT(treeNameField.value);
         }
 
         void CreateNewBT(string newBehaviorName)
@@ -35,6 +46,7 @@ namespace AI
             FileWriterManager.SaveFile(folder + "\\Enum\\NodeActions", "BehaviorType.cs", outputText);
 
             toolbarMenu.menu.InsertAction(typeID - 1, $"{AISystemState.Behaviors[typeID].Name}", (a) => { SelectTree((BehaviorType)typeID); });
+            OverlayWindow.style.visibility = Visibility.Hidden;
         }
 
         void SaveBts()
@@ -46,8 +58,7 @@ namespace AI
 
         void OnEnable()
         {
-            VisualElement root = rootVisualElement;
-        
+            root = rootVisualElement;
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditor.uxml");
             VisualElement labelFromUXML = visualTree.CloneTree();
             root.Add(labelFromUXML);
@@ -64,12 +75,18 @@ namespace AI
                 toolbarMenu.menu.AppendAction($"{AISystemState.Behaviors[i].Name}", (a) => SelectTree(type));
             }
             toolbarMenu.menu.AppendSeparator();
-            toolbarMenu.menu.AppendAction($"{"Create new Behavior"}", (a) => { CreateNewBT("testing"); });
+            toolbarMenu.menu.AppendAction($"{"Create new Behavior"}", (a) => { OpenPopUp(); });
             toolbarMenu.menu.AppendSeparator();
             toolbarMenu.menu.AppendAction($"{"Save Behavior"}", (a) => { SaveBts(); });
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/AIEditorStyle.uss");
             root.styleSheets.Add(styleSheet);
+
+            var createTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/Resources/NewBehaviorWindow.uxml");
+            OverlayWindow = createTree.CloneTree();
+            root.Add(OverlayWindow);
+            OverlayWindow.style.visibility = Visibility.Hidden;
+
         }
 
         void SelectTree(BehaviorType type)
@@ -83,6 +100,7 @@ namespace AI
         {
             //Set the container height to the window
             rootVisualElement.Q<VisualElement>("Container").style.height = new StyleLength(position.height);
+            OverlayWindow.style.height = new StyleLength(position.height);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using KMath;
 using static Unity.VisualScripting.Metadata;
+using UnityEditor;
 
 namespace AI
 {
@@ -30,6 +31,9 @@ namespace AI
             this.AddManipulator(new RectangleSelector());
 
             PopulateView();
+
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
+            styleSheets.Add(styleSheet);
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
