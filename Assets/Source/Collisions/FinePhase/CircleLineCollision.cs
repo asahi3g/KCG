@@ -30,17 +30,27 @@ namespace Collisions
         public static float TestCollision(Vec2f circleCenter, float circleRadius, Vec2f velocity, Vec2f p1, Vec2f p2)
         {
 
+            // step 1: p1 is the origin
+            // offset everything by p1
+
             p2 -= p1;
             circleCenter -= p1;
             p1 -= p1;
 
+            // step 2: compute the angle of rotation
+            // so that segment [p1, p2] is vertical
+
             float O = MathF.Atan(p2.Y / p2.X);
             float diff = MathF.PI * 0.5f - O;
+
+            // step3: apply the rotation
 
             circleCenter = rotatePoint(circleCenter, diff);
             p2 = rotatePoint(p2, diff);
             velocity = RotateVector2d(velocity, diff);
 
+            // step 4: circle center is the origin
+            // offset everything by the circle center
 
             p1 -= circleCenter;
             p2 -= circleCenter;
@@ -48,172 +58,70 @@ namespace Collisions
 
             float k = p1.X;
 
+
+
+            // step 5: check if the line is on the right or on the left of the circle
+
+            float timeX = 1.0f;
             if (k >= 0)
             {
+                // if the line is on the right 
+                // the time is (k-circleRadius) / velocity.X
 
-                float timeX = (k-circleRadius) / velocity.X;
-                float impactTimeX = (k) / velocity.X;
-
-                if (timeX >= 1.0f || timeX < 0.0f)
-                {
-                    timeX = 1.0f;
-                }
-
-                Vec2f stopPoint = circleCenter + velocity * timeX;
-                stopPoint.X += circleRadius;
-
-                Line2D line = new Line2D(p1, p2);
-                if (!line.OnLine(stopPoint) && timeX < 1.0f)
-                {
-
-                    Vec2f circleA = circleCenter + (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
-                    Vec2f circleB = circleCenter - (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
-                    Line2D line1 = new Line2D(circleA, circleA + velocity);
-                    Line2D line2 = new Line2D(circleB, circleB + velocity);
-
-                    if (!(line1.Intersects(line) || line2.Intersects(line)))
-                    {
-                        timeX = 1.0f;
-                    }
-
-
-
-
-
-
-                    /*float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
-
-                    float mag1 = (p1 - stopPoint).Magnitude;
-                    float mag2 = (p2 - stopPoint).Magnitude;
-
-                    float x1;
-                    float y1;
-
-                    if (mag1 < mag2)
-                    {
-                        x1 = p1.X;
-                        y1 = p1.Y;
-                    }
-                    else
-                    {
-                        x1 = p2.X;
-                        y1 = p2.Y;
-                    }
-
-                    float a = velocity.Y / velocity.X;
-
-                    float A = 1 + (a * a);
-                    float B = -2 * x1 + -2 * y1 * a;
-                    float C = (x1 * x1) + (y1 * y1) - (circleRadius * circleRadius);
-
-                    float delta = (B * B) - 4 * A * C;
-
-                    if (delta < 0)
-                    {
-                        timeX = 1.0f;
-                    }
-                    else if (delta == 0)
-                    {
-                        float x2 = (-B) / (2 * A);
-                        float y2 = a * x2;
-
-                        timeX = (x2) / velocity.X; 
-                    }
-                    else if (delta > 0)
-                    {
-                        float x2 = (-B - MathF.Sqrt(delta)) / (2 * A);
-                        float y2 = a * x2;
-
-                        timeX = (x2) / velocity.X; 
-                    }*/
-                              
-                }
-                 return timeX;
-
+                timeX = (k-circleRadius) / velocity.X;
             }
             else
             {
-                float timeX = (k+circleRadius) / velocity.X;
-                float impactTimeX = (k) / velocity.X;
+                // if the line is on the left 
+                // the time is (k+circleRadius) / velocity.X
 
-                if (timeX >= 1.0f || timeX < 0.0f)
+                timeX = (k+circleRadius) / velocity.X;
+            }
+                
+
+            // used to remove very small numbers that are supposed to be 0
+            float epsilon = 0.001f;
+
+            // if the time is more than 1 or less than epsillon
+            // that means we dont collide and the time should be 1
+            if (timeX >= 1.0f || timeX <= epsilon)
+            {
+                timeX = 1.0f;
+            }
+
+            // compute the point of collision with the static line [p1, p2]
+            Vec2f stopPoint = circleCenter + velocity * timeX;
+            stopPoint.X += circleRadius;
+
+            
+
+            // if the circle intersects the line we also need to see if 
+            // it managed to hit the segment [p1, p2]
+            // the line is infinite but the segment is not
+            if (timeX < 1.0f)
+            {
+
+                // segment [p1, p2]
+                Line2D line = new Line2D(p1, p2);
+                // 2 points that form the limits of the moving circle
+                // used to check if one of them intersect the static line
+                Vec2f circleA = circleCenter + (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
+                Vec2f circleB = circleCenter - (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
+
+                // the lines are just the 2 points + velocity
+                Line2D line1 = new Line2D(circleA, circleA + velocity);
+                Line2D line2 = new Line2D(circleB, circleB + velocity);
+
+                // check if the line is between the acceptable range of the moving circle
+                if (!(line1.Intersects(line) || line2.Intersects(line)))
                 {
+                    // does not collide
                     timeX = 1.0f;
                 }
-
-                Vec2f stopPoint = circleCenter + velocity * timeX;
-                stopPoint.X -= circleRadius;
-
-
-                Line2D line = new Line2D(p1, p2);
-                if (!line.OnLine(stopPoint) && timeX < 1.0f)
-                {
-                    Vec2f circleA = circleCenter + (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
-                    Vec2f circleB = circleCenter - (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
-                    Line2D line1 = new Line2D(circleA, circleA + velocity);
-                    Line2D line2 = new Line2D(circleB, circleB + velocity);
-
-                    if (!(line1.Intersects(line) || line2.Intersects(line)))
-                    {
-                        timeX = 1.0f;
-                    }
-
-
-
-
-
-
-                    /*float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
-
-                    float mag1 = (p1 - stopPoint).Magnitude;
-                    float mag2 = (p2 - stopPoint).Magnitude;
-
-                    float x1;
-                    float y1;
-
-                    if (mag1 < mag2)
-                    {
-                        x1 = p1.X;
-                        y1 = p1.Y;
-                    }
-                    else
-                    {
-                        x1 = p2.X;
-                        y1 = p2.Y;
-                    }
-
-                    float a = velocity.Y / velocity.X;
-
-                    float A = 1 + (a * a);
-                    float B = -2 * x1 + -2 * y1 * a;
-                    float C = (x1 * x1) + (y1 * y1) - (circleRadius * circleRadius);
-
-                    float delta = (B * B) - 4 * A * C;
-
-                    if (delta < 0)
-                    {
-                        timeX = 1.0f;
-                    }
-                    else if (delta == 0)
-                    {
-                        float x2 = (-B) / (2 * A);
-                        float y2 = a * x2;
-
-                        timeX = (x2) / velocity.X; 
-                    }
-                    else if (delta > 0)
-                    {
-                        float x2 = (-B + MathF.Sqrt(delta)) / (2 * A);
-                        float y2 = a * x2;
-
-                        timeX = (x2) / velocity.X; 
-                    }*/
-
-                }
-
-
-                return timeX;
+                            
             }
+
+            return timeX;
         }
     }
 }

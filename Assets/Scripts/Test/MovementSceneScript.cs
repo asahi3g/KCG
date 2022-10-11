@@ -52,7 +52,7 @@ namespace Planet.Unity
 
         float CircleRadius = 0.0f;
         Vec2f P1 = new Vec2f(15, 15);
-        Vec2f P2 = new Vec2f(17, 19);
+        Vec2f P2 = new Vec2f(17, 17);
 
         Vec2f P3 = new Vec2f(15, 15);
         Vec2f P4 = new Vec2f(18, 16);
@@ -88,12 +88,12 @@ namespace Planet.Unity
             P2.Y = P1.Y + mag;*/
 
 
-            Shape1 = new Vec2f[4];
-            ShapeTemp = new Vec2f[4];
+            Shape1 = new Vec2f[3];
+            ShapeTemp = new Vec2f[3];
             Shape1[0] = new Vec2f(12.0f, 12.0f);
             Shape1[1] = new Vec2f(13.0f, 12.0f);
             Shape1[2] = new Vec2f(13.0f, 13.0f);
-            Shape1[3] = new Vec2f(12.0f, 13.0f);
+            //Shape1[3] = new Vec2f(12.0f, 13.0f);
 
             Shape2 = new Vec2f[4];
             Shape2[0] = new Vec2f(15.0f, 15.0f);
@@ -161,21 +161,37 @@ namespace Planet.Unity
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 CircleCenter.X -= 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].X -= 1.0f;
+                }
             }
 
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
                 CircleCenter.X += 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].X += 1.0f;
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 CircleCenter.Y += 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].Y += 1.0f;
+                }
             }
 
             if(Input.GetKeyDown(KeyCode.DownArrow))
             {
                 CircleCenter.Y -= 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].Y -= 1.0f;
+                }
             }
 
             Vector3 p = Input.mousePosition;
@@ -185,7 +201,7 @@ namespace Planet.Unity
             Vec2f shapeVelocity = new Vec2f(mouse.x, mouse.y) - LastMousePosition;
             LastMousePosition = new Vec2f(mouse.x, mouse.y);
 
-            bool sat = true;
+            bool sat = false;
             if (sat)
             {
                 for( int i = 0; i < Shape1.Length; i++)
@@ -207,6 +223,7 @@ namespace Planet.Unity
             else
             {
                 float distance = Collisions.Box2dSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
+                Debug.Log(distance);
 
                  for( int i = 0; i < Shape1.Length; i++)
                 {
@@ -219,6 +236,7 @@ namespace Planet.Unity
 
             CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
 
+
             float distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1, P2);
             float distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3, P4);
 
@@ -226,10 +244,21 @@ namespace Planet.Unity
             CollisionDistance = Mathf.Min(distance1, distance2);
 
             distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
-            //distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
+            distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
 
 
+            CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));
+
+            distance1 = Collisions.CircleLineCollision.TestCollision(P1, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));;
+            distance2 = Collisions.CircleLineCollision.TestCollision(P2, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
             CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance1));
+
+           /* distance1 = 1.0f - Collisions.CircleLineCollision.TestCollision(P3, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+            distance2 = 1.0f - Collisions.CircleLineCollision.TestCollision(P4, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+            CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));*/
+
+
+
 
             /*CollisionDistance = rs.CollisionTime;
             NewPos = rs.NewPos;
@@ -560,7 +589,7 @@ namespace Planet.Unity
             }
 
 
-            bool shapeCollision = false;
+            bool shapeCollision = true;
 
             if (shapeCollision)
             {
@@ -600,7 +629,7 @@ namespace Planet.Unity
             }
 
 
-            bool circleLineCollision = true;
+            bool circleLineCollision = false;
 
             if (circleLineCollision)
             {
@@ -627,9 +656,9 @@ namespace Planet.Unity
                     Gizmos.DrawSphere(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
 
 
-                 //   Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
-                   // Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
-                  //   new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
+                    Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+                    Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
+                     new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
 
                     Gizmos.color = Color.yellow;
                    
