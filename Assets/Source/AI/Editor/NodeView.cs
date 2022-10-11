@@ -3,42 +3,48 @@ using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
 using UnityEngine.UIElements;
-using Entitas;
+using KMath;
+using Enums;
+using UnityEngine.Networking.Types;
+using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
 
 namespace AI
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {
-        public Vector2 Postion;
-        public int NodeID;
-        public Action<NodeView> OnNodeSelected;
+        public NodeInfo Node;
         public const int Width = 128;
         public const int Height = 80;
         public Port Input = null;
         public Port Output = null;
+        public Action<NodeView> OnNodeSelected;
 
-        public NodeView(NodeEntity nodeEntity, Vector2 pos) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
+        public NodeView(NodeInfo node) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
-            CreatePorts(nodeEntity);
-            SetupClasses(nodeEntity);
-            NodeID = nodeEntity.nodeID.ID;
-            title = nodeEntity.nodeID.TypeID.ToString();
-            Postion = pos;
-            style.left = Postion.x;
-            style.top = Postion.y;
+            Node = node;
+            CreatePorts();
+            SetupClasses();
+            if (Node.index == 0)
+                title = "Root";
+            else
+                title = node.type.ToString();
+            style.left = Node.pos.X;
+            style.top = Node.pos.Y;
         }
 
-        private void CreatePorts(NodeEntity nodeEntity)
+        private void CreatePorts()
         {
-            if (!nodeEntity.isNodeRoot)
+            if (Node.index != 0)
             {
                 Input = CreatePort(Direction.Input, Capacity.Single);
                 inputContainer.Add(Input);
             }
-            if (nodeEntity.hasNodeComposite)
+            NodeGroup nodeGroup = AISystemState.GetNodeGroup(Node.type);
+
+            if (nodeGroup == NodeGroup.CompositeNode)
                 Output = CreatePort(Direction.Output, Capacity.Multi);
-            else if (nodeEntity.hasNodesDecorator)
-                Output = CreatePort(Direction.Output, Capacity.Multi);
+            else if (nodeGroup == NodeGroup.DecoratorNode)
+                Output = CreatePort(Direction.Output, Capacity.Single);
             outputContainer.Add(Output);
         }
 
@@ -62,13 +68,13 @@ namespace AI
             }
         }
 
-        private void SetupClasses(NodeEntity nodeEntity)
+        private void SetupClasses()
         { 
-            if (nodeEntity.isNodeRoot)
+            if (Node.index == 0)
                 AddToClassList("root");
-            else if (nodeEntity.hasNodeComposite)
+            else if (AISystemState.GetNodeGroup(Node.type) == NodeGroup.CompositeNode)
                 AddToClassList("composite");
-            else if (nodeEntity.hasNodesDecorator)
+            else if (AISystemState.GetNodeGroup(Node.type) == NodeGroup.DecoratorNode)
                 AddToClassList("decorator");
             else
                 AddToClassList("action");
@@ -77,26 +83,23 @@ namespace AI
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-            Postion.x = newPos.xMin;
-            Postion.y = newPos.yMin;
+            Node.pos.X = newPos.xMin;
+            Node.pos.Y = newPos.yMin;
         }
 
-        public void RemoveAll(NodeView other)
+        public void RemoveAll()
         {
-            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
-            node.RemoveAllChildren();
+            Node.children.Clear();
         }
 
-        public void RemoveChild(NodeView other)
+        public void RemoveChild(NodeView nodeView)
         {
-            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
-            node.RemoveChild(other.NodeID);
+            Node.children.Remove(nodeView.Node.index);
         }
 
-        public void AddChild(NodeView other)
+        public void AddChild(NodeView nodeView)
         {
-            NodeEntity node = Contexts.sharedInstance.node.GetEntityWithNodeIDID(NodeID);
-            node.AddChild(other.NodeID);
-        }
+            Node.children.Add(nodeView.Node.index);
+        } 
     }
 }

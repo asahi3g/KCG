@@ -1,0 +1,26 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="UnityEngine" #>
+<#@ import namespace="UnityEditor" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="AI" #>
+<#@ output extension=".cs" #>
+
+namespace Enums
+{
+    public enum BehaviorType
+    {
+<# 
+    int length = AISystemState.Behaviors.Length;
+    for (int i = 0; i < length; i++)
+    {
+#>
+        <#= AISystemState.Behaviors[i].Name#>,
+<#
+    }
+#>
+    };
+}
