@@ -11,7 +11,7 @@ namespace AI
         NodeInfo Root = new NodeInfo
         {
             index = 0,
-            pos = new Vec2f(0f, 0f),
+            pos = new Vec2f(572.12f, 173.032f),
             type = NodeType.DecoratorNode,
         };
 

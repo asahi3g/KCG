@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Utility;
 
 namespace AI
 {
@@ -30,10 +31,17 @@ namespace AI
             var btGen = new BehaviorEnumGen();
             btGen.Initialize();
             string outputText = btGen.TransformText();
-            string folder = Utility.FileWriterManager.GetFullSourceFilePath();
-            Utility.FileWriterManager.SaveFile(folder + "\\Enum\\NodeActions", "BehaviorType.cs", outputText);
+            string folder = FileWriterManager.GetFullSourceFilePath();
+            FileWriterManager.SaveFile(folder + "\\Enum\\NodeActions", "BehaviorType.cs", outputText);
 
             toolbarMenu.menu.InsertAction(typeID - 1, $"{AISystemState.Behaviors[typeID].Name}", (a) => { SelectTree((BehaviorType)typeID); });
+        }
+
+        void SaveBts()
+        {
+            var builder = new BehaviourBuilder();
+            builder.Initialize();
+            builder.TransformText();
         }
 
         void OnEnable()
@@ -57,6 +65,8 @@ namespace AI
             }
             toolbarMenu.menu.AppendSeparator();
             toolbarMenu.menu.AppendAction($"{"Create new Behavior"}", (a) => { CreateNewBT("testing"); });
+            toolbarMenu.menu.AppendSeparator();
+            toolbarMenu.menu.AppendAction($"{"Save Behavior"}", (a) => { SaveBts(); });
 
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
             root.styleSheets.Add(styleSheet);
