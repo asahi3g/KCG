@@ -222,7 +222,7 @@ namespace Planet.Unity
             }
             else
             {
-                float distance = Collisions.Box2dSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
+                float distance = Collisions.PolygonSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
                 Debug.Log(distance);
 
                  for( int i = 0; i < Shape1.Length; i++)

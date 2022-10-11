@@ -5,7 +5,7 @@ namespace Collisions
 {
 
 
-    public class Box2dSweepTest
+    public class PolygonSweepTest
     {
 
 
