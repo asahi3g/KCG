@@ -5,6 +5,7 @@ namespace Enums
     {
         Error,
         Marine,
+        Medic,
         Insect,
         Patrol,
     };

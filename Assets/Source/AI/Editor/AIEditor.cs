@@ -17,6 +17,7 @@ namespace AI
         ToolbarMenu toolbarMenu;
         VisualElement root;
         VisualElement OverlayWindow;
+        TextField newBehaviorTextField;
 
 
         [MenuItem("AI/BehaviorTreeEditor")]
@@ -30,14 +31,12 @@ namespace AI
 
         void OpenPopUp()
         {
-            OverlayWindow.style.visibility = Visibility.Visible;
-            Button button = OverlayWindow.Q<Button>();
-            TextField treeNameField = root.Q<TextField>("TreeName");
-            button.clicked += () => CreateNewBT(treeNameField.value);
+             OverlayWindow.style.visibility = Visibility.Visible;
         }
 
-        void CreateNewBT(string newBehaviorName)
+        void CreateNewBT()
         {
+            string newBehaviorName = newBehaviorTextField.text;
             int typeID = AISystemState.CreateNewBehavior(newBehaviorName);
             var btGen = new BehaviorEnumGen();
             btGen.Initialize();
@@ -85,8 +84,9 @@ namespace AI
             var createTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Source/AI/Editor/Resources/NewBehaviorWindow.uxml");
             OverlayWindow = createTree.CloneTree();
             root.Add(OverlayWindow);
+            newBehaviorTextField = OverlayWindow.Q<TextField>();
+            OverlayWindow.Q<Button>().clicked += () => CreateNewBT();
             OverlayWindow.style.visibility = Visibility.Hidden;
-
         }
 
         void SelectTree(BehaviorType type)
