@@ -6,7 +6,8 @@ namespace Collisions
     public class PointLineCollision
     {
 
-
+        //collision between moving 2d point and stationary 2d line segment
+        
         // input:
         // - Vec2f point: vector that represents 1 points (x, y)
         // - Vec2f velocity: vector that represents the point velocity
@@ -18,7 +19,7 @@ namespace Collisions
 
 
         // steps
-        
+
         // step 1: p1 is the origin
         // offset everything by p1
 
