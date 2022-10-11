@@ -6,7 +6,6 @@ namespace Enums
         Error,
         Marine,
         Insect,
-        Slime,
         Patrol,
     };
 }

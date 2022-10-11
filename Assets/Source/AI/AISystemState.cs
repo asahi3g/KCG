@@ -54,12 +54,11 @@ namespace AI
 
             {
                 BehaviorBase behavior = new BehaviorBase();
-
                 for (int i = 0; i < length; i++)
                 {
                     if (Behaviors[i].Nodes == null)
                     {
-                        Behaviors[i].Nodes = null;
+                        Behaviors[i].Nodes = behavior.Nodes;
                         Behaviors[i].Name = ((BehaviorType)i).ToString();
                     }
                 }
@@ -80,7 +79,6 @@ namespace AI
 
             int oldLength = Behaviors.Length;
             Array.Resize<BehaviorProperties>(ref Behaviors, oldLength + 1);
-            Debug.Log(oldLength);
             BehaviorBase behavior = new BehaviorBase();
             Behaviors[Behaviors.Length - 1].Nodes = behavior.Nodes;
             Behaviors[Behaviors.Length - 1].TypeID = (BehaviorType)oldLength;

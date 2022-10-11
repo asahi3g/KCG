@@ -17,17 +17,19 @@ namespace AI
         { }
 
         public Action<NodeView> OnNodeSelected;
+        public BehaviorType Type;
         public List<NodeView> NodeViews;
 
         public BehaviorTreeView()
         {
+            NodeViews = new List<NodeView>();
             Insert(0, new GridBackground());
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            DefaultPopulateView();
+            PopulateView();
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -86,31 +88,32 @@ namespace AI
             evt.menu.AppendAction($"Delete", (a) => DeleteSelected());
         }
 
-        public void PopulateView(int i)
+        public void PopulateView()
         {
-            graphViewChanged -= OnGraphViewChanged;
-            DeleteElements(graphElements);
-            for (int j = 0; j < AISystemState.Behaviors[i].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
             {
-                CreateNodeView(AISystemState.Behaviors[i].Nodes[j]);
+                CreateNodeView(AISystemState.Behaviors[(int)Type].Nodes[j]);
             }
 
-            for (int j = 0; j < AISystemState.Behaviors[i].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
             {
+                if (NodeViews[j].Node.children == null)
+                    continue;
+
                 foreach (var index in NodeViews[j].Node.children)
                 {
                     Edge edge = NodeViews[j].Output.ConnectTo(NodeViews[index].Input);
                     AddElement(edge);
                 }
             }
+            graphViewChanged += OnGraphViewChanged;
         }
 
-        public void DefaultPopulateView()
+        public void ClearTree()
         {
-            // Clear elements
-            graphViewChanged -= OnGraphViewChanged;        
-            CreateNodeView(NodeType.DecoratorNode, SetRootPos());
-            graphViewChanged += OnGraphViewChanged;
+            graphViewChanged -= OnGraphViewChanged;
+            NodeViews.Clear();
+            DeleteElements(graphElements);
         }
 
         private NodeView CreateNodeView(NodeInfo node)

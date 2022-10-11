@@ -24,6 +24,10 @@ namespace AI
             Node = node;
             CreatePorts();
             SetupClasses();
+            if (Node.index == 0)
+                title = "Root";
+            else
+                title = node.type.ToString();
             style.left = Node.pos.X;
             style.top = Node.pos.Y;
         }
@@ -96,6 +100,6 @@ namespace AI
         public void AddChild(NodeView nodeView)
         {
             Node.children.Add(nodeView.Node.index);
-        }
+        } 
     }
 }

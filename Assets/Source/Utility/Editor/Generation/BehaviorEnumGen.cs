@@ -64,7 +64,7 @@ namespace Assets.Source.Utility.Editor.Generation {
             #line hidden
             
             #line 21 "Assets\Source\Utility\Editor\Generation\BehaviorEnumGen.tt"
-            this.Write("\r\n");
+            this.Write(",\r\n");
             
             #line default
             #line hidden

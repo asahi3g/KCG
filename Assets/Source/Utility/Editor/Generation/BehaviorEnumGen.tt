@@ -18,7 +18,7 @@ namespace Enums
     for (int i = 0; i < length; i++)
     {
 #>
-        <#= AISystemState.Behaviors[i].Name#>
+        <#= AISystemState.Behaviors[i].Name#>,
 <#
     }
 #>

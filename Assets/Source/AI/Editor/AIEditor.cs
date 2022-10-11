@@ -1,8 +1,5 @@
 using Assets.Source.Utility.Editor.Generation;
 using Enums;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms.Design.Behavior;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -36,7 +33,8 @@ namespace AI
             string folder = Utility.FileWriterManager.GetFullSourceFilePath();
             Utility.FileWriterManager.SaveFile(folder + "\\Enum\\NodeActions", "BehaviorType.cs", outputText);
 
-            toolbarMenu.menu.InsertAction(typeID - 1, $"{AISystemState.Behaviors[typeID].Name}", (a) => { behaviorTree.PopulateView(typeID); }); }
+            toolbarMenu.menu.InsertAction(typeID - 1, $"{AISystemState.Behaviors[typeID].Name}", (a) => { SelectTree((BehaviorType)typeID); });
+        }
 
         void OnEnable()
         {
@@ -49,20 +47,26 @@ namespace AI
             inspectorView = root.Q<InspectorView>();
             behaviorTree = root.Q<BehaviorTreeView>();
             behaviorTree.OnNodeSelected = inspectorView.UpdateSelection;
+            SelectTree((BehaviorType)1);
 
             toolbarMenu = root.Q<ToolbarMenu>();
-            for (int i = 0; i < AISystemState.Behaviors.Length; i++)
+            for (int i = 1; i < AISystemState.Behaviors.Length; i++)
             {
-                if (AISystemState.Behaviors[i].TypeID != BehaviorType.Error)
-                {
-                    toolbarMenu.menu.AppendAction($"{AISystemState.Behaviors[i].Name}", (a) => { behaviorTree.PopulateView((int)AISystemState.Behaviors[i].TypeID); });
-                }
+                BehaviorType type = (BehaviorType)i;
+                toolbarMenu.menu.AppendAction($"{AISystemState.Behaviors[i].Name}", (a) => SelectTree(type));
             }
             toolbarMenu.menu.AppendSeparator();
             toolbarMenu.menu.AppendAction($"{"Create new Behavior"}", (a) => { CreateNewBT("testing"); });
 
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
             root.styleSheets.Add(styleSheet);
+        }
+
+        void SelectTree(BehaviorType type)
+        {
+            behaviorTree.Type = type;
+            behaviorTree.ClearTree();
+            behaviorTree.PopulateView();
         }
 
         private void OnGUI()
