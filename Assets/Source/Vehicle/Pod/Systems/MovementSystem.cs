@@ -25,14 +25,17 @@ namespace Vehicle.Pod
             podContexts.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var vehicle in entities)
             {
-                PodProperties podProperties =
-                        PodCreationApi.GetRef((int)vehicle.vehiclePodType.Type);
+                if(!vehicle.vehiclePodStatus.Freeze)
+                {
+                    PodProperties podProperties =
+                            PodCreationApi.GetRef((int)vehicle.vehiclePodType.Type);
 
-                // Process Gravity
-                if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
-                    vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * Time.deltaTime;
+                    // Process Gravity
+                    if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
+                        vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * Time.deltaTime;
 
-                vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * Time.deltaTime;
+                    vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * Time.deltaTime;
+                }
             }
         }
     }

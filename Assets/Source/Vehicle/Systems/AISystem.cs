@@ -27,6 +27,8 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
+        // Initialize Method.
+
         public void Initialize(VehicleEntity _vehicle, Vec2f _particlePosition, Vec2f _movementSpeed)
         {
             vehicle = _vehicle;
@@ -55,6 +57,10 @@ namespace Vehicle
             if (vehicle == null || particlePosition == null || movementSpeed == null)
                 return;
 
+            // Scan planet and find open-sky area.
+            // Spawn vehicle to open sky area found.
+
+
             if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
                 if(!vehicle.vehicleHeightMap.OpenSky)
@@ -73,6 +79,7 @@ namespace Vehicle
                     }
                 }
 
+                // Spew out smoke if jet/ignition is on.
 
                 if(vehicle.hasVehicleThruster)
                 {
@@ -81,6 +88,11 @@ namespace Vehicle
                         CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
                     }
                 }
+
+                // Sky and Land check for scan path.
+                // Check if path is clear.
+                // Pop out all passengers in the vehicle after landed.
+                // Scan all pods near by and add to the array.
 
                 entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
                     new Vec2f(1.0f, -5));
@@ -165,6 +177,9 @@ namespace Vehicle
                 }
             }
         }
+
+        // Check if giving path is empty.
+        // Definition of method.
 
         public bool IsPathEmpty(ref Planet.PlanetState planet)
         {

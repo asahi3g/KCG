@@ -39,6 +39,7 @@
         MechPlacementAction,
         MaterialPlacementAction,
         ThrowFlareAction,
+        PickaxeAction,
 
 
         /// Ttools actions

@@ -1096,6 +1096,14 @@ namespace Item
             SetAction(NodeType.ToolActionAxe);
             EndItem();
 
+            CreateItem(ItemType.Pickaxe, "Pickaxe");
+            SetGroup(ItemGroups.None);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.PickaxeAction);
+            EndItem();
+
             CreateItem(ItemType.Wood, "Wood");
             SetGroup(ItemGroups.None);
             SetTexture(WoodTile);

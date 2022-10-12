@@ -177,6 +177,8 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
+            // Spawn drop ship after throwing flare
+
             if(!pEntity.projectileOnHit.ParticleSpawned)
             {
                 pEntity.projectileOnHit.ParticleSpawned = true;

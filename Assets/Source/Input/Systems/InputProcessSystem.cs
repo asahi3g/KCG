@@ -155,10 +155,22 @@ namespace ECSInput
 
                     foreach (var vehicle in vehicles)
                     {
+                        // Scan near vehicles.
+                        // Hop in when keycode is called.
+
                         if(Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
                         {
+                            // If player is outside the vehicle.
+                            // Get in, turn on the jet and ignition.
+
+                            // If player is inside the vehicle,
+                            // Get out, turn off the jet and ignition.
+
                             if(player.agentModel3D.GameObject.gameObject.active)
                             {
+                                // Set custom events for different vehicle types.
+                                // Spew out smoke when accelerate.
+
                                 if(vehicle.vehicleType.Type == VehicleType.DropShip)
                                 {
                                     GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));

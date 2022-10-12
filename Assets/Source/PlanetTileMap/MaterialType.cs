@@ -18,6 +18,7 @@ namespace PlanetTileMap
         Stone,
         Rock,
         Metal,
-        
+        OreStone,
+
     }
 }
