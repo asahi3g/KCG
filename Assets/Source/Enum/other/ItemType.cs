@@ -51,6 +51,7 @@
         Light,
         SmashableBox,
         SmashableEgg,
+        Pickaxe,
 
         /// <summary>
         /// Materials

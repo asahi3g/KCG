@@ -16,14 +16,17 @@ namespace Node
             float y = worldPosition.y;
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
+            if(tile == Enums.Tile.TileID.Bedrock)
+            {
+                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                return;
+            }
+
             planet.TileMap.RemoveFrontTile((int)x, (int)y);
             switch (tile)
             {
                 case Enums.Tile.TileID.Moon:
                     GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Moon, new Vec2f(x, y));
-                    break;
-                case Enums.Tile.TileID.Bedrock:
-                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Bedrock, new Vec2f(x, y));
                     break;
             }
 
