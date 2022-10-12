@@ -1,10 +1,11 @@
+
 namespace Enums
 {
     public enum BehaviorType
     {
-        Error = -1,
-        Marine = 0,
+        Error,
+        Marine,
         Insect,
-        Patrol
-    }
+        Patrol,
+    };
 }

@@ -7,7 +7,6 @@ using System.Reflection;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Utility;
 
 namespace AI
 {
@@ -23,7 +22,7 @@ namespace AI
         {
             ScrollView scrollView = this.Q<ScrollView>();
             scrollView.contentViewport.Clear();
-            AddChildrenAttributes(Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeView.NodeID), scrollView.contentViewport);
+            //AddChildrenAttributes(Contexts.sharedInstance.node.GetEntityWithNodeIDID(nodeView.NodeID), scrollView.contentViewport);
         }
 
         void AddChildrenAttributes(NodeEntity nodeEntity, VisualElement visualElement)
