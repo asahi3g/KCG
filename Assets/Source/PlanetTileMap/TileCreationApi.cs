@@ -1263,6 +1263,198 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
             GameState.TileCreationApi.EndTileProperty();
 
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_0);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_1);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_2);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_3);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_4);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_5);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_6);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_7);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 3);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_0);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_1);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_2);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_3);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_4);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_5);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_6);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_7);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 1);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_0);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_1);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_2);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_3);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_4);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_5);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_6);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_7);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 2);
+            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            GameState.TileCreationApi.EndTileProperty();
+
             GameState.TileCreationApi.CreateTileProperty(TileID.Background);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.Background);
             GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.R3);

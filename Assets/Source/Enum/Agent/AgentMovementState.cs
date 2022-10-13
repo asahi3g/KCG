@@ -30,5 +30,6 @@
         KnockedDownBack, // the death animation back version
         LyingBack, // dead state back version
         MonsterAttack,
+        PickaxeHit,
     }
 }
