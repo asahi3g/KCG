@@ -1063,6 +1063,14 @@ namespace Item
             SetAction(NodeType.ThrowGasBombAction);
             EndItem();
 
+            CreateItem(ItemType.Flare, "Flare");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSprite5);
+            SetInventoryTexture(GrenadeSprite5);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.ThrowFlareAction);
+            EndItem();
+
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
@@ -1086,6 +1094,14 @@ namespace Item
             SetInventoryTexture(SwordSpriteId);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetAction(NodeType.ToolActionAxe);
+            EndItem();
+
+            CreateItem(ItemType.Pickaxe, "Pickaxe");
+            SetGroup(ItemGroups.None);
+            SetTexture(SwordSpriteId);
+            SetInventoryTexture(SwordSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetAction(NodeType.PickaxeAction);
             EndItem();
 
             CreateItem(ItemType.Wood, "Wood");

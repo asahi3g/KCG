@@ -6,10 +6,10 @@ namespace AI.Sensor
 {
     public class Hearing : SensorBase
     {
-        public override void RegisterInBlackBoard(BlackBoard blackboard)
-        {
-            VariableID = blackboard.Register(typeof(bool), "Can Hear Enemy");
-        }
+        //public override void RegisterInBlackBoard(BlackBoard blackboard)
+        //{
+        //    VariableID = blackboard.Register(typeof(bool), "Can Hear Enemy");
+        //}
         public override void Update(BlackBoard blackboard, ref PlanetState planet)
         {
             const float MAX_DIST = 10f;
@@ -23,11 +23,11 @@ namespace AI.Sensor
                 bool canHear = ((agent.agentPhysicsState.Position - entity.agentPhysicsState.Position).Magnitude < MAX_DIST);
                 if (canHear)
                 {
-                    blackboard.Set(VariableID, true);
+                    blackboard.Set(-1, true);
                     return;
                 }
             }
-            blackboard.Set(VariableID, false);
+            blackboard.Set(-1, false);
         }
     }
 }

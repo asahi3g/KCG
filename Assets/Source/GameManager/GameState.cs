@@ -14,7 +14,6 @@ public static class GameState
     #region AI
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
-    public static readonly AI.BehaviorTree.CreationAPI BehaviorTreeCreationAPI;
     #endregion
 
     #region Action
@@ -173,7 +172,6 @@ public static class GameState
     {
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
-        BehaviorTreeCreationAPI = new AI.BehaviorTree.CreationAPI();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();

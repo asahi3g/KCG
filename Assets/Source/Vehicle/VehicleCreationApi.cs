@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using KMath;
-
+using Enums;
 
 namespace Vehicle
 {
@@ -175,6 +175,24 @@ namespace Vehicle
             }
         }
 
+        public void SetDefaultAgentCount(int defaultAgentCount)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].DefaultAgentCount = defaultAgentCount;
+            }
+        }
+
+        public void SetThruster(bool Jet, float angle, JetSize jetSize)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].Jet = Jet;
+                PropertiesArray[CurrentIndex].JetAngle = angle;
+                PropertiesArray[CurrentIndex].JetSize = jetSize;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -211,12 +229,14 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -3.0f));
             GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
             GameState.VehicleCreationApi.SetRotation(-90.0f);
-            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.1f));
+            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.5f));
             GameState.VehicleCreationApi.SetAngularMass(14f);
             GameState.VehicleCreationApi.SetAngularAcceleration(4f);
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
+            GameState.VehicleCreationApi.SetDefaultAgentCount(0);
+            GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
             GameState.VehicleCreationApi.End();
         }
     }

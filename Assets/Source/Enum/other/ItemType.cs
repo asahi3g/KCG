@@ -31,6 +31,7 @@
         RiotShield,
         GasBomb,
         FragGrenade,
+        Flare,
 
         /// <summary>
         /// Equipment
@@ -50,6 +51,7 @@
         Light,
         SmashableBox,
         SmashableEgg,
+        Pickaxe,
 
         /// <summary>
         /// Materials

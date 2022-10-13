@@ -1,3 +1,4 @@
+using Enums;
 using KMath;
 using UnityEngine;
 
@@ -27,6 +28,12 @@ namespace Vehicle
         public Vec2f CenterOfRotation;
 
         public bool AffectedByGravity;
+
+        public int DefaultAgentCount;
+
+        public bool Jet;
+        public float JetAngle;
+        public JetSize JetSize;
     }
 }
 

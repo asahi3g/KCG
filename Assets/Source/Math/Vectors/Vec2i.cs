@@ -12,7 +12,9 @@ namespace KMath
         
         public int X;
         public int Y;
-        
+
+        public Vector2Int GetVector2() => new Vector2Int(X, Y);
+
         public Vec2i(int x, int y)
         {
             X = x;

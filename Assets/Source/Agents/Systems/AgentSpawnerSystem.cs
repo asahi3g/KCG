@@ -3,7 +3,6 @@ using KMath;
 using UnityEngine;
 using Animancer;
 using UnityEngine.Animations.Rigging;
-using AI.BehaviorTree;
 using AI;
 
 namespace Agent

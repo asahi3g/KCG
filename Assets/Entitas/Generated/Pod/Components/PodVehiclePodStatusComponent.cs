@@ -11,19 +11,21 @@ public partial class PodEntity {
     public Vehicle.Pod.StatusComponent vehiclePodStatus { get { return (Vehicle.Pod.StatusComponent)GetComponent(PodComponentsLookup.VehiclePodStatus); } }
     public bool hasVehiclePodStatus { get { return HasComponent(PodComponentsLookup.VehiclePodStatus); } }
 
-    public void AddVehiclePodStatus(int newPodValue, int newScore) {
+    public void AddVehiclePodStatus(int newPodValue, int newScore, bool newFreeze) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.PodValue = newPodValue;
         component.Score = newScore;
+        component.Freeze = newFreeze;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePodStatus(int newPodValue, int newScore) {
+    public void ReplaceVehiclePodStatus(int newPodValue, int newScore, bool newFreeze) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.PodValue = newPodValue;
         component.Score = newScore;
+        component.Freeze = newFreeze;
         ReplaceComponent(index, component);
     }
 

@@ -71,7 +71,7 @@ namespace Projectile
 
                     if (!entity.hasProjectileOnHit)
                     {
-                        entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point);
+                        entity.AddProjectileOnHit(-1, Time.time, rayCastingResult.Point, Time.time, rayCastingResult.Point, false);
                     }
                     else 
                     {
@@ -143,7 +143,7 @@ namespace Projectile
                     // Todo: Deals with case: colliding with an object and an agent at the same frame.
                     if (!entity.hasProjectileOnHit)
                     {
-                        entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, collisionPosition, Time.time, collisionPosition);
+                        entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, collisionPosition, Time.time, collisionPosition, false);
                     }
                     else
                     {

@@ -15,5 +15,7 @@ namespace Projectile
 
         public float LastHitTime;
         public Vec2f LastHitPos;
+
+        public bool ParticleSpawned;
     }
 }

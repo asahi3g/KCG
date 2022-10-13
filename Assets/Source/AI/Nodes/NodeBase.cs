@@ -1,5 +1,8 @@
-﻿using Entitas;
+﻿using AI.Movement;
+using Entitas;
 using Enums;
+using System;
+using System.Collections.Generic;
 
 namespace Node
 { 
@@ -7,6 +10,18 @@ namespace Node
     {
         public virtual NodeType Type { get { return NodeType.None; } }
         public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
+
+        /// <summary>
+        /// List of action(Components in action folder) components used in the node.
+        /// This allows components parameters to show in AI visual tool.
+        /// </summary>
+        public virtual List<Type> RegisterComponents() => null;
+
+        /// <summary>
+        /// List of states used in the node.
+        /// This allows states parameters to show in AI visual tool.
+        /// </summary>
+        public virtual List<Tuple<string, Type>> RegisterStates() => null;
 
         public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

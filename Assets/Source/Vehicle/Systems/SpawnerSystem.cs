@@ -18,29 +18,54 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public VehicleEntity Spawn(VehicleContext contexts, VehicleType vehicleType, Vec2f position)
+        public VehicleEntity Spawn(ref Planet.PlanetState planet, VehicleType vehicleType, Vec2f position)
         {
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);
 
-            // Create Entity
-            var entity = contexts.CreateEntity();
+            // Create Entity.
+            // Add components to entity. (id, sprite, physics,
+            //  collider, type, radar, thruster, height map, capacity).
+            // Add default agents 
 
-            // Add ID Component
+
+            var entity = planet.EntitasContext.vehicle.CreateEntity();
+
             entity.AddVehicleID(UniqueID, -1);
 
-            // Add Sprite Component
             entity.AddVehicleSprite2D(vehicleProperties.SpriteId, vehicleProperties.SpriteSize);
 
-            // Add Physics State 2D Component
             entity.AddVehiclePhysicsState2D(position, position, vehicleProperties.Scale, vehicleProperties.Scale, vehicleProperties.Rotation, vehicleProperties.AngularVelocity, vehicleProperties.AngularMass,
                 vehicleProperties.AngularAcceleration, vehicleProperties.CenterOfGravity, vehicleProperties.CenterOfRotation, vehicleProperties.AffectedByGravity);
 
-            // Add Physics Box Collider Component
             entity.AddPhysicsBox2DCollider(vehicleProperties.CollisionSize, vehicleProperties.CollisionOffset);
 
             entity.AddVehicleType(vehicleType, false);
 
+            List<PodEntity> pods = new List<PodEntity>();
+            entity.AddVehicleRadar(pods);
+
+            entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None, true);
+
+            entity.AddVehicleHeightMap(false, Vec2f.Zero);
+
+            if (vehicleType == VehicleType.DropShip)
+            {
+                List<AgentEntity> agentsInside = new List<AgentEntity>();
+                entity.AddVehicleCapacity(agentsInside);
+
+                GameState.VehicleAISystem.Initialize(entity, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                GameState.VehicleAISystem.RunAI(entity, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+
+                for(int i = 0; i < vehicleProperties.DefaultAgentCount; i++)
+                {
+                    var agent = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
+                    agent.agentModel3D.GameObject.gameObject.SetActive(false);
+                    agent.isAgentAlive = false;
+
+                    entity.vehicleCapacity.agentsInside.Add(agent);
+                }
+            }
 
             // Increase ID per object statically
             UniqueID++;

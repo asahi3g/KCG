@@ -11,5 +11,6 @@ namespace Vehicle.Pod
     {
         public int PodValue;
         public int Score;
+        public bool Freeze;
     }
 }

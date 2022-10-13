@@ -229,6 +229,16 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
             GameState.ProjectileCreationApi.SetAffectedByGravity();
             GameState.ProjectileCreationApi.End();
+
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Flare);
+            GameState.ProjectileCreationApi.SetName("Flare");
+            GameState.ProjectileCreationApi.SetSpriteId(GrenadeSprite5);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(15.0f);
+            GameState.ProjectileCreationApi.SetLinearDrag(8f, 0f);
+            GameState.ProjectileCreationApi.SetBounce(0.4f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
         }
     }
 

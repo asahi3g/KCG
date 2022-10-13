@@ -1,9 +1,14 @@
-﻿namespace AI
+﻿using System.Collections.Generic;
+
+namespace AI
 {
     public struct BehaviorProperties
     {
         public Enums.BehaviorType TypeID;
-        public int RootID;  // Uses shared entitas context in properties.
+        public string Name;
+        public List<NodeInfo> Nodes;
+        public int BlackBordID;
+        public int SquadBlackBoardID;
 
         public AgentController InstatiateBehavior()
         {

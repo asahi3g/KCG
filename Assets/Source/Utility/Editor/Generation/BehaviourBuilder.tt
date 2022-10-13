@@ -1,0 +1,91 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="UnityEngine" #>
+<#@ import namespace="UnityEditor" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="AI" #>
+<#@ import namespace="Utility" #>
+<#@ output extension=".cs" #>
+<# 
+    int length = AISystemState.Behaviors.Length;
+    for (int i = 1; i < length; i++)
+    {
+#>
+using Enums;
+using KMath;
+using System.Collections.Generic;
+
+namespace AI
+{
+    public class <#= AISystemState.Behaviors[i].Name#>Behavior : BehaviorBase
+    {
+        public override BehaviorType Type { get { return BehaviorType.<#= AISystemState.Behaviors[i].Name#>; } }
+        
+        NodeInfo Root = new NodeInfo
+        {
+            index = 0,
+            pos = new Vec2f(<#=AISystemState.Behaviors[i].Nodes[0].pos.X#>f, <#=AISystemState.Behaviors[i].Nodes[0].pos.Y#>f),
+            type = NodeType.<#=AISystemState.Behaviors[i].Nodes[0].type#>,
+<#
+        if (AISystemState.Behaviors[i].Nodes[0].children != null)
+        {
+            if (AISystemState.Behaviors[i].Nodes[0].children.Count > 0)
+            {
+#>         
+            children = new List<int>(){<#=AISystemState.Behaviors[i].Nodes[0].children[0]#>}
+<#
+            }
+        }
+#>
+        };
+<#
+        for (int j = 1; j < AISystemState.Behaviors[i].Nodes.Count; j++)
+        {
+#>
+
+        NodeInfo Child<#=j.ToString()#> = new NodeInfo
+        {
+            index = <#=j.ToString()#>,
+            pos = new Vec2f(<#=AISystemState.Behaviors[i].Nodes[j].pos.X#>f, <#=AISystemState.Behaviors[i].Nodes[j].pos.Y#>f),
+            type = NodeType.<#=AISystemState.Behaviors[i].Nodes[j].type#>,
+<#
+            if (AISystemState.Behaviors[i].Nodes[j].children != null)
+            {
+#>
+            children = new List<int>(){<#for (int z = 0; z < AISystemState.Behaviors[i].Nodes[j].children.Count; z++){ if(z!=0){#>, <# }#> <#=AISystemState.Behaviors[i].Nodes[j].children[z]#><# }#>}
+<#
+            }
+#>
+        };
+<#
+        }
+#>
+
+        public override List<NodeInfo> Nodes
+        {
+            get
+            {
+                List<NodeInfo> nodes = new List<NodeInfo>();
+                nodes.Add(Root);
+<#
+        for (int j = 1; j < AISystemState.Behaviors[i].Nodes.Count; j++)
+        {
+#>
+                nodes.Add(Child<#=j.ToString()#>);
+<#
+        }
+#>
+                return nodes;
+            }
+        }
+    };
+}
+<#
+        string outputFilePath = FileWriterManager.GetFullSourceFilePath() + "\\AI\\Behaviors";
+        FileWriterManager.SaveFile(outputFilePath, AISystemState.Behaviors[i].Name + "Behavior.cs", this.GenerationEnvironment.ToString()); 
+        this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+    }
+#>

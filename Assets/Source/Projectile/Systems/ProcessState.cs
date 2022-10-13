@@ -37,6 +37,20 @@ namespace Projectile
                         entityP.isProjectileDelete = true;
                     }
                 }
+                else if(entityP.projectileType.Type == Enums.ProjectileType.Flare)
+                {
+                    float elapsed = Time.realtimeSinceStartup - entityP.projectileStart.StartTime;
+
+                    if (elapsed > 1.0f)
+                    {
+                        CircleSmoke.SpawnFlare(1, entityP.projectilePhysicsState.Position, new Vec2f(0.05f, 10.0f), new Vec2f(0.01f, 1.0f));
+                    }
+
+                    if (elapsed > 8.0f)
+                    {
+                        entityP.isProjectileDelete = true;
+                    }
+                }
             }
         }
     }
