@@ -64,7 +64,7 @@ namespace Planet.Unity
             inventoryManager = new Inventory.InventoryManager();
 
             Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
+            Planet.InitializeHUD();
 
             Planet.InitializeTGen(Material, transform);
 

@@ -89,10 +89,10 @@ namespace Planet
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
 
-        public void InitializeHUD(AgentEntity agentEntity)
+        public void InitializeHUD()
         {
             // GUI/HUD
-            GameState.GUIManager.InitStage1(this, agentEntity);
+            GameState.GUIManager.InitStage1(this);
             GameState.GUIManager.InitStage2();
         }
 

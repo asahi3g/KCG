@@ -1,9 +1,6 @@
 using Agent;
 using Enums;
-using UnityEngine.Animations.Rigging;
-using Entitas;
 using Inventory;
-using Item;
 using KGUI.Statistics;
 using KMath;
 using Mech;

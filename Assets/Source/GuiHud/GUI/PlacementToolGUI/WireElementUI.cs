@@ -32,21 +32,20 @@ namespace KGUI
 
         public override void OnMouseStay()
         {
-            GameState.GUIManager.InventorySlotItem.itemTile.InputsActive = !gameObject.activeSelf;
+            GameState.GUIManager.SelectedInventoryItem.itemTile.InputsActive = !gameObject.activeSelf;
         }
 
+        public override void OnMouseExited()
+        {
+            GameState.GUIManager.SelectedInventoryItem.itemTile.InputsActive = true;
+        }
+        
         public override void OnMouseClick()
         {
-            var item = GameState.GUIManager.InventorySlotItem;
-            if(item != null)
+            var item = GameState.GUIManager.SelectedInventoryItem;
+            if (item != null)
             {
-                switch (item.itemType.Type)
-                {
-                    case ItemType.PlacementTool:
-                    case ItemType.PlacementMaterialTool:
-                        item.itemTile.TileID = Enums.Tile.TileID.Wire;
-                        break;
-                }
+                item.itemTile.TileID = Enums.Tile.TileID.Wire;
             }
         }
     }

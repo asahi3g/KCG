@@ -787,6 +787,7 @@ namespace Item
             SetInventoryTexture(BoneIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(UIPanelID.PotionTool);
             SetAction(NodeType.ToolActionPotion);
             EndItem();
 
@@ -823,6 +824,7 @@ namespace Item
             SetInventoryTexture(PlacementToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(UIPanelID.PlacementMaterialTool);
             SetAction(NodeType.MaterialPlacementAction);
             EndItem();
 
