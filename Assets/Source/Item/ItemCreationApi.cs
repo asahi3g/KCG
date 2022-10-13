@@ -428,6 +428,80 @@ namespace Item
         public int ChestIconParticle;
         public int WoodTile;
 
+        public int MineOreSheet;
+
+        public int Diamond_0;
+        public int Diamond_1;
+        public int Diamond_2;
+        public int Diamond_3;
+        public int Diamond_4;
+        public int Diamond_5;
+        public int Diamond_6;
+        public int Diamond_7;
+
+        public int PinkDiamond_0;
+        public int PinkDiamond_1;
+        public int PinkDiamond_2;
+        public int PinkDiamond_3;
+        public int PinkDiamond_4;
+        public int PinkDiamond_5;
+        public int PinkDiamond_6;
+        public int PinkDiamond_7;
+
+        public int RedStone_0;
+        public int RedStone_1;
+        public int RedStone_2;
+        public int RedStone_3;
+        public int RedStone_4;
+        public int RedStone_5;
+        public int RedStone_6;
+        public int RedStone_7;
+
+        public int Emerald_0;
+        public int Emerald_1;
+        public int Emerald_2;
+        public int Emerald_3;
+        public int Emerald_4;
+        public int Emerald_5;
+        public int Emerald_6;
+        public int Emerald_7;
+
+        public int Lapis_0;
+        public int Lapis_1;
+        public int Lapis_2;
+        public int Lapis_3;
+        public int Lapis_4;
+        public int Lapis_5;
+        public int Lapis_6;
+        public int Lapis_7;
+
+        public int Coal_0;
+        public int Coal_1;
+        public int Coal_2;
+        public int Coal_3;
+        public int Coal_4;
+        public int Coal_5;
+        public int Coal_6;
+        public int Coal_7;
+
+        public int Iron_0;
+        public int Iron_1;
+        public int Iron_2;
+        public int Iron_3;
+        public int Iron_4;
+        public int Iron_5;
+        public int Iron_6;
+        public int Iron_7;
+
+        public int Gold_0;
+        public int Gold_1;
+        public int Gold_2;
+        public int Gold_3;
+        public int Gold_4;
+        public int Gold_5;
+        public int Gold_6;
+        public int Gold_7;
+
         public UIPanel PlacementToolPrefab;
 
         public void InitializeResources()
@@ -471,6 +545,8 @@ namespace Item
             RingSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Ring.png", 64, 64);
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
             WoodTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\MixedTileset\\mixed-tileset_00.png", 32, 32);
+            MineOreSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Gems-Ores\\gems-ores.png", 16, 16);
+
 
 
             SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, AtlasType.Particle);
@@ -512,7 +588,88 @@ namespace Item
             GlovesSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GlovesSlotIcon, 0, 0, AtlasType.Gui);
             RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, AtlasType.Gui);
             BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, AtlasType.Gui);
-            
+
+            Diamond_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 7, AtlasType.Particle);
+            Diamond_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 7, AtlasType.Particle);
+            Diamond_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 7, AtlasType.Particle);
+            Diamond_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 7, AtlasType.Particle);
+            Diamond_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 7, AtlasType.Particle);
+            Diamond_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 7, AtlasType.Particle);
+            Diamond_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 7, AtlasType.Particle);
+            Diamond_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 7, AtlasType.Particle);
+
+            Gold_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 6, AtlasType.Particle);
+            Gold_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 6, AtlasType.Particle);
+            Gold_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 6, AtlasType.Particle);
+            Gold_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 6, AtlasType.Particle);
+            Gold_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 6, AtlasType.Particle);
+            Gold_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 6, AtlasType.Particle);
+            Gold_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 6, AtlasType.Particle);
+            Gold_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 6, AtlasType.Particle);
+
+            Iron_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 3, AtlasType.Particle);
+            Iron_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 3, AtlasType.Particle);
+            Iron_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 3, AtlasType.Particle);
+            Iron_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 3, AtlasType.Particle);
+            Iron_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 3, AtlasType.Particle);
+            Iron_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 3, AtlasType.Particle);
+            Iron_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 3, AtlasType.Particle);
+            Iron_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 3, AtlasType.Particle);
+
+            Lapis_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
+            Lapis_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 0, AtlasType.Particle);
+            Lapis_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 0, AtlasType.Particle);
+            Lapis_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 0, AtlasType.Particle);
+            Lapis_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 0, AtlasType.Particle);
+            Lapis_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 0, AtlasType.Particle);
+            Lapis_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 0, AtlasType.Particle);
+            Lapis_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 0, AtlasType.Particle);
+
+            Emerald_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 4, AtlasType.Particle);
+            Emerald_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 4, AtlasType.Particle);
+            Emerald_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 4, AtlasType.Particle);
+            Emerald_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 4, AtlasType.Particle);
+            Emerald_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 4, AtlasType.Particle);
+            Emerald_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 4, AtlasType.Particle);
+            Emerald_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 4, AtlasType.Particle);
+            Emerald_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 4, AtlasType.Particle);
+
+            Coal_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 1, AtlasType.Particle);
+            Coal_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 1, AtlasType.Particle);
+            Coal_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 1, AtlasType.Particle);
+            Coal_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 1, AtlasType.Particle);
+            Coal_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 1, AtlasType.Particle);
+            Coal_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 1, AtlasType.Particle);
+            Coal_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 1, AtlasType.Particle);
+            Coal_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 1, AtlasType.Particle);
+
+            RedStone_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 5, AtlasType.Particle);
+            RedStone_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 5, AtlasType.Particle);
+            RedStone_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 5, AtlasType.Particle);
+            RedStone_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 5, AtlasType.Particle);
+            RedStone_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 5, AtlasType.Particle);
+            RedStone_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 5, AtlasType.Particle);
+            RedStone_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 5, AtlasType.Particle);
+            RedStone_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 5, AtlasType.Particle);
+
+            Lapis_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
+            Lapis_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 0, AtlasType.Particle);
+            Lapis_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 0, AtlasType.Particle);
+            Lapis_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 0, AtlasType.Particle);
+            Lapis_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 0, AtlasType.Particle);
+            Lapis_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 0, AtlasType.Particle);
+            Lapis_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 0, AtlasType.Particle);
+            Lapis_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 0, AtlasType.Particle);
+
+            PinkDiamond_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 2, AtlasType.Particle);
+            PinkDiamond_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 2, AtlasType.Particle);
+            PinkDiamond_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 2, AtlasType.Particle);
+            PinkDiamond_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 2, AtlasType.Particle);
+            PinkDiamond_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 2, AtlasType.Particle);
+            PinkDiamond_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 2, AtlasType.Particle);
+            PinkDiamond_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 2, AtlasType.Particle);
+            PinkDiamond_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 2, AtlasType.Particle);
+
             CreateItem(ItemType.SniperRifle, "SniperRifle");
             SetGroup(ItemGroups.Gun);
             SetTexture(SniperRifleIcon);
@@ -1114,6 +1271,448 @@ namespace Item
             SetAction(NodeType.MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
+
+            CreateItem(ItemType.Diamond_0, "Diamond_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_0);
+            SetInventoryTexture(Diamond_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_1, "Diamond_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_1);
+            SetInventoryTexture(Diamond_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_2, "Diamond_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_2);
+            SetInventoryTexture(Diamond_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_3, "Diamond_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_3);
+            SetInventoryTexture(Diamond_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_4, "Diamond_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_4);
+            SetInventoryTexture(Diamond_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_5, "Diamond_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_5);
+            SetInventoryTexture(Diamond_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_6, "Diamond_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_6);
+            SetInventoryTexture(Diamond_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Diamond_7, "Diamond_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Diamond_7);
+            SetInventoryTexture(Diamond_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_0, "Gold_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_0);
+            SetInventoryTexture(Gold_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_1, "Gold_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_1);
+            SetInventoryTexture(Gold_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_2, "Gold_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_2);
+            SetInventoryTexture(Gold_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_3, "Gold_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_3);
+            SetInventoryTexture(Gold_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_4, "Gold_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_4);
+            SetInventoryTexture(Gold_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_5, "Gold_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_5);
+            SetInventoryTexture(Gold_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_6, "Gold_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_6);
+            SetInventoryTexture(Gold_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Gold_7, "Gold_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Gold_7);
+            SetInventoryTexture(Gold_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_0, "Iron_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_0);
+            SetInventoryTexture(Iron_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_1, "Iron_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_1);
+            SetInventoryTexture(Iron_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_2, "Iron_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_2);
+            SetInventoryTexture(Iron_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_3, "Iron_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_3);
+            SetInventoryTexture(Iron_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_4, "Iron_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_4);
+            SetInventoryTexture(Iron_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_5, "Iron_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_5);
+            SetInventoryTexture(Iron_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_6, "Iron_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_6);
+            SetInventoryTexture(Iron_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Iron_7, "Iron_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Iron_7);
+            SetInventoryTexture(Iron_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_0, "Emerald_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_0);
+            SetInventoryTexture(Emerald_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_1, "Emerald_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_1);
+            SetInventoryTexture(Emerald_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_2, "Emerald_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_2);
+            SetInventoryTexture(Emerald_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_3, "Emerald_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_3);
+            SetInventoryTexture(Emerald_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_4, "Emerald_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_4);
+            SetInventoryTexture(Emerald_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_5, "Emerald_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_5);
+            SetInventoryTexture(Emerald_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_6, "Emerald_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_6);
+            SetInventoryTexture(Emerald_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Emerald_7, "Emerald_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Emerald_7);
+            SetInventoryTexture(Emerald_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_0, "Coal_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_0);
+            SetInventoryTexture(Coal_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_1, "Coal_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_1);
+            SetInventoryTexture(Coal_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_2, "Coal_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_2);
+            SetInventoryTexture(Coal_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_3, "Coal_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_3);
+            SetInventoryTexture(Coal_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_4, "Coal_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_4);
+            SetInventoryTexture(Coal_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_5, "Coal_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_5);
+            SetInventoryTexture(Coal_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_6, "Coal_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_6);
+            SetInventoryTexture(Coal_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Coal_7, "Coal_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Coal_7);
+            SetInventoryTexture(Coal_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_0, "Lapis_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_0);
+            SetInventoryTexture(Lapis_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_1, "Lapis_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_1);
+            SetInventoryTexture(Lapis_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_2, "Lapis_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_2);
+            SetInventoryTexture(Lapis_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_3, "Lapis_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_3);
+            SetInventoryTexture(Lapis_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_4, "Lapis_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_4);
+            SetInventoryTexture(Lapis_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_5, "Lapis_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_5);
+            SetInventoryTexture(Lapis_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_6, "Lapis_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_6);
+            SetInventoryTexture(Lapis_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.Lapis_7, "Lapis_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(Lapis_7);
+            SetInventoryTexture(Lapis_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_0, "PinkDia_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_0);
+            SetInventoryTexture(PinkDiamond_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
         }
     }
 }

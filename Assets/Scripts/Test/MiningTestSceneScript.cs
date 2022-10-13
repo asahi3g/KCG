@@ -41,7 +41,7 @@ namespace Planet.Unity
 
             if (enableGeometryPlacementTool)
             {
-                geometryPlacementTool.UpdateToolGrid();
+                //geometryPlacementTool.UpdateToolGrid();
             }
 
             MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
@@ -111,13 +111,9 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(32, 32);
+            Vec2i mapSize = new Vec2i(64, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
-
-            /*var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-            Planet.TileMap = TileMapManager.Load("map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);*/
 
             GenerateMap();
             SpawnStuff();
@@ -127,11 +123,9 @@ namespace Planet.Unity
 
             if (enableGeometryPlacementTool)
             {
-                geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
-                geometryPlacementTool.Initialize(ref Planet, Material, transform);
+                //geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
+                //geometryPlacementTool.Initialize(ref Planet, Material, transform);
             }
-
-            //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
             MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
@@ -229,8 +223,6 @@ namespace Planet.Unity
             tileMap.SetFrontTile(2, 5, TileID.Moon);
             tileMap.SetFrontTile(2, 6, TileID.Moon);
             tileMap.SetFrontTile(2, 7, TileID.Moon);
-
-
 
 
             tileMap.SetBackTile(6, 1, TileID.FP_R0_Rock);
@@ -570,6 +562,203 @@ namespace Planet.Unity
             tileMap.SetFrontTile(25, 6, TileID.RedStoneBlock_1);
             tileMap.SetFrontTile(25, 7, TileID.RedStoneBlock_5);
 
+
+
+            tileMap.SetBackTile(26, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(26, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(27, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(27, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(28, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(28, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(29, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(29, 7, TileID.FP_R0_Rock);
+
+
+            tileMap.SetFrontTile(26, 1, TileID.IronBlock_0);
+            tileMap.SetFrontTile(26, 2, TileID.IronBlock_4);
+            tileMap.SetFrontTile(26, 3, TileID.IronBlock_7);
+            tileMap.SetFrontTile(26, 4, TileID.IronBlock_6);
+            tileMap.SetFrontTile(26, 5, TileID.IronBlock_2);
+            tileMap.SetFrontTile(26, 6, TileID.IronBlock_1);
+            tileMap.SetFrontTile(26, 7, TileID.IronBlock_5);
+
+            tileMap.SetFrontTile(27, 1, TileID.IronBlock_0);
+            tileMap.SetFrontTile(27, 2, TileID.IronBlock_4);
+            tileMap.SetFrontTile(27, 3, TileID.IronBlock_7);
+            tileMap.SetFrontTile(27, 4, TileID.IronBlock_6);
+            tileMap.SetFrontTile(27, 5, TileID.IronBlock_2);
+            tileMap.SetFrontTile(27, 6, TileID.IronBlock_1);
+            tileMap.SetFrontTile(27, 7, TileID.IronBlock_5);
+
+            tileMap.SetFrontTile(28, 1, TileID.IronBlock_0);
+            tileMap.SetFrontTile(28, 2, TileID.IronBlock_4);
+            tileMap.SetFrontTile(28, 3, TileID.IronBlock_7);
+            tileMap.SetFrontTile(28, 4, TileID.IronBlock_6);
+            tileMap.SetFrontTile(28, 5, TileID.IronBlock_2);
+            tileMap.SetFrontTile(28, 6, TileID.IronBlock_1);
+            tileMap.SetFrontTile(28, 7, TileID.IronBlock_5);
+
+            tileMap.SetFrontTile(29, 1, TileID.IronBlock_0);
+            tileMap.SetFrontTile(29, 2, TileID.IronBlock_4);
+            tileMap.SetFrontTile(29, 3, TileID.IronBlock_7);
+            tileMap.SetFrontTile(29, 4, TileID.IronBlock_6);
+            tileMap.SetFrontTile(29, 5, TileID.IronBlock_2);
+            tileMap.SetFrontTile(29, 6, TileID.IronBlock_1);
+            tileMap.SetFrontTile(29, 7, TileID.IronBlock_5);
+
+            tileMap.SetBackTile(30, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(30, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(31, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(31, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(32, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(32, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(33, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(33, 7, TileID.FP_R0_Rock);
+
+
+            tileMap.SetFrontTile(30, 1, TileID.CoalBlock_0);
+            tileMap.SetFrontTile(30, 2, TileID.CoalBlock_4);
+            tileMap.SetFrontTile(30, 3, TileID.CoalBlock_7);
+            tileMap.SetFrontTile(30, 4, TileID.CoalBlock_6);
+            tileMap.SetFrontTile(30, 5, TileID.CoalBlock_2);
+            tileMap.SetFrontTile(30, 6, TileID.CoalBlock_1);
+            tileMap.SetFrontTile(30, 7, TileID.CoalBlock_5);
+
+            tileMap.SetFrontTile(31, 1, TileID.CoalBlock_0);
+            tileMap.SetFrontTile(31, 2, TileID.CoalBlock_4);
+            tileMap.SetFrontTile(31, 3, TileID.CoalBlock_7);
+            tileMap.SetFrontTile(31, 4, TileID.CoalBlock_6);
+            tileMap.SetFrontTile(31, 5, TileID.CoalBlock_2);
+            tileMap.SetFrontTile(31, 6, TileID.CoalBlock_1);
+            tileMap.SetFrontTile(31, 7, TileID.CoalBlock_5);
+
+            tileMap.SetFrontTile(32, 1, TileID.CoalBlock_0);
+            tileMap.SetFrontTile(32, 2, TileID.CoalBlock_4);
+            tileMap.SetFrontTile(32, 3, TileID.CoalBlock_7);
+            tileMap.SetFrontTile(32, 4, TileID.CoalBlock_6);
+            tileMap.SetFrontTile(32, 5, TileID.CoalBlock_2);
+            tileMap.SetFrontTile(32, 6, TileID.CoalBlock_1);
+            tileMap.SetFrontTile(32, 7, TileID.CoalBlock_5);
+
+            tileMap.SetFrontTile(33, 1, TileID.CoalBlock_0);
+            tileMap.SetFrontTile(33, 2, TileID.CoalBlock_4);
+            tileMap.SetFrontTile(33, 3, TileID.CoalBlock_7);
+            tileMap.SetFrontTile(33, 4, TileID.CoalBlock_6);
+            tileMap.SetFrontTile(33, 5, TileID.CoalBlock_2);
+            tileMap.SetFrontTile(33, 6, TileID.CoalBlock_1);
+            tileMap.SetFrontTile(33, 7, TileID.CoalBlock_5);
+
+
+            tileMap.SetBackTile(34, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(34, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(35, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(35, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(36, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(36, 7, TileID.FP_R0_Rock);
+
+            tileMap.SetBackTile(37, 1, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 2, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 3, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 4, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 5, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 6, TileID.FP_R0_Rock);
+            tileMap.SetBackTile(37, 7, TileID.FP_R0_Rock);
+
+
+            tileMap.SetFrontTile(34, 1, TileID.PinkDiaBlock_0);
+            tileMap.SetFrontTile(34, 2, TileID.PinkDiaBlock_4);
+            tileMap.SetFrontTile(34, 3, TileID.PinkDiaBlock_7);
+            tileMap.SetFrontTile(34, 4, TileID.PinkDiaBlock_6);
+            tileMap.SetFrontTile(34, 5, TileID.PinkDiaBlock_2);
+            tileMap.SetFrontTile(34, 6, TileID.PinkDiaBlock_1);
+            tileMap.SetFrontTile(34, 7, TileID.PinkDiaBlock_5);
+
+            tileMap.SetFrontTile(35, 1, TileID.PinkDiaBlock_0);
+            tileMap.SetFrontTile(35, 2, TileID.PinkDiaBlock_4);
+            tileMap.SetFrontTile(35, 3, TileID.PinkDiaBlock_7);
+            tileMap.SetFrontTile(35, 4, TileID.PinkDiaBlock_6);
+            tileMap.SetFrontTile(35, 5, TileID.PinkDiaBlock_2);
+            tileMap.SetFrontTile(35, 6, TileID.PinkDiaBlock_1);
+            tileMap.SetFrontTile(35, 7, TileID.PinkDiaBlock_5);
+
+            tileMap.SetFrontTile(36, 1, TileID.PinkDiaBlock_0);
+            tileMap.SetFrontTile(36, 2, TileID.PinkDiaBlock_4);
+            tileMap.SetFrontTile(36, 3, TileID.PinkDiaBlock_7);
+            tileMap.SetFrontTile(36, 4, TileID.PinkDiaBlock_6);
+            tileMap.SetFrontTile(36, 5, TileID.PinkDiaBlock_2);
+            tileMap.SetFrontTile(36, 6, TileID.PinkDiaBlock_1);
+            tileMap.SetFrontTile(36, 7, TileID.PinkDiaBlock_5);
+
+            tileMap.SetFrontTile(37, 1, TileID.PinkDiaBlock_0);
+            tileMap.SetFrontTile(37, 2, TileID.PinkDiaBlock_4);
+            tileMap.SetFrontTile(37, 3, TileID.PinkDiaBlock_7);
+            tileMap.SetFrontTile(37, 4, TileID.PinkDiaBlock_6);
+            tileMap.SetFrontTile(37, 5, TileID.PinkDiaBlock_2);
+            tileMap.SetFrontTile(37, 6, TileID.PinkDiaBlock_1);
+            tileMap.SetFrontTile(37, 7, TileID.PinkDiaBlock_5);
 
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
