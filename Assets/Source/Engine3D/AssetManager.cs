@@ -166,7 +166,7 @@ namespace Engine3D
             ModelLoader.Load("SmallInsect", ModelType.SmallInsect);
             ModelLoader.Load("HeavyInsect", ModelType.HeavyInsect);
             ModelLoader.Load("Stander", ModelType.Stander);
-            ModelLoader.Load("SpaceMarine", ModelType.SpaceMarine);
+            ModelLoader.Load("MediumMarinePrefab", ModelType.SpaceMarine);
             ModelLoader.Load("Pistol", ModelType.Pistol);
             ModelLoader.Load("Rapier", ModelType.Rapier);
 

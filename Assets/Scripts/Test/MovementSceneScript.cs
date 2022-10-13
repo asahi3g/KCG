@@ -29,7 +29,7 @@ namespace Planet.Unity
         private Color correctHlColor = Color.green;
 
 
-        KGui.CharacterDisplay CharacterDisplay;
+        //KGui.CharacterDisplay CharacterDisplay;
 
         Vec2f[] Shape1;
 
@@ -112,8 +112,8 @@ namespace Planet.Unity
 
 
 
-            CharacterDisplay = new KGui.CharacterDisplay();
-            CharacterDisplay.setPlayer(Player);
+           // CharacterDisplay = new KGui.CharacterDisplay();
+            //CharacterDisplay.setPlayer(Player);
 
           //  UpdateMode(ref Planet, Player);
         }
@@ -209,7 +209,7 @@ namespace Planet.Unity
             }
 
 
-            CharacterDisplay.Update();
+           // CharacterDisplay.Update();
             Planet.Update(Time.deltaTime, Material, transform);
 
         }
@@ -229,7 +229,7 @@ namespace Planet.Unity
             }
 
             
-            CharacterDisplay.Draw();
+          //  CharacterDisplay.Draw();
 
                  
         }
