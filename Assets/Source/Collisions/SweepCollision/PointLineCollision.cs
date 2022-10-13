@@ -107,7 +107,82 @@ namespace Collisions
         }
 
 
+
+        public static float TestCollision(Vec2f point, Vec2f velocity, Vec2f p1, Vec2f p2, float cos, float sin)
+        {
+
+            // step 1: p1 is the origin
+            // offset everything by p1
+
+            p2 -= p1;
+            point -= p1;
+            p1 -= p1;
+
+            // step3: apply the rotation
+
+            point = rotatePoint(point, cos, sin);
+            p2 = rotatePoint(p2, cos, sin);
+            velocity = RotateVector2d(velocity, cos, sin);
+
+            // step 4: point center is the origin
+            // offset everything by the point
+
+            p1 -= point;
+            p2 -= point;
+            point -= point;
+
+            // step 5: compute the time of collision
+            float k = p1.X;
+            float timeX = timeX = (k) / velocity.X;
                 
+
+            // used to remove very small numbers that are supposed to be 0
+            float epsilon = 0.001f;
+
+            // if the time is more than 1 or less than epsillon
+            // that means we dont collide and the time should be 1
+            if (timeX >= 1.0f || timeX <= epsilon)
+            {
+                timeX = 1.0f;
+            }
+
+            // step 6: see if the collision is valid
+
+            // if the point intersects the line we also need to see if 
+            // it managed to hit the segment [p1, p2]
+            // the line is infinite but the segment is not
+            if (timeX < 1.0f)
+            {
+
+                // segment [p1, p2]
+                Line2D staticLine = new Line2D(p1, p2);
+
+                // the line is just the point and the point + velocity
+                Line2D movingLine = new Line2D(point, point + velocity);
+
+                // check if the line intersects the segment [p1, p2]
+                if (!(movingLine.Intersects(staticLine)))
+                {
+                    // does not collide
+                    timeX = 1.0f;
+                }
+                            
+            }
+
+            return timeX;
+        }
+
+
+                
+
+        static Vec2f RotateVector2d(Vec2f vector, float cos, float sin)
+        {
+            Vec2f result = new Vec2f();
+            result.X = vector.X * cos - vector.Y * sin;
+            result.Y = vector.X * sin + vector.Y * cos;
+
+            return result;
+        }
 
         static Vec2f RotateVector2d(Vec2f vector, float angle)
         {
@@ -116,6 +191,15 @@ namespace Collisions
             result.Y = vector.X * MathF.Sin(angle) + vector.Y * MathF.Cos(angle);
 
             return result;
+        }
+
+        public static Vec2f rotatePoint(Vec2f pos, float cos, float sin)
+        {
+            Vec2f newv;
+            newv.X = pos.X * cos - pos.Y * sin;
+            newv.Y = pos.X * sin + pos.Y * cos;
+
+            return newv;
         }
 
         public static Vec2f rotatePoint(Vec2f pos, float angle) 

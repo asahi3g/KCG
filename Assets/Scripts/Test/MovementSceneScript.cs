@@ -50,12 +50,15 @@ namespace Planet.Unity
         float CollisionDistance = 0.0f;
 
 
-        float CircleRadius = 0.0f;
+        float CircleRadius = 1.0f;
         Vec2f P1 = new Vec2f(15, 15);
-        Vec2f P2 = new Vec2f(17, 17);
+        Vec2f P2 = new Vec2f(18, 15);
 
-        Vec2f P3 = new Vec2f(15, 15);
-        Vec2f P4 = new Vec2f(18, 16);
+        Vec2f P3 = new Vec2f(18, 15);
+        Vec2f P4 = new Vec2f(18, 18);
+
+        Vec2f P5 = new Vec2f(18, 18);
+        Vec2f P6 = new Vec2f(15, 15);
 
         static bool Init = false;
 
@@ -88,18 +91,30 @@ namespace Planet.Unity
             P2.Y = P1.Y + mag;*/
 
 
-            Shape1 = new Vec2f[3];
-            ShapeTemp = new Vec2f[3];
+            Shape1 = new Vec2f[4];
+            ShapeTemp = new Vec2f[4];
             Shape1[0] = new Vec2f(12.0f, 12.0f);
             Shape1[1] = new Vec2f(13.0f, 12.0f);
             Shape1[2] = new Vec2f(13.0f, 13.0f);
-            //Shape1[3] = new Vec2f(12.0f, 13.0f);
+            Shape1[3] = new Vec2f(12.0f, 13.0f);
 
-            Shape2 = new Vec2f[4];
+            float epsilon = 0.01f;
+            /*Shape2 = new Vec2f[5];
             Shape2[0] = new Vec2f(15.0f, 15.0f);
             Shape2[1] = new Vec2f(16.0f, 15.0f);
             Shape2[2] = new Vec2f(16.0f, 16.0f);
-            Shape2[3] = new Vec2f(15.0f, 16.0f);
+            Shape2[3] = new Vec2f(16.0f - epsilon, 16.0f);
+            Shape2[4] = new Vec2f(15.0f, 15.0f + epsilon);*/
+
+            Shape2 = new Vec2f[4];
+
+            Shape2[0] = new Vec2f(15.0f, 15.0f);
+            Shape2[1] = new Vec2f(16.0f, 16.0f);
+            Shape2[2] = new Vec2f(15.0f, 17.0f);
+            Shape2[3] = new Vec2f(14.0f, 16.0f);
+
+
+           // Shape2[3] = new Vec2f(15.0f, 16.0f);
 
 
             LastMousePosition = Shape1[0];
@@ -201,7 +216,7 @@ namespace Planet.Unity
             Vec2f shapeVelocity = new Vec2f(mouse.x, mouse.y) - LastMousePosition;
             LastMousePosition = new Vec2f(mouse.x, mouse.y);
 
-            bool sat = false;
+            bool sat = true;
             if (sat)
             {
                 for( int i = 0; i < Shape1.Length; i++)
@@ -222,12 +237,49 @@ namespace Planet.Unity
             }
             else
             {
-                float distance = Collisions.PolygonSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
+                var result = Collisions.PolygonSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
+                float distance = result.CollisionTime;
                 Debug.Log(distance);
+                Debug.Log(result.CollisionNormal);
+
+                Vec2f shape1Center = new Vec2f();
+                Vec2f shape2Center = new Vec2f();
+
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    shape1Center += Shape1[i] / (float)Shape1.Length;
+                }
+                
+                for( int i = 0; i < Shape2.Length; i++)
+                {
+                    shape2Center += Shape2[i] / (float)Shape2.Length;
+                }
 
                  for( int i = 0; i < Shape1.Length; i++)
                 {
-                    ShapeTemp[i] = Shape1[i] + shapeVelocity * distance;
+                    if (distance == 1.0f)
+                    {
+                        ShapeTemp[i] = Shape1[i] + shapeVelocity * distance;
+                        Shape1[i] = Shape1[i] + shapeVelocity * distance;
+                    }
+                    else
+                    {
+                        ShapeTemp[i] = Shape1[i] + shapeVelocity * distance;
+                        Shape1[i] = Shape1[i] + shapeVelocity * distance;
+
+                       // ShapeTemp[i] = Shape1[i] + new Vec2f(Mathf.Abs(shapeVelocity.X), Mathf.Abs(shapeVelocity.Y)) * (1.0f - distance) * result.CollisionNormal;
+                       // Shape1[i] = Shape1[i] + new Vec2f(Mathf.Abs(shapeVelocity.X), Mathf.Abs(shapeVelocity.Y)) * (1.0f - distance) * result.CollisionNormal;
+
+                        ShapeTemp[i] -= shapeVelocity * 0.01f;
+                        Shape1[i] -= shapeVelocity * 0.01f;
+
+                        Vec2f reflectVelocity = shapeVelocity - 1.0f * Vec2f.Dot(shapeVelocity, result.CollisionNormal) * result.CollisionNormal;
+
+                        ShapeTemp[i] = Shape1[i] + reflectVelocity * (1.0f - distance);
+                        Shape1[i] = Shape1[i] + reflectVelocity * (1.0f - distance);
+
+     
+                    }
                 }
             }
 
@@ -237,21 +289,22 @@ namespace Planet.Unity
             CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
 
 
-            float distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1, P2);
-            float distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3, P4);
+            //float distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1, P2);
+            //float distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3, P4);
+            float distance3 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P5, P6);
 
 
-            CollisionDistance = Mathf.Min(distance1, distance2);
+            CollisionDistance = Mathf.Min(distance3, Mathf.Min(distance3, distance3));
 
-            distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
-            distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
+            //distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
+           // distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
 
 
-            CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));
+            //CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));
 
-            distance1 = Collisions.CircleLineCollision.TestCollision(P1, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));;
-            distance2 = Collisions.CircleLineCollision.TestCollision(P2, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
-            CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance1));
+            //distance1 = Collisions.CircleLineCollision.TestCollision(P1, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));;
+           // distance2 = Collisions.CircleLineCollision.TestCollision(P2, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+          //  CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance1));
 
            /* distance1 = 1.0f - Collisions.CircleLineCollision.TestCollision(P3, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
             distance2 = 1.0f - Collisions.CircleLineCollision.TestCollision(P4, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
@@ -589,7 +642,7 @@ namespace Planet.Unity
             }
 
 
-            bool shapeCollision = true;
+            bool shapeCollision = false;
 
             if (shapeCollision)
             {
@@ -629,7 +682,7 @@ namespace Planet.Unity
             }
 
 
-            bool circleLineCollision = false;
+            bool circleLineCollision = true;
 
             if (circleLineCollision)
             {
@@ -638,6 +691,7 @@ namespace Planet.Unity
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(new Vector3(P1.X, P1.Y, 1), new Vector3(P2.X, P2.Y, 1));
                 Gizmos.DrawLine(new Vector3(P3.X, P3.Y, 1), new Vector3(P4.X, P4.Y, 1));
+                Gizmos.DrawLine(new Vector3(P5.X, P5.Y, 1), new Vector3(P6.X, P6.Y, 1));
                 
                 Gizmos.DrawSphere(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);
                 Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f, CircleCenter.Y, 1.0f), CircleRadius);
@@ -656,10 +710,10 @@ namespace Planet.Unity
                     Gizmos.DrawSphere(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
 
 
-                    Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
-                    Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
-                     new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
-
+                 //   Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+                 //   Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
+                 //    new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
+//
                     Gizmos.color = Color.yellow;
                    
                // }

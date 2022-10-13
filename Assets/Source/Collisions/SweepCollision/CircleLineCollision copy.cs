@@ -3,7 +3,7 @@ using System;
 
 namespace Collisions
 {
-    public class CircleLineCollision
+    public class CircleLineCollision__
     {
 
 
@@ -93,6 +93,8 @@ namespace Collisions
             Vec2f stopPoint = circleCenter + velocity * timeX;
             stopPoint.X += circleRadius;
 
+            UnityEngine.Debug.Log(timeX);
+
             
 
             // if the circle intersects the line we also need to see if 
@@ -102,24 +104,87 @@ namespace Collisions
             {
 
                 // segment [p1, p2]
-                Line2D line = new Line2D(p1, p2);
+               /* Line2D line = new Line2D(p1, p2);
                 // 2 points that form the limits of the moving circle
                 // used to check if one of them intersect the static line
                 Vec2f circleA = circleCenter + (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
                 Vec2f circleB = circleCenter - (new Vec2f(velocity.Y, -velocity.X)).Normalize() * circleRadius;
 
                 // the lines are just the 2 points + velocity
-                Line2D line1 = new Line2D(circleA, circleA + velocity);
-                Line2D line2 = new Line2D(circleB, circleB + velocity);
+                Line2D line1 = new Line2D(circleA, circleA + velocity * 999999);
+                Line2D line2 = new Line2D(circleB, circleB + velocity * 999999);
 
                 // check if the line is between the acceptable range of the moving circle
                 if (!(line1.Intersects(line) || line2.Intersects(line)))
                 {
                     // does not collide
+                    //UnityEngine.Debug.Log("does not collide");
                     timeX = 1.0f;
-                }
-                            
+                }*/
             }
+
+                    //UnityEngine.Debug.Log(timeX);
+
+                  /*  float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
+
+                    float mag1 = (p1 - stopPoint).Magnitude;
+                    float mag2 = (p2 - stopPoint).Magnitude;
+
+                    float x1;
+                    float y1;
+
+                    if (mag1 < mag2)
+                    {
+                        x1 = p1.X;
+                        y1 = p1.Y;
+                    }
+                    else
+                    {
+                        x1 = p2.X;
+                        y1 = p2.Y;
+                    }
+
+                    float a = velocity.Y / velocity.X;
+
+                    float A = 1 + (a * a);
+                    float B = -2 * x1 + -2 * y1 * a;
+                    float C = (x1 * x1) + (y1 * y1) - (circleRadius * circleRadius);
+
+                    float delta = (B * B) - 4 * A * C;
+
+                    if (delta < 0)
+                    {
+                        //timeX = 1.0f;
+                    }
+                    else if (delta == 0)
+                    {
+                        float x2 = (-B) / (2 * A);
+                        float y2 = a * x2;
+
+                        timeX = MathF.Min(timeX, (x2) / velocity.X); 
+                    }
+                    else if (delta > 0)
+                    {
+                        if (k >= 0)
+                        {
+                            float x2 = (-B - MathF.Sqrt(delta)) / (2 * A);
+                            float y2 = a * x2;
+
+                            timeX = MathF.Min(timeX, (x2) / velocity.X); 
+                        }
+                        else
+                        {
+                            float x2 = (-B + MathF.Sqrt(delta)) / (2 * A);
+                            float y2 = a * x2;
+
+                            timeX = MathF.Min(timeX, (x2) / velocity.X); 
+
+                        }
+                    }*/
+                
+                
+                            
+            
 
             return timeX;
         }
