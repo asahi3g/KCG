@@ -4,7 +4,9 @@ namespace KGUI
     {
         Error = 0,
         PlayerStatus,
-        PlacementTool
+        PlacementTool,
+        PlacementMaterialTool,
+        PotionTool,
     }
 }
 

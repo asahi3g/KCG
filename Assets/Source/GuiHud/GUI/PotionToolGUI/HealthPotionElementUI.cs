@@ -33,11 +33,12 @@ namespace KGUI
 
         public override void OnMouseStay()
         {
-            GameState.GUIManager.InventorySlotItem.itemTile.InputsActive = !gameObject.activeSelf;
         }
 
         public override void OnMouseClick()
         {
+            var item = GameState.GUIManager.SelectedInventoryItem;
+            item.itemPotion.potionType = PotionType.HealthPotion;
         }
     }
 }

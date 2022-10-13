@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Enums;
-using Enums.Tile;
-using KGUI.Elements;
 using KMath;
 using Planet;
 using UnityEngine;
@@ -14,20 +12,12 @@ namespace KGUI
     {
         public bool ShowGUI = true;
         
-        public AgentEntity AgentEntity;
+        public PlanetState Planet;
+        public ItemInventoryEntity SelectedInventoryItem;
 
         public Sprite ProgressBar;
         public Sprite WhiteSquareBorder;
 
-        // Default Cursors
-        public ImageWrapper DefaultCursor;
-
-        // Aim Cursor
-        public ImageWrapper AimCursor;
-
-        // Aim Cursor
-        public ImageWrapper BuildCursor;
-        
         public Dictionary<UIPanelID, UIPanel> UIPanelPrefabList = new();
         public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
 
@@ -35,26 +25,17 @@ namespace KGUI
         public UIElement CursorElement;
         
         private Canvas canvas;
-        
-        public PlanetState Planet;
-        
-        Text scannerText = new();
 
-        public ItemInventoryEntity InventorySlotItem;
+        private Text scannerText = new();
 
         GeometryGUI GeometryGUI;
 
         // Initialize
-        public void InitStage1(PlanetState planet, AgentEntity agentEntity)
+        public void InitStage1(PlanetState planet)
         {
             Planet = planet;
-
-            AgentEntity = agentEntity;
-
-            // Hide Cursor
+            
             Cursor.visible = true;
-
-            // Set Canvas
             canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
             ProgressBar = GameState.Renderer.CreateSprite(
@@ -64,6 +45,8 @@ namespace KGUI
 
             UIPanelPrefabList.Add(UIPanelID.PlayerStatus, Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI"));
             UIPanelPrefabList.Add(UIPanelID.PlacementTool, Resources.Load<UIPanel>("GUIPrefabs/PlacementToolUI"));
+            UIPanelPrefabList.Add(UIPanelID.PlacementMaterialTool, Resources.Load<UIPanel>("GUIPrefabs/PlacementMaterialToolUI"));
+            UIPanelPrefabList.Add(UIPanelID.PotionTool, Resources.Load<UIPanel>("GUIPrefabs/PotionToolUI"));
 
             GeometryGUI = new GeometryGUI();
 
@@ -79,12 +62,19 @@ namespace KGUI
         {
             if (UIPanelList.TryGetValue(panelID, out var panel))
             {
-                panel.OnDeactivate();
+                if (!active)
+                {
+                    panel.OnDeactivate();
+                }
+
                 panel.gameObject.SetActive(active);
             }
             else if(UIPanelPrefabList.TryGetValue(panelID, out var panelPrefab))
             {
-                Object.Instantiate(panelPrefab, canvas.transform);
+                if (active)
+                {
+                    Object.Instantiate(panelPrefab, canvas.transform);
+                }
             }
             else
             {
@@ -105,7 +95,7 @@ namespace KGUI
             var inventoryID = agentEntity.agentInventory.InventoryID;
             var inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            InventorySlotItem = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }
@@ -138,8 +128,12 @@ namespace KGUI
                 CursorElement = null;
                 foreach (var panel in UIPanelList.Values)
                 {
+                    if (!panel.gameObject.activeSelf) continue;
+                    
                     foreach (var element in panel.UIElementList.Values)
                     {
+                        if (!element.gameObject.activeSelf) continue;
+                        
                         if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y, element.HitBox.xmin, element.HitBox.xmax, element.HitBox.ymin, element.HitBox.ymax))
                         {
                             CursorElement = element;
@@ -174,12 +168,6 @@ namespace KGUI
             text.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
 
             return text;
-        }
-
-        // Kill
-        public void Teardown()
-        {
-            
         }
     }
 }

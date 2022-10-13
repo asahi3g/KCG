@@ -21,7 +21,7 @@ namespace KGUI
             
             ID = UIElementID.FoodElement;
             
-            foodAmount = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Food : 0.0f;
+            foodAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Food : 0.0f;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", AtlasType.Gui);
@@ -34,7 +34,7 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            foodAmount = GameState.GUIManager.AgentEntity != null ? GameState.GUIManager.AgentEntity.agentStats.Food : 0.0f;
+            foodAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Food : 0.0f;
             progressBar.Update(foodAmount);
             infoText.Update();
         }

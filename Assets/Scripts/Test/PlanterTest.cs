@@ -200,7 +200,7 @@ class PlanterTest : MonoBehaviour
         SpawnStuff();
 
         Planet.InitializeSystems(Material, transform);
-        Planet.InitializeHUD(Player);
+        Planet.InitializeHUD();
 
         //TileMapManager.Save(Planet.TileMap, "map.kmap");
 
