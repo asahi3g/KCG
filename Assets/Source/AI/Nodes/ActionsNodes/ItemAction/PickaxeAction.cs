@@ -22,13 +22,12 @@ namespace Node
                 return;
             }
 
+            
+            ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(tile);
+
+            GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(x, y));
+
             planet.TileMap.RemoveFrontTile((int)x, (int)y);
-            switch (tile)
-            {
-                case Enums.Tile.TileID.Moon:
-                    GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.Moon, new Vec2f(x, y));
-                    break;
-            }
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }
