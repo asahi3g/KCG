@@ -1778,6 +1778,78 @@ namespace Item
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
+            CreateItem(ItemType.RedStone_0, "RedStone_0");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_0);
+            SetInventoryTexture(RedStone_0);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_1, "RedStone_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_1);
+            SetInventoryTexture(RedStone_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_2, "RedStone_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_2);
+            SetInventoryTexture(RedStone_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_3, "RedStone_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_3);
+            SetInventoryTexture(RedStone_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_4, "RedStone_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_4);
+            SetInventoryTexture(RedStone_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_5, "RedStone_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_5);
+            SetInventoryTexture(RedStone_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_6, "RedStone_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_6);
+            SetInventoryTexture(RedStone_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.RedStone_7, "RedStone_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(RedStone_7);
+            SetInventoryTexture(RedStone_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
         }
     }
 }

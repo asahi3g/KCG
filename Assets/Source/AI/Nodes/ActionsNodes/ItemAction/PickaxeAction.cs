@@ -22,8 +22,11 @@ namespace Node
                 return;
             }
 
+            
             ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(tile);
+
             GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(x, y));
+
             planet.TileMap.RemoveFrontTile((int)x, (int)y);
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;

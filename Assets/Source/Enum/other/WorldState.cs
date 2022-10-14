@@ -5,7 +5,5 @@ namespace Enums
         Error = -1,
         Agent,
         Camera,
-        CameraOnly,
-        Creative
     }
 }
