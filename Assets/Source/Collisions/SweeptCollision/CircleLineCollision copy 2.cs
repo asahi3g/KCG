@@ -3,7 +3,7 @@ using System;
 
 namespace Collisions
 {
-    public class CircleLineCollision
+    public class CircleLineCollision_
     {
 
         //collision between moving 2d point and stationary 2d line segment
@@ -113,18 +113,34 @@ namespace Collisions
             float difference = MathF.Abs(MathF.Max(circleLimitB, MathF.Max(circleLimitA, MathF.Max(p1.Y, p2.Y))) - 
             MathF.Min(circleLimitB, MathF.Min(circleLimitA, MathF.Min(p1.Y, p2.Y))));
 
+            Line2D line = new Line2D(p1, p2);
+            Vec2f stopPoint = point + velocity * timeX;
 
-            if (difference > (MathF.Abs((circleLimitA - circleLimitB)) + MathF.Abs(p2.Y - p1.Y)))
+            if (k >= 0)
             {
-                // no collision
-                timeX = 1.0f;
+                stopPoint.X += circleRadius;
             }
             else
             {
-                /*Vec2f stopPoint = point + velocity * timeX;
                 stopPoint.X -= circleRadius;
+            }   
 
-                float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
+            UnityEngine.Debug.Log("onLine : " + line.OnLine(stopPoint));
+
+            if (!line.OnLine(stopPoint))
+            {
+                timeX = 1.0f;
+
+                 RayCastResult rs1 = Collisions.RayCastAgainstCircle(new Line2D(point, point + velocity), p1, circleRadius);
+                 RayCastResult rs2 = Collisions.RayCastAgainstCircle(new Line2D(point, point + velocity), p2, circleRadius);
+
+                 float time1 = rs1.Intersect ? (rs1.Point.X - point.X) / velocity.X : 1.0f;
+                 float time2 = rs2.Intersect ? (rs2.Point.X - point.X) / velocity.X : 1.0f;
+
+                 timeX = MathF.Min(time1, time2);
+
+
+                /*float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
 
                 float mag1 = (p1 - stopPoint).Magnitude;
                 float mag2 = (p2 - stopPoint).Magnitude;
@@ -180,6 +196,21 @@ namespace Collisions
                     }
                 }*/
             }
+            else if (difference > (MathF.Abs((circleLimitA - circleLimitB)) + MathF.Abs(p2.Y - p1.Y)))
+            {
+                timeX = 1.0f;
+            }
+
+           /* if (difference > (MathF.Abs((circleLimitA - circleLimitB)) + MathF.Abs(p2.Y - p1.Y)))
+            {
+                // no collision
+                timeX = 1.0f;
+            }
+            else
+            {
+
+               
+            }*/
 
 
 
