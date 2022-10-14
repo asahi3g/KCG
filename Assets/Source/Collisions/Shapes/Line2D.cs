@@ -70,8 +70,10 @@ namespace KMath
         [MethodImpl((MethodImplOptions)256)]
         public static bool OnSegment(Vec2f point1, Vec2f point2, Vec2f point3)
         {
-            if (point2.X <= MathF.Max(point1.X, point3.X) && point2.X >= MathF.Min(point1.X, point3.X) &&
-                 point2.Y <= MathF.Max(point1.Y, point3.Y) && point2.Y >= MathF.Min(point1.Y, point3.Y))
+            float epsilon = 0.00001f;
+
+            if (point2.X - epsilon <= MathF.Max(point1.X, point3.X) && point2.X + epsilon >= MathF.Min(point1.X, point3.X) &&
+                 point2.Y - epsilon <= MathF.Max(point1.Y, point3.Y) && point2.Y + epsilon >= MathF.Min(point1.Y, point3.Y))
                 return true;
 
             return false;
