@@ -48,6 +48,9 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.Drink, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDrink, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
+            SetAnimation(Enums.AgentMovementState.PickaxeHit, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default,
+                new AgentAnimation { Animation = Engine3D.AnimationType.SpaceMarinePickaxeHit, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
+
             SetAnimation(Enums.AgentMovementState.Limp, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 

@@ -1715,6 +1715,69 @@ namespace Item
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
+            CreateItem(ItemType.PinkDia_1, "PinkDia_1");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_1);
+            SetInventoryTexture(PinkDiamond_1);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_2, "PinkDia_2");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_2);
+            SetInventoryTexture(PinkDiamond_2);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_3, "PinkDia_3");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_3);
+            SetInventoryTexture(PinkDiamond_3);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_4, "PinkDia_4");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_4);
+            SetInventoryTexture(PinkDiamond_4);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_5, "PinkDia_5");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_5);
+            SetInventoryTexture(PinkDiamond_5);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_6, "PinkDia_6");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_6);
+            SetInventoryTexture(PinkDiamond_6);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
+            CreateItem(ItemType.PinkDia_7, "PinkDia_7");
+            SetGroup(ItemGroups.None);
+            SetTexture(PinkDiamond_7);
+            SetInventoryTexture(PinkDiamond_7);
+            SetFlags(ItemProprieties.Flags.Stackable);
+            SetStackable();
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            EndItem();
+
         }
     }
 }
