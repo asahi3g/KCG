@@ -53,7 +53,7 @@ namespace AI
         public void AddEntry(Type type, string name)
         {
             BlackBoardModel blackboard = AISystemState.Behaviors.Get((int)Type).BlackBoard;
-            int id = blackboard.Register(type, name);
+             int id = blackboard.Register(type, name);
 
             AddEntry(blackboard.IDToIndex[id]);
         }
