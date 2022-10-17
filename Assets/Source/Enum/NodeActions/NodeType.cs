@@ -40,6 +40,7 @@
         MaterialPlacementAction,
         ThrowFlareAction,
         PickaxeAction,
+        AxeAction,
 
 
         /// Ttools actions
@@ -58,6 +59,5 @@
         ToolActionRemoveMech,
         ToolActionPotion,
         ToolActionGeometryPlacement,
-        ToolActionAxe,
     }
 }

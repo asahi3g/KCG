@@ -31,5 +31,6 @@
         LyingBack, // dead state back version
         MonsterAttack,
         PickaxeHit,
+        ChoppingTree,
     }
 }

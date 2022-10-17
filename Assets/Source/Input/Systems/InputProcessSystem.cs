@@ -152,56 +152,53 @@ namespace ECSInput
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.G))
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
-                var mechs = contexts.mech.GetGroup(MechMatcher.MechID);
+                var mechEntities = contexts.mech.GetGroup(MechMatcher.MechID);
+
+                int inventoryID;
+                InventoryEntity playerInventory;
+                InventoryEntity equipmentInventory;
 
                 foreach (var player in players)
                 {
                     if (player.isAgentPlayer)
                     {
-                        int inventoryID = player.agentInventory.InventoryID;
-                        InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                        InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                        inventoryID = player.agentInventory.InventoryID;
+                        playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                        foreach (var mech in mechs)
+                        inventoryID = player.agentInventory.EquipmentInventoryID;
+                        equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+
+                        foreach (var mech in mechEntities)
                         {
                             if (mech.mechType.mechType == Mech.MechType.CraftingTable)
                             {
-                                if(mech.mechCraftingTable.InputInventory.hasInventoryDraw || 
+                                if (mech.mechCraftingTable.InputInventory.hasInventoryDraw ||
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
                                 {
                                     mech.mechCraftingTable.InputInventory.hasInventoryDraw = false;
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw = false;
 
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
+                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
                                     GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
                                 }
 
                                 if (Vec2f.Distance(player.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
                                 {
-                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, inventory);
+                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
                                     GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
 
                                     mech.mechCraftingTable.InputInventory.hasInventoryDraw = true;
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw = true;
                                 }
                             }
-                        } 
+                        }
                     }
-                }
-            }
 
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
-
-                foreach (var player in players)
-                {
                     var vehicles = contexts.vehicle.GetGroup(VehicleMatcher.VehicleID);
-
                     foreach (var vehicle in vehicles)
                     {
                         // Scan near vehicles.
@@ -317,11 +314,11 @@ namespace ECSInput
                     if (Inventory == null)
                         continue;
 
-                    int inventoryID = player.agentInventory.InventoryID;
-                    InventoryEntity playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                    inventoryID = player.agentInventory.InventoryID;
+                    playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     inventoryID = player.agentInventory.EquipmentInventoryID;
-                    InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+                    equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     if (!Inventory.hasInventoryDraw)
                     {

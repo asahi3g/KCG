@@ -39,15 +39,10 @@ namespace Vehicle.Pod
                         if(agentIds.Length <= 0)
                         {
                             pod.vehiclePodStatus.Freeze = true;
-                            planet.PodList.Remove(pod.creationIndex);
                         }
                         else
                         {
                             pod.vehiclePodStatus.Freeze = false;
-
-                            if (!planet.PodList.List.Contains(pod))
-                                planet.PodList.Add(pod);
-
                         }
 
                         if(pod.hasVehiclePodRadar)
