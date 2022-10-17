@@ -8,18 +8,13 @@ namespace AI
     {
         public int BehaviorTreeRoot;
         public BlackBoard BlackBoard;
-        public List<SensorBase> Sensors;
+        public SensorEntity[] Sensors;
 
-        public void AttachSensors(SensorBase sensor)
+        public void Update(AgentEntity agent, ref Planet.PlanetState planet)
         {
-            Sensors.Add(sensor);
-        }
-
-        public void Update(ref PlanetState planet)
-        {
-            foreach (var sensor in Sensors)
+            for (int i = 0; i < Sensors.Length; i++)
             {
-                sensor.Update(BlackBoard, ref planet);
+                AISystemState.Sensors[(int)Sensors[i].Type].Update(agent, in Sensors[i], ref BlackBoard, ref planet);
             }
         }
     }

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class NodeEntity {
 
-    public Nodes.DecoratorComponent nodesDecorator { get { return (Nodes.DecoratorComponent)GetComponent(NodeComponentsLookup.NodesDecorator); } }
-    public bool hasNodesDecorator { get { return HasComponent(NodeComponentsLookup.NodesDecorator); } }
+    public Node.DecoratorComponent nodeDecorator { get { return (Node.DecoratorComponent)GetComponent(NodeComponentsLookup.NodeDecorator); } }
+    public bool hasNodeDecorator { get { return HasComponent(NodeComponentsLookup.NodeDecorator); } }
 
-    public void AddNodesDecorator(int newChildID) {
-        var index = NodeComponentsLookup.NodesDecorator;
-        var component = (Nodes.DecoratorComponent)CreateComponent(index, typeof(Nodes.DecoratorComponent));
+    public void AddNodeDecorator(int newChildID) {
+        var index = NodeComponentsLookup.NodeDecorator;
+        var component = (Node.DecoratorComponent)CreateComponent(index, typeof(Node.DecoratorComponent));
         component.ChildID = newChildID;
         AddComponent(index, component);
     }
 
-    public void ReplaceNodesDecorator(int newChildID) {
-        var index = NodeComponentsLookup.NodesDecorator;
-        var component = (Nodes.DecoratorComponent)CreateComponent(index, typeof(Nodes.DecoratorComponent));
+    public void ReplaceNodeDecorator(int newChildID) {
+        var index = NodeComponentsLookup.NodeDecorator;
+        var component = (Node.DecoratorComponent)CreateComponent(index, typeof(Node.DecoratorComponent));
         component.ChildID = newChildID;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveNodesDecorator() {
-        RemoveComponent(NodeComponentsLookup.NodesDecorator);
+    public void RemoveNodeDecorator() {
+        RemoveComponent(NodeComponentsLookup.NodeDecorator);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class NodeEntity {
 //------------------------------------------------------------------------------
 public sealed partial class NodeMatcher {
 
-    static Entitas.IMatcher<NodeEntity> _matcherNodesDecorator;
+    static Entitas.IMatcher<NodeEntity> _matcherNodeDecorator;
 
-    public static Entitas.IMatcher<NodeEntity> NodesDecorator {
+    public static Entitas.IMatcher<NodeEntity> NodeDecorator {
         get {
-            if (_matcherNodesDecorator == null) {
-                var matcher = (Entitas.Matcher<NodeEntity>)Entitas.Matcher<NodeEntity>.AllOf(NodeComponentsLookup.NodesDecorator);
+            if (_matcherNodeDecorator == null) {
+                var matcher = (Entitas.Matcher<NodeEntity>)Entitas.Matcher<NodeEntity>.AllOf(NodeComponentsLookup.NodeDecorator);
                 matcher.componentNames = NodeComponentsLookup.componentNames;
-                _matcherNodesDecorator = matcher;
+                _matcherNodeDecorator = matcher;
             }
 
-            return _matcherNodesDecorator;
+            return _matcherNodeDecorator;
         }
     }
 }

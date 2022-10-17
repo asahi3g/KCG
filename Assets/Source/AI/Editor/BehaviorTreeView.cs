@@ -94,12 +94,12 @@ namespace AI
 
         public void PopulateView()
         {
-            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
             {
-                CreateNodeView(AISystemState.Behaviors[(int)Type].Nodes[j]);
+                CreateNodeView(AISystemState.Behaviors.Get((int)Type).Nodes[j]);
             }
 
-            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
             {
                 if (NodeViews[j].Node.children == null)
                     continue;

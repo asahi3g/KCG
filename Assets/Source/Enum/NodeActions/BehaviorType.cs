@@ -7,6 +7,7 @@ namespace Enums
         Marine,
         Medic,
         Insect,
+        Slime,
         Patrol,
     };
 }

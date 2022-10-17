@@ -61,7 +61,7 @@ namespace Node
         }
 
         public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
-        { 
+        {
         }
     }
 }

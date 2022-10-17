@@ -12,16 +12,11 @@ namespace Node
         public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
 
         /// <summary>
-        /// List of action(Components in action folder) components used in the node.
-        /// This allows components parameters to show in AI visual tool.
-        /// </summary>
-        public virtual List<Type> RegisterComponents() => null;
-
-        /// <summary>
         /// List of states used in the node.
         /// This allows states parameters to show in AI visual tool.
         /// </summary>
         public virtual List<Tuple<string, Type>> RegisterStates() => null;
+        protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
         public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

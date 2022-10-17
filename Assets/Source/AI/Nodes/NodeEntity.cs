@@ -32,7 +32,7 @@ public partial class NodeEntity
         }
         else
         {
-            nodesDecorator.ChildID = ID;
+            nodeDecorator.ChildID = ID;
             return true;
         }
     }
@@ -57,9 +57,9 @@ public partial class NodeEntity
             return true;
         }
 
-        if (hasNodesDecorator)
+        if (hasNodeDecorator)
         {
-            nodesDecorator.ChildID = -1;
+            nodeDecorator.ChildID = -1;
             return true;
         }
 
@@ -78,10 +78,10 @@ public partial class NodeEntity
                 children.Add(context.GetEntityWithNodeIDID(id));
             }
         }
-        if (hasNodesDecorator)
+        if (hasNodeDecorator)
         {
-            if (nodesDecorator.ChildID != -1)
-                children.Add(context.GetEntityWithNodeIDID(nodesDecorator.ChildID));
+            if (nodeDecorator.ChildID != -1)
+                children.Add(context.GetEntityWithNodeIDID(nodeDecorator.ChildID));
         }
 
         return children;

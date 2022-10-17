@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace KMath
 {
@@ -229,7 +228,14 @@ namespace KMath
         public static bool operator !=(Vec2f lhs, Vec2f rhs) => !(lhs == rhs);
 
         #endregion
-        
+
+        #region Reflection
+        public override string ToString()
+        {
+            return X.ToString() + ", " + Y.ToString();
+        }
+        #endregion
+
     }
 }
 

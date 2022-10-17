@@ -16,7 +16,10 @@ namespace Node.Action
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             if (!agentEntity.hasAgentInventory)
+            {
+                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                 return;
+            }
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);

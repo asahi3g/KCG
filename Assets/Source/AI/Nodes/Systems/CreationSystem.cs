@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Enums;
 using KMath;
+using AI;
+using System.Collections.Generic;
 
 namespace Node
 {
@@ -8,6 +10,30 @@ namespace Node
     {
 
         private static int ActionID;
+
+        public int CreateBehaviorTreeNode(Contexts entitasContext, NodeType NodeTypeID, int agentID, int[] entiresID = null)
+        {
+            NodeEntity nodeEntity = entitasContext.node.CreateEntity();
+            nodeEntity.AddNodeID(ActionID, NodeTypeID);
+            nodeEntity.AddNodeOwner(agentID);
+            nodeEntity.AddNodeExecution(NodeState.Entry);
+            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            if (entiresID != null)
+                nodeEntity.AddNodeBlackboardData(entiresID);
+
+            switch (AISystemState.Nodes[(int)NodeTypeID].NodeGroup)
+            {
+                case NodeGroup.CompositeNode:
+                    nodeEntity.AddNodeComposite(new List<int>(), 0);
+                    break;
+                case NodeGroup.DecoratorNode:
+                    nodeEntity.AddNodeDecorator(-1);
+                    break;
+            }
+            nodeEntity.isNodeBT = true;
+
+            return ActionID++;
+        }
 
         /// <summary>
         /// Create action and schedule it. Later we will be able to create action without scheduling immediately.

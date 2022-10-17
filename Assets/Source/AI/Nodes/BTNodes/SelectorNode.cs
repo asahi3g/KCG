@@ -2,6 +2,9 @@
 using Planet;
 using UnityEngine;
 using AI;
+using KMath;
+using System.Collections.Generic;
+using System;
 
 namespace Node
 {
@@ -10,6 +13,14 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.SelectorNode; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.CompositeNode; } }
+        public override List<Tuple<string, Type>> RegisterStates()
+        {
+            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
+            {
+                CreateEntry("Selector", typeof(bool)),
+            };
+            return blackboardEntries;
+        }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -30,7 +41,7 @@ namespace Node
             BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
             int index = 1;
             bool first = false;
-            blackBoard.Get(nodeEntity.nodeBlackboardData.DataID, ref first);
+            blackBoard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out first);
             if (first)
                 index = 0;
 
