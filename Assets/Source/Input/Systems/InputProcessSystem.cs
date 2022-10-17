@@ -200,69 +200,6 @@ namespace ECSInput
 
                 foreach (var player in players)
                 {
-                    InventoryEntity Inventory = null;
-                    float smallestDistance = 2.0f;
-                    var agents = planet.AgentList;
-                    for (int i =0; i < agents.Length; i++)
-                    {
-                        AgentEntity corpse = agents.Get(i);
-                        if (!corpse.isAgentAlive)
-                        {
-                            
-                            var physicsState = corpse.agentPhysicsState;
-                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
-
-                            if (!corpse.hasAgentInventory || !(distance < smallestDistance))
-                                continue;
-
-                            smallestDistance = distance;
-
-                            Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
-                        }
-                    }
-
-
-                    var mechs = contexts.mech.GetEntities();
-                    foreach (var mech in mechs)
-                    {
-                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, player.agentPhysicsState.Position);
-                        if (!(distance < smallestDistance))
-                            continue;
-
-                        distance = smallestDistance;
-                        Inventory = null;
-
-                        if (mech.hasMechInventory)
-                            Inventory = contexts.inventory.GetEntityWithInventoryID(mech.mechInventory.InventoryID);
-
-                        // Get proprietis.
-                        ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
-                        if (mechProperties.Action != NodeType.None)
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
-                    }
-
-                    if (Inventory == null)
-                        continue;
-
-                    int inventoryID = player.agentInventory.InventoryID;
-                    InventoryEntity playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                    inventoryID = player.agentInventory.EquipmentInventoryID;
-                    InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                    if (!Inventory.hasInventoryDraw)
-                    {
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, Inventory);
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
-                    }
-                    else 
-                    {
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, Inventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
-                    }
-
                     var vehicles = contexts.vehicle.GetGroup(VehicleMatcher.VehicleID);
 
                     foreach (var vehicle in vehicles)
@@ -335,6 +272,69 @@ namespace ECSInput
                         }
                     }
 
+
+                    InventoryEntity Inventory = null;
+                    float smallestDistance = 2.0f;
+                    var agents = planet.AgentList;
+                    for (int i =0; i < agents.Length; i++)
+                    {
+                        AgentEntity corpse = agents.Get(i);
+                        if (!corpse.isAgentAlive)
+                        {
+                            
+                            var physicsState = corpse.agentPhysicsState;
+                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
+
+                            if (!corpse.hasAgentInventory || !(distance < smallestDistance))
+                                continue;
+
+                            smallestDistance = distance;
+
+                            Inventory = contexts.inventory.GetEntityWithInventoryID(corpse.agentInventory.InventoryID);
+                        }
+                    }
+
+
+                    var mechs = contexts.mech.GetEntities();
+                    foreach (var mech in mechs)
+                    {
+                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, player.agentPhysicsState.Position);
+                        if (!(distance < smallestDistance))
+                            continue;
+
+                        distance = smallestDistance;
+                        Inventory = null;
+
+                        if (mech.hasMechInventory)
+                            Inventory = contexts.inventory.GetEntityWithInventoryID(mech.mechInventory.InventoryID);
+
+                        // Get proprietis.
+                        ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
+                        if (mechProperties.Action != NodeType.None)
+                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
+                    }
+
+                    if (Inventory == null)
+                        continue;
+
+                    int inventoryID = player.agentInventory.InventoryID;
+                    InventoryEntity playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+
+                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
+
+                    if (!Inventory.hasInventoryDraw)
+                    {
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                    }
+                    else 
+                    {
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, Inventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                    }
                 }
             }
 
