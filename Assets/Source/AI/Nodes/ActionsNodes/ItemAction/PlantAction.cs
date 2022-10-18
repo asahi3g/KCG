@@ -26,10 +26,10 @@ namespace Node
 
                 for (int i = 0; i < planet.MechList.Length; i++)
                 {
-                    if (planet.MechList.Get(i).mechType.mechType != Mech.MechType.Planter)
+                    if (planet.MechList.Get(i).mechType.mechType != Enums.MechType.Planter)
                         continue;
 
-                    if (planet.MechList.Get(i).mechPlanter.GotSeed)
+                    if (planet.MechList.Get(i).mechPlanter.GotPlant)
                         continue;
 
                     // Is mouse over it?
@@ -63,20 +63,20 @@ namespace Node
             switch (itemEntity.itemType.Type)
             {
                 case Enums.ItemType.MajestyPalm:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Mech.MechType.MajestyPalm);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.MajestyPalm);
                     break;
                 case Enums.ItemType.SagoPalm:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Mech.MechType.SagoPalm);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.SagoPalm);
                     break;
                 case Enums.ItemType.DracaenaTrifasciata:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Mech.MechType.DracaenaTrifasciata);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.DracaenaTrifasciata);
                     break;
                 default:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Mech.MechType.DracaenaTrifasciata);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.DracaenaTrifasciata);
                     break;
             }
 
-            planter.mechPlanter.GotSeed = true;
+            planter.mechPlanter.GotPlant = true;
             planter.mechPlanter.PlantMechID = plant.mechID.ID;
             GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;

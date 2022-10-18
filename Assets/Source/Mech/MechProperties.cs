@@ -5,15 +5,12 @@ namespace Mech
 {
     public struct MechProperties
     {
-        public int MechID;
+        public MechType Type;
+        public MechGroup Group;
 
         public string Name;
-
-        // Mech's Sprite ID
         public int SpriteID;
-
         public Vec2f SpriteSize;
-
         public int XMin, XMax, YMin, YMax;
 
         public NodeType Action;
@@ -23,9 +20,16 @@ namespace Mech
         public int InventoryModelID; // Only used if has inventory.
         public int Durability;       // Mech "health" Use only if Mech is breakable.
 
-        public int TreeHealth;       // Mech "health" Use only if Mech is breakable.
-        public int TreeSize;       // Mech "TreeSize" Use only if Mech is tree.
+        public int TreeHealth;      // Mech "health" Use only if Mech is breakable.
+        public int TreeSize;        // Mech "TreeSize" Use only if Mech is tree.
 
+        #region Plants
+        // SpriteID is the stage 1 sprite.
+        public int Stage2Sprite;
+        public int Stage3Sprite;
+        public Vec2f Stage2SpriteSize;
+        public Vec2f Stage3SpriteSize;
+        #endregion
 
         [Flags]
         public enum Flags : byte

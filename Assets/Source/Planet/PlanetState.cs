@@ -155,21 +155,7 @@ namespace Planet
         {
             Utils.Assert(MechList.Length < PlanetEntityLimits.MechLimit);
 
-            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(EntitasContext, position, mechType));
-            if (newEntity.hasMechInventory)
-            {
-                InventoryEntity inventory = EntitasContext.inventory.GetEntityWithInventoryID(newEntity.mechInventory.InventoryID);
-                AddInventory(inventory);
-            }
-
-            return newEntity;
-        }
-
-        public MechEntity AddMech(Planet.PlanetState planet, Vec2f position, MechType mechType)
-        {
-            Utils.Assert(MechList.Length < PlanetEntityLimits.MechLimit);
-
-            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(ref planet, position, mechType));
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(ref this, position, mechType));
             if (newEntity.hasMechInventory)
             {
                 InventoryEntity inventory = EntitasContext.inventory.GetEntityWithInventoryID(newEntity.mechInventory.InventoryID);
@@ -183,7 +169,7 @@ namespace Planet
         {
             MechEntity entity = MechList.Get(index);
             Utils.Assert(entity.isEnabled);
-            GameState.LootDropSystem.Add(GameState.MechCreationApi.Get((int)entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
+            GameState.LootDropSystem.Add(GameState.MechCreationApi.Get(entity.mechType.mechType).DropTableID, entity.mechPosition2D.Value);
 
             if (entity.hasMechInventory)
             {            
@@ -601,6 +587,7 @@ namespace Planet
             GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
             GameState.VehicleCollisionSystem.Update(ref this);
             GameState.PodCollisionSystem.Update(ref this);
+            GameState.MechPlantGrowthSystem.Update(ref this);
 
             GameState.AgentProcessStats.Update(ref this);
 

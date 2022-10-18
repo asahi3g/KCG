@@ -1,6 +1,7 @@
 using UnityEngine;
 using KMath;
 using KGUI.Elements;
+using Enums;
 
 namespace Mech
 {
@@ -129,22 +130,14 @@ namespace Mech
                     SmashableBoxBackground.GameObject.SetActive(true);
                     SmashableEggBackground.GameObject.SetActive(true);
 
-                    ChestBackground.SetImageColor(item.itemMech.MechID 
-                                                                == MechType.Storage ? Color.red : Color.yellow);
-                    PlanterBackground.SetImageColor(item.itemMech.MechID 
-                                                                == MechType.Planter ? Color.red : Color.yellow);
-                    LightBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.Light ? Color.red : Color.yellow);
-                    MajestyPalmBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.MajestyPalm ? Color.red : Color.yellow);
-                    SagoPalmBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.SagoPalm ? Color.red : Color.yellow);
-                    DracaenaTrifasciataBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.DracaenaTrifasciata ? Color.red : Color.yellow);
-                    SmashableBoxBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.SmashableBox ? Color.red : Color.yellow);
-                    SmashableEggBackground.SetImageColor(item.itemMech.MechID
-                                                                == MechType.SmashableEgg ? Color.red : Color.yellow);
+                    ChestBackground.SetImageColor(item.itemMech.MechID == MechType.Storage ? Color.red : Color.yellow);
+                    PlanterBackground.SetImageColor(item.itemMech.MechID == MechType.Planter ? Color.red : Color.yellow);
+                    LightBackground.SetImageColor(item.itemMech.MechID == MechType.Light ? Color.red : Color.yellow);
+                    MajestyPalmBackground.SetImageColor(item.itemMech.MechID == MechType.MajestyPalm ? Color.red : Color.yellow);
+                    SagoPalmBackground.SetImageColor(item.itemMech.MechID == MechType.SagoPalm ? Color.red : Color.yellow);
+                    DracaenaTrifasciataBackground.SetImageColor(item.itemMech.MechID == MechType.DracaenaTrifasciata ? Color.red : Color.yellow);
+                    SmashableBoxBackground.SetImageColor(item.itemMech.MechID == MechType.SmashableBox ? Color.red : Color.yellow);
+                    SmashableEggBackground.SetImageColor(item.itemMech.MechID == MechType.SmashableEgg ? Color.red : Color.yellow);
 
                     if (ChestBackground.IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
                     {
@@ -285,7 +278,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMech.MechID = MechType.DracaenaTrifasciata;
+                                    item.itemMech.MechID = Enums.MechType.DracaenaTrifasciata;
                                 }
                         }
 

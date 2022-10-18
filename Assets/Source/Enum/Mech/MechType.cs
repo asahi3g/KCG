@@ -1,19 +1,19 @@
-namespace Mech
+namespace Enums
 {
     public enum MechType
     {
         Error = -1,
         Planter,
         Light,
-        Storage,
         MajestyPalm,
         SagoPalm,
         DracaenaTrifasciata,
+        Tree,
         SmashableBox,
+        Storage,
         SmashableEgg,
         SurveillanceCamera,
         RoofScreen,
         CraftingTable,
-        Tree
     }
 }

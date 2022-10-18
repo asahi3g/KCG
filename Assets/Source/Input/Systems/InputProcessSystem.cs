@@ -212,7 +212,7 @@ namespace ECSInput
 
                         foreach (var mech in mechs)
                         {
-                            if (mech.mechType.mechType == Mech.MechType.CraftingTable)
+                            if (mech.mechType.mechType == Enums.MechType.CraftingTable)
                             {
                                 if(mech.mechCraftingTable.InputInventory.hasInventoryDraw || 
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
@@ -281,7 +281,7 @@ namespace ECSInput
                             Inventory = contexts.inventory.GetEntityWithInventoryID(mech.mechInventory.InventoryID);
 
                         // Get proprietis.
-                        ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
+                        MechProperties mechProperties = mech.GetProperties();
                         if (mechProperties.Action != NodeType.None)
                             GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
                     }

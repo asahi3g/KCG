@@ -50,7 +50,6 @@ namespace Node
                     continue;
 
                 AgentController controller = agent.agentController.Controller;
-                // Todo(Urgent): Move this code to another system:
                 controller.Update(agent, ref planet);
                 NodeEntity nodeEntity = planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
                 

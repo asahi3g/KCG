@@ -1,8 +1,7 @@
 using UnityEngine;
 using Enums.Tile;
 using KMath;
-using Item;
-using Mech;
+using Enums;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -94,7 +93,7 @@ namespace Planet.Unity
             y >= 0 && y < Planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
+                var mech = GameState.MechCreationApi.Get((MechType)selectedMechIndex);
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
 
