@@ -223,7 +223,6 @@ public partial class AgentEntity
                     GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
-
                         GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
                         GameObject gun = GameObject.Instantiate(prefab);
 

@@ -389,7 +389,7 @@ MonoBehaviour:
   m_RigLayers:
   - m_Rig: {fileID: 315927142}
     m_Active: 1
-  - m_Rig: {fileID: 0}
+  - m_Rig: {fileID: 1171545309}
     m_Active: 1
   - m_Rig: {fileID: 0}
     m_Active: 1
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!4 &1171545310
 Transform:
@@ -1458,7 +1458,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4020156552473501276}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 46197ab11fcf138438ab4f75c8bcb5ab, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 04b09a91e942602448c580ddc97fa2c9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

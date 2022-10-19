@@ -48,21 +48,21 @@ namespace Agent
                                         entity.agentAction.Action = AgentAction.Aiming;
                                     }
                                 }
-
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (transform.childCount >= 4)
                             {
-                                if (transform.childCount >= 4)
+                                if (transform.GetChild(3) != null)
                                 {
-                                    if (transform.GetChild(3) != null)
-                                    {
-                                        transform.GetChild(3).GetComponent<Rig>().weight = Mathf.Lerp(
-                                        transform.GetChild(3).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
-                                    }
+                                    transform.GetChild(3).GetComponent<Rig>().weight = Mathf.Lerp(
+                                    transform.GetChild(3).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
                                 }
                             }
                         }
-                        else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
+
+                        if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
                         {
                             if(transform.childCount >= 4)
                             {
@@ -91,15 +91,15 @@ namespace Agent
                                     }
                                 }
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (transform.childCount >= 5)
                             {
-                                if (transform.childCount >= 5)
+                                if (transform.GetChild(4) != null)
                                 {
-                                    if (transform.GetChild(4) != null)
-                                    {
-                                        transform.GetChild(4).GetComponent<Rig>().weight = Mathf.Lerp(
-                                        transform.GetChild(4).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
-                                    }
+                                    transform.GetChild(4).GetComponent<Rig>().weight = Mathf.Lerp(
+                                    transform.GetChild(4).GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
                                 }
                             }
                         }
