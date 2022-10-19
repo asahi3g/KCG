@@ -38,6 +38,7 @@ public partial class AgentEntity
         //physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.PickaxeHit &&
+        physicsState.MovementState != AgentMovementState.ChoppingTree &&
         physicsState.MovementState != AgentMovementState.Stagger &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling &&
@@ -222,7 +223,6 @@ public partial class AgentEntity
                     GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
-
                         GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
                         GameObject gun = GameObject.Instantiate(prefab);
 
@@ -307,6 +307,20 @@ public partial class AgentEntity
         if (IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.PickaxeHit;
+
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
+            physicsState.ActionCooldown = cooldown;
+        }
+    }
+
+    public void ChopTree(float cooldown)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            physicsState.MovementState = AgentMovementState.ChoppingTree;
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;

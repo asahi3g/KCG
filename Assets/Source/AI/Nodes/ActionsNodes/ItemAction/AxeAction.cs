@@ -5,9 +5,9 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Node
 {
-    public class ToolActionAxe : NodeBase
+    public class AxeAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionAxe; } }
+        public override NodeType Type { get { return NodeType.AxeAction; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
@@ -23,9 +23,11 @@ namespace Node
                     {
                         if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 1.3f)
                         {
-                            if(mech.hasMechStatus)
+                            if (mech.hasMechStatus)
                             {
-                                if(mech.mechStatus.Health <= 0)
+                                agentEntity.agentPhysicsState.MovementState = AgentMovementState.ChoppingTree;
+
+                                if (mech.mechStatus.Health <= 0)
                                 {
                                     planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
 
@@ -40,8 +42,8 @@ namespace Node
                                 planet.AddParticleEmitter(mech.mechPosition2D.Value + Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
 
                                 mech.mechStatus.Health -= 20;
-                                
-                                if(mech.mechStatus.TreeSize > 0)
+
+                                if (mech.mechStatus.TreeSize > 0)
                                 {
                                     planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
                                 }

@@ -1252,7 +1252,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryTexture(SwordSpriteId);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionAxe);
+            SetAction(NodeType.AxeAction);
             EndItem();
 
             CreateItem(ItemType.Pickaxe, "Pickaxe");

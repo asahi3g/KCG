@@ -13,7 +13,6 @@ namespace Planet.Unity
 
         public PlanetState Planet;
 
-
         AgentEntity Player;
         int PlayerID;
 
@@ -39,8 +38,6 @@ namespace Planet.Unity
         Vec2f LastMousePosition;
 
         bool IsShapeColliding = false;
-
-
 
         Vec2f CircleCenter = new Vec2f(12, 12);
 
