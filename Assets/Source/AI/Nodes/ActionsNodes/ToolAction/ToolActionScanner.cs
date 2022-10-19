@@ -6,6 +6,7 @@ namespace Node
     public class ToolActionScanner : NodeBase
     {
         public override NodeType Type { get { return NodeType.ToolActionScanner; } }
+        public override bool IsPlayerOnly { get { return true; } }
 
         // Todo: Fix scanner item crashing bug and fix this action.
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)

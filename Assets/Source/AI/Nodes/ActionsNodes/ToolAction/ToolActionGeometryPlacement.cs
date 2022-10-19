@@ -7,6 +7,7 @@ namespace Node.Action
     public class ToolActionGeometryPlacement : NodeBase
     {
         public override NodeType Type { get { return NodeType.ToolActionGeometryPlacement; } }
+        public override bool IsPlayerOnly { get { return true; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
@@ -25,8 +26,7 @@ namespace Node.Action
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
-                    if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                            y >= 0 && y < planet.TileMap.MapSize.Y)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
                         switch (ItemEntity.itemTile.Layer)
                         {
@@ -43,11 +43,6 @@ namespace Node.Action
                     }
                 }
             }
-            else
-            {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-            }
-
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }
     }

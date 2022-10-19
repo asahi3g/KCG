@@ -11,7 +11,7 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.ShootFireWeaponAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
-        public override List<Tuple<string, Type>> RegisterStates()
+        public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
             {

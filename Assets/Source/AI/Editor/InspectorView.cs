@@ -60,7 +60,7 @@ namespace AI
             visualElement.Add(enumField);
 
             NodeBase node = AISystemState.Nodes[(int)nodeInfo.type];
-            List<Tuple<string, Type>> blackboardEntries = node.RegisterStates();
+            List<Tuple<string, Type>> blackboardEntries = node.RegisterEntries();
 
             if (blackboardEntries != null)
             {

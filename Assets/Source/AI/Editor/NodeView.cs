@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
@@ -96,6 +97,8 @@ namespace AI
 
         public void AddChild(NodeView nodeView)
         {
+            if (Node.children == null)
+                Node.children = new List<int>();
             Node.children.Add(nodeView.Node.index);
         } 
     }

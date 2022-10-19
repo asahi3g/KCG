@@ -11,14 +11,14 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.WaitAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
-        public override List<Tuple<string, Type>> RegisterStates()
+        public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
             {
                 CreateEntry("Wait", typeof(int)),
             };
             return blackboardEntries;
-    }
+        }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {

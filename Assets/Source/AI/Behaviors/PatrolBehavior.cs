@@ -20,6 +20,7 @@ namespace AI
             index = 0,
             pos = new Vec2f(572.12f, 173.032f),
             type = NodeType.DecoratorNode,
+            children = new List<int>(){}
         };
 
         public override List<NodeInfo> Nodes

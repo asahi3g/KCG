@@ -138,6 +138,8 @@ namespace AI
                 pos = position,
                 children = (AISystemState.GetNodeGroup(nodeType) == NodeGroup.ActionNode) ? null : new List<int>()
             };
+            AISystemState.Behaviors.Get((int)Type).Nodes.Add(node);
+
             CreateNodeView(node);
         }
 

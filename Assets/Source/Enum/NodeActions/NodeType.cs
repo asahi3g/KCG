@@ -6,6 +6,7 @@
         None = -1,
 
         // Behaviour tree Nodes
+        ConditionalNode,
         DecoratorNode,
         RepeaterNode,
         SequenceNode,

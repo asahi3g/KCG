@@ -13,14 +13,6 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.SelectorNode; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.CompositeNode; } }
-        public override List<Tuple<string, Type>> RegisterStates()
-        {
-            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
-            {
-                CreateEntry("Selector", typeof(bool)),
-            };
-            return blackboardEntries;
-        }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -38,13 +30,8 @@ namespace Node
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
-            int index = 1;
-            bool first = false;
-            blackBoard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out first);
-            if (first)
-                index = 0;
 
+            int index = 0;
             NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeComposite.Children[index]);
             ref var nodes = ref AISystemState.Nodes;
             index = (int)child.nodeID.TypeID;

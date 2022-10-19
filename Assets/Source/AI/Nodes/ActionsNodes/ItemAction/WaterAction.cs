@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KMath;
 using Planet;
 using Enums;
+using System;
 
 namespace Node
 {
@@ -10,7 +11,14 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.WaterAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
-
+        public override List<Tuple<string, Type>> RegisterEntries()
+        {
+            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
+            {
+                CreateEntry("PlantID", typeof(int)),
+            };
+            return blackboardEntries;
+        }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
@@ -57,9 +65,8 @@ namespace Node
             }
             else
             {
-                Debug.LogError("AI can't use this action. Add blackboard entry with mech target");
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
-                return;
+                if (nodeEntity.hasNodeBlackboardData)
+                    plant = planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
             }
 
             if (plant != null)

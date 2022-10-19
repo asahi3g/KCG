@@ -122,56 +122,42 @@ namespace AI
             #line hidden
             
             #line 38 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write(",\r\n");
+            this.Write(",\r\n            children = new List<int>(){");
             
             #line default
             #line hidden
             
             #line 39 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-
-        if (AISystemState.Behaviors.Get(i).Nodes[0].children != null)
-        {
-            if (AISystemState.Behaviors.Get(i).Nodes[0].children.Count > 0)
-            {
-
+if (AISystemState.Behaviors.Get(i).Nodes[0].children != null){ if (AISystemState.Behaviors.Get(i).Nodes[0].children.Count > 0) {
             
             #line default
             #line hidden
             
-            #line 45 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("         \r\n            children = new List<int>(){");
+            #line 40 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write(" ");
             
             #line default
             #line hidden
             
-            #line 46 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 40 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[0].children[0]));
             
             #line default
             #line hidden
             
-            #line 46 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("}\r\n");
+            #line 40 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+ } }
             
             #line default
             #line hidden
             
-            #line 47 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-
-            }
-        }
-
+            #line 41 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write("}\r\n        };\r\n");
             
             #line default
             #line hidden
             
-            #line 51 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("        };\r\n");
-            
-            #line default
-            #line hidden
-            
-            #line 52 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 43 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         for (int j = 1; j < AISystemState.Behaviors.Get(i).Nodes.Count; j++)
         {
@@ -180,73 +166,73 @@ namespace AI
             #line default
             #line hidden
             
-            #line 56 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 47 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\r\n        NodeInfo Child");
             
             #line default
             #line hidden
             
-            #line 57 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 48 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 57 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 48 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(" = new NodeInfo\r\n        {\r\n            index = ");
             
             #line default
             #line hidden
             
-            #line 59 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 50 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 59 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 50 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(",\r\n            pos = new Vec2f(");
             
             #line default
             #line hidden
             
-            #line 60 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 51 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].pos.X));
             
             #line default
             #line hidden
             
-            #line 60 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 51 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("f, ");
             
             #line default
             #line hidden
             
-            #line 60 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 51 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].pos.Y));
             
             #line default
             #line hidden
             
-            #line 60 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 51 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("f),\r\n            type = NodeType.");
             
             #line default
             #line hidden
             
-            #line 61 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 52 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].type));
             
             #line default
             #line hidden
             
-            #line 61 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 52 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(",\r\n");
             
             #line default
             #line hidden
             
-            #line 62 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 53 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
             if (AISystemState.Behaviors.Get(i).Nodes[j].children != null)
             {
@@ -255,14 +241,72 @@ namespace AI
             #line default
             #line hidden
             
-            #line 66 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 57 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("            children = new List<int>(){");
             
             #line default
             #line hidden
             
-            #line 66 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 57 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].children.Count; z++){ if(z!=0){
+            
+            #line default
+            #line hidden
+            
+            #line 58 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write(", ");
+            
+            #line default
+            #line hidden
+            
+            #line 58 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+ }
+            
+            #line default
+            #line hidden
+            
+            #line 59 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write(" ");
+            
+            #line default
+            #line hidden
+            
+            #line 59 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].children[z]));
+            
+            #line default
+            #line hidden
+            
+            #line 59 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+ }
+            
+            #line default
+            #line hidden
+            
+            #line 60 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write("},\r\n");
+            
+            #line default
+            #line hidden
+            
+            #line 61 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+
+            }
+            if (AISystemState.Behaviors.Get(i).Nodes[j].entriesID != null)
+            {
+
+            
+            #line default
+            #line hidden
+            
+            #line 66 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            this.Write("            entriesID = new List<int>(){");
+            
+            #line default
+            #line hidden
+            
+            #line 66 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++){ if(z!=0){
             
             #line default
             #line hidden
@@ -286,7 +330,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].children.Count; z++)
             #line hidden
             
             #line 68 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].children[z]));
+            this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].entriesID[z]));
             
             #line default
             #line hidden
@@ -298,7 +342,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].children.Count; z++)
             #line hidden
             
             #line 69 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("},\r\n");
+            this.Write("}\r\n");
             
             #line default
             #line hidden
@@ -306,76 +350,18 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].children.Count; z++)
             #line 70 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
             }
-            if (AISystemState.Behaviors.Get(i).Nodes[j].entriesID != null)
-            {
 
             
             #line default
             #line hidden
             
-            #line 75 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("            entriesID = new List<int>(){");
-            
-            #line default
-            #line hidden
-            
-            #line 75 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++){ if(z!=0){
-            
-            #line default
-            #line hidden
-            
-            #line 76 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write(", ");
-            
-            #line default
-            #line hidden
-            
-            #line 76 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
- }
-            
-            #line default
-            #line hidden
-            
-            #line 77 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write(" ");
-            
-            #line default
-            #line hidden
-            
-            #line 77 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Nodes[j].entriesID[z]));
-            
-            #line default
-            #line hidden
-            
-            #line 77 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
- }
-            
-            #line default
-            #line hidden
-            
-            #line 78 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-            this.Write("}\r\n");
-            
-            #line default
-            #line hidden
-            
-            #line 79 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
-
-            }
-
-            
-            #line default
-            #line hidden
-            
-            #line 82 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 73 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("        };\r\n");
             
             #line default
             #line hidden
             
-            #line 83 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 74 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         }
 
@@ -383,7 +369,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++
             #line default
             #line hidden
             
-            #line 86 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 77 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\r\n        public override List<NodeInfo> Nodes\r\n        {\r\n            get\r\n     " +
                     "       {\r\n                List<NodeInfo> nodes = new List<NodeInfo>();\r\n        " +
                     "        nodes.Add(Root);\r\n");
@@ -391,7 +377,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++
             #line default
             #line hidden
             
-            #line 93 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 84 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         for (int j = 1; j < AISystemState.Behaviors.Get(i).Nodes.Count; j++)
         {
@@ -400,25 +386,25 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++
             #line default
             #line hidden
             
-            #line 97 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 88 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                nodes.Add(Child");
             
             #line default
             #line hidden
             
-            #line 97 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 88 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 97 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 88 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(");\r\n");
             
             #line default
             #line hidden
             
-            #line 98 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 89 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         }
 
@@ -426,13 +412,13 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++
             #line default
             #line hidden
             
-            #line 101 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 92 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                return nodes;\r\n            }\r\n        }\r\n");
             
             #line default
             #line hidden
             
-            #line 104 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 95 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         for (int j = 0; j < AISystemState.Behaviors.Get(i).SensorCount; j++)
         {
@@ -441,79 +427,79 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Nodes[j].entriesID.Count; z++
             #line default
             #line hidden
             
-            #line 108 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 99 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("        SensorEntity ");
             
             #line default
             #line hidden
             
-            #line 108 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 99 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Sensors[j].Type.ToString()));
             
             #line default
             #line hidden
             
-            #line 108 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 99 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("Sensor = new SensorEntity\r\n        {\r\n            Type = SensorType.");
             
             #line default
             #line hidden
             
-            #line 110 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 101 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Sensors[j].Type));
             
             #line default
             #line hidden
             
-            #line 110 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 101 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(",\r\n            EntriesID = new List<int>(){");
             
             #line default
             #line hidden
             
-            #line 111 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 102 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z++){ if(z!=0){
             
             #line default
             #line hidden
             
-            #line 112 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 103 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(", ");
             
             #line default
             #line hidden
             
-            #line 112 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 103 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
  }
             
             #line default
             #line hidden
             
-            #line 113 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 104 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(" ");
             
             #line default
             #line hidden
             
-            #line 113 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 104 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Sensors[j].EntriesID[z]));
             
             #line default
             #line hidden
             
-            #line 113 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 104 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
  }
             
             #line default
             #line hidden
             
-            #line 114 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 105 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("}\r\n        };\r\n");
             
             #line default
             #line hidden
             
-            #line 116 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 107 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         }
         int sensorLength = Enum.GetNames(typeof(Enums.SensorType)).Length - 1;
@@ -522,38 +508,38 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 120 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 111 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("      \r\n        public override int SensorCount { get { return ");
             
             #line default
             #line hidden
             
-            #line 121 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 112 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).SensorCount));
             
             #line default
             #line hidden
             
-            #line 121 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 112 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("; } }\r\n\r\n        public override SensorEntity[] Sensors\r\n        {\r\n            g" +
                     "et\r\n            {\r\n                SensorEntity[] sensors = new SensorEntity[");
             
             #line default
             #line hidden
             
-            #line 127 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 118 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(sensorLength.ToString()));
             
             #line default
             #line hidden
             
-            #line 127 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 118 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("];\r\n");
             
             #line default
             #line hidden
             
-            #line 128 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 119 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         for (int j = 0; j < AISystemState.Behaviors.Get(i).SensorCount; j++)
         {
@@ -562,37 +548,37 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 132 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 123 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                sensors[");
             
             #line default
             #line hidden
             
-            #line 132 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 123 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 132 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 123 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("] = ");
             
             #line default
             #line hidden
             
-            #line 132 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 123 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).Sensors[j].Type.ToString()));
             
             #line default
             #line hidden
             
-            #line 132 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 123 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("Sensor;\r\n");
             
             #line default
             #line hidden
             
-            #line 133 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 124 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         }
 
@@ -600,13 +586,13 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 136 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 127 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                return sensors;\r\n            }\r\n        }\r\n");
             
             #line default
             #line hidden
             
-            #line 139 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 130 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         BlackBoardModel blackboard = AISystemState.Behaviors.Get(i).BlackBoard;
         for (int j = 0; j < AISystemState.Behaviors.Get(i).BlackBoard.Length; j++)
@@ -616,61 +602,61 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 144 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 135 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\r\n        BlackBoardModel.EntryInfo Entry");
             
             #line default
             #line hidden
             
-            #line 145 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 136 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 145 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 136 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(" = new BlackBoardModel.EntryInfo\r\n        {\r\n            Name = \"");
             
             #line default
             #line hidden
             
-            #line 147 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 138 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blackboard.Entries[j].Name));
             
             #line default
             #line hidden
             
-            #line 147 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 138 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\",\r\n            Description = \"");
             
             #line default
             #line hidden
             
-            #line 148 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 139 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blackboard.Entries[j].Description));
             
             #line default
             #line hidden
             
-            #line 148 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 139 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\",\r\n            ID = ");
             
             #line default
             #line hidden
             
-            #line 149 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 140 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blackboard.Entries[j].ID));
             
             #line default
             #line hidden
             
-            #line 149 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 140 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("\r\n        };\r\n");
             
             #line default
             #line hidden
             
-            #line 151 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 142 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         }
 
@@ -678,7 +664,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 154 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 145 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("      \r\n        public override BlackBoardModel AgentBlackboard\r\n        {\r\n     " +
                     "       get\r\n            {\r\n                BlackBoardModel blackboard = new Blac" +
                     "kBoardModel(Type);\r\n");
@@ -686,7 +672,7 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 160 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 151 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         for (int j = 0; j < AISystemState.Behaviors.Get(i).BlackBoard.Length; j++)
         {
@@ -699,49 +685,49 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                blackboard.Register(ref Entry");
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(", (");
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(type.ToString()));
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(")");
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AISystemState.Behaviors.Get(i).BlackBoard.GetValue(Entry.ID).ToString().ToLower()));
             
             #line default
             #line hidden
             
-            #line 168 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 159 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(");\r\n");
             
             #line default
             #line hidden
             
-            #line 169 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 160 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
             }
             else if (type == typeof(KMath.Vec2f))
@@ -752,49 +738,49 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                blackboard.Register(ref Entry");
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(j.ToString()));
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(", new KMath.Vec2f(");
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(value.X));
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(", ");
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(value.Y));
             
             #line default
             #line hidden
             
-            #line 175 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 166 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("));\r\n");
             
             #line default
             #line hidden
             
-            #line 176 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 167 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
             }
         }
@@ -803,13 +789,13 @@ for (int z = 0; z < AISystemState.Behaviors.Get(i).Sensors[j].EntriesID.Count; z
             #line default
             #line hidden
             
-            #line 180 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 171 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
             this.Write("                return blackboard;\r\n            }\r\n        }\r\n    };\r\n}\r\n");
             
             #line default
             #line hidden
             
-            #line 185 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
+            #line 176 "Assets\Source\Utility\Editor\Generation\BehaviourBuilder.tt"
 
         string outputFilePath = FileWriterManager.GetFullSourceFilePath() + "\\AI\\Behaviors";
         FileWriterManager.SaveFile(outputFilePath, AISystemState.Behaviors.Get(i).Name + "Behavior.cs", this.GenerationEnvironment.ToString()); 

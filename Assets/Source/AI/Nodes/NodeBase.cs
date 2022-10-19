@@ -10,36 +10,38 @@ namespace Node
     {
         public virtual NodeType Type { get { return NodeType.None; } }
         public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
+        /// <summary> If it player only node won't be accessable in the behavior tree. </summary>
+        public virtual bool IsPlayerOnly { get { return false; } }
 
         /// <summary>
-        /// List of states used in the node.
+        /// List of blackboard entries used in the node.
         /// This allows states parameters to show in AI visual tool.
         /// </summary>
-        public virtual List<Tuple<string, Type>> RegisterStates() => null;
+        public virtual List<Tuple<string, Type>> RegisterEntries() => null;
+
+        // 
         protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
+        /// <summary> Run once at the beggining of the action. </summary>
         public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
+        /// <summary> Run once per frame until action state is changed to sucess or fail. </summary>
         public virtual void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
-        /// <summary> We should always delete actions after executed.</summary>
+        /// <summary> Run once if action succeeded</summary>
         public virtual void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
         }
 
-        public virtual void CheckProceduralPrecondition(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        /// <summary> Run once if action failed</summary>
+        public virtual void OnFail(ref Planet.PlanetState plane, NodeEntity nodeEntity)
         {
-
-        }
-
-        public virtual void ProceduralEffects(ref Planet.PlanetState plane, NodeEntity nodeEntity)
-        { 
         }
     }
 }

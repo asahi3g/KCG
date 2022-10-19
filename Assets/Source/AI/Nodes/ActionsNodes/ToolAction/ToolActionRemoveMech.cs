@@ -6,6 +6,7 @@ namespace Node
     public class ToolActionRemoveMech : NodeBase
     {
         public override NodeType Type { get { return NodeType.ToolActionRemoveMech; } }
+        public override bool IsPlayerOnly { get { return true; } }
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

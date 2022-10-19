@@ -20,8 +20,7 @@ namespace AI
             index = 0,
             pos = new Vec2f(579.2f, 160.8704f),
             type = NodeType.DecoratorNode,
-         
-            children = new List<int>(){1}
+            children = new List<int>(){ 1}
         };
 
         NodeInfo Child1 = new NodeInfo
@@ -35,16 +34,15 @@ namespace AI
         NodeInfo Child2 = new NodeInfo
         {
             index = 2,
-            pos = new Vec2f(579.2f, 388.8001f),
+            pos = new Vec2f(579.2f, 378.7431f),
             type = NodeType.SelectorNode,
-            children = new List<int>(){ 3, 8 },
-            entriesID = new List<int>(){ 16777216}
+            children = new List<int>(){ 8,  10},
         };
 
         NodeInfo Child3 = new NodeInfo
         {
             index = 3,
-            pos = new Vec2f(447.9999f, 502.4f),
+            pos = new Vec2f(454.5475f, 585.7426f),
             type = NodeType.SequenceNode,
             children = new List<int>(){ 4,  5,  6},
         };
@@ -52,7 +50,7 @@ namespace AI
         NodeInfo Child4 = new NodeInfo
         {
             index = 4,
-            pos = new Vec2f(248.6f, 648f),
+            pos = new Vec2f(255.3475f, 730.5425f),
             type = NodeType.SelectClosestTarget,
             entriesID = new List<int>(){ 67108864}
         };
@@ -60,7 +58,7 @@ namespace AI
         NodeInfo Child5 = new NodeInfo
         {
             index = 5,
-            pos = new Vec2f(399.2f, 649.6f),
+            pos = new Vec2f(398.5475f, 732.1425f),
             type = NodeType.ShootFireWeaponAction,
             entriesID = new List<int>(){ 67108864}
         };
@@ -68,7 +66,7 @@ namespace AI
         NodeInfo Child6 = new NodeInfo
         {
             index = 6,
-            pos = new Vec2f(540.8f, 648f),
+            pos = new Vec2f(548.1475f, 730.5425f),
             type = NodeType.WaitAction,
             entriesID = new List<int>(){ 50331648}
         };
@@ -76,7 +74,7 @@ namespace AI
         NodeInfo Child7 = new NodeInfo
         {
             index = 7,
-            pos = new Vec2f(825.4f, 648f),
+            pos = new Vec2f(832.1475f, 730.5425f),
             type = NodeType.WaitAction,
             children = new List<int>(){},
             entriesID = new List<int>(){ 50331648}
@@ -85,7 +83,7 @@ namespace AI
         NodeInfo Child8 = new NodeInfo
         {
             index = 8,
-            pos = new Vec2f(750.4001f, 502.4f),
+            pos = new Vec2f(756.9475f, 585.7426f),
             type = NodeType.SequenceNode,
             children = new List<int>(){ 9,  7},
         };
@@ -93,9 +91,18 @@ namespace AI
         NodeInfo Child9 = new NodeInfo
         {
             index = 9,
-            pos = new Vec2f(691f, 649.6f),
+            pos = new Vec2f(697.7476f, 732.1425f),
             type = NodeType.WaitAction,
             entriesID = new List<int>(){ 50331648}
+        };
+
+        NodeInfo Child10 = new NodeInfo
+        {
+            index = 10,
+            pos = new Vec2f(455.1998f, 495.2f),
+            type = NodeType.ConditionalNode,
+            children = new List<int>(){ 3},
+            entriesID = new List<int>(){ 16777216}
         };
 
         public override List<NodeInfo> Nodes
@@ -113,6 +120,7 @@ namespace AI
                 nodes.Add(Child7);
                 nodes.Add(Child8);
                 nodes.Add(Child9);
+                nodes.Add(Child10);
                 return nodes;
             }
         }
