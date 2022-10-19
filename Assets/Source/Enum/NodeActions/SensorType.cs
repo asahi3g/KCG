@@ -5,6 +5,7 @@
         Error = -1,
         Sight,
         Hearing,
-        EnemySensor
+        EnemySensor,
+        BulletInClip
     };
 }

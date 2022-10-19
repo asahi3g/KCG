@@ -39,7 +39,7 @@ namespace AI
         {
             get
             {
-                SensorEntity[] sensors = new SensorEntity[3];
+                SensorEntity[] sensors = new SensorEntity[4];
                 return sensors;
             }
         }

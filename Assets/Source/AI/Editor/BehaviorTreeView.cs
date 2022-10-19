@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 using System.Linq;
 using System;
 using KMath;
-using static Unity.VisualScripting.Metadata;
 using UnityEditor;
 
 namespace AI
@@ -60,7 +59,29 @@ namespace AI
                 });
             }
 
+            NodeViews.ForEach((n) => 
+            {
+                SortChildren(n);
+            });
+
             return graphViewChange;
+        }
+
+        public void SortChildren(NodeView node)
+        {
+            NodeGroup nodeGroup = AISystemState.GetNodeGroup(node.Node.type);
+            if (nodeGroup == NodeGroup.CompositeNode)
+            {
+                node.Node.children.Sort(SortByHorizontalPosition);
+            }
+        }
+
+
+        private int SortByHorizontalPosition(int left, int right)
+        {
+            NodeView leftNode = NodeViews[left];
+            NodeView rightNode = NodeViews[right];
+            return leftNode.Node.pos.X < rightNode.Node.pos.X ? -1 : 1;
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)

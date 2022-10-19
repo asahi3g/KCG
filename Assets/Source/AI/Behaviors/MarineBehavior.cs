@@ -36,13 +36,13 @@ namespace AI
             index = 2,
             pos = new Vec2f(579.2f, 378.7431f),
             type = NodeType.SelectorNode,
-            children = new List<int>(){ 8,  10},
+            children = new List<int>(){ 10,  8},
         };
 
         NodeInfo Child3 = new NodeInfo
         {
             index = 3,
-            pos = new Vec2f(454.5475f, 585.7426f),
+            pos = new Vec2f(283.3315f, 820.8f),
             type = NodeType.SequenceNode,
             children = new List<int>(){ 4,  5,  6},
         };
@@ -50,7 +50,7 @@ namespace AI
         NodeInfo Child4 = new NodeInfo
         {
             index = 4,
-            pos = new Vec2f(255.3475f, 730.5425f),
+            pos = new Vec2f(133.6f, 950.2505f),
             type = NodeType.SelectClosestTarget,
             entriesID = new List<int>(){ 67108864}
         };
@@ -58,7 +58,7 @@ namespace AI
         NodeInfo Child5 = new NodeInfo
         {
             index = 5,
-            pos = new Vec2f(398.5475f, 732.1425f),
+            pos = new Vec2f(284f, 950.4f),
             type = NodeType.ShootFireWeaponAction,
             entriesID = new List<int>(){ 67108864}
         };
@@ -66,7 +66,7 @@ namespace AI
         NodeInfo Child6 = new NodeInfo
         {
             index = 6,
-            pos = new Vec2f(548.1475f, 730.5425f),
+            pos = new Vec2f(453.6001f, 950.4f),
             type = NodeType.WaitAction,
             entriesID = new List<int>(){ 50331648}
         };
@@ -74,7 +74,7 @@ namespace AI
         NodeInfo Child7 = new NodeInfo
         {
             index = 7,
-            pos = new Vec2f(832.1475f, 730.5425f),
+            pos = new Vec2f(703.2001f, 730.4f),
             type = NodeType.WaitAction,
             children = new List<int>(){},
             entriesID = new List<int>(){ 50331648}
@@ -85,13 +85,13 @@ namespace AI
             index = 8,
             pos = new Vec2f(756.9475f, 585.7426f),
             type = NodeType.SequenceNode,
-            children = new List<int>(){ 9,  7},
+            children = new List<int>(){ 7,  9},
         };
 
         NodeInfo Child9 = new NodeInfo
         {
             index = 9,
-            pos = new Vec2f(697.7476f, 732.1425f),
+            pos = new Vec2f(853.7722f, 730.3999f),
             type = NodeType.WaitAction,
             entriesID = new List<int>(){ 50331648}
         };
@@ -99,10 +99,34 @@ namespace AI
         NodeInfo Child10 = new NodeInfo
         {
             index = 10,
-            pos = new Vec2f(455.1998f, 495.2f),
+            pos = new Vec2f(453.6f, 496f),
+            type = NodeType.ConditionalNode,
+            children = new List<int>(){ 11},
+            entriesID = new List<int>(){ 16777216}
+        };
+
+        NodeInfo Child11 = new NodeInfo
+        {
+            index = 11,
+            pos = new Vec2f(453.5999f, 598.3209f),
+            type = NodeType.SelectorNode,
+            children = new List<int>(){ 12,  13},
+        };
+
+        NodeInfo Child12 = new NodeInfo
+        {
+            index = 12,
+            pos = new Vec2f(284.1315f, 732f),
             type = NodeType.ConditionalNode,
             children = new List<int>(){ 3},
-            entriesID = new List<int>(){ 16777216}
+            entriesID = new List<int>(){ 16777217}
+        };
+
+        NodeInfo Child13 = new NodeInfo
+        {
+            index = 13,
+            pos = new Vec2f(453.6001f, 732.0001f),
+            type = NodeType.ReloadAction,
         };
 
         public override List<NodeInfo> Nodes
@@ -121,6 +145,9 @@ namespace AI
                 nodes.Add(Child8);
                 nodes.Add(Child9);
                 nodes.Add(Child10);
+                nodes.Add(Child11);
+                nodes.Add(Child12);
+                nodes.Add(Child13);
                 return nodes;
             }
         }
@@ -129,15 +156,21 @@ namespace AI
             Type = SensorType.EnemySensor,
             EntriesID = new List<int>(){ 16777216}
         };
+        SensorEntity BulletInClipSensor = new SensorEntity
+        {
+            Type = SensorType.BulletInClip,
+            EntriesID = new List<int>(){ 16777217}
+        };
       
-        public override int SensorCount { get { return 1; } }
+        public override int SensorCount { get { return 2; } }
 
         public override SensorEntity[] Sensors
         {
             get
             {
-                SensorEntity[] sensors = new SensorEntity[3];
+                SensorEntity[] sensors = new SensorEntity[4];
                 sensors[0] = EnemySensorSensor;
+                sensors[1] = BulletInClipSensor;
                 return sensors;
             }
         }
@@ -162,15 +195,23 @@ namespace AI
             Description = "",
             ID = 16777216
         };
+
+        BlackBoardModel.EntryInfo Entry3 = new BlackBoardModel.EntryInfo
+        {
+            Name = "BulletsInClip",
+            Description = "",
+            ID = 16777217
+        };
       
         public override BlackBoardModel AgentBlackboard
         {
             get
             {
                 BlackBoardModel blackboard = new BlackBoardModel(Type);
-                blackboard.Register(ref Entry0, (System.Int32)1);
-                blackboard.Register(ref Entry1, new KMath.Vec2f(0, 0));
-                blackboard.Register(ref Entry2, (System.Boolean)false);
+                blackboard.Register(ref Entry0, (System.Int32)0);
+                blackboard.Register(ref Entry1, new KMath.Vec2f(0f, 0f));
+                blackboard.Register(ref Entry2, (System.Boolean)true);
+                blackboard.Register(ref Entry3, (System.Boolean)true);
                 return blackboard;
             }
         }

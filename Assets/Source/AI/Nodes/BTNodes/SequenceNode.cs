@@ -51,7 +51,7 @@ namespace Node
                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnExit(ref planet, child);
+                    nodes[index].OnFail(ref planet, child);
                     nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                     break;
                 default:

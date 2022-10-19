@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Planet;
 using AI.Sensor;
+using Enums;
 
 namespace AI
 {
     public class AgentController
     {
+        public BehaviorType behaviorType;
         public int BehaviorTreeRoot;
         public BlackBoard BlackBoard;
         public SensorEntity[] Sensors;

@@ -29,7 +29,7 @@ namespace Node
                     child.nodeExecution.State = Enums.NodeState.Entry;
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnExit(ref planet, child);
+                    nodes[index].OnFail(ref planet, child);
                     child.nodeExecution.State = Enums.NodeState.Entry;
                     break;
                 default:

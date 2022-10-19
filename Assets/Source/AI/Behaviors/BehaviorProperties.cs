@@ -59,6 +59,7 @@ namespace AI
             }
             controller.BlackBoard = BlackBoard.Data;
             controller.BehaviorTreeRoot = CreateTree(EntitasContext, agentID);
+            controller.behaviorType = TypeID;
 
             return controller;
         }
