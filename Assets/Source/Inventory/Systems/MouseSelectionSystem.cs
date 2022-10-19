@@ -17,7 +17,19 @@ namespace Inventory
 
             if (!InventorySystemsState.MouseHold) // if less than 250ms consider it a click.
             {
+                var player = GameState.GUIManager.Planet.Player;
+                if (player != null && inventoryEntity.inventoryEntity.SelectedSlotID !=
+                    InventorySystemsState.ClickedSlotslotID)
+                {
+                    var item = GameState.InventoryManager.GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    player.HandleItemDeselected(item);
+                }
                 inventoryEntity.inventoryEntity.SelectedSlotID = InventorySystemsState.ClickedSlotslotID;
+                if (player != null)
+                {
+                    var item = GameState.InventoryManager.GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    player.HandleItemSelected(item);
+                }
                 InventorySystemsState.ClickedSlotslotID = -1;
                 return;
             }

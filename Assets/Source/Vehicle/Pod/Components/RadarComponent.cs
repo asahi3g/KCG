@@ -11,7 +11,10 @@ namespace Vehicle.Pod
     {
         public Vec2f RadarSize;
 
-        public List<AgentEntity> Agents;
+        public List<AgentEntity> Members;
+
+        public List<AgentEntity> DeadMembers;
+
         public int AgentCount;
     }
 }

@@ -28,6 +28,11 @@ namespace KMath
             X = x;
             Y = y;
         }
+
+        public override string ToString()
+        {
+            return "{" + X + " " + Y + "}";
+        }
         
 
         #region Properties

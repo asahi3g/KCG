@@ -49,6 +49,8 @@ namespace Vehicle
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }
             }
+
+            GameState.VehicleAISystem.Update(ref planet);
         }
 
         public void DrawGizmos(ref Planet.PlanetState planet)

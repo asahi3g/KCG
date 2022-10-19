@@ -10,6 +10,7 @@ namespace Enums
         Rocket,
         Missile,
         GasGrenade,
+        Flare,
         Invalid
     }
 

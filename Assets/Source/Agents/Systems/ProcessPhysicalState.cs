@@ -127,6 +127,22 @@ namespace Agent
                             physicsState.ActionJustEnded = true;
                             break;
                         }
+
+                        case AgentMovementState.PickaxeHit:
+                        {
+                                physicsState.MovementState = AgentMovementState.None;
+                                physicsState.ActionInProgress = false;
+                                physicsState.ActionJustEnded = true;
+                                break;
+                        }
+
+                        case AgentMovementState.ChoppingTree:
+                        {
+                                physicsState.MovementState = AgentMovementState.None;
+                                physicsState.ActionInProgress = false;
+                                physicsState.ActionJustEnded = true;
+                                break;
+                        }
                     }
                 }
                 

@@ -85,6 +85,8 @@ namespace Engine3D
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@Crouch_Walk", AnimationType.Crouch_Walk);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/98_Damage/Stander@Slowed", AnimationType.Limp);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/99_Sub/Stander@Sub_Drink", AnimationType.Drink);
+            //AnimationLoader.Load("Shinabro/Platform_Animation/Animation/99_Sub/Stander@Sub_Drink", AnimationType.PickaxeHit);
+            //AnimationLoader.Load("Shinabro/Platform_Animation/Animation/99_Sub/Stander@Sub_Drink", AnimationType.ChopTree);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/00_Base/Stander@JumpFall", AnimationType.JumpFall);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/10_Rapier/Stander@Rapier_Attack1", AnimationType.SwordSlash);
             AnimationLoader.Load("Shinabro/Platform_Animation/Animation/05_Pistol/Stander@Pistol_Attack1", AnimationType.FireGun);
@@ -143,6 +145,8 @@ namespace Engine3D
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/GunCrouchWalkBackwards", AnimationType.SpaceMarineRifleCrouch_WalkBackwards);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Limp", AnimationType.SpaceMarineLimp);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Drink", AnimationType.SpaceMarineDrink);
+            //AnimationLoader.Load("ArtistAnimations/SpaceMarine/Drink", AnimationType.SpaceMarinePickaxeHit);
+            //AnimationLoader.Load("ArtistAnimations/SpaceMarine/Drink", AnimationType.SpaceMarineChoppingTree);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/JumpFall", AnimationType.SpaceMarineJumpFall);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/GunJumpFall", AnimationType.SpaceMarineRifleJumpFall);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/SpaceMarinePistolJumpFall2", AnimationType.SpaceMarinePistolJumpFall);
@@ -166,7 +170,7 @@ namespace Engine3D
             ModelLoader.Load("SmallInsect", ModelType.SmallInsect);
             ModelLoader.Load("HeavyInsect", ModelType.HeavyInsect);
             ModelLoader.Load("Stander", ModelType.Stander);
-            ModelLoader.Load("SpaceMarine", ModelType.SpaceMarine);
+            ModelLoader.Load("MediumMarinePrefab", ModelType.SpaceMarine);
             ModelLoader.Load("Pistol", ModelType.Pistol);
             ModelLoader.Load("Rapier", ModelType.Rapier);
 

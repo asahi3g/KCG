@@ -147,6 +147,326 @@ namespace LootDrop
             GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Wire, 1);
             GameState.LootTableCreationAPI.SetEntry(1, 100);
             GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.LapisBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Lapis_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.CoalBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Coal_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.PinkDiaBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.PinkDia_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.IronBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Iron_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.EmeraldBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Emerald_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.RedStoneBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.RedStone_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.GoldBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Gold_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_0Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_1Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_2Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_3Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_4Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_5Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_6Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+
+            GameState.LootTableCreationAPI.Create(Enums.LootTableType.DiamondBlock_7Drop);
+            GameState.LootTableCreationAPI.AddItem(Enums.ItemType.Diamond_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
         }
     }
 }

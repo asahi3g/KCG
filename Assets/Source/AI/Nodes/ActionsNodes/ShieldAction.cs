@@ -25,9 +25,13 @@ namespace Node.Action
             {
                 int selectedSlot = inventory.SelectedSlotID;
                 ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
-                if(itemEntity.itemType.Type is Enums.ItemType.Sword or Enums.ItemType.StunBaton)
+                if(itemEntity != null)
                 {
-                    agentEntity.agentPhysicsState.Invulnerable = !agentEntity.agentPhysicsState.Invulnerable;
+                    if(itemEntity.itemType.Type is Enums.ItemType.Sword or Enums.ItemType.StunBaton)
+                    {
+                        if(agentEntity.hasAgentPhysicsState)
+                            agentEntity.agentPhysicsState.Invulnerable = !agentEntity.agentPhysicsState.Invulnerable;
+                    }
                 }
 
                 nodeEntity.nodeExecution.State = Enums.NodeState.Success;

@@ -207,7 +207,7 @@ namespace Planet.Unity
             //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
             Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
+            Planet.InitializeHUD();
             
             MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
             

@@ -16,7 +16,9 @@ namespace PlanetTileMap
         Wire,
         Bedrock,
         Stone,
+        Rock,
         Metal,
-        
+        OreStone,
+
     }
 }

@@ -10,10 +10,10 @@ namespace Agent
         public void InitSpaceMarineAnimations()
         {
             SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJog, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJog, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.MoveBackward, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineIdle, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -48,6 +48,12 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.Drink, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDrink, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
+            SetAnimation(Enums.AgentMovementState.PickaxeHit, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default,
+                new AgentAnimation { Animation = Engine3D.AnimationType.SpaceMarinePickaxeHit, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
+
+            SetAnimation(Enums.AgentMovementState.ChoppingTree, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default,
+                new AgentAnimation { Animation = Engine3D.AnimationType.SpaceMarineChoppingTree, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
+
             SetAnimation(Enums.AgentMovementState.Limp, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
@@ -77,10 +83,10 @@ namespace Agent
 
 
             SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleJog, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleJog, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.MoveBackward, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleIdle, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.0f, MovementSpeedFactor = 0.0f});
@@ -156,10 +162,10 @@ namespace Agent
 
             // pistol
               SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolJog, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolJog, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.MoveBackward, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 2.0f, MovementSpeedFactor = 1.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineWalkBackward, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolIdle, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.0f, MovementSpeedFactor = 0.0f});

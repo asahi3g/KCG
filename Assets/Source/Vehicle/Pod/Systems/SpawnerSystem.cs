@@ -44,10 +44,15 @@ namespace Vehicle.Pod
             PodState podState = PodState.None;
             entity.AddVehiclePodState(podState);
 
-            List<AgentEntity> agents = new List<AgentEntity>();
-            entity.AddVehiclePodRadar(podProperties.RadarSize, agents, agents.Count);
+            List<AgentEntity> Members = new List<AgentEntity>();
+            List<AgentEntity> DeadMembers = new List<AgentEntity>();
+            entity.AddVehiclePodRadar(podProperties.RadarSize, Members, DeadMembers, Members.Count);
 
-            entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score);
+            entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score, false);
+
+            List<Vec2f> CoversPositions = new List<Vec2f>();
+            List<Vec2f> FiringPositions = new List<Vec2f>();
+            entity.AddVehiclePodCover(CoversPositions, FiringPositions);
 
             // Increase ID per object statically
             UniqueID++;

@@ -14,7 +14,6 @@ namespace Planet.Unity
 
         public PlanetState Planet;
 
-
         AgentEntity Player;
         int PlayerID;
 
@@ -30,7 +29,32 @@ namespace Planet.Unity
         private Color correctHlColor = Color.green;
 
 
-        KGui.CharacterDisplay CharacterDisplay;
+        //KGui.CharacterDisplay CharacterDisplay;
+
+        Vec2f[] Shape1;
+
+        Vec2f[] ShapeTemp;
+        Vec2f[] Shape2;
+
+        Vec2f LastMousePosition;
+
+        bool IsShapeColliding = false;
+
+        Vec2f CircleCenter = new Vec2f(12, 12);
+
+
+        Vec2f CircleVelocity = new Vec2f();
+
+        float CollisionDistance = 0.0f;
+
+
+        float CircleRadius = 0.5f;
+        Vec2f P1 = new Vec2f(15, 15);
+        Vec2f P2 = new Vec2f(18, 15);
+
+        Vec2f P3 = new Vec2f(18, 18);
+
+        Vec2f collisionPoint;
 
         static bool Init = false;
 
@@ -44,9 +68,52 @@ namespace Planet.Unity
             }
         }
 
+        Vec2f rotatePoint(Vec2f pos, float angle) 
+        {
+            Vec2f newv;
+            newv.X = pos.X * System.MathF.Cos(angle) - pos.Y * System.MathF.Sin(angle);
+            newv.Y = pos.X * System.MathF.Sin(angle) + pos.Y * System.MathF.Cos(angle);
+
+            return newv;
+        }
+
                 // create the sprite atlas for testing purposes
         public void Initialize()
         {
+
+           /* Vec2f slope = P2 - P1;
+            float mag = slope.Magnitude;
+            P2.X = P1.X;
+            P2.Y = P1.Y + mag;*/
+
+
+            Shape1 = new Vec2f[4];
+            ShapeTemp = new Vec2f[4];
+            Shape1[0] = new Vec2f(12.0f, 12.0f);
+            Shape1[1] = new Vec2f(13.0f, 12.0f);
+            Shape1[2] = new Vec2f(13.0f, 13.0f);
+            Shape1[3] = new Vec2f(12.0f, 13.0f);
+
+            float epsilon = 0.01f;
+            /*Shape2 = new Vec2f[5];
+            Shape2[0] = new Vec2f(15.0f, 15.0f);
+            Shape2[1] = new Vec2f(16.0f, 15.0f);
+            Shape2[2] = new Vec2f(16.0f, 16.0f);
+            Shape2[3] = new Vec2f(16.0f - epsilon, 16.0f);
+            Shape2[4] = new Vec2f(15.0f, 15.0f + epsilon);*/
+
+            Shape2 = new Vec2f[4];
+
+            Shape2[0] = new Vec2f(15.0f, 15.0f);
+            Shape2[1] = new Vec2f(16.0f, 15.0f);
+            Shape2[2] = new Vec2f(16.0f, 16.0f);
+            Shape2[3] = new Vec2f(15.0f, 15.2f);
+
+
+           // Shape2[3] = new Vec2f(15.0f, 16.0f);
+
+
+            LastMousePosition = Shape1[0];
 
             Application.targetFrameRate = 60;
 
@@ -65,7 +132,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
+            Planet.InitializeHUD();
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
             //GenerateMap();
             var camera = Camera.main;
@@ -86,10 +153,10 @@ namespace Planet.Unity
 
 
 
-            CharacterDisplay = new KGui.CharacterDisplay();
-            CharacterDisplay.setPlayer(Player);
+           // CharacterDisplay = new KGui.CharacterDisplay();
+            //CharacterDisplay.setPlayer(Player);
 
-            UpdateMode(ref Planet, Player);
+          //  UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -97,9 +164,222 @@ namespace Planet.Unity
         public void Update()
         {
 
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                CircleCenter.X -= 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].X -= 1.0f;
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                CircleCenter.X += 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].X += 1.0f;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                CircleCenter.Y += 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].Y += 1.0f;
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                CircleCenter.Y -= 1.0f;
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i].Y -= 1.0f;
+                }
+            }
+
             Vector3 p = Input.mousePosition;
             p.z = 20;
             Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+
+            Vec2f shapeVelocity = new Vec2f(mouse.x, mouse.y) - LastMousePosition;
+            LastMousePosition = new Vec2f(mouse.x, mouse.y);
+
+            bool sat = true;
+            if (sat)
+            {
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    Shape1[i] += shapeVelocity;
+                    ShapeTemp[i] = Shape1[i];
+                }
+
+           
+                Collisions.MinimumMagnitudeVector mtv = Collisions.SAT.CollisionDetection(Shape1, Shape2);
+                if (mtv.Value > 0.0f)
+                {
+                    for( int i = 0; i < Shape1.Length; i++)
+                    {
+                        Shape1[i] -= shapeVelocity.Normalize() * mtv.Value;
+                    }
+                }
+            }
+            else
+            {
+                var result = Collisions.PolygonSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
+                float distance = result.CollisionTime;
+                Debug.Log(distance);
+                Debug.Log(result.CollisionNormal);
+
+                Vec2f shape1Center = new Vec2f();
+                Vec2f shape2Center = new Vec2f();
+
+                for( int i = 0; i < Shape1.Length; i++)
+                {
+                    shape1Center += Shape1[i] / (float)Shape1.Length;
+                }
+                
+                for( int i = 0; i < Shape2.Length; i++)
+                {
+                    shape2Center += Shape2[i] / (float)Shape2.Length;
+                }
+
+                 for( int i = 0; i < Shape1.Length; i++)
+                {
+                    if (distance == 1.0f)
+                    {
+                        ShapeTemp[i] = Shape1[i] + shapeVelocity * distance;
+                        Shape1[i] = Shape1[i] + shapeVelocity * distance;
+                    }
+                    else
+                    {
+                        ShapeTemp[i] = Shape1[i] + shapeVelocity * distance;
+                        Shape1[i] = Shape1[i] + shapeVelocity * distance;
+
+                       // ShapeTemp[i] = Shape1[i] + new Vec2f(Mathf.Abs(shapeVelocity.X), Mathf.Abs(shapeVelocity.Y)) * (1.0f - distance) * result.CollisionNormal;
+                       // Shape1[i] = Shape1[i] + new Vec2f(Mathf.Abs(shapeVelocity.X), Mathf.Abs(shapeVelocity.Y)) * (1.0f - distance) * result.CollisionNormal;
+
+                        ShapeTemp[i] -= shapeVelocity * 0.01f;
+                        Shape1[i] -= shapeVelocity * 0.01f;
+
+                        Vec2f reflectVelocity = shapeVelocity - 1.0f * Vec2f.Dot(shapeVelocity, result.CollisionNormal) * result.CollisionNormal;
+
+                        ShapeTemp[i] = Shape1[i] + reflectVelocity * (1.0f - distance);
+                        Shape1[i] = Shape1[i] + reflectVelocity * (1.0f - distance);
+
+     
+                    }
+                }
+            }
+
+            LastMousePosition = Shape1[0];
+
+
+            CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
+
+
+            var circleCollisionResult = Collisions.CirclePolygonSweepTest.TestCollision(CircleCenter, CircleRadius, CircleVelocity, Shape2);
+          /*  var rs1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1 + 0.001f, P2 - 0.001f);
+            var rs2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P2 + 0.001f, P3 - 0.001f);
+            var rs3 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3 + 0.001f, P1 - 0.001f);
+
+
+            float minTime = 1.0f;
+            Vec2f minNormal = new Vec2f();
+            float minCollisionTime = 1.0f;
+            if (rs1.Time < rs2.Time)
+            {
+                if (rs1.Time < rs3.Time)
+                {
+                    minTime = rs1.Time;
+                    minNormal = rs1.Normal;
+                }
+                else
+                {
+                    minTime = rs3.Time;
+                    minNormal = rs3.Normal;
+                }
+            }
+            else
+            {
+                if (rs2.Time < rs3.Time)
+                {
+                    minTime = rs2.Time;
+                    minNormal = rs2.Normal;
+                }
+                else
+                {
+                    minTime = rs3.Time;
+                    minNormal = rs3.Normal;
+                }
+            }
+           // CollisionDistance = Mathf.Min(rs1.Time, Mathf.Min(rs2.Time, rs3.Time));
+
+           Debug.Log("normal 1" + rs1.Normal);
+           Debug.Log("normal 2" + rs2.Normal);
+           Debug.Log("normal 3" + rs3.Normal);*/
+
+           CollisionDistance = circleCollisionResult.CollisionTime;
+
+            //CollisionDistance -= 0.01f;
+
+            //collisionPoint = CircleCenter + CircleVelocity * CollisionDistance;
+
+            CircleCenter = CircleCenter + CircleVelocity * CollisionDistance;
+
+            //minNormal = (collisionPoint - CircleCenter).Normalize();
+
+            CircleCenter = CircleCenter - CircleVelocity * 0.01f;
+
+            Debug.Log("normal " + circleCollisionResult.CollisionNormal);
+
+
+
+            Vec2f refl = CircleVelocity - 1.0f * Vec2f.Dot(CircleVelocity, circleCollisionResult.CollisionNormal) * circleCollisionResult.CollisionNormal;
+
+            CircleCenter = CircleCenter + refl * (1.0f - CollisionDistance);
+
+            //distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
+           // distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
+
+
+            //CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));
+
+            //distance1 = Collisions.CircleLineCollision.TestCollision(P1, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));;
+           // distance2 = Collisions.CircleLineCollision.TestCollision(P2, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+          //  CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance1));
+
+           /* distance1 = 1.0f - Collisions.CircleLineCollision.TestCollision(P3, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+            distance2 = 1.0f - Collisions.CircleLineCollision.TestCollision(P4, CircleRadius, -CircleVelocity, CircleCenter, CircleCenter + new Vec2f(1.0f, 0.0f));
+            CollisionDistance = Mathf.Min(CollisionDistance, Mathf.Min(distance1, distance2));*/
+
+
+
+
+            /*CollisionDistance = rs.CollisionTime;
+            NewPos = rs.NewPos;
+
+            CircleA = CircleCenter + new Vec2f (CircleVelocity.Y, -CircleVelocity.X).Normalize() * CircleRadius;
+            CircleB = CircleCenter - new Vec2f (CircleVelocity.Y, -CircleVelocity.X).Normalize() * CircleRadius;
+
+            Line2D Line = new Line2D(P1, P2);
+            Line2D LineA = new Line2D(CircleA, CircleA + CircleVelocity * 10000.0f);
+            Line2D LineB = new Line2D(CircleB, CircleB + CircleVelocity * 10000.0f);
+
+            if (!Line.Intersects(LineB) && !Line.Intersects(LineA))
+            {
+                CollisionDistance = 1.0f;
+            }
+
+            ImpactPoint = CircleCenter + CircleVelocity * rs.ImpactTime;*/
+
+
+
+
+
+
             
             var playerPhysicsState = Player.agentPhysicsState;
             Vec2f playerPosition = playerPhysicsState.Position;
@@ -111,6 +391,8 @@ namespace Planet.Unity
             
             Vec2f velocity = new Vec2f(mouse.x - orrectedBox.x, mouse.y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
+
+
 
 
             
@@ -146,7 +428,7 @@ namespace Planet.Unity
 
 
                Planet.InitializeSystems(Material, transform);
-               Planet.InitializeHUD(Player);
+               Planet.InitializeHUD();
                GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
                Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
@@ -159,7 +441,7 @@ namespace Planet.Unity
             }
 
 
-            CharacterDisplay.Update();
+           // CharacterDisplay.Update();
             Planet.Update(Time.deltaTime, Material, transform);
 
         }
@@ -179,7 +461,7 @@ namespace Planet.Unity
             }
 
             
-            CharacterDisplay.Draw();
+          //  CharacterDisplay.Draw();
 
                  
         }
@@ -394,7 +676,7 @@ namespace Planet.Unity
             }
 
 
-            bool testSweptCollision = true;
+            bool testSweptCollision = false;
             if (testSweptCollision)
             {
                 //var playerCollider = Player.physicsBox2DCollider;
@@ -402,6 +684,98 @@ namespace Planet.Unity
                 Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(new Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
+            }
+
+
+            bool shapeCollision = false;
+
+            if (shapeCollision)
+            {
+                Gizmos.color = Color.green;
+                if (IsShapeColliding)
+                {
+                    Gizmos.color = Color.red;
+                }
+
+                for(int i = 0; i < Shape1.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape1.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(new Vector3(Shape1[i].X, Shape1[i].Y, 1), new Vector3(Shape1[nextPosition].X, Shape1[nextPosition].Y, 1));
+
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(new Vector3(ShapeTemp[i].X, ShapeTemp[i].Y, 1), new Vector3(ShapeTemp[nextPosition].X, ShapeTemp[nextPosition].Y, 1));
+                }
+
+                Gizmos.color = Color.green;
+
+                for(int i = 0; i < Shape2.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape2.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                }
+                
+                
+            }
+
+
+            bool circleLineCollision = true;
+
+            if (circleLineCollision)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(new Vector3(P1.X, P1.Y + 100, 1), new Vector3(P2.X, P2.Y - 100, 1));
+                Gizmos.color = Color.green;
+               /* Gizmos.DrawLine(new Vector3(P1.X, P1.Y, 1), new Vector3(P2.X, P2.Y, 1));
+                Gizmos.DrawLine(new Vector3(P2.X, P2.Y, 1), new Vector3(P3.X, P3.Y, 1));
+                Gizmos.DrawLine(new Vector3(P3.X, P3.Y, 1), new Vector3(P1.X, P1.Y, 1));*/
+
+                Gizmos.color = Color.green;
+
+                for(int i = 0; i < Shape2.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape2.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                }
+                
+                Gizmos.DrawSphere(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);
+                Gizmos.DrawSphere(new Vector3(collisionPoint.X, collisionPoint.Y, 1.0f), 0.2f);
+
+                Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1), new Vector3(CircleCenter.X + 1.0f, CircleCenter.Y, 1));
+
+                Gizmos.color = Color.blue;
+               
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new Vector3(CircleCenter.X + CircleVelocity.X, CircleCenter.Y + CircleVelocity.Y, 1.0f));
+
+                /*if (CollisionDistance < 1.0f)
+                {*/
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f));
+                    //Gizmos.DrawSphere(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+
+
+                 //   Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+                 //   Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
+                 //    new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
+//
+                    Gizmos.color = Color.yellow;
+                   
+               // }
+
+
             }
         }
 
@@ -420,8 +794,6 @@ namespace Planet.Unity
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword, Planet.EntitasContext);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
 
-
-           Planet.AddItemParticle(new Vec2f(10.0f, 16.0f), Enums.ItemType.Chest);
         }
 
 
@@ -496,56 +868,6 @@ namespace Planet.Unity
 
             tileMap.GetTile(8, 27).FrontTileID = TileID.Platform;
             tileMap.GetTile(7, 27).FrontTileID = TileID.Platform;
-
-
-
-            tileMap.GetTile(15, 15).FrontTileID = TileID.SB_R0_Metal;
-            tileMap.GetTile(16, 15).FrontTileID = TileID.FP_R0_Metal;
-            tileMap.GetTile(17, 15).FrontTileID = TileID.FP_R1_Metal;
-            tileMap.GetTile(18, 15).FrontTileID = TileID.FP_R2_Metal;
-            tileMap.GetTile(19, 15).FrontTileID = TileID.FP_R3_Metal;
-            tileMap.GetTile(20, 15).FrontTileID = TileID.HB_R0_Metal;
-            tileMap.GetTile(21, 15).FrontTileID = TileID.HB_R1_Metal;
-            tileMap.GetTile(22, 15).FrontTileID = TileID.HB_R2_Metal;
-            tileMap.GetTile(23, 15).FrontTileID = TileID.HB_R3_Metal;
-            tileMap.GetTile(24, 15).FrontTileID = TileID.HP_R0_Metal;
-            tileMap.GetTile(25, 15).FrontTileID = TileID.HP_R1_Metal;
-            tileMap.GetTile(26, 15).FrontTileID = TileID.HP_R2_Metal;
-            tileMap.GetTile(27, 15).FrontTileID = TileID.HP_R3_Metal;
-            tileMap.GetTile(28, 15).FrontTileID = TileID.QP_R0_Metal;
-            tileMap.GetTile(29, 15).FrontTileID = TileID.QP_R1_Metal;
-            tileMap.GetTile(30, 15).FrontTileID = TileID.QP_R2_Metal;
-            tileMap.GetTile(31, 15).FrontTileID = TileID.QP_R3_Metal;
-
-            tileMap.GetTile(32, 15).FrontTileID = TileID.TB_R0_Metal;
-            tileMap.GetTile(33, 15).FrontTileID = TileID.TB_R1_Metal;
-            tileMap.GetTile(34, 15).FrontTileID = TileID.TB_R4_Metal;
-            tileMap.GetTile(35, 15).FrontTileID = TileID.TB_R5_Metal;
-            tileMap.GetTile(36, 15).FrontTileID = TileID.TB_R6_Metal;
-            tileMap.GetTile(37, 15).FrontTileID = TileID.TB_R7_Metal;
-            tileMap.GetTile(38, 15).FrontTileID = TileID.TB_R2_Metal;
-            tileMap.GetTile(39, 15).FrontTileID = TileID.TB_R3_Metal;
-
-
-            tileMap.GetTile(40, 15).FrontTileID = TileID.L1_R0_Metal;
-            tileMap.GetTile(41, 15).FrontTileID = TileID.L1_R1_Metal;
-            tileMap.GetTile(42, 15).FrontTileID = TileID.L1_R2_Metal;
-            tileMap.GetTile(43, 15).FrontTileID = TileID.L1_R3_Metal;
-
-            tileMap.GetTile(44, 15).FrontTileID = TileID.L1_R4_Metal;
-            tileMap.GetTile(45, 15).FrontTileID = TileID.L1_R5_Metal;
-            tileMap.GetTile(46, 15).FrontTileID = TileID.L1_R6_Metal;
-            tileMap.GetTile(47, 15).FrontTileID = TileID.L1_R7_Metal;
-
-            tileMap.GetTile(48, 15).FrontTileID = TileID.L2_R0_Metal;
-            tileMap.GetTile(49, 15).FrontTileID = TileID.L2_R1_Metal;
-            tileMap.GetTile(50, 15).FrontTileID = TileID.L2_R2_Metal;
-            tileMap.GetTile(51, 15).FrontTileID = TileID.L2_R3_Metal;
-
-            tileMap.GetTile(52, 15).FrontTileID = TileID.L2_R4_Metal;
-            tileMap.GetTile(53, 15).FrontTileID = TileID.L2_R5_Metal;
-            tileMap.GetTile(54, 15).FrontTileID = TileID.L2_R6_Metal;
-            tileMap.GetTile(55, 15).FrontTileID = TileID.L2_R7_Metal;
 
 
 

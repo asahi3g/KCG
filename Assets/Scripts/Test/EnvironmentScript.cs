@@ -65,7 +65,7 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD(Player);
+            Planet.InitializeHUD();
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
             //GenerateMap();
             var camera = Camera.main;
@@ -149,7 +149,7 @@ namespace Planet.Unity
 
 
                Planet.InitializeSystems(Material, transform);
-               Planet.InitializeHUD(Player);
+               Planet.InitializeHUD();
                GameState.MechGUIDrawSystem.Initialize(ref Planet);
 
                Player = Planet.AddPlayer(new Vec2f(3.0f, 20));

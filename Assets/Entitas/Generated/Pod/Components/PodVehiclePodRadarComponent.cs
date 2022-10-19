@@ -11,20 +11,22 @@ public partial class PodEntity {
     public Vehicle.Pod.RadarComponent vehiclePodRadar { get { return (Vehicle.Pod.RadarComponent)GetComponent(PodComponentsLookup.VehiclePodRadar); } }
     public bool hasVehiclePodRadar { get { return HasComponent(PodComponentsLookup.VehiclePodRadar); } }
 
-    public void AddVehiclePodRadar(KMath.Vec2f newRadarSize, System.Collections.Generic.List<AgentEntity> newAgents, int newAgentCount) {
+    public void AddVehiclePodRadar(KMath.Vec2f newRadarSize, System.Collections.Generic.List<AgentEntity> newMembers, System.Collections.Generic.List<AgentEntity> newDeadMembers, int newAgentCount) {
         var index = PodComponentsLookup.VehiclePodRadar;
         var component = (Vehicle.Pod.RadarComponent)CreateComponent(index, typeof(Vehicle.Pod.RadarComponent));
         component.RadarSize = newRadarSize;
-        component.Agents = newAgents;
+        component.Members = newMembers;
+        component.DeadMembers = newDeadMembers;
         component.AgentCount = newAgentCount;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePodRadar(KMath.Vec2f newRadarSize, System.Collections.Generic.List<AgentEntity> newAgents, int newAgentCount) {
+    public void ReplaceVehiclePodRadar(KMath.Vec2f newRadarSize, System.Collections.Generic.List<AgentEntity> newMembers, System.Collections.Generic.List<AgentEntity> newDeadMembers, int newAgentCount) {
         var index = PodComponentsLookup.VehiclePodRadar;
         var component = (Vehicle.Pod.RadarComponent)CreateComponent(index, typeof(Vehicle.Pod.RadarComponent));
         component.RadarSize = newRadarSize;
-        component.Agents = newAgents;
+        component.Members = newMembers;
+        component.DeadMembers = newDeadMembers;
         component.AgentCount = newAgentCount;
         ReplaceComponent(index, component);
     }

@@ -51,7 +51,7 @@ class PlanterTest : MonoBehaviour
         SpawnStuff();
 
         Planet.InitializeSystems(Material, transform);
-        Planet.InitializeHUD(Player);
+        Planet.InitializeHUD();
 
         InventoryID = Player.agentInventory.InventoryID;
 

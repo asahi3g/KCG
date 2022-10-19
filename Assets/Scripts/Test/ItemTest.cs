@@ -53,7 +53,7 @@ namespace Planet.Unity
             Planet.Init(mapSize);
             Planet.InitializeSystems(Material, transform);
             Player = Planet.AddPlayer(new Vec2f(6.0f, 4.0f));
-            Planet.InitializeHUD(Player);
+            Planet.InitializeHUD();
 
             int inventoryID = Player.agentInventory.InventoryID;
 
