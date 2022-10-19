@@ -10,8 +10,6 @@ namespace Node
     {
         public virtual NodeType Type { get { return NodeType.None; } }
         public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
-        /// <summary> If it player only node won't be accessable in the behavior tree. </summary>
-        public virtual bool IsPlayerOnly { get { return false; } }
 
         /// <summary>
         /// List of blackboard entries used in the node.
