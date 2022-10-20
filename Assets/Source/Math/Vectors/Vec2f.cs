@@ -234,13 +234,6 @@ namespace KMath
 
         #endregion
 
-        #region Reflection
-        public override string ToString()
-        {
-            return X.ToString() + ", " + Y.ToString();
-        }
-        #endregion
-
     }
 }
 
