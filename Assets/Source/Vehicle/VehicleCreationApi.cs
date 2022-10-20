@@ -235,7 +235,7 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
-            GameState.VehicleCreationApi.SetDefaultAgentCount(0);
+            GameState.VehicleCreationApi.SetDefaultAgentCount(5);
             GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
             GameState.VehicleCreationApi.End();
         }

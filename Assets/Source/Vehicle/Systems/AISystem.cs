@@ -118,9 +118,13 @@ namespace Vehicle
                     {
                         for(int i = 0; i < vehicle.vehicleCapacity.agentsInside.Count; i++)
                         {
-                            agentsInside[i].agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                            agentsInside[i].agentModel3D.GameObject.gameObject.SetActive(true);
-                            agentsInside[i].isAgentAlive = true;
+                            if (!agentsInside[i].agentModel3D.GameObject.gameObject.active)
+                            {
+                                agentsInside[i].agentModel3D.GameObject.gameObject.SetActive(true);
+                                agentsInside[i].isAgentAlive = true;
+                                agentsInside[i].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X - 2, 
+                                    vehicle.vehiclePhysicsState2D.Position.Y);
+                            }
                         }
                     }
                 }
@@ -134,9 +138,13 @@ namespace Vehicle
                     {
                         for (int j = 0; j < agentsInside.Count; j++)
                         {
-                            agentsInside[j].agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                            agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
-                            agentsInside[j].isAgentAlive = true;
+                            if(!agentsInside[j].agentModel3D.GameObject.gameObject.active)
+                            {
+                                agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+                                agentsInside[j].isAgentAlive = true;
+                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X - 2,
+                                              vehicle.vehiclePhysicsState2D.Position.Y);
+                            }
                         }
                     }
                 }
