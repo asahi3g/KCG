@@ -86,7 +86,6 @@ namespace KGUI
                 {
                     var newPanel = Object.Instantiate(panelPrefab, canvas.transform);
                     newPanel.gameObject.SetActive(true);
-                    newPanel.OnActivate();
                 }
             }
             else
