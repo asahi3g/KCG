@@ -179,6 +179,9 @@ public partial class AgentEntity
                     SetAgentWeapon(Model3DWeapon.Sword);
                     break;
                 }
+                default:
+                    SetAgentWeapon(Model3DWeapon.None);
+                    break;
             }
         }
 
