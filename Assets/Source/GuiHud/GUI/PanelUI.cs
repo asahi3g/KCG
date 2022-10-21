@@ -4,23 +4,23 @@ using UnityEngine;
 namespace KGUI
 {
     [DefaultExecutionOrder (101)]
-    public class UIPanel : MonoBehaviour
+    public class PanelUI : MonoBehaviour
     {
-        public UIPanelID ID;
-        public Dictionary<UIElementID, UIElement> UIElementList = new();
+        public Dictionary<ElementEnums, ElementUI> UIElementList = new();
+        
+        public PanelEnums ID { get; protected set; }
 
         private void Start()
         {
             Init();
         }
-        
-        public virtual void Update() { }
 
         public virtual void Init()
         {
-            GameState.GUIManager.UIPanelList.Add(ID, this);
+            GameState.GUIManager.PanelList.Add(ID, this);
         }
         
+        public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }
     }
 }

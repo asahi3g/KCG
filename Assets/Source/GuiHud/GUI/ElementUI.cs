@@ -1,6 +1,5 @@
 using KGUI.Elements;
 using KMath;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -8,7 +7,7 @@ using Utility;
 namespace KGUI
 {
     [DefaultExecutionOrder (100)]
-    public class UIElement : MonoBehaviour
+    public class ElementUI : MonoBehaviour
     {
         [SerializeField] protected Image iconImage;
 
@@ -16,7 +15,7 @@ namespace KGUI
         // Set this to any initialized image
         protected GameObject HitBoxObject;
 
-        public UIElementID ID { get; protected set; }
+        public ElementEnums ID { get; protected set; }
         public Vector3 HitBoxPosition { get; private set; }
         public Vector2 HitBoxSize { get; private set; }
         public AABox2D HitBox { get; private set; }

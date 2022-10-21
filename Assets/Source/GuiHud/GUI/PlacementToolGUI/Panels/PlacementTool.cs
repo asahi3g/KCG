@@ -4,14 +4,26 @@ using UnityEngine;
 
 namespace KGUI
 {
-    public class PlacementToolUI : UIPanel
+    public class PlacementTool : PanelUI
     {
         [SerializeField] private BedrockElementUI bedrockElementUI;
         [SerializeField] private DirtElementUI dirtElementUI;
         [SerializeField] private PipeElementUI pipeElementUI;
         [SerializeField] private WireElementUI wireElementUI;
 
-        public override void Update()
+        public override void Init()
+        {
+            ID = PanelEnums.PlacementTool;
+            
+            UIElementList.Add(bedrockElementUI.ID, bedrockElementUI);
+            UIElementList.Add(dirtElementUI.ID, dirtElementUI);
+            UIElementList.Add(pipeElementUI.ID, pipeElementUI);
+            UIElementList.Add(wireElementUI.ID, wireElementUI);
+
+            base.Init();
+        }
+
+        public override void OnActivate()
         {
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if(selectedInventoryItem == null) return;
@@ -35,18 +47,6 @@ namespace KGUI
             wireElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Wire
                 ? Color.red
                 : Color.yellow);
-        }
-        
-        public override void Init()
-        {
-            ID = UIPanelID.PlacementTool;
-            
-            UIElementList.Add(bedrockElementUI.ID, bedrockElementUI);
-            UIElementList.Add(dirtElementUI.ID, dirtElementUI);
-            UIElementList.Add(pipeElementUI.ID, pipeElementUI);
-            UIElementList.Add(wireElementUI.ID, wireElementUI);
-
-            base.Init();
         }
 
         public override void OnDeactivate()

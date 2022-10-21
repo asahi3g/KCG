@@ -371,10 +371,10 @@ namespace ECSInput
             // Show/Hide Statistics
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled)
-                    StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled = false;
-                else if (!StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled)
-                    StatisticsDisplay.text.GetGameObject().GetComponent<Text>().enabled = true;
+                if (StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled)
+                    StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled = false;
+                else if (!StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled)
+                    StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled = true;
 
             }
 

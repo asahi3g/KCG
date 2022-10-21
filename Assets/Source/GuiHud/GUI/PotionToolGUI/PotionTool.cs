@@ -3,11 +3,20 @@ using UnityEngine;
 
 namespace KGUI
 {
-    public class PotionToolUI : UIPanel
+    public class PotionTool : PanelUI
     {
         [SerializeField] private HealthPotionElementUI healthPotionElementUI;
 
-        public override void Update()
+        public override void Init()
+        {
+            ID = PanelEnums.PotionTool;
+            
+            UIElementList.Add(healthPotionElementUI.ID, healthPotionElementUI);
+
+            base.Init();
+        }
+        
+        public override void OnActivate()
         {
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
@@ -37,15 +46,6 @@ namespace KGUI
                     }
                 }
             }
-        }
-
-        public override void Init()
-        {
-            ID = UIPanelID.PotionTool;
-            
-            UIElementList.Add(healthPotionElementUI.ID, healthPotionElementUI);
-
-            base.Init();
         }
 
         public override void OnDeactivate()

@@ -11,7 +11,7 @@ namespace KGUI.Elements
     {
         public string Text;
         public float TimeToLive;
-        public Text GameObject;
+        public TextWrapper GameObject;
         public Vec2f SizeDelta;
     }
 }

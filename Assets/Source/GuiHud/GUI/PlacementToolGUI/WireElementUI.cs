@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class WireElementUI : UIElement
+    public class WireElementUI : ElementUI
     {
         [SerializeField] private Image borderImage;
 
@@ -17,7 +17,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = UIElementID.WireElement;
+            ID = ElementEnums.Wire;
 
             Icon = new ImageWrapper(iconImage, 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", AtlasType.Gui);
 
@@ -45,7 +45,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Wire;
+                item.itemTile.TileID = global::Enums.Tile.TileID.Wire;
             }
         }
     }
