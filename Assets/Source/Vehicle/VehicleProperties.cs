@@ -34,6 +34,12 @@ namespace Vehicle
         public bool Jet;
         public float JetAngle;
         public JetSize JetSize;
+
+        public int ThrusterSpriteId;
+        public Vec2f ThrusterSpriteSize;
+
+        public Vec2f Thruster1Position;
+        public Vec2f Thruster2Position;
     }
 }
 
