@@ -37,17 +37,31 @@ namespace Agent
                         {
                             if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
                             {
-                                PistolIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                PistolIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
-                                entity.agentAction.Action = AgentAction.Aiming;
+                                if(entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
+                                {
+                                    PistolIK.GetComponent<Rig>().weight = Mathf.Lerp(
+                                    PistolIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                                    entity.agentAction.Action = AgentAction.Aiming;
+                                }
+                                else
+                                {
+                                    PistolIK.GetComponent<Rig>().weight = 0.0f;
+                                }
                             }
                             else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
                             {
                                 PistolIK.GetComponent<Rig>().weight = 0.0f;
 
-                                RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                RifleIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
-                                entity.agentAction.Action = AgentAction.Aiming;
+                                if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
+                                {
+                                    RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
+                                    RifleIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                                    entity.agentAction.Action = AgentAction.Aiming;
+                                }
+                                else
+                                {
+                                    RifleIK.GetComponent<Rig>().weight = 0.0f;
+                                }
                             }
                             else
                             {
