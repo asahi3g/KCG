@@ -48,7 +48,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/untitled.tmj", "generated-maps/");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map2.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(PlanetTileMap.MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.GeometryTileShape)).Length;
@@ -94,7 +94,7 @@ namespace Planet.Unity
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 4), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(7.0f, 12), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -158,7 +158,7 @@ namespace Planet.Unity
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
 
-            //UpdateMode(ref Planet, Player);
+            UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -346,7 +346,7 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            Planet.DrawDebug();
+          /*  Planet.DrawDebug();
 
             // Set the color of gizmos
             Gizmos.color = Color.green;
@@ -375,102 +375,18 @@ namespace Planet.Unity
                 }
 
             // Draw Chunk Visualizer
-            Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+            Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);*/
 
-
-            bool drawRayCast = false;
-
-
-            if (drawRayCast)
-            {
-                Vector3 p = Input.mousePosition;
-                p.z = 20;
-                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
-
-                var rayCastResult = Collisions.Collisions.RayCastAgainstTileMap(Planet.TileMap, new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
-                
-                Vec2f startPos = Player.agentPhysicsState.Position;
-                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
-                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
-
-                if (rayCastResult.Intersect)
-                {
-                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
-                    new Vector3(0.3f, 0.3f, 0.3f));
-                }
-            }
-
-            
-            bool testCircleCollision = false;
-            bool testRectangleCollision = false;
-
-            
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = 20.0f;
-
-            if (testCircleCollision)
-            {
-                int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(Planet, new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
-
-                Gizmos.color = Color.yellow;
-                if (agentIds != null && agentIds.Length > 0)
-                {
-                    Gizmos.color = Color.red;
-                }    
-                
-                Gizmos.DrawSphere(worldPosition, 0.5f);
-            }
-
-            if (testRectangleCollision)
-            {
-                int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(Planet, 
-                new KMath.AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
-
-                Gizmos.color = Color.yellow;
-                if (agentIds != null && agentIds.Length > 0)
-                {
-                    Gizmos.color = Color.red;
-                }    
-                
-                Gizmos.DrawWireCube(worldPosition + new Vector3(0.25f, 0.75f * 0.5f, 0), new Vector3(0.5f, 0.75f, 0.5f));
-            }
-
-            bool testRayAgainstCircle = false;
-
-            if (testRayAgainstCircle)
-            {
-                Vector3 p = Input.mousePosition;
-                p.z = 20;
-                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
-
-                var rayCastResult = Collisions.Collisions.RayCastAgainstCircle(new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)),
-                 new Vec2f(9, 19), 1.0f);
-
-                Vec2f startPos = Player.agentPhysicsState.Position;
-                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
-                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
-
-                Gizmos.color = Color.yellow;
-                if (rayCastResult.Intersect)
-                {
-                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
-                    new Vector3(0.3f, 0.3f, 0.3f));
+var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
                     Gizmos.color = Color.red;
-                }
-
-                Gizmos.DrawSphere(new Vector3(9, 19, 20.0f), 1.0f);
-            }
-
-
-            bool testSweptCollision = true;
-            if (testSweptCollision)
+                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+          
+            for (int i = 0; i < Planet.DebugLinesCount; i++)
             {
-                //var playerCollider = Player.physicsBox2DCollider;
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireCube(new Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
+                Line2D line = Planet.DebugLines[i];
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
         }
 

@@ -53,7 +53,7 @@ namespace Projectile
             physicsState.Acceleration = Vec2f.Zero;
         }
 
-        public void Update(ref PlanetState planet)
+        public void Update(PlanetState planet)
         {
             float deltaTime = Time.deltaTime;
             for (int i = 0; i < planet.ProjectileList.Length; i++)

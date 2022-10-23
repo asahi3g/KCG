@@ -8,7 +8,7 @@ namespace Projectile
 {
     public class ProcessState
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {

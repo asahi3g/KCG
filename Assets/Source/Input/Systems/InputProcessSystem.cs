@@ -13,7 +13,7 @@ namespace ECSInput
 {
     public class InputProcessSystem
     {
-        private Mode mode = Mode.Camera;
+        private Mode mode = Mode.Agent;
 
         private void UpdateMode(ref PlanetState planetState, AgentEntity agentEntity)
         {
@@ -37,7 +37,7 @@ namespace ECSInput
 
        
 
-        public void Update(ref PlanetState planet)
+        public void Update(PlanetState planet)
         {
             Contexts contexts = planet.EntitasContext;
 

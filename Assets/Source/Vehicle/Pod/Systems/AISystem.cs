@@ -18,7 +18,7 @@ namespace Vehicle.Pod
 {
     public sealed class AISystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             IGroup<PodEntity> pods =
                 planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);

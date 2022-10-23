@@ -18,7 +18,7 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public VehicleEntity Spawn(ref Planet.PlanetState planet, VehicleType vehicleType, Vec2f position)
+        public VehicleEntity Spawn(Planet.PlanetState planet, VehicleType vehicleType, Vec2f position)
         {
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);

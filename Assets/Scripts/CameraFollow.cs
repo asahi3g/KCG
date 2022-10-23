@@ -18,7 +18,7 @@ public class CameraFollow
     public bool canFollow = false;
 
     // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
-    public void Update(ref Planet.PlanetState planetState)
+    public void Update(Planet.PlanetState planetState)
     {
         // Can Camera Follow Player?
         if(canFollow)

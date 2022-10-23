@@ -7,7 +7,7 @@ namespace Node
     // 
     public class SchedulerSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             NodeEntity[] nodes = planet.EntitasContext.node.GetEntities();
 

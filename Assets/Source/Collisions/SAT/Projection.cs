@@ -14,18 +14,22 @@ namespace Collisions
         public bool Overlap(Projection other)
         {
 
-            return !((other.Min >= Max && other.Max >= Min) ||
-                (Min >= other.Max && Max >= other.Min)); 
+            return !((other.Min > Max) ||
+                (Min > other.Max)); 
         }
 
         public float OverlapValue(Projection other)
         {
-            return Math.Min(Max, other.Max) - Math.Max(Min, other.Min);
+            // make sure they overlap
+            if (this.Overlap(other)) {
+                return this.Max - other.Min;
+            }
+            return 0;
         }
 
         public bool Contains(Projection other)
         {
-            return other.Min >= Min && other.Max <= Max;
+            return other.Min > Min && other.Max < Max;
         }
     }
 

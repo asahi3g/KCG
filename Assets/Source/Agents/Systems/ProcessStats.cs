@@ -5,7 +5,7 @@ namespace Agent
 {
     public class ProcessStats
     {
-        public void Update(ref PlanetState planet)
+        public void Update(PlanetState planet)
         {
             ref AgentList agentList = ref planet.AgentList;
 

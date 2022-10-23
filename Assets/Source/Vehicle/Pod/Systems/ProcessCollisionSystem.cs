@@ -6,7 +6,7 @@ namespace Vehicle.Pod
 {
     public class ProcessCollisionSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             // Get Delta Time
             float deltaTime = Time.deltaTime;

@@ -8,7 +8,7 @@ namespace KGUI.Elements
     {
         List<UIElementEntity> ToRemoveEntities = new List<UIElementEntity>();
 
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(Planet.PlanetState planetState, float deltaTime)
         {
             var entities = planetState.EntitasContext.uIElement.GetGroup(UIElementMatcher.AllOf(UIElementMatcher.KGUIElementsPosition2D));
 

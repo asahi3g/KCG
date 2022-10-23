@@ -52,7 +52,7 @@ namespace Vehicle
             }
         }
 
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             if (vehicle == null || particlePosition == null || movementSpeed == null)
                 return;

@@ -6,7 +6,7 @@ namespace Projectile
 {
     public class DebugSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             if (planet.ProjectileList == null)
                 return;

@@ -10,7 +10,7 @@ namespace Particle
         List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
 
-        public void Update(ref Planet.PlanetState planetState, ParticleContext particleContext)
+        public void Update(Planet.PlanetState planetState, ParticleContext particleContext)
         {
             ToDestroy.Clear();
 

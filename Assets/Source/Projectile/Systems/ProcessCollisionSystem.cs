@@ -8,7 +8,7 @@ namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        public void UpdateEx(ref Planet.PlanetState planet, float deltaTime)
+        public void UpdateEx(Planet.PlanetState planet, float deltaTime)
         {
             const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;

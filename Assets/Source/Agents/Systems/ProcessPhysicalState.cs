@@ -7,7 +7,7 @@ namespace Agent
 {
     public class ProcessPhysicalState
     {
-        public void Update(ref PlanetState planet, float deltaTime)
+        public void Update(PlanetState planet, float deltaTime)
         {
             var EntitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
                 AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
@@ -20,6 +20,7 @@ namespace Agent
                 stats.IsLimping = stats.Health <= 50.0f;
 
                 float epsilon = 4.0f;
+
 
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&

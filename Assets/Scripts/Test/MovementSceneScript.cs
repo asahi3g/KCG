@@ -129,10 +129,9 @@ namespace Planet.Unity
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 24), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
 
             PlayerID = Player.agentID.ID;
@@ -163,7 +162,7 @@ namespace Planet.Unity
            // CharacterDisplay = new KGui.CharacterDisplay();
             //CharacterDisplay.setPlayer(Player);
 
-          //  UpdateMode(ref Planet, Player);
+            UpdateMode(ref Planet, Player);
         }
         Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -339,8 +338,6 @@ namespace Planet.Unity
             //minNormal = (collisionPoint - CircleCenter).Normalize();
 
             CircleCenter = CircleCenter - CircleVelocity * 0.01f;
-
-            Debug.Log("normal " + circleCollisionResult.CollisionNormal);
 
 
 
@@ -784,6 +781,20 @@ namespace Planet.Unity
 
 
             }
+
+                var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
+
+                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+
+
+                UnityEngine.Debug.Log(Planet.DebugLinesCount);
+                for (int i = 0; i < Planet.DebugLinesCount; i++)
+                {
+                    Line2D line = Planet.DebugLines[i];
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
+                }
+
         }
 
 

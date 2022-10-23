@@ -6,7 +6,7 @@ namespace Agent
 {
     public class MouseInteractionSystem
     {
-        public void Update(ref PlanetState planet)
+        public void Update(PlanetState planet)
         {
             Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);

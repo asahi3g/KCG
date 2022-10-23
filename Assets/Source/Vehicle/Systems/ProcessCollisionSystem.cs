@@ -6,7 +6,7 @@ namespace Vehicle
 {
     public class ProcessCollisionSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update(Planet.PlanetState planet)
         {
             // Get Delta Time
             float deltaTime = Time.deltaTime;
@@ -50,7 +50,7 @@ namespace Vehicle
                 }
             }
 
-            GameState.VehicleAISystem.Update(ref planet);
+            GameState.VehicleAISystem.Update(planet);
         }
 
         public void DrawGizmos(ref Planet.PlanetState planet)

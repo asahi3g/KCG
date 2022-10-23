@@ -63,7 +63,7 @@ namespace Agent
             // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
             var physicsState = entity.agentPhysicsState;
 
-            if (physicsState.AffectedByGravity)
+            if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
@@ -116,6 +116,26 @@ namespace Agent
                     else
                         physicsState.Velocity.X = 0;
                 }
+            }
+
+            physicsState.Velocity = new Vec2f();
+            physicsState.Acceleration = new Vec2f();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                physicsState.Velocity.Y += 5.0f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                physicsState.Velocity.Y -= 5.0f;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                physicsState.Velocity.X += 5.0f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                physicsState.Velocity.X -= 5.0f;
             }
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;

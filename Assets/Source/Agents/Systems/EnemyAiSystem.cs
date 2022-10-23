@@ -7,7 +7,7 @@ namespace Agent
 {
     public class EnemyAiSystem
     {
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(Planet.PlanetState planetState, float deltaTime)
         {
             var players = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
             var entities = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentEnemy));
