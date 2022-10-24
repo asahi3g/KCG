@@ -193,17 +193,33 @@ namespace Vehicle
             }
         }
 
+        public void SetThrusterSprite(int spriteID, Vec2f SpriteSize, Vec2f Position1, 
+            Vec2f Position2)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].ThrusterSpriteId = spriteID;
+                PropertiesArray[CurrentIndex].ThrusterSpriteSize = SpriteSize;
+                PropertiesArray[CurrentIndex].Thruster1Position = Position1;
+                PropertiesArray[CurrentIndex].Thruster2Position = Position2;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
         }
 
         public int JetChassis;
+        public int WhiteSquare;
 
         public void InitializeResources()
         {
             JetChassis = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\Jet\\Chassis\\Jet_chassis.png", 144, 96);
             JetChassis = GameState.SpriteAtlasManager.CopySpriteToAtlas(JetChassis, 0, 0, Enums.AtlasType.Vehicle);
+
+            WhiteSquare = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Vehicles\\DropShipTest\\white_square.png", 225, 225);
+            WhiteSquare = GameState.SpriteAtlasManager.CopySpriteToAtlas(WhiteSquare, 0, 0, Enums.AtlasType.Vehicle);
 
             GameState.VehicleCreationApi.Create((int)Enums.VehicleType.Jet);
             GameState.VehicleCreationApi.SetName("Car");
@@ -223,20 +239,22 @@ namespace Vehicle
 
             GameState.VehicleCreationApi.Create((int)Enums.VehicleType.DropShip);
             GameState.VehicleCreationApi.SetName("DropShip");
-            GameState.VehicleCreationApi.SetSpriteId(JetChassis);
-            GameState.VehicleCreationApi.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.VehicleCreationApi.SetSpriteId(WhiteSquare);
+            GameState.VehicleCreationApi.SetSize(new Vec2f(2.0f, 3.0f));
             GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
             GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -3.0f));
             GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
-            GameState.VehicleCreationApi.SetRotation(-90.0f);
+            GameState.VehicleCreationApi.SetRotation(0.0f);
             GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.5f));
             GameState.VehicleCreationApi.SetAngularMass(14f);
             GameState.VehicleCreationApi.SetAngularAcceleration(4f);
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
-            GameState.VehicleCreationApi.SetDefaultAgentCount(0);
+            GameState.VehicleCreationApi.SetDefaultAgentCount(5);
             GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
+            GameState.VehicleCreationApi.SetThrusterSprite(WhiteSquare, new Vec2f(0.5f, 1.0f), 
+                new Vec2f(-0.4f, -0.8f), new Vec2f(1.9f, -0.8f));
             GameState.VehicleCreationApi.End();
         }
     }

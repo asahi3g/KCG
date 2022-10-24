@@ -74,7 +74,6 @@ namespace Vehicle
                             vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);
 
                             vehicle.vehiclePhysicsState2D.Position = vehicle.vehicleHeightMap.SpawnPosition;
-
                         }
                     }
                 }
@@ -94,36 +93,40 @@ namespace Vehicle
                 // Pop out all passengers in the vehicle after landed.
                 // Scan all pods near by and add to the array.
 
-                entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
-                    new Vec2f(1.0f, -5));
+                //entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
+                //    new Vec2f(1.0f, -1));
 
-                var skyCheck = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) +                vehicle.physicsBox2DCollider.Offset, new Vec2f(1.0f, 20));
+                //var skyCheck = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) +                vehicle.physicsBox2DCollider.Offset, new Vec2f(1.0f, 20));
 
-                if(skyCheck.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
-                {
-                    return;
-                }
+                //if(skyCheck.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                //{
+                //    return;
+                //}
 
-                if((entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
-                    entityBoxBorders.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
-                        entityBoxBorders.IsCollidingRight(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity)) && 
-                            vehicle.vehicleThruster.isLaunched)
-                {
-                    vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
-                    vehicle.vehicleThruster.Jet = false;
-                    vehicle.vehicleThruster.isLaunched = false;
+                //if((entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
+                //    entityBoxBorders.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity) ||
+                //        entityBoxBorders.IsCollidingRight(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity)) && 
+                //            vehicle.vehicleThruster.isLaunched)
+                //{
+                //    vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                //    vehicle.vehicleThruster.Jet = false;
+                //    vehicle.vehicleThruster.isLaunched = false;
 
-                    var agentsInside = vehicle.vehicleCapacity.agentsInside;
-                    if (vehicle.hasVehicleCapacity)
-                    {
-                        for(int i = 0; i < vehicle.vehicleCapacity.agentsInside.Count; i++)
-                        {
-                            agentsInside[i].agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                            agentsInside[i].agentModel3D.GameObject.gameObject.SetActive(true);
-                            agentsInside[i].isAgentAlive = true;
-                        }
-                    }
-                }
+                //    var agentsInside = vehicle.vehicleCapacity.agentsInside;
+                //    if (vehicle.hasVehicleCapacity)
+                //    {
+                //        for(int i = 0; i < vehicle.vehicleCapacity.agentsInside.Count; i++)
+                //        {
+                //            if (!agentsInside[i].agentModel3D.GameObject.gameObject.active)
+                //            {
+                //                agentsInside[i].agentModel3D.GameObject.gameObject.SetActive(true);
+                //                agentsInside[i].isAgentAlive = true;
+                //                agentsInside[i].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X - 2, 
+                //                    vehicle.vehiclePhysicsState2D.Position.Y);
+                //            }
+                //        }
+                //    }
+                //}
 
                 if (!GameState.VehicleAISystem.IsPathEmpty(ref planet))
                 {
@@ -134,9 +137,13 @@ namespace Vehicle
                     {
                         for (int j = 0; j < agentsInside.Count; j++)
                         {
-                            agentsInside[j].agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                            agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
-                            agentsInside[j].isAgentAlive = true;
+                            if(!agentsInside[j].agentModel3D.GameObject.gameObject.active)
+                            {
+                                agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+                                agentsInside[j].isAgentAlive = true;
+                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X - 2,
+                                              vehicle.vehiclePhysicsState2D.Position.Y);
+                            }
                         }
                     }
                 }

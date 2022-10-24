@@ -68,10 +68,10 @@ namespace Planet.Unity
 
             // Set the color of gizmos
             Gizmos.color = Color.green;
-            
+
             // Draw a cube around the map
-            if(Planet.TileMap != null)
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+            if (Planet.TileMap != null)
+                Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
             Gizmos.color = Color.yellow;
             CircleSmoke.DrawGizmos();
@@ -79,10 +79,10 @@ namespace Planet.Unity
 
             // Draw lines around player if out of bounds
             if (Player != null)
-                if(Player.agentPhysicsState.Position.X -10.0f >= Planet.TileMap.MapSize.X)
+                if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
-                
+
                     // X+
                     Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
 
@@ -110,7 +110,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            Vec2i mapSize = new Vec2i(64, 64);
+            Vec2i mapSize = new Vec2i(32, 32);
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
@@ -120,7 +120,7 @@ namespace Planet.Unity
             Planet.InitializeSystems(Material, transform);
             Planet.InitializeHUD();
 
-            if(enableGeometryPlacementTool)
+            if (enableGeometryPlacementTool)
             {
                 geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
                 geometryPlacementTool.Initialize(ref Planet, Material, transform);
@@ -137,16 +137,9 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.AxeTool, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Flare, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemySlimeTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GasBomb, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);
@@ -156,8 +149,8 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
-            
+            KMath.Random.Mt19937.init_genrand((ulong)System.DateTime.Now.Ticks);
+
             ref var tileMap = ref Planet.TileMap;
 
             for (int y = 0; y < 16; y++)
@@ -168,7 +161,7 @@ namespace Planet.Unity
                 }
             }
 
-            for(int i = 0; i < tileMap.MapSize.X; i++)
+            for (int i = 0; i < tileMap.MapSize.X; i++)
             {
                 tileMap.GetTile(i, 0).FrontTileID = TileID.Bedrock;
                 tileMap.GetTile(i, tileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
@@ -227,14 +220,7 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
-            Planet.AddMech(new Vec2f(15.0f, 16.07f), Enums.MechType.CraftingTable);
-
-            Planet.AddMech(new Vec2f(10.0f, 16.07f), Enums.MechType.Tree);
-
-            Planet.AddPod(new Vec2f(2, 9.0f), Enums.PodType.Default);
-
             Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
-
         }
     }
 }
