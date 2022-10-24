@@ -15,7 +15,7 @@ namespace Mech
         /// <returns>If error return null</returns>
         public List<MechEntity> GetMechFromMousePos(ref PlanetState planet)
         {
-            Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
 
             List<MechEntity> meches = new List<MechEntity>(5);

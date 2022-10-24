@@ -18,7 +18,7 @@ namespace Node
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
             if (entiresID != null)
                 nodeEntity.AddNodeBlackboardData(entiresID);
 
