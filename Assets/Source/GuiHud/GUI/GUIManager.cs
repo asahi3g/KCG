@@ -6,6 +6,7 @@ using Planet;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace KGUI
 {
     public class GUIManager
@@ -22,7 +23,7 @@ namespace KGUI
         public Dictionary<PanelEnums, PanelUI> PanelList = new();
 
         public Vec2f CursorPosition;
-        public ElementUI Cursor;
+        public ElementUI CursorElement;
         
         private Canvas canvas;
 
@@ -125,19 +126,19 @@ namespace KGUI
 
         public void HandleMouseEvents()
         {
-            if (Cursor != null 
+            if (CursorElement != null 
                 && Collisions.Collisions.PointOverlapRect
                 (
                     CursorPosition.X, CursorPosition.Y,
-                    Cursor.HitBox.xmin, Cursor.HitBox.xmax, Cursor.HitBox.ymin, Cursor.HitBox.ymax)
+                    CursorElement.HitBox.xmin, CursorElement.HitBox.xmax, CursorElement.HitBox.ymin, CursorElement.HitBox.ymax)
                )
             {
-                Cursor.OnMouseStay();
+                CursorElement.OnMouseStay();
             }
             else
             {
-                Cursor?.OnMouseExited();
-                Cursor = null;
+                CursorElement?.OnMouseExited();
+                CursorElement = null;
                 foreach (var panel in PanelList.Values)
                 {
                     if (!panel.gameObject.activeSelf) continue;
@@ -148,8 +149,8 @@ namespace KGUI
                         
                         if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y, element.HitBox.xmin, element.HitBox.xmax, element.HitBox.ymin, element.HitBox.ymax))
                         {
-                            Cursor = element;
-                            Cursor.OnMouseEntered();
+                            CursorElement = element;
+                            CursorElement.OnMouseEntered();
                             return;
                         }
                     }
@@ -158,11 +159,11 @@ namespace KGUI
             
             if (Input.GetMouseButton(0))
             {
-                Cursor?.OnMouseClick();
+                CursorElement?.OnMouseClick();
             }
         }
 
-        public void AddTemporaryText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
+        public void AddText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
         {
             text.Create("TempText", _text, canvas.transform, lifeTime);
             text.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
