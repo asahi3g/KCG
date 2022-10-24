@@ -163,7 +163,7 @@ namespace Collisions
             collisionPoint += tmpP1;
 
 
-            result.Normal = (collisionPoint - originalPoint).Normalize();
+            result.Normal = (originalPoint - collisionPoint).Normalize();
 
 
             return result;

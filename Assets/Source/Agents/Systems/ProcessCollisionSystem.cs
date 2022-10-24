@@ -33,35 +33,13 @@ namespace Agent
             physicsState.Position.Y = physicsState.PreviousPosition.Y + delta.Y * (verticalCollisionResult.MinTime - 0.01f);*/
 
 
-            var minResult = TileCollisions.HandleCollisionCircle(entity, delta, planet, true);
-            physicsState.Position = physicsState.PreviousPosition + delta * (minResult.MinTime - 0.01f);
+            Vec2f collisionPosition = physicsState.PreviousPosition + box2DCollider.Offset;
+            var bottomCollision = TileCollisions.HandleCollisionCircle(entity, collisionPosition, delta, planet, true);
 
-            Vec2f remainingDelta = delta * (1.0f - minResult.MinTime);
+            delta = physicsState.Position - physicsState.PreviousPosition; 
+            collisionPosition.Y += 2.0f;
+            var topCollision = TileCollisions.HandleCollisionCircle(entity, collisionPosition, delta, planet, true);
 
-            if (minResult.MinTime < 1.0f)
-            {
-               // physicsState.Position -= delta.Normalize() * 0.02f;
-               float coefficientOfRest = 0.6f;
-               Vec2f velocity = delta;
-
-
-               float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
-               Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
-
-               UnityEngine.Debug.Log(minResult.MinNormal);
-
-               if (minResult.MinNormal.X >= 0.9f || minResult.MinNormal.X <= -0.9f)
-               {
-                    normalized.X = -normalized.X;
-               }
-               else if (minResult.MinNormal.Y >= 0.9f || minResult.MinNormal.Y <= -0.9f)
-               {
-                normalized.Y = -normalized.Y;
-               }
-
-                Vec2f reflectVelocity = normalized * coefficientOfRest * N;
-                physicsState.Position += reflectVelocity;
-            }
 
            // if (isColliding)
            // {
@@ -73,10 +51,18 @@ namespace Agent
             bool collidingRight = horizontalCollisionResult.isCollidingRight ; //physicsState.Velocity.X > 0 && isColliding;
             bool collidingTop = verticalCollisionResult.isCollidingTop ; //physicsState.Velocity.Y > 0 && isColliding;*/
 
-            bool collidingBottom = minResult.isCollidingBottom;
-            bool collidingLeft = minResult.isCollidingLeft ;//physicsState.Velocity.X < 0 && isColliding;
-            bool collidingRight = minResult.isCollidingRight ; //physicsState.Velocity.X > 0 && isColliding;
-            bool collidingTop = minResult.isCollidingTop ; //physicsState.Velocity.Y > 0 && isColliding;
+            bool collidingBottom = bottomCollision.isCollidingBottom || topCollision.isCollidingBottom;
+            bool collidingLeft = bottomCollision.isCollidingLeft || topCollision.isCollidingLeft;//physicsState.Velocity.X < 0 && isColliding;
+            bool collidingRight = bottomCollision.isCollidingRight || topCollision.isCollidingRight; //physicsState.Velocity.X > 0 && isColliding;
+            bool collidingTop = bottomCollision.isCollidingTop || topCollision.isCollidingTop; //physicsState.Velocity.Y > 0 && isColliding;      
+            bool slidingLeft = bottomCollision.isSlidingLeft || topCollision.isSlidingLeft;//physicsState.Velocity.X < 0 && isColliding;
+            bool slidingRight = bottomCollision.isSlidingRight || topCollision.isSlidingRight; //physicsState.Velocity.X > 0 && isColliding;
+
+
+            UnityEngine.Debug.Log("collidingBottom " + collidingBottom);
+            UnityEngine.Debug.Log("collidingLeft " + collidingLeft);
+            UnityEngine.Debug.Log("collidingRight " + collidingRight);
+            UnityEngine.Debug.Log("collidingTop " + collidingTop);
 
 
 
@@ -155,14 +141,20 @@ namespace Agent
                 /*physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);*/
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-                //entity.SlideLeft();
+                if (slidingLeft)
+                {
+                    entity.SlideLeft();
+                }
            }
             else if (collidingRight)
             {
                /* physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);*/
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
-               // entity.SlideRight();
+                if (slidingRight)
+                {
+                    entity.SlideRight();
+                }
             }
 
            // if (physicsState.Position.Y <= 16.0f)physicsState.Position.Y = 16.0f;

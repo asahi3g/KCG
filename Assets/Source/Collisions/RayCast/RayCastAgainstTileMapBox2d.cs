@@ -23,11 +23,6 @@ namespace Collisions
             Vec2f vRayUnitStepSize = new Vec2f( (float)Math.Sqrt(1 + (vRayDir.Y / vRayDir.X) * (vRayDir.Y / vRayDir.X)),
             (float)Math.Sqrt(1 + (vRayDir.X / vRayDir.Y) * (vRayDir.X / vRayDir.Y)) );
 
-            if (vRayUnitStepSize.X != vRayUnitStepSize.X) // This returns true if vRayUnitStepSize.X is a float.NAN
-                vRayUnitStepSize.X = 0;
-            if (vRayUnitStepSize.Y != vRayUnitStepSize.Y)
-                vRayUnitStepSize.Y = 0;
-
             Vec2i vMapCheck = new Vec2i((int)vRayStart.X, (int)vRayStart.Y);
             Vec2f vRayLength1D;
             Vec2i vStep;

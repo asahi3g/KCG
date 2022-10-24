@@ -345,7 +345,9 @@ namespace Collisions
             public bool isCollidingBottom;
             public bool isCollidingTop;
             public bool isCollidingRight;
+            public bool isSlidingRight;
             public bool isCollidingLeft;
+            public bool isSlidingLeft;
         }
 
         public static HandleCollisionResult HandleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet, bool reflect)
@@ -651,7 +653,7 @@ namespace Collisions
         }
 
 
-        public static HandleCollisionResult HandleCollisionCircle(AgentEntity entity, Vec2f delta, Planet.PlanetState planet, bool reflect)
+        public static HandleCollisionResult HandleCollisionCircle(AgentEntity entity, Vec2f colliderPosition, Vec2f delta, Planet.PlanetState planet, bool reflect)
         {
             HandleCollisionResult result = new HandleCollisionResult();
 
@@ -660,8 +662,6 @@ namespace Collisions
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
            // if (delta.X <= 0) return false;
-            
-            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
             
             int ymin = (int)(colliderPosition.Y);
             int ymax = (int)(colliderPosition.Y + box2dCollider.Size.Y);
@@ -684,7 +684,7 @@ namespace Collisions
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
+                for (int y = ymin; y <= ymax; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -715,7 +715,14 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                positions[linesCount] = 2;
+                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                {
+                                    positions[linesCount] = 4;
+                                }
+                                else
+                                {
+                                    positions[linesCount] = 2;
+                                }
 
                                 linesCount++;
                             }
@@ -730,7 +737,7 @@ namespace Collisions
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
+                for (int y = ymin; y <= ymax; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -761,7 +768,14 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                positions[linesCount] = 3;
+                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                {
+                                    positions[linesCount] = 5;
+                                }
+                                else
+                                {
+                                    positions[linesCount] = 3;
+                                }
 
                                 linesCount++;
                             }
@@ -889,9 +903,24 @@ namespace Collisions
 
             }
 
+            physicsState.Position = physicsState.PreviousPosition + delta * (minTime - 0.01f);
+
             if (minTime < 1.0)
             {
 
+               // physicsState.Position -= delta.Normalize() * 0.02f;
+               float coefficientOfRest = 0.6f;
+               Vec2f velocity = delta;
+
+
+               float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
+               Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
+
+               normalized = normalized - 2.0f * Vec2f.Dot(normalized, minNormal) * minNormal;
+                Vec2f reflectVelocity = normalized * coefficientOfRest * N;
+                physicsState.Position += reflectVelocity;
+
+            
                 if (minPosition == 0)
                {
                 result.isCollidingTop = true;
@@ -904,9 +933,19 @@ namespace Collisions
                {
                 result.isCollidingRight = true;
                }
-               else 
+               else if (minPosition == 3)
                {
                 result.isCollidingLeft = true;
+               }
+               else if (minPosition == 4)
+               {
+                result.isCollidingRight = true;
+                result.isSlidingRight = true;
+               }
+               else if (minPosition == 5)
+               {
+                result.isCollidingLeft = true;
+                result.isSlidingLeft = true;
                }
 
 

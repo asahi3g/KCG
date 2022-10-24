@@ -118,25 +118,27 @@ namespace Agent
                 }
             }
 
+            /*float speed = 20.0f;
+
             physicsState.Velocity = new Vec2f();
             physicsState.Acceleration = new Vec2f();
 
             if (Input.GetKey(KeyCode.W))
             {
-                physicsState.Velocity.Y += 5.0f;
+                physicsState.Velocity.Y += speed;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                physicsState.Velocity.Y -= 5.0f;
+                physicsState.Velocity.Y -= speed;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                physicsState.Velocity.X += 5.0f;
+                physicsState.Velocity.X += speed;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                physicsState.Velocity.X -= 5.0f;
-            }
+                physicsState.Velocity.X -= speed;
+            }*/
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
