@@ -4,6 +4,7 @@ using Item;
 using Animancer;
 using Enums.Tile;
 using Planet;
+using PlanetTileMap;
 
 class PlanterTest : MonoBehaviour
 {
@@ -132,7 +133,7 @@ class PlanterTest : MonoBehaviour
             }
 
         // Draw Chunk Visualizer
-        Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+        ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
     }
 
     // create the sprite atlas for testing purposes

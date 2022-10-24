@@ -4,6 +4,7 @@ using KMath;
 using Item;
 using System.Linq;
 using System.Collections.Generic;
+using PlanetTileMap;
 
 namespace Planet.Unity
 {
@@ -592,7 +593,7 @@ namespace Planet.Unity
                 }
 
             // Draw Chunk Visualizer
-            Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+            ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
 
 
             bool drawRayCast = false;
