@@ -1,5 +1,6 @@
+//import UnityEngine
+
 using Entitas;
-using UnityEngine;
 using Animancer;
 
 namespace Agent
@@ -7,11 +8,11 @@ namespace Agent
     [Agent]
     public class Model3DComponent : IComponent
     {
-        public GameObject GameObject;
-        public GameObject LeftHand;
-        public GameObject RightHand;
+        public UnityEngine.GameObject GameObject;
+        public UnityEngine.GameObject LeftHand;
+        public UnityEngine.GameObject RightHand;
         public Model3DWeapon CurrentWeapon;
-        public GameObject Weapon;
+        public UnityEngine.GameObject Weapon;
         public AnimancerComponent AnimancerComponent;
         public Enums.AgentAnimationType AnimationType;
         public Enums.ItemAnimationSet ItemAnimationSet;

@@ -1,12 +1,12 @@
-using UnityEngine;
-using Entitas;
+//import UnityEngine
 
-public class InputManager : MonoBehaviour
+
+public class InputManager : UnityEngine.MonoBehaviour
 {
     // Key struct to keep key settings
     public struct Key
     {
-        public KeyCode keyCode;
+        public UnityEngine.KeyCode keyCode;
         public Enums.eKeyEvent keyEvent;
         public string keyName;
     }
@@ -32,9 +32,9 @@ public class InputManager : MonoBehaviour
         if (playerState == Enums.PlayerState.Pedestrian)
         {
             // Decrease zoom with -
-            if (Input.GetKey(KeyCode.KeypadMinus))
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.KeypadMinus))
             {
-                PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+                PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
                 if (pixelCam.targetCameraHalfWidth < 15.0f)
                     pixelCam.targetCameraHalfWidth += 1.0f;
                 // Update Zoomed ortho pixel perfect calculation
@@ -42,26 +42,26 @@ public class InputManager : MonoBehaviour
             }
 
             // Increase Zoom with +
-            if (Input.GetKey(KeyCode.KeypadPlus))
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.KeypadPlus))
             {
-                PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+                PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
                 if (pixelCam.targetCameraHalfWidth > 1.5f)
                     pixelCam.targetCameraHalfWidth -= 1.0f;
                 // Update Zoomed ortho pixel perfect calculation
                 pixelCam.adjustCameraFOV();
             }
 
-            if (Input.mouseScrollDelta.y > 0)
+            if (UnityEngine.Input.mouseScrollDelta.y > 0)
             {
-                PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+                PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
                 if (pixelCam.targetCameraHalfWidth > 1.5f)
                     pixelCam.targetCameraHalfWidth -= 1.0f;
                 // Update Zoomed ortho pixel perfect calculation
                 pixelCam.adjustCameraFOV();
             }
-            else if (Input.mouseScrollDelta.y < -0.5f)
+            else if (UnityEngine.Input.mouseScrollDelta.y < -0.5f)
             {
-                PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+                PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
                 if (pixelCam.targetCameraHalfWidth < 15.0f)
                     pixelCam.targetCameraHalfWidth += 1.0f;
                 // Update Zoomed ortho pixel perfect calculation
@@ -69,17 +69,17 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (Input.mouseScrollDelta.y > 0)
+        if (UnityEngine.Input.mouseScrollDelta.y > 0)
         {
-            PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+            PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
             if (pixelCam.targetCameraHalfWidth > 1.5f)
                 pixelCam.targetCameraHalfWidth -= 1.0f;
             // Update Zoomed ortho pixel perfect calculation
             pixelCam.adjustCameraFOV();
         }
-        else if (Input.mouseScrollDelta.y < -0.5f)
+        else if (UnityEngine.Input.mouseScrollDelta.y < -0.5f)
         {
-            PixelPerfectCameraTestTool pixelCam = Camera.main.GetComponent<PixelPerfectCameraTestTool>();
+            PixelPerfectCameraTestTool pixelCam = UnityEngine.Camera.main.GetComponent<PixelPerfectCameraTestTool>();
             if (pixelCam.targetCameraHalfWidth < 15.0f)
                 pixelCam.targetCameraHalfWidth += 1.0f;
             // Update Zoomed ortho pixel perfect calculation
@@ -97,7 +97,7 @@ public class InputManager : MonoBehaviour
     }
 
     // Returns if referenced key pressed or not
-    public bool IsKeyPressed(KeyCode key)
+    public bool IsKeyPressed(UnityEngine.KeyCode key)
     {
         if(activeKey.ToString() == key.ToString())
         {
@@ -117,15 +117,15 @@ public class InputManager : MonoBehaviour
     private Enums.eInputDevice DetectInputDevice()
     {
         // If any mouse or keyboard key detected, set input device to keyboard+mouse
-        if(Event.current.isKey ||
-            Event.current.isMouse)
+        if(UnityEngine.Event.current.isKey ||
+            UnityEngine.Event.current.isMouse)
         {
             return Enums.eInputDevice.KeyboardMouse;
         }
 
         // If any mouse hover event detected, set input device to keyboard+mouse
-        if (Input.GetAxis("Mouse X") != 0.0f ||
-            Input.GetAxis("Mouse Y") != 0.0f)
+        if (UnityEngine.Input.GetAxis("Mouse X") != 0.0f ||
+            UnityEngine.Input.GetAxis("Mouse Y") != 0.0f)
         {
             return Enums.eInputDevice.KeyboardMouse;
         }

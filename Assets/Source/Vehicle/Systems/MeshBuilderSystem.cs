@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Entitas;
-using KMath;
-using Sprites;
+﻿//imports UnityEngine
+
 
 namespace Vehicle
 {
@@ -10,7 +7,7 @@ namespace Vehicle
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("vehiclesGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle), drawOrder);
@@ -24,7 +21,7 @@ namespace Vehicle
             int index = 0;
             foreach (var entity in VehiclesWithSprite)
             {
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
                 var x = entity.vehiclePhysicsState2D.Position.X;
                 var y = entity.vehiclePhysicsState2D.Position.Y;
@@ -42,9 +39,9 @@ namespace Vehicle
 
                 if (entity.hasVehicleThruster && entity.hasVehicleThrusterSprite2D)
                 {
-                    Vector4 Thruster1textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleThrusterSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+                    UnityEngine.Vector4 Thruster1textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleThrusterSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
-                    Vector4 Thruster2textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleThrusterSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+                    UnityEngine.Vector4 Thruster2textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehicleThrusterSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
                     var thruster1X = entity.vehicleThrusterSprite2D.Position1.X;
                     var thruster1Y = entity.vehicleThrusterSprite2D.Position1.Y;

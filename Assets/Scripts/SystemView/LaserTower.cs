@@ -1,12 +1,12 @@
+//import UnityEngine
+
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class LaserTower : MonoBehaviour {
+        public class LaserTower : UnityEngine.MonoBehaviour {
             public  float posx;
             public  float posy;
 
@@ -28,20 +28,20 @@ namespace Scripts {
 
             public  System.Random rand;
 
-            public  SpriteRenderer sr;
+            public UnityEngine.SpriteRenderer sr;
             public  CameraController camera;
 
-            private GameObject debug_line_object1;
-            private GameObject debug_line_object2;
-            private GameObject laser_line_object;
+            private UnityEngine.GameObject debug_line_object1;
+            private UnityEngine.GameObject debug_line_object2;
+            private UnityEngine.GameObject laser_line_object;
 
-            private LineRenderer debug_line_renderer1;
-            private LineRenderer debug_line_renderer2;
+            private UnityEngine.LineRenderer debug_line_renderer1;
+            private UnityEngine.LineRenderer debug_line_renderer2;
 
-            private Color debug_cone_color         = new Color(0.8f, 0.6f, 0.1f, 0.4f);
+            private UnityEngine.Color debug_cone_color         = new UnityEngine.Color(0.8f, 0.6f, 0.1f, 0.4f);
 
-            public LineRenderer laser_renderer;
-            public Color laser_color               = new Color(0.2f, 0.8f, 0.3f, 0.7f);
+            public UnityEngine.LineRenderer laser_renderer;
+            public UnityEngine.Color laser_color               = new UnityEngine.Color(0.2f, 0.8f, 0.3f, 0.7f);
 
             public float laser_charging_time;
             public float laser_duration;
@@ -74,22 +74,22 @@ namespace Scripts {
                 hull_damage_multiplier             = 0.2f;
                 shield_penetration                 = 0.02f;
 
-                sr                                 = gameObject.AddComponent<SpriteRenderer>();
-                sr.sprite                          = UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+                sr                                 = gameObject.AddComponent<UnityEngine.SpriteRenderer>();
+                sr.sprite                          = UnityEditor.AssetDatabase.GetBuiltinExtraResource<UnityEngine.Sprite>("UI/Skin/UISprite.psd");
 
-                camera                             = GameObject.Find("Main Camera").GetComponent<CameraController>();
+                camera                             = UnityEngine.GameObject.Find("Main Camera").GetComponent<CameraController>();
 
-                debug_line_object1                 = new GameObject();
-                debug_line_object2                 = new GameObject();
-                laser_line_object                  = new GameObject();
+                debug_line_object1                 = new UnityEngine.GameObject();
+                debug_line_object2                 = new UnityEngine.GameObject();
+                laser_line_object                  = new UnityEngine.GameObject();
 
-                debug_line_renderer1               = debug_line_object1.AddComponent<LineRenderer>();
-                debug_line_renderer2               = debug_line_object2.AddComponent<LineRenderer>();
-                laser_renderer                     = laser_line_object.AddComponent<LineRenderer>();
+                debug_line_renderer1               = debug_line_object1.AddComponent<UnityEngine.LineRenderer>();
+                debug_line_renderer2               = debug_line_object2.AddComponent<UnityEngine.LineRenderer>();
+                laser_renderer                     = laser_line_object.AddComponent<UnityEngine.LineRenderer>();
 
-                Shader shader                      = Shader.Find("Hidden/Internal-Colored");
-                Material mat                       = new Material(shader);
-                mat.hideFlags                      = HideFlags.HideAndDontSave;
+                UnityEngine.Shader shader                      = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+                UnityEngine.Material mat                       = new UnityEngine.Material(shader);
+                mat.hideFlags                      = UnityEngine.HideFlags.HideAndDontSave;
 
                 mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -107,7 +107,7 @@ namespace Scripts {
                 debug_line_renderer2.useWorldSpace =
                 laser_renderer.useWorldSpace       = true;
 
-                last_millis                        = (int)(Time.time * 1000.0f);
+                last_millis                        = (int)(UnityEngine.Time.time * 1000.0f);
 
                 laser_renderer.startWidth          =
                 laser_renderer.endWidth            = 0.15f / camera.scale;
@@ -117,24 +117,24 @@ namespace Scripts {
             }
 
             void Update() {
-                sr.transform.position              = new Vector3(posx, posy, -0.1f);
-                sr.transform.localScale            = new Vector3(5.0f / camera.scale,
+                sr.transform.position              = new UnityEngine.Vector3(posx, posy, -0.1f);
+                sr.transform.localScale            = new UnityEngine.Vector3(5.0f / camera.scale,
                                                                  5.0f / camera.scale,
                                                                  1.0f);
 
-                sr.transform.Rotate(new Vector3(0.0f, 0.0f, (rotation - last_rotation) * 180.0f / Tools.pi));
+                sr.transform.Rotate(new UnityEngine.Vector3(0.0f, 0.0f, (rotation - last_rotation) * 180.0f / Tools.pi));
                 last_rotation                      = rotation;
 
-                Vector3[] vertices1                = new Vector3[2];
-                Vector3[] vertices2                = new Vector3[2];
+                UnityEngine.Vector3[] vertices1                = new UnityEngine.Vector3[2];
+                UnityEngine.Vector3[] vertices2                = new UnityEngine.Vector3[2];
 
-                vertices1[0]                       = new Vector3(posx, posy, 0.0f);
-                vertices1[1]                       = new Vector3(posx + (float)Math.Cos(rotation - FOV / 2.0f) * range,
+                vertices1[0]                       = new UnityEngine.Vector3(posx, posy, 0.0f);
+                vertices1[1]                       = new UnityEngine.Vector3(posx + (float)Math.Cos(rotation - FOV / 2.0f) * range,
                                                                  posy + (float)Math.Sin(rotation - FOV / 2.0f) * range,
                                                                  0.0f);
 
-                vertices2[0]                       = new Vector3(posx, posy, 0.0f);
-                vertices2[1]                       = new Vector3(posx + (float)Math.Cos(rotation + FOV / 2.0f) * range,
+                vertices2[0]                       = new UnityEngine.Vector3(posx, posy, 0.0f);
+                vertices2[1]                       = new UnityEngine.Vector3(posx + (float)Math.Cos(rotation + FOV / 2.0f) * range,
                                                                  posy + (float)Math.Sin(rotation + FOV / 2.0f) * range,
                                                                  0.0f);
 
@@ -154,8 +154,8 @@ namespace Scripts {
                 debug_line_renderer1.positionCount =
                 debug_line_renderer2.positionCount = 2;
 
-                int CurrentMillis                  = (int)(Time.time * 1000.0f) - last_millis;
-                last_millis                        = (int)(Time.time * 1000.0f);
+                int CurrentMillis                  = (int)(UnityEngine.Time.time * 1000.0f) - last_millis;
+                last_millis                        = (int)(UnityEngine.Time.time * 1000.0f);
 
                 int ChargingTime                   = (int)(firing_rate * laser_duration *         laser_charging_time );
                 int LaserDurationTime              = (int)(firing_rate * laser_duration * (1.0f - laser_charging_time));
@@ -170,12 +170,12 @@ namespace Scripts {
                         laser_renderer.startWidth =
                         laser_renderer.endWidth   = laser_width * RemainingTimeAsPercentage / camera.scale;
 
-                        laser_renderer.startColor = new Color(laser_color.r,
+                        laser_renderer.startColor = new UnityEngine.Color(laser_color.r,
                                                               laser_color.g,
                                                               laser_color.b,
                                                               laser_color.a * RemainingTimeAsPercentage + 0.10f);
 
-                        laser_renderer.endColor   = new Color(laser_color.r,
+                        laser_renderer.endColor   = new UnityEngine.Color(laser_color.r,
                                                               laser_color.g,
                                                               laser_color.b,
                                                               laser_color.a * RemainingTimeAsPercentage + 0.02f);
@@ -184,12 +184,12 @@ namespace Scripts {
                         laser_renderer.startWidth =
                         laser_renderer.endWidth   = RemainingTimeAsPercentage * laser_width / camera.scale;
 
-                        laser_renderer.startColor = new Color(laser_color.r,
+                        laser_renderer.startColor = new UnityEngine.Color(laser_color.r,
                                                               laser_color.g,
                                                               laser_color.b,
                                                               laser_color.a * RemainingTimeAsPercentage + 0.10f);
 
-                        laser_renderer.endColor   = new Color(laser_color.r,
+                        laser_renderer.endColor   = new UnityEngine.Color(laser_color.r,
                                                               laser_color.g,
                                                               laser_color.b,
                                                               laser_color.a * RemainingTimeAsPercentage + 0.02f);
@@ -298,9 +298,9 @@ namespace Scripts {
                 if(Angle > rotation + FOV / 2.0f
                 || Angle < rotation - FOV / 2.0f) return false;
 
-                Vector3[] vertices                = new Vector3[2];
-                vertices[0]                       = new Vector3(posx, posy, 0.0f);
-                vertices[1]                       = new Vector3(target.self.posx, target.self.posy, 0.0f);
+                UnityEngine.Vector3[] vertices                = new UnityEngine.Vector3[2];
+                vertices[0]                       = new UnityEngine.Vector3(posx, posy, 0.0f);
+                vertices[1]                       = new UnityEngine.Vector3(target.self.posx, target.self.posy, 0.0f);
 
                 laser_renderer.SetPositions(vertices);
 
@@ -329,12 +329,12 @@ namespace Scripts {
             }
 
             void OnDestroy() {
-                GameObject.Destroy(debug_line_renderer1);
-                GameObject.Destroy(debug_line_renderer2);
-                GameObject.Destroy(laser_renderer);
-                GameObject.Destroy(debug_line_object1);
-                GameObject.Destroy(debug_line_object2);
-                GameObject.Destroy(laser_line_object);
+                UnityEngine.GameObject.Destroy(debug_line_renderer1);
+                UnityEngine.GameObject.Destroy(debug_line_renderer2);
+                UnityEngine.GameObject.Destroy(laser_renderer);
+                UnityEngine.GameObject.Destroy(debug_line_object1);
+                UnityEngine.GameObject.Destroy(debug_line_object2);
+                UnityEngine.GameObject.Destroy(laser_line_object);
             }
         }
     }

@@ -1,4 +1,5 @@
-using UnityEngine;
+//import UnityEngine
+
 using Enums.Tile;
 using KMath;
 using Item;
@@ -8,9 +9,9 @@ using System.Collections.Generic;
 
 namespace Planet.Unity
 {
-    public class MechTest : MonoBehaviour
+    public class MechTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         public Planet.PlanetState Planet;
         AgentEntity Player;
@@ -23,9 +24,9 @@ namespace Planet.Unity
 
         private int totalMechs;
 
-        private Color correctHlColor = Color.green;
+        private UnityEngine.Color correctHlColor = UnityEngine.Color.green;
 
-        private Color wrongHlColor = Color.red;
+        private UnityEngine.Color wrongHlColor = UnityEngine.Color.red;
 
         public Utility.FrameMesh HighliterMesh;
         
@@ -46,26 +47,26 @@ namespace Planet.Unity
         public void Update()
         {
             ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
+            UnityEngine.Material material = Material;
 
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow))
             {
                 selectedMechIndex++;
-            } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            } else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow))
             {
                 selectedMechIndex--;
             }
 
-            selectedMechIndex = Mathf.Clamp(selectedMechIndex, 0, totalMechs);
+            selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.T))
             {
                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
             }
 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             
             MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
@@ -84,7 +85,7 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
@@ -95,8 +96,8 @@ namespace Planet.Unity
             {
                 //TODO: SET TO Get(selectedMechIndex)
                 var mech = GameState.MechCreationApi.Get(selectedMechIndex);
-                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);
+                var yRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.Y);
 
                 var allTilesAir = true;
 
@@ -132,26 +133,26 @@ namespace Planet.Unity
             }
         }
 
-        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h, UnityEngine.Color color)
         {
-            var mr = gameObject.GetComponent<MeshRenderer>();
+            var mr = gameObject.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial.color = color;
 
-            var mf = gameObject.GetComponent<MeshFilter>();
+            var mf = gameObject.GetComponent<UnityEngine.MeshFilter>();
             var mesh = mf.sharedMesh;
 
             List<int> triangles = new List<int>();
-            List<Vector3> vertices = new List<Vector3>();
+            List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 
             Vec2f topLeft = new Vec2f(x, y + h);
             Vec2f BottomLeft = new Vec2f(x, y);
             Vec2f BottomRight = new Vec2f(x + w, y);
             Vec2f TopRight = new Vec2f(x + w, y + h);
 
-            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
-            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
-            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
-            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+            var p0 = new UnityEngine.Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new UnityEngine.Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new UnityEngine.Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new UnityEngine.Vector3(BottomRight.X, BottomRight.Y, 0);
 
             vertices.Add(p0);
             vertices.Add(p1);
@@ -296,11 +297,11 @@ namespace Planet.Unity
 
         private void PlaceMech()
         {
-            Debug.Log("PLACE MECH");
+            UnityEngine.Debug.Log("PLACE MECH");
 
             var planet = FindObjectOfType<ItemTest>().Planet;
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 

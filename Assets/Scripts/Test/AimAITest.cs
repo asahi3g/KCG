@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿//imports UnityEngine
+
+
 using KMath;
 using Enums.Tile;
 
 namespace Planet.Unity
 {
-    public class AimAITest : MonoBehaviour
+    public class AimAITest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
         public PlanetState Planet;
         bool Init = false;
         float LastSpawn = 0;
@@ -22,13 +24,13 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
             const float SPAWN_DELAY = 2.0f;
-            if ((Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY)
+            if ((UnityEngine.Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY)
             {
                 SpawnTarget();
-                LastSpawn = Time.realtimeSinceStartup;
+                LastSpawn = UnityEngine.Time.realtimeSinceStartup;
             }
         }
 
@@ -43,7 +45,7 @@ namespace Planet.Unity
             Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
-            LastSpawn = Time.realtimeSinceStartup;
+            LastSpawn = UnityEngine.Time.realtimeSinceStartup;
         }
 
         private void GenerateMap()
@@ -62,7 +64,7 @@ namespace Planet.Unity
 
         private void SpawnTarget()
         {
-            float x = Random.Range(1.0f, 31.0f);
+            float x = UnityEngine.Random.Range(1.0f, 31.0f);
             Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
         }
     }

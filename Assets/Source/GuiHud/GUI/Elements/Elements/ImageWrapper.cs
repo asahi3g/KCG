@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using Enums;
 using KMath;
-using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 using Texture = Utility.Texture;
@@ -11,27 +12,27 @@ namespace KGUI.Elements
     {
         public Image UnityImage { get; private set; }
         
-        public Transform Transform => GameObject.transform;
-        public GameObject GameObject { get; private set; }
-        public RectTransform RectTransform { get; private set; }
+        public UnityEngine.Transform Transform => GameObject.transform;
+        public UnityEngine.GameObject GameObject { get; private set; }
+        public UnityEngine.RectTransform RectTransform { get; private set; }
 
-        public ImageWrapper(Image image, Sprite sprite)
+        public ImageWrapper(Image image, UnityEngine.Sprite sprite)
         {
             GameObject = image.gameObject;
             
-            RectTransform = GameObject.GetComponent<RectTransform>();
+            RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
             UnityImage = image;
             
             UnityImage.sprite = sprite;
             UnityImage.enabled = false;
             
-            RectTransform.anchorMin = new Vector2(0, 0);
-            RectTransform.anchorMax = new Vector2(0, 0);
-            RectTransform.pivot = new Vector2(0, 0);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0, 0);
         }
-        public ImageWrapper(string imageName, Transform parent, Sprite sprite)
+        public ImageWrapper(string imageName, UnityEngine.Transform parent, UnityEngine.Sprite sprite)
         {
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -39,21 +40,21 @@ namespace KGUI.Elements
                 }
             };
             
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             UnityImage.sprite = sprite;
             
-            RectTransform.anchorMin = new Vector2(0, 0);
-            RectTransform.anchorMax = new Vector2(0, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
 
             UnityImage.enabled = false;
         }
-        public ImageWrapper(string imageName, Transform parent, int width, int height, string path)
+        public ImageWrapper(string imageName, UnityEngine.Transform parent, int width, int height, string path)
         {
             var sprite = GameState.Renderer.CreateSprite(path, width, height, AtlasType.Gui);
             
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -62,21 +63,21 @@ namespace KGUI.Elements
                 }
             };
             
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             
             UnityImage.sprite = sprite;
-            RectTransform.anchorMin = new Vector2(0f, 0f);
-            RectTransform.position = new Vector3(0f, 0f, 0f);
-            RectTransform.anchorMax = new Vector2(0f, 0f);
-            RectTransform.pivot = new Vector2(0f, 0f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0f, 0f);
+            RectTransform.position = new UnityEngine.Vector3(0f, 0f, 0f);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0f, 0f);
+            RectTransform.pivot = new UnityEngine.Vector2(0f, 0f);
             UnityImage.enabled = false;
         }
-        public ImageWrapper(string imageName, Transform parent, int width, int height, int tileSpriteID)
+        public ImageWrapper(string imageName, UnityEngine.Transform parent, int width, int height, int tileSpriteID)
         {
             var sprite = GameState.Renderer.CreateSprite(tileSpriteID, width, height, AtlasType.TGen);
             
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -85,22 +86,22 @@ namespace KGUI.Elements
                 }
             };
             
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             UnityImage.sprite = sprite;
             
-            RectTransform.anchorMin = new Vector2(0, 0);
-            RectTransform.position = new Vector3(0, 0, 0);
-            RectTransform.anchorMax = new Vector2(0, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            RectTransform.position = new UnityEngine.Vector3(0, 0, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
 
             UnityImage.enabled = false;
         }
-        public ImageWrapper(string imageName, Transform parent, int width, int height, int tileSpriteID, AtlasType atlasType)
+        public ImageWrapper(string imageName, UnityEngine.Transform parent, int width, int height, int tileSpriteID, AtlasType atlasType)
         {
             var sprite = GameState.Renderer.CreateSprite(tileSpriteID, width, height, atlasType);
             
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -108,13 +109,13 @@ namespace KGUI.Elements
                 }
             };
             
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             UnityImage.sprite = sprite;
             
-            RectTransform.anchorMin = new Vector2(0, 0);
-            RectTransform.anchorMax = new Vector2(0, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
 
             UnityImage.enabled = false;
         }
@@ -124,20 +125,20 @@ namespace KGUI.Elements
             
             var sprite = GameState.Renderer.CreateSprite(path, width, height, atlasType);
 
-            RectTransform = GameObject.GetComponent<RectTransform>();
+            RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
             UnityImage = image;
             
             UnityImage.sprite = sprite;
-            RectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-            RectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0.5f, 0.5f);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0.5f, 0.5f);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
             UnityImage.enabled = false;
         }
-        public ImageWrapper(string imageName, Transform parent, int width, int height, string path, AtlasType atlasType)
+        public ImageWrapper(string imageName, UnityEngine.Transform parent, int width, int height, string path, AtlasType atlasType)
         {
             var sprite = GameState.Renderer.CreateSprite(path, width, height, atlasType);
             
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -146,20 +147,20 @@ namespace KGUI.Elements
                 }
             };
 
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             
             UnityImage.sprite = sprite;
-            RectTransform.anchorMin = new Vector2(0f, 0f);
-            RectTransform.anchorMax = new Vector2(0f, 0f);
-            RectTransform.pivot = new Vector2(0f, 0f);
-            RectTransform.localPosition = Vector3.zero;
+            RectTransform.anchorMin = new UnityEngine.Vector2(0f, 0f);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0f, 0f);
+            RectTransform.pivot = new UnityEngine.Vector2(0f, 0f);
+            RectTransform.localPosition = UnityEngine.Vector3.zero;
             UnityImage.enabled = false;
         }
         
-        public void Init(string imageName, Transform parent, Sprite sprite)
+        public void Init(string imageName, UnityEngine.Transform parent, UnityEngine.Sprite sprite)
         {
-            GameObject = new GameObject(imageName)
+            GameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -168,13 +169,13 @@ namespace KGUI.Elements
                 }
             };
             
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
             UnityImage = GameObject.AddComponent<Image>();
             UnityImage.sprite = sprite;
             
-            RectTransform.anchorMin = new Vector2(0, 0);
-            RectTransform.anchorMax = new Vector2(0, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
 
             UnityImage.enabled = false;
         }
@@ -197,29 +198,29 @@ namespace KGUI.Elements
             var position = RectTransform.position;
             var sizeDelta = RectTransform.sizeDelta;
             var halfSize = sizeDelta / 2f;
-            var bottomLeft = (Vector2)position - halfSize;
+            var bottomLeft = (UnityEngine.Vector2)position - halfSize;
             DrawDebug.DrawBox(new Vec2f(bottomLeft.x, bottomLeft.y), new Vec2f(sizeDelta.x, sizeDelta.y));
 
             return Collisions.Collisions.PointOverlapRect(cursor.X, cursor.Y, bottomLeft.x, bottomLeft.x + sizeDelta.x,
                 bottomLeft.y, bottomLeft.y + sizeDelta.y);
         }
 
-        public void SetPosition(Vector3 newPos)
+        public void SetPosition(UnityEngine.Vector3 newPos)
         {
             RectTransform.localPosition = newPos;
         }
 
-        public void SetRotation(Quaternion newRot)
+        public void SetRotation(UnityEngine.Quaternion newRot)
         {
             RectTransform.localRotation = newRot;
         }
 
-        public void SetScale(Vector3 newScale)
+        public void SetScale(UnityEngine.Vector3 newScale)
         {
             RectTransform.localScale = newScale;
         }
         
-        public void SetSize(Vector2 newSize)
+        public void SetSize(UnityEngine.Vector2 newSize)
         {
             RectTransform.sizeDelta = newSize;
         }
@@ -231,31 +232,31 @@ namespace KGUI.Elements
 
         public void SetImageTopLeft()
         {
-            RectTransform.anchorMin = new Vector2(0, 1);
-            RectTransform.anchorMax = new Vector2(0, 1);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0, 1);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0, 1);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
         }
 
         public void SetImageBottomRight()
         {
-            RectTransform.anchorMin = new Vector2(1, 0);
-            RectTransform.anchorMax = new Vector2(1, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(1, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(1, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
         }
 
         public void SetImageMidBottom()
         {
-            RectTransform.anchorMin = new Vector2(0.5f, 0);
-            RectTransform.anchorMax = new Vector2(0.5f, 0);
-            RectTransform.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform.anchorMin = new UnityEngine.Vector2(0.5f, 0);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0.5f, 0);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
         }
 
-        public void SetImage(Sprite sprite)
+        public void SetImage(UnityEngine.Sprite sprite)
         {
             UnityImage.sprite = sprite;
         }
 
-        public void SetImageColor(Color color)
+        public void SetImageColor(UnityEngine.Color color)
         {
             UnityImage.color = color;
         }

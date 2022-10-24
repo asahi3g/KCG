@@ -1,5 +1,6 @@
+//import UnityEngine
+
 using KMath;
-using UnityEngine;
 
 namespace FloatingText
 {
@@ -7,7 +8,7 @@ namespace FloatingText
     {
         static int uniqueID = 0;
         public FloatingTextEntity SpawnFloatingText(FloatingTextContext floatingTextContext, string text, 
-                                    float timeToLive, Vec2f velocity, Vec2f position, Color color, int fontSize)
+                                    float timeToLive, Vec2f velocity, Vec2f position, UnityEngine.Color color, int fontSize)
         {
             var entity = floatingTextContext.CreateEntity();
 
@@ -21,7 +22,7 @@ namespace FloatingText
         }
 
         public FloatingTextEntity SpawnFixedFloatingText(FloatingTextContext floatingTextContext, string text,
-                            Vec2f position, Color color, int fontSize)
+                            Vec2f position, UnityEngine.Color color, int fontSize)
         {
             var entity = floatingTextContext.CreateEntity();
 

@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 
 namespace Node
@@ -47,7 +48,7 @@ namespace Node
                                             case Enums.PotionType.HealthPotion:
                                                 if (item.itemType.Type == Enums.ItemType.HealthPositon)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
                                                     int y = (int)worldPosition.y;
 

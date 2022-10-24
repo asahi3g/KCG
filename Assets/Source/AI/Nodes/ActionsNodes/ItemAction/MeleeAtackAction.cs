@@ -1,5 +1,6 @@
+//import UnityEngine
+
 using KMath;
-using UnityEngine;
 using Enums;
 using Item;
 
@@ -19,7 +20,7 @@ namespace Node
 
             float damage = WeaponProperty.BasicDemage;
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 

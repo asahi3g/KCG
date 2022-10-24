@@ -1,4 +1,5 @@
-using UnityEngine;
+//import UntiyEngine
+
 using Enums.Tile;
 using KMath;
 using Item;
@@ -8,9 +9,9 @@ using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class MovementSceneScript : MonoBehaviour
+    class MovementSceneScript : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         public PlanetState Planet;
 
@@ -25,8 +26,8 @@ namespace Planet.Unity
         private int totalMechs;
         private int selectedMechIndex;
         public Utility.FrameMesh HighliterMesh;
-        private Color wrongHlColor = Color.red;
-        private Color correctHlColor = Color.green;
+        private UnityEngine.Color wrongHlColor = UnityEngine.Color.red;
+        private UnityEngine.Color correctHlColor = UnityEngine.Color.green;
 
 
         //KGui.CharacterDisplay CharacterDisplay;
@@ -115,7 +116,7 @@ namespace Planet.Unity
 
             LastMousePosition = Shape1[0];
 
-            Application.targetFrameRate = 60;
+            UnityEngine.Application.targetFrameRate = 60;
 
             GameResources.Initialize();
 
@@ -140,8 +141,8 @@ namespace Planet.Unity
             Planet.InitializeHUD();
             GameState.MechGUIDrawSystem.Initialize(ref Planet);
             //GenerateMap();
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+            var camera = UnityEngine.Camera.main;
+            UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2, camera.nearClipPlane));
 
             GenerateMap();
 
@@ -169,7 +170,7 @@ namespace Planet.Unity
         public void Update()
         {
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow))
             {
                 CircleCenter.X -= 1.0f;
                 for( int i = 0; i < Shape1.Length; i++)
@@ -178,7 +179,7 @@ namespace Planet.Unity
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow))
             {
                 CircleCenter.X += 1.0f;
                 for( int i = 0; i < Shape1.Length; i++)
@@ -187,7 +188,7 @@ namespace Planet.Unity
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.UpArrow))
             {
                 CircleCenter.Y += 1.0f;
                 for( int i = 0; i < Shape1.Length; i++)
@@ -196,7 +197,7 @@ namespace Planet.Unity
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.DownArrow))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow))
             {
                 CircleCenter.Y -= 1.0f;
                 for( int i = 0; i < Shape1.Length; i++)
@@ -205,9 +206,9 @@ namespace Planet.Unity
                 }
             }
 
-            Vector3 p = Input.mousePosition;
+            UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
             p.z = 20;
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
 
             Vec2f shapeVelocity = new Vec2f(mouse.x, mouse.y) - LastMousePosition;
             LastMousePosition = new Vec2f(mouse.x, mouse.y);
@@ -235,8 +236,8 @@ namespace Planet.Unity
             {
                 var result = Collisions.PolygonSweepTest.TestCollision(Shape1, shapeVelocity, Shape2);
                 float distance = result.CollisionTime;
-                Debug.Log(distance);
-                Debug.Log(result.CollisionNormal);
+                UnityEngine.Debug.Log(distance);
+                UnityEngine.Debug.Log(result.CollisionNormal);
 
                 Vec2f shape1Center = new Vec2f();
                 Vec2f shape2Center = new Vec2f();
@@ -338,7 +339,7 @@ namespace Planet.Unity
 
             CircleCenter = CircleCenter - CircleVelocity * 0.01f;
 
-            Debug.Log("normal " + circleCollisionResult.CollisionNormal);
+            UnityEngine.Debug.Log("normal " + circleCollisionResult.CollisionNormal);
 
 
 
@@ -402,28 +403,28 @@ namespace Planet.Unity
 
             
             ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
+            UnityEngine.Material material = Material;
 
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow))
             {
                 selectedMechIndex++;
-            } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            } else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow))
             {
                 selectedMechIndex--;
             }
 
-            selectedMechIndex = Mathf.Clamp(selectedMechIndex, 0, totalMechs);
+            selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            if (Input.GetKeyDown(KeyCode.F1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
             {
                 PlanetManager.Save(Planet, "generated-maps/movement-map.kmap");
-                Debug.Log("saved!");
+                UnityEngine.Debug.Log("saved!");
             }
 
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
             {
-                var camera = Camera.main;
-                Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+                var camera = UnityEngine.Camera.main;
+                UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2, camera.nearClipPlane));
 
                 Planet.Destroy();
                 Planet = PlanetManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
@@ -442,15 +443,15 @@ namespace Planet.Unity
 
                AddItemsToPlayer();
 
-                Debug.Log("loaded!");
+                UnityEngine.Debug.Log("loaded!");
             }
 
 
            // CharacterDisplay.Update();
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
         }
-        Texture2D texture;
+        UnityEngine.Texture2D texture;
 
         private void OnGUI()
         {
@@ -471,26 +472,26 @@ namespace Planet.Unity
                  
         }
 
-        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h, UnityEngine.Color color)
         {
-            var mr = gameObject.GetComponent<MeshRenderer>();
+            var mr = gameObject.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial.color = color;
 
-            var mf = gameObject.GetComponent<MeshFilter>();
+            var mf = gameObject.GetComponent<UnityEngine.MeshFilter>();
             var mesh = mf.sharedMesh;
 
             List<int> triangles = new List<int>();
-            List<Vector3> vertices = new List<Vector3>();
+            List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 
             Vec2f topLeft = new Vec2f(x, y + h);
             Vec2f BottomLeft = new Vec2f(x, y);
             Vec2f BottomRight = new Vec2f(x + w, y);
             Vec2f TopRight = new Vec2f(x + w, y + h);
 
-            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
-            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
-            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
-            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+            var p0 = new UnityEngine.Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new UnityEngine.Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new UnityEngine.Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new UnityEngine.Vector3(BottomRight.X, BottomRight.Y, 0);
 
             vertices.Add(p0);
             vertices.Add(p1);
@@ -510,7 +511,7 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
@@ -521,8 +522,8 @@ namespace Planet.Unity
             {
                 //TODO: SET TO Get(selectedMechIndex)
                 var mech = GameState.MechCreationApi.Get(selectedMechIndex);
-                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);
+                var yRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.Y);
 
                 var allTilesAir = true;
 
@@ -567,29 +568,29 @@ namespace Planet.Unity
             Planet.DrawDebug();
 
             // Set the color of gizmos
-            Gizmos.color = Color.green;
+            UnityEngine.Gizmos.color = UnityEngine.Color.green;
             
             // Draw a cube around the map
             if(Planet.TileMap != null)
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
             // Draw lines around player if out of bounds
             if (Player != null)
                 if(Player.agentPhysicsState.Position.X -10.0f >= Planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
-                
+
                     // X+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -601,20 +602,20 @@ namespace Planet.Unity
 
             if (drawRayCast)
             {
-                Vector3 p = Input.mousePosition;
+                UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
                 p.z = 20;
-                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+                UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
 
                 var rayCastResult = Collisions.Collisions.RayCastAgainstTileMap(Planet.TileMap, new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
                 
                 Vec2f startPos = Player.agentPhysicsState.Position;
                 Vec2f endPos = new Vec2f(mouse.x, mouse.y);
-                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20), new UnityEngine.Vector3(endPos.X, endPos.Y, 20));
 
                 if (rayCastResult.Intersect)
                 {
-                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
-                    new Vector3(0.3f, 0.3f, 0.3f));
+                    UnityEngine.Gizmos.DrawWireCube(new UnityEngine.Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
+                    new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
                 }
             }
 
@@ -622,21 +623,21 @@ namespace Planet.Unity
             bool testCircleCollision = false;
             bool testRectangleCollision = false;
 
-            
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             worldPosition.z = 20.0f;
 
             if (testCircleCollision)
             {
                 int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(Planet, new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
 
-                Gizmos.color = Color.yellow;
+                UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
                 {
-                    Gizmos.color = Color.red;
-                }    
-                
-                Gizmos.DrawSphere(worldPosition, 0.5f);
+                    UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                }
+
+                UnityEngine.Gizmos.DrawSphere(worldPosition, 0.5f);
             }
 
             if (testRectangleCollision)
@@ -644,40 +645,40 @@ namespace Planet.Unity
                 int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(Planet, 
                 new KMath.AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
 
-                Gizmos.color = Color.yellow;
+                UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
                 {
-                    Gizmos.color = Color.red;
-                }    
-                
-                Gizmos.DrawWireCube(worldPosition + new Vector3(0.25f, 0.75f * 0.5f, 0), new Vector3(0.5f, 0.75f, 0.5f));
+                    UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                }
+
+                UnityEngine.Gizmos.DrawWireCube(worldPosition + new UnityEngine.Vector3(0.25f, 0.75f * 0.5f, 0), new UnityEngine.Vector3(0.5f, 0.75f, 0.5f));
             }
 
             bool testRayAgainstCircle = false;
 
             if (testRayAgainstCircle)
             {
-                Vector3 p = Input.mousePosition;
+                UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
                 p.z = 20;
-                Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+                UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
 
                 var rayCastResult = Collisions.Collisions.RayCastAgainstCircle(new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)),
                  new Vec2f(9, 19), 1.0f);
 
                 Vec2f startPos = Player.agentPhysicsState.Position;
                 Vec2f endPos = new Vec2f(mouse.x, mouse.y);
-                Gizmos.DrawLine(new Vector3(startPos.X, startPos.Y, 20), new Vector3(endPos.X, endPos.Y, 20));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20), new UnityEngine.Vector3(endPos.X, endPos.Y, 20));
 
-                Gizmos.color = Color.yellow;
+                UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                 if (rayCastResult.Intersect)
                 {
-                    Gizmos.DrawWireCube(new Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
-                    new Vector3(0.3f, 0.3f, 0.3f));
+                    UnityEngine.Gizmos.DrawWireCube(new UnityEngine.Vector3(rayCastResult.Point.X, rayCastResult.Point.Y, 20),
+                    new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
 
-                    Gizmos.color = Color.red;
+                    UnityEngine.Gizmos.color = UnityEngine.Color.red;
                 }
 
-                Gizmos.DrawSphere(new Vector3(9, 19, 20.0f), 1.0f);
+                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(9, 19, 20.0f), 1.0f);
             }
 
 
@@ -685,10 +686,10 @@ namespace Planet.Unity
             if (testSweptCollision)
             {
                 //var playerCollider = Player.physicsBox2DCollider;
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(new Vector3(otherBox.x, otherBox.y, 1.0f), new Vector3(otherBox.w, otherBox.h, 0.5f));
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireCube(new Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
+                UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                UnityEngine.Gizmos.DrawWireCube(new UnityEngine.Vector3(otherBox.x, otherBox.y, 1.0f), new UnityEngine.Vector3(otherBox.w, otherBox.h, 0.5f));
+                UnityEngine.Gizmos.color = UnityEngine.Color.green;
+                UnityEngine.Gizmos.DrawWireCube(new UnityEngine.Vector3(orrectedBox.x, orrectedBox.y, 1.0f), new UnityEngine.Vector3(orrectedBox.w, orrectedBox.h, 0.5f));
             }
 
 
@@ -696,10 +697,10 @@ namespace Planet.Unity
 
             if (shapeCollision)
             {
-                Gizmos.color = Color.green;
+                UnityEngine.Gizmos.color = UnityEngine.Color.green;
                 if (IsShapeColliding)
                 {
-                    Gizmos.color = Color.red;
+                    UnityEngine.Gizmos.color = UnityEngine.Color.red;
                 }
 
                 for(int i = 0; i < Shape1.Length; i++)
@@ -709,14 +710,14 @@ namespace Planet.Unity
                     {
                         nextPosition = 0;
                     }
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawLine(new Vector3(Shape1[i].X, Shape1[i].Y, 1), new Vector3(Shape1[nextPosition].X, Shape1[nextPosition].Y, 1));
+                    UnityEngine.Gizmos.color = UnityEngine.Color.green;
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Shape1[i].X, Shape1[i].Y, 1), new UnityEngine.Vector3(Shape1[nextPosition].X, Shape1[nextPosition].Y, 1));
 
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawLine(new Vector3(ShapeTemp[i].X, ShapeTemp[i].Y, 1), new Vector3(ShapeTemp[nextPosition].X, ShapeTemp[nextPosition].Y, 1));
+                    UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(ShapeTemp[i].X, ShapeTemp[i].Y, 1), new UnityEngine.Vector3(ShapeTemp[nextPosition].X, ShapeTemp[nextPosition].Y, 1));
                 }
 
-                Gizmos.color = Color.green;
+                UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
                 for(int i = 0; i < Shape2.Length; i++)
                 {
@@ -725,7 +726,7 @@ namespace Planet.Unity
                     {
                         nextPosition = 0;
                     }
-                    Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Shape2[i].X, Shape2[i].Y, 1), new UnityEngine.Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
                 }
                 
                 
@@ -736,14 +737,14 @@ namespace Planet.Unity
 
             if (circleLineCollision)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(new Vector3(P1.X, P1.Y + 100, 1), new Vector3(P2.X, P2.Y - 100, 1));
-                Gizmos.color = Color.green;
-               /* Gizmos.DrawLine(new Vector3(P1.X, P1.Y, 1), new Vector3(P2.X, P2.Y, 1));
-                Gizmos.DrawLine(new Vector3(P2.X, P2.Y, 1), new Vector3(P3.X, P3.Y, 1));
-                Gizmos.DrawLine(new Vector3(P3.X, P3.Y, 1), new Vector3(P1.X, P1.Y, 1));*/
+                UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(P1.X, P1.Y + 100, 1), new UnityEngine.Vector3(P2.X, P2.Y - 100, 1));
+                UnityEngine.Gizmos.color = UnityEngine.Color.green;
+                /* Gizmos.DrawLine(new Vector3(P1.X, P1.Y, 1), new Vector3(P2.X, P2.Y, 1));
+                 Gizmos.DrawLine(new Vector3(P2.X, P2.Y, 1), new Vector3(P3.X, P3.Y, 1));
+                 Gizmos.DrawLine(new Vector3(P3.X, P3.Y, 1), new Vector3(P1.X, P1.Y, 1));*/
 
-                Gizmos.color = Color.green;
+                UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
                 for(int i = 0; i < Shape2.Length; i++)
                 {
@@ -752,31 +753,31 @@ namespace Planet.Unity
                     {
                         nextPosition = 0;
                     }
-                    Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Shape2[i].X, Shape2[i].Y, 1), new UnityEngine.Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
                 }
                 
-                Gizmos.DrawSphere(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);
-                Gizmos.DrawSphere(new Vector3(collisionPoint.X, collisionPoint.Y, 1.0f), 0.2f);
+                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);
+                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(collisionPoint.X, collisionPoint.Y, 1.0f), 0.2f);
 
-                Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1), new Vector3(CircleCenter.X + 1.0f, CircleCenter.Y, 1));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(CircleCenter.X, CircleCenter.Y, 1), new UnityEngine.Vector3(CircleCenter.X + 1.0f, CircleCenter.Y, 1));
 
-                Gizmos.color = Color.blue;
+                UnityEngine.Gizmos.color = UnityEngine.Color.blue;
                
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new Vector3(CircleCenter.X + CircleVelocity.X, CircleCenter.Y + CircleVelocity.Y, 1.0f));
+                UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new UnityEngine.Vector3(CircleCenter.X + CircleVelocity.X, CircleCenter.Y + CircleVelocity.Y, 1.0f));
 
                 /*if (CollisionDistance < 1.0f)
                 {*/
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawLine(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f));
-                    //Gizmos.DrawSphere(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+                    UnityEngine.Gizmos.color = UnityEngine.Color.green;
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), new UnityEngine.Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f));
+                //Gizmos.DrawSphere(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
 
 
-                 //   Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
-                 //   Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
-                 //    new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
-//
-                    Gizmos.color = Color.yellow;
+                //   Gizmos.DrawSphere(new Vector3(CircleCenter.X + 1.0f + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1.0f), CircleRadius + 0.05f);
+                //   Gizmos.DrawLine(new Vector3(CircleCenter.X + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1),
+                //    new Vector3(CircleCenter.X + 1.0f + + CircleVelocity.X * CollisionDistance, CircleCenter.Y + CircleVelocity.Y * CollisionDistance, 1));
+                //
+                UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                    
                // }
 
@@ -896,10 +897,10 @@ namespace Planet.Unity
             private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
         {
             agentEntity.agentPhysicsState.Invulnerable = false;
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = false;
 
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = true;
         }
 

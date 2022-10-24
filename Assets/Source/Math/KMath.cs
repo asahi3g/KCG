@@ -1,11 +1,12 @@
-using UnityEngine;
+//import UnityEngine
+
 using System;
 
 namespace KMath
 {
     public static class KMath
     {
-        public static float LengthSquared(Vector2 vector)
+        public static float LengthSquared(UnityEngine.Vector2 vector)
         {
             return (vector.x * vector.x) + (vector.y * vector.y);
         }

@@ -1,6 +1,7 @@
+//import UnityEngine
+
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using KMath;
 using System.Numerics;
 using Unity.VisualScripting;
@@ -109,12 +110,12 @@ public class GeometryGUI
         int SQNoSpecularID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 1, 0);
 
         // Initialize Pipe Widget
-        SQNoSpecular_0Background = planet.AddUIImage("SQNoSpecular_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SQNoSpecular_0Background = planet.AddUIImage("SQNoSpecular_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-330f, -100f));
-        SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -124,12 +125,12 @@ public class GeometryGUI
         int SQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 19, 21, 0);
 
         // Initialize Pipe Widget
-        SQ_0Background = planet.AddUIImage("SQ_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SQ_0Background = planet.AddUIImage("SQ_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SQ_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SQ_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-280f, -100f));
-        SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SQ_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         SQ_0 = planet.AddUIImage("SQ_0", SQ_0Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, SQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -138,12 +139,12 @@ public class GeometryGUI
         int SQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 21, 21, 0);
 
         // Initialize Pipe Widget
-        SQ_1Background = planet.AddUIImage("SQ_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SQ_1Background = planet.AddUIImage("SQ_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SQ_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SQ_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-280f, -50f));
-        SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SQ_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         SQ_1 = planet.AddUIImage("SQ_1", SQ_1Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, SQ_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -152,12 +153,12 @@ public class GeometryGUI
         int SQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 23, 21, 0);
 
         // Initialize Pipe Widget
-        SQ_2Background = planet.AddUIImage("SQ_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SQ_2Background = planet.AddUIImage("SQ_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SQ_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SQ_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-280f, 0f));
-        SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SQ_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         SQ_2 = planet.AddUIImage("SQ_2", SQ_2Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, SQ_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -166,12 +167,12 @@ public class GeometryGUI
         int SQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 25, 21, 0);
 
         // Initialize Pipe Widget
-        SQ_3Background = planet.AddUIImage("SQ_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SQ_3Background = planet.AddUIImage("SQ_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SQ_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SQ_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-280f, 50f));
-        SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SQ_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         SQ_3 = planet.AddUIImage("SQ_3", SQ_3Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, SQ_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -180,12 +181,12 @@ public class GeometryGUI
         int HSQNoSpecular_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 3, 0);
 
         // Initialize Pipe Widget
-        HSQNoSpecular_0Background = planet.AddUIImage("HSQNoSpecular_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQNoSpecular_0Background = planet.AddUIImage("HSQNoSpecular_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-230f, -100f));
-        HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         HSQNoSpecular_0 = planet.AddUIImage("HSQNoSpecular_0", HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, HSQNoSpecular_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -194,12 +195,12 @@ public class GeometryGUI
         int HSQNoSpecular_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 3, 0);
 
         // Initialize Pipe Widget
-        HSQNoSpecular_1Background = planet.AddUIImage("HSQNoSpecular_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQNoSpecular_1Background = planet.AddUIImage("HSQNoSpecular_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-230f, -50f));
-        HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         HSQNoSpecular_1 = planet.AddUIImage("HSQNoSpecular_1", HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, HSQNoSpecular_1ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -208,12 +209,12 @@ public class GeometryGUI
         int HSQNoSpecular_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 3, 0);
 
         // Initialize Pipe Widget
-        HSQNoSpecular_2Background = planet.AddUIImage("HSQNoSpecular_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQNoSpecular_2Background = planet.AddUIImage("HSQNoSpecular_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-230f, 0f));
-        HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         HSQNoSpecular_2 = planet.AddUIImage("HSQNoSpecular_2", HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, HSQNoSpecular_2ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -222,12 +223,12 @@ public class GeometryGUI
         int HSQNoSpecular_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 3, 0);
 
         // Initialize Pipe Widget
-        HSQNoSpecular_3Background = planet.AddUIImage("HSQNoSpecular_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQNoSpecular_3Background = planet.AddUIImage("HSQNoSpecular_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-230f, 50f));
-        HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         HSQNoSpecular_3 = planet.AddUIImage("HSQNoSpecular_3", HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, HSQNoSpecular_3ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -236,12 +237,12 @@ public class GeometryGUI
         int HSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 19, 19, 0);
 
         // Initialize Pipe Widget
-        HSQ_0Background = planet.AddUIImage("HSQ_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQ_0Background = planet.AddUIImage("HSQ_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQ_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQ_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-180f, -100f));
-        HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQ_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
         HSQ_0 = planet.AddUIImage("HSQ_0", HSQ_0Background.kGUIElementsImage.ImageWrapper.Transform, 32, 32, HSQ_0ID, 0, Vec2f.Zero, new Vec3f(0.8f, 0.8f, 0.8f), Enums.AtlasType.Gui);
@@ -250,12 +251,12 @@ public class GeometryGUI
         int HSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 21, 19, 0);
 
         // Initialize Pipe Widget
-        HSQ_1Background = planet.AddUIImage("HSQ_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQ_1Background = planet.AddUIImage("HSQ_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQ_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQ_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-180f, -50f));
-        HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQ_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -265,12 +266,12 @@ public class GeometryGUI
         int HSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 23, 19, 0);
 
         // Initialize Pipe Widget
-        HSQ_2Background = planet.AddUIImage("HSQ_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQ_2Background = planet.AddUIImage("HSQ_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQ_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQ_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-180f, 0f));
-        HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQ_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -280,12 +281,12 @@ public class GeometryGUI
         int HSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 25, 19, 0);
 
         // Initialize Pipe Widget
-        HSQ_3Background = planet.AddUIImage("HSQ_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        HSQ_3Background = planet.AddUIImage("HSQ_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HSQ_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HSQ_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-180f, 50f));
-        HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HSQ_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -295,12 +296,12 @@ public class GeometryGUI
         int SSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 10, 17, 0);
 
         // Initialize Pipe Widget
-        SSQ_0Background = planet.AddUIImage("SSQ_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SSQ_0Background = planet.AddUIImage("SSQ_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SSQ_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SSQ_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-130f, -100f));
-        SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SSQ_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -310,12 +311,12 @@ public class GeometryGUI
         int SSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 12, 17, 0);
 
         // Initialize Pipe Widget
-        SSQ_1Background = planet.AddUIImage("SSQ_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SSQ_1Background = planet.AddUIImage("SSQ_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SSQ_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SSQ_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-130f, -50f));
-        SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SSQ_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -325,12 +326,12 @@ public class GeometryGUI
         int SSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 14, 17, 0);
 
         // Initialize Pipe Widget
-        SSQ_2Background = planet.AddUIImage("SSQ_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SSQ_2Background = planet.AddUIImage("SSQ_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SSQ_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SSQ_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-130f, 0f));
-        SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SSQ_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -340,12 +341,12 @@ public class GeometryGUI
         int SSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 16, 17, 0);
 
         // Initialize Pipe Widget
-        SSQ_3Background = planet.AddUIImage("SSQ_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        SSQ_3Background = planet.AddUIImage("SSQ_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         SSQ_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         SSQ_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-130f, 50f));
-        SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         SSQ_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -355,12 +356,12 @@ public class GeometryGUI
         int TI_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 5, 0);
 
         // Initialize Pipe Widget
-        TI_0Background = planet.AddUIImage("TI_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        TI_0Background = planet.AddUIImage("TI_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         TI_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TI_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TI_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-80f, -100f));
-        TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TI_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -370,12 +371,12 @@ public class GeometryGUI
         int TI_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 5, 0);
 
         // Initialize Pipe Widget
-        TI_1Background = planet.AddUIImage("TI_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        TI_1Background = planet.AddUIImage("TI_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         TI_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TI_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TI_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-80f, -50f));
-        TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TI_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -385,12 +386,12 @@ public class GeometryGUI
         int TI_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 7, 0);
 
         // Initialize Pipe Widget
-        TI_2Background = planet.AddUIImage("TI_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
+        TI_2Background = planet.AddUIImage("TI_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png",
             Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
         TI_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TI_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TI_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-80f, 0f));
-        TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TI_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -400,12 +401,12 @@ public class GeometryGUI
         int TI_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 7, 0);
 
         // Initialize Pipe Widget
-        TI_3Background = planet.AddUIImage("TI_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        TI_3Background = planet.AddUIImage("TI_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         TI_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TI_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TI_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-80f, 50f));
-        TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TI_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -415,12 +416,12 @@ public class GeometryGUI
         int TO_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 5, 0);
 
         // Initialize Pipe Widget
-        TO_0Background = planet.AddUIImage("TO_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        TO_0Background = planet.AddUIImage("TO_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         TO_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TO_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TO_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-30f, -100f));
-        TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TO_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -430,12 +431,12 @@ public class GeometryGUI
         int TO_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 5, 0);
 
         // Initialize Pipe Widget
-        TO_1Background = planet.AddUIImage("TO_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        TO_1Background = planet.AddUIImage("TO_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         TO_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TO_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TO_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-30f, -50f));
-        TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TO_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -445,12 +446,12 @@ public class GeometryGUI
         int TO_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 7, 0);
 
         // Initialize Pipe Widget
-        TO_2Background = planet.AddUIImage("TO_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        TO_2Background = planet.AddUIImage("TO_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         TO_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TO_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TO_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-30f, 0f));
-        TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TO_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -460,12 +461,12 @@ public class GeometryGUI
         int TO_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 7, 0);
 
         // Initialize Pipe Widget
-        TO_3Background = planet.AddUIImage("TO_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        TO_3Background = planet.AddUIImage("TO_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         TO_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         TO_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         TO_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(-30f, 50f));
-        TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         TO_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -475,12 +476,12 @@ public class GeometryGUI
         int HTD_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 9, 0);
 
         // Initialize Pipe Widget
-        HTD_0Background = planet.AddUIImage("HTD_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        HTD_0Background = planet.AddUIImage("HTD_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HTD_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HTD_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(20f, -100f));
-        HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HTD_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -490,12 +491,12 @@ public class GeometryGUI
         int HTL_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 9, 0);
 
         // Initialize Pipe Widget
-        HTL_1Background = planet.AddUIImage("HTL_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        HTL_1Background = planet.AddUIImage("HTL_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HTL_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HTL_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(20f, -50f));
-        HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HTL_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -505,12 +506,12 @@ public class GeometryGUI
         int HTU_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 11, 0);
 
         // Initialize Pipe Widget
-        HTU_2Background = planet.AddUIImage("HTU_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        HTU_2Background = planet.AddUIImage("HTU_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HTU_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HTU_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(20f, 0f));
-        HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HTU_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -520,12 +521,12 @@ public class GeometryGUI
         int HTR_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 11, 0);
 
         // Initialize Pipe Widget
-        HTR_3Background = planet.AddUIImage("HTR_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        HTR_3Background = planet.AddUIImage("HTR_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         HTR_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         HTR_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(20f, 50f));
-        HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         HTR_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -535,12 +536,12 @@ public class GeometryGUI
         int RHTD_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 11, 0);
 
         // Initialize Pipe Widget
-        RHTD_0Background = planet.AddUIImage("RHTD_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RHTD_0Background = planet.AddUIImage("RHTD_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RHTD_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RHTD_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(70f, -100f));
-        RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RHTD_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -550,12 +551,12 @@ public class GeometryGUI
         int RHTL_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 11, 0);
 
         // Initialize Pipe Widget
-        RHTL_1Background = planet.AddUIImage("RHTL_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RHTL_1Background = planet.AddUIImage("RHTL_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RHTL_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RHTL_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(70f, -50f));
-        RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RHTL_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -565,12 +566,12 @@ public class GeometryGUI
         int RHTU_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 9, 0);
 
         // Initialize Pipe Widget
-        RHTU_2Background = planet.AddUIImage("RHTU_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RHTU_2Background = planet.AddUIImage("RHTU_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RHTU_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RHTU_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(70f, 0f));
-        RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RHTU_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -580,12 +581,12 @@ public class GeometryGUI
         int RHTR_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 9, 0);
 
         // Initialize Pipe Widget
-        RHTR_3Background = planet.AddUIImage("RHTR_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RHTR_3Background = planet.AddUIImage("RHTR_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RHTR_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RHTR_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(70f, 50f));
-        RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RHTR_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -595,12 +596,12 @@ public class GeometryGUI
         int CSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 13, 0);
 
         // Initialize Pipe Widget
-        CSQ_0Background = planet.AddUIImage("CSQ_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        CSQ_0Background = planet.AddUIImage("CSQ_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         CSQ_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         CSQ_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(120f, -100f));
-        CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         CSQ_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -610,12 +611,12 @@ public class GeometryGUI
         int CSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 13, 0);
 
         // Initialize Pipe Widget
-        CSQ_1Background = planet.AddUIImage("CSQ_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        CSQ_1Background = planet.AddUIImage("CSQ_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         CSQ_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         CSQ_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(120f, -50f));
-        CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         CSQ_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -625,12 +626,12 @@ public class GeometryGUI
         int CSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 1, 15, 0);
 
         // Initialize Pipe Widget
-        CSQ_2Background = planet.AddUIImage("CSQ_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        CSQ_2Background = planet.AddUIImage("CSQ_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         CSQ_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         CSQ_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(120f, 0f));
-        CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         CSQ_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -640,12 +641,12 @@ public class GeometryGUI
         int CSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 3, 15, 0);
 
         // Initialize Pipe Widget
-        CSQ_3Background = planet.AddUIImage("CSQ_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        CSQ_3Background = planet.AddUIImage("CSQ_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         CSQ_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         CSQ_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(120f, 50f));
-        CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         CSQ_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -655,12 +656,12 @@ public class GeometryGUI
         int RCSQ_0ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 13, 0);
 
         // Initialize Pipe Widget
-        RCSQ_0Background = planet.AddUIImage("RCSQ_0Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RCSQ_0Background = planet.AddUIImage("RCSQ_0Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(170f, -100f));
-        RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RCSQ_0Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -670,12 +671,12 @@ public class GeometryGUI
         int RCSQ_1ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 13, 0);
 
         // Initialize Pipe Widget
-        RCSQ_1Background = planet.AddUIImage("RCSQ_1Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RCSQ_1Background = planet.AddUIImage("RCSQ_1Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(170f, -50f));
-        RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RCSQ_1Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -685,12 +686,12 @@ public class GeometryGUI
         int RCSQ_2ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 5, 15, 0);
 
         // Initialize Pipe Widget
-        RCSQ_2Background = planet.AddUIImage("RCSQ_2Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RCSQ_2Background = planet.AddUIImage("RCSQ_2Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(170f, 0f));
-        RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RCSQ_2Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -700,12 +701,12 @@ public class GeometryGUI
         int RCSQ_3ID = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(TileSheet, 7, 15, 0);
 
         // Initialize Pipe Widget
-        RCSQ_3Background = planet.AddUIImage("RCSQ_3Background", GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
+        RCSQ_3Background = planet.AddUIImage("RCSQ_3Background", UnityEngine.GameObject.Find("Canvas").transform, "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", Vec2f.Zero, new Vec3f(0.4f, 0.4f, 0.4f), 225, 225);
 
         RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageMidBottom();
         RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetScale(new UnityEngine.Vector3(0.3f, 0.3f, 0.3f));
         RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetPosition(new UnityEngine.Vector3(170f, 50f));
-        RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
         RCSQ_3Background.kGUIElementsImage.ImageWrapper.GameObject.SetActive(false);
 
 
@@ -786,7 +787,7 @@ public class GeometryGUI
                     item.itemTile.InputsActive = true;
             }
 
-            if(Input.GetKeyDown(KeyCode.Mouse0))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
             {
                 if(SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.IsMouseOver(GameState.GUIManager.CursorPosition))
                 {
@@ -796,7 +797,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.SB_R0_Metal;
                             ResetColors();
-                            SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -809,7 +810,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.FP_R0_Metal;
                             ResetColors();
 
-                            SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -821,7 +822,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.FP_R1_Metal;
                             ResetColors();
-                            SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
 
                         }
                     }
@@ -834,7 +835,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.FP_R2_Metal;
                             ResetColors();
-                            SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -846,7 +847,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.FP_R3_Metal;
                             ResetColors();
-                            SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -858,7 +859,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HB_R0_Metal;
                             ResetColors();
-                            HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -870,7 +871,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HB_R1_Metal;
                             ResetColors();
-                            HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
 
                     }
@@ -883,7 +884,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HB_R2_Metal;
                             ResetColors();
-                            HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -895,7 +896,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HB_R3_Metal;
                             ResetColors();
-                            HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -907,7 +908,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HP_R0_Metal;
                             ResetColors();
-                            HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -919,7 +920,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HP_R1_Metal;
                             ResetColors();
-                            HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -931,7 +932,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HP_R2_Metal;
                             ResetColors();
-                            HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -943,7 +944,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.HP_R3_Metal;
                             ResetColors();
-                            HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -955,7 +956,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.QP_R0_Metal;
                             ResetColors();
-                            SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -967,7 +968,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.QP_R1_Metal;
                             ResetColors();
-                            SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -979,7 +980,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.QP_R2_Metal;
                             ResetColors();
-                            SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -991,7 +992,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.QP_R3_Metal;
                             ResetColors();
-                            SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1003,7 +1004,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R0_Metal;
                             ResetColors();
-                            TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1015,7 +1016,7 @@ public class GeometryGUI
                         {
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R1_Metal;
                             ResetColors();
-                            TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1028,7 +1029,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R4_Metal;
                             ResetColors();
 
-                            TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1041,7 +1042,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R5_Metal;
                             ResetColors();
 
-                            TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1054,7 +1055,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R6_Metal;
                             ResetColors();
 
-                            TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1067,7 +1068,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R7_Metal;
                             ResetColors();
 
-                            TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1080,7 +1081,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R2_Metal;
                             ResetColors();
 
-                            TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1093,7 +1094,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.TB_R3_Metal;
                             ResetColors();
 
-                            TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1106,7 +1107,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R0_Metal;
                             ResetColors();
 
-                            HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1119,7 +1120,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R1_Metal;
                             ResetColors();
 
-                            HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1132,7 +1133,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R2_Metal;
                             ResetColors();
 
-                            HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1145,7 +1146,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R3_Metal;
                             ResetColors();
 
-                            HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1158,7 +1159,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R4_Metal;
                             ResetColors();
 
-                            RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1171,7 +1172,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R5_Metal;
                             ResetColors();
 
-                            RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
 
                         }
                     }
@@ -1185,7 +1186,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R6_Metal;
                             ResetColors();
 
-                            RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1198,7 +1199,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L1_R7_Metal;
                             ResetColors();
 
-                            RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1211,7 +1212,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R0_Metal;
                             ResetColors();
 
-                            CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1224,7 +1225,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R1_Metal;
                             ResetColors();
 
-                            CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1237,7 +1238,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R2_Metal;
                             ResetColors();
 
-                            CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1250,7 +1251,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R3_Metal;
                             ResetColors();
 
-                            CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1263,7 +1264,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R4_Metal;
                             ResetColors();
 
-                            RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1276,7 +1277,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R5_Metal;
                             ResetColors();
 
-                            RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1289,7 +1290,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R6_Metal;
                             ResetColors();
 
-                            RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1302,7 +1303,7 @@ public class GeometryGUI
                             item.itemTile.TileID = Enums.Tile.TileID.L2_R7_Metal;
                             ResetColors();
 
-                            RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.red);
+                            RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.red);
                         }
                     }
                 }
@@ -1483,46 +1484,46 @@ public class GeometryGUI
 
     private void ResetColors()
     {
-        SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
-        RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(Color.yellow);
+        SQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQNoSpecular_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQNoSpecular_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQNoSpecular_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQNoSpecular_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        SSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TI_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TI_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TI_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TI_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TO_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TO_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TO_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        TO_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        HTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RHTD_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RHTL_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RHTU_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RHTR_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        CSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        CSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        CSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        CSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RCSQ_0Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RCSQ_1Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RCSQ_2Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
+        RCSQ_3Background.kGUIElementsImage.ImageWrapper.SetImageColor(UnityEngine.Color.yellow);
     }
 }

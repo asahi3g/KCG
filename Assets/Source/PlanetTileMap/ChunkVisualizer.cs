@@ -1,5 +1,4 @@
 using Enums.Tile;
-using UnityEngine;
 
 namespace PlanetTileMap
 {
@@ -18,19 +17,19 @@ namespace PlanetTileMap
                 {
                     // If chunk is empty/air make it black
                     if (tileMap.GetFrontTileID(x, y) == TileID.Air)
-                        Gizmos.color = Color.black;
+                        UnityEngine.Gizmos.color = UnityEngine.Color.black;
                     if (tileMap.GetFrontTileID(x, y) != TileID.Air)
-                        Gizmos.color = Color.green;
+                        UnityEngine.Gizmos.color = UnityEngine.Color.green;
                     if (tileMap.GetBackTileID(x, y) != TileID.Air)
-                        Gizmos.color = Color.cyan;
+                        UnityEngine.Gizmos.color = UnityEngine.Color.cyan;
                     if (tileMap.GetMidTileID(x, y) != TileID.Air)
-                        Gizmos.color = Color.yellow;
+                        UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
 
                     if (!Utility.ObjectMesh.isOnScreen(x, y))
-                        Gizmos.color = Color.blue;
+                        UnityEngine.Gizmos.color = UnityEngine.Color.blue;
 
                     // Draw colored cubes to the editor display (Debug)
-                    Gizmos.DrawCube(new Vector3(x + xOffset, y + yOffset), new Vector3(1, 1));
+                    UnityEngine.Gizmos.DrawCube(new UnityEngine.Vector3(x + xOffset, y + yOffset), new UnityEngine.Vector3(1, 1));
                 }
             }
         }

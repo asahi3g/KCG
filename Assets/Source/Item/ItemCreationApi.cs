@@ -1,10 +1,12 @@
-﻿using System;
+﻿//imports UnityEngine
+
+using System;
 using Enums;
 using Enums.Tile;
 using KGUI;
 using KMath;
 using Mech;
-using UnityEngine;
+
 
 /*
     How To use it:
@@ -360,7 +362,7 @@ namespace Item
 #if DEBUG
             if (itemType == ItemType.Error)
             {
-                Debug.Log("Not valid ItemType");
+                UnityEngine.Debug.Log("Not valid ItemType");
                 Utils.Assert(false);
             }
 #endif

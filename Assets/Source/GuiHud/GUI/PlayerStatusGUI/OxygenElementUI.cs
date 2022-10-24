@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using KGUI.Elements;
 using UnityEngine.UI;
 using Text = KGUI.Elements.Text;
@@ -8,7 +9,7 @@ namespace KGUI
 {
     public class OxygenElementUI : UIElement
     {
-        [SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float oxygenAmount;
@@ -46,36 +47,36 @@ namespace KGUI
         
         public override void OnMouseClick()
         {
-            Debug.LogWarning("Oxygen Bar Clicked");
+            UnityEngine.Debug.LogWarning("Oxygen Bar Clicked");
         }
         
         public override void OnMouseEntered()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Enter");
+            UnityEngine.Debug.LogWarning("Oxygen Bar Mouse Enter");
             
             if (oxygenAmount < 50)
             {
                 infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", transform, 2.0f);
-                infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoText.SetPosition(new UnityEngine.Vector3(260.0f, 0, 0));
             }
             else
             {
                 infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", transform, 2.0f);
-                infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(260.0f, 0, 0));
+                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoText.SetPosition(new UnityEngine.Vector3(260.0f, 0, 0));
             }
 
         }
         
         public override void OnMouseStay()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Stay");
+            UnityEngine.Debug.LogWarning("Oxygen Bar Mouse Stay");
         }
         
         public override void OnMouseExited()
         {
-            Debug.LogWarning("Oxygen Bar Mouse Exit");
+            UnityEngine.Debug.LogWarning("Oxygen Bar Mouse Exit");
             infoText.StartLifeTime = true;
         }
     }

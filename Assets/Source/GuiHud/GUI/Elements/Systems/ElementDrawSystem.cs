@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using KMath;
-
 namespace KGUI.Elements
 {
     public class ElementDrawSystem

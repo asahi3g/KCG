@@ -1,4 +1,6 @@
-using UnityEngine;
+//imports UnityEngine
+
+
 using Enums.Tile;
 using KMath;
 using Item;
@@ -7,11 +9,11 @@ using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class DropShipTestScript : MonoBehaviour
+    class DropShipTestScript : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
-        [SerializeField]
+        [UnityEngine.SerializeField]
         private bool enableGeometryPlacementTool;
 
         public PlanetState Planet;
@@ -37,7 +39,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             Planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
@@ -56,7 +58,7 @@ namespace Planet.Unity
             // Draw HUD
             Planet.DrawHUD(Player);
 
-            if (Event.current.type != EventType.Repaint)
+            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
             // Draw Statistics
@@ -68,15 +70,15 @@ namespace Planet.Unity
             Planet.DrawDebug();
 
             // Set the color of gizmos
-            Gizmos.color = Color.green;
+            UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
             // Draw a cube around the map
             if (Planet.TileMap != null)
-                Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
-            Gizmos.color = Color.yellow;
+            UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
             CircleSmoke.DrawGizmos();
-            Gizmos.color = Color.red;
+            UnityEngine.Gizmos.color = UnityEngine.Color.red;
 
             // Draw lines around player if out of bounds
             if (Player != null)
@@ -85,16 +87,16 @@ namespace Planet.Unity
                     // Out of bounds
 
                     // X+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -104,7 +106,7 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
-            Application.targetFrameRate = 60;
+            UnityEngine.Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
 

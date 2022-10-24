@@ -1,5 +1,4 @@
 ﻿using KMath;
-using UnityEngine;
 
 namespace LootDrop
 {

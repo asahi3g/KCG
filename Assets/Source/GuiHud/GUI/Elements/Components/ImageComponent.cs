@@ -1,8 +1,7 @@
+// Imports UnityEngine
+
 using Entitas;
-using UnityEngine;
 using KMath;
-using Entitas.CodeGeneration.Attributes;
-using Enums;
 
 namespace KGUI.Elements
 {
@@ -10,7 +9,7 @@ namespace KGUI.Elements
     public class ImageComponent : IComponent
     {
         public string Name;
-        public Sprite Sprite;
+        public UnityEngine.Sprite Sprite;
         public ImageWrapper ImageWrapper;
         public Vec3f Scale;
         public int Width;

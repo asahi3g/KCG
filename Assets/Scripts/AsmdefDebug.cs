@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Compilation;
-using UnityEngine;
+
 
 /// <summary>
 /// https://gist.github.com/karljj1/9c6cce803096b5cd4511cf0819ff517b
@@ -86,8 +86,8 @@ public class AsmdefDebug
             var totalTimeSeconds = totalCompilationTimeSeconds + time.TotalSeconds;
             if (!string.IsNullOrEmpty(compilationTimes))
             {
-                Debug.Log($"Editor Game Loading Time: {totalTimeSeconds:F2} seconds\n");
-                Debug.Log($"Compilation Report: {totalTimeSeconds:F2} seconds\n" + compilationTimes + "Assembly Reload Time: " + time.TotalSeconds + "s\n");
+                UnityEngine.Debug.Log($"Editor Game Loading Time: {totalTimeSeconds:F2} seconds\n");
+                UnityEngine.Debug.Log($"Compilation Report: {totalTimeSeconds:F2} seconds\n" + compilationTimes + "Assembly Reload Time: " + time.TotalSeconds + "s\n");
             }
         }
     }

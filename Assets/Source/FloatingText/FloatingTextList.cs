@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Entitas;
-
 namespace FloatingText
 {
     public class FloatingTextList

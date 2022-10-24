@@ -1,7 +1,8 @@
+//import UnityEngine
+
 using Physics;
 using System;
 using KMath;
-using UnityEngine;
 using Enums;
 
 namespace Agent
@@ -157,7 +158,7 @@ namespace Agent
         public void Update(AgentContext agentContext)
         {
 
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in EntitiesWithVelocity)
             {

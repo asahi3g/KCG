@@ -1,11 +1,7 @@
-using UnityEngine;
+//imports UnityEngine
 
 namespace KGui
 {
-
-
-
-
     public class CharacterDisplay
     {
 
@@ -74,7 +70,7 @@ namespace KGui
                 float marginX = 4.0f;
                 float marginY = 2.0f;
 
-                Color backgroundColor = new Color(0.75f, 0.75f, 0.75f, 0.75f);
+                UnityEngine.Color backgroundColor = new UnityEngine.Color(0.75f, 0.75f, 0.75f, 0.75f);
 
                 GameState.Renderer.DrawQuadColorGui(x, y, width, height, backgroundColor);
 

@@ -1,5 +1,6 @@
-﻿using Enums;
-using UnityEngine;
+﻿//imports UnityEngine
+
+using Enums;
 using KMath;
 
 namespace Node.Action
@@ -63,9 +64,9 @@ namespace Node.Action
                 }
 
                 var itemDrawPosition2D = itemEntity.itemDrawPosition2D;
-                itemDrawPosition2D.Acceleration = (agentCenterPos - itemCenterPos).Normalized * 5.0f * Time.deltaTime;
+                itemDrawPosition2D.Acceleration = (agentCenterPos - itemCenterPos).Normalized * 5.0f * UnityEngine.Time.deltaTime;
                 itemDrawPosition2D.Velocity += itemDrawPosition2D.Acceleration;
-                itemDrawPosition2D.Position += itemDrawPosition2D.Velocity * Time.deltaTime;
+                itemDrawPosition2D.Position += itemDrawPosition2D.Velocity * UnityEngine.Time.deltaTime;
             }
         }
     }

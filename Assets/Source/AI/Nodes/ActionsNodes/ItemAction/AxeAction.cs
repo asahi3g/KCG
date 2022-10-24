@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using KMath;
 using Enums;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -38,14 +39,14 @@ namespace Node
                                 }
 
                                 planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
-                                planet.AddParticleEmitter(mech.mechPosition2D.Value + Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
-                                planet.AddParticleEmitter(mech.mechPosition2D.Value + Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
+                                planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
+                                planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
 
                                 mech.mechStatus.Health -= 20;
 
                                 if (mech.mechStatus.TreeSize > 0)
                                 {
-                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
+                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + UnityEngine.Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
                                 }
 
                             }

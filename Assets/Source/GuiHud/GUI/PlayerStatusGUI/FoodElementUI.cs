@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using KGUI.Elements;
 using KMath;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ namespace KGUI
 {
     public class FoodElementUI : UIElement
     {
-        [SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float foodAmount;
@@ -47,34 +48,34 @@ namespace KGUI
 
         public override void OnMouseClick()
         {
-            Debug.LogWarning("Food Bar Clicked");
+            UnityEngine.Debug.LogWarning("Food Bar Clicked");
         }
         public override void OnMouseEntered()
         {
-            Debug.LogWarning("Food Bar Mouse Enter");
+            UnityEngine.Debug.LogWarning("Food Bar Mouse Enter");
             
             if (foodAmount < 50)
             {
                 infoText.Create("Food Indicator", "Hunger Bar\nStatus: Low", transform, 2.0f);
-                infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoText.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
                 infoText.Draw();
             }
             else 
             {
                 infoText.Create("Food DeIndicator", "Hunger Bar\nStatus: Normal", transform, 2.0f);
-                infoText.SetSizeDelta(new Vector2(250, 50));
-                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoText.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
                 infoText.Draw();
             }
         }
         public override void OnMouseStay()
         {
-            Debug.LogWarning("Food Bar Mouse Stay");
+            UnityEngine.Debug.LogWarning("Food Bar Mouse Stay");
         }
         public override void OnMouseExited()
         {
-            Debug.LogWarning("Food Bar Mouse Exit");
+            UnityEngine.Debug.LogWarning("Food Bar Mouse Exit");
 
             infoText.StartLifeTime = true;
         }

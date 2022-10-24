@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+//import UnityEngine
+
 
 namespace Mech
 {
@@ -11,7 +7,7 @@ namespace Mech
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("MechsGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Mech), drawOrder);
@@ -28,7 +24,7 @@ namespace Mech
                 int spriteId = entity.mechSprite2D.SpriteId;
 
                 //#397; TEMP ATLAS TYPE AGENT; SHOULD BE MECH
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Mech).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Mech).TextureCoords;
 
                 var x = entity.mechPosition2D.Value.X;
                 var y = entity.mechPosition2D.Value.Y;

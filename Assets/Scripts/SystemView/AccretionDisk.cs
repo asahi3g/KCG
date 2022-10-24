@@ -1,11 +1,10 @@
-using System;
-using System.Threading;
-using UnityEngine;
+//imports UnityEngine
+
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class AccretionDisk : MonoBehaviour {
+        public class AccretionDisk : UnityEngine.MonoBehaviour {
             public int            seed;
             public int            layers;
             public int            width;
@@ -16,10 +15,10 @@ namespace Scripts {
             public float          swirl;
             public float          spin;             // Angular velocity in degrees/second
             public float          brightness;
-            public Vector3        center;           // Center point to spin around
+            public UnityEngine.Vector3        center;           // Center point to spin around
 
-            public Texture2D      texture;
-            public SpriteRenderer renderer;
+            public UnityEngine.Texture2D      texture;
+            public UnityEngine.SpriteRenderer renderer;
 
             private System.Random rng;
 
@@ -29,9 +28,9 @@ namespace Scripts {
 
                 rng = new(seed);
 
-                Color[] pixels    = new Color[width * height];
+                UnityEngine.Color[] pixels    = new UnityEngine.Color[width * height];
 
-                for(int i = 0; i < width * height; i++) pixels[i] = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                for(int i = 0; i < width * height; i++) pixels[i] = new UnityEngine.Color(0.0f, 0.0f, 0.0f, 0.0f);
 
                 float[] base_alpha = ProceduralImages.generate_noise(rng, 1.0f,             width / 64, height / 64);
                         base_alpha = ProceduralImages.smoothen_noise(base_alpha,            width / 64, height / 64, 64);
@@ -126,8 +125,8 @@ namespace Scripts {
                         pixels[i].a *= opacity;
                     }
 
-                texture = new Texture2D(width, height);
-                texture.filterMode = FilterMode.Trilinear;
+                texture = new UnityEngine.Texture2D(width, height);
+                texture.filterMode = UnityEngine.FilterMode.Trilinear;
                 texture.SetPixels(pixels);
                 texture.Apply();
 
@@ -136,18 +135,18 @@ namespace Scripts {
             private void Start() {
                 generate();
 
-                renderer        = gameObject.AddComponent<SpriteRenderer>();
-                last_time       = Time.time;
+                renderer        = gameObject.AddComponent<UnityEngine.SpriteRenderer>();
+                last_time       = UnityEngine.Time.time;
 
-                renderer.sprite = Sprite.Create(texture,
-                                                new Rect(0, 0, width, height),
-                                                new Vector2(0.5f, 0.5f));
+                renderer.sprite = UnityEngine.Sprite.Create(texture,
+                                                new UnityEngine.Rect(0, 0, width, height),
+                                                new UnityEngine.Vector2(0.5f, 0.5f));
             }
 
             private void Update() {
-                renderer.transform.RotateAround(center, new Vector3(0.0f, 0.0f, 1.0f), -spin * (Time.time - last_time));
+                renderer.transform.RotateAround(center, new UnityEngine.Vector3(0.0f, 0.0f, 1.0f), -spin * (UnityEngine.Time.time - last_time));
 
-                last_time = Time.time;
+                last_time = UnityEngine.Time.time;
             }
         }
     }

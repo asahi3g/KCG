@@ -1,24 +1,25 @@
+//imports UnityEngine
+
 using System;
-using UnityEngine;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class Nebula : MonoBehaviour {
+        public class Nebula : UnityEngine.MonoBehaviour {
             public int            seed;
             public int            layers;
-            public Color          basecolor;
-            public Color[]        colors;
+            public UnityEngine.Color          basecolor;
+            public UnityEngine.Color[]        colors;
             public int            width;
             public int            height;
             public float          opacity;
             public float          contrast;
             public float          cutoff;           // Also sometimes called black level
             public float          spin;             // Angular velocity in degrees/second
-            public Vector3        center;           // Center position to spin around
+            public UnityEngine.Vector3        center;           // Center position to spin around
 
-            public Texture2D      texture;
-            public SpriteRenderer renderer;
+            public UnityEngine.Texture2D      texture;
+            public UnityEngine.SpriteRenderer renderer;
 
             public bool           pixelate;
             public int            pixelation_size;
@@ -26,35 +27,35 @@ namespace Scripts {
             private System.Random rng;
             private float         last_time;
 
-            public  ComputeShader         blur_noise_shader;
-            public  ComputeShader        scale_noise_shader;
-            public  ComputeShader exponential_filter_shader;
-            public  ComputeShader         distortion_shader;
-            public  ComputeShader      circular_blur_shader;
-            public  ComputeShader      circular_mask_shader;
-            public  ComputeShader           pixelate_shader;
+            public UnityEngine.ComputeShader         blur_noise_shader;
+            public  UnityEngine.ComputeShader        scale_noise_shader;
+            public  UnityEngine.ComputeShader exponential_filter_shader;
+            public  UnityEngine.ComputeShader         distortion_shader;
+            public  UnityEngine.ComputeShader      circular_blur_shader;
+            public  UnityEngine.ComputeShader      circular_mask_shader;
+            public  UnityEngine.ComputeShader           pixelate_shader;
 
             private void generate() {
                 // Shaders properties
-                int      width_id = Shader.PropertyToID("width");
-                int     height_id = Shader.PropertyToID("height");
-                int      noise_id = Shader.PropertyToID("noise");
-                int      scale_id = Shader.PropertyToID("scale");
-                int   strength_id = Shader.PropertyToID("strength");
-                int     radius_id = Shader.PropertyToID("radius");
-                int distortion_id = Shader.PropertyToID("distortionnoise");
-                int     output_id = Shader.PropertyToID("outputnoise");
-                int    sharpen_id = Shader.PropertyToID("sharpen");
+                int      width_id = UnityEngine.Shader.PropertyToID("width");
+                int     height_id = UnityEngine.Shader.PropertyToID("height");
+                int      noise_id = UnityEngine.Shader.PropertyToID("noise");
+                int      scale_id = UnityEngine.Shader.PropertyToID("scale");
+                int   strength_id = UnityEngine.Shader.PropertyToID("strength");
+                int     radius_id = UnityEngine.Shader.PropertyToID("radius");
+                int distortion_id = UnityEngine.Shader.PropertyToID("distortionnoise");
+                int     output_id = UnityEngine.Shader.PropertyToID("outputnoise");
+                int    sharpen_id = UnityEngine.Shader.PropertyToID("sharpen");
                 
                 rng = new(seed);
 
-                Color[] pixels    = new Color[width * height];
+                UnityEngine.Color[] pixels    = new UnityEngine.Color[width * height];
 
-                for(int i = 0; i < width * height; i++) pixels[i] = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                for(int i = 0; i < width * height; i++) pixels[i] = new UnityEngine.Color(0.0f, 0.0f, 0.0f, 0.0f);
 
                 // Generate base noise
-                ComputeBuffer base_buffer1 = new ComputeBuffer(width * height, sizeof(float));  
-                ComputeBuffer base_buffer2 = new ComputeBuffer(width * height / 4096, sizeof(float));
+                UnityEngine.ComputeBuffer base_buffer1 = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
+                UnityEngine.ComputeBuffer base_buffer2 = new UnityEngine.ComputeBuffer(width * height / 4096, sizeof(float));
 
                 base_buffer2.SetData(ProceduralImages.generate_noise(rng, 1.0f, width / 64, height / 64));
                     
@@ -70,10 +71,10 @@ namespace Scripts {
 
                 // Generate distortion noise
                 base_buffer2.Release();
-                base_buffer2 = new ComputeBuffer(width * height / 1024, sizeof(float));
+                base_buffer2 = new UnityEngine.ComputeBuffer(width * height / 1024, sizeof(float));
                 base_buffer2.SetData(ProceduralImages.generate_noise(rng, 1.0f, width / 32, height / 32));
 
-                ComputeBuffer distortion_buffer = new ComputeBuffer(width * height, sizeof(float));
+                UnityEngine.ComputeBuffer distortion_buffer = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
 
                 // Scale distortion noise
                 scale_noise_shader.SetInt( width_id, width);
@@ -88,7 +89,7 @@ namespace Scripts {
                 base_buffer2.Release();
 
                 // Apply distortion
-                base_buffer2 = new ComputeBuffer(width * height, sizeof(float));
+                base_buffer2 = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
 
                 distortion_shader.SetInt( width_id, width);
                 distortion_shader.SetInt(height_id, height);
@@ -159,16 +160,16 @@ namespace Scripts {
 
                 float max_dist = Tools.get_distance(0, 0, width, height);
 
-                foreach(Color color in colors) {
+                foreach(UnityEngine.Color color in colors) {
                     float[] alpha = new float[width * height];
-                    ComputeBuffer color_buffer1 = new ComputeBuffer(width * height, sizeof(float));
+                    UnityEngine.ComputeBuffer color_buffer1 = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
 
                     for(int layer = 0; layer < layers; layer++) {
 
                         int   scale         = 1 << layers - layer - 1;
                         float strength      = scale / layers;
 
-                        ComputeBuffer layer_buffer = new ComputeBuffer(width / scale * height / scale, sizeof(float));
+                        UnityEngine.ComputeBuffer layer_buffer = new UnityEngine.ComputeBuffer(width / scale * height / scale, sizeof(float));
 
                         // Generate random noise
                         layer_buffer.SetData(ProceduralImages.generate_noise(rng, strength, width / scale, height / scale));
@@ -207,11 +208,11 @@ namespace Scripts {
                     color_buffer1.SetData(ProceduralImages.mask(rng, alpha, 8, width, height));
 
                     // Generate distortion noise
-                    ComputeBuffer color_buffer2 = new ComputeBuffer(width * height / 4096, sizeof(float));
+                    UnityEngine.ComputeBuffer color_buffer2 = new UnityEngine.ComputeBuffer(width * height / 4096, sizeof(float));
                     color_buffer2.SetData(ProceduralImages.generate_noise(rng, 1.0f, width / 64, height / 64));
 
                     // Scale distortion noise
-                    ComputeBuffer distortion_noise = new ComputeBuffer(width * height, sizeof(float));
+                    UnityEngine.ComputeBuffer distortion_noise = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
 
                     scale_noise_shader.SetInt( width_id, width);
                     scale_noise_shader.SetInt(height_id, height);
@@ -225,7 +226,7 @@ namespace Scripts {
                     color_buffer2.Release();
 
                     // Apply distortion
-                    color_buffer2 = new ComputeBuffer(width * height, sizeof(float));
+                    color_buffer2 = new UnityEngine.ComputeBuffer(width * height, sizeof(float));
 
                     distortion_shader.SetInt( width_id, width);
                     distortion_shader.SetInt(height_id, height);
@@ -309,8 +310,8 @@ namespace Scripts {
                     pixels[i].a *= opacity;
                 }
 
-                texture = new Texture2D(width, height);
-                texture.filterMode = FilterMode.Trilinear;
+                texture = new UnityEngine.Texture2D(width, height);
+                texture.filterMode = UnityEngine.FilterMode.Trilinear;
                 texture.SetPixels(pixels);
                 texture.Apply();
 
@@ -319,21 +320,21 @@ namespace Scripts {
             private void Start() {
                 generate();
 
-                renderer        = gameObject.AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprite.Create(texture,
-                                                new Rect(0, 0, width, height),
-                                                new Vector2(0.5f, 0.5f));
+                renderer        = gameObject.AddComponent<UnityEngine.SpriteRenderer>();
+                renderer.sprite = UnityEngine.Sprite.Create(texture,
+                                                new UnityEngine.Rect(0, 0, width, height),
+                                                new UnityEngine.Vector2(0.5f, 0.5f));
 
-                renderer.transform.Translate(new Vector3(0.0f, 0.0f, renderer.transform.position.z + 5.0f));
+                renderer.transform.Translate(new UnityEngine.Vector3(0.0f, 0.0f, renderer.transform.position.z + 5.0f));
 
-                last_time = Time.time;
+                last_time = UnityEngine.Time.time;
             }
 
             private void Update() {
-                float current_time = Time.time - last_time;
-                      last_time    = Time.time;
+                float current_time = UnityEngine.Time.time - last_time;
+                      last_time    = UnityEngine.Time.time;
 
-                renderer.transform.RotateAround(center, new Vector3(0.0f, 0.0f, 1.0f), -current_time * spin);
+                renderer.transform.RotateAround(center, new UnityEngine.Vector3(0.0f, 0.0f, 1.0f), -current_time * spin);
             }
         }
     }

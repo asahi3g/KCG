@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Utils
 {
 
@@ -9,7 +7,7 @@ public class Utils
 
         if (!condition)
         {
-            Application.Quit();
+            UnityEngine.Application.Quit();
         }
     }
 }

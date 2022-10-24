@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 using KMath;
 
 namespace Particle
@@ -25,13 +26,13 @@ namespace Particle
 
             ParticleContext context = planetState.EntitasContext.particle;
 
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             IGroup<ParticleEntity> entities = context.GetGroup(ParticleMatcher.ParticleEmitterState);
             foreach (var gameEntity in entities)
             {
                 var state = gameEntity.particleEmitterState;
                 var position = gameEntity.particleEmitter2dPosition;
-                state.Duration -= Time.deltaTime;
+                state.Duration -= UnityEngine.Time.deltaTime;
                 ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)state.ParticleEmitterType);
                 ParticleProperties particleProperties = 
@@ -70,7 +71,7 @@ namespace Particle
                     }
                     else
                     {
-                        state.CurrentTime -= Time.deltaTime;
+                        state.CurrentTime -= UnityEngine.Time.deltaTime;
                     }
 
                     gameEntity.ReplaceParticleEmitterState(state.ParticleType, state.ParticleEmitterType,

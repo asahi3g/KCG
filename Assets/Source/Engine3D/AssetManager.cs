@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Animancer;
-using UnityEngine;
 using System;
 
 namespace Engine3D
@@ -45,20 +46,20 @@ namespace Engine3D
             LoadMaterials();
             LoadAnimations();
             LoadModels();
-            Debug.Log("3d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+            UnityEngine.Debug.Log("3d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
 
-        public ref AnimationClip GetAnimationClip(AnimationType animationType)
+        public ref UnityEngine.AnimationClip GetAnimationClip(AnimationType animationType)
         {
             return ref AnimationLoader.GetAnimationClip(animationType);
         }
 
-        public ref GameObject GetModel(ModelType modelType)
+        public ref UnityEngine.GameObject GetModel(ModelType modelType)
         {
             return ref ModelLoader.GetModel(modelType);
         }
 
-        public ref Material GetMaterial(MaterialType materialType)
+        public ref UnityEngine.Material GetMaterial(MaterialType materialType)
         {
             return ref MaterialLoader.GetMaterial(materialType);
         }

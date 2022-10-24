@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using System.Collections.Generic;
 using KMath;
 
@@ -15,10 +16,10 @@ namespace Planet.Unity
     // there will be things like rendering, collision, TileMap
     // that are not supposed to be here.
 
-    class ParticlesTest : MonoBehaviour
+    class ParticlesTest : UnityEngine.MonoBehaviour
     {
         //public string TileMap = "Moonbunker/Moon Bunker.tmx";
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         /**public static string BaseDir => Application.streamingAssetsPath;
 

@@ -1,4 +1,5 @@
-using UnityEngine;
+//import UnityEngine
+
 using KMath;
 
 namespace TGen
@@ -20,11 +21,11 @@ namespace TGen
             if(x >= 0 && x < GridTiles.GetLength(0) && y >= 0 && y < GridTiles.GetLength(1))
             {
                 GridTiles[x, y].TileIsoType = isotype;
-                Debug.Log(string.Format("Placed tile {0} at ({1}, {2})", ((BlockTypeAndRotation)isotype).ToString(), x.ToString(), y.ToString()));
+                UnityEngine.Debug.Log(string.Format("Placed tile {0} at ({1}, {2})", ((BlockTypeAndRotation)isotype).ToString(), x.ToString(), y.ToString()));
             }
             else
             {
-                Debug.LogError(string.Format("Position ({0}, {1}) out of range", x, y));
+                UnityEngine.Debug.LogError(string.Format("Position ({0}, {1}) out of range", x, y));
             }
         }
 

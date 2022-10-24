@@ -1,4 +1,5 @@
-using UnityEngine;
+//import UnityEngine
+
 using Enums.Tile;
 using KMath;
 using Item;
@@ -7,11 +8,11 @@ using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class GeometryTestSceneScript : MonoBehaviour
+    class GeometryTestSceneScript : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
-        [SerializeField]
+        [UnityEngine.SerializeField]
         private bool enableGeometryPlacementTool;
 
         public PlanetState Planet;
@@ -47,7 +48,7 @@ namespace Planet.Unity
                     ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
                     if (itemProperty.IsTool())
                     {
-                        if (Input.GetKeyDown(KeyCode.Mouse0))
+                        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
                         {
                             if (!Inventory.InventorySystemsState.MouseDown)
                                 GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, itemProperty.ToolActionType,
@@ -56,7 +57,7 @@ namespace Planet.Unity
                     }
                 }
 
-                Planet.Update(Time.deltaTime, Material, transform);
+                Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
                 Planet.DrawHUD(Player);
 
                 if (enableGeometryPlacementTool)
@@ -76,7 +77,7 @@ namespace Planet.Unity
             // Draw HUD
             Planet.DrawHUD(Player);
 
-            if (Event.current.type != EventType.Repaint)
+            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
             // Draw Statistics
@@ -86,15 +87,15 @@ namespace Planet.Unity
         private void OnDrawGizmos()
         {
             // Set the color of gizmos
-            Gizmos.color = Color.green;
+            UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
             // Draw a cube around the map
             if (Planet.TileMap != null)
-                Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
-            Gizmos.color = Color.yellow;
+            UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
             CircleSmoke.DrawGizmos();
-            Gizmos.color = Color.red;
+            UnityEngine.Gizmos.color = UnityEngine.Color.red;
 
             // Draw lines around player if out of bounds
             if (Player != null)
@@ -103,16 +104,16 @@ namespace Planet.Unity
                     // Out of bounds
 
                     // X+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -123,7 +124,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            Application.targetFrameRate = 60;
+            UnityEngine.Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
 
@@ -382,8 +383,8 @@ namespace Planet.Unity
             tileMap.SetFrontTile(14, 4, TileID.Platform);
             tileMap.SetFrontTile(16, 4, TileID.Platform);
 
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+            var camera = UnityEngine.Camera.main;
+            UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2, camera.nearClipPlane));
 
             tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);

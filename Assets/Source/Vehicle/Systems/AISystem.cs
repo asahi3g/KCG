@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Entitas;
 using System.Collections;
 using KMath;
@@ -159,7 +160,7 @@ namespace Vehicle
             }
             else if(vehicle.vehicleType.Type == VehicleType.Jet)
             {
-                vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * Time.deltaTime;
+                vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * UnityEngine.Time.deltaTime;
 
                 CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
 
@@ -173,7 +174,7 @@ namespace Vehicle
                 }
                 else
                 {
-                    Debug.Log("LANDING");
+                    UnityEngine.Debug.Log("LANDING");
                     movementSpeed = new Vec2f(movementSpeed.X, -25f);
 
                     if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))

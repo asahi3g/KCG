@@ -1,7 +1,4 @@
-﻿using Entitas;
-using UnityEngine;
-
-namespace ActionCoolDown
+﻿namespace ActionCoolDown
 {
     public class CoolDownSystem
     {

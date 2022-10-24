@@ -1,6 +1,5 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
-using UnityEngine;
 using KMath;
 
 namespace KGUI.Elements

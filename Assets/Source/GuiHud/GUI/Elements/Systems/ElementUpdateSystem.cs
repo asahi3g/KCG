@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
-using UnityEngine;
 using KMath;
 
 namespace KGUI.Elements
@@ -21,8 +22,8 @@ namespace KGUI.Elements
 
                     text.GameObject.Update();
                     text.GameObject.UpdateText(text.Text);
-                    text.GameObject.SetPosition(new Vector3(position.Value.X, position.Value.Y, 0.0f));
-                    text.GameObject.SetSizeDelta(new Vector2(text.SizeDelta.X, text.SizeDelta.Y));
+                    text.GameObject.SetPosition(new UnityEngine.Vector3(position.Value.X, position.Value.Y, 0.0f));
+                    text.GameObject.SetSizeDelta(new UnityEngine.Vector2(text.SizeDelta.X, text.SizeDelta.Y));
 
                 }
 
@@ -33,7 +34,7 @@ namespace KGUI.Elements
 
                     image.ImageWrapper.Update();
                     //image.Image.SetPosition(new Vector3(position.Value.X, position.Value.Y, 0.0f));
-                    image.ImageWrapper.SetScale(new Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
+                    image.ImageWrapper.SetScale(new UnityEngine.Vector3(image.Scale.X, image.Scale.Y, image.Scale.Z));
                 }
             }
 

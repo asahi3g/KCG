@@ -1,13 +1,16 @@
+//imports UnityEngine
+
 using Enums;
 using KGUI.Elements;
-using UnityEngine;
+
+
 using UnityEngine.UI;
 
 namespace KGUI
 {
     public class PipeElementUI : UIElement
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
         public ImageWrapper Border;
 

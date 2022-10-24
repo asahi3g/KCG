@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿//imports UnityEngine
+
 using KMath;
-using Entitas;
 using Item;
 
 namespace Inventory
@@ -37,8 +36,8 @@ namespace Inventory
 
             if (InventorySystemsState.MouseHold)
             {
-                float scaleFacor = Screen.height / 1080f;
-                Vector3 mousePos = Input.mousePosition;
+                float scaleFacor = UnityEngine.Screen.height / 1080f;
+                UnityEngine.Vector3 mousePos = UnityEngine.Input.mousePosition;
                 Vec2f pos = new Vec2f(mousePos.x, mousePos.y);
                 float size = 60f * scaleFacor;
 
@@ -58,7 +57,7 @@ namespace Inventory
             Window window = isDrawingToolBar ? inventoryModel.ToolBarWindow : 
                 (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
                    
-            float scaleFactor = (float)Screen.height / DEFAULT_SCREEN_HIGHT;
+            float scaleFactor = (float)UnityEngine.Screen.height / DEFAULT_SCREEN_HIGHT;
             window.Scale(scaleFactor);
 
             // Draw Background.
@@ -100,8 +99,8 @@ namespace Inventory
                         window.TileSize,
                         label: (i + 1).ToString(),
                         fontSize: font,
-                        alignment: TextAnchor.UpperCenter,
-                        color: new Color(255, 255, 255, 255));
+                        alignment: UnityEngine.TextAnchor.UpperCenter,
+                        color: new UnityEngine.Color(255, 255, 255, 255));
                 }
             }
 
@@ -117,8 +116,8 @@ namespace Inventory
                     font + 4,
                     inventoryEntity.inventoryName.Name,
                     fontSize: font,
-                    alignment: TextAnchor.LowerCenter,
-                    color: new Color(255, 255, 255, 255));
+                    alignment: UnityEngine.TextAnchor.LowerCenter,
+                    color: new UnityEngine.Color(255, 255, 255, 255));
             }
         }
 
@@ -152,7 +151,7 @@ namespace Inventory
             float posX = tilePosX + slotOffset;
             float posY = tilePosY + slotOffset;
 
-            Color slotColor = inventoryModel.RenderProprieties.SlotColor;
+            UnityEngine.Color slotColor = inventoryModel.RenderProprieties.SlotColor;
 
             if (inventoryModel.RenderProprieties.HasDefaultSlotTexture())
             {
@@ -197,8 +196,8 @@ namespace Inventory
                         sizeY,
                         entity.itemStack.Count.ToString(),
                         font,
-                        TextAnchor.LowerRight,
-                        Color.white);
+                        UnityEngine.TextAnchor.LowerRight,
+                        UnityEngine.Color.white);
                 }
             }
         }

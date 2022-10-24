@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using System;
 
 public class GameResources
@@ -27,7 +28,7 @@ public class GameResources
             CreateVehicles();
             CreateGUI();
 
-            Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+            UnityEngine.Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
     }
 

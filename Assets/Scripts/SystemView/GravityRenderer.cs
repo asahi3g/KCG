@@ -1,10 +1,11 @@
+//import UnityEngine
+
 using System;
-using UnityEngine;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class GravityRenderer : MonoBehaviour {
+        public class GravityRenderer : UnityEngine.MonoBehaviour {
             public const int         samples        = 1024;
             public const float       line_thickness = 0.15f;
             public const float       line_length    = 0.75f;
@@ -15,17 +16,17 @@ namespace Scripts {
                 public float         y;
                 public float         dirx;
                 public float         diry;
-                public GameObject    obj;
-                public LineRenderer  line;
-                public Vector3[]     vertices;
+                public UnityEngine.GameObject    obj;
+                public UnityEngine.LineRenderer  line;
+                public UnityEngine.Vector3[]     vertices;
             }
 
             public  CameraController camera;
 
             public  int              width;
             public  int              height;
-            public  Shader           shader;
-            public  Material         mat;
+            public  UnityEngine.Shader           shader;
+            public  UnityEngine.Material         mat;
             public  SystemState      state;
 
             private ArrowInfo[,]     arrows;
@@ -35,8 +36,8 @@ namespace Scripts {
                 if(arrows != null)
                     for(int x = 0; x < width; x++)
                         for(int y = 0; y < height; y++) {
-                            GameObject.Destroy(arrows[x, y].line);
-                            GameObject.Destroy(arrows[x, y].obj);
+                            UnityEngine.GameObject.Destroy(arrows[x, y].line);
+                            UnityEngine.GameObject.Destroy(arrows[x, y].obj);
                         }
                 
             }
@@ -52,27 +53,27 @@ namespace Scripts {
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++) {
                         arrows[x, y]                      = new ArrowInfo();
-                        arrows[x, y].obj                  = new GameObject();
+                        arrows[x, y].obj                  = new UnityEngine.GameObject();
                         arrows[x, y].obj.name             = "Gravity direction renderer (" + x + ", " + y + ")";
                         arrows[x, y].obj.transform.parent = transform;
-                        arrows[x, y].line                 = arrows[x, y].obj.AddComponent<LineRenderer>();
+                        arrows[x, y].line                 = arrows[x, y].obj.AddComponent<UnityEngine.LineRenderer>();
                         arrows[x, y].line.material        = mat;
                         arrows[x, y].line.useWorldSpace   = true;
                         arrows[x, y].line.startColor      =
-                        arrows[x, y].line.endColor        = Color.white;
-                        arrows[x, y].vertices             = new Vector3[5];
-                        arrows[x, y].vertices[0]          = new Vector3();
-                        arrows[x, y].vertices[1]          = new Vector3();
-                        arrows[x, y].vertices[2]          = new Vector3();
-                        arrows[x, y].vertices[3]          = new Vector3();
-                        arrows[x, y].vertices[4]          = new Vector3();
+                        arrows[x, y].line.endColor        = UnityEngine.Color.white;
+                        arrows[x, y].vertices             = new UnityEngine.Vector3[5];
+                        arrows[x, y].vertices[0]          = new UnityEngine.Vector3();
+                        arrows[x, y].vertices[1]          = new UnityEngine.Vector3();
+                        arrows[x, y].vertices[2]          = new UnityEngine.Vector3();
+                        arrows[x, y].vertices[3]          = new UnityEngine.Vector3();
+                        arrows[x, y].vertices[4]          = new UnityEngine.Vector3();
                     }
             }
 
             private void Start() {
-                shader        = Shader.Find("Hidden/Internal-Colored");
-                mat           = new Material(shader);
-                mat.hideFlags = HideFlags.HideAndDontSave;
+                shader        = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+                mat           = new UnityEngine.Material(shader);
+                mat.hideFlags = UnityEngine.HideFlags.HideAndDontSave;
 
                 mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -107,7 +108,7 @@ namespace Scripts {
 
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++) {
-                        Vector3 absolute = camera.get_abs_pos(new Vector3(
+                        UnityEngine.Vector3 absolute = camera.get_abs_pos(new UnityEngine.Vector3(
                             x * length / line_length,
                             y * length / line_length,
                             0.0f
@@ -180,7 +181,7 @@ namespace Scripts {
                         arrows[x, y].line.positionCount = 5;
 
                         arrows[x, y].line.startColor =
-                        arrows[x, y].line.endColor   = new Color(2.0f * (1.0f - 1.0f / (color_factor * magnitude)),
+                        arrows[x, y].line.endColor   = new UnityEngine.Color(2.0f * (1.0f - 1.0f / (color_factor * magnitude)),
                                                                  2.0f * (       1.0f / (color_factor * magnitude)),
                                                                  0.0f, 1.0f);
                     }

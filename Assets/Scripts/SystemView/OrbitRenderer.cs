@@ -1,18 +1,19 @@
+//imports UnityEngine
+
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class OrbitRenderer : MonoBehaviour {
-            private LineRenderer line_renderer;
+        public class OrbitRenderer : UnityEngine.MonoBehaviour {
+            private UnityEngine.LineRenderer line_renderer;
 
             public OrbitingObjectDescriptor descriptor;
 
-            public Material mat;
+            public UnityEngine.Material mat;
 
-            public Color color = new Color(0.5f, 0.7f, 1.0f, 1.0f);
+            public UnityEngine.Color color = new UnityEngine.Color(0.5f, 0.7f, 1.0f, 1.0f);
 
             public float line_width = 0.1f;
 
@@ -26,7 +27,7 @@ namespace Scripts {
                     return;
                 }
 
-                List<Vector3> vertices = new();
+                List<UnityEngine.Vector3> vertices = new();
                 
                 for(int i = 0; i < segments; i++) {
                     float true_anomaly;
@@ -47,7 +48,7 @@ namespace Scripts {
                         descriptor.get_distance_from_center_at(true_anomaly)
                     );
 
-                    vertices.Add(new Vector3(pos[0], pos[1], 0.0f));
+                    vertices.Add(new UnityEngine.Vector3(pos[0], pos[1], 0.0f));
                 }
 
                 line_renderer.startWidth    =
@@ -63,16 +64,16 @@ namespace Scripts {
 
             // Start is called before the first frame update
             void Start() {
-                camera = GameObject.Find("Main Camera").GetComponent<CameraController>();
+                camera = UnityEngine.GameObject.Find("Main Camera").GetComponent<CameraController>();
 
-                line_renderer = gameObject.AddComponent<LineRenderer>();
+                line_renderer = gameObject.AddComponent<UnityEngine.LineRenderer>();
 
                 // Load unity test shader
                 // this could alternatively also be our GLTestShader
 
-                Shader shader = Shader.Find("Hidden/Internal-Colored");
-                mat = new Material(shader);
-                mat.hideFlags = HideFlags.HideAndDontSave;
+                UnityEngine.Shader shader = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+                mat = new UnityEngine.Material(shader);
+                mat.hideFlags = UnityEngine.HideFlags.HideAndDontSave;
 
                 mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -88,7 +89,7 @@ namespace Scripts {
             }
 
             void OnDestroy() {
-                GameObject.Destroy(line_renderer);
+                UnityEngine.GameObject.Destroy(line_renderer);
             }
         }
     }
