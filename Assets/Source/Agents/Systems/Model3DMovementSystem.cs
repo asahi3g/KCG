@@ -40,12 +40,13 @@ namespace Agent
                                 if(entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
                                 {
                                     PistolIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                    PistolIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                                    PistolIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 10f);
                                     entity.agentAction.Action = AgentAction.Aiming;
                                 }
                                 else
                                 {
-                                    PistolIK.GetComponent<Rig>().weight = 0.0f;
+                                    PistolIK.GetComponent<Rig>().weight = Mathf.Lerp(
+                                        PistolIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 0.3f);
                                 }
                             }
                             else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
@@ -55,40 +56,23 @@ namespace Agent
                                 if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
                                 {
                                     RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                    RifleIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
+                                    RifleIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 10f);
                                     entity.agentAction.Action = AgentAction.Aiming;
                                 }
                                 else
                                 {
-                                    RifleIK.GetComponent<Rig>().weight = 0.0f;
+                                    RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
+                                        RifleIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 0.3f);
                                 }
                             }
                             else
                             {
                                 PistolIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                PistolIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
+                                PistolIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 10f);
 
                                 RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                RifleIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
+                                RifleIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 10f);
 
-                                entity.agentAction.Action = AgentAction.UnAlert;
-                            }
-                        }
-
-                        if(RifleIK != null)
-                        {
-                            if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
-                            {
-                                PistolIK.GetComponent<Rig>().weight = 0.0f;
-                            
-                                RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                RifleIK.GetComponent<Rig>().weight, 1.0f, Time.deltaTime * 20f);
-                                entity.agentAction.Action = AgentAction.Aiming;
-                            }
-                            else
-                            {
-                                RifleIK.GetComponent<Rig>().weight = Mathf.Lerp(
-                                RifleIK.GetComponent<Rig>().weight, 0.0f, Time.deltaTime * 20f);
                                 entity.agentAction.Action = AgentAction.UnAlert;
                             }
                         }
@@ -97,12 +81,14 @@ namespace Agent
                     if (physicsState.FacingDirection == 1)
                     {
                         model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                        model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
+                        model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, 
+                            model3d.ModelScale.Z);
                     }
                     else if (physicsState.FacingDirection == -1)
                     {
-                        model3d.GameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                        model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, -model3d.ModelScale.Z);
+                        model3d.GameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
+                        model3d.GameObject.transform.localScale = new Vector3(model3d.ModelScale.X, 
+                            model3d.ModelScale.Y,model3d.ModelScale.Z);
                     }
                 }
             }

@@ -142,6 +142,8 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
 
             // Admin API Add Items
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SMG, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementMaterialTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
@@ -150,7 +152,6 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ParticleEmitterPlacementTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PotionTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GasBomb, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
             Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);
@@ -330,9 +331,6 @@ namespace Planet.Unity
             float spawnHeight = tileMap.MapSize.Y - 2;
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
-
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
     }
 }
