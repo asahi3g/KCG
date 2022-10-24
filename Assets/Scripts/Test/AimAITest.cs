@@ -63,7 +63,7 @@ namespace Planet.Unity
         private void SpawnTarget()
         {
             float x = Random.Range(1.0f, 31.0f);
-            Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
+            Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime, 1);
         }
     }
 }

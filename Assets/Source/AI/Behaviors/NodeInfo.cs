@@ -10,5 +10,6 @@ namespace AI
         public NodeType type;
         public Vec2f pos;
         public List<int> children;
+        public List<int> entriesID;
     }
 }

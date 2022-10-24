@@ -20,8 +20,7 @@ namespace Node
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
-                    if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                            y >= 0 && y < planet.TileMap.MapSize.Y)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
                         switch (itemInventory.itemTile.Layer)
                         {
@@ -44,8 +43,7 @@ namespace Node
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
 
-                if (x >= 0 && x < planet.TileMap.MapSize.X &&
-                        y >= 0 && y < planet.TileMap.MapSize.Y)
+                if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
                     switch (itemInventory.itemTile.Layer)
                     {
@@ -59,10 +57,8 @@ namespace Node
                             planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                             break;
                     }
-                }
-                
+                }   
             }
-
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }
     }

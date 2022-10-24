@@ -1,12 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
 using UnityEngine.UIElements;
-using KMath;
 using Enums;
-using UnityEngine.Networking.Types;
-using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
 
 namespace AI
 {
@@ -99,6 +97,8 @@ namespace AI
 
         public void AddChild(NodeView nodeView)
         {
+            if (Node.children == null)
+                Node.children = new List<int>();
             Node.children.Add(nodeView.Node.index);
         } 
     }

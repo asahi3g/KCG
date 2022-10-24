@@ -237,7 +237,7 @@ namespace Planet.Unity
             y >= 0 && y < Planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
+                var mech = GameState.MechCreationApi.Get((Enums.MechType)selectedMechIndex);
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
 

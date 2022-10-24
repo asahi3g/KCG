@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 using System.Linq;
 using System;
 using KMath;
-using static Unity.VisualScripting.Metadata;
 using UnityEditor;
 
 namespace AI
@@ -60,7 +59,29 @@ namespace AI
                 });
             }
 
+            NodeViews.ForEach((n) => 
+            {
+                SortChildren(n);
+            });
+
             return graphViewChange;
+        }
+
+        public void SortChildren(NodeView node)
+        {
+            NodeGroup nodeGroup = AISystemState.GetNodeGroup(node.Node.type);
+            if (nodeGroup == NodeGroup.CompositeNode)
+            {
+                node.Node.children.Sort(SortByHorizontalPosition);
+            }
+        }
+
+
+        private int SortByHorizontalPosition(int left, int right)
+        {
+            NodeView leftNode = NodeViews[left];
+            NodeView rightNode = NodeViews[right];
+            return leftNode.Node.pos.X < rightNode.Node.pos.X ? -1 : 1;
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
@@ -94,12 +115,12 @@ namespace AI
 
         public void PopulateView()
         {
-            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
             {
-                CreateNodeView(AISystemState.Behaviors[(int)Type].Nodes[j]);
+                CreateNodeView(AISystemState.Behaviors.Get((int)Type).Nodes[j]);
             }
 
-            for (int j = 0; j < AISystemState.Behaviors[(int)Type].Nodes.Count; j++)
+            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
             {
                 if (NodeViews[j].Node.children == null)
                     continue;
@@ -138,6 +159,8 @@ namespace AI
                 pos = position,
                 children = (AISystemState.GetNodeGroup(nodeType) == NodeGroup.ActionNode) ? null : new List<int>()
             };
+            AISystemState.Behaviors.Get((int)Type).Nodes.Add(node);
+
             CreateNodeView(node);
         }
 

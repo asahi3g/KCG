@@ -5,6 +5,7 @@ using KGUI;
 using KMath;
 using Mech;
 using UnityEngine;
+using Utility;
 
 /*
     How To use it:
@@ -719,7 +720,7 @@ namespace Item
             SetTexture(SMGIcon);
             SetInventoryTexture(SMGIcon);
             SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
-            SetRangedWeaponClip(99999, 1, 1f);
+            SetRangedWeaponClip(50, 1, 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -755,7 +756,30 @@ namespace Item
             SetAction(NodeType.ShootFireWeaponAction);
             EndItem();
 
+            CreateItem(ItemType.Pistol, "Pistol");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(PistolIcon);
+            SetInventoryTexture(PistolIcon);
+            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
+            SetRangedWeaponClip(8, 1, 1f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Bullet);
+            SetAction(NodeType.ShootFireWeaponAction);
+            SetItemToolType(ItemToolType.Pistol);
+            SetAnimationSet(ItemAnimationSet.HoldingPistol);
+            EndItem();
 
+            CreateItem(ItemType.RPG, "RPG");
+            SetGroup(ItemGroups.Gun);
+            SetTexture(RPGIcon);
+            SetInventoryTexture(RPGIcon);
+            SetRangedWeapon(50.0f, 3f, 50.0f, 100);
+            SetRangedWeaponClip(2, 1, 3);
+            SetExplosion(3.0f, 15, 0f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Rocket);
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
 
             CreateItem(ItemType.Moon, "Moon");
             SetGroup(ItemGroups.None);
@@ -825,31 +849,6 @@ namespace Item
             SetTexture(GrenadeSpriteId);
             SetInventoryTexture(GrenadeSpriteId);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowFragGrenadeAction);
-            EndItem();
-
-            CreateItem(ItemType.Pistol, "Pistol");
-            SetGroup(ItemGroups.Gun);
-            SetTexture(PistolIcon);
-            SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
-            SetRangedWeaponClip(8, 1, 1f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
-            SetItemToolType(ItemToolType.Pistol);
-            SetAnimationSet(ItemAnimationSet.HoldingPistol);
-            EndItem();
-
-            CreateItem(ItemType.RPG, "RPG");
-            SetGroup(ItemGroups.Gun);
-            SetTexture(RPGIcon);
-            SetInventoryTexture(RPGIcon);
-            SetRangedWeapon(50.0f, 3f, 50.0f, 100);
-            SetRangedWeaponClip(2, 1, 3);
-            SetExplosion(3.0f, 15, 0f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetProjectileType(ProjectileType.Rocket);
             SetAction(NodeType.ThrowFragGrenadeAction);
             EndItem();
 

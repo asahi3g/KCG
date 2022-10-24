@@ -2,6 +2,8 @@
 using Enums;
 using Planet;
 using KMath;
+using System.Collections.Generic;
+using System;
 
 namespace Node.Action
 {
@@ -9,6 +11,14 @@ namespace Node.Action
     {
         public override NodeType Type { get { return NodeType.SelectClosestTarget; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override List<Tuple<string, Type>> RegisterEntries()
+        {
+            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
+            {
+                CreateEntry("Target", typeof(Vec2f)),
+            };
+            return blackboardEntries;
+        }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
@@ -37,7 +47,7 @@ namespace Node.Action
             {
                 nodeEntity.nodeExecution.State = NodeState.Success;
                 BlackBoard blackBoard = agent.agentController.Controller.BlackBoard;
-                blackBoard.Set(nodeEntity.nodeBlackboardData.DataID, target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f);
+                blackBoard.Set(nodeEntity.nodeBlackboardData.entriesIDs[0], target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f);
             }
         }
     }

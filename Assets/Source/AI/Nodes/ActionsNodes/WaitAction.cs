@@ -11,12 +11,13 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.WaitAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
-
-        public override List<Type> RegisterComponents()
+        public override List<Tuple<string, Type>> RegisterEntries()
         {
-            List<Type> components = new List<Type>();
-            components.Add(typeof(DurationComponent));
-            return components;
+            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
+            {
+                CreateEntry("Wait", typeof(int)),
+            };
+            return blackboardEntries;
         }
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
@@ -27,15 +28,18 @@ namespace Node
 
         public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
-            float elapsed = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
+            ref AI.BlackBoard blackboard = ref planet.EntitasContext.agent.GetEntityWithAgentID(
+                nodeEntity.nodeOwner.AgentID).agentController.Controller.BlackBoard;
 
-            if (elapsed >= nodeEntity.nodeDuration.Duration)
+            float elapsed = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
+            int duration;
+            blackboard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out duration);
+            if (elapsed >= duration)
                 nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
         public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            Debug.Log(nodeEntity.nodeDuration.Duration.ToString() + " seconds.");
         }
     }
 }

@@ -4,6 +4,7 @@ using KMath;
 using Item;
 using System.Linq;
 using System.Collections.Generic;
+using Enums;
 
 namespace Planet.Unity
 {
@@ -127,11 +128,6 @@ namespace Planet.Unity
             int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
-            PlayerID = Player.agentID.ID;
-
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
-            //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
-
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
@@ -519,7 +515,7 @@ namespace Planet.Unity
             y >= 0 && y < Planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
+                var mech = GameState.MechCreationApi.Get((MechType)selectedMechIndex);
                 var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
 

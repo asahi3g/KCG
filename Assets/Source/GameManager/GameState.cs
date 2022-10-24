@@ -52,6 +52,7 @@ public static class GameState
     public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
     public static readonly Mech.MechGUIDrawSystem MechGUIDrawSystem;
     public static readonly Mech.MouseInteractionSystem MechMouseInteractionSystem;
+    public static readonly Mech.PlantGrowthSystem MechPlantGrowthSystem;
     #endregion
 
     #region Agent
@@ -197,9 +198,6 @@ public static class GameState
         AgentProcessStats = new Agent.ProcessStats();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
-        MechCreationApi = new Mech.MechCreationApi();
-        MechSpawnerSystem = new Mech.MechSpawnSystem(MechCreationApi);
-
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
         InventoryCreationApi = new Inventory.CreationApi();
@@ -251,9 +249,12 @@ public static class GameState
         ProjectileDeleteSystem = new Projectile.DeleteSystem();
         ProjectileDebugSystem = new Projectile.DebugSystem();
 
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
+        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
 
         Renderer = new Utility.Render();
 

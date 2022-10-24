@@ -14,7 +14,7 @@ namespace Node.Action
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            planet.AddMech(new Vec2f(x, y), Mech.MechType.Storage);
+            planet.AddMech(new Vec2f(x, y), Enums.MechType.Storage);
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
         }

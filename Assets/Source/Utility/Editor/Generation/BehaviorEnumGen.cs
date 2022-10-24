@@ -58,7 +58,7 @@ namespace Assets.Source.Utility.Editor.Generation {
             #line hidden
             
             #line 21 "Assets\Source\Utility\Editor\Generation\BehaviorEnumGen.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture( AISystemState.Behaviors[i].Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture( AISystemState.Behaviors.Get(i).Name));
             
             #line default
             #line hidden
