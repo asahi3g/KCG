@@ -3,6 +3,8 @@ namespace KGUI
     public enum ElementEnums
     {
         Error = 0,
+        
+        Test,
 
         // Player Status HUD Indicators
         FoodIndicator,

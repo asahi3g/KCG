@@ -29,9 +29,11 @@ namespace KGUI
         {
             if (transform.hasChanged)
             {
-                var hitBoxTransform = HitBoxObject.transform;
-                HitBoxPosition = hitBoxTransform.position - hitBoxTransform.localPosition;
-                HitBoxSize = HitBoxObject.GetComponent<RectTransform>().sizeDelta;
+                var rect = HitBoxObject.GetComponent<RectTransform>();
+                var corners = new Vector3[4];
+                rect.GetWorldCorners(corners);
+                HitBoxPosition = corners[0]; // 0 - bottom left, 1 - top left, 2 - top right, 3 - bottom right
+                HitBoxSize = rect.sizeDelta;
                 HitBox = new AABox2D(new Vec2f(HitBoxPosition.x, HitBoxPosition.y), new Vec2f(HitBoxSize.x, HitBoxSize.y));
                 transform.hasChanged = false;
             }
@@ -40,8 +42,9 @@ namespace KGUI
 
         public virtual void Init()
         {
-            HitBoxObject = iconImage.gameObject;
-            transform.hasChanged = true;
+            var tr = transform;
+            HitBoxObject = tr.gameObject;
+            tr.hasChanged = true;
         }
 
         public virtual void Draw() {}

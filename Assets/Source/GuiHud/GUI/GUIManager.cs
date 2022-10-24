@@ -48,6 +48,8 @@ namespace KGUI
             PanelPrefabList.Add(PanelEnums.PlacementTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementToolUI"));
             PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolUI"));
             PanelPrefabList.Add(PanelEnums.PotionTool, Resources.Load<PanelUI>("GUIPrefabs/PotionToolUI"));
+            
+            PanelPrefabList.Add(PanelEnums.Test, Resources.Load<PanelUI>("GUIPrefabs/TestPanel"));
 
             GeometryGUI = new GeometryGUI();
 
@@ -57,6 +59,7 @@ namespace KGUI
         public void InitStage2()
         {
             SetPanelActive(PanelEnums.PlayerStatus);
+            SetPanelActive(PanelEnums.Test);
         }
 
         // Inputs panel's ID that we wanna enable or disable
