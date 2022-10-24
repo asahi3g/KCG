@@ -290,8 +290,6 @@ namespace PlanetTileMap
                 default:
                     return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
             }
-
-            return 0;
         }
 
         public void DrawLayer(MapLayerType planetLayer)

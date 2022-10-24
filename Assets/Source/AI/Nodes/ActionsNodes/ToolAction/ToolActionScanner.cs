@@ -7,6 +7,7 @@ namespace Node
     {
         public override NodeType Type { get { return NodeType.ToolActionScanner; } }
 
+        // Todo: Fix scanner item crashing bug and fix this action.
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
@@ -20,13 +21,13 @@ namespace Node
                 {
                     if (entity.hasMechType)
                     {
-                        if (entity.mechType.mechType == Mech.MechType.Planter)
+                        if (entity.mechType.mechType == Enums.MechType.Planter)
                         {
                             if (entity.hasMechPlanter)
                             {
-                                GameState.GUIManager.AddScannerText("Got Seed: " + entity.mechPlanter.GotSeed + " \n" + "Light Status: " + 
-                                    entity.mechPlanter.LightLevel + " \n" + "Water Status: " + (int)entity.mechPlanter.WaterLevel + " \n" + 
-                                    "Growth Status: " + (int)entity.mechPlanter.PlantGrowth, new Vec2f(-160f, 90.0f), new Vec2f(350, 120), 3.0f);
+                                //GameState.GUIManager.AddScannerText("Got Seed: " + entity.mechPlanter.GotSeed + " \n" + "Light Status: " + 
+                                //    entity.mechPlanter.LightLevel + " \n" + "Water Status: " + (int)entity.mechPlanter.WaterLevel + " \n" + 
+                                //    "Growth Status: " + (int)entity.mechPlanter.PlantGrowth, new Vec2f(-160f, 90.0f), new Vec2f(350, 120), 3.0f);
                             }
                         }
                     }

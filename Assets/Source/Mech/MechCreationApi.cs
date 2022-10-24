@@ -3,6 +3,7 @@ using KMath;
 using System;
 using System.Collections.Generic;
 using PlanetTileMap;
+using Sprites;
 
 namespace Mech
 {
@@ -11,16 +12,11 @@ namespace Mech
     public class MechCreationApi
     {
         public MechProperties[] PropertiesArray;
-
         public int CurrentIndex;
-
-        private Dictionary<string, int> NameToID;
 
         public MechCreationApi()
         {
-            NameToID = new Dictionary<string, int>();
-
-            PropertiesArray = new MechProperties[1024];
+            PropertiesArray = new MechProperties[Enum.GetNames(typeof(MechType)).Length - 1];
 
             for (int i = 0; i < PropertiesArray.Length; i++)
             {
@@ -30,66 +26,42 @@ namespace Mech
             CurrentIndex = -1;
         }
 
-        public MechProperties Get(int Id)
+        public MechProperties Get(MechType type)
         {
-            if (Id >= 0 && Id < PropertiesArray.Length)
-            {
-                return PropertiesArray[Id];
-            }
-
-            return new MechProperties();
+            return PropertiesArray[(int)type];
         }
 
-        public ref MechProperties GetRef(int Id)
+        public ref MechProperties GetRef(MechType type)
         {
-            return ref PropertiesArray[Id];
+            return ref PropertiesArray[(int)type];
         }
 
-        public MechProperties Get(string name)
+        public void Create(MechType type)
         {
-            int value;
-            bool exists = NameToID.TryGetValue(name, out value);
-            if (exists)
-            {
-                return Get(value);
-            }
-
-            return new MechProperties();
-        }
-
-        public void Create(int Id)
-        {
-            while (Id >= PropertiesArray.Length)
-            {
-                Array.Resize(ref PropertiesArray, PropertiesArray.Length * 2);
-            }
-
-            CurrentIndex = Id;
+            CurrentIndex = (int)type;
             if (CurrentIndex != -1)
             {
-                PropertiesArray[CurrentIndex].MechID = CurrentIndex;
+                PropertiesArray[CurrentIndex].Type = type;
                 PropertiesArray[CurrentIndex].Action = NodeType.None;
+                PropertiesArray[CurrentIndex].Group = MechGroup.None;
             }
+        }
+
+        public void SetGroup(MechGroup group)
+        {
+            PropertiesArray[CurrentIndex].Group = group;
         }
 
         public void SetName(string name)
         {
             if (CurrentIndex == -1) return;
 
-            if (!NameToID.ContainsKey(name))
-            {
-                NameToID.Add(name, CurrentIndex);
-            }
-
             PropertiesArray[CurrentIndex].Name = name;
         }
 
         public void SetDropTableID(Enums.LootTableType dropTableID)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].DropTableID = dropTableID;
-            }
+            PropertiesArray[CurrentIndex].DropTableID = dropTableID;
         }
 
         public void SetTexture(int spriteId)
@@ -97,55 +69,51 @@ namespace Mech
             PropertiesArray[CurrentIndex].SpriteID = spriteId;
         }
 
+        public void SetPlantTextures(int stage1SpriteID, int stage2SpriteID = -1, int stage3SpriteID = -1)
+        {
+            PropertiesArray[CurrentIndex].SpriteID = stage1SpriteID;
+            PropertiesArray[CurrentIndex].Stage2Sprite = stage2SpriteID;
+            PropertiesArray[CurrentIndex].Stage3Sprite = stage3SpriteID;
+        }
+
+        public void SetPlantSizes(Vec2f stage1Size, Vec2f stage2Size, Vec2f stage3Size)
+        {
+            PropertiesArray[CurrentIndex].SpriteSize = stage1Size;
+            PropertiesArray[CurrentIndex].Stage2SpriteSize = stage2Size;
+            PropertiesArray[CurrentIndex].Stage3SpriteSize = stage3Size;
+        }
+
         public void SetSpriteSize(Vec2f size)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].SpriteSize = size;
-            }
+            PropertiesArray[CurrentIndex].SpriteSize = size;
         }
 
         public void SetAction(Enums.NodeType NodeType)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].Action = NodeType;
-            }
+            PropertiesArray[CurrentIndex].Action = NodeType;
         }
 
         public void SetInventory(int inventoryModelID)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].InventoryModelID = inventoryModelID;
-                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.HasInventory;
-            }
+            PropertiesArray[CurrentIndex].InventoryModelID = inventoryModelID;
+            PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.HasInventory;
         }
 
         public void SetDurability(int durability)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].Durability = durability;
-                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
-            }
+            PropertiesArray[CurrentIndex].Durability = durability;
+            PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
         }
 
         public void SetHealth(int health)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].TreeHealth = health;
-                PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
-            }
+        {            
+            PropertiesArray[CurrentIndex].TreeHealth = health;
+            PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.IsBreakable;
         }
 
         public void SetTreeSize(int treeSize)
         {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].TreeSize = treeSize;
-            }
+            PropertiesArray[CurrentIndex].TreeSize = treeSize;
         }
 
         public void End()
@@ -216,7 +184,7 @@ namespace Mech
             Tree = GameState.SpriteAtlasManager.CopySpriteToAtlas(Tree, 0, 0, Enums.AtlasType.Mech);
 
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.Storage);
+            GameState.MechCreationApi.Create(Enums.MechType.Storage);
             GameState.MechCreationApi.SetName("chest");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.ChestDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
@@ -224,39 +192,43 @@ namespace Mech
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.Planter);
+            GameState.MechCreationApi.Create(Enums.MechType.Planter);
             GameState.MechCreationApi.SetName("planter");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.PlanterDrop);
             GameState.MechCreationApi.SetTexture(PotIcon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.Light);
+            GameState.MechCreationApi.Create(Enums.MechType.Light);
             GameState.MechCreationApi.SetName("light");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.LightDrop);
             GameState.MechCreationApi.SetTexture(Light2Icon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.MajestyPalm);
+            GameState.MechCreationApi.Create(Enums.MechType.MajestyPalm);
+            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
             GameState.MechCreationApi.SetName("majesty");
-            GameState.MechCreationApi.SetTexture(MajestyPalm);
-            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+            GameState.MechCreationApi.SetPlantTextures(MajestyPalm, MajestyPalmS1, MajestyPalmS2);
+            GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.SagoPalm);
+            GameState.MechCreationApi.Create(Enums.MechType.SagoPalm);
+            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
             GameState.MechCreationApi.SetName("sago");
-            GameState.MechCreationApi.SetTexture(SagoPalm);
-            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+            GameState.MechCreationApi.SetPlantTextures(SagoPalm, SagoPalmS1, SagoPalmS2);
+            GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.DracaenaTrifasciata);
+            GameState.MechCreationApi.Create(Enums.MechType.DracaenaTrifasciata);
+            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
             GameState.MechCreationApi.SetName("dracaenatrifasciata");
             GameState.MechCreationApi.SetTexture(DracaenaTrifasciata);
-            GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
+            GameState.MechCreationApi.SetPlantTextures(DracaenaTrifasciata, DracaenaTrifasciataS1, DracaenaTrifasciataS2);
+            GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.SmashableBox);
+            GameState.MechCreationApi.Create(Enums.MechType.SmashableBox);
             GameState.MechCreationApi.SetName("smashableBox");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableBoxDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
@@ -266,7 +238,7 @@ namespace Mech
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.SmashableEgg);
+            GameState.MechCreationApi.Create(Enums.MechType.SmashableEgg);
             GameState.MechCreationApi.SetName("smashableEgg");
             GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableEggDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
@@ -274,25 +246,25 @@ namespace Mech
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.SurveillanceCamera);
+            GameState.MechCreationApi.Create(Enums.MechType.SurveillanceCamera);
             GameState.MechCreationApi.SetName("SurveillanceCamera");
             GameState.MechCreationApi.SetTexture(surveillanceCamera);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.RoofScreen);
+            GameState.MechCreationApi.Create(Enums.MechType.RoofScreen);
             GameState.MechCreationApi.SetName("RoofScreen");
             GameState.MechCreationApi.SetTexture(roofScreen);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.CraftingTable);
+            GameState.MechCreationApi.Create(Enums.MechType.CraftingTable);
             GameState.MechCreationApi.SetName("CraftingTable");
             GameState.MechCreationApi.SetTexture(craftingTable);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create((int)Mech.MechType.Tree);
+            GameState.MechCreationApi.Create(Enums.MechType.Tree);
             GameState.MechCreationApi.SetName("Tree");
             GameState.MechCreationApi.SetTexture(Tree);
             GameState.MechCreationApi.SetHealth(100);

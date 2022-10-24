@@ -11,17 +11,17 @@ public partial class NodeEntity {
     public Node.BlackboardDataComponent nodeBlackboardData { get { return (Node.BlackboardDataComponent)GetComponent(NodeComponentsLookup.NodeBlackboardData); } }
     public bool hasNodeBlackboardData { get { return HasComponent(NodeComponentsLookup.NodeBlackboardData); } }
 
-    public void AddNodeBlackboardData(int newDataID) {
+    public void AddNodeBlackboardData(int[] newEntriesIDs) {
         var index = NodeComponentsLookup.NodeBlackboardData;
         var component = (Node.BlackboardDataComponent)CreateComponent(index, typeof(Node.BlackboardDataComponent));
-        component.DataID = newDataID;
+        component.entriesIDs = newEntriesIDs;
         AddComponent(index, component);
     }
 
-    public void ReplaceNodeBlackboardData(int newDataID) {
+    public void ReplaceNodeBlackboardData(int[] newEntriesIDs) {
         var index = NodeComponentsLookup.NodeBlackboardData;
         var component = (Node.BlackboardDataComponent)CreateComponent(index, typeof(Node.BlackboardDataComponent));
-        component.DataID = newDataID;
+        component.entriesIDs = newEntriesIDs;
         ReplaceComponent(index, component);
     }
 

@@ -4,14 +4,23 @@ using System;
 using Agent;
 using Engine3D;
 using Enums;
-using Item;
+using Inventory;
 using KMath;
 using Physics;
-
+using Planet;
 
 public partial class AgentEntity 
 {
+    public ItemInventoryEntity GetItem(ref PlanetState planet)
+    {
+        if (!hasAgentInventory)
+            return null;
 
+        int inventoryID = agentInventory.InventoryID;
+        EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+        int selectedSlot = inventory.SelectedSlotID;
+        return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
+    }
     public void Destroy()
     {
         if (hasAgentModel3D)

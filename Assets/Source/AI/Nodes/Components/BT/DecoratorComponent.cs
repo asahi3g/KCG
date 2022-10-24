@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-namespace Nodes
+namespace Node
 {
     [Node]
     public class DecoratorComponent : IComponent

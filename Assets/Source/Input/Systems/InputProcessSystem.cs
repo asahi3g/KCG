@@ -175,7 +175,7 @@ namespace ECSInput
 
                         foreach (var mech in mechEntities)
                         {
-                            if (mech.mechType.mechType == Mech.MechType.CraftingTable)
+                            if (mech.mechType.mechType == Enums.MechType.CraftingTable)
                             {
                                 if (mech.mechCraftingTable.InputInventory.hasInventoryDraw ||
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
@@ -213,7 +213,7 @@ namespace ECSInput
                             // If player is inside the vehicle,
                             // Get out, turn off the jet and ignition.
 
-                            if (player.agentModel3D.GameObject.gameObject.active)
+                            if (player.agentModel3D.GameObject.gameObject.activeSelf)
                             {
                                 // Set custom events for different vehicle types.
                                 // Spew out smoke when accelerate.
@@ -307,7 +307,7 @@ namespace ECSInput
                             Inventory = contexts.inventory.GetEntityWithInventoryID(mech.mechInventory.InventoryID);
 
                         // Get proprietis.
-                        ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef((int)mech.mechType.mechType);
+                        MechProperties mechProperties = mech.GetProperties();
                         if (mechProperties.Action != NodeType.None)
                             GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
                     }

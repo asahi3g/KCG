@@ -1,6 +1,5 @@
 using Entitas;
-using KMath;
-using UnityEngine;
+using Enums;
 
 namespace Mech
 {

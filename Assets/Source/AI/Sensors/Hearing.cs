@@ -1,19 +1,30 @@
 ﻿using Collisions;
 using KMath;
 using Planet;
+using System.Collections.Generic;
+using System;
+using Enums;
 
 namespace AI.Sensor
 {
     public class Hearing : SensorBase
     {
-        //public override void RegisterInBlackBoard(BlackBoard blackboard)
-        //{
-        //    VariableID = blackboard.Register(typeof(bool), "Can Hear Enemy");
-        //}
-        public override void Update(BlackBoard blackboard, ref PlanetState planet)
+        public override SensorType Type { get { return SensorType.Hearing; } }
+
+        public override List<Tuple<string, Type>> GetBlackboardEntries()
         {
+            List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
+            {
+                CreateEntry("CanHear", typeof(bool)),
+            };
+            return blackboardEntries;
+        }
+
+        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard, ref PlanetState planet)
+        {
+            int canHearID = sensor.EntriesID[0];
+
             const float MAX_DIST = 10f;
-            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.OwnerAgentID);
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity entity = planet.AgentList.Get(i);
@@ -23,11 +34,11 @@ namespace AI.Sensor
                 bool canHear = ((agent.agentPhysicsState.Position - entity.agentPhysicsState.Position).Magnitude < MAX_DIST);
                 if (canHear)
                 {
-                    blackboard.Set(-1, true);
+                    blackBoard.Set(canHearID, true);
                     return;
                 }
             }
-            blackboard.Set(-1, false);
+            blackBoard.Set(canHearID, false);
         }
     }
 }

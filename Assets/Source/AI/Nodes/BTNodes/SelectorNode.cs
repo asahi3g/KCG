@@ -2,6 +2,9 @@
 using Planet;
 using UnityEngine;
 using AI;
+using KMath;
+using System.Collections.Generic;
+using System;
 
 namespace Node
 {
@@ -26,17 +29,19 @@ namespace Node
         // Todo: Allow selection between more than two nodes.
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
-            int index = 1;
-            bool first = false;
-            blackBoard.Get(nodeEntity.nodeBlackboardData.DataID, ref first);
-            if (first)
-                index = 0;
+            var childern = nodeEntity.nodeComposite.Children;
+            if (nodeEntity.nodeComposite.CurrentID >= childern.Count)
+            {
+                nodeEntity.nodeExecution.State = NodeState.Fail;
+                return;
+            }
 
-            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeComposite.Children[index]);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            int nodeID = childern[nodeEntity.nodeComposite.CurrentID];
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
+
             ref var nodes = ref AISystemState.Nodes;
-            index = (int)child.nodeID.TypeID;
+            int index = (int)child.nodeID.TypeID;
             switch (child.nodeExecution.State)
             {
                 case NodeState.Entry:
@@ -50,8 +55,8 @@ namespace Node
                     nodeEntity.nodeExecution.State = NodeState.Success;
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnExit(ref planet, child);
-                    nodeEntity.nodeExecution.State = NodeState.Fail;
+                    nodes[index].OnFail(ref planet, child);
+                    nodeEntity.nodeComposite.CurrentID++;
                     break;
                 default:
                     Debug.Log("Not valid Action state.");

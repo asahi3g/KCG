@@ -2,6 +2,7 @@
 
 using KMath;
 using KGUI.Elements;
+using Enums;
 
 namespace Mech
 {
@@ -146,6 +147,14 @@ namespace Mech
                                                                 == MechType.SmashableBox ? UnityEngine.Color.red : UnityEngine.Color.yellow);
                     SmashableEggBackground.SetImageColor(item.itemMech.MechID
                                                                 == MechType.SmashableEgg ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    ChestBackground.SetImageColor(item.itemMech.MechID == MechType.Storage ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    PlanterBackground.SetImageColor(item.itemMech.MechID == MechType.Planter ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    LightBackground.SetImageColor(item.itemMech.MechID == MechType.Light ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    MajestyPalmBackground.SetImageColor(item.itemMech.MechID == MechType.MajestyPalm ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    SagoPalmBackground.SetImageColor(item.itemMech.MechID == MechType.SagoPalm ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    DracaenaTrifasciataBackground.SetImageColor(item.itemMech.MechID == MechType.DracaenaTrifasciata ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    SmashableBoxBackground.SetImageColor(item.itemMech.MechID == MechType.SmashableBox ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+                    SmashableEggBackground.SetImageColor(item.itemMech.MechID == MechType.SmashableEgg ? UnityEngine.Color.red : UnityEngine.Color.yellow);
 
                     if (ChestBackground.IsMouseOver(new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y)))
                     {
@@ -286,7 +295,7 @@ namespace Mech
                                 if (item.itemType.Type == Enums.ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMech.MechID = MechType.DracaenaTrifasciata;
+                                    item.itemMech.MechID = Enums.MechType.DracaenaTrifasciata;
                                 }
                         }
 

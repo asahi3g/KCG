@@ -13,14 +13,14 @@ namespace Node
 
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
             child.nodeExecution.State = NodeState.Entry;
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodesDecorator.ChildID);
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
 
             ref var nodes = ref AISystemState.Nodes;
             int index = (int)child.nodeID.TypeID;
@@ -36,7 +36,7 @@ namespace Node
                     nodes[index].OnExit(ref planet, child);
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnExit(ref planet, child);
+                    nodes[index].OnFail(ref planet, child);
                     nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                     break;
                 default:

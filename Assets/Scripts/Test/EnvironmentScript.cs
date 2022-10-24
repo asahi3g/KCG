@@ -7,6 +7,7 @@ using Animancer;
 using PlanetTileMap;
 using System.Linq;
 using System.Collections.Generic;
+using Enums;
 
 namespace Planet.Unity
 {
@@ -238,7 +239,7 @@ namespace Planet.Unity
             y >= 0 && y < Planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get(selectedMechIndex);
+                var mech = GameState.MechCreationApi.Get((MechType)selectedMechIndex);
                 var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);
                 var yRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.Y);
 

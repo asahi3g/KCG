@@ -6,66 +6,66 @@ namespace AI
 {
     public struct BlackBoard
     {
-        const int MASK = 0b0000000_11111111_11111111_11111111;
+        public List<bool> BoolEntries;
+        public List<float> FloatEnties;
+        public List<int> IntEntries;
+        public List<Vec2f> VecEntries;
+        public Dictionary<int, int> IDToIndex;
 
-        public int OwnerAgentID;
-
-        public List<bool>   BoolEntries;
-        public List<float>  FloatEnties;
-        public List<int>    IntEntries;
-        public List<Vec2f>  VecEntries;
-
-        public BlackBoard(int ownerAgentID)
+        public void Get(int ID, out bool value)
         {
-            OwnerAgentID = ownerAgentID;
-            BoolEntries = new List<bool>();
-            FloatEnties = new List<float>();
-            IntEntries = new List<int>();
-            VecEntries = new List<Vec2f>();
-        }
-
-        public void Get(int ID, ref bool value)
-        {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             value = BoolEntries[index];
         }
-        public void Get(int ID, ref float value)
+        public void Get(int ID, out float value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             value = FloatEnties[index];
         }
-        public void Get(int ID, ref int value)
+        public void Get(int ID, out int value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             value = IntEntries[index];
         }
 
-        public void Get(int ID, ref Vec2f value)
+        public void Get(int ID, out Vec2f value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             value = VecEntries[index];
         }
 
         public void Set(int ID, bool value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             BoolEntries[index] = value;
         }
         public void Set(int ID, float value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             FloatEnties[index] = value;
         }
         public void Set(int ID, int value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             IntEntries[index] = value;
         }
 
         public void Set(int ID, Vec2f value)
         {
-            int index = ID & MASK;
+            int index = IDToIndex[ID];
             VecEntries[index] = value;
+        }
+
+        public static BlackBoard CreateBlackboard()
+        {
+            BlackBoard blackBoard = new BlackBoard();
+            blackBoard.BoolEntries = new List<bool>();
+            blackBoard.FloatEnties = new List<float>();
+            blackBoard.IntEntries = new List<int>();
+            blackBoard.VecEntries = new List<Vec2f>();
+            blackBoard.IDToIndex = new Dictionary<int, int>();
+            return blackBoard;
         }
     }
 }
+

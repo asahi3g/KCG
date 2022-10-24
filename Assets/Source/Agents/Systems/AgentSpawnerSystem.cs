@@ -5,6 +5,7 @@ using KMath;
 using Animancer;
 using UnityEngine.Animations.Rigging;
 using AI;
+using static UnityEditor.PlayerSettings;
 
 namespace Agent
 {
@@ -71,8 +72,7 @@ namespace Agent
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, 
-            int inventoryID)
+        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
             ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
@@ -373,9 +373,8 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(entitasContext, Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(entitasContext, item, inventoryID);
-                        entity.AddAgentController(AISystemState.Behaviors[(int)Enums.BehaviorType.Marine].InstatiateBehavior());
+                        entity.AddAgentController(AISystemState.Behaviors.Get((int)Enums.BehaviorType.Marine).InstatiateBehavior(entitasContext, entity.agentID.ID));
                         entity.HandleItemSelected(item);
-
                         break;
                     }
             }

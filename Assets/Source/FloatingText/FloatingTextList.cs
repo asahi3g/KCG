@@ -1,3 +1,5 @@
+using Utility;
+
 namespace FloatingText
 {
     public class FloatingTextList

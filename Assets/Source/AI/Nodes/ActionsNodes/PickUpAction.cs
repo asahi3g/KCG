@@ -33,7 +33,7 @@ namespace Node.Action
             Vec2f drawPos = itemEntity.itemPhysicsState.Position;
             if (!itemEntity.hasItemDrawPosition2D)
             {
-                itemEntity.AddItemDrawPosition2D(Vec2f.Zero, Vec2f.Zero, drawPos);
+                itemEntity.AddItemDrawPosition2D(Vec2f.Zero, drawPos);
             }
             itemEntity.isItemUnpickable = true;
 
@@ -51,7 +51,7 @@ namespace Node.Action
                 Vec2f itemCenterPos = itemEntity.itemDrawPosition2D.Position + itemSize / 2.0f;
                 Vec2f agentCenterPos = agentEntity.agentPhysicsState.Position + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
 
-                if ((itemCenterPos - agentCenterPos).Magnitude < 0.4f)
+                if ((itemCenterPos - agentCenterPos).Magnitude < 0.2f)
                 {
                     if (agentEntity.hasAgentInventory)
                     {
@@ -64,9 +64,15 @@ namespace Node.Action
                 }
 
                 var itemDrawPosition2D = itemEntity.itemDrawPosition2D;
-                itemDrawPosition2D.Acceleration = (agentCenterPos - itemCenterPos).Normalized * 5.0f * UnityEngine.Time.deltaTime;
-                itemDrawPosition2D.Velocity += itemDrawPosition2D.Acceleration;
                 itemDrawPosition2D.Position += itemDrawPosition2D.Velocity * UnityEngine.Time.deltaTime;
+
+                float acceleration =  15.0f * UnityEngine.Time.deltaTime;
+                if (itemDrawPosition2D.Velocity.Magnitude >= 50.0f)
+                    acceleration = 0.0f;
+
+                itemDrawPosition2D.Velocity = (agentCenterPos - itemCenterPos).Normalized * (itemDrawPosition2D.Velocity.Magnitude + acceleration);
+                itemDrawPosition2D.Position += itemDrawPosition2D.Velocity * UnityEngine.Time.deltaTime;
+
             }
         }
     }

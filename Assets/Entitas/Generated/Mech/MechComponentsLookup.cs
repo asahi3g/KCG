@@ -12,20 +12,22 @@ public static class MechComponentsLookup {
     public const int MechDurability = 1;
     public const int MechID = 2;
     public const int MechInventory = 3;
-    public const int MechPlanter = 4;
-    public const int MechPosition2D = 5;
-    public const int MechPositionLimits = 6;
-    public const int MechSprite2D = 7;
-    public const int MechStatus = 8;
-    public const int MechType = 9;
+    public const int MechPlant = 4;
+    public const int MechPlanter = 5;
+    public const int MechPosition2D = 6;
+    public const int MechPositionLimits = 7;
+    public const int MechSprite2D = 8;
+    public const int MechStatus = 9;
+    public const int MechType = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "MechCraftingTable",
         "MechDurability",
         "MechID",
         "MechInventory",
+        "MechPlant",
         "MechPlanter",
         "MechPosition2D",
         "MechPositionLimits",
@@ -39,6 +41,7 @@ public static class MechComponentsLookup {
         typeof(Mech.DurabilityComponent),
         typeof(Mech.IDComponent),
         typeof(Mech.InventoryComponent),
+        typeof(Mech.PlantComponent),
         typeof(Mech.PlanterComponent),
         typeof(Mech.Position2DComponent),
         typeof(Mech.PositionLimitsComponent),

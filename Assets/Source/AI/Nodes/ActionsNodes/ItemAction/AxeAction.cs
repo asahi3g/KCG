@@ -20,7 +20,7 @@ namespace Node
             {
                 foreach (var mech in mechs)
                 {
-                    if (mech.mechType.mechType == Mech.MechType.Tree)
+                    if (mech.mechType.mechType == Enums.MechType.Tree)
                     {
                         if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 1.3f)
                         {

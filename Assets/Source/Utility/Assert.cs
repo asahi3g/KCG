@@ -1,13 +1,16 @@
-public class Utils
+namespace Utility
 {
-
-    public static void Assert(bool condition, string message = "")
+    public class Utils
     {
-        UnityEngine.Assertions.Assert.IsTrue(condition, message);
-
-        if (!condition)
+        public static void Assert(bool condition, string message = "")
         {
             UnityEngine.Application.Quit();
+            UnityEngine.Assertions.Assert.IsTrue(condition, message);
+
+            if (!condition)
+            {
+                UnityEngine.Application.Quit();
+            }
         }
     }
 }

@@ -28,6 +28,10 @@ namespace Item
             if (weaponProperty.HasClip())
                 entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
 
+            if (weaponProperty.HasCharge())
+                entity.AddItemFireWeaponCharge(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
+                    weaponProperty.ChargePerShot, weaponProperty.ChargeMin, weaponProperty.ChargeMax);
+
             ItemID++;
             return entity;
         }
@@ -59,6 +63,7 @@ namespace Item
         public ItemInventoryEntity SpawnInventoryItem(Contexts entitasContext, ItemType itemType)
         {
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(itemType);
+            FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = entitasContext.itemInventory.CreateEntity();
             entity.AddItemID(ItemID);
@@ -85,6 +90,9 @@ namespace Item
                     entity.AddItemPotion(potionType);
                 }
             }
+
+            if (weaponProperty.HasClip())
+                entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
 
             ItemID++;
             return entity;
