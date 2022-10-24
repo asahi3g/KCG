@@ -212,7 +212,7 @@ namespace ECSInput
                             // If player is inside the vehicle,
                             // Get out, turn off the jet and ignition.
 
-                            if (player.agentModel3D.GameObject.gameObject.active)
+                            if (player.agentModel3D.GameObject.gameObject.activeSelf)
                             {
                                 // Set custom events for different vehicle types.
                                 // Spew out smoke when accelerate.
