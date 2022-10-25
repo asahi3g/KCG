@@ -7,7 +7,7 @@ namespace Scripts {
             public SystemShip         ship;
 
             public GameObject         obj;
-            public SystemShipRenderer renderer;
+            public SystemShipRenderer systemShipRenderer;
 
             public System.Random      rand;
 
@@ -44,10 +44,10 @@ namespace Scripts {
 
                 ship.descriptor.compute();
 
-                renderer                      = obj.AddComponent<SystemShipRenderer>();
-                renderer.ship                 = ship;
-                renderer.shipColor            = Color.red;
-                renderer.width                = 3.0f;
+                systemShipRenderer                      = obj.AddComponent<SystemShipRenderer>();
+                systemShipRenderer.ship                 = ship;
+                systemShipRenderer.shipColor            = Color.red;
+                systemShipRenderer.width                = 3.0f;
 
                 ship.health                   =
                 ship.max_health               = 25000;
@@ -78,11 +78,11 @@ namespace Scripts {
 
                 ship.descriptor.update_position(current_millis);
 
-                renderer.shipColor.r          = (float)ship.health / ship.max_health;
+                systemShipRenderer.shipColor.r          = (float)ship.health / ship.max_health;
             }
 
             void OnDestroy() {
-                GameObject.Destroy(renderer);
+                GameObject.Destroy(systemShipRenderer);
                 GameObject.Destroy(obj);
             }
         }

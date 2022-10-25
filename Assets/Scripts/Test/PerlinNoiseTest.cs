@@ -29,8 +29,7 @@ public class PerlinNoiseTest : MonoBehaviour
     TMP_InputField PositionZ;
     Toggle UnityToggle;
     TMP_Dropdown Dimension;
-
-    bool Init;
+    
     bool MovingRight = false;
     bool MovingUp = false;
 
@@ -56,8 +55,6 @@ public class PerlinNoiseTest : MonoBehaviour
         GameState.Renderer.Initialize(Unlit);
 
         GeneratePerlin();
-
-        Init = true;
     }
 
     private void Update()

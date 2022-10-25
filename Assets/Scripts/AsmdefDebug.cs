@@ -40,7 +40,9 @@ public class AsmdefDebug
     static AsmdefDebug()
     {
         // Get Assembly Compilation Data
+#pragma warning disable CS0618
         CompilationPipeline.assemblyCompilationStarted += CompilationPipelineOnAssemblyCompilationStarted;
+#pragma warning restore CS0618
         CompilationPipeline.assemblyCompilationFinished += CompilationPipelineOnAssemblyCompilationFinished;
         AssemblyReloadEvents.beforeAssemblyReload += AssemblyReloadEventsOnBeforeAssemblyReload;
         AssemblyReloadEvents.afterAssemblyReload += AssemblyReloadEventsOnAfterAssemblyReload;

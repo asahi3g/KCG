@@ -22,8 +22,6 @@ namespace Planet.Unity
         int CharacterSpriteId;
         int inventoryID;
 
-        bool showMechInventory = false;
-
         private int totalMechs;
         private int selectedMechIndex;
         public Utility.FrameMesh HighliterMesh;
@@ -93,7 +91,6 @@ namespace Planet.Unity
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
-            int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(3.0f, 4), PlayerFaction);
             PlayerID = Player.agentID.ID;

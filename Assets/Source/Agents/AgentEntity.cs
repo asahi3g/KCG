@@ -21,7 +21,7 @@ public partial class AgentEntity
         int selectedSlot = inventory.SelectedSlotID;
         return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
     }
-    public void Destroy()
+    public void DestroyEntity()
     {
         if (hasAgentModel3D)
         {

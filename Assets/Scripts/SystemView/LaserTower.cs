@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Source.SystemView;
+using UnityEngine.Serialization;
 
 namespace Scripts {
     namespace SystemView {
@@ -29,7 +30,7 @@ namespace Scripts {
             public  System.Random rand;
 
             public  SpriteRenderer sr;
-            public  CameraController camera;
+            [FormerlySerializedAs("camera")] public  CameraController currentCamera;
 
             private GameObject debug_line_object1;
             private GameObject debug_line_object2;
@@ -77,7 +78,7 @@ namespace Scripts {
                 sr                                 = gameObject.AddComponent<SpriteRenderer>();
                 sr.sprite                          = UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
 
-                camera                             = GameObject.Find("Main Camera").GetComponent<CameraController>();
+                currentCamera                             = GameObject.Find("Main Camera").GetComponent<CameraController>();
 
                 debug_line_object1                 = new GameObject();
                 debug_line_object2                 = new GameObject();
@@ -110,7 +111,7 @@ namespace Scripts {
                 last_millis                        = (int)(Time.time * 1000.0f);
 
                 laser_renderer.startWidth          =
-                laser_renderer.endWidth            = 0.15f / camera.scale;
+                laser_renderer.endWidth            = 0.15f / currentCamera.scale;
 
                 laser_renderer.startColor          =
                 laser_renderer.endColor            = laser_color;
@@ -118,8 +119,8 @@ namespace Scripts {
 
             void Update() {
                 sr.transform.position              = new Vector3(posx, posy, -0.1f);
-                sr.transform.localScale            = new Vector3(5.0f / camera.scale,
-                                                                 5.0f / camera.scale,
+                sr.transform.localScale            = new Vector3(5.0f / currentCamera.scale,
+                                                                 5.0f / currentCamera.scale,
                                                                  1.0f);
 
                 sr.transform.Rotate(new Vector3(0.0f, 0.0f, (rotation - last_rotation) * 180.0f / Tools.pi));
@@ -141,7 +142,7 @@ namespace Scripts {
                 debug_line_renderer1.startWidth    =
                 debug_line_renderer1.endWidth      =
                 debug_line_renderer2.startWidth    =
-                debug_line_renderer2.endWidth      = 0.1f / camera.scale;
+                debug_line_renderer2.endWidth      = 0.1f / currentCamera.scale;
                 
                 debug_line_renderer1.startColor    =
                 debug_line_renderer1.endColor      =
@@ -168,7 +169,7 @@ namespace Scripts {
                         float RemainingTimeAsPercentage = 1.0f - (float)RemainingChargingTime
                                                                / (float)LaserDurationTime;
                         laser_renderer.startWidth =
-                        laser_renderer.endWidth   = laser_width * RemainingTimeAsPercentage / camera.scale;
+                        laser_renderer.endWidth   = laser_width * RemainingTimeAsPercentage / currentCamera.scale;
 
                         laser_renderer.startColor = new Color(laser_color.r,
                                                               laser_color.g,
@@ -182,7 +183,7 @@ namespace Scripts {
                     } else {
                         float RemainingTimeAsPercentage = (float)RemainingTime / (float)LaserDurationTime;
                         laser_renderer.startWidth =
-                        laser_renderer.endWidth   = RemainingTimeAsPercentage * laser_width / camera.scale;
+                        laser_renderer.endWidth   = RemainingTimeAsPercentage * laser_width / currentCamera.scale;
 
                         laser_renderer.startColor = new Color(laser_color.r,
                                                               laser_color.g,

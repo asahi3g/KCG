@@ -99,7 +99,6 @@ namespace Inventory
             if (id < 0 || id >= InventoryModels.Length)
             {
                 throw new ArgumentOutOfRangeException();
-                Utils.Assert(false);
             }
             
             return ref InventoryModels[id];
