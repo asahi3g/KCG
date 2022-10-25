@@ -57,13 +57,14 @@ namespace Vehicle
                 GameState.VehicleAISystem.Initialize(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
                 GameState.VehicleAISystem.RunAI(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
 
-                for(int i = 0; i < vehicleProperties.DefaultAgentCount; i++)
+                for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
                 {
-                    var agent = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
-                    agent.agentModel3D.GameObject.gameObject.SetActive(false);
-                    agent.isAgentAlive = false;
+                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
+                    enemy.agentModel3D.GameObject.gameObject.SetActive(false);
+                    enemy.isAgentAlive = false;
+                    enemy.agentAction.Action = Agent.AgentAction.Alert;
 
-                    entity.vehicleCapacity.agentsInside.Add(agent);
+                    entity.vehicleCapacity.agentsInside.Add(enemy);
                 }
             }
 

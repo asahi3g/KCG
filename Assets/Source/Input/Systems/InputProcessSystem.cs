@@ -32,11 +32,8 @@ namespace ECSInput
             {
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
-
             }
         }
-
-       
 
         public void Update(ref PlanetState planet)
         {
@@ -220,7 +217,7 @@ namespace ECSInput
 
                                 if (vehicle.vehicleType.Type == VehicleType.DropShip)
                                 {
-                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
                                     // Player Gets inside of Rocket
                                     // Hide Agent/Player
@@ -228,7 +225,7 @@ namespace ECSInput
                                     player.isAgentAlive = false;
                                     vehicle.vehicleType.HasAgent = true;
 
-                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
                                     vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
                                     vehicle.vehicleThruster.Jet = true;
