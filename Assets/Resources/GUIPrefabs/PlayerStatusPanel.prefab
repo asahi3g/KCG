@@ -859,7 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8107399940162336358}
   m_Layer: 5
-  m_Name: Wrapper
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1028,7 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8107399940240423281}
-  - component: {fileID: 8107399940240423280}
+  - component: {fileID: 1184680140579193292}
   m_Layer: 5
   m_Name: PlayerStatusPanel
   m_TagString: Untagged
@@ -1057,7 +1057,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &8107399940240423280
+--- !u!114 &1184680140579193292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1069,11 +1069,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f78412ba7ea4b419040e70e6c72e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthElementUI: {fileID: 8107399939149178903}
-  foodElementUI: {fileID: 8107399940192353784}
-  waterElementUI: {fileID: 8107399939958513909}
-  oxygenElementUI: {fileID: 8107399939628527100}
-  fuelElementUI: {fileID: 8107399940344091158}
 --- !u!1 &8107399940268253961
 GameObject:
   m_ObjectHideFlags: 0

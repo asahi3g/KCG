@@ -1,26 +1,24 @@
+using System.Linq;
 using Enums;
 using Enums.Tile;
-using UnityEngine;
 
 namespace KGUI
 {
     public class PlacementMaterialTool : PanelUI
     {
-        [SerializeField] private BedrockElementUI bedrockElementUI;
-        [SerializeField] private DirtElementUI dirtElementUI;
-        [SerializeField] private PipeElementUI pipeElementUI;
-        [SerializeField] private WireElementUI wireElementUI;
-
         public override void Init()
         {
             ID = PanelEnums.PlacementMaterialTool;
             
-            UIElementList.Add(bedrockElementUI.ID, bedrockElementUI);
-            UIElementList.Add(dirtElementUI.ID, dirtElementUI);
-            UIElementList.Add(pipeElementUI.ID, pipeElementUI);
-            UIElementList.Add(wireElementUI.ID, wireElementUI);
-
             base.Init();
+        }
+        
+        public override void HandleClickEvent(ElementEnums elementID)
+        {
+            foreach (var element in ElementList.Values.Where(element => element.ID != elementID))
+            {
+                ((IToggleElement)element).Toggle(false);
+            }
         }
         
         public override void OnActivate()
@@ -49,35 +47,29 @@ namespace KGUI
                     switch (materialBagSlot.itemType.Type)
                     {
                         case ItemType.Dirt:
-                            dirtElementUI.gameObject.SetActive(true);
+                            if (ElementList.TryGetValue(ElementEnums.Dirt, out var dirtElementUI))
+                            {
+                                dirtElementUI.gameObject.SetActive(true);
+                            }
                             break;
                         case ItemType.Bedrock:
-                            bedrockElementUI.gameObject.SetActive(true);
+                            if (ElementList.TryGetValue(ElementEnums.Bedrock, out var bedrockElementUI))
+                            {
+                                bedrockElementUI.gameObject.SetActive(true);
+                            }
                             break;
                         case ItemType.Pipe:
-                            pipeElementUI.gameObject.SetActive(true);
+                            if (ElementList.TryGetValue(ElementEnums.Pipe, out var pipeElementUI))
+                            {
+                                pipeElementUI.gameObject.SetActive(true);
+                            }
                             break;
                         case ItemType.Wire:
-                            wireElementUI.gameObject.SetActive(true);
+                            if (ElementList.TryGetValue(ElementEnums.Wire, out var wireElementUI))
+                            {
+                                wireElementUI.gameObject.SetActive(true);
+                            }
                             break;
-                    }
-
-                    if (materialBagSlot.hasItemStack)
-                    {
-                        bedrockElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Bedrock
-                            ? Color.red
-                            : Color.yellow);
-                        dirtElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Moon
-                            ? Color.red
-                            : Color.yellow);
-
-                        pipeElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Pipe
-                            ? Color.red
-                            : Color.yellow);
-
-                        wireElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Wire
-                            ? Color.red
-                            : Color.yellow);
                     }
                 }
             }
@@ -91,10 +83,10 @@ namespace KGUI
                 item.itemTile.TileID = TileID.Error;
             }
             
-            bedrockElementUI.Border.SetImageColor(Color.yellow);
-            dirtElementUI.Border.SetImageColor(Color.yellow);
-            pipeElementUI.Border.SetImageColor(Color.yellow);
-            wireElementUI.Border.SetImageColor(Color.yellow);
+            foreach (var element in ElementList.Values)
+            {
+                ((IToggleElement)element).Toggle(false);
+            }
         }
     }
 }

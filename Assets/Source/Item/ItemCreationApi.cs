@@ -1243,6 +1243,7 @@ namespace Item
             SetInventoryTexture(OreIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(PanelEnums.GeometryTool);
             SetAction(NodeType.ToolActionGeometryPlacement);
             EndItem();
 
