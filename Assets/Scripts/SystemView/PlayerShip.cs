@@ -14,7 +14,7 @@ namespace Scripts {
             public SystemShip ship;
 
             public GameObject o;
-            public SystemShipRenderer renderer;
+            public SystemShipRenderer systemShipRenderer;
 
             public float last_time;
 
@@ -88,10 +88,10 @@ namespace Scripts {
 
                 ship.self.mass     = 100.0f;
 
-                renderer           = o.AddComponent<SystemShipRenderer>();
-                renderer.ship      = ship;
-                renderer.shipColor = Color.blue;
-                renderer.width     = 3.0f;
+                systemShipRenderer           = o.AddComponent<SystemShipRenderer>();
+                systemShipRenderer.ship      = ship;
+                systemShipRenderer.shipColor = Color.blue;
+                systemShipRenderer.width     = 3.0f;
 
                 ship.health        =
                 ship.max_health    = 25000;
@@ -396,7 +396,7 @@ namespace Scripts {
                     }
                 }
 
-                renderer.shipColor.b = (float) ship.health / ship.max_health;
+                systemShipRenderer.shipColor.b = (float) ship.health / ship.max_health;
 
                 foreach (ShipWeapon weapon in ship.weapons) {
                     weapon.cooldown -= (int)(current_time * 1000.0f);
@@ -469,7 +469,7 @@ namespace Scripts {
             void OnDestroy() {
                 GameObject.Destroy(angular_velocity_perpendicular_renderer);
                 GameObject.Destroy(angular_velocity_direction_renderer);
-                GameObject.Destroy(renderer);
+                GameObject.Destroy(systemShipRenderer);
                 GameObject.Destroy(o);
             }
         }   

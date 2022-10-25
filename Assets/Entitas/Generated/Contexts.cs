@@ -35,10 +35,9 @@ public partial class Contexts : Entitas.IContexts {
     public ParticleContext particle { get; set; }
     public PodContext pod { get; set; }
     public ProjectileContext projectile { get; set; }
-    public UIElementContext uIElement { get; set; }
     public VehicleContext vehicle { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { actionCoolDown, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, node, particle, pod, projectile, uIElement, vehicle }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { actionCoolDown, agent, aI, floatingText, game, input, inventory, itemInventory, itemParticle, mech, node, particle, pod, projectile, vehicle }; } }
 
     public Contexts() {
         actionCoolDown = new ActionCoolDownContext();
@@ -55,7 +54,6 @@ public partial class Contexts : Entitas.IContexts {
         particle = new ParticleContext();
         pod = new PodContext();
         projectile = new ProjectileContext();
-        uIElement = new UIElementContext();
         vehicle = new VehicleContext();
 
         var postConstructors = System.Linq.Enumerable.Where(
@@ -95,7 +93,6 @@ public partial class Contexts {
     public const string ItemID = "ItemID";
     public const string ItemInventory = "ItemInventory";
     public const string ItemType = "ItemType";
-    public const string KGUIElementsID = "KGUIElementsID";
     public const string MechID = "MechID";
     public const string NodeIDID = "NodeIDID";
     public const string NodeIDTypeID = "NodeIDTypeID";
@@ -161,11 +158,6 @@ public partial class Contexts {
             ItemType,
             itemParticle.GetGroup(ItemParticleMatcher.ItemType),
             (e, c) => ((Item.TypeComponent)c).Type));
-
-        uIElement.AddEntityIndex(new Entitas.PrimaryEntityIndex<UIElementEntity, int>(
-            KGUIElementsID,
-            uIElement.GetGroup(UIElementMatcher.KGUIElementsID),
-            (e, c) => ((KGUI.Elements.IDComponent)c).Index));
 
         mech.AddEntityIndex(new Entitas.PrimaryEntityIndex<MechEntity, int>(
             MechID,
@@ -265,10 +257,6 @@ public static class ContextsExtensions {
         return ((Entitas.EntityIndex<ItemParticleEntity, Enums.ItemType>)context.GetEntityIndex(Contexts.ItemType)).GetEntities(Type);
     }
 
-    public static UIElementEntity GetEntityWithKGUIElementsID(this UIElementContext context, int Index) {
-        return ((Entitas.PrimaryEntityIndex<UIElementEntity, int>)context.GetEntityIndex(Contexts.KGUIElementsID)).GetEntity(Index);
-    }
-
     public static MechEntity GetEntityWithMechID(this MechContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<MechEntity, int>)context.GetEntityIndex(Contexts.MechID)).GetEntity(ID);
     }
@@ -338,7 +326,6 @@ public partial class Contexts {
             CreateContextObserver(particle);
             CreateContextObserver(pod);
             CreateContextObserver(projectile);
-            CreateContextObserver(uIElement);
             CreateContextObserver(vehicle);
         } catch(System.Exception) {
         }

@@ -1,9 +1,13 @@
+using System;
+
 namespace Agent
 {
 
 
     public struct AgentAnimation
     {
+
+
         public Engine3D.AnimationType Animation;
         public float FadeTime;
         public float Speed;
@@ -31,5 +35,26 @@ namespace Agent
             a.Looping == b.Looping &&
             a.MovementSpeedFactor == b.MovementSpeedFactor &&
             a.UseActionDurationForSpeed == b.UseActionDurationForSpeed;
+        
+        public bool Equals(AgentAnimation other)
+        {
+            return Animation == other.Animation && 
+                   FadeTime.Equals(other.FadeTime) && 
+                   Speed.Equals(other.Speed) &&
+                   StartTime.Equals(other.StartTime) && 
+                   Looping == other.Looping &&
+                   MovementSpeedFactor.Equals(other.MovementSpeedFactor) &&
+                   UseActionDurationForSpeed == other.UseActionDurationForSpeed;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AgentAnimation other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine((int) Animation, FadeTime, Speed, StartTime, Looping, MovementSpeedFactor, UseActionDurationForSpeed);
+        }
     }
 }

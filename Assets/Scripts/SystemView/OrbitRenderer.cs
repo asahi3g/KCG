@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Source.SystemView;
+using UnityEngine.Serialization;
 
 namespace Scripts {
     namespace SystemView {
@@ -17,7 +18,7 @@ namespace Scripts {
 
             public float line_width = 0.1f;
 
-            public CameraController camera;
+            [FormerlySerializedAs("camera")] public CameraController currentCamera;
 
             public void update_renderer(int segments) {
                 if(line_renderer == null) return;
@@ -52,7 +53,7 @@ namespace Scripts {
                 }
 
                 line_renderer.startWidth    =
-                line_renderer.endWidth      = line_width == 0.1f ? line_width / camera.scale : line_width;
+                line_renderer.endWidth      = line_width == 0.1f ? line_width / currentCamera.scale : line_width;
                 line_renderer.startColor    =
                 line_renderer.endColor      = color;
 
@@ -64,7 +65,8 @@ namespace Scripts {
 
             // Start is called before the first frame update
             void Start() {
-                camera = UnityEngine.GameObject.Find("Main Camera").GetComponent<CameraController>();
+
+                currentCamera = UnityEngine.GameObject.Find("Main Camera").GetComponent<CameraController>();
 
                 line_renderer = gameObject.AddComponent<UnityEngine.LineRenderer>();
 

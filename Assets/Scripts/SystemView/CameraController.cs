@@ -41,14 +41,6 @@ namespace Scripts {
             public float get_aspect_ratio()              { return camera.aspect; }
             public float get_width()                     { return UnityEngine.Screen.width; }
             public float get_height()                    { return UnityEngine.Screen.height; }
-
-            public bool size_changed() {
-                if(last_aspect == camera.aspect) return false;
-
-                last_aspect = camera.aspect;
-
-                return true;
-            }
         }
     }
 }

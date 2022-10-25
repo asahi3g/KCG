@@ -1,8 +1,8 @@
 //imports UnityEngine
 
 using KMath;
-using KGUI.Elements;
 using Enums;
+using Utility;
 
 namespace Mech
 {
@@ -47,8 +47,11 @@ namespace Mech
             var positionY = -220f;
 
 
-            ChestBackground = planet.AddUIImage("ChestBackground", canvas, backgroundSprite,
-                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
+            //var backgroundSprite = UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd");
+
+
+            /*ChestBackground = planet.AddUIImage("ChestBackground", canvas, backgroundSprite,
+                    new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
             Chest = planet.AddUIImage("Chest", ChestBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
@@ -106,7 +109,7 @@ namespace Mech
             
             SmashableEgg = planet.AddUIImage("SmashableEgg", SmashableEggBackground.Transform,
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
-                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
+                new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;*/
         }
 
         public void Draw(ref Planet.PlanetState planet, AgentEntity agentEntity)

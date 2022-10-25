@@ -35,7 +35,9 @@ namespace Scripts {
             public  float            drag_factor      =             10000.0f;
             public  float            sailing_factor   =                20.0f;
 
+#pragma warning disable CS0414
             private float            CachedSunMass    = 50000000000000000.0f;
+
             private float            CachedPlanetMass =   100000000000000.0f;
             private float            CachedMoonMass   =    20000000000000.0f;
 
@@ -50,6 +52,7 @@ namespace Scripts {
             public  ComputeShader    circular_blur_shader;
             public  ComputeShader    circular_mask_shader;
             public  ComputeShader    pixelate_shader;
+#pragma warning restore CS0414
 
             public  bool             pixelate;
             public  bool             smoothstepped_colors;

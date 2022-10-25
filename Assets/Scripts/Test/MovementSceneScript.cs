@@ -95,8 +95,9 @@ namespace Planet.Unity
             Shape1[2] = new Vec2f(13.0f, 13.0f);
             Shape1[3] = new Vec2f(12.0f, 13.0f);
 
+            /*
             float epsilon = 0.01f;
-            /*Shape2 = new Vec2f[5];
+            Shape2 = new Vec2f[5];
             Shape2[0] = new Vec2f(15.0f, 15.0f);
             Shape2[1] = new Vec2f(16.0f, 15.0f);
             Shape2[2] = new Vec2f(16.0f, 16.0f);
@@ -125,10 +126,9 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
-            int PlayerFaction = 0;
-            int EnemyFaction = 1;
+            int playerFaction = 0;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(3.0f, 20), playerFaction);
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 

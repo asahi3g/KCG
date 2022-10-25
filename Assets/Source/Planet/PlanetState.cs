@@ -32,7 +32,6 @@ namespace Planet
         public ParticleList ParticleList;
         public ItemParticleList ItemParticleList;
         public InventoryList InventoryList;
-        public UIElementList UIElementList;
         public CameraFollow cameraFollow;
 
         public AgentEntity Player;
@@ -52,7 +51,6 @@ namespace Planet
             ParticleList = new ParticleList();
             ItemParticleList = new ItemParticleList();
             InventoryList = new InventoryList();
-            UIElementList = new UIElementList();
             cameraFollow = new CameraFollow();
 
             EntitasContext = new Contexts();
@@ -64,7 +62,7 @@ namespace Planet
             {
                 AgentEntity entity = AgentList.Get(agentId);
 
-                entity.Destroy();
+                entity.DestroyEntity();
             }
         }
 
@@ -267,107 +265,6 @@ namespace Planet
 
             return null;
         }
-        public UIElementEntity AddUIText(string text, float timeToLive, Vec2f position, Vec2f areaSize)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnText(EntitasContext.uIElement, text, timeToLive, position,
-                    areaSize, -1, ElementType.Text));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIText(string text, Vec2f position, Vec2f areaSize)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnText(EntitasContext.uIElement, text, position,
-                    areaSize, -1, ElementType.Text));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
-                position, scale, Type, -1, ElementType.Image));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, UnityEngine.UI.Image.Type Type, Color color)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
-                position, scale, Type, color, -1, ElementType.Image));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, Sprite Sprite, Vec2f position, Vec3f scale, Vec2f size, UnityEngine.UI.Image.Type Type, Color color)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, Sprite,
-                position, scale, size, Type, color, -1, ElementType.Image));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, string path, Vec2f position, Vec3f scale, int width, int height)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
-                position, scale, width, height, -1, ElementType.Image));
-            return newEntity;
-        }
-        
-        public UIElementEntity AddUIImage(string Name, Transform Parent, string path, Vec2f position, Vec3f scale, Vec2f size, int width, int height)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, path,
-                position, scale, size, width, height, -1, ElementType.Image));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int tileSpriteID, Vec2f position, Vec3f scale, int width, int height)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, tileSpriteID,
-                position, scale, width, height, -1, ElementType.Image));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, Vec2f position, Vec3f scale, 
-            AtlasType atlasType)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
-                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image, false, Vec2f.Zero, Vec2f.Zero));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, Vec2f position, Vec3f scale,
-            AtlasType atlasType, Vec2f pos1, Vec2f pos2)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
-                height, tileSpriteID, position, scale, -1, atlasType, ElementType.Image, true, pos1, pos2));
-            return newEntity;
-        }
-
-        public UIElementEntity AddUIImage(string Name, Transform Parent, int width, int height, int tileSpriteID, int atlasID, Vec2f position, Vec3f scale,
-            AtlasType atlasType)
-        {
-            Utils.Assert(UIElementList.Size < PlanetEntityLimits.UIElementLimit);
-
-            UIElementEntity newEntity = UIElementList.Add(GameState.ElementSpawnerSystem.SpawnImage(EntitasContext.uIElement, Name, Parent, width,
-                height, tileSpriteID, position, scale, 0, -1, atlasType, ElementType.Image));
-            return newEntity;
-        }
 
         public PodEntity AddPod(Vec2f position, PodType podType)
         {
@@ -517,11 +414,6 @@ namespace Planet
 
         }
 
-        public void RemoveUIElement(int elementID)
-        {
-            UIElementList.Remove(elementID);
-        }
-
         // updates the entities, must call the systems and so on ..
         public void Update(float deltaTime, Material material, Transform transform)
         {
@@ -664,8 +556,6 @@ namespace Planet
             {
                 GameState.GUIManager.Update(agentEntity);
                 GameState.GUIManager.Draw();
-                GameState.ElementUpdateSystem.Update(ref this, Time.deltaTime);
-                GameState.ElementDrawSystem.Draw(EntitasContext.uIElement);
             }
         }
     }

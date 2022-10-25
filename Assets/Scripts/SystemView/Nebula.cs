@@ -21,6 +21,7 @@ namespace Scripts {
             public UnityEngine.Texture2D      texture;
             public UnityEngine.SpriteRenderer renderer;
 
+
             public bool           pixelate;
             public int            pixelation_size;
 
@@ -327,6 +328,7 @@ namespace Scripts {
 
                 renderer.transform.Translate(new UnityEngine.Vector3(0.0f, 0.0f, renderer.transform.position.z + 5.0f));
 
+
                 last_time = UnityEngine.Time.time;
             }
 
@@ -335,6 +337,7 @@ namespace Scripts {
                       last_time    = UnityEngine.Time.time;
 
                 renderer.transform.RotateAround(center, new UnityEngine.Vector3(0.0f, 0.0f, 1.0f), -current_time * spin);
+
             }
         }
     }

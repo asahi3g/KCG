@@ -26,7 +26,6 @@ public class GameResources
             CreateProjectiles();
             CreateMechs();
             CreateVehicles();
-            CreateGUI();
 
             UnityEngine.Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
         }
@@ -87,10 +86,4 @@ public class GameResources
         GameState.VehicleCreationApi.InitializeResources();
         GameState.PodCreationApi.InitializeResources();
     }
-
-    private static void CreateGUI()
-    {
-        GameState.ElementUpdateSystem.InitializeResources();
-    }
-
 }
