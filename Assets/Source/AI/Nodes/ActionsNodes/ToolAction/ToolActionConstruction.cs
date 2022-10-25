@@ -21,7 +21,7 @@ namespace Node.Action
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&
                 y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
-                    var mech = GameState.MechCreationApi.Get((int)itemEntity.itemMech.MechID);
+                    var mech = GameState.MechCreationApi.Get(itemEntity.itemMech.MechID);
 
                     var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
                     var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);

@@ -11,29 +11,9 @@ namespace Node.Action
         public override NodeType Type { get { return NodeType.ReloadAction; } }
         public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
 
-        private ItemInventoryEntity GetItem(ref PlanetState planet, NodeEntity nodeEntity)
-        {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-
-            if (!agentEntity.hasAgentInventory)
-                return null;
-
-            int inventoryID = agentEntity.agentInventory.InventoryID;
-            EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
-            ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
-
-            if (inventoryModel.HasToolBar)
-            {
-                int selectedSlot = inventory.SelectedSlotID;
-                return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentEntity.agentInventory.InventoryID, selectedSlot);
-            }
-
-            return null;
-        }
-
         public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            ItemInventoryEntity item = GetItem(ref planet, nodeEntity);
+            ItemInventoryEntity item = nodeEntity.GetItem(ref planet);
 
             if (item != null)
             {
@@ -48,14 +28,14 @@ namespace Node.Action
 
         public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = GetItem(ref planet, nodeEntity);
-            FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            ItemInventoryEntity item = nodeEntity.GetItem(ref planet);
+            FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
 
             float runningTime = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
             if (runningTime >= WeaponPropreties.ReloadTime)
             {
-                if(itemEntity.hasItemFireWeaponClip)
-                    itemEntity.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;
+                if(item.hasItemFireWeaponClip)
+                    item.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;
 
                 nodeEntity.nodeExecution.State =  Enums.NodeState.Success;
             }
@@ -63,19 +43,15 @@ namespace Node.Action
 
         public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = GetItem(ref planet, nodeEntity);
+            ItemInventoryEntity item = nodeEntity.GetItem(ref planet);
 
-            if (nodeEntity.nodeExecution.State == Enums.NodeState.Fail)
-            {
-                Debug.Log("Reload Failed.");
-            }
-            else
-            {
-                if (itemEntity.hasItemFireWeaponClip)
-                    Debug.Log("Weapon Reloaded." + itemEntity.itemFireWeaponClip.NumOfBullets.ToString() + " Ammo in the clip.");
-            }
+            if (item.hasItemFireWeaponClip)
+                Debug.Log("Weapon Reloaded." + item.itemFireWeaponClip.NumOfBullets.ToString() + " Ammo in the clip.");
+        }
 
-            base.OnExit(ref planet, nodeEntity);
+        public override void OnFail(ref PlanetState plane, NodeEntity nodeEntity)
+        {
+            Debug.Log("Reload Failed.");
         }
     }
 }

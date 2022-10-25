@@ -8,13 +8,8 @@ namespace Mech
     [Mech]
     public class PlanterComponent : IComponent
     {
-        public bool GotSeed;
-        public int PlantMechID;
-        public float PlantGrowth;
-        public float GrowthTarget;
-        public float WaterLevel;
-        public float MaxWaterLevel;
-        public int LightLevel;
+        public bool GotPlant;
+        public int  PlantMechID;
     }
 }
 

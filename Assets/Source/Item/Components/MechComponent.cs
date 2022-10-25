@@ -1,13 +1,12 @@
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
-using Mech;
+using Enums;
 
 namespace Item
 {
     [ItemInventory]
     public class MechComponent : IComponent
     {
-        public Mech.MechType MechID;
+        public MechType MechID;
         public bool InputsActive;
     }
 }

@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc4adab7f802724d9c7bfcc316c132d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Material: {fileID: 2100000, guid: 4073de6af124b4f40bdce02691603836, type: 2}
+  material: {fileID: 2100000, guid: 4073de6af124b4f40bdce02691603836, type: 2}
   enableGeometryPlacementTool: 1
 --- !u!1 &865859322
 GameObject:
@@ -601,7 +601,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

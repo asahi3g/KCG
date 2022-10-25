@@ -59,7 +59,7 @@ namespace Planet
                         float x = (float)reader.ReadDouble();
                         float y = (float)reader.ReadDouble();
 
-                        planet.AddMech(new Vec2f(x, y), (Mech.MechType)mechType);
+                        planet.AddMech(new Vec2f(x, y), (Enums.MechType)mechType);
                     }
 
 

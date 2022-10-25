@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:IMGUIContainer style="flex-shrink: 0; flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.47); flex-direction: column; width: auto; height: auto; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="CreateWindow" style="height: 80px; width: 250px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-bottom-color: rgb(48, 48, 48); border-left-color: rgb(48, 48, 48); border-right-color: rgb(48, 48, 48); border-top-color: rgb(48, 48, 48); background-color: rgb(56, 56, 56);">
+            <ui:Label text="New Sensor" display-tooltip-when-elided="true" enable-rich-text="false" style="font-size: 11px; height: 23px;" />
+            <ui:DropdownField label="Type" index="0" choices="System.Collections.Generic.List`1[System.String]" />
+            <ui:Button text="Add Sensor" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:IMGUIContainer>
+</ui:UXML>

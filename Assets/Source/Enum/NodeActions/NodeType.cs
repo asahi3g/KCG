@@ -6,6 +6,7 @@
         None = -1,
 
         // Behaviour tree Nodes
+        ConditionalNode,
         DecoratorNode,
         RepeaterNode,
         SequenceNode,
@@ -40,6 +41,7 @@
         MaterialPlacementAction,
         ThrowFlareAction,
         PickaxeAction,
+        AxeAction,
 
 
         /// Ttools actions
@@ -58,6 +60,5 @@
         ToolActionRemoveMech,
         ToolActionPotion,
         ToolActionGeometryPlacement,
-        ToolActionAxe,
     }
 }

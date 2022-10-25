@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Node
 {
-    // 
     public class SchedulerSystem
     {
         public void Update(Planet.PlanetState planet)
@@ -51,8 +50,7 @@ namespace Node
                     continue;
 
                 AgentController controller = agent.agentController.Controller;
-                // Todo(Urgemt): Move this code to another system:
-                controller.Update(ref planet);
+                controller.Update(agent, ref planet);
                 NodeEntity nodeEntity = planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
                 
                 int index = (int)nodeEntity.nodeID.TypeID;

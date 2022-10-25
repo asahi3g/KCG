@@ -169,9 +169,9 @@ namespace Inventory
         public void RemoveItem(Contexts contexts, int inventoryID, int slotID)
         {
             Inventory.EntityComponent inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
-
             if (!inventory.SlotsMask[slotID])
                 return;
+
             ItemInventoryEntity itemEntity = GetItemInSlot(contexts, inventoryID, slotID);
             inventory.SlotsMask.UnSet(slotID);
             inventory.Slots[slotID].ItemID = -1;

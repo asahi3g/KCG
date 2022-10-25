@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using KMath;
-using System.Numerics;
-using Unity.VisualScripting;
 
 public class GeometryGUI
 {

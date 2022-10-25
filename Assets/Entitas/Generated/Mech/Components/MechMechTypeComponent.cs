@@ -11,14 +11,14 @@ public partial class MechEntity {
     public Mech.TypeComponent mechType { get { return (Mech.TypeComponent)GetComponent(MechComponentsLookup.MechType); } }
     public bool hasMechType { get { return HasComponent(MechComponentsLookup.MechType); } }
 
-    public void AddMechType(Mech.MechType newMechType) {
+    public void AddMechType(Enums.MechType newMechType) {
         var index = MechComponentsLookup.MechType;
         var component = (Mech.TypeComponent)CreateComponent(index, typeof(Mech.TypeComponent));
         component.mechType = newMechType;
         AddComponent(index, component);
     }
 
-    public void ReplaceMechType(Mech.MechType newMechType) {
+    public void ReplaceMechType(Enums.MechType newMechType) {
         var index = MechComponentsLookup.MechType;
         var component = (Mech.TypeComponent)CreateComponent(index, typeof(Mech.TypeComponent));
         component.mechType = newMechType;

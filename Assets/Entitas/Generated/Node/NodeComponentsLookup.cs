@@ -11,17 +11,17 @@ public static class NodeComponentsLookup {
     public const int NodeBlackboardData = 0;
     public const int NodeBT = 1;
     public const int NodeComposite = 2;
-    public const int NodeDuration = 3;
-    public const int NodeExecution = 4;
-    public const int NodeID = 5;
-    public const int NodeInterrupt = 6;
-    public const int NodeMoveTo = 7;
-    public const int NodeOwner = 8;
-    public const int NodeRoot = 9;
-    public const int NodeTarget = 10;
-    public const int NodeTime = 11;
-    public const int NodeTool = 12;
-    public const int NodesDecorator = 13;
+    public const int NodeDecorator = 3;
+    public const int NodeDuration = 4;
+    public const int NodeExecution = 5;
+    public const int NodeID = 6;
+    public const int NodeInterrupt = 7;
+    public const int NodeMoveTo = 8;
+    public const int NodeOwner = 9;
+    public const int NodeRoot = 10;
+    public const int NodeTarget = 11;
+    public const int NodeTime = 12;
+    public const int NodeTool = 13;
 
     public const int TotalComponents = 14;
 
@@ -29,6 +29,7 @@ public static class NodeComponentsLookup {
         "NodeBlackboardData",
         "NodeBT",
         "NodeComposite",
+        "NodeDecorator",
         "NodeDuration",
         "NodeExecution",
         "NodeID",
@@ -38,14 +39,14 @@ public static class NodeComponentsLookup {
         "NodeRoot",
         "NodeTarget",
         "NodeTime",
-        "NodeTool",
-        "NodesDecorator"
+        "NodeTool"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(Node.BlackboardDataComponent),
         typeof(Node.BTComponent),
         typeof(Node.CompositeComponent),
+        typeof(Node.DecoratorComponent),
         typeof(Node.DurationComponent),
         typeof(Node.ExecutionComponent),
         typeof(Node.IDComponent),
@@ -55,7 +56,6 @@ public static class NodeComponentsLookup {
         typeof(Node.RootComponent),
         typeof(Node.TargetComponent),
         typeof(Node.TimeComponent),
-        typeof(Node.ToolComponent),
-        typeof(Nodes.DecoratorComponent)
+        typeof(Node.ToolComponent)
     };
 }

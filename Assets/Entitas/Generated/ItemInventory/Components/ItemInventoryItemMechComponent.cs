@@ -11,7 +11,7 @@ public partial class ItemInventoryEntity {
     public Item.MechComponent itemMech { get { return (Item.MechComponent)GetComponent(ItemInventoryComponentsLookup.ItemMech); } }
     public bool hasItemMech { get { return HasComponent(ItemInventoryComponentsLookup.ItemMech); } }
 
-    public void AddItemMech(Mech.MechType newMechID, bool newInputsActive) {
+    public void AddItemMech(Enums.MechType newMechID, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemMech;
         var component = (Item.MechComponent)CreateComponent(index, typeof(Item.MechComponent));
         component.MechID = newMechID;
@@ -19,7 +19,7 @@ public partial class ItemInventoryEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceItemMech(Mech.MechType newMechID, bool newInputsActive) {
+    public void ReplaceItemMech(Enums.MechType newMechID, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemMech;
         var component = (Item.MechComponent)CreateComponent(index, typeof(Item.MechComponent));
         component.MechID = newMechID;

@@ -363,11 +363,11 @@ namespace Planet.Unity
             Planet.AddAgent(new Vec2f(5, 28), Enums.AgentType.EnemyGunner);
             Planet.AddAgent(new Vec2f(10, 28), Enums.AgentType.EnemyGunner);
 
-            Planet.AddMech(new Vec2f(10, 2), Mech.MechType.SmashableBox);
+            Planet.AddMech(new Vec2f(10, 2), Enums.MechType.SmashableBox);
 
-            Planet.AddMech(new Vec2f(11, 6.1f), Mech.MechType.SurveillanceCamera);
+            Planet.AddMech(new Vec2f(11, 6.1f), Enums.MechType.SurveillanceCamera);
 
-            Planet.AddMech(new Vec2f(19, 6.1f), Mech.MechType.RoofScreen);
+            Planet.AddMech(new Vec2f(19, 6.1f), Enums.MechType.RoofScreen);
 
             for (int y = 0; y < 31; y++)
             {

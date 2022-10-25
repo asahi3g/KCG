@@ -16,7 +16,10 @@ namespace Node.Action
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             if (!agentEntity.hasAgentInventory)
+            {
+                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                 return;
+            }
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
@@ -42,7 +45,7 @@ namespace Node.Action
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
                 ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
-                itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.MovingDirection * 8.0f, 8.0f);
+                itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
                 itemParticle.isItemUnpickable = true;
                 nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);
 

@@ -41,13 +41,13 @@ namespace Collisions
 
         public GeometryProperties GetProperties(Enums.GeometryTileShape shape)
         {
-            Utils.Assert((int)shape >= 0 && (int)shape < PropertiesArray.Length);
+            Utility.Utils.Assert((int)shape >= 0 && (int)shape < PropertiesArray.Length);
 
             return PropertiesArray[(int)shape];
         }
         public TileLineSegment GetLine(int index)
         {
-             Utils.Assert((int)index >= 0 && (int)index < SegmentArray.Length);
+             Utility.Utils.Assert((int)index >= 0 && (int)index < SegmentArray.Length);
 
              return SegmentArray[index];
         }
