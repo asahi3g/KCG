@@ -19,6 +19,7 @@ namespace Agent
 
         // Enemy agent
         public EnemyBehaviour EnemyBehaviour;
+        public int BehaviorTreeRootID;
         public float DetectionRadius;
 
         // Stats

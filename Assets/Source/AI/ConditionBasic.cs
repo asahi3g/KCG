@@ -1,0 +1,56 @@
+﻿using Enums;
+using Item;
+using NodeSystem.BehaviorTree;
+using Unity.Collections.LowLevel.Unsafe;
+using Planet;
+
+namespace Condition
+{
+    // Basic conditions used by several behaviors
+    public static class ConditionBasic
+    {
+        static bool HasBulletInClip(object ptr)
+        {
+            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            ItemInventoryEntity item = agent.GetItem(ref planet);
+            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+
+            if (itemProperty.Group == ItemGroups.Gun)
+            {
+                if (item.hasItemFireWeaponClip)
+                {
+                    if (item.itemFireWeaponClip.NumOfBullets == 0)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false; // Weapon not equipped.
+        }
+
+        static bool HasEnemyAlive(object ptr)
+        {
+            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            for (int i = 0; i < planet.AgentList.Length; i++)
+            {
+                AgentEntity entity = planet.AgentList.Get(i);
+                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
+                    continue;
+
+                return true;
+            }
+            return false;
+        }
+
+        public static void RegisterConditions()
+        {
+            GameState.ConditionManager.RegisterCondition("HasBulletInClip", HasBulletInClip);
+            GameState.ConditionManager.RegisterCondition("HasEnemyAlive", HasEnemyAlive);
+        }
+    }
+}

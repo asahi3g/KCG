@@ -11,6 +11,11 @@ using UnityEngine;
 
 public partial class AgentEntity 
 {
+    /// <summary>
+    /// Gets equipped item.
+    /// </summary>
+    /// <param name="planet"></param>
+    /// <returns></returns>
     public ItemInventoryEntity GetItem(ref PlanetState planet)
     {
         if (!hasAgentInventory)
@@ -21,6 +26,7 @@ public partial class AgentEntity
         int selectedSlot = inventory.SelectedSlotID;
         return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
     }
+
     public void Destroy()
     {
         if (hasAgentModel3D)

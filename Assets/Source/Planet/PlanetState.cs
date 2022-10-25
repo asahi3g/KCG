@@ -590,6 +590,7 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update(ref this);
 
             GameState.AgentProcessStats.Update(ref this);
+            GameState.BehaviorTreeUpdateSystem.Update();
 
             cameraFollow.Update(ref this);
 

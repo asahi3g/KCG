@@ -1,10 +1,17 @@
-/// <summary>
-/// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
-/// </summary>
 
+using AI;
+using NodeSystem;
+using NodeSystem.BehaviorTree;
+using Planet;
+
+// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors
 public static class GameState
 {
     //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
+
+    public static readonly Utility.FileLoadingManager FileLoadingManager;
+    public static readonly ECSInput.InputProcessSystem InputProcessSystem;
+    public static PlanetState CurrentPlanet;
 
     #region Atinmation
     public static readonly Animation.AnimationManager AnimationManager;
@@ -14,6 +21,12 @@ public static class GameState
     #region AI
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
+    public static readonly BlackboardManager    BlackboardManager;
+    public static readonly NodeManager          NodeManager;
+    public static readonly ActionManager        ActionManager;
+    public static readonly ConditionManager     ConditionManager;
+    public static readonly BehaviorTreeManager  BehaviorTreeManager;
+    public static readonly UpdateSystem         BehaviorTreeUpdateSystem;
     #endregion
 
     #region Action
@@ -127,9 +140,6 @@ public static class GameState
     public static readonly Vehicle.Pod.AISystem PodAISystem;
     #endregion
 
-    public static readonly Utility.FileLoadingManager FileLoadingManager;
-    public static readonly ECSInput.InputProcessSystem InputProcessSystem;
-
     #region Particle
     public static readonly Particle.ParticleCreationApi ParticleCreationApi;
     public static readonly Particle.ParticleEmitterCreationApi ParticleEmitterCreationApi;
@@ -173,6 +183,12 @@ public static class GameState
     {
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
+        BlackboardManager = new BlackboardManager();
+        NodeManager =   new NodeManager();
+        ActionManager = new ActionManager();
+        ConditionManager = new ConditionManager();
+        BehaviorTreeManager = new BehaviorTreeManager();
+        BehaviorTreeUpdateSystem = new UpdateSystem();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
