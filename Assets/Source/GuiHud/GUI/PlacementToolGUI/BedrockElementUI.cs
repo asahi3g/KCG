@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class BedrockElementUI : UIElement
+    public class BedrockElementUI : ElementUI
     {
         [SerializeField] private Image borderImage;
 
@@ -17,7 +17,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = UIElementID.BedrockElement;
+            ID = ElementEnums.Bedrock;
 
             Icon = new ImageWrapper(iconImage, 16, 16,
                 "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png", AtlasType.Gui);
@@ -46,7 +46,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Bedrock;
+                item.itemTile.TileID = global::Enums.Tile.TileID.Bedrock;
             }
         }
     }

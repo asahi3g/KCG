@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace KGUI
 {
-    public class PlayerStatusUI : UIPanel
+    public class PlayerStatus : PanelUI
     {
         [SerializeField] private HealthElementUI healthElementUI;
         [SerializeField] private FoodElementUI foodElementUI;
@@ -12,7 +12,7 @@ namespace KGUI
 
         public override void Init()
         {
-            ID = UIPanelID.PlayerStatus;
+            ID = PanelEnums.PlayerStatus;
 
             UIElementList.Add(foodElementUI.ID, foodElementUI);
             UIElementList.Add(waterElementUI.ID, waterElementUI);

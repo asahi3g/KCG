@@ -3,23 +3,22 @@ using UnityEngine;
 using KGUI.Elements;
 using KMath;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
-    public class FoodElementUI : UIElement
+    public class FoodElementUI : ElementUI
     {
         [SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float foodAmount;
-        private readonly Text infoText = new();
+        private readonly TextWrapper infoText = new();
 
         public override void Init()
         {
             base.Init();
             
-            ID = UIElementID.FoodElement;
+            ID = ElementEnums.FoodIndicator;
             
             foodAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Food : 0.0f;
 

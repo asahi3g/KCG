@@ -14,14 +14,14 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            Text textObj = new Text();
-            textObj.Entity = entity;
+            TextWrapper textWrapperObj = new TextWrapper();
+            textWrapperObj.Entity = entity;
 
-            entity.AddKGUIElementsText(text, timeToLive, textObj, areaSize);
+            entity.AddKGUIElementsText(text, timeToLive, textWrapperObj, areaSize);
             entity.AddKGUIElementsType(elementType);
 
-            textObj.Create("UIElementText", entity.kGUIElementsText.Text, GameObject.Find("Canvas").transform, entity.kGUIElementsText.TimeToLive);
-            textObj.SetSizeDelta(new Vector2(areaSize.X, areaSize.Y));
+            textWrapperObj.Create("UIElementText", entity.kGUIElementsText.Text, GameObject.Find("Canvas").transform, entity.kGUIElementsText.TimeToLive);
+            textWrapperObj.SetSizeDelta(new Vector2(areaSize.X, areaSize.Y));
             entity.kGUIElementsText.GameObject.StartLifeTime = true;
 
             return entity;
@@ -35,14 +35,14 @@ namespace KGUI.Elements
             entity.AddKGUIElementsID(Index);
             entity.AddKGUIElementsPosition2D(position, position);
 
-            Text textObj = new Text();
-            textObj.Entity = entity;
+            TextWrapper textWrapperObj = new TextWrapper();
+            textWrapperObj.Entity = entity;
 
-            entity.AddKGUIElementsText(text, 50.0f, textObj, areaSize);
+            entity.AddKGUIElementsText(text, 50.0f, textWrapperObj, areaSize);
             entity.AddKGUIElementsType(elementType);
 
-            textObj.Create("UIElementText", entity.kGUIElementsText.Text, GameObject.Find("Canvas").transform, entity.kGUIElementsText.TimeToLive);
-            textObj.SetSizeDelta(new Vector2(areaSize.X, areaSize.Y));
+            textWrapperObj.Create("UIElementText", entity.kGUIElementsText.Text, GameObject.Find("Canvas").transform, entity.kGUIElementsText.TimeToLive);
+            textWrapperObj.SetSizeDelta(new Vector2(areaSize.X, areaSize.Y));
 
             return entity;
         }

@@ -11,7 +11,7 @@ public partial class UIElementEntity {
     public KGUI.Elements.TextComponent kGUIElementsText { get { return (KGUI.Elements.TextComponent)GetComponent(UIElementComponentsLookup.KGUIElementsText); } }
     public bool hasKGUIElementsText { get { return HasComponent(UIElementComponentsLookup.KGUIElementsText); } }
 
-    public void AddKGUIElementsText(string newText, float newTimeToLive, KGUI.Elements.Text newGameObject, KMath.Vec2f newSizeDelta) {
+    public void AddKGUIElementsText(string newText, float newTimeToLive, KGUI.Elements.TextWrapper newGameObject, KMath.Vec2f newSizeDelta) {
         var index = UIElementComponentsLookup.KGUIElementsText;
         var component = (KGUI.Elements.TextComponent)CreateComponent(index, typeof(KGUI.Elements.TextComponent));
         component.Text = newText;
@@ -21,7 +21,7 @@ public partial class UIElementEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceKGUIElementsText(string newText, float newTimeToLive, KGUI.Elements.Text newGameObject, KMath.Vec2f newSizeDelta) {
+    public void ReplaceKGUIElementsText(string newText, float newTimeToLive, KGUI.Elements.TextWrapper newGameObject, KMath.Vec2f newSizeDelta) {
         var index = UIElementComponentsLookup.KGUIElementsText;
         var component = (KGUI.Elements.TextComponent)CreateComponent(index, typeof(KGUI.Elements.TextComponent));
         component.Text = newText;

@@ -151,10 +151,10 @@ namespace Item
             PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
         }
 
-        public void SetUIPanel(UIPanelID uiPanelID)
+        public void SetUIPanel(PanelEnums panelEnums)
         {
             PropertiesArray[(int) currentIndex].ItemFlags |= ItemProprieties.Flags.UI;
-            PropertiesArray[(int) currentIndex].ItemUIPanelID = uiPanelID;
+            PropertiesArray[(int) currentIndex].ItemPanelEnums = panelEnums;
         }
 
         public void SetPlaceable()
@@ -503,7 +503,7 @@ namespace Item
         public int Gold_6;
         public int Gold_7;
 
-        public UIPanel PlacementToolPrefab;
+        public PanelUI PlacementToolPrefab;
 
         public void InitializeResources()
         {
@@ -943,7 +943,7 @@ namespace Item
             SetInventoryTexture(BoneIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PotionTool);
+            SetUIPanel(PanelEnums.PotionTool);
             SetAction(NodeType.ToolActionPotion);
             EndItem();
 
@@ -970,7 +970,7 @@ namespace Item
             SetInventoryTexture(PlacementToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PlacementTool);
+            SetUIPanel(PanelEnums.PlacementTool);
             SetAction(NodeType.ToolActionPlaceTile);
             EndItem();
 
@@ -980,7 +980,7 @@ namespace Item
             SetInventoryTexture(PlacementToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PlacementMaterialTool);
+            SetUIPanel(PanelEnums.PlacementMaterialTool);
             SetAction(NodeType.MaterialPlacementAction);
             EndItem();
 

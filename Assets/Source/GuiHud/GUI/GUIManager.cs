@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Enums;
+using KGUI.Elements;
 using KMath;
 using Planet;
 using UnityEngine;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
+
 
 namespace KGUI
 {
@@ -18,15 +19,15 @@ namespace KGUI
         public Sprite ProgressBar;
         public Sprite WhiteSquareBorder;
 
-        public Dictionary<UIPanelID, UIPanel> UIPanelPrefabList = new();
-        public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelList = new();
 
         public Vec2f CursorPosition;
-        public UIElement CursorElement;
+        public ElementUI CursorElement;
         
         private Canvas canvas;
 
-        private Text scannerText = new();
+        private TextWrapper text = new();
 
         GeometryGUI GeometryGUI;
 
@@ -35,7 +36,7 @@ namespace KGUI
         {
             Planet = planet;
             
-            Cursor.visible = true;
+            UnityEngine.Cursor.visible = true;
             canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
             ProgressBar = GameState.Renderer.CreateSprite(
@@ -43,10 +44,12 @@ namespace KGUI
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
 
-            UIPanelPrefabList.Add(UIPanelID.PlayerStatus, Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI"));
-            UIPanelPrefabList.Add(UIPanelID.PlacementTool, Resources.Load<UIPanel>("GUIPrefabs/PlacementToolUI"));
-            UIPanelPrefabList.Add(UIPanelID.PlacementMaterialTool, Resources.Load<UIPanel>("GUIPrefabs/PlacementMaterialToolUI"));
-            UIPanelPrefabList.Add(UIPanelID.PotionTool, Resources.Load<UIPanel>("GUIPrefabs/PotionToolUI"));
+            PanelPrefabList.Add(PanelEnums.PlayerStatus, Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusUI"));
+            PanelPrefabList.Add(PanelEnums.PlacementTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementToolUI"));
+            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolUI"));
+            PanelPrefabList.Add(PanelEnums.PotionTool, Resources.Load<PanelUI>("GUIPrefabs/PotionToolUI"));
+            
+            PanelPrefabList.Add(PanelEnums.Test, Resources.Load<PanelUI>("GUIPrefabs/TestPanel"));
 
             GeometryGUI = new GeometryGUI();
 
@@ -55,12 +58,19 @@ namespace KGUI
 
         public void InitStage2()
         {
-            SetPanelActive(UIPanelID.PlayerStatus);
+            SetPanelActive(PanelEnums.PlayerStatus);
+            SetPanelActive(PanelEnums.Test);
         }
 
-        public void SetPanelActive(UIPanelID panelID, bool active = true)
+        // Inputs panel's ID that we wanna enable or disable
+        // UIPanelList.TryGetValue - checks if we have initialized our panel
+        // Then if that panel initialized we are disable or enable(bool active)
+        // If panel not Initialized, we are checking it in Prefab List(UIPanelPrefabList) with TryGetValue
+        // If it's in Prefab List then instantiate it and enable. If we trying to actually disable it(active == false) then don't even instantiate
+        // If we not have in UIPanelList or UIPanelPrefabList then error
+        public void SetPanelActive(PanelEnums panelEnums, bool active = true)
         {
-            if (UIPanelList.TryGetValue(panelID, out var panel))
+            if (PanelList.TryGetValue(panelEnums, out var panel))
             {
                 if (!active)
                 {
@@ -68,12 +78,18 @@ namespace KGUI
                 }
 
                 panel.gameObject.SetActive(active);
+
+                if (active)
+                {
+                    panel.OnActivate();
+                }
             }
-            else if(UIPanelPrefabList.TryGetValue(panelID, out var panelPrefab))
+            else if(PanelPrefabList.TryGetValue(panelEnums, out var panelPrefab))
             {
                 if (active)
                 {
-                    Object.Instantiate(panelPrefab, canvas.transform);
+                    var newPanel = Object.Instantiate(panelPrefab, canvas.transform);
+                    newPanel.gameObject.SetActive(true);
                 }
             }
             else
@@ -89,7 +105,7 @@ namespace KGUI
             
             CursorPosition = new Vec2f(Input.mousePosition.x, Input.mousePosition.y);
             
-            scannerText.Update();
+            text.Update();
             GeometryGUI.Update(ref Planet, agentEntity);
             
             var inventoryID = agentEntity.agentInventory.InventoryID;
@@ -102,7 +118,7 @@ namespace KGUI
 
         public void Draw()
         {
-            foreach (var panel in UIPanelList.Values)
+            foreach (var panel in PanelList.Values)
             {
                 foreach (var element in panel.UIElementList.Values)
                 {
@@ -126,7 +142,7 @@ namespace KGUI
             {
                 CursorElement?.OnMouseExited();
                 CursorElement = null;
-                foreach (var panel in UIPanelList.Values)
+                foreach (var panel in PanelList.Values)
                 {
                     if (!panel.gameObject.activeSelf) continue;
                     
@@ -150,24 +166,22 @@ namespace KGUI
             }
         }
 
-        public void AddScannerText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
+        public void AddText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
         {
-            // Create Scanner Text
-            scannerText.Create("TempText", _text, canvas.transform, lifeTime);
-            scannerText.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
-            scannerText.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
-            scannerText.StartLifeTime = true;
-        }
-
-        public Text AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
-        {
-            // Add Temporary text
-            Text text = new Text();
-            text.Create("TempText", _text, canvas.transform, 1);
+            text.Create("TempText", _text, canvas.transform, lifeTime);
             text.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
             text.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
+            text.StartLifeTime = true;
+        }
 
-            return text;
+        public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
+        {
+            TextWrapper textWrapper = new TextWrapper();
+            textWrapper.Create("TempText", _text, canvas.transform, 1);
+            textWrapper.SetPosition(new Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
+            textWrapper.SetSizeDelta(new Vector2(hudSize.X, hudSize.Y));
+
+            return textWrapper;
         }
     }
 }
