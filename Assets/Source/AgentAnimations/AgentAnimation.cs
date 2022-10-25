@@ -2,8 +2,6 @@ using System;
 
 namespace Agent
 {
-
-
     public struct AgentAnimation
     {
         //TODO: AgentAnimationId
