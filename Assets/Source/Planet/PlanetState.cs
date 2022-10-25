@@ -37,6 +37,7 @@ namespace Planet
         public AgentEntity Player;
 
         public Line2D[] DebugLines;
+        public Color[] DebugLinesColors;
         public int DebugLinesCount;
 
         public Contexts EntitasContext;
@@ -58,6 +59,7 @@ namespace Planet
             cameraFollow = new CameraFollow();
 
             DebugLines = new Line2D[1024];
+            DebugLinesColors = new Color[1024];
             DebugLinesCount = 0;
 
             EntitasContext = new Contexts();
@@ -102,13 +104,16 @@ namespace Planet
             GameState.GUIManager.InitStage2();
         }
 
-        public void AddDebugLine(Line2D line)
+        public void AddDebugLine(Line2D line, Color color)
         {
             if (DebugLinesCount + 1 >= DebugLines.Length)
             {
                 System.Array.Resize(ref DebugLines, DebugLines.Length + 1024);
+                System.Array.Resize(ref DebugLinesColors, DebugLines.Length + 1024);
             }
+            DebugLinesColors[DebugLinesCount] = color;
             DebugLines[DebugLinesCount++] = line;
+
         }
 
         // Note(Mahdi): Deprecated will be removed soon

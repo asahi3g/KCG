@@ -33,12 +33,45 @@ namespace Agent
             physicsState.Position.Y = physicsState.PreviousPosition.Y + delta.Y * (verticalCollisionResult.MinTime - 0.01f);*/
 
 
-            Vec2f collisionPosition = physicsState.PreviousPosition + box2DCollider.Offset;
-            var bottomCollision = TileCollisions.HandleCollisionCircle(entity, collisionPosition, delta, planet, true);
 
-            delta = physicsState.Position - physicsState.PreviousPosition; 
-            collisionPosition.Y += 2.0f;
-            var topCollision = TileCollisions.HandleCollisionCircle(entity, collisionPosition, delta, planet, true);
+            float minTime = 1.0f;
+            Vec2f minNormal = new Vec2f();
+
+            
+            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity, delta, planet);
+
+            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+
+            if (bottomCollision.MinTime <= topCollision.MinTime)
+            {
+                minTime = bottomCollision.MinTime;
+                minNormal = bottomCollision.MinNormal;
+            }
+            else
+            {
+                minTime = topCollision.MinTime;
+                minNormal = topCollision.MinNormal;
+            }
+
+            
+            
+            physicsState.Position = physicsState.PreviousPosition + delta * (minTime - 0.01f);
+
+            if (minTime < 1.0)
+            {
+
+               // physicsState.Position -= delta.Normalize() * 0.02f;
+               float coefficientOfRest = 0.6f;
+               Vec2f velocity = delta;
+
+
+               float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
+               Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
+
+               normalized = normalized - 2.0f * Vec2f.Dot(normalized, minNormal) * minNormal;
+                Vec2f reflectVelocity = normalized * coefficientOfRest * N;
+                physicsState.Position += reflectVelocity;
+            }
 
 
            // if (isColliding)
@@ -51,6 +84,7 @@ namespace Agent
             bool collidingRight = horizontalCollisionResult.isCollidingRight ; //physicsState.Velocity.X > 0 && isColliding;
             bool collidingTop = verticalCollisionResult.isCollidingTop ; //physicsState.Velocity.Y > 0 && isColliding;*/
 
+
             bool collidingBottom = bottomCollision.isCollidingBottom || topCollision.isCollidingBottom;
             bool collidingLeft = bottomCollision.isCollidingLeft || topCollision.isCollidingLeft;//physicsState.Velocity.X < 0 && isColliding;
             bool collidingRight = bottomCollision.isCollidingRight || topCollision.isCollidingRight; //physicsState.Velocity.X > 0 && isColliding;
@@ -59,10 +93,60 @@ namespace Agent
             bool slidingRight = bottomCollision.isSlidingRight || topCollision.isSlidingRight; //physicsState.Velocity.X > 0 && isColliding;
 
 
-            UnityEngine.Debug.Log("collidingBottom " + collidingBottom);
-            UnityEngine.Debug.Log("collidingLeft " + collidingLeft);
-            UnityEngine.Debug.Log("collidingRight " + collidingRight);
-            UnityEngine.Debug.Log("collidingTop " + collidingTop);
+            collidingBottom = false;
+            collidingLeft = false;
+            collidingRight = false;
+            collidingTop = false;
+
+
+
+            Vec2f collisionDirection = -minNormal;
+
+            UnityEngine.Debug.Log(minNormal);
+            UnityEngine.Debug.Log(collisionDirection);
+
+
+            if (minTime < 1.0)
+            {
+                if (Mathf.Abs(collisionDirection.X) > Mathf.Abs(collisionDirection.Y))
+                {
+
+                    if (collisionDirection.X > 0.0f)
+                    {
+                        // colliding right
+                        collidingRight = true;
+
+                    }
+                    else
+                    {
+                        // colliding left
+                        collidingLeft = true;
+                    }
+                }
+                else 
+                {
+                    if (collisionDirection.Y > 0)
+                    {
+                        // colliding top
+                        collidingTop = true;
+                    }
+                    else
+                    {
+                        // colliding bottom
+                        collidingBottom = true;
+                    }
+                }
+            }
+
+
+          
+
+          /*  if (collidingTop)
+            UnityEngine.Debug.Log(minNormal);*/
+            if (collidingBottom)UnityEngine.Debug.Log("collidingBottom " + collidingBottom);
+            if (collidingLeft)UnityEngine.Debug.Log("collidingLeft " + collidingLeft);
+            if (collidingRight)UnityEngine.Debug.Log("collidingRight " + collidingRight);
+            if (collidingTop)UnityEngine.Debug.Log("collidingTop " + collidingTop);
 
 
 

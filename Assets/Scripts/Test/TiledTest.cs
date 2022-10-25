@@ -389,7 +389,7 @@ var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset
             for (int i = 0; i < Planet.DebugLinesCount; i++)
             {
                 Line2D line = Planet.DebugLines[i];
-                Gizmos.color = Color.blue;
+                Gizmos.color = Planet.DebugLinesColors[i];
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
         }
