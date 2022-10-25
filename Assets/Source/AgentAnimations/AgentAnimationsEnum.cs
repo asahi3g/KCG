@@ -1,9 +1,5 @@
 namespace Engine3D
 {
-
-
-
-
     public enum AnimationType
     {
         Idle,
@@ -21,7 +17,7 @@ namespace Engine3D
         Drink,
         Stagger,
         JumpFall,
-        SwordSlash, 
+        SwordSlash,
         FireGun,
         PickaxeHit,
         ChopTree,
@@ -89,7 +85,7 @@ namespace Engine3D
         SpaceMarineJumpFall,
         SpaceMarineRifleJumpFall,
         SpaceMarinePistolJumpFall,
-        SpaceMarineSwordSlash, 
+        SpaceMarineSwordSlash,
         SpaceMarineFireGun,
         SpaceMarineRifleFireGun,
         SpaceMarinePistolFireGun,
