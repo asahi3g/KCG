@@ -2,11 +2,10 @@ using System;
 
 namespace Agent
 {
-
-
     public struct AgentAnimation
     {
-
+        //TODO: AgentAnimationId
+        public int AnimationId;
 
         public Engine3D.AnimationType Animation;
         public float FadeTime;

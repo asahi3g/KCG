@@ -11,14 +11,14 @@ public partial class AgentEntity {
     public Agent.ActionComponent agentAction { get { return (Agent.ActionComponent)GetComponent(AgentComponentsLookup.AgentAction); } }
     public bool hasAgentAction { get { return HasComponent(AgentComponentsLookup.AgentAction); } }
 
-    public void AddAgentAction(Agent.AgentAction newAction) {
+    public void AddAgentAction(Agent.AgentAlertState newAction) {
         var index = AgentComponentsLookup.AgentAction;
         var component = (Agent.ActionComponent)CreateComponent(index, typeof(Agent.ActionComponent));
         component.Action = newAction;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentAction(Agent.AgentAction newAction) {
+    public void ReplaceAgentAction(Agent.AgentAlertState newAction) {
         var index = AgentComponentsLookup.AgentAction;
         var component = (Agent.ActionComponent)CreateComponent(index, typeof(Agent.ActionComponent));
         component.Action = newAction;

@@ -62,7 +62,7 @@ namespace Vehicle
                     var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
                     enemy.agentModel3D.GameObject.gameObject.SetActive(false);
                     enemy.isAgentAlive = false;
-                    enemy.agentAction.Action = Agent.AgentAction.Alert;
+                    enemy.agentAction.Action = Agent.AgentAlertState.Alert;
 
                     entity.vehicleCapacity.agentsInside.Add(enemy);
                 }

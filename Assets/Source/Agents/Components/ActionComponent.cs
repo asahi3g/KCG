@@ -7,6 +7,6 @@ namespace Agent
     [Agent]
     public class ActionComponent : IComponent
     {
-        public AgentAction Action;
+        public AgentAlertState Action;
     }
 }

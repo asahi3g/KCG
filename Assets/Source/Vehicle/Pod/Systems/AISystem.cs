@@ -64,7 +64,7 @@ namespace Vehicle.Pod
                                     var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentID);
                                     foreach (var entity in agents)
                                     {
-                                        entity.agentAction.Action = Agent.AgentAction.Alert;
+                                        entity.agentAction.Action = Agent.AgentAlertState.Alert;
                                     }
                                 }
                             }
