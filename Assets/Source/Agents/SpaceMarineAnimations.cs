@@ -51,9 +51,6 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.PickaxeHit, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default,
                 new AgentAnimation { Animation = Engine3D.AnimationType.SpaceMarinePickaxeHit, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
 
-            SetAnimation(Enums.AgentMovementState.ChoppingTree, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default,
-                new AgentAnimation { Animation = Engine3D.AnimationType.SpaceMarineChoppingTree, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
-
             SetAnimation(Enums.AgentMovementState.Limp, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
