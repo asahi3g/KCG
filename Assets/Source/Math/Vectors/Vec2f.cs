@@ -187,6 +187,21 @@ namespace KMath
             float num = -2f * Dot(inNormal, inDirection);
             return new Vec2f(num * inNormal.X + inDirection.X, num * inNormal.Y + inDirection.Y);
         }
+        
+        public bool Equals(Vec2f other)
+        {
+            return X.Equals(other.X) && Y.Equals(other.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Vec2f other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
 
         #endregion
 

@@ -148,9 +148,7 @@ public static class GameState
     #region GUI/HUD
 
     public static readonly KGUI.GUIManager GUIManager;
-    public static KGUI.Elements.ElementSpawnerSystem ElementSpawnerSystem;
-    public static KGUI.Elements.ElementDrawSystem ElementDrawSystem;
-    public static KGUI.Elements.ElementUpdateSystem ElementUpdateSystem;
+
     #endregion
 
 
@@ -264,9 +262,6 @@ public static class GameState
         TGenRenderMapMesh = new TGen.RenderMapMesh();
 
         GUIManager = new KGUI.GUIManager();
-        ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
-        ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
-        ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
 
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();

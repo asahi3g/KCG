@@ -32,6 +32,21 @@ namespace KMath
             X = Math.Abs(X);
             Y = Math.Abs(Y);
         }
+        
+        public bool Equals(Vec2i other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Vec2i other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
 
         #endregion
 

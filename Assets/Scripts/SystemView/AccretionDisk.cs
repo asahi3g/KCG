@@ -19,7 +19,7 @@ namespace Scripts {
             public Vector3        center;           // Center point to spin around
 
             public Texture2D      texture;
-            public SpriteRenderer renderer;
+            public SpriteRenderer spriteRenderer;
 
             private System.Random rng;
 
@@ -33,11 +33,15 @@ namespace Scripts {
 
                 for(int i = 0; i < width * height; i++) pixels[i] = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
+#pragma warning disable CS0618
                 float[] base_alpha = ProceduralImages.generate_noise(rng, 1.0f,             width / 64, height / 64);
                         base_alpha = ProceduralImages.smoothen_noise(base_alpha,            width / 64, height / 64, 64);
+
                         base_alpha = ProceduralImages.distort(rng,   base_alpha, 16.0f, 16, width,      height);
+
                         base_alpha = ProceduralImages.soften(        base_alpha, 4,         width,      height);
                         base_alpha = ProceduralImages.circular_mask( base_alpha,            width,      height);
+#pragma warning restore CS0618
 
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++)
@@ -52,10 +56,12 @@ namespace Scripts {
 
                     int   scale         = 1 << layers - layer + 1;
                     float strength      = scale / layers;
-
+#pragma warning disable CS0618
                     float[] layer_alpha = ProceduralImages.generate_noise(rng, strength, width / scale, height / scale);
-                            layer_alpha = ProceduralImages.blur_noise(   layer_alpha,    width / scale, height / scale);
-                            layer_alpha = ProceduralImages.smoothen_noise(layer_alpha,   width / scale, height / scale, scale);
+
+                    layer_alpha = ProceduralImages.blur_noise(   layer_alpha,    width / scale, height / scale);
+
+                    layer_alpha = ProceduralImages.smoothen_noise(layer_alpha,   width / scale, height / scale, scale);
 
                     for(int x = 0; x < width; x++)
                         for(int y = 0; y < height; y++) {
@@ -70,6 +76,7 @@ namespace Scripts {
                 alpha = ProceduralImages.distort(rng,       alpha, 32.0f, 64, width, height);
                 alpha = ProceduralImages.soften(            alpha,         8, width, height);
                 alpha = ProceduralImages.swirl(             alpha, rotation,  width, height);
+#pragma warning restore CS0618
 
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++) {
@@ -136,16 +143,16 @@ namespace Scripts {
             private void Start() {
                 generate();
 
-                renderer        = gameObject.AddComponent<SpriteRenderer>();
+                spriteRenderer        = gameObject.AddComponent<SpriteRenderer>();
                 last_time       = Time.time;
 
-                renderer.sprite = Sprite.Create(texture,
+                spriteRenderer.sprite = Sprite.Create(texture,
                                                 new Rect(0, 0, width, height),
                                                 new Vector2(0.5f, 0.5f));
             }
 
             private void Update() {
-                renderer.transform.RotateAround(center, new Vector3(0.0f, 0.0f, 1.0f), -spin * (Time.time - last_time));
+                spriteRenderer.transform.RotateAround(center, new Vector3(0.0f, 0.0f, 1.0f), -spin * (Time.time - last_time));
 
                 last_time = Time.time;
             }

@@ -10,7 +10,7 @@ namespace Planet.Unity
         [SerializeField]
         private Material Material;
 
-        public Planet.PlanetState Planet;
+        public PlanetState Planet;
 
         private static bool Init = false;
 
@@ -20,16 +20,10 @@ namespace Planet.Unity
         [SerializeField]
         private bool drawMapBorder = true;
 
-        [SerializeField]
-        private bool foregroundToolEnabled = true;
-
-        private AgentEntity Player;
-
-
-        Inventory.InventoryManager inventoryManager;
-
-        int InventoryID;
-        InventoryEntity MaterialBag;
+        private AgentEntity player;
+        private Inventory.InventoryManager inventoryManager;
+        private int inventoryID;
+        private InventoryEntity materialBag;
 
         public void Start()
         {
@@ -47,7 +41,7 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            Planet.DrawHUD(Player);
+            Planet.DrawHUD(player);
         }
 
         public void Initialize()
@@ -59,7 +53,7 @@ namespace Planet.Unity
             Planet = new Planet.PlanetState();
             Planet.Init(mapSize);
 
-            Player = Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            player = Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
 
             inventoryManager = new Inventory.InventoryManager();
 
@@ -76,9 +70,9 @@ namespace Planet.Unity
             if (drawMapBorder)
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
-            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            materialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
-            InventoryID = Player.agentInventory.InventoryID;
+            inventoryID = player.agentInventory.InventoryID;
 
             // Note: ItemType not exists
             //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);

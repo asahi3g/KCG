@@ -117,6 +117,5 @@ class PlanterTest : MonoBehaviour
         Planet.AddMech(new Vec2f(4, 4), Enums.MechType.Light);
         Planet.AddMech(new Vec2f(8, 4), Enums.MechType.Light);
         Planet.AddMech(new Vec2f(12, 4), Enums.MechType.Light);
-        Planet.AddUIText("SampleText", new Vec2f(-250.67f, 94.3f), new Vec2f(200, 120));
     }
 }

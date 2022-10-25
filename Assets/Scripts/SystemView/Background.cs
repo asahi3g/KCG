@@ -11,7 +11,7 @@ namespace Scripts {
             public int            height;
 
             public Texture2D      texture;
-            public SpriteRenderer renderer;
+            public SpriteRenderer spriteRenderer;
 
             private System.Random rng;
 
@@ -52,12 +52,12 @@ namespace Scripts {
             private void Start() {
                 generate();
 
-                renderer        = gameObject.AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprite.Create(texture,
+                spriteRenderer        = gameObject.AddComponent<SpriteRenderer>();
+                spriteRenderer.sprite = Sprite.Create(texture,
                                                 new Rect(0, 0, width, height),
                                                 new Vector2(0.5f, 0.5f));
 
-                renderer.transform.Translate(new Vector3(0.0f, 0.0f, 10.0f));
+                spriteRenderer.transform.Translate(new Vector3(0.0f, 0.0f, 10.0f));
             }
         }
     }

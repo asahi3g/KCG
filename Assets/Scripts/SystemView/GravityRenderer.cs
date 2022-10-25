@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Source.SystemView;
+using UnityEngine.Serialization;
 
 namespace Scripts {
     namespace SystemView {
@@ -20,7 +21,7 @@ namespace Scripts {
                 public Vector3[]     vertices;
             }
 
-            public  CameraController camera;
+            [FormerlySerializedAs("camera")] public  CameraController currentCamera;
 
             public  int              width;
             public  int              height;
@@ -44,8 +45,8 @@ namespace Scripts {
             public void reinit() {
                 cleanup();
 
-                height = (int)Math.Sqrt(samples / camera.get_aspect_ratio());
-                width  = (int)         (height  * camera.get_aspect_ratio());
+                height = (int)Math.Sqrt(samples / currentCamera.get_aspect_ratio());
+                width  = (int)         (height  * currentCamera.get_aspect_ratio());
 
                 arrows = new ArrowInfo[width, height];
 
@@ -86,10 +87,10 @@ namespace Scripts {
             }
 
             private void Update() {
-                if(camera.size_changed()) reinit();
+                if(currentCamera.size_changed()) reinit();
 
-                float camera_width                   = camera.get_width();
-                float camera_height                  = camera.get_height();
+                float camera_width                   = currentCamera.get_width();
+                float camera_height                  = currentCamera.get_height();
 
                 float length;
 
@@ -103,11 +104,11 @@ namespace Scripts {
                     scale                            = 1.0f / (width  - 1);
                 }
 
-                float actual_length = length / camera.scale * 0.25f * scale;
+                float actual_length = length / currentCamera.scale * 0.25f * scale;
 
                 for(int x = 0; x < width; x++)
                     for(int y = 0; y < height; y++) {
-                        Vector3 absolute = camera.get_abs_pos(new Vector3(
+                        Vector3 absolute = currentCamera.get_abs_pos(new Vector3(
                             x * length / line_length,
                             y * length / line_length,
                             0.0f
@@ -118,7 +119,7 @@ namespace Scripts {
                         arrows[x, y].dirx            = 0.0f;
                         arrows[x, y].diry            = 0.0f;
                         arrows[x, y].line.startWidth =
-                        arrows[x, y].line.endWidth   = line_thickness / camera.scale;
+                        arrows[x, y].line.endWidth   = line_thickness / currentCamera.scale;
 
                         float maxg = 0.0f;
 
@@ -160,8 +161,8 @@ namespace Scripts {
                         arrows[x, y].vertices[0].y   = arrows[x, y].y;
                         arrows[x, y].vertices[0].z   = 1.0f;
 
-                        arrows[x, y].vertices[1].x   = arrows[x, y].x + arrows[x, y].dirx / camera.scale * scale;
-                        arrows[x, y].vertices[1].y   = arrows[x, y].y + arrows[x, y].diry / camera.scale * scale;
+                        arrows[x, y].vertices[1].x   = arrows[x, y].x + arrows[x, y].dirx / currentCamera.scale * scale;
+                        arrows[x, y].vertices[1].y   = arrows[x, y].y + arrows[x, y].diry / currentCamera.scale * scale;
                         arrows[x, y].vertices[1].z   = 1.0f;
 
                         arrows[x, y].vertices[2].x   = arrows[x, y].vertices[1].x + actual_length * (float)Math.Cos(angle + Tools.pi - Tools.sixthpi);                                                                       
