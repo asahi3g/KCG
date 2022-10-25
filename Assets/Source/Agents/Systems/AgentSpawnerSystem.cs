@@ -31,7 +31,7 @@ namespace Agent
             entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
-            entity.AddAgentAction(AgentAction.UnAlert);
+            entity.AddAgentAction(AgentAlertState.UnAlert);
             entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, attackCoolDown, false);
 
             if (inventoryID != -1)
@@ -134,7 +134,7 @@ namespace Agent
             entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
-            entity.AddAgentAction(AgentAction.UnAlert);
+            entity.AddAgentAction(AgentAlertState.UnAlert);
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
 
             entity.AddAgentPhysicsState(
@@ -209,7 +209,7 @@ namespace Agent
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
                         if(!entity.hasAgentAction)
-                            entity.AddAgentAction(AgentAction.UnAlert);
+                            entity.AddAgentAction(AgentAlertState.UnAlert);
                         break;
                     }
                 case Enums.AgentType.Agent:
@@ -367,9 +367,9 @@ namespace Agent
                         entity.agentPhysicsState.Speed = 10.0f;
 
                         if (!entity.hasAgentAction)
-                            entity.AddAgentAction(AgentAction.Alert);
+                            entity.AddAgentAction(AgentAlertState.Alert);
                         else
-                            entity.agentAction.Action = AgentAction.Alert;
+                            entity.agentAction.Action = AgentAlertState.Alert;
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(entitasContext, Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(entitasContext, item, inventoryID);

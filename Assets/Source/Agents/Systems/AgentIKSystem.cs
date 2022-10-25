@@ -57,7 +57,7 @@ namespace Agent
                                 {
                                     PistolIK.GetComponent<Rig>().weight = UnityEngine.Mathf.Lerp(
                                     PistolIK.GetComponent<Rig>().weight, 1.0f, UnityEngine.Time.deltaTime * 10f);
-                                    entity.agentAction.Action = AgentAction.Aiming;
+                                    entity.agentAction.Action = AgentAlertState.Aiming;
                                 }
                                 else
                                 {
@@ -73,7 +73,7 @@ namespace Agent
                                 {
                                     RifleIK.GetComponent<Rig>().weight = UnityEngine.Mathf.Lerp(
                                     RifleIK.GetComponent<Rig>().weight, 1.0f, UnityEngine.Time.deltaTime * 10f);
-                                    entity.agentAction.Action = AgentAction.Aiming;
+                                    entity.agentAction.Action = AgentAlertState.Aiming;
                                 }
                                 else
                                 {
@@ -89,7 +89,7 @@ namespace Agent
                                 RifleIK.GetComponent<Rig>().weight = UnityEngine.Mathf.Lerp(
                                 RifleIK.GetComponent<Rig>().weight, 0.0f, UnityEngine.Time.deltaTime * 10f);
 
-                                entity.agentAction.Action = AgentAction.UnAlert;
+                                entity.agentAction.Action = AgentAlertState.UnAlert;
                             }
                         }
                     }

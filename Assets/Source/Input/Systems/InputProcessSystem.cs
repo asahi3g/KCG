@@ -480,14 +480,14 @@ namespace ECSInput
                 {
                     if(entity.hasAgentAction)
                     {
-                        entity.agentAction.Action = AgentAction.Alert;
+                        entity.agentAction.Action = AgentAlertState.Alert;
                     }
                 }
                 else
                 {
                     if (entity.hasAgentAction)
                     {
-                        entity.agentAction.Action = AgentAction.UnAlert;
+                        entity.agentAction.Action = AgentAlertState.UnAlert;
                     }
                 }
                 
