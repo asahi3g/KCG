@@ -1065,7 +1065,7 @@ namespace Collisions
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin - 1; y <= ymin - 1; y++)
+                for (int y = ymin - 1; y <= ymin; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
