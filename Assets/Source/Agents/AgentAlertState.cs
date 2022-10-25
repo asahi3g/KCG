@@ -1,6 +1,6 @@
 namespace Agent
 {
-    public enum AgentAction
+    public enum AgentAlertState
     {
         Error = -1,
         UnAlert,
