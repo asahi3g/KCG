@@ -17,7 +17,8 @@ namespace KGUI
 
         public virtual void Init()
         {
-            GameState.GUIManager.PanelList.Add(ID, this);
+            if(!GameState.GUIManager.PanelList.ContainsKey(ID))
+                GameState.GUIManager.PanelList.Add(ID, this);
             OnActivate();
         }
         

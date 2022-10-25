@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using KMath;
 using TGen;
 
@@ -24,7 +25,7 @@ namespace Planet
             placementTool.UpdateToolGrid();
         }
 
-        public void Initialize(ref PlanetState Planet, Material Material, Transform transform)
+        public void Initialize(ref PlanetState Planet, UnityEngine.Material Material, UnityEngine.Transform transform)
         {
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);

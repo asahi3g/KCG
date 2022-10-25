@@ -1,5 +1,5 @@
-using Enums;
-using UnityEngine;
+//imports UnityEngine
+
 using UnityEngine.UI;
 using Utility;
 
@@ -7,7 +7,7 @@ namespace KGUI
 {
     public class PipeElementUI : ElementUI
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
         public ImageWrapper Border;
 
@@ -18,8 +18,6 @@ namespace KGUI
             HitBoxObject = borderImage.gameObject;
             
             ID = ElementEnums.Pipe;
-
-            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
 
             Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }

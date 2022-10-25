@@ -1,42 +1,43 @@
-﻿using Entitas;
+﻿//imports UnityEngine
+
+using Entitas;
 using Entitas.CodeGeneration.Attributes;
 using KMath;
 using Sprites;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Utility
 {
     public struct FrameMesh
     {
-        public GameObject obj;
-        public List<Vector3> vertices;
-        public List<Vector2> uvs;
+        public UnityEngine.GameObject obj;
+        public List<UnityEngine.Vector3> vertices;
+        public List<UnityEngine.Vector2> uvs;
         public List<int> triangles;
 
-        public FrameMesh(string name, Material material, Transform transform, Sprites.SpriteAtlas Atlassprite, int drawOrder = 0)
+        public FrameMesh(string name, UnityEngine.Material material, UnityEngine.Transform transform, Sprites.SpriteAtlas Atlassprite, int drawOrder = 0)
         {
-            obj = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+            obj = new UnityEngine.GameObject(name, typeof(UnityEngine.MeshFilter), typeof(UnityEngine.MeshRenderer));
             obj.transform.SetParent(transform);
 
-            var mat = Material.Instantiate(material);
+            var mat = UnityEngine.Material.Instantiate(material);
             mat.SetTexture("MainTex", Atlassprite.Texture);
 
-            var mesh = new Mesh
+            var mesh = new UnityEngine.Mesh
             {
                 indexFormat = UnityEngine.Rendering.IndexFormat.UInt32
             };
 
-            var mf = obj.GetComponent<MeshFilter>();
+            var mf = obj.GetComponent<UnityEngine.MeshFilter>();
             mf.sharedMesh = mesh;
-            var mr = obj.GetComponent<MeshRenderer>();
+            var mr = obj.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial = mat;
             mr.sortingOrder = drawOrder;
 
             // Todo: prealocate lists.
-            vertices = new List<Vector3>();
+            vertices = new List<UnityEngine.Vector3>();
             triangles = new List<int>();
-            uvs = new List<Vector2>();
+            uvs = new List<UnityEngine.Vector2>();
         }
 
         public void Clear()
@@ -73,10 +74,10 @@ namespace Utility
                 TopRight = RotatePoint(TopRight, angle);
             }
 
-            var p0 = new Vector3(BottomLeft.X + x, BottomLeft.Y + y, 0);
-            var p1 = new Vector3(TopRight.X + x, TopRight.Y + y, 0);
-            var p2 = new Vector3(topLeft.X + x, topLeft.Y + y, 0);
-            var p3 = new Vector3(BottomRight.X + x, BottomRight.Y + y, 0);
+            var p0 = new UnityEngine.Vector3(BottomLeft.X + x, BottomLeft.Y + y, 0);
+            var p1 = new UnityEngine.Vector3(TopRight.X + x, TopRight.Y + y, 0);
+            var p2 = new UnityEngine.Vector3(topLeft.X + x, topLeft.Y + y, 0);
+            var p3 = new UnityEngine.Vector3(BottomRight.X + x, BottomRight.Y + y, 0);
 
             int triangleIndex = vertices.Count;
 
@@ -110,15 +111,15 @@ namespace Utility
 
             for(int i = 0; i < verts.Length; i++)
             {
-                vertices.Add(new Vector3(verts[i].X + x, verts[i].Y + y, 0));
+                vertices.Add(new UnityEngine.Vector3(verts[i].X + x, verts[i].Y + y, 0));
                 triangles.Add(triangleIndex + i);
             }
         }
 
-        public void UpdateUV(Vector4 textureCoords, int index)
+        public void UpdateUV(UnityEngine.Vector4 textureCoords, int index)
         {
-            var uv0 = new Vector2(textureCoords.x, textureCoords.y + textureCoords.w);
-            var uv1 = new Vector2(textureCoords.x + textureCoords.z, textureCoords.y);
+            var uv0 = new UnityEngine.Vector2(textureCoords.x, textureCoords.y + textureCoords.w);
+            var uv1 = new UnityEngine.Vector2(textureCoords.x + textureCoords.z, textureCoords.y);
             var uv2 = uv0; uv2.y = uv1.y;
             var uv3 = uv1; uv3.y = uv0.y;
 
@@ -132,7 +133,7 @@ namespace Utility
         {
             for(int i = 0; i < coords.Length; i++)
             {
-                uvs.Add(new Vector2(coords[i].X, coords[i].Y));
+                uvs.Add(new UnityEngine.Vector2(coords[i].X, coords[i].Y));
             }
         }
     }
@@ -142,22 +143,22 @@ namespace Utility
     {
         //FIX: Do UnityEngine.CreateMesh, not using UnityEngine
 
-        public static GameObject CreateObjectMesh(Transform parent, string name,
-                     int sortingOrder, Material material)
+        public static UnityEngine.GameObject CreateObjectMesh(UnityEngine.Transform parent, string name,
+                     int sortingOrder, UnityEngine.Material material)
         {
-            var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+            var go = new UnityEngine.GameObject(name, typeof(UnityEngine.MeshFilter), typeof(UnityEngine.MeshRenderer));
             go.transform.SetParent(parent);
 
-            var mesh = new Mesh
+            var mesh = new UnityEngine.Mesh
             {
                 indexFormat = UnityEngine.Rendering.IndexFormat.UInt32
             };
 
-            var mf = go.GetComponent<MeshFilter>();
+            var mf = go.GetComponent<UnityEngine.MeshFilter>();
             mf.sharedMesh = mesh;
 
-            var mat = Material.Instantiate(material);
-            var mr = go.GetComponent<MeshRenderer>();
+            var mat = UnityEngine.Material.Instantiate(material);
+            var mr = go.GetComponent<UnityEngine.MeshRenderer>();
 
             mr.sharedMaterial = mat;
             mr.sortingOrder = sortingOrder;
@@ -165,50 +166,50 @@ namespace Utility
             return go;
         }
 
-        public static GameObject CreateEmptyObjectMesh()
+        public static UnityEngine.GameObject CreateEmptyObjectMesh()
         {
-            var go = new GameObject("sprite", typeof(MeshFilter), typeof(MeshRenderer));
+            var go = new UnityEngine.GameObject("sprite", typeof(UnityEngine.MeshFilter), typeof(UnityEngine.MeshRenderer));
 
-            var mesh = new Mesh
+            var mesh = new UnityEngine.Mesh
             {
                 indexFormat = UnityEngine.Rendering.IndexFormat.UInt32
             };
 
-            var mf = go.GetComponent<MeshFilter>();
+            var mf = go.GetComponent<UnityEngine.MeshFilter>();
             mf.sharedMesh = mesh;
-            var mr = go.GetComponent<MeshRenderer>();
+            var mr = go.GetComponent<UnityEngine.MeshRenderer>();
 
             return go;
         }
 
-        public static GameObject CreateObjectText(Transform parent, Vector2 pos, string name, int sortingOrder)
+        public static UnityEngine.GameObject CreateObjectText(UnityEngine.Transform parent, UnityEngine.Vector2 pos, string name, int sortingOrder)
         {
-            var go = new GameObject(name, typeof(TextMesh));
+            var go = new UnityEngine.GameObject(name, typeof(UnityEngine.TextMesh));
             go.transform.SetParent(parent);
-            go.GetComponent<Transform>().position = pos;
+            go.GetComponent<UnityEngine.Transform>().position = pos;
 
-            var textMesh = go.GetComponent<TextMesh>();
-            textMesh.anchor = TextAnchor.LowerLeft;
-            Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+            var textMesh = go.GetComponent<UnityEngine.TextMesh>();
+            textMesh.anchor = UnityEngine.TextAnchor.LowerLeft;
+            UnityEngine.Font ArialFont = (UnityEngine.Font)UnityEngine.Resources.GetBuiltinResource(typeof(UnityEngine.Font), "Arial.ttf");
             textMesh.font = ArialFont;
 
-            var mr = go.GetComponent<MeshRenderer>();
+            var mr = go.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial = ArialFont.material;
             mr.sortingOrder = sortingOrder;
 
             return go;
         }
 
-        public static GameObject CreateEmptyTextGameObject(string name = "sprite")
+        public static UnityEngine.GameObject CreateEmptyTextGameObject(string name = "sprite")
         {
-            var go = new GameObject(name, typeof(TextMesh));
+            var go = new UnityEngine.GameObject(name, typeof(UnityEngine.TextMesh));
 
-            var textMesh = go.GetComponent<TextMesh>();
-            textMesh.anchor = TextAnchor.LowerLeft;
-            Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+            var textMesh = go.GetComponent<UnityEngine.TextMesh>();
+            textMesh.anchor = UnityEngine.TextAnchor.LowerLeft;
+            UnityEngine.Font ArialFont = (UnityEngine.Font)UnityEngine.Resources.GetBuiltinResource(typeof(UnityEngine.Font), "Arial.ttf");
             textMesh.font = ArialFont;
 
-            var mr = go.GetComponent<MeshRenderer>();
+            var mr = go.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial = ArialFont.material;
 
             return go;
@@ -216,8 +217,8 @@ namespace Utility
 
         public static bool isOnScreen(float x, float y)
         {
-            var posMax = Camera.main.ScreenToWorldPoint(new Vector3(Screen.safeArea.xMax, Screen.safeArea.yMax, 0));
-            var posMin = Camera.main.ScreenToWorldPoint(new Vector3(Screen.safeArea.xMin, Screen.safeArea.yMin, 0));
+            var posMax = UnityEngine.Camera.main.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.safeArea.xMax, UnityEngine.Screen.safeArea.yMax, 0));
+            var posMin = UnityEngine.Camera.main.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.safeArea.xMin, UnityEngine.Screen.safeArea.yMin, 0));
             if (x > posMax.x ||
                 x < posMin.x - 1.0f ||
                 y > posMax.y ||

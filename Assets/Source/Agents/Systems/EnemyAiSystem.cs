@@ -1,6 +1,6 @@
+//import UnityEngine
+
 using System;
-using UnityEngine;
-using System.Collections.Generic;
 using KMath;
 
 namespace Agent
@@ -51,7 +51,7 @@ namespace Agent
                             // will be spawned at that position
                             if (entity.hasAgentStats && Len <= 0.6f && !targetPhysicsState.Invulnerable)
                             {
-                                Vector2 oppositeDirection = new Vector2(-direction.X, -direction.Y);
+                                UnityEngine.Vector2 oppositeDirection = new UnityEngine.Vector2(-direction.X, -direction.Y);
                                 var stats = entity.agentStats;
                                 float damage = 20.0f;
                                 stats.Health -= (int)damage;
@@ -108,7 +108,7 @@ namespace Agent
                             // will be spawned at that position
                             if (entity.hasAgentStats && Len <= 0.6f && !targetPhysicsState.Invulnerable)
                             {
-                                Vector2 oppositeDirection = new Vector2(-direction.X, -direction.Y);
+                                UnityEngine.Vector2 oppositeDirection = new UnityEngine.Vector2(-direction.X, -direction.Y);
                                 var stats = entity.agentStats;
                                 float damage = 20.0f;
                                 stats.Health -= (int)damage;

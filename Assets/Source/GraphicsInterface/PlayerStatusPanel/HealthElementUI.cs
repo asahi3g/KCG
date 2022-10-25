@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using KGUI.Elements;
 using UnityEngine.UI;
 using Utility;
@@ -8,10 +9,10 @@ namespace KGUI
 {
     public class HealthElementUI : ElementUI
     {
-        [SerializeField] private Image progressBarImage;
-        [SerializeField] private Image progressBarBorderImage;
-        [SerializeField] private Image progressBarDiv1Image;
-        [SerializeField] private Image progressBarDiv2Image;
+        [UnityEngine.SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private Image progressBarBorderImage;
+        [UnityEngine.SerializeField] private Image progressBarDiv1Image;
+        [UnityEngine.SerializeField] private Image progressBarDiv2Image;
         
         private ProgressBar progressBar;
         private ImageWrapper progressBarBorder;
@@ -66,35 +67,32 @@ namespace KGUI
         
         public override void OnMouseClick()
         {
-            Debug.LogWarning("Health Bar Clicked");
+            UnityEngine.Debug.LogWarning("Health Bar Clicked");
         }
         
         public override void OnMouseEntered()
         {
-            Debug.LogWarning("Health Bar Mouse Enter");
+            UnityEngine.Debug.LogWarning("Health Bar Mouse Enter");
             
             if (healthAmount < 50)
             {
-                infoTextWrapper.Create("Health Indicator", "Health Bar\nStatus: Low", transform, 2.0f);
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
-                infoTextWrapper.SetPosition(new Vector3(700.0f, 0, 0));
             }
             else
             {
                 infoTextWrapper.Create("Health DeIndicator", "Health Bar\nStatus: Normal", transform, 2.0f);
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
-                infoTextWrapper.SetPosition(new Vector3(700.0f, 0, 0));
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(700.0f, 0, 0));
             }
         }
         
         public override void OnMouseStay()
         {
-            Debug.LogWarning("Health Bar Mouse Stay");
+            UnityEngine.Debug.LogWarning("Health Bar Mouse Stay");
         }
         
         public override void OnMouseExited()
         {
-            Debug.LogWarning("Health Bar Mouse Exit");
+            UnityEngine.Debug.LogWarning("Health Bar Mouse Exit");
             infoTextWrapper.StartLifeTime = true;
         }
     }

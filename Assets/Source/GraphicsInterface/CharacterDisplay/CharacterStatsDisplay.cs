@@ -1,11 +1,8 @@
-using UnityEngine;
+//imports UnityEngine
 
 
 namespace KGui
 {
-
-
-
 
     public class CharacterStatsDisplay
     {
@@ -43,14 +40,14 @@ namespace KGui
                 float lineSize = fontSize + padding * 2.0f;
                 float leftPanelWidth = width * 0.6f - marginX - padding;
                 float rightPanelWidth = width * 0.4f - marginX - padding;
-                TextAnchor leftSizeAnchor = TextAnchor.MiddleLeft;
-                TextAnchor rightSizeAnchor = TextAnchor.MiddleRight;
+                UnityEngine.TextAnchor leftSizeAnchor = UnityEngine.TextAnchor.MiddleLeft;
+                UnityEngine.TextAnchor rightSizeAnchor = UnityEngine.TextAnchor.MiddleRight;
 
                 height = marginY * 2 + 5 * lineSize;
 
-                Color backgroundColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-                Color debugColor = new Color(0.7f, 0.7f, 0.7f, 0.5f);
-                Color statTextColor = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+                UnityEngine.Color backgroundColor = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
+                UnityEngine.Color debugColor = new UnityEngine.Color(0.7f, 0.7f, 0.7f, 0.5f);
+                UnityEngine.Color statTextColor = new UnityEngine.Color(0.0f, 1.0f, 0.0f, 1.0f);
                 
 
                 GameState.Renderer.DrawQuadColorGui(x, y, width, height, backgroundColor);
@@ -64,11 +61,11 @@ namespace KGui
                     GameState.Renderer.DrawQuadColorGui(x + marginX, y + lineSize * 4 + marginY, leftPanelWidth, lineSize, debugColor);
                 }
 
-                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 0 + marginY, leftPanelWidth, lineSize, "Health :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 1 + marginY, leftPanelWidth, lineSize, "Vitality :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 2 + marginY, leftPanelWidth, lineSize, "Strength :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 3 + marginY, leftPanelWidth, lineSize, "Dexterity :", fontSize, leftSizeAnchor, Color.white);
-                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 4 + marginY, leftPanelWidth, lineSize, "Intelligence :", fontSize, leftSizeAnchor, Color.white);
+                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 0 + marginY, leftPanelWidth, lineSize, "Health :", fontSize, leftSizeAnchor, UnityEngine.Color.white);
+                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 1 + marginY, leftPanelWidth, lineSize, "Vitality :", fontSize, leftSizeAnchor, UnityEngine.Color.white);
+                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 2 + marginY, leftPanelWidth, lineSize, "Strength :", fontSize, leftSizeAnchor, UnityEngine.Color.white);
+                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 3 + marginY, leftPanelWidth, lineSize, "Dexterity :", fontSize, leftSizeAnchor, UnityEngine.Color.white);
+                GameState.Renderer.DrawStringGui(x + marginX, y + lineSize * 4 + marginY, leftPanelWidth, lineSize, "Intelligence :", fontSize, leftSizeAnchor, UnityEngine.Color.white);
 
 
                 if (DebugDraw)

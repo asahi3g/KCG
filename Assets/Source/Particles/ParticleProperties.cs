@@ -1,6 +1,6 @@
+//imports UnityEngine
 
 using KMath;
-using UnityEngine;
 
 namespace Particle
 {
@@ -26,7 +26,7 @@ namespace Particle
         public Vec2f StartingVelocity;
         public float StartingRotation;
         public float StartingScale;
-        public Color StartingColor;
+        public UnityEngine.Color StartingColor;
         public float AnimationSpeed;
 
 

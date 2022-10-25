@@ -2,6 +2,7 @@ using UnityEngine;
 using KMath;
 using Enums.Tile;
 using Planet;
+using PlanetTileMap;
 
 class PlanterTest : MonoBehaviour
 {
@@ -38,6 +39,41 @@ class PlanterTest : MonoBehaviour
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
     }
 
+    private void OnDrawGizmos()
+    {
+        Planet.DrawDebug();
+
+        // Set the color of gizmos
+        Gizmos.color = Color.green;
+
+        // Draw a cube around the map
+        if (Planet.TileMap != null)
+            Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+
+        // Draw lines around player if out of bounds
+        if (Player != null)
+            if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
+            {
+                // Out of bounds
+
+                // X+
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f,Player.agentPhysicsState.Position.Y));
+
+                // X-
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X-10.0f,Player.agentPhysicsState.Position.Y));
+
+                // Y+
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y + 10.0f));
+
+                // Y-
+                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y - 10.0f));
+            }
+
+        // Draw Chunk Visualizer
+        ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
+    }
+
+    // create the sprite atlas for testing purposes
     public void Initialize()
     {
         GameResources.Initialize();

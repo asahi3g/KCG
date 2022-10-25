@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 using KGUI.Elements;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace KGUI
 {
     public class FuelElementUI : ElementUI
     {
-        [SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float fuelLevel;
@@ -52,34 +53,31 @@ namespace KGUI
         
         public override void OnMouseClick()
         {
-            Debug.LogWarning("Fuel Bar Clicked");
+            UnityEngine.Debug.LogWarning("Fuel Bar Clicked");
         }
         
         public override void OnMouseEntered()
         {
-            Debug.LogWarning("Fuel Bar Mouse Enter");
+            UnityEngine.Debug.LogWarning("Fuel Bar Mouse Enter");
 
             // If Water level less than 50
             if (fuelLevel < 50)
             {
-                infoTextWrapper.Create("Fuel Indicator", "Fuel Bar\nStatus: Low", transform, 2.0f);
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
-                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
             else
             {
                 infoTextWrapper.Create("Fuel DeIndicator", "Fuel Bar\nStatus: Normal", transform, 2.0f);
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
-                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
         }
         public override void OnMouseStay()
         {
-            Debug.LogWarning("Fuel Bar Mouse Stay");
+            UnityEngine.Debug.LogWarning("Fuel Bar Mouse Stay");
         }
         public override void OnMouseExited()
         {
-            Debug.LogWarning("Fuel Bar Mouse Exit");
+            UnityEngine.Debug.LogWarning("Fuel Bar Mouse Exit");
 
             infoTextWrapper.StartLifeTime = true;
         }

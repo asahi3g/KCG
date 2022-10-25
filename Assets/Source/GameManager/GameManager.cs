@@ -1,9 +1,10 @@
+//imports UnityEngine
+
 using Scripts.SystemView;
-using UnityEngine;
 
 // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
 
-public class GameManager : MonoBehaviour
+public class GameManager : UnityEngine.MonoBehaviour
 {
     public SystemState CurrentSystemState;
 

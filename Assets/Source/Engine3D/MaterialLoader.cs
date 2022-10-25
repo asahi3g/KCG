@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using System;
 using System.Collections.Generic;
 using Enums.Tile;
@@ -9,12 +10,12 @@ namespace Engine3D
 {
     public class MaterialLoader
     {
-        public Material[] ObjectArray;
+        public UnityEngine.Material[] ObjectArray;
         public Dictionary<string, int> ObjectID;
 
         public MaterialLoader()
         {
-            ObjectArray = new Material[1024];
+            ObjectArray = new UnityEngine.Material[1024];
             ObjectID = new Dictionary<string, int>();
         }
 
@@ -31,11 +32,11 @@ namespace Engine3D
             }
 
             ObjectID.Add(filename, index);
-            Material prefab = (Material)Resources.Load(filename);
+            UnityEngine.Material prefab = (UnityEngine.Material)UnityEngine.Resources.Load(filename);
             ObjectArray[index] = prefab;
         }
 
-        public ref Material GetMaterial(MaterialType type)
+        public ref UnityEngine.Material GetMaterial(MaterialType type)
         {
             return ref ObjectArray[(int)type];
         }

@@ -1,6 +1,7 @@
+//import UnityEngine
+
 using System;
 using KMath;
-using UnityEngine;
 using Enums;
 
 namespace Agent
@@ -10,7 +11,7 @@ namespace Agent
         public void Update(AgentContext agentContext)
         {
             
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
 
             foreach (var entity in entities)
@@ -30,7 +31,7 @@ namespace Agent
                         GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, model3d.AnimationType, model3d.ItemAnimationSet);
 
 
-                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
+                    UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
                     currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 

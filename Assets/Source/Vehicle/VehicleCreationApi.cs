@@ -242,7 +242,7 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetSpriteId(WhiteSquare);
             GameState.VehicleCreationApi.SetSize(new Vec2f(2.0f, 3.0f));
             GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
-            GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -3.0f));
+            GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -1.0f));
             GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
             GameState.VehicleCreationApi.SetRotation(0.0f);
             GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.5f));

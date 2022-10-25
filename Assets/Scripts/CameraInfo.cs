@@ -1,15 +1,16 @@
-using UnityEngine;
+//imports UnityEngine
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 //Needs Camera Compoent to Work
-[ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
-public class CameraInfo : MonoBehaviour
+[UnityEngine.ExecuteInEditMode]
+[UnityEngine.RequireComponent(typeof(UnityEngine.Camera))]
+public class CameraInfo : UnityEngine.MonoBehaviour
 {
     // Target Camera
-    public Camera cam;
+    public UnityEngine.Camera cam;
 
     //Camera Struct
     public struct CameraProperties
@@ -19,8 +20,8 @@ public class CameraInfo : MonoBehaviour
         public float nearZ;
         public float farZ;
         public float depth;
-        public Vector3 Position;
-        public Vector3 Rotation;
+        public UnityEngine.Vector3 Position;
+        public UnityEngine.Vector3 Rotation;
         public float fieldOfView;
         public float orthographicSize;
         public float aspect;
@@ -64,7 +65,7 @@ public class CameraInfo : MonoBehaviour
         if (cam == null)
         {
             // Assign camera object
-            cam = GetComponent<Camera>();
+            cam = GetComponent<UnityEngine.Camera>();
 
             // Assigning struct values to camera values. Reciving all the info of the camera to our struct. So, we can save later on.
             camProp.depth = cam.depth;
@@ -120,13 +121,13 @@ public class CameraInfo : MonoBehaviour
     }
 
     // Set Camera's world position
-    public void SetPosition(Vector3 newPosition)
+    public void SetPosition(UnityEngine.Vector3 newPosition)
     {
         canUpdate = false;
         if (cam != null)
             camProp.Position = newPosition;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     }
 
@@ -137,7 +138,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             camProp.depth = newDepth;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     }
 
@@ -152,7 +153,7 @@ public class CameraInfo : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         }
         UpdateCamera();
     }
@@ -164,7 +165,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             camProp.cullingMask = newMask;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     }
 
@@ -175,7 +176,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             camProp.isOrtho = true;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     } 
 
@@ -186,7 +187,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             camProp.isOrtho = false;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     }
 
@@ -201,19 +202,19 @@ public class CameraInfo : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         }
         UpdateCamera();
     }
  
     // Set new Camera object
-    public void SetCamera(Camera newCamera)
+    public void SetCamera(UnityEngine.Camera newCamera)
     {
         canUpdate = false;
         if (cam != null)
             cam = newCamera;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         UpdateCamera();
     }
 
@@ -225,20 +226,20 @@ public class CameraInfo : MonoBehaviour
             canUpdate = false;
             if(!camProp.isOrtho)
             {
-                camProp.fieldOfView = Mathf.MoveTowards(camProp.fieldOfView, minFOVZoom, 0.5f * Time.deltaTime);
+                camProp.fieldOfView = UnityEngine.Mathf.MoveTowards(camProp.fieldOfView, minFOVZoom, 0.5f * UnityEngine.Time.deltaTime);
             }
             else
             {
                 if(camProp.orthographicSize > 0.0f)
                 {
                     tempZoom = cam.orthographicSize;
-                    camProp.orthographicSize = Mathf.MoveTowards(camProp.orthographicSize, minOrthoZoom, 0.5f * Time.deltaTime);
+                    camProp.orthographicSize = UnityEngine.Mathf.MoveTowards(camProp.orthographicSize, minOrthoZoom, 0.5f * UnityEngine.Time.deltaTime);
                 }
             }
         }
         else
         {
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         }
         UpdateCamera();
     }
@@ -251,20 +252,20 @@ public class CameraInfo : MonoBehaviour
             canUpdate = false;
             if (!camProp.isOrtho)
             {
-                camProp.fieldOfView = Mathf.MoveTowards(camProp.fieldOfView, maxFOVZoom, 0.5f * Time.deltaTime);
+                camProp.fieldOfView = UnityEngine.Mathf.MoveTowards(camProp.fieldOfView, maxFOVZoom, 0.5f * UnityEngine.Time.deltaTime);
             }
             else
             {
                 if (camProp.orthographicSize > 0.0f)
                 {
                     tempZoom = cam.orthographicSize;
-                    camProp.orthographicSize = Mathf.MoveTowards(camProp.orthographicSize, maxOrthoZoom, 0.5f * Time.deltaTime);
+                    camProp.orthographicSize = UnityEngine.Mathf.MoveTowards(camProp.orthographicSize, maxOrthoZoom, 0.5f * UnityEngine.Time.deltaTime);
                 }
             }
         }
         else
         {
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         }
         UpdateCamera();
     }
@@ -279,7 +280,7 @@ public class CameraInfo : MonoBehaviour
         }
         else
         {
-            Debug.LogError("New View Type is empty.");
+            UnityEngine.Debug.LogError("New View Type is empty.");
             return ViewType.ViewTypeError;
         }
     }
@@ -301,33 +302,33 @@ public class CameraInfo : MonoBehaviour
     }
 
     // Get Current Camera Object
-    public Camera GetCurrentCamera()
+    public UnityEngine.Camera GetCurrentCamera()
     {
         if (cam != null)
             return cam;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return null;
     }
 
     // Get Camera Position
-    public Vector3 GetCameraPosition()
+    public UnityEngine.Vector3 GetCameraPosition()
     {
         if (cam != null)
             return camProp.Position;
         else
-            Debug.LogError("Camera object is empty.");
-        return Vector3.zero;
+            UnityEngine.Debug.LogError("Camera object is empty.");
+        return UnityEngine.Vector3.zero;
     }
 
     // Get Camera Rotation
-    public Vector3 GetCameraRotation()
+    public UnityEngine.Vector3 GetCameraRotation()
     {
         if (cam != null)
             return camProp.Rotation;
         else
-            Debug.LogError("Camera object is empty.");
-        return Vector3.zero;
+            UnityEngine.Debug.LogError("Camera object is empty.");
+        return UnityEngine.Vector3.zero;
     }
 
     // Get Condition if its ortho or not
@@ -336,7 +337,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             return camProp.isOrtho;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return false;
     }
     
@@ -346,19 +347,19 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             return camProp.orthographicSize;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return 0.0f;
     }
 
     // Get Screen Resolution
-    public Vector2 GetResolution()
+    public UnityEngine.Vector2 GetResolution()
     {
         if (cam != null)
-            return new Vector2(cam.pixelWidth, cam.pixelHeight);
+            return new UnityEngine.Vector2(cam.pixelWidth, cam.pixelHeight);
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
 
-        return Vector2.zero;
+        return UnityEngine.Vector2.zero;
     }
 
     // Get Aspect
@@ -367,7 +368,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             return camProp.aspect;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return 0.0f;
     }
 
@@ -377,7 +378,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             return camProp.fieldOfView;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return 0.0f;
     }
 
@@ -387,7 +388,7 @@ public class CameraInfo : MonoBehaviour
         if (cam != null)
             return camProp.cullingMask;
         else
-            Debug.LogError("Camera object is empty.");
+            UnityEngine.Debug.LogError("Camera object is empty.");
         return -1;
     }
 
@@ -442,7 +443,7 @@ public class CameraInfoEditor : Editor
 
         CameraInfo myCamera = (CameraInfo)target;
 
-        GUIStyle style = new GUIStyle(GUI.skin.label);
+        UnityEngine.GUIStyle style = new UnityEngine.GUIStyle(UnityEngine.GUI.skin.label);
         style.richText = true;
 
         string Size = string.Format("{0:0.00}", myCamera.GetOrthoSize());
@@ -485,18 +486,18 @@ public class CameraInfoEditor : Editor
         style.fontSize = 12;
 
         // Screen Size
-        EditorGUILayout.LabelField("Size", string.Format("Width: {0}, Height {1}", Screen.width, Screen.height), style);
+        EditorGUILayout.LabelField("Size", string.Format("Width: {0}, Height {1}", UnityEngine.Screen.width, UnityEngine.Screen.height), style);
         
         // Screen Resoluiton
-        EditorGUILayout.LabelField("Resolution", string.Format("{0} x {1}", Screen.width, Screen.height), style);
+        EditorGUILayout.LabelField("Resolution", string.Format("{0} x {1}", UnityEngine.Screen.width, UnityEngine.Screen.height), style);
 
         // Screen Ratio Calculating
         string ratio = "";
-        if (Screen.width / Screen.height >= 1.7f)
+        if (UnityEngine.Screen.width / UnityEngine.Screen.height >= 1.7f)
             ratio = string.Format("16:9");
-        else if (Screen.width / Screen.height > 1.6f)
+        else if (UnityEngine.Screen.width / UnityEngine.Screen.height > 1.6f)
             ratio = string.Format("5:3");
-        else if (Screen.width / Screen.height >= 1.5f)
+        else if (UnityEngine.Screen.width / UnityEngine.Screen.height >= 1.5f)
             ratio = string.Format("16:10");
         else
             ratio = string.Format("4:3");
@@ -515,28 +516,28 @@ public class CameraInfoEditor : Editor
         style.fontSize = 12;
 
         // Local Device Name
-        EditorGUILayout.LabelField("Device Name",  SystemInfo.deviceName, style);
+        EditorGUILayout.LabelField("Device Name", UnityEngine.SystemInfo.deviceName, style);
         
         // Current Operating System
-        EditorGUILayout.LabelField("Operating System", SystemInfo.operatingSystem.ToString(), style);
+        EditorGUILayout.LabelField("Operating System", UnityEngine.SystemInfo.operatingSystem.ToString(), style);
 
         // GPU Device Name
-        EditorGUILayout.LabelField("GPU", SystemInfo.graphicsDeviceName.ToString(), style);
+        EditorGUILayout.LabelField("GPU", UnityEngine.SystemInfo.graphicsDeviceName.ToString(), style);
         
         // GPU Memory Size
-        EditorGUILayout.LabelField("GPU Memory Size", SystemInfo.graphicsMemorySize.ToString() + " MB", style);
+        EditorGUILayout.LabelField("GPU Memory Size", UnityEngine.SystemInfo.graphicsMemorySize.ToString() + " MB", style);
         
         // GPU Driver Version
-        EditorGUILayout.LabelField("Driver Version", SystemInfo.graphicsDeviceVersion.ToString(), style);
+        EditorGUILayout.LabelField("Driver Version", UnityEngine.SystemInfo.graphicsDeviceVersion.ToString(), style);
         
         // Current Graphics API
-        EditorGUILayout.LabelField("Graphics API", SystemInfo.graphicsDeviceType.ToString(), style);
+        EditorGUILayout.LabelField("Graphics API", UnityEngine.SystemInfo.graphicsDeviceType.ToString(), style);
 
         // Processor Type Name
-        EditorGUILayout.LabelField("CPU", SystemInfo.processorType.ToString(), style);
+        EditorGUILayout.LabelField("CPU", UnityEngine.SystemInfo.processorType.ToString(), style);
 
         // System Memory
-        EditorGUILayout.LabelField("System Memory", SystemInfo.systemMemorySize.ToString() + " MB",  style);
+        EditorGUILayout.LabelField("System Memory", UnityEngine.SystemInfo.systemMemorySize.ToString() + " MB",  style);
 
         // Apply Changes
         serializedObject.ApplyModifiedProperties();

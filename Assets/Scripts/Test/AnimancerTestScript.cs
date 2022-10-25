@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//imports UnityEngine
+
+
 using Animancer;
 
-public class AnimancerTestScript : MonoBehaviour
+public class AnimancerTestScript : UnityEngine.MonoBehaviour
 {
 
     public static int HumanoidCount = 3;
-    GameObject[] HumanoidArray;
+    UnityEngine.GameObject[] HumanoidArray;
 
-    AnimationClip IdleAnimationClip ;
-    AnimationClip RunAnimationClip ;
-    AnimationClip WalkAnimationClip ;
-    AnimationClip GolfSwingClip;
+    UnityEngine.AnimationClip IdleAnimationClip ;
+    UnityEngine.AnimationClip RunAnimationClip ;
+    UnityEngine.AnimationClip WalkAnimationClip ;
+    UnityEngine.AnimationClip GolfSwingClip;
 
 
     AnimancerComponent[] AnimancerComponentArray;
@@ -24,15 +24,15 @@ public class AnimancerTestScript : MonoBehaviour
         //GameObject humanoid = GameObject.Find("DefaultHumanoid");
 
         // load the 3d model from file
-        GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
 
-        HumanoidArray = new GameObject[HumanoidCount];
+        HumanoidArray = new UnityEngine.GameObject[HumanoidCount];
         AnimancerComponentArray = new AnimancerComponent[HumanoidCount];
 
         for(int i = 0; i < HumanoidCount; i++)
         {
             HumanoidArray[i] = Instantiate(prefab);
-            HumanoidArray[i].transform.position = new Vector3(i, 0.0f, 0.0f);
+            HumanoidArray[i].transform.position = new UnityEngine.Vector3(i, 0.0f, 0.0f);
         }
 
 
@@ -42,11 +42,11 @@ public class AnimancerTestScript : MonoBehaviour
         // create an animancer object and give it a reference to the Animator component
         for(int i = 0; i < HumanoidCount; i++)
         {
-            GameObject animancerComponent = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+            UnityEngine.GameObject animancerComponent = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
             // get the animator component from the game object
             // this component is used by animancer
             AnimancerComponentArray[i] = animancerComponent.GetComponent<AnimancerComponent>();
-            AnimancerComponentArray[i].Animator = HumanoidArray[i].GetComponent<Animator>();
+            AnimancerComponentArray[i].Animator = HumanoidArray[i].GetComponent<UnityEngine.Animator>();
         }
 
         
@@ -67,10 +67,10 @@ public class AnimancerTestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool run = Input.GetKeyDown(KeyCode.R);
-        bool walk = Input.GetKeyDown(KeyCode.W);
-        bool idle = Input.GetKeyDown(KeyCode.I);
-        bool golf = Input.GetKeyDown(KeyCode.G);
+        bool run = UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R);
+        bool walk = UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W);
+        bool idle = UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.I);
+        bool golf = UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.G);
 
         for(int i = 0; i < HumanoidCount; i++)
         {

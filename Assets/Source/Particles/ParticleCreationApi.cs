@@ -1,8 +1,8 @@
+//imports UnityEngine
+
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using KMath;
-
 
 namespace Particle
 {
@@ -159,7 +159,7 @@ namespace Particle
             }
         }
 
-        public void SetStartingColor(Color startingColor)
+        public void SetStartingColor(UnityEngine.Color startingColor)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -235,7 +235,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 10.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)Particle.ParticleType.OreExplosionParticle);
@@ -249,7 +249,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)Particle.ParticleType.DustParticle);
@@ -263,7 +263,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
 
@@ -274,7 +274,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
 
@@ -289,7 +289,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(10.3f);
             GameState.ParticleCreationApi.SetStartingScale(20.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255f, 72f, 0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255f, 72f, 0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
 
@@ -304,7 +304,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
 
@@ -319,7 +319,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
 
@@ -334,7 +334,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)Particle.ParticleType.Shrapnel);
@@ -348,7 +348,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.SetBounce(true);
             GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));

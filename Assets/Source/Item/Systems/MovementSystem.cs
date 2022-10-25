@@ -1,7 +1,8 @@
-﻿using System;
+﻿//import UntiyEngine
+
+using System;
 using Physics;
 using KMath;
-using UnityEngine;
 
 namespace Item
 {
@@ -50,7 +51,7 @@ namespace Item
 
         public void Update(ItemParticleContext Context)
         {
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var EntitiesWithPhysicsState = Context.GetGroup(ItemParticleMatcher.ItemPhysicsState);
             foreach (var entity in EntitiesWithPhysicsState)
             {

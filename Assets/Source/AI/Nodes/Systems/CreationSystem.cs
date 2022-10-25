@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//imports UntiyEngine
+
 using Enums;
 using KMath;
 using AI;
@@ -17,7 +18,7 @@ namespace Node
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
             if (entiresID != null)
                 nodeEntity.AddNodeBlackboardData(entiresID);
 
@@ -43,7 +44,7 @@ namespace Node
         {
             if (GameState.ActionCoolDownSystem.InCoolDown(entitasContext, NodeTypeID, agentID))
             {
-                Debug.Log("Action " + NodeTypeID.ToString() + " in CoolDown");
+                UnityEngine.Debug.Log("Action " + NodeTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
@@ -51,7 +52,7 @@ namespace Node
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
 
             return ActionID++;
         }

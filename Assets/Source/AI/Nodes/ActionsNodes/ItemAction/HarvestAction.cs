@@ -1,7 +1,7 @@
-using UnityEngine;
+//import UnityEngine
+
 using KMath;
 using Enums;
-using Entitas;
 
 namespace Node.Action
 {
@@ -12,15 +12,18 @@ namespace Node.Action
 
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
+
+            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            float x = worldPosition.x;
+            float y = worldPosition.y;
+   
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             MechEntity plant = null;
             MechEntity planter = null;
             if (agentEntity.isAgentPlayer)
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                float x = worldPosition.x;
-                float y = worldPosition.y;
-
                 for (int i = 0; i < planet.MechList.Length; i++)
                 {
                     MechEntity mech = (planet.MechList.Get(i));
@@ -64,7 +67,7 @@ namespace Node.Action
             }
             else
             {
-                Debug.LogError("AI can't use this action. Add blackboard entry with mech target");
+                UnityEngine.Debug.LogError("AI can't use this action. Add blackboard entry with mech target");
                 nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                 return;
             }

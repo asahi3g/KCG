@@ -1,7 +1,8 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
 using Entitas;
 using KMath;
-using UnityEngine;
 using Planet;
 
 namespace Particle
@@ -71,7 +72,7 @@ namespace Particle
 
         public void SpawnSpriteDebris(PlanetState planetState, Vec2f position, int spriteId, float spriteWidth, float spriteHeight)
         {
-            Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
+            UnityEngine.Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
             float x = spriteCoords.x;
             float y = spriteCoords.y;
             float width = spriteCoords.z;

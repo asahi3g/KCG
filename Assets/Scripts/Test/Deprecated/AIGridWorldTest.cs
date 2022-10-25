@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using AI;
-using KMath;
-
-// Note: Unit Testing to test AI.
+﻿// Note: Unit Testing to test AI.
 /*
 public class AIGridWorldTest : MonoBehaviour
 {

@@ -1,5 +1,6 @@
-﻿using Entitas;
-using UnityEngine;
+﻿//imports UnityEngine
+
+using Entitas;
 using KMath;
 using Enums;
 using static UnityEditor.PlayerSettings;
@@ -62,7 +63,7 @@ namespace Node.Action
         {
             const float DURATION = 2.0f;
 
-            float deltaTime = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
+            float deltaTime = UnityEngine.Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
             if (deltaTime < DURATION)
                 return;
 

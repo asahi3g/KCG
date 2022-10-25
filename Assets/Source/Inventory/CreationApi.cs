@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Utility;
 using KMath;
-using UnityEngine;
 
 namespace Inventory
 {
-
     /// <summary>
     /// Exemple on how to use the api in default functions and in InventoryTest script.
     /// </summary>
@@ -171,9 +168,9 @@ namespace Inventory
             SetInventoryPos(560f, 340f);
             SetSize(10, 5);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetToolBar();
             SetTileSize(80);
             SetSlotBorderOffset(8);
@@ -199,9 +196,9 @@ namespace Inventory
             SetRestriction(5, Enums.ItemGroups.Armour);
             SetRestriction(7, Enums.ItemGroups.Belt);
             SetRestriction(9, Enums.ItemGroups.Gloves);
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -214,9 +211,9 @@ namespace Inventory
             SetInventoryPos(560f, 630f);
             SetSize(10, 4);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -230,9 +227,9 @@ namespace Inventory
             SetInventoryPos(560f, 810f);
             SetSize(10, 2);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -246,9 +243,9 @@ namespace Inventory
             SetInventoryPos(250f, 330f);
             SetSize(3, 5);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -262,9 +259,9 @@ namespace Inventory
             SetInventoryPos(400f, 800f);
             SetSize(3, 3);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -278,9 +275,9 @@ namespace Inventory
             SetInventoryPos(750f, 900f);
             SetSize(1, 1);
             SetAllSlotsAsActive();
-            SetBackgroundColor(new Color(0.2f, 0.2f, 0.2f, 1.0f));
-            SetSelectedtSlotColor(Color.yellow);
-            SetDefaultSlotColor(Color.gray);
+            SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
+            SetSelectedtSlotColor(UnityEngine.Color.yellow);
+            SetDefaultSlotColor(UnityEngine.Color.gray);
             SetTileSize(80);
             SetSlotBorderOffset(8);
             SetSlotOffset(16);
@@ -341,16 +338,16 @@ namespace Inventory
             InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackgroundTexture;
         }
 
-        public void SetBackgroundColor(Color color)
+        public void SetBackgroundColor(UnityEngine.Color color)
         {
             InventoryModels[ID].RenderProprieties.BackgroundColor = color;
             InventoryModels[ID].RenderProprieties.InventoryFlags |= RenderProprieties.Flags.HasBackground;
         }
 
-        public void SetSelectedtSlotColor(Color whenSelected)
+        public void SetSelectedtSlotColor(UnityEngine.Color whenSelected)
             => InventoryModels[ID].RenderProprieties.SelectedColor = whenSelected;
 
-        public void SetDefaultSlotColor(Color defaultBorder) 
+        public void SetDefaultSlotColor(UnityEngine.Color defaultBorder) 
             => InventoryModels[ID].RenderProprieties.SlotColor = defaultBorder;
 
         public void SetToolBar()

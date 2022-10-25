@@ -1,13 +1,14 @@
-using UnityEngine;
+//import UnityEngine
+
 using Enums.Tile;
 using KMath;
 using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class MediumPlanetTest : MonoBehaviour
+    class MediumPlanetTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
         public PlanetState Planet;
         Inventory.InventoryManager inventoryManager;
         Inventory.DrawSystem inventoryDrawSystem;
@@ -30,7 +31,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
@@ -41,7 +42,7 @@ namespace Planet.Unity
             if (!Init)
                 return;
             
-            if (Event.current.type != EventType.Repaint)
+            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
             inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);

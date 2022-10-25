@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 
@@ -7,7 +8,7 @@ namespace KGUI
 {
     public class DirtElementUI : ElementUI
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
         public ImageWrapper Border;
 

@@ -1,7 +1,8 @@
+//imports UnityEngine
+
 using Enums;
 using Planet;
 using Inventory;
-using UnityEngine;
 
 namespace Node.Action
 {
@@ -69,11 +70,11 @@ namespace Node.Action
             float difference = itemEntity.itemFireWeaponCharge.ChargeRate - tempCharge;
             if (nodeEntity.nodeExecution.State == Enums.NodeState.Fail)
             {
-                Debug.Log("Reload Failed.");
+                UnityEngine.Debug.Log("Reload Failed.");
             }
             else
             {
-                Debug.Log("Weapon Charged: " + difference.ToString());
+                UnityEngine.Debug.Log("Weapon Charged: " + difference.ToString());
             }
 
             base.OnExit(ref planet, nodeEntity);

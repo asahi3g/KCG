@@ -1,22 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+//imports UnityEngine
+
 using Animancer;
 
 namespace KGui
 {
-
-
-
     public class CharacterModelDisplay
     {
-    
-        Camera OffscreenCamera; 
 
-        Material Material;
-        RenderTexture _Texture;
-        Texture2D GuiTexture;
+        UnityEngine.Camera OffscreenCamera; 
+
+        UnityEngine.Material Material;
+        UnityEngine.RenderTexture _Texture;
+        UnityEngine.Texture2D GuiTexture;
 
         public bool Enabled;
         public bool DebugDraw;
@@ -27,31 +22,31 @@ namespace KGui
         public float height;
 
 
-        GameObject Model;
+        UnityEngine.GameObject Model;
         AnimancerComponent AnimancerComponent;
 
         public CharacterModelDisplay()
         {
 
-            Material = Resources.Load<Material>("CamFeedMaterial");
-            _Texture = Resources.Load<RenderTexture>("CamFeedTexture");
+            Material = UnityEngine.Resources.Load<UnityEngine.Material>("CamFeedMaterial");
+            _Texture = UnityEngine.Resources.Load<UnityEngine.RenderTexture>("CamFeedTexture");
 
             Material.mainTexture = _Texture;
 
-            Camera OffscreenCamera = Camera.Instantiate(Camera.main);
-            OffscreenCamera.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.0f);
+            UnityEngine.Camera OffscreenCamera = UnityEngine.Camera.Instantiate(UnityEngine.Camera.main);
+            OffscreenCamera.backgroundColor = new UnityEngine.Color(0.2f, 0.2f, 0.2f, 0.0f);
             OffscreenCamera.name = "OffScreen camera";
 
-            foreach (var comp in OffscreenCamera.GetComponents<Component>())
+            foreach (var comp in OffscreenCamera.GetComponents<UnityEngine.Component>())
             {
-                if (!(comp is Transform) && !(comp is Camera))
+                if (!(comp is UnityEngine.Transform) && !(comp is UnityEngine.Camera))
                 {
-                    Component.Destroy(comp);
+                    UnityEngine.Component.Destroy(comp);
                 }
             }
 
 
-            OffscreenCamera.transform.position = new Vector3(-1000.0f, -1000.0f, -10.0f);
+            OffscreenCamera.transform.position = new UnityEngine.Vector3(-1000.0f, -1000.0f, -10.0f);
 
             OffscreenCamera.targetTexture = _Texture;
 
@@ -64,28 +59,28 @@ namespace KGui
             height = 200;
         }
 
-        public void SetModel(GameObject model)
+        public void SetModel(UnityEngine.GameObject model)
         {
             if (Model != null)
             {
-                GameObject.Destroy(Model);
+                UnityEngine.GameObject.Destroy(Model);
             }
 
-            Model = GameObject.Instantiate(model);
-            Model.transform.position = new Vector3(-1000.0f - 2.5f, -1000.0f - 4.5f, 20.0f);
-            Model.transform.localScale = new Vector3(1.5f * 4, 1.5f * 4, 1.5f * 4); 
+            Model = UnityEngine.GameObject.Instantiate(model);
+            Model.transform.position = new UnityEngine.Vector3(-1000.0f - 2.5f, -1000.0f - 4.5f, 20.0f);
+            Model.transform.localScale = new UnityEngine.Vector3(1.5f * 4, 1.5f * 4, 1.5f * 4);
 
-            GameObject animancerComponentGO = new GameObject("AnimancerComponent", typeof(AnimancerComponent));
+            UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
             animancerComponentGO.transform.parent = Model.transform;
             // get the animator component from the game object
             // this component is used by animancer
             AnimancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-            AnimancerComponent.Animator = Model.GetComponent<Animator>();
+            AnimancerComponent.Animator = Model.GetComponent<UnityEngine.Animator>();
 
-            Model.transform.rotation = Quaternion.Euler(0, 135, 0);
+            Model.transform.rotation = UnityEngine.Quaternion.Euler(0, 135, 0);
             if (AnimancerComponent)
             {
-                AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
+                UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(Engine3D.AnimationType.SpaceMarineIdle);
                 AnimancerComponent.Play(animation);
             }
         }
@@ -96,12 +91,12 @@ namespace KGui
             {
                 if (GuiTexture != null)
                 {
-                    Texture2D.Destroy(GuiTexture);
+                    UnityEngine.Texture2D.Destroy(GuiTexture);
                 }
 
-                GuiTexture = new Texture2D((int)width, (int)height, TextureFormat.RGBA32, false);
-                RenderTexture.active = _Texture;
-                GuiTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+                GuiTexture = new UnityEngine.Texture2D((int)width, (int)height, UnityEngine.TextureFormat.RGBA32, false);
+                UnityEngine.RenderTexture.active = _Texture;
+                GuiTexture.ReadPixels(new UnityEngine.Rect(0, 0, width, height), 0, 0);
                 GuiTexture.Apply();
           
             }
@@ -112,7 +107,7 @@ namespace KGui
         {
             if (Enabled)
             {
-                GUI.DrawTexture(new Rect(x, y - height * 0.5f, width, height) , GuiTexture);
+                UnityEngine.GUI.DrawTexture(new UnityEngine.Rect(x, y - height * 0.5f, width, height) , GuiTexture);
             }
         }
     }

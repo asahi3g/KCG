@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using Enums;
 using KGUI.Elements;
-using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 
@@ -8,7 +9,7 @@ namespace KGUI
 {
     public class HealthPotionElementUI : ElementUI
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
         public ImageWrapper Border;
 

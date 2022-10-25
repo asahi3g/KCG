@@ -1,7 +1,8 @@
+//imports UnityEngine
+
 using Collisions;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 using Utility;
 using Enums.Tile;
 
@@ -12,7 +13,7 @@ namespace Particle
 
         public void Update(ParticleContext context, ref PlanetTileMap.TileMap tileMap)
         {
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var entitiesWithBox = context.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleBox2DCollider));
 
             foreach (var entity in entitiesWithBox)

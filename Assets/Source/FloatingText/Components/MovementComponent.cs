@@ -1,6 +1,4 @@
-        
 using Entitas;
-using UnityEngine;
 using KMath;
 
 namespace FloatingText

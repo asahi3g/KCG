@@ -1,5 +1,6 @@
-﻿using Entitas;
-using UnityEngine;
+﻿//import UnityEngine
+
+using Entitas;
 using KMath;
 
 namespace Inventory
@@ -34,8 +35,8 @@ namespace Inventory
                 return;
             }
 
-            Vector3 mousePos = Input.mousePosition;
-            float scaleFacor = 1080f / Screen.height;
+            UnityEngine.Vector3 mousePos = UnityEngine.Input.mousePosition;
+            float scaleFacor = 1080f / UnityEngine.Screen.height;
             Vec2f mPos = new Vec2f(mousePos.x, mousePos.y) * scaleFacor;
 
             for (int i = 0; i < inventoryList.Length; i++)
@@ -73,8 +74,8 @@ namespace Inventory
 
         public void OnMouseDown(Contexts contexts, Inventory.InventoryList inventoryList)
         {
-            Vector3 mousePos = Input.mousePosition;
-            float scaleFacor = 1080f / Screen.height;
+            UnityEngine.Vector3 mousePos = UnityEngine.Input.mousePosition;
+            float scaleFacor = 1080f / UnityEngine.Screen.height;
             Vec2f mPos = new Vec2f(mousePos.x, mousePos.y) * scaleFacor;
 
             for (int i = 0; i < inventoryList.Length; i++)
@@ -109,7 +110,7 @@ namespace Inventory
                 return;
 
             // If less than 250ms consider it a click.
-            if (Time.realtimeSinceStartup - InventorySystemsState.TimeSinceClick < 0.15f || InventorySystemsState.GrabbedItemID < 0)
+            if (UnityEngine.Time.realtimeSinceStartup - InventorySystemsState.TimeSinceClick < 0.15f || InventorySystemsState.GrabbedItemID < 0)
                 return;
 
             if (!InventorySystemsState.MouseHold)
@@ -165,7 +166,7 @@ namespace Inventory
             if (!window.IsInsideWindow(mousePos)) return false;
             
             InventorySystemsState.MouseDown = true;
-            InventorySystemsState.TimeSinceClick = Time.realtimeSinceStartup;
+            InventorySystemsState.TimeSinceClick = UnityEngine.Time.realtimeSinceStartup;
 
             int gridSlotID = (int)((window.GridSize.Y - (mousePos.Y - window.GridPosition.Y)) / window.TileSize);
             gridSlotID = gridSlotID * width + (int)((mousePos.X - window.GridPosition.X) / window.TileSize);
