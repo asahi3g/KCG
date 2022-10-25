@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class HealthElementUI : UIElement
+    public class HealthElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image progressBarImage;
         [UnityEngine.SerializeField] private Image progressBarBorderImage;
@@ -19,13 +19,13 @@ namespace KGUI
         private ImageWrapper progressBarDiv2;
 
         float healthAmount;
-        private readonly Elements.Text infoText = new();
+        private readonly Elements.TextWrapper infoTextWrapper = new();
 
         public override void Init()
         {
             base.Init();
 
-            ID = UIElementID.HealthElement;
+            ID = ElementEnums.HealthIndicator;
             healthAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Health : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
@@ -52,7 +52,7 @@ namespace KGUI
             base.Update();
             healthAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Health : 0.0f;
             progressBar.Update(healthAmount);
-            infoText.Update();
+            infoTextWrapper.Update();
         }
 
         public override void Draw()
@@ -75,15 +75,12 @@ namespace KGUI
             
             if (healthAmount < 50)
             {
-                infoText.Create("Health Indicator", "Health Bar\nStatus: Low", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(700.0f, 0, 0));
             }
             else
             {
-                infoText.Create("Health DeIndicator", "Health Bar\nStatus: Normal", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(700.0f, 0, 0));
+                infoTextWrapper.Create("Health DeIndicator", "Health Bar\nStatus: Normal", transform, 2.0f);
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(700.0f, 0, 0));
             }
         }
         
@@ -95,7 +92,7 @@ namespace KGUI
         public override void OnMouseExited()
         {
             UnityEngine.Debug.LogWarning("Health Bar Mouse Exit");
-            infoText.StartLifeTime = true;
+            infoTextWrapper.StartLifeTime = true;
         }
     }
 }

@@ -1,10 +1,4 @@
-//import UnityEngine
-
-using System.Collections;
-using System.Collections.Generic;
 using KMath;
-using System.Numerics;
-using Unity.VisualScripting;
 
 public class GeometryGUI
 {

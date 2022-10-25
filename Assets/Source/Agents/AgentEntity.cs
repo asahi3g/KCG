@@ -187,7 +187,7 @@ public partial class AgentEntity
 
         if (isAgentPlayer && itemProperty.HasUI())
         {
-            GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID);
+            GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
         }
     }
     
@@ -197,7 +197,7 @@ public partial class AgentEntity
 
         if (isAgentPlayer && itemProperty.HasUI())
         {
-            GameState.GUIManager.SetPanelActive(itemProperty.ItemUIPanelID, false);
+            GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums, false);
         }
     }
 

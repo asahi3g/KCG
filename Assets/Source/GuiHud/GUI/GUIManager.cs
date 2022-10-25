@@ -2,10 +2,11 @@
 
 using System.Collections.Generic;
 using Enums;
+using KGUI.Elements;
 using KMath;
 using Planet;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
+
 
 namespace KGUI
 {
@@ -19,15 +20,15 @@ namespace KGUI
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
 
-        public Dictionary<UIPanelID, UIPanel> UIPanelPrefabList = new();
-        public Dictionary<UIPanelID, UIPanel> UIPanelList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelList = new();
 
         public Vec2f CursorPosition;
-        public UIElement CursorElement;
+        public ElementUI CursorElement;
         
         private UnityEngine.Canvas canvas;
 
-        private Text scannerText = new();
+        private TextWrapper text = new();
 
         GeometryGUI GeometryGUI;
 
@@ -44,10 +45,12 @@ namespace KGUI
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
 
-            UIPanelPrefabList.Add(UIPanelID.PlayerStatus, UnityEngine.Resources.Load<UIPanel>("GUIPrefabs/PlayerStatusUI"));
-            UIPanelPrefabList.Add(UIPanelID.PlacementTool, UnityEngine.Resources.Load<UIPanel>("GUIPrefabs/PlacementToolUI"));
-            UIPanelPrefabList.Add(UIPanelID.PlacementMaterialTool, UnityEngine.Resources.Load<UIPanel>("GUIPrefabs/PlacementMaterialToolUI"));
-            UIPanelPrefabList.Add(UIPanelID.PotionTool, UnityEngine.Resources.Load<UIPanel>("GUIPrefabs/PotionToolUI"));
+            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusUI"));
+            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolUI"));
+            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolUI"));
+            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolUI"));
+            
+            PanelPrefabList.Add(PanelEnums.Test, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/TestPanel"));
 
             GeometryGUI = new GeometryGUI();
 
@@ -56,12 +59,19 @@ namespace KGUI
 
         public void InitStage2()
         {
-            SetPanelActive(UIPanelID.PlayerStatus);
+            SetPanelActive(PanelEnums.PlayerStatus);
+            SetPanelActive(PanelEnums.Test);
         }
 
-        public void SetPanelActive(UIPanelID panelID, bool active = true)
+        // Inputs panel's ID that we wanna enable or disable
+        // UIPanelList.TryGetValue - checks if we have initialized our panel
+        // Then if that panel initialized we are disable or enable(bool active)
+        // If panel not Initialized, we are checking it in Prefab List(UIPanelPrefabList) with TryGetValue
+        // If it's in Prefab List then instantiate it and enable. If we trying to actually disable it(active == false) then don't even instantiate
+        // If we not have in UIPanelList or UIPanelPrefabList then error
+        public void SetPanelActive(PanelEnums panelEnums, bool active = true)
         {
-            if (UIPanelList.TryGetValue(panelID, out var panel))
+            if (PanelList.TryGetValue(panelEnums, out var panel))
             {
                 if (!active)
                 {
@@ -69,12 +79,20 @@ namespace KGUI
                 }
 
                 panel.gameObject.SetActive(active);
+
+                if (active)
+                {
+                    panel.OnActivate();
+                }
             }
-            else if(UIPanelPrefabList.TryGetValue(panelID, out var panelPrefab))
+            else if(PanelPrefabList.TryGetValue(panelEnums, out var panelPrefab))
             {
                 if (active)
                 {
                     UnityEngine.Object.Instantiate(panelPrefab, canvas.transform);
+
+                    var newPanel = UnityEngine.Object.Instantiate(panelPrefab, canvas.transform);
+                    newPanel.gameObject.SetActive(true);
                 }
             }
             else
@@ -90,7 +108,7 @@ namespace KGUI
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
             
-            scannerText.Update();
+            text.Update();
             GeometryGUI.Update(ref Planet, agentEntity);
             
             var inventoryID = agentEntity.agentInventory.InventoryID;
@@ -103,7 +121,7 @@ namespace KGUI
 
         public void Draw()
         {
-            foreach (var panel in UIPanelList.Values)
+            foreach (var panel in PanelList.Values)
             {
                 foreach (var element in panel.UIElementList.Values)
                 {
@@ -127,7 +145,7 @@ namespace KGUI
             {
                 CursorElement?.OnMouseExited();
                 CursorElement = null;
-                foreach (var panel in UIPanelList.Values)
+                foreach (var panel in PanelList.Values)
                 {
                     if (!panel.gameObject.activeSelf) continue;
                     
@@ -151,24 +169,14 @@ namespace KGUI
             }
         }
 
-        public void AddScannerText(string _text, Vec2f canvasPosition, Vec2f hudSize, float lifeTime)
+        public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
-            // Create Scanner Text
-            scannerText.Create("TempText", _text, canvas.transform, lifeTime);
-            scannerText.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
-            scannerText.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
-            scannerText.StartLifeTime = true;
-        }
+            TextWrapper textWrapper = new TextWrapper();
+            textWrapper.Create("TempText", _text, canvas.transform, 1);
+            textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
+            textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
 
-        public Text AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
-        {
-            // Add Temporary text
-            Text text = new Text();
-            text.Create("TempText", _text, canvas.transform, 1);
-            text.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
-            text.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
-
-            return text;
+            return textWrapper;
         }
     }
 }

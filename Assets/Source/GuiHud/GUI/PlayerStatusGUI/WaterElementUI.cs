@@ -2,23 +2,22 @@ using UnityEngine;
 using Enums;
 using KGUI.Elements;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
-    public class WaterElementUI : UIElement
+    public class WaterElementUI : ElementUI
     {
         [SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float waterAmount;
-        private readonly Text infoText = new();
+        private readonly TextWrapper infoTextWrapper = new();
 
         public override void Init()
         {
             base.Init();
             
-            ID = UIElementID.WaterElement;
+            ID = ElementEnums.WaterIndicator;
             
             waterAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Water : 0.0f;
 
@@ -35,7 +34,7 @@ namespace KGUI
             base.Update();
             waterAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Water : 0.0f;
             progressBar.Update(waterAmount);
-            infoText.Update();
+            infoTextWrapper.Update();
 
         }
         public override void Draw()
@@ -57,24 +56,24 @@ namespace KGUI
             if (waterAmount < 50)
             {
                 // Create Hover Text
-                infoText.Create("Water Indicator", "Water Bar\nStatus: Low", transform, 2.0f);
+                infoTextWrapper.Create("Water Indicator", "Water Bar\nStatus: Low", transform, 2.0f);
 
                 // Set Size Delta
-                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
 
                 // Set Position
-                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
             else
             {
                 // Create Hover Text
-                infoText.Create("Water DeIndicator", "Water Bar\nStatus: Normal", transform, 2.0f);
+                infoTextWrapper.Create("Water DeIndicator", "Water Bar\nStatus: Normal", transform, 2.0f);
 
                 // Set Size Delta
-                infoText.SetSizeDelta(new Vector2(250, 50));
+                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
 
                 // Set Position
-                infoText.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
         }
 
@@ -89,7 +88,7 @@ namespace KGUI
         {
             Debug.LogWarning("Water Bar Mouse Exit");
 
-            infoText.StartLifeTime = true;
+            infoTextWrapper.StartLifeTime = true;
         }
     }
 }

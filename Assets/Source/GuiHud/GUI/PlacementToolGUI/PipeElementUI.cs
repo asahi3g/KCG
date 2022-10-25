@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class PipeElementUI : UIElement
+    public class PipeElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image borderImage;
 
@@ -20,7 +20,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = UIElementID.PipeElement;
+            ID = ElementEnums.Pipe;
 
             Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
 
@@ -49,7 +49,7 @@ namespace KGUI
 
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Pipe;
+                item.itemTile.TileID = global::Enums.Tile.TileID.Pipe;
             }
         }
     }

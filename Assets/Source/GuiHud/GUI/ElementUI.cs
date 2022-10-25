@@ -1,6 +1,5 @@
 using KGUI.Elements;
 using KMath;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -8,7 +7,7 @@ using Utility;
 namespace KGUI
 {
     [DefaultExecutionOrder (100)]
-    public class UIElement : MonoBehaviour
+    public class ElementUI : MonoBehaviour
     {
         [SerializeField] protected Image iconImage;
 
@@ -16,7 +15,7 @@ namespace KGUI
         // Set this to any initialized image
         protected GameObject HitBoxObject;
 
-        public UIElementID ID { get; protected set; }
+        public ElementEnums ID { get; protected set; }
         public Vector3 HitBoxPosition { get; private set; }
         public Vector2 HitBoxSize { get; private set; }
         public AABox2D HitBox { get; private set; }
@@ -30,9 +29,11 @@ namespace KGUI
         {
             if (transform.hasChanged)
             {
-                var hitBoxTransform = HitBoxObject.transform;
-                HitBoxPosition = hitBoxTransform.position - hitBoxTransform.localPosition;
-                HitBoxSize = HitBoxObject.GetComponent<RectTransform>().sizeDelta;
+                var rect = HitBoxObject.GetComponent<RectTransform>();
+                var corners = new Vector3[4];
+                rect.GetWorldCorners(corners);
+                HitBoxPosition = corners[0]; // 0 - bottom left, 1 - top left, 2 - top right, 3 - bottom right
+                HitBoxSize = rect.sizeDelta;
                 HitBox = new AABox2D(new Vec2f(HitBoxPosition.x, HitBoxPosition.y), new Vec2f(HitBoxSize.x, HitBoxSize.y));
                 transform.hasChanged = false;
             }
@@ -41,8 +42,9 @@ namespace KGUI
 
         public virtual void Init()
         {
-            HitBoxObject = iconImage.gameObject;
-            transform.hasChanged = true;
+            var tr = transform;
+            HitBoxObject = tr.gameObject;
+            tr.hasChanged = true;
         }
 
         public virtual void Draw() {}

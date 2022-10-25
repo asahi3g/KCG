@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class DirtElementUI : UIElement
+    public class DirtElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image borderImage;
 
@@ -18,7 +18,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = UIElementID.DirtElement;
+            ID = ElementEnums.Dirt;
 
             Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", AtlasType.Gui);
 
@@ -46,7 +46,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Moon;
+                item.itemTile.TileID = global::Enums.Tile.TileID.Moon;
             }
         }
     }

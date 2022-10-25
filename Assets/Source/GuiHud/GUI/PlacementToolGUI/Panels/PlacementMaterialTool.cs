@@ -4,14 +4,26 @@ using UnityEngine;
 
 namespace KGUI
 {
-    public class PlacementMaterialToolUI : UIPanel
+    public class PlacementMaterialTool : PanelUI
     {
         [SerializeField] private BedrockElementUI bedrockElementUI;
         [SerializeField] private DirtElementUI dirtElementUI;
         [SerializeField] private PipeElementUI pipeElementUI;
         [SerializeField] private WireElementUI wireElementUI;
 
-        public override void Update()
+        public override void Init()
+        {
+            ID = PanelEnums.PlacementMaterialTool;
+            
+            UIElementList.Add(bedrockElementUI.ID, bedrockElementUI);
+            UIElementList.Add(dirtElementUI.ID, dirtElementUI);
+            UIElementList.Add(pipeElementUI.ID, pipeElementUI);
+            UIElementList.Add(wireElementUI.ID, wireElementUI);
+
+            base.Init();
+        }
+        
+        public override void OnActivate()
         {
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
@@ -69,18 +81,6 @@ namespace KGUI
                     }
                 }
             }
-        }
-
-        public override void Init()
-        {
-            ID = UIPanelID.PlacementMaterialTool;
-            
-            UIElementList.Add(bedrockElementUI.ID, bedrockElementUI);
-            UIElementList.Add(dirtElementUI.ID, dirtElementUI);
-            UIElementList.Add(pipeElementUI.ID, pipeElementUI);
-            UIElementList.Add(wireElementUI.ID, wireElementUI);
-
-            base.Init();
         }
 
         public override void OnDeactivate()

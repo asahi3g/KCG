@@ -1,13 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 namespace KGUI.Elements
 {
-    public class Text : ElementManager
+    public class TextWrapper : ElementManager
     {
-        // Image Gameobject
         private GameObject textCanvas;
         private RectTransform rectTransform;
-        private UnityEngine.UI.Text textComponent;
+        private TextMeshProUGUI textComponent;
 
         // Countdown
         private float timeLeft;
@@ -25,38 +25,27 @@ namespace KGUI.Elements
                 return;
 
             timeLeft = lifeTime;
-
-            // Create Gameobject
+            
             textCanvas = new GameObject(objectName)
             {
                 transform =
                 {
-                    // Set Object Parent To Canvas
                     parent = parent,
                     position = Vector3.zero,
                     rotation = Quaternion.identity
                 }
             };
-
-            // Add Rect Transform to Manage UI Scaling
+            
             rectTransform = textCanvas.AddComponent<RectTransform>();
-
-            // Add Image Component to Render the Sprite
-            textComponent = textCanvas.AddComponent<UnityEngine.UI.Text>();
-
-            // Set Image Sprite
+            textComponent = textCanvas.AddComponent<TextMeshProUGUI>();
+            
             textComponent.text = text;
-            textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+            textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as TMP_FontAsset;
             textComponent.fontSize = 20;
-            textComponent.fontStyle = FontStyle.Normal;
-
-            // Set Anchor Min
+            textComponent.fontStyle = FontStyles.Normal;
+            
             rectTransform.anchorMin = new Vector2(0, 0);
-
-            // Set Anchor Max
             rectTransform.anchorMax = new Vector2(0, 0);
-
-            // Set Pivot
             rectTransform.pivot = new Vector2(0, 0);
 
             textComponent.enabled = false;

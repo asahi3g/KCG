@@ -1,12 +1,15 @@
 namespace KGUI
 {
-    public enum UIPanelID
+    public enum PanelEnums
     {
         Error = 0,
+        Test,
         PlayerStatus,
         PlacementTool,
         PlacementMaterialTool,
         PotionTool,
+        GameMenu,
+        GeometryTool
     }
 }
 

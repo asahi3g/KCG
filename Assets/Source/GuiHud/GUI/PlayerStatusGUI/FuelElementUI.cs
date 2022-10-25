@@ -4,23 +4,22 @@ using Enums;
 using KGUI.Elements;
 using KMath;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
-    public class FuelElementUI : UIElement
+    public class FuelElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float fuelLevel;
-        private readonly Text infoText = new();
+        private readonly TextWrapper infoTextWrapper = new();
 
         public override void Init()
         {
             base.Init();
 
-            ID = UIElementID.FuelElement;
+            ID = ElementEnums.FuelIndicator;
             fuelLevel = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Fuel : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
@@ -43,7 +42,7 @@ namespace KGUI
             }
             
             progressBar.Update(fuelLevel);
-            infoText.Update();
+            infoTextWrapper.Update();
         }
 
         public override void Draw()
@@ -64,15 +63,12 @@ namespace KGUI
             // If Water level less than 50
             if (fuelLevel < 50)
             {
-                infoText.Create("Fuel Indicator", "Fuel Bar\nStatus: Low", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
             else
             {
-                infoText.Create("Fuel DeIndicator", "Fuel Bar\nStatus: Normal", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.Create("Fuel DeIndicator", "Fuel Bar\nStatus: Normal", transform, 2.0f);
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
         }
         public override void OnMouseStay()
@@ -83,7 +79,7 @@ namespace KGUI
         {
             UnityEngine.Debug.LogWarning("Fuel Bar Mouse Exit");
 
-            infoText.StartLifeTime = true;
+            infoTextWrapper.StartLifeTime = true;
         }
     }
 }

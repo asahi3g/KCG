@@ -3,23 +3,22 @@
 using Enums;
 using KGUI.Elements;
 using UnityEngine.UI;
-using Text = KGUI.Elements.Text;
 
 namespace KGUI
 {
-    public class OxygenElementUI : UIElement
+    public class OxygenElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image progressBarImage;
         
         private ProgressBar progressBar;
         private float oxygenAmount;
-        private readonly Text infoText = new();
+        private readonly TextWrapper infoTextWrapper = new();
         
         public override void Init()
         {
             base.Init();
             
-            ID = UIElementID.OxygenElement;
+            ID = ElementEnums.OxygenIndicator;
             
             oxygenAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Oxygen : 0.0f;
 
@@ -36,7 +35,7 @@ namespace KGUI
             base.Update();
             oxygenAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Oxygen : 0.0f;
             progressBar.Update(oxygenAmount);
-            infoText.Update();
+            infoTextWrapper.Update();
         }
 
         public override void Draw()
@@ -56,15 +55,12 @@ namespace KGUI
             
             if (oxygenAmount < 50)
             {
-                infoText.Create("Oxygen Indicator", "Oxygen Bar\nStatus: Low", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(260.0f, 0, 0));
             }
             else
             {
-                infoText.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", transform, 2.0f);
-                infoText.SetSizeDelta(new UnityEngine.Vector2(250, 50));
-                infoText.SetPosition(new UnityEngine.Vector3(260.0f, 0, 0));
+                infoTextWrapper.Create("Oxygen DeIndicator", "Oxygen Bar\nStatus: Normal", transform, 2.0f);
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(260.0f, 0, 0));
             }
 
         }
@@ -77,7 +73,7 @@ namespace KGUI
         public override void OnMouseExited()
         {
             UnityEngine.Debug.LogWarning("Oxygen Bar Mouse Exit");
-            infoText.StartLifeTime = true;
+            infoTextWrapper.StartLifeTime = true;
         }
     }
 }

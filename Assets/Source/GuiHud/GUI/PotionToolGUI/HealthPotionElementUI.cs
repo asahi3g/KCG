@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace KGUI
 {
-    public class HealthPotionElementUI : UIElement
+    public class HealthPotionElementUI : ElementUI
     {
         [UnityEngine.SerializeField] private Image borderImage;
 
@@ -18,7 +18,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
 
-            ID = UIElementID.HealthPotionElement;
+            ID = ElementEnums.HealthPotion;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
