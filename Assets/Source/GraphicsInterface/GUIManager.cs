@@ -1,10 +1,8 @@
 //imports UnityEngine
 
 using System.Collections.Generic;
-using Enums;
 using KMath;
 using Planet;
-using UnityEngine.UI;
 using Utility;
 
 
@@ -41,9 +39,9 @@ namespace KGUI
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
 
             ProgressBar = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, AtlasType.Gui);
+                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
+                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
 
             PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
             PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
@@ -97,10 +95,7 @@ namespace KGUI
 
         public void Update(AgentEntity agentEntity)
         {
-            if (Planet.TileMap == null)
-                return;
-
-            canvas.GetComponent<CanvasScaler>().referenceResolution =
+            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);

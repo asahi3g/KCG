@@ -1,13 +1,12 @@
 //imports UnityEngine
 
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class PipeElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
 
         private ImageWrapper border;
 
@@ -19,7 +18,7 @@ namespace KGUI
             
             ID = ElementEnums.Pipe;
 
-            //Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
+            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", Enums.AtlasType.Gui);
 
             border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
