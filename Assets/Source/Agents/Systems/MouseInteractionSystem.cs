@@ -1,6 +1,4 @@
-﻿//import UnityEngine
-
-using Planet;
+﻿using Planet;
 using KMath;
 
 namespace Agent
