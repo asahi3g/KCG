@@ -13,11 +13,6 @@ namespace KGUI
         {
             ID = PanelEnums.GameMenu;
             
-            UIElementList.Add(startButton.ID, startButton);
-            UIElementList.Add(resumeButton.ID, resumeButton);
-            UIElementList.Add(controlsButton.ID, controlsButton);
-            UIElementList.Add(exitButton.ID, exitButton);
-            
             base.Init();
         }
     }

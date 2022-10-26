@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Enums;
-using KGUI.Elements;
 using KMath;
 using Planet;
 using UnityEngine.UI;
@@ -25,15 +24,13 @@ namespace KGUI
         public Dictionary<PanelEnums, PanelUI> PanelList = new();
 
         public Vec2f CursorPosition;
-        public ElementUI CursorElement;
+        public ElementUI ElementUnderCursor;
+        public PanelUI PanelUnderCursor;
         
         private UnityEngine.Canvas canvas;
 
         private TextWrapper text = new();
-
-        GeometryGUI GeometryGUI;
-
-        // Initialize
+        
         public void InitStage1(PlanetState planet)
         {
             Planet = planet;
@@ -46,14 +43,11 @@ namespace KGUI
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
 
-            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusUI"));
-            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolUI"));
-            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolUI"));
-            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolUI"));
-            
-            PanelPrefabList.Add(PanelEnums.Test, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/TestPanel"));
-
-            GeometryGUI = new GeometryGUI();
+            PanelPrefabList.Add(PanelEnums.PlayerStatus, Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PotionTool, Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
+            PanelPrefabList.Add(PanelEnums.GeometryTool, Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
         }
 
         public void InitStage2()
@@ -120,7 +114,7 @@ namespace KGUI
         {
             foreach (var panel in PanelList.Values)
             {
-                foreach (var element in panel.UIElementList.Values)
+                foreach (var element in panel.ElementList.Values)
                 {
                     element.Draw();
                 }
@@ -129,40 +123,44 @@ namespace KGUI
 
         public void HandleMouseEvents()
         {
-            if (CursorElement != null 
+            if (ElementUnderCursor != null 
                 && Collisions.Collisions.PointOverlapRect
                 (
                     CursorPosition.X, CursorPosition.Y,
-                    CursorElement.HitBox.xmin, CursorElement.HitBox.xmax, CursorElement.HitBox.ymin, CursorElement.HitBox.ymax)
+                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax)
                )
             {
-                CursorElement.OnMouseStay();
+                ElementUnderCursor.OnMouseStay();
             }
             else
             {
-                CursorElement?.OnMouseExited();
-                CursorElement = null;
+                ElementUnderCursor?.OnMouseExited();
+                ElementUnderCursor = null;
+                PanelUnderCursor = null;
                 foreach (var panel in PanelList.Values)
                 {
                     if (!panel.gameObject.activeSelf) continue;
+                    if (ElementUnderCursor != null) break;
                     
-                    foreach (var element in panel.UIElementList.Values)
+                    foreach (var element in panel.ElementList.Values)
                     {
                         if (!element.gameObject.activeSelf) continue;
                         
                         if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y, element.HitBox.xmin, element.HitBox.xmax, element.HitBox.ymin, element.HitBox.ymax))
                         {
-                            CursorElement = element;
-                            CursorElement.OnMouseEntered();
-                            return;
+                            ElementUnderCursor = element;
+                            PanelUnderCursor = panel;
+                            ElementUnderCursor.OnMouseEntered();
+                            break;
                         }
                     }
                 }
             }
-            
-            if (UnityEngine.Input.GetMouseButton(0))
+
+            if (ElementUnderCursor != null && PanelUnderCursor != null && Input.GetMouseButton(0))
             {
-                CursorElement?.OnMouseClick();
+                PanelUnderCursor.HandleClickEvent(ElementUnderCursor.ID);
+                ElementUnderCursor.OnMouseClick();
             }
         }
 

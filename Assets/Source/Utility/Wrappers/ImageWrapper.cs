@@ -25,10 +25,6 @@ namespace Utility
             
             UnityImage.sprite = sprite;
             UnityImage.enabled = false;
-            
-            RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
-            RectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
-            RectTransform.pivot = new UnityEngine.Vector2(0, 0);
         }
         public ImageWrapper(string imageName, UnityEngine.Transform parent, UnityEngine.Sprite sprite)
         {

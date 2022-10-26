@@ -5,11 +5,11 @@ using Utility;
 
 namespace KGUI
 {
-    public class PipeElementUI : ElementUI
+    public class PipeElementUI : ElementUI, IToggleElement
     {
         [UnityEngine.SerializeField] private Image borderImage;
 
-        public ImageWrapper Border;
+        private ImageWrapper border;
 
         public override void Init()
         {
@@ -19,13 +19,15 @@ namespace KGUI
             
             ID = ElementEnums.Pipe;
 
-            Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
+
+            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
             Icon.Draw();
-            Border.Draw();
+            border.Draw();
         }
 
         public override void OnMouseStay()
@@ -45,7 +47,13 @@ namespace KGUI
             if (item != null)
             {
                 item.itemTile.TileID = Enums.Tile.TileID.Pipe;
+                Toggle(true);
             }
+        }
+        
+        public void Toggle(bool value)
+        {
+            border.SetImageColor(value ? Color.red : Color.yellow);
         }
     }
 }
