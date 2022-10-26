@@ -41,7 +41,7 @@ namespace Planet.Unity
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
@@ -74,7 +74,7 @@ namespace Planet.Unity
             ref var planet = ref GameState.Planet;
             // Draw a cube around the map
             if (planet.TileMap != null)
-                Gizmos.DrawWireCube(Vector3.zero, new Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
+                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
             UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
             CircleSmoke.DrawGizmos();

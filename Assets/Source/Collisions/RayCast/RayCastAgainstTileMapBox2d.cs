@@ -113,7 +113,7 @@ namespace Collisions
                 {
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        Enums.Tile.TileID tileID = planet.TileMap.GetFrontTileID(x, y);
+                        Enums.PlanetTileMap.TileID tileID = planet.TileMap.GetFrontTileID(x, y);
                         PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
                         if (tileID != Enums.PlanetTileMap.TileID.Air && tileID != Enums.PlanetTileMap.TileID.Platform)
                         {

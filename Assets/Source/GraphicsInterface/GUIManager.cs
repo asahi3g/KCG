@@ -160,7 +160,7 @@ namespace KGUI
 
         public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
-            if (Planet.TileMap != null)
+            if (GameState.Planet.TileMap != null)
             {
                 TextWrapper textWrapper = new TextWrapper();
                 textWrapper.Create("TempText", _text, canvas.transform, 1);

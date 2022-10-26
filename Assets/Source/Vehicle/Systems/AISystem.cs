@@ -62,7 +62,7 @@ namespace Vehicle
                     for(int i = 0; i < planet.TileMap.MapSize.X; i++)
                     {
                         var tile = planet.TileMap.GetTile(i, 30);
-                        if(tile.FrontTileID == Enums.Tile.TileID.Air)
+                        if(tile.FrontTileID == Enums.PlanetTileMap.TileID.Air)
                         {
                             vehicle.vehicleHeightMap.OpenSky = true;
                             vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);

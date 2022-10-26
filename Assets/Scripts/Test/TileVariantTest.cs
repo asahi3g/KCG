@@ -30,7 +30,7 @@ namespace Planet.Unity
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
-                Debug.Log(x + " " + y);
+                UnityEngine.Debug.Log(x + " " + y);
                 GameState.Planet.TileMap.RemoveFrontTile(x, y);                
             }
 

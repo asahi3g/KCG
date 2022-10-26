@@ -114,7 +114,7 @@ namespace Agent
 
         public void Update()
         {
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var agentEntitiesWithBox = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));
 
             foreach (var agentEntity in agentEntitiesWithBox)

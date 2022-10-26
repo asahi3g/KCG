@@ -223,7 +223,7 @@ namespace Planet
                 if (itemInventory == null)
                     continue;
 
-                int rand = Random.Range(0, 100);
+                int rand = UnityEngine.Random.Range(0, 100);
                 GameState.InventoryManager.RemoveItem(inventoryID, i);
                 pos.X += rand / 100f;
                 GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
@@ -306,7 +306,7 @@ namespace Planet
 
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
         {
-            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText(text, timeToLive, velocity, position, Color.red, 18));
+            FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText(text, timeToLive, velocity, position, UnityEngine.Color.red, 18));
             return newEntity;
         }
 
@@ -530,10 +530,10 @@ namespace Planet
             
             switch (UnityEngine.Event.current.type)
             {
-                case EventType.MouseDown:
+                case UnityEngine.EventType.MouseDown:
                     GameState.InventoryMouseSelectionSystem.OnMouseDown(InventoryList);
                     return;
-                case EventType.MouseUp:
+                case UnityEngine.EventType.MouseUp:
                     GameState.InventoryMouseSelectionSystem.OnMouseUP(InventoryList);
                     return;
                 case not UnityEngine.EventType.Repaint:

@@ -157,10 +157,10 @@ public class RayCastTest : UnityEngine.MonoBehaviour
     void GenerateMap()
     {
         ref var planet = ref GameState.Planet;
-        CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(16f, 16f),new Vec2f(16f, 16f), Color.white, false, "Chunk_4").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(16f, 16f),new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_4").lineRenderer.sortingOrder = 11;
 
         Grid = new UnityEngine.GameObject("Grid");
 

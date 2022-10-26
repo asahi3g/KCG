@@ -1,12 +1,12 @@
 //imports UnityEngine
 
 using KMath;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using PlanetTileMap;
 
 class PlanterTest : UnityEngine.MonoBehaviour
 {
-    [SerializeField] Material Material;
+    [UnityEngine.SerializeField] UnityEngine.Material Material;
 
 
     AgentEntity Player;
@@ -24,7 +24,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     public void Update()
     {
-        GameState.Planet.Update(Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
     private void OnGUI()
@@ -33,7 +33,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
             return;
 
         GameState.Planet.DrawHUD(Player);
-        if (Event.current.type != EventType.Repaint)
+        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
         KGUI.Statistics.StatisticsDisplay.DrawStatistics();
@@ -49,7 +49,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
         // Draw a cube around the map
         if (planet.TileMap != null)
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
+            UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
         // Draw lines around player if out of bounds
         if (Player != null)

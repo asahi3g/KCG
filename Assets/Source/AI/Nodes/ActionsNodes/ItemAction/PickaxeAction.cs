@@ -22,7 +22,7 @@ namespace Node
 
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
-            if(tile == Enums.Tile.TileID.Bedrock)
+            if(tile == Enums.PlanetTileMap.TileID.Bedrock)
             {
                 nodeEntity.nodeExecution.State = NodeState.Success;
                 return;
