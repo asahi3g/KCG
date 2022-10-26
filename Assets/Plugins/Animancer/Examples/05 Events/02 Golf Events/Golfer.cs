@@ -23,7 +23,7 @@ namespace Animancer.Examples.Events
         [SerializeField] private ClipTransition _Ready;
         [SerializeField, EventNames(HitEventName)] private ClipTransition _Swing;
         [SerializeField] private Rigidbody _Ball;
-        [SerializeField] private Vector3 _HitVelocity = new Vector3(0, 10, 10);
+        [SerializeField] private Vector3 _HitVelocity = new(0, 10, 10);
         [SerializeField, Meters] private float _BallReturnHeight = -10;
 
         private Vector3 _BallStartPosition;

@@ -8,9 +8,9 @@ namespace Node
     {
         public override NodeType Type => NodeType.ToolActionPlaceTile;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ItemInventoryEntity itemInventory = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)
             {
@@ -20,18 +20,18 @@ namespace Node
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
-                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
+                    if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X && y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
                     {
                         switch (itemInventory.itemTile.Layer)
                         {
                             case MapLayerType.Back:
-                                planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
+                                GameState.Planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Mid:
-                                planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
+                                GameState.Planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Front:
-                                planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
+                                GameState.Planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                         }
                     }
@@ -43,23 +43,23 @@ namespace Node
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
 
-                if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
+                if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X && y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
                 {
                     switch (itemInventory.itemTile.Layer)
                     {
                         case MapLayerType.Back:
-                            planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
+                            GameState.Planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Mid:
-                            planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
+                            GameState.Planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Front:
-                            planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
+                            GameState.Planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                             break;
                     }
                 }   
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -1,25 +1,23 @@
 ﻿using KMath;
 using Particle;
-using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace Projectile
 {
     public class ProcessState
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
-            for (int i = 0; i < planet.ProjectileList.Length; i++)
+            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
             {
-                ProjectileEntity entityP = planet.ProjectileList.Get(i);
+                ProjectileEntity entityP = GameState.Planet.ProjectileList.Get(i);
 
                 if (entityP.hasProjectileRange)
                 {
                     if ((entityP.projectilePhysicsState.Position - entityP.projectileStart.StarPos).Magnitude > entityP.projectileRange.Range)
                     {
                         entityP.isProjectileDelete = true;
-                        planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                        GameState.Planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
                     }
                 }
 

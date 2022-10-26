@@ -33,7 +33,7 @@ namespace ToonyColorsPro
 			public bool useCustomBackgroundColor;
 			public Color backgroundColor = Color.black;
 
-			private Hashtable m_ReflectionCameras = new Hashtable(); // Camera -> Camera table
+			private Hashtable m_ReflectionCameras = new(); // Camera -> Camera table
 
 			private RenderTexture m_ReflectionTexture;
 			private int m_OldReflectionTextureSize;

@@ -4,7 +4,6 @@ using PlanetTileMap;
 using UnityEngine;
 using Utility;
 using Physics;
-using Enums.Tile;
 
 namespace Item
 {
@@ -62,7 +61,7 @@ namespace Item
             entityBoxBorders.DrawBox();
         }
 
-        public void Update(ItemParticleContext itemContext, ref PlanetTileMap.TileMap tileMap)
+        public void Update(ItemParticleContext itemContext, ref TileMap tileMap)
         {
             float deltaTime = Time.deltaTime;
             var entitiesWithBox = itemContext.GetGroup(ItemParticleMatcher.AllOf(ItemParticleMatcher.PhysicsBox2DCollider, ItemParticleMatcher.ItemPhysicsState));

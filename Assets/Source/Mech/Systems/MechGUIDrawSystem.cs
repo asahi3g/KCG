@@ -38,7 +38,7 @@ namespace Mech
         int selectedSlot;
         ItemInventoryEntity item;
 
-        public void Initialize(ref Planet.PlanetState planet)
+        public void Initialize()
         {
             var canvas = UnityEngine.GameObject.Find("Canvas").transform;
             var backgroundSprite = UnityEditor.AssetDatabase.GetBuiltinExtraResource<UnityEngine.Sprite>("UI/Skin/Background.psd");
@@ -50,80 +50,80 @@ namespace Mech
             //var backgroundSprite = UnityEditor.AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Background.psd");
 
 
-            /*ChestBackground = planet.AddUIImage("ChestBackground", canvas, backgroundSprite,
+            /*ChestBackground = GameState.Planet.AddUIImage("ChestBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Chest = planet.AddUIImage("Chest", ChestBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
+            Chest = GameState.Planet.AddUIImage("Chest", ChestBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
 
-            PlanterBackground = planet.AddUIImage("PlanterBackground", canvas, backgroundSprite,
+            PlanterBackground = GameState.Planet.AddUIImage("PlanterBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Planter = planet.AddUIImage("Planter", PlanterBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
+            Planter = GameState.Planet.AddUIImage("Planter", PlanterBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f),  32, 16).kGUIElementsImage.ImageWrapper;
 
-            LightBackground = planet.AddUIImage("LightBackground", canvas, backgroundSprite,
+            LightBackground = GameState.Planet.AddUIImage("LightBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            Light = planet.AddUIImage("Light", LightBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
+            Light = GameState.Planet.AddUIImage("Light", LightBackground.Transform, "Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 48, 16).kGUIElementsImage.ImageWrapper;
 
-            MajestyPalmBackground = planet.AddUIImage("MajestyPalmBackground", canvas, backgroundSprite,
+            MajestyPalmBackground = GameState.Planet.AddUIImage("MajestyPalmBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            MajestyPalm = planet.AddUIImage("MajestyPalm", MajestyPalmBackground.Transform,
+            MajestyPalm = GameState.Planet.AddUIImage("MajestyPalm", MajestyPalmBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
-            SagoPalmBackground = planet.AddUIImage("SagoPalmBackground", canvas, backgroundSprite,
+            SagoPalmBackground = GameState.Planet.AddUIImage("SagoPalmBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            SagoPalm = planet.AddUIImage("SagoPalm", SagoPalmBackground.Transform,
+            SagoPalm = GameState.Planet.AddUIImage("SagoPalm", SagoPalmBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
-            DracaenaTrifasciataBackground = planet.AddUIImage("DracaenaTrifasciataBackground", canvas, backgroundSprite,
+            DracaenaTrifasciataBackground = GameState.Planet.AddUIImage("DracaenaTrifasciataBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            DracaenaTrifasciata = planet.AddUIImage("DracaenaTrifasciata", DracaenaTrifasciataBackground.Transform,
+            DracaenaTrifasciata = GameState.Planet.AddUIImage("DracaenaTrifasciata", DracaenaTrifasciataBackground.Transform,
                 "Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 16, 16).kGUIElementsImage.ImageWrapper;
 
-            SmashableBoxBackground = planet.AddUIImage("SmashableBoxBackground", canvas, backgroundSprite,
+            SmashableBoxBackground = GameState.Planet.AddUIImage("SmashableBoxBackground", canvas, backgroundSprite,
                     new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
 
-            SmashableBox = planet.AddUIImage("SmashableBox", SmashableBoxBackground.Transform,
+            SmashableBox = GameState.Planet.AddUIImage("SmashableBox", SmashableBoxBackground.Transform,
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
                     new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;
             
-            SmashableEggBackground = planet.AddUIImage("SmashableEggBackground", canvas, backgroundSprite,
+            SmashableEggBackground = GameState.Planet.AddUIImage("SmashableEggBackground", canvas, backgroundSprite,
                 new Vec2f(positionX, positionY), new Vec3f(0.7f, 0.7f, 0.7f), new Vec2f(50f, 50f), UnityEngine.UI.Image.Type.Tiled, UnityEngine.Color.yellow).kGUIElementsImage.ImageWrapper;
             positionX += differenceX;
             
-            SmashableEgg = planet.AddUIImage("SmashableEgg", SmashableEggBackground.Transform,
+            SmashableEgg = GameState.Planet.AddUIImage("SmashableEgg", SmashableEggBackground.Transform,
                 "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png",
                 new Vec2f(0.0f, 0.0f), new Vec3f(0.8f, -0.8f, 0.8f), new Vec2f(50f, 50f), 32, 32).kGUIElementsImage.ImageWrapper;*/
         }
 
-        public void Draw(ref Planet.PlanetState planet, AgentEntity agentEntity)
+        public void Draw(AgentEntity agentEntity)
         {
             // Set Inventory Elements
             inventoryID = agentEntity.agentInventory.InventoryID;
-            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
             // Create Item
-            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
             if (item != null)
             {
-                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                if (item.itemType.Type == ItemType.ConstructionTool)
                 {
                     ChestBackground.GameObject.SetActive(true);
                     PlanterBackground.GameObject.SetActive(true);
@@ -203,13 +203,13 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.Storage;
@@ -220,13 +220,13 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.Planter;
@@ -237,13 +237,13 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.Light;
@@ -255,13 +255,13 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.MajestyPalm;
@@ -272,13 +272,13 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.SagoPalm;
@@ -289,16 +289,16 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
-                                    item.itemMech.MechID = Enums.MechType.DracaenaTrifasciata;
+                                    item.itemMech.MechID = MechType.DracaenaTrifasciata;
                                 }
                         }
 
@@ -306,14 +306,14 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
                             {
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.SmashableBox;
@@ -325,14 +325,14 @@ namespace Mech
                         {
                             // Set Inventory Elements
                             inventoryID = agentEntity.agentInventory.InventoryID;
-                            Inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                            Inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                             selectedSlot = Inventory.inventoryEntity.SelectedSlotID;
 
                             // Create Item
-                            item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                            item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                             if (item != null)
                             {
-                                if (item.itemType.Type == Enums.ItemType.ConstructionTool)
+                                if (item.itemType.Type == ItemType.ConstructionTool)
                                 {
                                     // Set Data Tile ID to Pipe
                                     item.itemMech.MechID = MechType.SmashableEgg;

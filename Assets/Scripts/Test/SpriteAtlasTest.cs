@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 namespace Planet.Unity
 {
@@ -21,11 +20,11 @@ namespace Planet.Unity
 
         public static string BaseDir => Application.streamingAssetsPath;
 
-        List<int> triangles = new List<int>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector3> verticies = new List<Vector3>();
+        List<int> triangles = new();
+        List<Vector2> uvs = new();
+        List<Vector3> verticies = new();
 
-        Vector2 MapOffset = new Vector2(-3.0f, 4.0f);
+        Vector2 MapOffset = new(-3.0f, 4.0f);
 
         static bool InitTiles = false;
         

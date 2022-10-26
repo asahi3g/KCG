@@ -9,8 +9,9 @@ namespace Node
 {
     public class PlantAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.PlantAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.PlantAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
+
         public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
@@ -20,10 +21,10 @@ namespace Node
             return blackboardEntries;
         }
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             MechEntity planter = null;
             Vec2f planterPosition = Vec2f.Zero;
@@ -33,36 +34,36 @@ namespace Node
                 float x = worldPosition.x;
                 float y = worldPosition.y;
 
-                for (int i = 0; i < planet.MechList.Length; i++)
+                for (int i = 0; i < GameState.Planet.MechList.Length; i++)
                 {
-                    if (planet.MechList.Get(i).mechType.mechType != Enums.MechType.Planter)
+                    if (GameState.Planet.MechList.Get(i).mechType.mechType != MechType.Planter)
                         continue;
 
-                    if (planet.MechList.Get(i).mechPlanter.GotPlant)
+                    if (GameState.Planet.MechList.Get(i).mechPlanter.GotPlant)
                         continue;
 
                     // Is mouse over it?
-                    planterPosition = planet.MechList.Get(i).mechPosition2D.Value;
-                    Vec2f size = planet.MechList.Get(i).mechSprite2D.Size;
+                    planterPosition = GameState.Planet.MechList.Get(i).mechPosition2D.Value;
+                    Vec2f size = GameState.Planet.MechList.Get(i).mechSprite2D.Size;
                     if (x < planterPosition.X || y < planterPosition.Y)
                         continue;
 
                     if (x > planterPosition.X + size.X || y > planterPosition.Y + size.Y)
                         continue;
 
-                    planter = planet.MechList.Get(i);
+                    planter = GameState.Planet.MechList.Get(i);
                     break;
                 }
             }
             else
             {
                 if (nodeEntity.hasNodeBlackboardData)
-                    planter = planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
+                    planter = GameState.Planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
             }
 
             if (planter == null)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                nodeEntity.nodeExecution.State = NodeState.Fail;
                 return;
             }
 
@@ -70,24 +71,24 @@ namespace Node
             planterPosition.Y += 0.85f;
             switch (itemEntity.itemType.Type)
             {
-                case Enums.ItemType.MajestyPalm:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.MajestyPalm);
+                case ItemType.MajestyPalm:
+                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.MajestyPalm);
                     break;
-                case Enums.ItemType.SagoPalm:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.SagoPalm);
+                case ItemType.SagoPalm:
+                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.SagoPalm);
                     break;
-                case Enums.ItemType.DracaenaTrifasciata:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.DracaenaTrifasciata);
+                case ItemType.DracaenaTrifasciata:
+                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
                     break;
                 default:
-                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), Enums.MechType.DracaenaTrifasciata);
+                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
                     break;
             }
 
             planter.mechPlanter.GotPlant = true;
             planter.mechPlanter.PlantMechID = plant.mechID.ID;
-            GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            GameState.InventoryManager.RemoveItem(GameState.Planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

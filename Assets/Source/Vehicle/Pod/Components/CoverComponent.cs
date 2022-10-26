@@ -1,5 +1,4 @@
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
 using KMath;
 using System.Collections.Generic;
 

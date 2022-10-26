@@ -15,7 +15,7 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public VehicleEntity Spawn(ref Planet.PlanetState planet, VehicleType vehicleType, Vec2f position)
+        public VehicleEntity Spawn(VehicleType vehicleType, Vec2f position)
         {
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);
@@ -26,7 +26,7 @@ namespace Vehicle
             // Add default agents 
 
 
-            var entity = planet.EntitasContext.vehicle.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.vehicle.CreateEntity();
 
             entity.AddVehicleID(UniqueID, -1);
 
@@ -59,7 +59,7 @@ namespace Vehicle
 
                 for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
                 {
-                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
+                    var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
                     enemy.agentModel3D.GameObject.gameObject.SetActive(false);
                     enemy.isAgentAlive = false;
                     enemy.agentAction.Action = Agent.AgentAlertState.Alert;

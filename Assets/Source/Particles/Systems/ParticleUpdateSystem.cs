@@ -8,10 +8,10 @@ namespace Particle
 {
      public class ParticleUpdateSystem
     {
-        List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
+        List<ParticleEntity> ToDestroy = new();
 
 
-        public void Update(ref Planet.PlanetState planetState, ParticleContext particleContext)
+        public void Update(ParticleContext particleContext)
         {
             ToDestroy.Clear();
 
@@ -57,7 +57,7 @@ namespace Particle
             {
                 //Object.Destroy(gameEntity.particleState.GameObject);
                 //gameEntity.Destroy();
-                planetState.RemoveParticle(gameEntity.particleID.Index);
+                GameState.Planet.RemoveParticle(gameEntity.particleID.Index);
             }
         }
     }

@@ -28,11 +28,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -65,11 +65,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -102,11 +102,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -169,7 +169,7 @@ namespace Particle
                         Collisions[i] = tempCollision;
 
                         if (Materials[i].color.a <= 0.5f)
-                            UnityEngine.GameObject.Destroy(Smokes[i].gameObject);
+                            UnityEngine.Object.Destroy(Smokes[i].gameObject);
                     }
                 }
             }

@@ -18,6 +18,7 @@ namespace Planet
 {
     public struct PlanetState
     {
+        //
         public int Index;
         public TimeState TimeState;
 
@@ -91,7 +92,7 @@ namespace Planet
         public void InitializeHUD()
         {
             // GUI/HUD
-            GameState.GUIManager.InitStage1(this);
+            GameState.GUIManager.InitStage1();
             GameState.GUIManager.InitStage2();
         }
 
@@ -123,14 +124,14 @@ namespace Planet
                 AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
 
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position,
-                    Enums.AgentType.Player, faction, inventoryID, equipmentInventoryID));
+                    AgentType.Player, faction, inventoryID, equipmentInventoryID));
 
             Player = newEntity;
 
             return newEntity;
         }
 
-        public AgentEntity AddAgent(Vec2f position, Enums.AgentType agentType = Enums.AgentType.Agent, int faction = 0)
+        public AgentEntity AddAgent(Vec2f position, AgentType agentType = AgentType.Agent, int faction = 0)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -144,7 +145,7 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, Enums.AgentType.Slime, 1));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(EntitasContext, position, AgentType.Slime, 1));
             return newEntity;
         }
 
@@ -153,7 +154,7 @@ namespace Planet
         {
             Utils.Assert(MechList.Length < PlanetEntityLimits.MechLimit);
 
-            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(ref this, position, mechType));
+            MechEntity newEntity = MechList.Add(GameState.MechSpawnerSystem.Spawn(position, mechType));
             if (newEntity.hasMechInventory)
             {
                 InventoryEntity inventory = EntitasContext.inventory.GetEntityWithInventoryID(newEntity.mechInventory.InventoryID);
@@ -223,7 +224,7 @@ namespace Planet
                 if (itemInventory == null)
                     continue;
 
-                int rand = UnityEngine.Random.Range(0, 100);
+                int rand = Random.Range(0, 100);
                 GameState.InventoryManager.RemoveItem(EntitasContext, inventoryID, i);
                 pos.X += rand / 100f;
                 GameState.ItemSpawnSystem.SpawnItemParticle(EntitasContext, itemInventory, pos);
@@ -326,7 +327,7 @@ namespace Planet
             FloatingTextList.Remove(index);
         }
 
-        public ParticleEntity AddParticleEmitter(Vec2f position, Particle.ParticleEmitterType type)
+        public ParticleEntity AddParticleEmitter(Vec2f position, ParticleEmitterType type)
         {
             ParticleEntity newEntity = ParticleEmitterList.Add(GameState.ParticleEmitterSpawnerSystem.Spawn(
                 EntitasContext.particle, type, position));
@@ -341,7 +342,7 @@ namespace Planet
         }
 
 
-        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, Particle.ParticleType type)
+        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type)
         {
             Utils.Assert(ParticleList.Length < PlanetEntityLimits.ParticleLimit);
 
@@ -354,7 +355,7 @@ namespace Planet
         {
             Utils.Assert(ParticleList.Length + 5 < PlanetEntityLimits.ParticleLimit);
 
-            GameState.ParticleSpawnerSystem.SpawnSpriteDebris(this, position, spriteId, spriteWidth, spriteHeight);
+            GameState.ParticleSpawnerSystem.SpawnSpriteDebris(position, spriteId, spriteWidth, spriteHeight);
         }
 
         public void RemoveParticle(int index)
@@ -362,7 +363,7 @@ namespace Planet
             ParticleList.Remove(index);
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int agentOwnerId, bool isFirstHit = true)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, ProjectileType projectileType, int agentOwnerId, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
@@ -371,7 +372,7 @@ namespace Planet
             return newEntity;
         }
 
-        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, Enums.ProjectileType projectileType, int damage, int agentOwnerId, bool isFirstHit = true)
+        public ProjectileEntity AddProjectile(Vec2f position, Vec2f direction, ProjectileType projectileType, int damage, int agentOwnerId, bool isFirstHit = true)
         {
             Utils.Assert(ProjectileList.Length < PlanetEntityLimits.ProjectileLimit);
             ProjectileEntity newEntity = ProjectileList.Add(GameState.ProjectileSpawnerSystem.Spawn(
@@ -387,11 +388,11 @@ namespace Planet
             ProjectileList.Remove(entity.projectileID.Index);
         }
 
-        public VehicleEntity AddVehicle(Enums.VehicleType vehicleType, Vec2f position)
+        public VehicleEntity AddVehicle(VehicleType vehicleType, Vec2f position)
         {
             Utils.Assert(VehicleList.Length < PlanetEntityLimits.VehicleLimit);
 
-            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(ref this, vehicleType, position));
+            VehicleEntity newEntity = VehicleList.Add(GameState.VehicleSpawnerSystem.Spawn(vehicleType, position));
             return newEntity;
         }
 
@@ -448,42 +449,42 @@ namespace Planet
 
             // calling all the systems we have
 
-            GameState.InputProcessSystem.Update(ref this);
+            GameState.InputProcessSystem.Update();
             // Movement Systems
-            GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
+            GameState.AgentProcessPhysicalState.Update(frameTime);
             GameState.AgentMovementSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
             GameState.PodMovementSystem.UpdateEx(EntitasContext.pod);
-            GameState.ProjectileMovementSystem.Update(ref this);
+            GameState.ProjectileMovementSystem.Update();
 
             GameState.AgentModel3DAnimationSystem.Update(EntitasContext.agent);
             GameState.LootDropSystem.Update(EntitasContext);
-            GameState.EnemyAiSystem.Update(ref this, frameTime);
-            GameState.FloatingTextUpdateSystem.Update(ref this, frameTime);
+            GameState.EnemyAiSystem.Update(frameTime);
+            GameState.FloatingTextUpdateSystem.Update(frameTime);
             GameState.AnimationUpdateSystem.Update(EntitasContext, frameTime);
             GameState.ItemPickUpSystem.Update(EntitasContext);
-            GameState.ActionSchedulerSystem.Update(ref this);
+            GameState.ActionSchedulerSystem.Update();
             GameState.ActionCoolDownSystem.Update(EntitasContext, deltaTime);
-            GameState.ParticleEmitterUpdateSystem.Update(ref this);
-            GameState.ParticleUpdateSystem.Update(ref this, EntitasContext.particle);
-            GameState.ProjectileProcessState.Update(ref this);
-            GameState.PodAISystem.Update(ref this);
-            GameState.VehicleAISystem.Update(ref this);
+            GameState.ParticleEmitterUpdateSystem.Update();
+            GameState.ParticleUpdateSystem.Update(EntitasContext.particle);
+            GameState.ProjectileProcessState.Update();
+            GameState.PodAISystem.Update();
+            GameState.VehicleAISystem.Update();
 
             // Collision systems.
             GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, ref TileMap);
             GameState.ItemProcessCollisionSystem.Update(EntitasContext.itemParticle, ref TileMap);
             GameState.ParticleProcessCollisionSystem.Update(EntitasContext.particle, ref TileMap);
-            GameState.ProjectileCollisionSystem.UpdateEx(ref this, deltaTime);
-            GameState.VehicleCollisionSystem.Update(ref this);
-            GameState.PodCollisionSystem.Update(ref this);
-            GameState.MechPlantGrowthSystem.Update(ref this);
+            GameState.ProjectileCollisionSystem.UpdateEx(deltaTime);
+            GameState.VehicleCollisionSystem.Update();
+            GameState.PodCollisionSystem.Update();
+            GameState.MechPlantGrowthSystem.Update();
 
-            GameState.AgentProcessStats.Update(ref this);
+            GameState.AgentProcessStats.Update();
 
-            cameraFollow.Update(ref this);
+            cameraFollow.Update();
 
             TileMap.UpdateTileSprites();
 
@@ -510,24 +511,24 @@ namespace Planet
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Mid);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
-            GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
-            GameState.Renderer.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
-            GameState.Renderer.DrawFrame(ref GameState.VehicleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle));
-            GameState.Renderer.DrawFrame(ref GameState.PodMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle));
-            GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
-            GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle));
+            GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
+            GameState.Renderer.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Agent));
+            GameState.Renderer.DrawFrame(ref GameState.VehicleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Vehicle));
+            GameState.Renderer.DrawFrame(ref GameState.PodMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Vehicle));
+            GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
+            GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
             GameState.FloatingTextDrawSystem.Draw(EntitasContext.floatingText, transform, 10000);
 
             // Delete Entities.
-            GameState.ProjectileDeleteSystem.Update(ref this);
+            GameState.ProjectileDeleteSystem.Update();
         }
 
         public void DrawDebug()
         {
             GameState.PathFindingDebugSystem.Draw();
-            GameState.ProjectileDebugSystem.Update(ref this);
+            GameState.ProjectileDebugSystem.Update();
         }
 
         public void DrawHUD(AgentEntity agentEntity)
@@ -547,8 +548,8 @@ namespace Planet
             }
 
             // Mouse Interactions with objects.
-            GameState.AgentMouseInteractionSystem.Update(ref this);
-            GameState.MechMouseInteractionSystem.Update(ref this);
+            GameState.AgentMouseInteractionSystem.Update();
+            GameState.MechMouseInteractionSystem.Update();
             GameState.InventoryMouseSelectionSystem.Update(EntitasContext);
             GameState.InventoryDrawSystem.Draw(EntitasContext, InventoryList);
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace InteliMap
@@ -11,7 +9,7 @@ namespace InteliMap
 
         public float speed;
 
-        private static Vector3 move = new Vector3(1, 0.5f);
+        private static Vector3 move = new(1, 0.5f);
 
         public void LateUpdate()
         {

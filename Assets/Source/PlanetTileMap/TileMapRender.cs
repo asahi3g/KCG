@@ -45,7 +45,7 @@ namespace PlanetTileMap
             {
                 for (int x = (int)(bottomLeft.x - 10); x < tileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
-                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                    if (!ObjectMesh.isOnScreen(x, y))
                         continue;
 
                     if (x >= 0 && y >= 0)
@@ -79,7 +79,7 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                                    if (!ObjectMesh.isOnScreen(x, y))
                                         continue;
 
                                     // Update UVs
@@ -118,7 +118,7 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!Utility.ObjectMesh.isOnScreen(x, y))
+                        if (!ObjectMesh.isOnScreen(x, y))
                             continue;
 
                         ref var tile = ref tileMap.GetTile(x, y);
@@ -160,7 +160,7 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                                    if (!ObjectMesh.isOnScreen(x, y))
                                         continue;
 
                                     // Update UVs
@@ -200,7 +200,7 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!Utility.ObjectMesh.isOnScreen(x, y))
+                        if (!ObjectMesh.isOnScreen(x, y))
                             continue;
 
                         ref var tile = ref tileMap.GetTile(x, y);
@@ -233,7 +233,7 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                                    if (!ObjectMesh.isOnScreen(x, y))
                                         continue;
 
                                     // Update UVs

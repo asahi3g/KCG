@@ -26,7 +26,7 @@
         private readonly int backgroundColorInt;
         private readonly Dictionary<int, int> colorCounts;
 
-        private readonly List<(string keyword, byte[] data)> storedStrings = new List<(string keyword, byte[] data)>();
+        private readonly List<(string keyword, byte[] data)> storedStrings = new();
 
         /// <summary>
         /// Create a builder for a PNG with the given width and size.

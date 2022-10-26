@@ -1,9 +1,5 @@
 //import UnityEngine
 
-using System;
-using KMath;
-using Enums;
-
 namespace Agent
 {
     public class Model3DAnimationSystem

@@ -53,7 +53,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override FastEnumerator<AnimancerState> GetEnumerator()
-            => new FastEnumerator<AnimancerState>(ChildStates);
+            => new(ChildStates);
 
         /************************************************************************************************************************/
 

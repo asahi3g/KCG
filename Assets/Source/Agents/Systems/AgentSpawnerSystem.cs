@@ -1,11 +1,8 @@
 //imports UnityEngine
 
-using System.Collections.Generic;
 using KMath;
 using Animancer;
-using UnityEngine.Animations.Rigging;
 using AI;
-using static UnityEditor.PlayerSettings;
 
 namespace Agent
 {
@@ -18,7 +15,7 @@ namespace Agent
             int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = entitasContext.agent.CreateEntity();
-            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
+            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
 
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
@@ -75,7 +72,7 @@ namespace Agent
         public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
-            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
             entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
@@ -127,7 +124,7 @@ namespace Agent
         {
             var entity = entitasContext.agent.CreateEntity();
 
-            ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
@@ -179,7 +176,7 @@ namespace Agent
                         UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
 
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         //GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
                         //GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
@@ -234,7 +231,7 @@ namespace Agent
                 case Enums.AgentType.EnemyGunner:
                     {
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
                         UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
@@ -266,7 +263,7 @@ namespace Agent
                 case Enums.AgentType.EnemySwordman:
                     {
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
                         UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
@@ -295,7 +292,7 @@ namespace Agent
                 case Enums.AgentType.EnemyInsect:
                     {
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SmallInsect);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
 
@@ -321,7 +318,7 @@ namespace Agent
                 case Enums.AgentType.EnemyHeavy:
                     {
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.HeavyInsect);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
 
@@ -349,7 +346,7 @@ namespace Agent
                         UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
 
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
-                        UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
+                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
                         GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;

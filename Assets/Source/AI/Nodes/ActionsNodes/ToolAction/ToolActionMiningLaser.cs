@@ -6,11 +6,11 @@ namespace Node
 {
     public class ToolActionMiningLaser : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionMiningLaser; } }
+        public override NodeType Type => NodeType.ToolActionMiningLaser;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeID.ID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeID.ID);
             Vec2f   agentPosition = agentEntity.agentPhysicsState.Position;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -35,13 +35,13 @@ namespace Node
 
             foreach (var cell in start.LineTo(end))
             {
-                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(planet.TileMap.GetFrontTileID(cell.x, cell.y));
+                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(GameState.Planet.TileMap.GetFrontTileID(cell.x, cell.y));
                 GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(cell.x, cell.y));
 
-                planet.TileMap.RemoveFrontTile(cell.x, cell.y);
+                GameState.Planet.TileMap.RemoveFrontTile(cell.x, cell.y);
                 Debug.DrawLine(new Vector3(agentPosition.X, agentPosition.Y, 0.0f), new Vector3(worldPosition.x, worldPosition.y, 0.0f), Color.red);
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

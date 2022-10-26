@@ -111,7 +111,7 @@ namespace Agent
             entityBoxBorders.DrawBox();
         }
 
-        public void Update(AgentContext agentContext, ref PlanetTileMap.TileMap tileMap)
+        public void Update(AgentContext agentContext, ref TileMap tileMap)
         {
             float deltaTime = UnityEngine.Time.deltaTime;
             var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));

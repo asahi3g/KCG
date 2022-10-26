@@ -47,7 +47,7 @@ namespace ToonyColorsPro
 			}
 
 			//Properties
-			Material targetMaterial { get { return (_materialEditor == null) ? null : _materialEditor.target as Material; } }
+			Material targetMaterial => (_materialEditor == null) ? null : _materialEditor.target as Material;
 			MaterialEditor _materialEditor;
 			MaterialProperty[] _properties;
 			static public bool _isURP;
@@ -56,7 +56,7 @@ namespace ToonyColorsPro
 			//--------------------------------------------------------------------------------------------------
 
 			// Set by custom conditions (IF_KEYWORD, IF_PROPERTY) to tell if the next properties should be visible
-			static Stack<bool> ShowStack = new Stack<bool>();
+			static Stack<bool> ShowStack = new();
 
 			static public bool ShowNextProperty { get; private set; }
 			static public void PushShowProperty(bool value)
@@ -70,7 +70,7 @@ namespace ToonyColorsPro
 			}
 
 			// Set by custom conditions (IF_PROPERTY_DISABLE) to tell if the next properties should be disabled
-			static Stack<bool> DisableStack = new Stack<bool>();
+			static Stack<bool> DisableStack = new();
 			static public bool DisableNextProperty { get; private set; }
 			static public void PushDisableProperty(bool value)
 			{
@@ -97,8 +97,8 @@ namespace ToonyColorsPro
 			const string kGC_HelpBox = "HELP_BOX";
 			const string kGC_Label = "LABEL";
 
-			Dictionary<int, List<GUICommand>> guiCommands = new Dictionary<int, List<GUICommand>>();
-			Dictionary<int, string[]> splitLabels = new Dictionary<int, string[]>();
+			Dictionary<int, List<GUICommand>> guiCommands = new();
+			Dictionary<int, string[]> splitLabels = new();
 
 			bool initialized = false;
 			AssetImporter shaderImporter;
@@ -447,7 +447,7 @@ namespace ToonyColorsPro
 
 			void IterateMaterials(System.Action<Material> action)
 			{
-				foreach (var target in this._materialEditor.targets)
+				foreach (var target in _materialEditor.targets)
 				{
 					action(target as Material);
 				}
@@ -456,7 +456,7 @@ namespace ToonyColorsPro
 			void IterateMaterialsByIndex(System.Action<Material, int> action)
 			{
 				int i = 0;
-				foreach (var target in this._materialEditor.targets)
+				foreach (var target in _materialEditor.targets)
 				{
 					action(target as Material, i);
 					i++;
@@ -468,9 +468,9 @@ namespace ToonyColorsPro
 			float[] materialsOutlineMapping;
 			void InitOutlineMapping()
 			{
-				if (materialsOutlineMapping == null || materialsOutlineMapping.Length != this._materialEditor.targets.Length)
+				if (materialsOutlineMapping == null || materialsOutlineMapping.Length != _materialEditor.targets.Length)
 				{
-					materialsOutlineMapping = new float[this._materialEditor.targets.Length];
+					materialsOutlineMapping = new float[_materialEditor.targets.Length];
 					IterateMaterialsByIndex((mat, i) => materialsOutlineMapping[i] = mat.GetFloat(PROP_OUTLINE));
 				}
 			}
@@ -518,7 +518,7 @@ namespace ToonyColorsPro
 					if (EditorGUI.EndChangeCheck())
 					{
 						bool enableOutline = outlineProp.floatValue > 0;
-						Undo.RecordObjects(this._materialEditor.targets, (enableOutline ? "Enable" : "Disable") + " Outline on Material(s)");
+						Undo.RecordObjects(_materialEditor.targets, (enableOutline ? "Enable" : "Disable") + " Outline on Material(s)");
 						UpdateOutlineMapping(true);
 					}
 				}
@@ -572,7 +572,7 @@ namespace ToonyColorsPro
 					var newMobileMode = (MobileMode)EditorGUILayout.EnumPopup(TCP2_GUI.TempContent("Mobile Mode", mobileModeHelp), (MobileMode)mobileModeProp.floatValue);
 					if ((float)newMobileMode != mobileModeProp.floatValue)
 					{
-						Undo.RecordObjects(this._materialEditor.targets, "Change Material Mobile Mode");
+						Undo.RecordObjects(_materialEditor.targets, "Change Material Mobile Mode");
 						IterateMaterials(mat =>
 						{
 							mat.SetFloat(PROP_MOBILE_MODE, (float)newMobileMode);
@@ -604,7 +604,7 @@ namespace ToonyColorsPro
 					var newRenderingMode = (RenderingMode)EditorGUILayout.EnumPopup(TCP2_GUI.TempContent("Rendering Mode"), (RenderingMode)renderingModeProp.floatValue);
 					if ((float)newRenderingMode != renderingModeProp.floatValue)
 					{
-						Undo.RecordObjects(this._materialEditor.targets, "Change Material Rendering Mode");
+						Undo.RecordObjects(_materialEditor.targets, "Change Material Rendering Mode");
 						SetRenderingMode(newRenderingMode);
 					}
 				}
@@ -771,8 +771,8 @@ namespace ToonyColorsPro
 			string _expression;
 			public string expression
 			{
-				get { return _expression; }
-				set { _expression = value.Replace("!=", "<>"); }
+				get => _expression;
+				set => _expression = value.Replace("!=", "<>");
 			}
 			public Material[] materials { get; set; }
 

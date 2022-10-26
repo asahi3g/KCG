@@ -393,7 +393,7 @@ namespace Animancer
 
         /// <summary>Returns an exception stating that the `value` is unsupported.</summary>
         public static ArgumentException CreateUnsupportedArgumentException<T>(T value)
-            => new ArgumentException(GetUnsupportedMessage(value));
+            => new(GetUnsupportedMessage(value));
 
         /************************************************************************************************************************/
         #endregion

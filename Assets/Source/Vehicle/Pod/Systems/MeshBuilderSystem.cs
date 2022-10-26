@@ -1,10 +1,5 @@
 //import UnityEngine
 
-using System.Collections.Generic;
-using Entitas;
-using KMath;
-using Sprites;
-
 namespace Vehicle.Pod
 {
     public class MeshBuilderSystem

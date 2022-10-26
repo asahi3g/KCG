@@ -16,7 +16,7 @@ namespace ToonyColorsPro
 	{
 		public static class TCP2_GUI
 		{
-			static GUIContent tempGuiContent = new GUIContent();
+			static GUIContent tempGuiContent = new();
 
 			public static GUIContent TempContent(string label, Texture2D icon)
 			{
@@ -34,7 +34,7 @@ namespace ToonyColorsPro
 				return tempGuiContent;
 			}
 
-			private static Dictionary<string, Texture2D> CustomEditorTextures = new Dictionary<string, Texture2D>();
+			private static Dictionary<string, Texture2D> CustomEditorTextures = new();
 			public static Texture2D GetCustomTexture(string name)
 			{
 				var uiName = name + (EditorGUIUtility.isProSkin ? "pro" : "");
@@ -532,12 +532,9 @@ namespace ToonyColorsPro
 				return null;
 			}
 
-			static Color hoverColor = new Color(0, 0, 0, 0.05f);
-			static Color hoverColorDark = new Color(1, 1, 1, 0.05f);
-			static Color HoverColor
-			{
-				get { return EditorGUIUtility.isProSkin ? hoverColorDark : hoverColor; }
-			}
+			static Color hoverColor = new(0, 0, 0, 0.05f);
+			static Color hoverColorDark = new(1, 1, 1, 0.05f);
+			static Color HoverColor => EditorGUIUtility.isProSkin ? hoverColorDark : hoverColor;
 
 			public static void DrawHoverRect(Rect rect,
 #if UNITY_2019_3_OR_NEWER
@@ -610,7 +607,7 @@ namespace ToonyColorsPro
 				if (Button(rect, HelpIcon, "?"))
 				{
 					string append = string.IsNullOrEmpty(helpAnchor) ? helpTopic : helpAnchor;
-					Application.OpenURL(ToonyColorsPro.ShaderGenerator.ShaderGenerator2.DOCUMENTATION_URL + "#" + append);
+					Application.OpenURL(ShaderGenerator.ShaderGenerator2.DOCUMENTATION_URL + "#" + append);
 				}
 			}
 			public static void HelpButtonSG2(string helpTopic, string helpAnchor = null)
@@ -618,7 +615,7 @@ namespace ToonyColorsPro
 				if (Button(HelpIcon, "?"))
 				{
 					string append = string.IsNullOrEmpty(helpAnchor) ? helpTopic : helpAnchor;
-					Application.OpenURL(ToonyColorsPro.ShaderGenerator.ShaderGenerator2.DOCUMENTATION_URL + "#" + append);
+					Application.OpenURL(ShaderGenerator.ShaderGenerator2.DOCUMENTATION_URL + "#" + append);
 				}
 			}
 
@@ -1049,10 +1046,10 @@ namespace ToonyColorsPro
 		public class TCP2OutlineNormalsGUIDrawer : MaterialPropertyDrawer
 		{
 			readonly GUIContent[] labels = {
-			new GUIContent("Regular", "Use regular vertex normals"),
-			new GUIContent("Vertex Colors", "Use vertex colors as normals (with smoothed mesh)"),
-			new GUIContent("Tangents", "Use tangents as normals (with smoothed mesh)"),
-			new GUIContent("UV2", "Use second texture coordinates as normals (with smoothed mesh)")
+			new("Regular", "Use regular vertex normals"),
+			new("Vertex Colors", "Use vertex colors as normals (with smoothed mesh)"),
+			new("Tangents", "Use tangents as normals (with smoothed mesh)"),
+			new("UV2", "Use second texture coordinates as normals (with smoothed mesh)")
 	};
 			readonly string[] keywords = { "TCP2_NONE", "TCP2_COLORS_AS_NORMALS", "TCP2_TANGENT_AS_NORMALS", "TCP2_UV2_AS_NORMALS" };
 
@@ -1255,8 +1252,8 @@ namespace ToonyColorsPro
 			static Texture2D DefaultRampTexture;
 			static bool DefaultTextureSearched;     //Avoid searching each update if texture isn't found
 
-			private static GUIContent editButtonLabel = new GUIContent("Edit Gradient", "Edit the ramp texture using Unity's gradient editor");
-			private static GUIContent editButtonDisabledLabel = new GUIContent("Edit Gradient", "Can't edit the ramp texture because it hasn't been generated with the Ramp Generator\n\n(Tools/Toony Colors Pro 2/Ramp Generator)");
+			private static GUIContent editButtonLabel = new("Edit Gradient", "Edit the ramp texture using Unity's gradient editor");
+			private static GUIContent editButtonDisabledLabel = new("Edit Gradient", "Can't edit the ramp texture because it hasn't been generated with the Ramp Generator\n\n(Tools/Toony Colors Pro 2/Ramp Generator)");
 
 			private AssetImporter assetImporter;
 
@@ -1682,15 +1679,15 @@ namespace ToonyColorsPro
 
 			public MaterialTCP2EnumDrawer(string[] enumNames, float[] vals)
 			{
-				this.names = new GUIContent[enumNames.Length];
+				names = new GUIContent[enumNames.Length];
 				for (int i = 0; i < enumNames.Length; i++)
 				{
-					this.names[i] = new GUIContent(enumNames[i]);
+					names[i] = new GUIContent(enumNames[i]);
 				}
-				this.values = new float[vals.Length];
+				values = new float[vals.Length];
 				for (int j = 0; j < vals.Length; j++)
 				{
-					this.values[j] = vals[j];
+					values[j] = vals[j];
 				}
 			}
 			public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
@@ -1718,20 +1715,20 @@ namespace ToonyColorsPro
 					EditorGUI.showMixedValue = prop.hasMixedValue;
 					float floatValue = prop.floatValue;
 					int selectedIndex = -1;
-					for (int i = 0; i < this.values.Length; i++)
+					for (int i = 0; i < values.Length; i++)
 					{
-						float num = this.values[i];
+						float num = values[i];
 						if (num == floatValue)
 						{
 							selectedIndex = i;
 							break;
 						}
 					}
-					int num2 = EditorGUI.Popup(position, label, selectedIndex, this.names);
+					int num2 = EditorGUI.Popup(position, label, selectedIndex, names);
 					EditorGUI.showMixedValue = false;
 					if (EditorGUI.EndChangeCheck())
 					{
-						prop.floatValue = this.values[num2];
+						prop.floatValue = values[num2];
 					}
 				}
 			}
@@ -1783,8 +1780,8 @@ namespace ToonyColorsPro
 		{
 			private static readonly GUIContent[] s_UVLabels = new GUIContent[]
 			{
-		new GUIContent("U"),
-		new GUIContent("V")
+		new("U"),
+		new("V")
 			};
 
 			private static readonly float[] s_UVValues = new float[]

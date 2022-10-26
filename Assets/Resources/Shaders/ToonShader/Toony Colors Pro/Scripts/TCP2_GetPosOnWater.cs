@@ -29,9 +29,9 @@ namespace ToonyColorsPro
 			[Tooltip("Will align the object to the wave normal based on its position")]
 			public bool followWaterNormal;
 			[Tooltip("Determine the object's up axis (when following wave normal)")]
-			public Vector3 upAxis = new Vector3(0, 1, 0);
+			public Vector3 upAxis = new(0, 1, 0);
 			[Tooltip("Rotation of the object once it's been affected by the water normal")]
-			public Vector3 postRotation = new Vector3(0, 0, 0);
+			public Vector3 postRotation = new(0, 0, 0);
 
 			[SerializeField, HideInInspector]
 			bool isValid;

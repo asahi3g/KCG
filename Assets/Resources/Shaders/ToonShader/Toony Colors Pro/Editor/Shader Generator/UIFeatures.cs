@@ -26,7 +26,7 @@ namespace ToonyColorsPro
 			static int LastIndent;
 			static bool LastVisible;
 
-			static GUIContent tempContent = new GUIContent();
+			static GUIContent tempContent = new();
 			protected static GUIContent TempContent(string label, string tooltip = null)
 			{
 				tempContent.text = label;
@@ -52,7 +52,7 @@ namespace ToonyColorsPro
 
 			UIFeature parent; // simple hierarchy system to handle visibility and vertical/horizontal line hierarchy drawing
 
-			protected static Stack<bool> FoldoutStack = new Stack<bool>();
+			protected static Stack<bool> FoldoutStack = new();
 			internal static void ClearFoldoutStack()
 			{
 				UIFeature_DropDownStart.ClearDropDownsList();
@@ -126,8 +126,8 @@ namespace ToonyColorsPro
 				bool guiEnabled = GUI.enabled;
 
 				// update states
-				this.enabled = Enabled(config);
-				this.highlighted = Highlighted(config);
+				enabled = Enabled(config);
+				highlighted = Highlighted(config);
 
 				GUI.enabled = enabled;
 
@@ -240,7 +240,7 @@ namespace ToonyColorsPro
 					//Label
 					var guiContent = TempContent(label, tooltip);
 					var labelPosition = HeaderRect(ref position, inline ? (EditorStyles.label.CalcSize(guiContent)).x + 8f : LABEL_WIDTH - position.x);
-					TCP2_GUI.SubHeader(labelPosition, guiContent, this.highlighted && this.enabled);
+					TCP2_GUI.SubHeader(labelPosition, guiContent, highlighted && enabled);
 
 					//Actual property
 					bool labelClicked = Event.current.type == EventType.MouseUp && Event.current.button == 0 && labelPosition.Contains(Event.current.mousePosition);
@@ -551,7 +551,7 @@ namespace ToonyColorsPro
 			string[] labels;
 			string[] values;
 			string cachedKeywordValue;
-			List<string> flagsList = new List<string>();
+			List<string> flagsList = new();
 			int cachedFlagListCount;
 
 			string popupLabel = "None";
@@ -576,7 +576,7 @@ namespace ToonyColorsPro
 					Debug.Log("process values: " + value);
 					var data = value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 					labels = new string[data.Length];
-					this.values = new string[data.Length];
+					values = new string[data.Length];
 
 					for(var i = 0; i < data.Length; i++)
 					{
@@ -588,7 +588,7 @@ namespace ToonyColorsPro
 						}
 
 						labels[i] = lbl_feat[0];
-						this.values[i] = lbl_feat[1];
+						values[i] = lbl_feat[1];
 					}
 				}
 				else
@@ -972,7 +972,7 @@ namespace ToonyColorsPro
 
 			internal override bool Highlighted(Config config)
 			{
-				var value = config.GetKeyword(this.keyword);
+				var value = config.GetKeyword(keyword);
 				return !string.IsNullOrEmpty(value) && value != defaultValue;
 			}
 		}
@@ -1199,11 +1199,11 @@ namespace ToonyColorsPro
 
 			protected override void DrawGUI(Rect position, Config config, bool labelClicked)
 			{
-				if (this.helpTopic != null)
+				if (helpTopic != null)
 				{
 					EditorGUILayout.BeginHorizontal();
 					{
-						TCP2_GUI.HelpButtonSG2(this.helpTopic);
+						TCP2_GUI.HelpButtonSG2(helpTopic);
 						TCP2_GUI.SubHeaderGray(label);
 					}
 					EditorGUILayout.EndHorizontal();
@@ -1257,7 +1257,7 @@ namespace ToonyColorsPro
 
 		internal class UIFeature_DropDownStart : UIFeature
 		{
-			static List<UIFeature_DropDownStart> AllDropDowns = new List<UIFeature_DropDownStart>();
+			static List<UIFeature_DropDownStart> AllDropDowns = new();
 			internal static void ClearDropDownsList()
 			{
 				AllDropDowns.Clear();

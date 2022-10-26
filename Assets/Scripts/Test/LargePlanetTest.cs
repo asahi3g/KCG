@@ -3,14 +3,13 @@
 using Enums.PlanetTileMap;
 using KMath;
 using Item;
-using PlanetTileMap;
 
 namespace Planet.Unity
 {
     class LargePlanetTest : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField] UnityEngine.Material Material;
-        public PlanetState Planet;
+
         Inventory.InventoryManager inventoryManager;
         Inventory.DrawSystem inventoryDrawSystem;
         AgentEntity Player;
@@ -32,20 +31,20 @@ namespace Planet.Unity
 
         public void Update()
         {
-            int selectedSlot = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
+            int selectedSlot = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
 
-            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
                 {
-                    GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, 
+                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, 
                         itemProperty.ToolActionType, Player.agentID.ID);
                 }
             }
 
-            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
@@ -59,7 +58,7 @@ namespace Planet.Unity
             if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
-            inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
+            inventoryDrawSystem.Draw(GameState.Planet.EntitasContext, GameState.Planet.InventoryList);
         }
 
         // create the sprite atlas for testing purposes
@@ -72,38 +71,38 @@ namespace Planet.Unity
 
             // Generating the map
             Vec2i mapSize = new Vec2i(6400, 1600);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
+
+            GameState.Planet.Init(mapSize);
+            GameState.Planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 1600));
+            Player = GameState.Planet.AddPlayer(new Vec2f(3.0f, 1600));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
 
             inventoryID = Player.agentInventory.InventoryID;
 
-            ItemInventoryEntity gun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
-            ItemInventoryEntity ore = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Ore);
-            ItemInventoryEntity placementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.PlacementTool);
-            ItemInventoryEntity removeTileTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.RemoveTileTool);
-            ItemInventoryEntity spawnEnemySlimeTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
-            ItemInventoryEntity miningLaserTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MiningLaserTool);
-            ItemInventoryEntity particleEmitterPlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ParticleEmitterPlacementTool);
+            ItemInventoryEntity gun = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.Pistol);
+            ItemInventoryEntity ore = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.Ore);
+            ItemInventoryEntity placementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.PlacementTool);
+            ItemInventoryEntity removeTileTool = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.RemoveTileTool);
+            ItemInventoryEntity spawnEnemySlimeTool = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
+            ItemInventoryEntity miningLaserTool = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.MiningLaserTool);
+            ItemInventoryEntity particleEmitterPlacementTool = GameState.ItemSpawnSystem.SpawnInventoryItem(GameState.Planet.EntitasContext, Enums.ItemType.ParticleEmitterPlacementTool);
 
 
-            inventoryManager.AddItem(Planet.EntitasContext, placementTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, removeTileTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, spawnEnemySlimeTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, miningLaserTool, inventoryID);
-            inventoryManager.AddItem(Planet.EntitasContext, particleEmitterPlacementTool, inventoryID);
+            inventoryManager.AddItem(GameState.Planet.EntitasContext, placementTool, inventoryID);
+            inventoryManager.AddItem(GameState.Planet.EntitasContext, removeTileTool, inventoryID);
+            inventoryManager.AddItem(GameState.Planet.EntitasContext, spawnEnemySlimeTool, inventoryID);
+            inventoryManager.AddItem(GameState.Planet.EntitasContext, miningLaserTool, inventoryID);
+            inventoryManager.AddItem(GameState.Planet.EntitasContext, particleEmitterPlacementTool, inventoryID);
         }
 
         void GenerateMap()
         {
             KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
             
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)
             {
@@ -212,25 +211,25 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
             System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
 
-            Planet.AddAgent(new Vec2f(6.0f, spawnHeight));
-            Planet.AddAgent(new Vec2f(1.0f, spawnHeight));
+            GameState.Planet.AddAgent(new Vec2f(6.0f, spawnHeight));
+            GameState.Planet.AddAgent(new Vec2f(1.0f, spawnHeight));
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
                 if (random.Next() % 5 == 0)
                 {
-                    Planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
+                    GameState.Planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
                 }
             }
             
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(GameState.Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(GameState.Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
         
     }

@@ -6,7 +6,7 @@ namespace AI
 {
     public struct BehaviorProperties
     {
-        public Enums.BehaviorType TypeID;
+        public BehaviorType TypeID;
         public string Name;
         public List<NodeInfo> Nodes;
         public BlackBoardModel BlackBoard;

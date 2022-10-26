@@ -1,13 +1,12 @@
 ﻿//import UnityEngine
 
-using Entitas;
 using KMath;
 
 namespace Inventory
 {
     public class MouseSelectionSystem
     {
-        public void OnMouseUP(Contexts contexts, Inventory.InventoryList inventoryList)
+        public void OnMouseUP(Contexts contexts, InventoryList inventoryList)
         {
             // Initialize states.
             if (InventorySystemsState.ClickedSlotslotID < 0)
@@ -18,7 +17,7 @@ namespace Inventory
 
             if (!InventorySystemsState.MouseHold) // if less than 250ms consider it a click.
             {
-                var player = GameState.GUIManager.Planet.Player;
+                var player = GameState.Planet.Player;
                 if (player != null && inventoryEntity.inventoryEntity.SelectedSlotID !=
                     InventorySystemsState.ClickedSlotslotID)
                 {
@@ -72,7 +71,7 @@ namespace Inventory
             InventorySystemsState.ClickedInventoryID = -1;
         }
 
-        public void OnMouseDown(Contexts contexts, Inventory.InventoryList inventoryList)
+        public void OnMouseDown(Contexts contexts, InventoryList inventoryList)
         {
             UnityEngine.Vector3 mousePos = UnityEngine.Input.mousePosition;
             float scaleFacor = 1080f / UnityEngine.Screen.height;

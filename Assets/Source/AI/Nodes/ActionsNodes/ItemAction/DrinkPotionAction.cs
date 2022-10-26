@@ -6,47 +6,47 @@ namespace Node
 {
     public class DrinkPotionAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.DrinkPotionAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.DrinkPotionAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ItemInventoryEntity ItemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
-                ItemEntity.itemPotion.potionType = Enums.PotionType.HealthPotion;
+            if (ItemEntity.itemPotion.potionType == PotionType.Error)
+                ItemEntity.itemPotion.potionType = PotionType.HealthPotion;
 
-            var player = planet.Player;
+            var player = GameState.Planet.Player;
             if (ItemEntity.hasItemPotion)
             {
-                var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+                var entities = GameState.Planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
                 {
                     if (entity.hasInventoryName)
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+                            var Slots = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
 
                             for (int i = 0; i < Slots.Length; i++)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, entity.inventoryID.ID, i);
+                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, entity.inventoryID.ID, i);
 
                                 if (item != null)
                                 {
                                     if (item.hasItemStack)
                                     {
-                                        if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
+                                        if (ItemEntity.itemPotion.potionType == PotionType.Error)
                                         {
-                                            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                            nodeEntity.nodeExecution.State = NodeState.Success;
                                             return;
                                         }
 
                                         switch (ItemEntity.itemPotion.potionType)
                                         {
-                                            case Enums.PotionType.HealthPotion:
-                                                if (item.itemType.Type == Enums.ItemType.HealthPositon)
+                                            case PotionType.HealthPotion:
+                                                if (item.itemType.Type == ItemType.HealthPositon)
                                                 {
                                                     UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
@@ -56,9 +56,9 @@ namespace Node
                                                     item.itemStack.Count--;
                                                     if (item.itemStack.Count < 1)
                                                     {
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(GameState.Planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                        nodeEntity.nodeExecution.State = NodeState.Success;
                                                         return;
                                                     }
                                                 }
@@ -73,10 +73,10 @@ namespace Node
             }
             else
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                nodeEntity.nodeExecution.State = NodeState.Success;
             }
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

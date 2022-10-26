@@ -8,19 +8,19 @@ namespace Projectile
 {
     public class ProcessCollisionSystem
     {
-        public void UpdateEx(ref Planet.PlanetState planet, float deltaTime)
+        public void UpdateEx(float deltaTime)
         {
             const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.
-            ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
+            ref PlanetTileMap.TileMap tileMap = ref GameState.Planet.TileMap;
 
-            var entities = planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
+            var entities = GameState.Planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.PhysicsBox2DCollider, ProjectileMatcher.ProjectilePhysicsState));
 
             List < AgentEntity > CollidedWith = new List< AgentEntity >();
             List < Vec2f > CollisionPosition = new List< Vec2f >();
 
             foreach (var entity in entities)
             {
-               AgentEntity ownerEntity = planet.EntitasContext.agent.GetEntityWithAgentID(entity.projectileID.AgentOwnerID);
+               AgentEntity ownerEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(entity.projectileID.AgentOwnerID);
                 float bounceValue = GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).BounceValue;
                 bool bounce = 
                     GameState.ProjectileCreationApi.Get((int)entity.projectileType.Type).Flags.HasFlag(ProjectileProperties.ProjFlags.CanBounce);
@@ -31,7 +31,7 @@ namespace Projectile
                 AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
                 // Collising with terrainr(raycasting)
-                var rayCastingResult = Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new KMath.Line2D(
+                var rayCastingResult = Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, new Line2D(
                     physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
@@ -90,9 +90,9 @@ namespace Projectile
                 Vec2f position = physicsState.Position + box2DCollider.Offset  + box2DCollider.Size / 2.0f;
                 Collisions.Box2D entityBox = new Collisions.Box2D { x = position.X, y = position.Y, w = box2DCollider.Size.X, h = box2DCollider.Size.Y };
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
-                for (int i = 0; i < planet.AgentList.Length; i++)
+                for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
                 {
-                    AgentEntity agentEntity = planet.AgentList.Get(i);
+                    AgentEntity agentEntity = GameState.Planet.AgentList.Get(i);
                     if (agentEntity.agentID.Faction != ownerEntity.agentID.Faction && agentEntity.isAgentAlive)
                     {
                         var agentPhysicsState = agentEntity.agentPhysicsState;
@@ -159,8 +159,8 @@ namespace Projectile
                 entityBoxBorders.DrawBox();
             }
 
-            CircleSmoke.Update(ref planet.TileMap);
-            GameState.ProjectileProcessOnHit.Update(ref planet);
+            CircleSmoke.Update(ref GameState.Planet.TileMap);
+            GameState.ProjectileProcessOnHit.Update();
         }
     }
 }

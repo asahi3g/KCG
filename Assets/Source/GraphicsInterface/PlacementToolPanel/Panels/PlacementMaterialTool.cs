@@ -32,23 +32,22 @@ namespace KGUI
         {
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
-
-            var planet = GameState.GUIManager.Planet;
+            
             var inventories =
-                planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID,
+                GameState.Planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID,
                     InventoryMatcher.InventoryName));
             
             foreach (var inventory in inventories)
             {
                 if (inventory.inventoryName.Name != "MaterialBag") continue;
 
-                var materialBag = planet.EntitasContext.inventory
+                var materialBag = GameState.Planet.EntitasContext.inventory
                     .GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryEntity.Slots;
 
                 for (int i = 0; i < materialBag.Length; i++)
                 {
                     var materialBagSlot =
-                        GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventory.inventoryID.ID, i);
+                        GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventory.inventoryID.ID, i);
                     if (materialBagSlot == null) continue;
 
                     switch (materialBagSlot.itemType.Type)

@@ -7,14 +7,14 @@ namespace Node
 {
     public class ShootPulseWeaponAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ShootPulseWeaponAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.ShootPulseWeaponAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -32,7 +32,7 @@ namespace Node
                     if (numGrenade == 0)
                     {
                         Debug.Log("Grenade Clip is empty. Press R to reload.");
-                        nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                        nodeEntity.nodeExecution.State = NodeState.Fail;
                         return;
                     }
                 }
@@ -46,7 +46,7 @@ namespace Node
                     if (numBullet == 0)
                     {
                         Debug.Log("Clip is empty. Press R to reload.");
-                        nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                        nodeEntity.nodeExecution.State = NodeState.Fail;
                         return;
                     }
                 }
@@ -77,15 +77,15 @@ namespace Node
 
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
-                    var random = UnityEngine.Random.Range(-spread, spread);
-                    planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - random, y - startPos.Y).Normalized, Enums.ProjectileType.Bullet, agentEntity.agentID.ID);
+                    var random = Random.Range(-spread, spread);
+                    GameState.Planet.AddProjectile(startPos, new Vec2f((x - startPos.X) - random, y - startPos.Y).Normalized, ProjectileType.Bullet, agentEntity.agentID.ID);
                 }
             }
             else
-                planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, Enums.ProjectileType.Grenade, agentEntity.agentID.ID);
+                GameState.Planet.AddProjectile(startPos, new Vec2f(x - startPos.X, y - startPos.Y).Normalized, ProjectileType.Grenade, agentEntity.agentID.ID);
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
-            GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+            nodeEntity.nodeExecution.State = NodeState.Running;
+            GameState.ActionCoolDownSystem.SetCoolDown(GameState.Planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
     }
 }

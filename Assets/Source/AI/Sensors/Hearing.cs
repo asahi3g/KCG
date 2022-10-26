@@ -1,7 +1,4 @@
-﻿using Collisions;
-using KMath;
-using Planet;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using Enums;
 
@@ -9,7 +6,7 @@ namespace AI.Sensor
 {
     public class Hearing : SensorBase
     {
-        public override SensorType Type { get { return SensorType.Hearing; } }
+        public override SensorType Type => SensorType.Hearing;
 
         public override List<Tuple<string, Type>> GetBlackboardEntries()
         {
@@ -20,14 +17,14 @@ namespace AI.Sensor
             return blackboardEntries;
         }
 
-        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard, ref PlanetState planet)
+        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard)
         {
             int canHearID = sensor.EntriesID[0];
 
             const float MAX_DIST = 10f;
-            for (int i = 0; i < planet.AgentList.Length; i++)
+            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
             {
-                AgentEntity entity = planet.AgentList.Get(i);
+                AgentEntity entity = GameState.Planet.AgentList.Get(i);
                 if (entity.agentID.ID == agent.agentID.ID)
                     continue;
 

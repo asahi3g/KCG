@@ -513,26 +513,26 @@ namespace Animancer.Editor
 
                 public static readonly GUIStyle TitleArea = "In BigTitle";
 
-                public static readonly GUIStyle Title = new GUIStyle(GUI.skin.label)
+                public static readonly GUIStyle Title = new(GUI.skin.label)
                 {
                     fontSize = 26,
                 };
 
                 public static readonly GUIStyle Block = GUI.skin.box;
 
-                public static readonly GUIStyle HeaderLabel = new GUIStyle(GUI.skin.label)
+                public static readonly GUIStyle HeaderLabel = new(GUI.skin.label)
                 {
                     stretchWidth = false,
                 };
 
-                public static readonly GUIStyle HeaderLink = new GUIStyle(HeaderLabel);
+                public static readonly GUIStyle HeaderLink = new(HeaderLabel);
 
-                public static readonly GUIStyle Description = new GUIStyle(GUI.skin.label)
+                public static readonly GUIStyle Description = new(GUI.skin.label)
                 {
                     alignment = TextAnchor.LowerLeft,
                 };
 
-                public static readonly GUIStyle URL = new GUIStyle(GUI.skin.label)
+                public static readonly GUIStyle URL = new(GUI.skin.label)
                 {
                     fontSize = 9,
                     alignment = TextAnchor.LowerLeft,
@@ -562,10 +562,10 @@ namespace Animancer.Editor
                 public readonly string Name;
 
                 /// <summary>The scenes in this group.</summary>
-                public readonly List<SceneAsset> Scenes = new List<SceneAsset>();
+                public readonly List<SceneAsset> Scenes = new();
 
                 /// <summary>The folder paths of each of the <see cref="Scenes"/>.</summary>
-                public readonly List<string> Directories = new List<string>();
+                public readonly List<string> Directories = new();
 
                 /// <summary>Indicates whether this group should show its contents in the GUI.</summary>
                 private bool _IsExpanded;

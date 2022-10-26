@@ -21,13 +21,7 @@ class SceneManager : MonoBehaviour
     public List<SceneManagerObject> SceneObjects;
 
     public static SceneManager _instance;
-    public static SceneManager Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    public static SceneManager Instance => _instance;
 
     public void Awake()
     {

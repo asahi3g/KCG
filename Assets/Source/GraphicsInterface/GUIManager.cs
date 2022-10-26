@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using KMath;
-using Planet;
 using Utility;
 
 
@@ -12,7 +11,6 @@ namespace KGUI
     {
         public bool ShowGUI = true;
         
-        public PlanetState Planet;
         public ItemInventoryEntity SelectedInventoryItem;
 
         public UnityEngine.Sprite ProgressBar;
@@ -29,12 +27,8 @@ namespace KGUI
 
         private TextWrapper text = new();
         
-        public void InitStage1(PlanetState planet)
+        public void InitStage1()
         {
-            Planet = planet;
-            if (Planet.TileMap == null)
-                return;
-
             UnityEngine.Cursor.visible = true;
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
 
@@ -103,9 +97,9 @@ namespace KGUI
             text.Update();
 
             var inventoryID = agentEntity.agentInventory.InventoryID;
-            var inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }

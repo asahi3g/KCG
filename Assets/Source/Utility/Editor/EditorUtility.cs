@@ -9,8 +9,8 @@ namespace Utility
 {
     public partial class Utils
     {
-        static Dictionary<Type, string> TypeToName = new Dictionary<Type, string>
-    {
+        static Dictionary<Type, string> TypeToName = new()
+        {
         { typeof(bool), "bool" },
         { typeof(byte), "byte" },
         { typeof(char), "char" },
@@ -29,8 +29,8 @@ namespace Utility
         { typeof(void), "void" }
     };
 
-        static Dictionary<string, Type> NameToType = new Dictionary<string, Type>
-    {
+        static Dictionary<string, Type> NameToType = new()
+        {
         { "bool", typeof(bool) },
         { "byte", typeof(byte) },
         { "char", typeof(char) },

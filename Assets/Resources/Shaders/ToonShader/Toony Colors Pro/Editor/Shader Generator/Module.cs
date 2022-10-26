@@ -36,11 +36,11 @@ namespace ToonyColorsPro
 			public string[] Functions = new string[0];
 			public string[] Variables = new string[0];
 			public string[] InputStruct = new string[0];
-			Dictionary<string, string[]> Vertices = new Dictionary<string, string[]>();
-			Dictionary<string, string[]> Fragments = new Dictionary<string, string[]>();
+			Dictionary<string, string[]> Vertices = new();
+			Dictionary<string, string[]> Fragments = new();
 
-			Dictionary<string, Argument[]> VerticesArgs = new Dictionary<string, Argument[]>();
-			Dictionary<string, Argument[]> FragmentsArgs = new Dictionary<string, Argument[]>();
+			Dictionary<string, Argument[]> VerticesArgs = new();
+			Dictionary<string, Argument[]> FragmentsArgs = new();
 
 			static public Module CreateFromName(string moduleName)
 			{
@@ -243,16 +243,16 @@ namespace ToonyColorsPro
 			//Find minimum indentation and remove for every line for each block
 			void ProcessIndentation()
 			{
-				RemoveMinimumIndentation(this.Features);
-				RemoveMinimumIndentation(this.PropertiesNew);
-				RemoveMinimumIndentation(this.Keywords);
-				RemoveMinimumIndentation(this.ShaderFeaturesBlock);
-				RemoveMinimumIndentation(this.PropertiesBlock);
-				RemoveMinimumIndentation(this.Functions);
-				RemoveMinimumIndentation(this.Variables);
-				RemoveMinimumIndentation(this.InputStruct);
-				RemoveMinimumIndentation(this.Vertices);
-				RemoveMinimumIndentation(this.Fragments);
+				RemoveMinimumIndentation(Features);
+				RemoveMinimumIndentation(PropertiesNew);
+				RemoveMinimumIndentation(Keywords);
+				RemoveMinimumIndentation(ShaderFeaturesBlock);
+				RemoveMinimumIndentation(PropertiesBlock);
+				RemoveMinimumIndentation(Functions);
+				RemoveMinimumIndentation(Variables);
+				RemoveMinimumIndentation(InputStruct);
+				RemoveMinimumIndentation(Vertices);
+				RemoveMinimumIndentation(Fragments);
 			}
 
 			void RemoveMinimumIndentation(Dictionary<string, string[]> dict)
@@ -325,7 +325,7 @@ namespace ToonyColorsPro
 
 				if (lines == null)
 				{
-					Debug.LogError(ShaderGenerator2.ErrorMsg(string.Format("Can't find #FRAGMENT/#LIGHTING for Module '{0}{1}'", this.name, string.IsNullOrEmpty(key) ? "" : ":" + key)));
+					Debug.LogError(ShaderGenerator2.ErrorMsg(string.Format("Can't find #FRAGMENT/#LIGHTING for Module '{0}{1}'", name, string.IsNullOrEmpty(key) ? "" : ":" + key)));
 					return null;
 				}
 
@@ -345,7 +345,7 @@ namespace ToonyColorsPro
 							arguments.Length,
 							string.Join(", ", System.Array.ConvertAll(arguments, a => a.ToString())),
 							string.Join(", ", suppliedArguments.ToArray()),
-							this.name)));
+							name)));
 					}
 
 					var list = new List<string>();

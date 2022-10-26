@@ -9,7 +9,7 @@ namespace Particle
 
     public class ParticleEmitterUpdateSystem
     {
-        List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
+        List<ParticleEntity> ToDestroy = new();
 
         ParticleEmitterCreationApi ParticleEmitterCreationApi;
         ParticleCreationApi ParticleCreationApi;
@@ -20,11 +20,11 @@ namespace Particle
             ParticleCreationApi = particleCreationApi;
         }
 
-        public void Update(ref Planet.PlanetState planetState)
+        public void Update()
         {
             ToDestroy.Clear();
 
-            ParticleContext context = planetState.EntitasContext.particle;
+            ParticleContext context = GameState.Planet.EntitasContext.particle;
 
             float deltaTime = UnityEngine.Time.deltaTime;
             IGroup<ParticleEntity> entities = context.GetGroup(ParticleMatcher.ParticleEmitterState);
@@ -64,7 +64,7 @@ namespace Particle
                                                    emitterProperties.VelocityIntervalBegin.Y) -
                                                         emitterProperties.VelocityIntervalEnd.Y;
 
-                            planetState.AddParticle(new Vec2f(x, y), Velocity, state.ParticleType);
+                            GameState.Planet.AddParticle(new Vec2f(x, y), Velocity, state.ParticleType);
                         }
 
                         state.CurrentTime = emitterProperties.TimeBetweenEmissions;
@@ -85,7 +85,7 @@ namespace Particle
 
             foreach(var entity in ToDestroy)
             {
-                planetState.RemoveParticleEmitter(entity.particleEmitterID.Index);
+                GameState.Planet.RemoveParticleEmitter(entity.particleEmitterID.Index);
             }
         }
     }

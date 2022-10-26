@@ -114,7 +114,7 @@ namespace Collisions
         // Works with front tiles
         public static Vec2i RayTileCollisionCheck(TileMap tileMap, Vec2i start, Vec2i end)
         {
-            var rayCoordinates = RayCastCheck.GetRayCoordinates(start, end);
+            var rayCoordinates = GetRayCoordinates(start, end);
 
             foreach (var coordinate in rayCoordinates)
             {

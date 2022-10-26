@@ -21,7 +21,7 @@ namespace KGUI
             
             ID = ElementEnums.OxygenIndicator;
             
-            oxygenAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Oxygen : 0.0f;
+            oxygenAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Oxygen : 0.0f;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", AtlasType.Gui);
@@ -34,7 +34,7 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            oxygenAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Oxygen : 0.0f;
+            oxygenAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Oxygen : 0.0f;
             progressBar.Update(oxygenAmount);
             infoTextWrapper.Update();
         }

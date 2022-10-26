@@ -82,7 +82,7 @@ namespace Item
 
                 if(entity.itemType.Type == ItemType.PotionTool)
                 {
-                    Enums.PotionType potionType = PotionType.Error;
+                    PotionType potionType = PotionType.Error;
                     entity.AddItemPotion(potionType);
                 }
             }

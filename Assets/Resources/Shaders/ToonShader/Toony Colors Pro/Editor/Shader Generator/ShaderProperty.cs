@@ -323,26 +323,28 @@ namespace ToonyColorsPro
 
 			//================================================================================================================================
 
-			ReorderableLayoutList layoutList = new ReorderableLayoutList();
+			ReorderableLayoutList layoutList = new();
 
-			public string Name { get { return _name; } private set { _name = value; } }
+			public string Name { get => _name;
+				private set => _name = value;
+			}
 			[Serialization.SerializeAs("name")] string _name;
 			[Serialization.SerializeAs("imps")] public List<Implementation> implementations;
 			public VariableType Type { get; private set; }
 			public ProgramType Program = ProgramType.Undefined;
 			public bool IsUsedInLightingFunction = false;   //TODO same process for IsUsedInVertexFunction for vert/frag shaders and automatic float4 texcoordN packing
-			public List<int> usedImplementationsForCustomCode = new List<int>();
+			public List<int> usedImplementationsForCustomCode = new();
 
 			int passBitmask;    //bitmask that determines in which passes the shader property is used
 			Implementation[] defaultImplementations;
 			public bool expanded;
-			public List<int> implementationsExpandedStates = new List<int>();
+			public List<int> implementationsExpandedStates = new();
 			string helpMessage;
 			string displayName = null;
 			public string DisplayName
 			{
-				get { return displayName ?? _name; }
-				set { displayName = value; }
+				get => displayName ?? _name;
+				set => displayName = value;
 			}
 
 			public delegate void OnImplementationsChanged();
@@ -375,7 +377,7 @@ namespace ToonyColorsPro
 			void OnCustomTextureRemoved(CustomMaterialProperty ct)
 			{
 				// expand this Shader Property if a linked Custom Material Property was removed to show the message
-				foreach (var imp in this.implementations)
+				foreach (var imp in implementations)
 				{
 					var imp_ct = imp as Imp_CustomMaterialProperty;
 					if (imp_ct != null && imp_ct.LinkedCustomMaterialProperty == ct)
@@ -462,8 +464,8 @@ namespace ToonyColorsPro
 
 			public void CheckErrors()
 			{
-				bool wasError = this.error;
-				this.error = false;
+				bool wasError = error;
+				error = false;
 				foreach (var imp in implementations)
 				{
 					if (imp == null)
@@ -472,7 +474,7 @@ namespace ToonyColorsPro
 					}
 
 					imp.CheckErrors();
-					this.error |= imp.HasErrors;
+					error |= imp.HasErrors;
 				}
 
 				if (wasError != error)
@@ -776,7 +778,7 @@ namespace ToonyColorsPro
 					return implementations[0].PrintVariableFixedFunction();
 				}
 
-				return "__" + ToLowerCamelCase(this.Name);
+				return "__" + ToLowerCamelCase(Name);
 			}
 
 			static string ToLowerCamelCase(string input)
@@ -832,7 +834,7 @@ namespace ToonyColorsPro
 
 						if (t == typeof(Imp_GenericFromTemplate))
 						{
-							if (this.Type == VariableType.fixed_function_enum || this.Type == VariableType.fixed_function_float)
+							if (Type == VariableType.fixed_function_enum || Type == VariableType.fixed_function_float)
 							{
 								continue;
 							}
@@ -847,7 +849,7 @@ namespace ToonyColorsPro
 								bool selected = selectedImp != null && selectedImp.sourceIdentifier == imp.identifier;
 
 								// different pass (note: pass 0 sets bit 1, etc.)
-								if ((this.passBitmask & (1<<imp.pass)) == 0)
+								if ((passBitmask & (1<<imp.pass)) == 0)
 								{
 									continue;
 								}
@@ -925,7 +927,7 @@ namespace ToonyColorsPro
 								{
 									itemsList.Add(new MenuItem { order = order, guiContent = new GUIContent(label), disabled = true });
 								}
-								else if (this.cantReferenceOtherProperties)
+								else if (cantReferenceOtherProperties)
 								{
 									itemsList.Add(new MenuItem { order = order, guiContent = new GUIContent(label), disabled = true });
 								}
@@ -980,7 +982,7 @@ namespace ToonyColorsPro
 							{
 								if (ShaderGenerator2.CurrentConfig.VisibleShaderProperties == null || ShaderGenerator2.CurrentConfig.VisibleShaderProperties.Length == 0)
 									itemsList.Add(new MenuItem { order = order, guiContent = new GUIContent(label), disabled = true });
-								else if (this.cantReferenceOtherProperties)
+								else if (cantReferenceOtherProperties)
 									itemsList.Add(new MenuItem { order = order, guiContent = new GUIContent(label), disabled = true });
 								else
 								{
@@ -1120,15 +1122,15 @@ namespace ToonyColorsPro
 				return implementationsMenu;
 			}
 
-			static readonly GUIContent gc_copyImplementations = new GUIContent("Copy Implementations");
-			static readonly GUIContent gc_PasteImplementations = new GUIContent("Paste Implementations");
-			static GUIContent gc_cantPasteImplementations = new GUIContent();
-			static readonly GUIContent gc_ExportImplementations = new GUIContent("Export Implementations...");
-			static readonly GUIContent gc_ImportImplementations = new GUIContent("Import Implementations...");
-			static readonly GUIContent gc_ResetImplementations = new GUIContent("Reset Default Implementation");
-			static readonly GUIContent gc_debugCompareImplementations = new GUIContent("Debug: compare implementations with defaults");
+			static readonly GUIContent gc_copyImplementations = new("Copy Implementations");
+			static readonly GUIContent gc_PasteImplementations = new("Paste Implementations");
+			static GUIContent gc_cantPasteImplementations = new();
+			static readonly GUIContent gc_ExportImplementations = new("Export Implementations...");
+			static readonly GUIContent gc_ImportImplementations = new("Import Implementations...");
+			static readonly GUIContent gc_ResetImplementations = new("Reset Default Implementation");
+			static readonly GUIContent gc_debugCompareImplementations = new("Debug: compare implementations with defaults");
 			static List<Implementation> s_copiedImplementationsBuffer;
-			static ShaderProperty.VariableType s_copiedImplementationsType;
+			static VariableType s_copiedImplementationsType;
 
 			/// <summary>
 			/// Prevent an Implementation field/property from being copied/pasted
@@ -1156,7 +1158,7 @@ namespace ToonyColorsPro
 					string cantPasteMessage = "";
 					if (s_copiedImplementationsBuffer != null)
 					{
-						if (s_copiedImplementationsType != this.Type)
+						if (s_copiedImplementationsType != Type)
 						{
 							cantPasteMessage = " (incompatible type)";
 						}
@@ -1194,8 +1196,8 @@ namespace ToonyColorsPro
 				{
 					menu.AddItem(gc_debugCompareImplementations, false, () =>
 					{
-						var method = typeof(ShaderProperty.Implementation).GetMethod("CompareToDefaultImplementation", BindingFlags.Instance | BindingFlags.NonPublic);
-						foreach (var imp in this.implementations)
+						var method = typeof(Implementation).GetMethod("CompareToDefaultImplementation", BindingFlags.Instance | BindingFlags.NonPublic);
+						foreach (var imp in implementations)
 						{
 							var genericMethod = method.MakeGenericMethod(imp.GetType());
 							genericMethod.Invoke(imp, null);
@@ -1264,7 +1266,7 @@ namespace ToonyColorsPro
 					}
 				}
 
-				s_copiedImplementationsType = this.Type;
+				s_copiedImplementationsType = Type;
 			}
 
 			void OnPasteImplementations(object newImplementations)
@@ -1290,7 +1292,7 @@ namespace ToonyColorsPro
 					folder = Application.dataPath;
 				}
 
-				var path = EditorUtility.SaveFilePanel("Export Implementations", folder, this.Name, "tcp2imp");
+				var path = EditorUtility.SaveFilePanel("Export Implementations", folder, Name, "tcp2imp");
 				if (!string.IsNullOrEmpty(path))
 				{
 					ProjectOptions.data.LastImplementationExportImportPath = System.IO.Path.GetDirectoryName(path);
@@ -1624,7 +1626,7 @@ namespace ToonyColorsPro
 				return associatedData;
 			}
 
-			static Dictionary<string, ShaderProperty> CachedShaderPropertiesFromTemplate = new Dictionary<string, ShaderProperty>();
+			static Dictionary<string, ShaderProperty> CachedShaderPropertiesFromTemplate = new();
 
 			public static void ClearCache()
 			{

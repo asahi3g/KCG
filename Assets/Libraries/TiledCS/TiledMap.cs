@@ -152,16 +152,16 @@ namespace TiledCS
                 var attrParallaxOriginX = nodeMap.Attributes["parallaxoriginx"];
                 var attrParallaxOriginY = nodeMap.Attributes["parallaxoriginy"];
 
-                this.TiledVersion = nodeMap.Attributes["tiledversion"].Value;
-                this.Orientation = nodeMap.Attributes["orientation"].Value;
-                this.RenderOrder = nodeMap.Attributes["renderorder"].Value;
-                this.BackgroundColor = nodeMap.Attributes["backgroundcolor"]?.Value;
-                this.Infinite = nodeMap.Attributes["infinite"].Value == "1";
+                TiledVersion = nodeMap.Attributes["tiledversion"].Value;
+                Orientation = nodeMap.Attributes["orientation"].Value;
+                RenderOrder = nodeMap.Attributes["renderorder"].Value;
+                BackgroundColor = nodeMap.Attributes["backgroundcolor"]?.Value;
+                Infinite = nodeMap.Attributes["infinite"].Value == "1";
 
-                this.Width = int.Parse(nodeMap.Attributes["width"].Value);
-                this.Height = int.Parse(nodeMap.Attributes["height"].Value);
-                this.TileWidth = int.Parse(nodeMap.Attributes["tilewidth"].Value);
-                this.TileHeight = int.Parse(nodeMap.Attributes["tileheight"].Value);
+                Width = int.Parse(nodeMap.Attributes["width"].Value);
+                Height = int.Parse(nodeMap.Attributes["height"].Value);
+                TileWidth = int.Parse(nodeMap.Attributes["tilewidth"].Value);
+                TileHeight = int.Parse(nodeMap.Attributes["tileheight"].Value);
 
                 if (nodesProperty != null) Properties = ParseProperties(nodesProperty);
                 if (nodesTileset != null) Tilesets = ParseTilesets(nodesTileset);

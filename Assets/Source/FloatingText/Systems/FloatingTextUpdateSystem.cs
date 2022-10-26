@@ -5,11 +5,11 @@ namespace FloatingText
 {
     public class FloatingTextUpdateSystem
     {
-        List<FloatingTextEntity> ToRemoveEntities = new List<FloatingTextEntity>();
+        List<FloatingTextEntity> ToRemoveEntities = new();
 
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(float deltaTime)
         {
-            FloatingTextEntity[] entities = planetState.EntitasContext.floatingText.GetEntities();
+            FloatingTextEntity[] entities = GameState.Planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {
@@ -40,7 +40,7 @@ namespace FloatingText
 
             foreach(var entity in ToRemoveEntities)
             {
-                planetState.RemoveFloatingText(entity.floatingTextID.Index);
+                GameState.Planet.RemoveFloatingText(entity.floatingTextID.Index);
             }
             ToRemoveEntities.Clear();
         }

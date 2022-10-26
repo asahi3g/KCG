@@ -1,9 +1,6 @@
 //imports UnityEngine
 
-using System.Collections.Generic;
-using Entitas;
 using KMath;
-using Planet;
 
 namespace Particle
 {
@@ -16,7 +13,7 @@ namespace Particle
             ParticleCreationApi = particleCreationApi;
         }
 
-        public ParticleEntity Spawn(ParticleContext context, Particle.ParticleType particleType, 
+        public ParticleEntity Spawn(ParticleContext context, ParticleType particleType, 
                                         Vec2f position, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
@@ -47,7 +44,7 @@ namespace Particle
         public ParticleEntity SpawnDebrisParticle(ParticleContext context, Vec2f position, Vec2f[] triangles, Vec2f[] textureCoords, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get((int)Particle.ParticleType.Debris);
+                        ParticleCreationApi.Get((int)ParticleType.Debris);
 
             var entity = context.CreateEntity();
             entity.AddParticleID(UniqueID++, -1);
@@ -70,7 +67,7 @@ namespace Particle
             return entity;
         }
 
-        public void SpawnSpriteDebris(PlanetState planetState, Vec2f position, int spriteId, float spriteWidth, float spriteHeight)
+        public void SpawnSpriteDebris(Vec2f position, int spriteId, float spriteWidth, float spriteHeight)
         {
             UnityEngine.Vector4 spriteCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
             float x = spriteCoords.x;
@@ -228,7 +225,7 @@ namespace Particle
             velocity.X = rand1 * -1 * velocityValueX;
             velocity.Y = rand2 * -1 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
+            GameState.Planet.ParticleList.Add(SpawnDebrisParticle(GameState.Planet.EntitasContext.particle, position, 
             part1Vertices, part1Coords, velocity));
 
 
@@ -238,7 +235,7 @@ namespace Particle
             velocity.X = rand1 * 1 * velocityValueX;
             velocity.Y = rand2 * -1 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position, 
+            GameState.Planet.ParticleList.Add(SpawnDebrisParticle(GameState.Planet.EntitasContext.particle, position, 
             part2Vertices, part2Coords, velocity));
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
@@ -247,7 +244,7 @@ namespace Particle
             velocity.X = rand1 * velocityValueX;
             velocity.Y = rand2 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
+            GameState.Planet.ParticleList.Add(SpawnDebrisParticle(GameState.Planet.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
             part3Vertices, part3Coords, velocity));
 
             rand1 = KMath.Random.Mt19937.genrand_realf();
@@ -256,7 +253,7 @@ namespace Particle
             velocity.X = rand1 * velocityValueX;
             velocity.Y = rand2 * 1 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
+            GameState.Planet.ParticleList.Add(SpawnDebrisParticle(GameState.Planet.EntitasContext.particle, position + new Vec2f(0.0f, 0.66f), 
             part4Vertices, part4Coords, velocity));
 
 
@@ -266,7 +263,7 @@ namespace Particle
             velocity.X = rand1 * -1 * velocityValueX;
             velocity.Y = rand2 * velocityValueY;
 
-            planetState.ParticleList.Add(SpawnDebrisParticle(planetState.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
+            GameState.Planet.ParticleList.Add(SpawnDebrisParticle(GameState.Planet.EntitasContext.particle, position + new Vec2f(0.0f, 0.26f), 
             part5Vertices, part5Coords, velocity));
         }
 

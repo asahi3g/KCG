@@ -6,13 +6,13 @@ namespace Mech
     public class MechSpawnSystem
     {
         static private int UniqueID;
-        public MechEntity Spawn(ref Planet.PlanetState planet, Vec2f position, MechType mechType)
+        public MechEntity Spawn(Vec2f position, MechType mechType)
         {
             ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef(mechType);
             var spriteSize = mechProperties.SpriteSize;
             var spriteId = mechProperties.SpriteID;
 
-            var entity = planet.EntitasContext.mech.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.mech.CreateEntity();
             entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
@@ -26,15 +26,15 @@ namespace Mech
                 entity.AddMechPlanter(false, -1);
 
             if (mechProperties.HasInventory())
-                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(planet.EntitasContext, mechProperties.InventoryModelID, "Chest").inventoryID.ID);
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(GameState.Planet.EntitasContext, mechProperties.InventoryModelID, "Chest").inventoryID.ID);
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.Durability);
 
             if (mechType == MechType.CraftingTable)
             {
-                entity.AddMechCraftingTable(planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
-                    planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
+                entity.AddMechCraftingTable(GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
+                    GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
             }
 
             if (mechType == MechType.Tree)

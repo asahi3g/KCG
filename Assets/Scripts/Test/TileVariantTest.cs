@@ -10,7 +10,7 @@ namespace Planet.Unity
         [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         static bool Init = false;
-        public PlanetState Planet;
+
         
 
         public void Start()
@@ -30,11 +30,11 @@ namespace Planet.Unity
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
-                UnityEngine.Debug.Log(x + " " + y);
-                Planet.TileMap.RemoveFrontTile(x, y);                
+                Debug.Log(x + " " + y);
+                GameState.Planet.TileMap.RemoveFrontTile(x, y);                
             }
 
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(Planet.TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh(GameState.Planet.TileMap);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
         }
 
@@ -48,7 +48,7 @@ namespace Planet.Unity
 
             AgentEntity player = new AgentEntity();
 
-            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in entities)
             {
                 if (entity.isAgentPlayer)
@@ -56,11 +56,11 @@ namespace Planet.Unity
 
             }
 
-            Planet = new PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
 
-            ref var tileMap = ref Planet.TileMap;
+            GameState.Planet.Init(mapSize);
+            GameState.Planet.InitializeSystems(Material, transform);
+
+            ref var tileMap = ref GameState.Planet.TileMap;
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
@@ -96,7 +96,7 @@ namespace Planet.Unity
                        frontTile = TileID.Air;
                     }
 
-                    Planet.TileMap.SetFrontTile(i,j, frontTile);
+                    GameState.Planet.TileMap.SetFrontTile(i,j, frontTile);
                 }
             }
         }

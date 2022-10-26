@@ -7,11 +7,11 @@ namespace Node.Action
 {
     public class ToolActionGeometryPlacement : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionGeometryPlacement; } }
+        public override NodeType Type => NodeType.ToolActionGeometryPlacement;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ItemInventoryEntity ItemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (ItemEntity.hasItemTile)
             {
@@ -26,24 +26,24 @@ namespace Node.Action
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
-                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
+                    if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X && y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
                     {
                         switch (ItemEntity.itemTile.Layer)
                         {
                             case MapLayerType.Back:
-                                planet.TileMap.SetBackTile(x, y, ItemEntity.itemTile.TileID);
+                                GameState.Planet.TileMap.SetBackTile(x, y, ItemEntity.itemTile.TileID);
                                 break;
                             case MapLayerType.Mid:
-                                planet.TileMap.SetMidTile(x, y, ItemEntity.itemTile.TileID);
+                                GameState.Planet.TileMap.SetMidTile(x, y, ItemEntity.itemTile.TileID);
                                 break;
                             case MapLayerType.Front:
-                                planet.TileMap.SetFrontTile(x, y, ItemEntity.itemTile.TileID);
+                                GameState.Planet.TileMap.SetFrontTile(x, y, ItemEntity.itemTile.TileID);
                                 break;
                         }
                     }
                 }
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

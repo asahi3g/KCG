@@ -5,14 +5,13 @@ using Planet;
 using AI;
 using System.Collections.Generic;
 using System;
-using UnityEditor.Experimental.GraphView;
 
 namespace Node
 {
     public class ConditionalNode : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ConditionalNode; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.DecoratorNode; } }
+        public override NodeType Type => NodeType.ConditionalNode;
+        public override NodeGroup NodeGroup => NodeGroup.DecoratorNode;
 
         public override List<Tuple<string, Type>> RegisterEntries()
         {
@@ -23,24 +22,24 @@ namespace Node
             return blackboardEntries;
         }
 
-        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
+            NodeEntity child = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
             child.nodeExecution.State = NodeState.Entry;
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
-        public override void OnUpdate(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnUpdate(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
-            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
+            NodeEntity child = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
 
-            bool conditional = false;
+            bool conditional;
             blackBoard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out conditional);
             if (!conditional)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                nodeEntity.nodeExecution.State = NodeState.Fail;
                 return;
             }
 
@@ -49,18 +48,18 @@ namespace Node
             switch (child.nodeExecution.State)
             {
                 case NodeState.Entry:
-                    nodes[index].OnEnter(ref planet, child);
+                    nodes[index].OnEnter(child);
                     break;
                 case NodeState.Running:
-                    nodes[index].OnUpdate(ref planet, child);
+                    nodes[index].OnUpdate(child);
                     break;
                 case NodeState.Success:
-                    nodes[index].OnExit(ref planet, child);
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                    nodes[index].OnExit(child);
+                    nodeEntity.nodeExecution.State = NodeState.Success;
                     break;
                 case NodeState.Fail:
-                    nodes[index].OnFail(ref planet, child);
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                    nodes[index].OnFail(child);
+                    nodeEntity.nodeExecution.State = NodeState.Fail;
                     break;
                 default:
                     UnityEngine.Debug.Log("Not valid Action state.");

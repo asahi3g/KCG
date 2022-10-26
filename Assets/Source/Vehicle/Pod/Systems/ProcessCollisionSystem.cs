@@ -6,13 +6,13 @@ namespace Vehicle.Pod
 {
     public class ProcessCollisionSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
             // Get Delta Time
             float deltaTime = Time.deltaTime;
 
             // Get Vehicle Physics Entity
-            var entities = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.PhysicsBox2DCollider, PodMatcher.VehiclePodPhysicsState2D));
+            var entities = GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.PhysicsBox2DCollider, PodMatcher.VehiclePodPhysicsState2D));
 
             foreach (var entity in entities)
             {
@@ -25,11 +25,11 @@ namespace Vehicle.Pod
                 var entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding bottom-top stop y movement
-                if (entityBoxBorders.IsCollidingTop(planet.TileMap, pos.angularVelocity))
+                if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
                 }
-                else if (entityBoxBorders.IsCollidingBottom(planet.TileMap, pos.angularVelocity))
+                else if (entityBoxBorders.IsCollidingBottom(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
                 }
@@ -41,24 +41,24 @@ namespace Vehicle.Pod
                 entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding left-right stop x movement
-                if (entityBoxBorders.IsCollidingLeft(planet.TileMap, pos.angularVelocity))
+                if (entityBoxBorders.IsCollidingLeft(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }
-                else if (entityBoxBorders.IsCollidingRight(planet.TileMap, pos.angularVelocity))
+                else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }
             }
         }
 
-        public void DrawGizmos(ref Planet.PlanetState planet)
+        public void DrawGizmos()
         {
             // Get Delta Time
             float deltaTime = Time.deltaTime;
 
             // Get Vehicle Physics Entity
-            var entities = planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.PhysicsBox2DCollider, VehicleMatcher.VehiclePhysicsState2D));
+            var entities = GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.PhysicsBox2DCollider, VehicleMatcher.VehiclePhysicsState2D));
 
             foreach (var entity in entities)
             {

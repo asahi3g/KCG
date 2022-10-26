@@ -8,15 +8,15 @@ namespace Node
 {
     public class MeleeAtackAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.MeleeAttackAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.MeleeAttackAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             float damage = WeaponProperty.BasicDemage;
 
@@ -25,10 +25,10 @@ namespace Node
             float y = worldPosition.y;
 
             // Check if projectile has hit a enemy.
-            var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            var agents = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
-            planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.2f, agentEntity.agentPhysicsState.Position.Y));
-            var player = planet.Player;
+            GameState.Planet.AddFloatingText(WeaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.2f, agentEntity.agentPhysicsState.Position.Y));
+            var player = GameState.Planet.Player;
             if (player != null)
             {
                 var physicsState = player.agentPhysicsState;
@@ -58,7 +58,7 @@ namespace Node
                             GameState.AgentProcessPhysicalState.Knockback(agent, 7.0f, -KnockbackDir);
 
                             // spawns a debug floating text for damage 
-                            planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
+                            GameState.Planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
                             new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
 
                             agent.agentStats.Health -= (int)damage;
@@ -66,7 +66,7 @@ namespace Node
                     }
                 }
                 
-                var destructableMechs = planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechDurability));
+                var destructableMechs = GameState.Planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechDurability));
 
               // Todo: Move this code to mech system 
 
@@ -88,8 +88,8 @@ namespace Node
 
             //foreach (var mech in ToRemoveMechs)
             //{
-            //    planet.AddDebris(mech.mechPosition2D.Value, GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
-            //    planet.RemoveMech(mech.mechID.Index);
+            //    GameState.Planet.AddDebris(mech.mechPosition2D.Value, GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
+            //    GameState.Planet.RemoveMech(mech.mechID.Index);
             //}
             //
             //ToRemoveMechs.Clear();
@@ -103,7 +103,7 @@ namespace Node
                     {
                         if(ActionPropertyEntity.actionPropertyShield.ShieldActive)
                         {
-                            planet.AddFloatingText("Shield", 0.5f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
+                            GameState.Planet.AddFloatingText("Shield", 0.5f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
                         }
                         else
                         {
@@ -135,9 +135,9 @@ namespace Node
                 }
             }*/
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
 
-            GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+            GameState.ActionCoolDownSystem.SetCoolDown(GameState.Planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
     }
 }

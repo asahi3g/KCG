@@ -1,16 +1,13 @@
 ﻿using Collisions;
-using KMath;
-using Planet;
 using System.Collections.Generic;
 using System;
 using Enums;
-using UnityEditor.Experimental.GraphView;
 
 namespace AI.Sensor
 {
     public class Sight : SensorBase
     {
-        public override SensorType Type { get { return SensorType.Sight; } }
+        public override SensorType Type => SensorType.Sight;
 
         public override List<Tuple<string, Type>> GetBlackboardEntries()
         {
@@ -21,17 +18,17 @@ namespace AI.Sensor
             return blackboardEntries;
         }
 
-        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard, ref PlanetState planet)
+        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard)
         {
             int canSeedID = sensor.EntriesID[0];
 
-            for (int i = 0; i < planet.AgentList.Length; i++)
+            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
             {
-                AgentEntity entity = planet.AgentList.Get(i);
+                AgentEntity entity = GameState.Planet.AgentList.Get(i);
                 if (entity.agentID.ID == agent.agentID.ID)
                     continue;
 
-                bool intersect = LineOfSight.CanSee(ref planet, agent.agentID.ID, entity.agentID.ID);
+                bool intersect = LineOfSight.CanSee(agent.agentID.ID, entity.agentID.ID);
                 if (intersect)
                 {
                     blackBoard.Set(canSeedID, true);

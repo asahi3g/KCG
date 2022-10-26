@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using KMath;
-
 namespace Animation
 {
     public class UpdateSystem

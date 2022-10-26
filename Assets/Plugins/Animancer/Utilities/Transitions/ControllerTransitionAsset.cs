@@ -3,9 +3,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
 using Object = UnityEngine.Object;
-using Animancer.Units;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -187,7 +185,7 @@ namespace Animancer
 
         /// <summary>Creates a new <see cref="ControllerTransition"/> with the specified Animator Controller.</summary>
         public static implicit operator ControllerTransition(RuntimeAnimatorController controller)
-            => new ControllerTransition(controller);
+            => new(controller);
 
         /************************************************************************************************************************/
 

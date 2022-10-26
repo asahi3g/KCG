@@ -4,10 +4,6 @@ using System;
 
 #if UNITY_EDITOR
 using Animancer.Editor;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEditor;
-using UnityEngine;
 using System.Collections;
 #endif
 

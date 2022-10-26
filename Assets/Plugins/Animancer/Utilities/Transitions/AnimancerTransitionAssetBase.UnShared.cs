@@ -276,10 +276,7 @@ namespace Animancer
 
                     return _State;
                 }
-                protected set
-                {
-                    BaseState = _State = value;
-                }
+                protected set => BaseState = _State = value;
             }
 
             /************************************************************************************************************************/

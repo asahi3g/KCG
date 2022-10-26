@@ -47,7 +47,8 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("impl_index"), ExcludeFromCopy] public int DefaultImplementationIndex = -1; // if >= 0, then this is a default implementation
 
 				// Default implementation helpers: system used to check if a variable is different than the default one (highlight labels)
-				protected bool IsDefaultImplementation { get { return DefaultImplementationIndex >= 0; } }
+				protected bool IsDefaultImplementation => DefaultImplementationIndex >= 0;
+
 				protected T GetDefaultImplementation<T>() where T : Implementation
 				{
 					return ParentShaderProperty.defaultImplementations[DefaultImplementationIndex] as T;
@@ -56,11 +57,11 @@ namespace ToonyColorsPro
 				public ShaderProperty ParentShaderProperty;
 
 				public virtual void CheckErrors() { }
-				public virtual bool HasErrors { get { return false; } }
+				public virtual bool HasErrors => false;
 
 				public Implementation(ShaderProperty shaderProperty)
 				{
-					this.guid = Guid.NewGuid().ToString();
+					guid = Guid.NewGuid().ToString();
 
 					if (shaderProperty != null)
 					{
@@ -76,7 +77,7 @@ namespace ToonyColorsPro
 
 				public override string ToString()
 				{
-					return string.Format("[Implementation: {0}]", this.GetType());
+					return string.Format("[Implementation: {0}]", GetType());
 				}
 
 				public virtual string ToHashString()
@@ -162,9 +163,9 @@ namespace ToonyColorsPro
 
 				public void CopyCommonProperties(Implementation from)
 				{
-					this.@operator = from.@operator;
-					this.Label = from.Label;
-					this.IsGpuInstanced = from.IsGpuInstanced;
+					@operator = from.@operator;
+					Label = from.Label;
+					IsGpuInstanced = from.IsGpuInstanced;
 
 					var from_mp = from as Imp_MaterialProperty;
 					var this_mp = this as Imp_MaterialProperty;
@@ -194,7 +195,7 @@ namespace ToonyColorsPro
 				internal virtual string PrintVariableDeclare(string indent, bool gpuInstanced)
 				{
 					// Default behavior for GPU instancing: print declaration only if flags match
-					if ( (this.IsGpuInstanced && gpuInstanced) || (!this.IsGpuInstanced && !gpuInstanced) )
+					if ( (IsGpuInstanced && gpuInstanced) || (!IsGpuInstanced && !gpuInstanced) )
 					{
 						return PrintVariableDeclare(indent);
 					}
@@ -257,8 +258,8 @@ namespace ToonyColorsPro
 			{
 				internal override bool CanBeCopied() { return false; }
 
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Hook"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Hook";
 				internal override string GUILabel() { return MenuLabel; }
 
 				public Imp_Hook(ShaderProperty shaderProperty) : base(shaderProperty)
@@ -267,7 +268,7 @@ namespace ToonyColorsPro
 
 				internal override string PrintVariableFragment(string inputSource, string outputSource, string arguments)
 				{
-					return this.Label;
+					return Label;
 				}
 
 				internal override void NewLineGUI(bool usedByCustomCode)
@@ -277,7 +278,7 @@ namespace ToonyColorsPro
 						SGUILayout.InlineLabel("Shader Variable:");
 						using (new EditorGUI.DisabledScope(true))
 						{
-							SGUILayout.TextField(this.Label);
+							SGUILayout.TextField(Label);
 						}
 					}
 					EndHorizontal();
@@ -298,8 +299,8 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("prop"), ExcludeFromCopy] protected string _PropertyName = "_ShaderProperty";
 				public string PropertyName
 				{
-					get { return _PropertyName; }
-					set { _PropertyName = UniqueMaterialPropertyName.GetUniquePropertyName(value, this); }
+					get => _PropertyName;
+					set => _PropertyName = UniqueMaterialPropertyName.GetUniquePropertyName(value, this);
 				}
 				[Serialization.SerializeAs("md")] public string MaterialDrawers = "";
 				[Serialization.SerializeAs("custom")] public bool IsCustomMaterialProperty = false;
@@ -362,7 +363,7 @@ namespace ToonyColorsPro
 
 				protected string FetchVariable(string variableName)
 				{
-					return this.IsGpuInstanced ? string.Format("UNITY_ACCESS_INSTANCED_PROP(Props, {0})", variableName) : variableName;
+					return IsGpuInstanced ? string.Format("UNITY_ACCESS_INSTANCED_PROP(Props, {0})", variableName) : variableName;
 				}
 
 				internal override void NewLineGUI(bool usedByCustomCode)
@@ -413,7 +414,7 @@ namespace ToonyColorsPro
 
 						if (GUILayout.Button(TCP2_GUI.TempContent(">", "Generate from Label"), SGUILayout.Styles.ShurikenMiniButtonCustom, GUILayout.ExpandWidth(false)))
 						{
-							PropertyName = string.Format("_{0}", this.Label);
+							PropertyName = string.Format("_{0}", Label);
 						}
 						var newName = SGUILayout.TextFieldShaderVariable(PropertyName);
 						if (newName != PropertyName)
@@ -455,8 +456,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_mp_float")]
 			public class Imp_MaterialProperty_Float : Imp_MaterialProperty
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll | VariableType.fixed_function_float; } }
-				public static string MenuLabel { get { return "Material Property/Float"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll | VariableType.fixed_function_float;
+				public static string MenuLabel => "Material Property/Float";
 				internal override string GUILabel() { return MenuLabel; }
 				protected override string PropertyTypeName() { return "float"; }
 
@@ -490,8 +491,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_mp_range")]
 			public class Imp_MaterialProperty_Range : Imp_MaterialProperty
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll | VariableType.fixed_function_float; } }
-				public static string MenuLabel { get { return "Material Property/Range"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll | VariableType.fixed_function_float;
+				public static string MenuLabel => "Material Property/Range";
 				internal override string GUILabel() { return MenuLabel; }
 				protected override string PropertyTypeName() { return "float range"; }
 
@@ -543,8 +544,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_mp_vector")]
 			public class Imp_MaterialProperty_Vector : Imp_MaterialProperty
 			{
-				public static VariableType VariableCompatibility { get { return VariableType.float2 | VariableType.float3 | VariableType.float4 | VariableType.color | VariableType.color_rgba; } }
-				public static string MenuLabel { get { return "Material Property/Vector"; } }
+				public static VariableType VariableCompatibility => VariableType.float2 | VariableType.float3 | VariableType.float4 | VariableType.color | VariableType.color_rgba;
+				public static string MenuLabel => "Material Property/Vector";
 				internal override string GUILabel() { return MenuLabel; }
 				protected override string PropertyTypeName() { return "vector4"; }
 
@@ -656,8 +657,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_mp_color")]
 			public class Imp_MaterialProperty_Color : Imp_MaterialProperty
 			{
-				public static VariableType VariableCompatibility { get { return VariableType.float2 | VariableType.float3 | VariableType.float4 | VariableType.color | VariableType.color_rgba; } }
-				public static string MenuLabel { get { return "Material Property/Color"; } }
+				public static VariableType VariableCompatibility => VariableType.float2 | VariableType.float3 | VariableType.float4 | VariableType.color | VariableType.color_rgba;
+				public static string MenuLabel => "Material Property/Color";
 				internal override string GUILabel() { return MenuLabel; }
 				protected override string PropertyTypeName() { return "color"; }
 
@@ -772,8 +773,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_mp_texture")]
 			public class Imp_MaterialProperty_Texture : Imp_MaterialProperty
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Material Property/Texture"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Material Property/Texture";
 				internal override string GUILabel() { return MenuLabel; }
 				protected override string PropertyTypeName() { return "texture"; }
 
@@ -907,13 +908,10 @@ namespace ToonyColorsPro
 				ShaderProperty _linkedShaderProperty;
 				public ShaderProperty LinkedShaderProperty
 				{
-					get { return _linkedShaderProperty; }
-					set
-					{
-						SetLinkedShaderProperty(value);
-					}
+					get => _linkedShaderProperty;
+					set => SetLinkedShaderProperty(value);
 				}
-				public List<ShaderProperty> Dependencies = new List<ShaderProperty>();
+				public List<ShaderProperty> Dependencies = new();
 
 				public void TryToFindLinkedShaderProperty()
 				{
@@ -956,7 +954,7 @@ namespace ToonyColorsPro
 					if (Dependencies.Contains(shaderProperty))
 					{
 						//cyclic reference: can happen if a template has incorrect values
-						Debug.LogError(ShaderGenerator2.ErrorMsg("Cyclic reference between '" + this.ParentShaderProperty.Name + "' and '" + shaderProperty.Name + "'"));
+						Debug.LogError(ShaderGenerator2.ErrorMsg("Cyclic reference between '" + ParentShaderProperty.Name + "' and '" + shaderProperty.Name + "'"));
 						return;
 					}
 					Dependencies.Add(shaderProperty);
@@ -1024,7 +1022,7 @@ namespace ToonyColorsPro
 					{
 						if(_uvExpandedCache == null)
 						{
-							_uvExpandedCache = ParentShaderProperty.implementationsExpandedStates.Contains(this.guid.GetHashCode());
+							_uvExpandedCache = ParentShaderProperty.implementationsExpandedStates.Contains(guid.GetHashCode());
 						}
 						return _uvExpandedCache.Value;
 					}
@@ -1188,7 +1186,7 @@ namespace ToonyColorsPro
 				// Returns true if this property's tiling/offset variable can be referenced
 				bool HasValidTilingOffsetVariable()
 				{
-					return this.UseTilingOffset && !this.GlobalTilingOffset && !this.UseCustomTilingOffsetVariable();
+					return UseTilingOffset && !GlobalTilingOffset && !UseCustomTilingOffsetVariable();
 				}
 
 
@@ -1211,7 +1209,7 @@ namespace ToonyColorsPro
 				// Returns true if this property's tiling/offset variable can be referenced
 				public bool HasValidScrollingVariable()
 				{
-					return this.UseScrolling && !this.GlobalScrolling && !this.UseCustomScrollingVariable();
+					return UseScrolling && !GlobalScrolling && !UseCustomScrollingVariable();
 				}
 
 
@@ -1591,11 +1589,11 @@ namespace ToonyColorsPro
 						{
 							if (uvExpanded)
 							{
-								ParentShaderProperty.implementationsExpandedStates.Add(this.guid.GetHashCode());
+								ParentShaderProperty.implementationsExpandedStates.Add(guid.GetHashCode());
 							}
 							else
 							{
-								ParentShaderProperty.implementationsExpandedStates.Remove(this.guid.GetHashCode());
+								ParentShaderProperty.implementationsExpandedStates.Remove(guid.GetHashCode());
 							}
 							_uvExpandedCache = null;
 						}
@@ -1750,7 +1748,7 @@ namespace ToonyColorsPro
 										var availableValues = FetchValidTilingOffsetValues();
 										foreach(var availableValue in availableValues)
 										{
-											if (availableValue.label == this.Label)
+											if (availableValue.label == Label)
 											{
 												continue;
 											}
@@ -1760,7 +1758,7 @@ namespace ToonyColorsPro
 												itemList.Add(new MenuItem()
 												{
 													guiContent = new GUIContent(string.Format("{0}: {1}", availableValue.label, availableValue.valueLabel)), // note: has non-breaking space character
-													on = this.TilingOffsetVariable == availableValue.value,
+													on = TilingOffsetVariable == availableValue.value,
 													menuFunction = () =>
 													{
 														TilingOffsetVariable = availableValue.value;
@@ -1774,7 +1772,7 @@ namespace ToonyColorsPro
 												itemList.Add(new MenuItem()
 												{
 													guiContent = new GUIContent(string.Format("{0}: {1} {2}", availableValue.label, availableValue.valueLabel, availableValue.disabled)), // note: has non-breaking space character
-													on = this.TilingOffsetVariable == availableValue.value,
+													on = TilingOffsetVariable == availableValue.value,
 													disabled = true
 												});
 											}
@@ -1880,7 +1878,7 @@ namespace ToonyColorsPro
 													var availableValues = FetchValidScrollingValues();
 													foreach (var availableValue in availableValues)
 													{
-														if (availableValue.label == this.Label)
+														if (availableValue.label == Label)
 														{
 															continue;
 														}
@@ -1890,7 +1888,7 @@ namespace ToonyColorsPro
 															itemList.Add(new MenuItem()
 															{
 																guiContent = new GUIContent(string.Format("{0}: {1}", availableValue.label, availableValue.valueLabel)), // note: has non-breaking space character
-																on = this.ScrollingVariable == availableValue.value,
+																on = ScrollingVariable == availableValue.value,
 																menuFunction = () =>
 																{
 																	ScrollingVariable = availableValue.value;
@@ -1904,7 +1902,7 @@ namespace ToonyColorsPro
 															itemList.Add(new MenuItem()
 															{
 																guiContent = new GUIContent(string.Format("{0}: {1} {2}", availableValue.label, availableValue.valueLabel, availableValue.disabled)), // note: has non-breaking space character
-																on = this.ScrollingVariable == availableValue.value,
+																on = ScrollingVariable == availableValue.value,
 																disabled = true
 															});
 														}
@@ -1999,7 +1997,7 @@ namespace ToonyColorsPro
 
 							if (GUILayout.Button((LinkedShaderProperty != null) ? LinkedShaderProperty.Name : "None", SGUILayout.Styles.ShurikenPopup))
 							{
-								var menu = ShaderProperty.Imp_ShaderPropertyReference.CreateShaderPropertiesMenu(this.ParentShaderProperty, this.LinkedShaderProperty, OnSelectShaderProperty);
+								var menu = Imp_ShaderPropertyReference.CreateShaderPropertiesMenu(ParentShaderProperty, LinkedShaderProperty, OnSelectShaderProperty);
 								if (menu != null)
 								{
 									menu.ShowAsContext();
@@ -2053,8 +2051,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_constant")]
 			public class Imp_ConstantValue : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll | VariableType.fixed_function_float; } }
-				public static string MenuLabel { get { return "Constant Value"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll | VariableType.fixed_function_float;
+				public static string MenuLabel => "Constant Value";
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("type"), ExcludeFromCopy] VariableType type;
@@ -2163,8 +2161,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_constant_float")]
 			public class Imp_ConstantFloat : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Constant Float"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Constant Float";
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("fprc")] FloatPrecision floatPrec;
@@ -2213,8 +2211,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_vcolors")]
 			public class Imp_VertexColor : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Vertex Color"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Vertex Color";
 				internal override string GUILabel() { return MenuLabel; }
 				internal override OptionFeatures[] NeededFeatures() { return new[] { OptionFeatures.VertexColors }; }
 
@@ -2300,8 +2298,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_texcoord")]
 			public class Imp_VertexTexcoord : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Vertex UV"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Vertex UV";
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("tex")] public int TexcoordChannel = 0;
@@ -2417,8 +2415,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_worldpos")]
 			public class Imp_WorldPosition : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "World Position"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "World Position";
 				internal override string GUILabel() { return MenuLabel; }
 				internal override OptionFeatures[] NeededFeatures() { return new[] { ParentShaderProperty.Program == ProgramType.Vertex ? OptionFeatures.World_Pos_UV_Vertex : OptionFeatures.World_Pos_UV_Fragment }; }
 
@@ -2537,18 +2535,18 @@ namespace ToonyColorsPro
 						var imp = new Imp_GenericFromTemplate(shaderProperty);
 
 						// copy properties
-						imp.ChannelsOptions = this.ChannelsOptions;
-						imp.MenuLabel = this.MenuLabel;
-						imp.HelpMessage = this.HelpMessage;
-						imp.Compatibility = this.Compatibility;
-						imp.VariableName = this.VariableName;
-						imp.NeededFeaturesStr = this.NeededFeatures;
-						imp.WorksWithCustomCode = this.WorksWithCustomCode;
-						imp.OptionsString = this.Options;
+						imp.ChannelsOptions = ChannelsOptions;
+						imp.MenuLabel = MenuLabel;
+						imp.HelpMessage = HelpMessage;
+						imp.Compatibility = Compatibility;
+						imp.VariableName = VariableName;
+						imp.NeededFeaturesStr = NeededFeatures;
+						imp.WorksWithCustomCode = WorksWithCustomCode;
+						imp.OptionsString = Options;
 						imp.ParseOptions();
 
 						// identification based on available Generic Implementations
-						imp.sourceIdentifier = this.identifier;
+						imp.sourceIdentifier = identifier;
 						imp.sourceIsAvailable = true;
 						imp.Register();
 
@@ -2730,7 +2728,7 @@ namespace ToonyColorsPro
 
 				//--------------------------------------------------------------------------------------------------------------------------------
 
-				public VariableType VariableCompatibility { get { return Compatibility; } }
+				public VariableType VariableCompatibility => Compatibility;
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("cc")] public int ChannelsCount = 1;
@@ -2739,11 +2737,11 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("needed_features")] public string NeededFeaturesStr = "";
 				[Serialization.SerializeAs("custom_code_compatible")] public bool WorksWithCustomCode = false;
 				public string OptionsString = "";
-				[Serialization.SerializeAs("options_v")] public Dictionary<string, bool> OptionsEnabled = new Dictionary<string, bool>();
+				[Serialization.SerializeAs("options_v")] public Dictionary<string, bool> OptionsEnabled = new();
 				
 				string DefaultChannels = "X";
 
-				static Dictionary<string, List<Imp_GenericFromTemplate>> AllGenericImplementations = new Dictionary<string, List<Imp_GenericFromTemplate>>();
+				static Dictionary<string, List<Imp_GenericFromTemplate>> AllGenericImplementations = new();
 
 				List<Option> options;
 				struct Option
@@ -2754,15 +2752,15 @@ namespace ToonyColorsPro
 
 					public void UpdateConfigIfNeeded(bool enabled)
 					{
-						if (this.affectConfig)
+						if (affectConfig)
 						{
 							if (enabled)
 							{
-								Utils.AddIfMissing(ShaderGenerator2.CurrentConfig.ExtraTempFeatures, this.feature);
+								Utils.AddIfMissing(ShaderGenerator2.CurrentConfig.ExtraTempFeatures, feature);
 							}
 							else
 							{
-								Utils.RemoveIfExists(ShaderGenerator2.CurrentConfig.ExtraTempFeatures, this.feature);
+								Utils.RemoveIfExists(ShaderGenerator2.CurrentConfig.ExtraTempFeatures, feature);
 							}
 						}
 					}
@@ -2854,7 +2852,7 @@ namespace ToonyColorsPro
 					return list.ToArray();
 				}
 
-				public override bool HasErrors { get { return base.HasErrors || !sourceIsAvailable || isNotTheLastImplementation; } }
+				public override bool HasErrors => base.HasErrors || !sourceIsAvailable || isNotTheLastImplementation;
 
 				public Imp_GenericFromTemplate(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
@@ -2886,7 +2884,7 @@ namespace ToonyColorsPro
 				void OnDeserialized()
 				{
 					// get the options from the template and not from serialization, in case options are added in the future
-					var match = Imp_GenericFromTemplate.AvailableGenericImplementations.Find(gi => gi.identifier == this.sourceIdentifier);
+					var match = AvailableGenericImplementations.Find(gi => gi.identifier == sourceIdentifier);
 					if (match.valid)
 					{
 						OptionsString = match.Options;
@@ -2937,13 +2935,13 @@ namespace ToonyColorsPro
 
 					if (source.valid)
 					{
-						this.MenuLabel = source.MenuLabel;
-						this.HelpMessage = source.HelpMessage;
-						this.ChannelsOptions = source.ChannelsOptions;
-						this.Compatibility = source.Compatibility;
-						this.VariableName = source.VariableName;
+						MenuLabel = source.MenuLabel;
+						HelpMessage = source.HelpMessage;
+						ChannelsOptions = source.ChannelsOptions;
+						Compatibility = source.Compatibility;
+						VariableName = source.VariableName;
 
-						this.DeduceChannelsSettings(ParentShaderProperty);
+						DeduceChannelsSettings(ParentShaderProperty);
 					}
 				}
 
@@ -2952,30 +2950,30 @@ namespace ToonyColorsPro
 					// deduce the channels/count based on the shader property
 					switch (shaderProperty.Type)
 					{
-						case VariableType.@float: this.ChannelsCount = 1; break;
-						case VariableType.float2: this.ChannelsCount = 2; break;
+						case VariableType.@float: ChannelsCount = 1; break;
+						case VariableType.float2: ChannelsCount = 2; break;
 						case VariableType.float3:
-						case VariableType.color: this.ChannelsCount = 3; break;
+						case VariableType.color: ChannelsCount = 3; break;
 						case VariableType.float4:
-						case VariableType.color_rgba: this.ChannelsCount = 4; break;
+						case VariableType.color_rgba: ChannelsCount = 4; break;
 					}
 
 					string defaultChannels = "";
-					for (int i = 0; i < this.ChannelsCount; i++)
+					for (int i = 0; i < ChannelsCount; i++)
 					{
-						defaultChannels += this.ChannelsOptions[i % this.ChannelsOptions.Length];
+						defaultChannels += ChannelsOptions[i % ChannelsOptions.Length];
 					}
-					this.DefaultChannels = defaultChannels;
+					DefaultChannels = defaultChannels;
 
 					// set Channels, or preserve existing ones as far as possible
 					var prevChannels = Channels;
 					Channels = "";
 					for (int i = 0; i < ChannelsCount; i++)
 					{
-						if (prevChannels != null && i < prevChannels.Length && this.ChannelsOptions.Contains(prevChannels[i].ToString()))
+						if (prevChannels != null && i < prevChannels.Length && ChannelsOptions.Contains(prevChannels[i].ToString()))
 							Channels += prevChannels[i];
 						else
-							Channels += this.ChannelsOptions[i % this.ChannelsOptions.Length];
+							Channels += ChannelsOptions[i % ChannelsOptions.Length];
 					}
 				}
 
@@ -3130,8 +3128,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_enum")]
 			public class Imp_Enum : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableType.fixed_function_enum; } }
-				public static string MenuLabel { get { return "Enum (Fixed Function)"; } }
+				public static VariableType VariableCompatibility => VariableType.fixed_function_enum;
+				public static string MenuLabel => "Enum (Fixed Function)";
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("value_type")] public int ValueType;
@@ -3301,8 +3299,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_customcode")]
 			public class Imp_CustomCode : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Special/Custom Code"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Special/Custom Code";
 				internal override string GUILabel() { return MenuLabel; }
 				internal override bool HasOperator() { return false; }
 
@@ -3317,7 +3315,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("prepend_code")] public string prependCode = "";
 				[Serialization.SerializeAs("prepend_file")] public string prependFileGuid = "";
 				[Serialization.SerializeAs("prepend_file_block")] public string prependFileBlock = "";
-				[Serialization.SerializeAs("preprend_params")] public Dictionary<string, string> prependParametersValues = new Dictionary<string, string>(); // values for the parameters of the defined block in the prepend file
+				[Serialization.SerializeAs("preprend_params")] public Dictionary<string, string> prependParametersValues = new(); // values for the parameters of the defined block in the prepend file
 
 				TextAsset prependFile;
 				bool prependFileBlockFound;
@@ -3325,12 +3323,12 @@ namespace ToonyColorsPro
 
 				struct PrependReference
 				{
-					public ShaderProperty.VariableType variableType;
+					public VariableType variableType;
 					public string variableName;
 					public string defaultValueOrComment;
 					public bool isComment;
 
-					public PrependReference(ShaderProperty.VariableType type, string name, string value, bool comment)
+					public PrependReference(VariableType type, string name, string value, bool comment)
 					{
 						variableType = type;
 						variableName = name;
@@ -3347,11 +3345,11 @@ namespace ToonyColorsPro
 
 				[Serialization.SerializeAs("code")] public string code = "";
 				public bool usesReplacementTags = false;
-				Dictionary<string, List<string>> replacementParts = new Dictionary<string, List<string>>();
-				List<int> usedImplementations = new List<int>();
+				Dictionary<string, List<string>> replacementParts = new();
+				List<int> usedImplementations = new();
 				public string tagError = null;
 
-				public override bool HasErrors { get { return base.HasErrors | !string.IsNullOrEmpty(tagError) | (prependType == PrependType.ExternalFile && prependFile != null && !prependFileBlockFound); } }
+				public override bool HasErrors => base.HasErrors | !string.IsNullOrEmpty(tagError) | (prependType == PrependType.ExternalFile && prependFile != null && !prependFileBlockFound);
 
 				public Imp_CustomCode(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
@@ -3429,7 +3427,7 @@ namespace ToonyColorsPro
 							pCode = ParseReplacementParts(list, cachedVariables, inputSource, outputSource, arguments);
 						}
 
-						var lines = pCode.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
+						var lines = pCode.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 						foreach (var l in lines)
 						{
 							ShaderGenerator2.AppendLineBefore(l);
@@ -3470,7 +3468,7 @@ namespace ToonyColorsPro
 							}
 
 							ShaderGenerator2.AppendLineBefore(string.Format("{0} {1} = {2};", 
-								ShaderProperty.VariableTypeToShaderCode(reference.variableType),
+								VariableTypeToShaderCode(reference.variableType),
 								shaderUniqueVariableNamesMapping[reference.variableName],
 								value));
 						}
@@ -3851,7 +3849,7 @@ namespace ToonyColorsPro
 
 				public void TryToFindPrependCodeBlock()
 				{
-					if (prependType != PrependType.ExternalFile || string.IsNullOrEmpty(this.prependFileGuid))
+					if (prependType != PrependType.ExternalFile || string.IsNullOrEmpty(prependFileGuid))
 					{
 						return;
 					}
@@ -3937,15 +3935,15 @@ namespace ToonyColorsPro
 								// will be translated into an UI where user can type the value they want, including {n} notation
 
 								string prependRefStr = line.Substring("//#".Length).Trim();
-								string[] parts = prependRefStr.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+								string[] parts = prependRefStr.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 								if (parts.Length < 2)
 								{
 									Debug.LogError(ShaderGenerator2.ErrorMsg("Invalid prepend code reference, it should be in the following format:\n\"//# type name [defaultValue]\" (e.g. \"//# float4 myVariable (1.1, 2.0, 0.0, 4.0)\")\nParsed line:\n" + line));
 								}
 								else
 								{
-									var vType = (ShaderProperty.VariableType)System.Enum.Parse(typeof(ShaderProperty.VariableType), parts[0]);
-									if (!System.Enum.IsDefined(typeof(ShaderProperty.VariableType), vType))
+									var vType = (VariableType)Enum.Parse(typeof(VariableType), parts[0]);
+									if (!Enum.IsDefined(typeof(VariableType), vType))
 									{
 										Debug.LogError(ShaderGenerator2.ErrorMsg("Invalid variable type defined for prepend code reference:\n" + line));
 									}
@@ -4014,7 +4012,7 @@ namespace ToonyColorsPro
 					}
 				}
 
-				string getDefaultValueForType(ShaderProperty.VariableType variableType)
+				string getDefaultValueForType(VariableType variableType)
 				{
 					switch(variableType)
 					{
@@ -4293,8 +4291,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_hsv")]
 			public class Imp_HSV : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableType.color | VariableType.color_rgba; } }
-				public static string MenuLabel { get { return "Special/HSV"; } }
+				public static VariableType VariableCompatibility => VariableType.color | VariableType.color_rgba;
+				public static string MenuLabel => "Special/HSV";
 				internal override string GUILabel() { return MenuLabel; }
 				internal override bool HasOperator() { return false; }
 				internal override OptionFeatures[] NeededFeatures() { return new[] { hsvType == HsvType.FullOffset ? OptionFeatures.HSV_Full : (hsvType == HsvType.Colorize ? OptionFeatures.HSV_Colorize : OptionFeatures.HSV_Grayscale) }; }
@@ -4307,7 +4305,7 @@ namespace ToonyColorsPro
 					Colorize
 				}
 
-				public override bool HasErrors { get { return base.HasErrors | isFirstImplementation | noColorizeChannels; } }
+				public override bool HasErrors => base.HasErrors | isFirstImplementation | noColorizeChannels;
 
 				[Serialization.SerializeAs("type")] HsvType hsvType;
 				[Serialization.SerializeAs("chue")] bool colorizeHue;
@@ -4319,7 +4317,7 @@ namespace ToonyColorsPro
 				string valueVariable;
 				VariableType variableType;
 				bool isFirstImplementation;
-				bool noColorizeChannels { get { return (hsvType == HsvType.Colorize && !colorizeHue && !colorizeSat && !colorizeVal); } }
+				bool noColorizeChannels => (hsvType == HsvType.Colorize && !colorizeHue && !colorizeSat && !colorizeVal);
 
 				public Imp_HSV(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
@@ -4513,8 +4511,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_spref")]
 			public class Imp_ShaderPropertyReference : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Other Shader Property"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Other Shader Property";
 				internal override string GUILabel() { return MenuLabel; }
 
 				[Serialization.SerializeAs("cc")] public int ChannelsCount = 3;
@@ -4522,16 +4520,13 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("lsp")] public string LinkedShaderPropertyName;
 				string DefaultChannels = "RGB";
 
-				public List<ShaderProperty> Dependencies = new List<ShaderProperty>();
+				public List<ShaderProperty> Dependencies = new();
 
 				ShaderProperty _linkedShaderProperty;
 				public ShaderProperty LinkedShaderProperty
 				{
-					get { return _linkedShaderProperty; }
-					set
-					{
-						SetLinkedShaderProperty(value);
-					}
+					get => _linkedShaderProperty;
+					set => SetLinkedShaderProperty(value);
 				}
 
 				public override string ToHashString()
@@ -4568,13 +4563,7 @@ namespace ToonyColorsPro
 					return result.ToString();
 				}
 
-				public override bool HasErrors
-				{
-					get
-					{
-						return base.HasErrors | _linkedShaderProperty == null | (_linkedShaderProperty != null && !_linkedShaderProperty.IsVisible());
-					}
-				}
+				public override bool HasErrors => base.HasErrors | _linkedShaderProperty == null | (_linkedShaderProperty != null && !_linkedShaderProperty.IsVisible());
 
 				public Imp_ShaderPropertyReference(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
@@ -4649,7 +4638,7 @@ namespace ToonyColorsPro
 
 						if (GUILayout.Button((LinkedShaderProperty != null) ? LinkedShaderProperty.Name : "None", SGUILayout.Styles.ShurikenPopup))
 						{
-							var menu = CreateShaderPropertiesMenu(this.ParentShaderProperty, this.LinkedShaderProperty, OnSelectShaderProperty);
+							var menu = CreateShaderPropertiesMenu(ParentShaderProperty, LinkedShaderProperty, OnSelectShaderProperty);
 							if (menu != null)
 							{
 								menu.ShowAsContext();
@@ -4864,7 +4853,7 @@ namespace ToonyColorsPro
 					if (Dependencies.Contains(shaderProperty))
 					{
 						//cyclic reference: can happen if a template has incorrect values
-						Debug.LogError(ShaderGenerator2.ErrorMsg("Cyclic reference between '" + this.ParentShaderProperty.Name + "' and '" + shaderProperty.Name + "'"));
+						Debug.LogError(ShaderGenerator2.ErrorMsg("Cyclic reference between '" + ParentShaderProperty.Name + "' and '" + shaderProperty.Name + "'"));
 						return;
 					}
 					Dependencies.Add(shaderProperty);
@@ -4915,8 +4904,8 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("imp_ct")]
 			public class Imp_CustomMaterialProperty : Implementation
 			{
-				public static VariableType VariableCompatibility { get { return VariableTypeAll; } }
-				public static string MenuLabel { get { return "Custom Material Property"; } }
+				public static VariableType VariableCompatibility => VariableTypeAll;
+				public static string MenuLabel => "Custom Material Property";
 				internal override string GUILabel() { return MenuLabel; }
 
 				internal override OptionFeatures[] NeededFeatures()
@@ -4934,7 +4923,7 @@ namespace ToonyColorsPro
 				CustomMaterialProperty _linkedCustomMaterialProperty;
 				public CustomMaterialProperty LinkedCustomMaterialProperty
 				{
-					get { return _linkedCustomMaterialProperty; }
+					get => _linkedCustomMaterialProperty;
 					set
 					{
 						_linkedCustomMaterialProperty = value;
@@ -4947,7 +4936,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("avchan")] string AvailableChannels = "RGBA";
 				string DefaultChannels = "RGBA";
 
-				public override bool HasErrors { get { return base.HasErrors | LinkedCustomMaterialProperty == null | errorMessage != null; } }
+				public override bool HasErrors => base.HasErrors | LinkedCustomMaterialProperty == null | errorMessage != null;
 				string errorMessage = null;
 				public override void CheckErrors()
 				{
@@ -4955,11 +4944,11 @@ namespace ToonyColorsPro
 
 					// Specific combinations errors
 					errorMessage = null;
-					if (this.LinkedCustomMaterialProperty != null)
+					if (LinkedCustomMaterialProperty != null)
 					{
-						var imp_texture = this.LinkedCustomMaterialProperty.implementation as Imp_MaterialProperty_Texture;
+						var imp_texture = LinkedCustomMaterialProperty.implementation as Imp_MaterialProperty_Texture;
 
-						if (this.ParentShaderProperty.Program == ProgramType.Vertex
+						if (ParentShaderProperty.Program == ProgramType.Vertex
 							&& imp_texture != null
 							&& imp_texture.UvSource == Imp_MaterialProperty_Texture.UvSourceType.ScreenSpace)
 						{
@@ -5033,7 +5022,7 @@ namespace ToonyColorsPro
 				public bool willBeRemoved { get; private set; }
 				public override void WillBeRemoved()
 				{
-					this.willBeRemoved = true;
+					willBeRemoved = true;
 					if (LinkedCustomMaterialProperty != null)
 					{
 						LinkedCustomMaterialProperty.implementation.WillBeRemoved();

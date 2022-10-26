@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-
-
-using Entitas;
-using KMath;
-using Sprites;
-
-namespace Item
+﻿namespace Item
 {
     public class MeshBuilderSystem
     {

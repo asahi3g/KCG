@@ -1,6 +1,4 @@
-using System;
 using Entitas;
-using KMath;
 
 namespace Projectile
 {

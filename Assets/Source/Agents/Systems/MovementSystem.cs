@@ -122,7 +122,7 @@ namespace Agent
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
-            if (entity.isAgentAlive && System.Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
+            if (entity.isAgentAlive && Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
                 physicsState.MovementState != AgentMovementState.Stagger)
             {
                 if (newVelocity.X > 0)

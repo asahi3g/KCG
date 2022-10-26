@@ -1,17 +1,16 @@
 ﻿//imports UnityEngine
 
+using Enums.Tile;
 using Enums.PlanetTileMap;
 using Item;
 using KMath;
-using PlanetTileMap;
 
 namespace Planet.Unity
 {
     class PathFindingTest : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField] UnityEngine.Material Material;
-
-        Planet.PlanetState Planet;
+        
         AgentEntity Slime;
         AgentEntity FlyingSlime;
         AgentEntity Agent;
@@ -57,11 +56,11 @@ namespace Planet.Unity
             {
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 Vec2f goalPos = new Vec2f(worldPosition.x, worldPosition.y);
-                GameState.ActionCreationSystem.CreateMovementAction(Planet.EntitasContext, Enums.NodeType.MoveToAction,
+                GameState.ActionCreationSystem.CreateMovementAction(GameState.Planet.EntitasContext, Enums.NodeType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
 
-            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -72,7 +71,7 @@ namespace Planet.Unity
             if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
+            GameState.InventoryDrawSystem.Draw(GameState.Planet.EntitasContext, GameState.Planet.InventoryList);
         }
 
         private void OnDrawGizmos()
@@ -128,13 +127,13 @@ namespace Planet.Unity
 
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
 
-            Slime = Planet.AddAgent(new Vec2f(0f, 22f), Enums.AgentType.Slime);
-            FlyingSlime = Planet.AddAgent(new Vec2f(0f, 18f), Enums.AgentType.FlyingSlime);
-            Agent = Planet.AddAgent(new Vec2f(1, 22f), Enums.AgentType.Agent);
+            GameState.Planet.Init(mapSize);
+            GameState.Planet.InitializeSystems(Material, transform);
+
+            Slime = GameState.Planet.AddAgent(new Vec2f(0f, 22f), Enums.AgentType.Slime);
+            FlyingSlime = GameState.Planet.AddAgent(new Vec2f(0f, 18f), Enums.AgentType.FlyingSlime);
+            Agent = GameState.Planet.AddAgent(new Vec2f(1, 22f), Enums.AgentType.Agent);
 
             SelectedAgent = Slime;
 
@@ -143,7 +142,7 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
 
             for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)
             {

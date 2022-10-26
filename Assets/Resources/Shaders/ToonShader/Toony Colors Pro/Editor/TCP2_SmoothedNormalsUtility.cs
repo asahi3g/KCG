@@ -76,7 +76,7 @@ namespace ToonyColorsPro
 			}   //can be SkinnedMeshRenderer or MeshFilter
 			public bool isSkinned;
 
-			private List<Object> _associatedObjects = new List<Object>();
+			private List<Object> _associatedObjects = new();
 		}
 
 		private Dictionary<Mesh, SelectedMesh> mMeshes;

@@ -1,20 +1,18 @@
 ﻿//imports UnityEngine
 
-using System;
-
 namespace Projectile
 {
     public class DebugSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
-            if (planet.ProjectileList == null)
+            if (GameState.Planet.ProjectileList == null)
                 return;
                 
     #if UNITY_EDITOR
-                for (int i = 0; i < planet.ProjectileList.Length; i++)
+                for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
                 {
-                    ProjectileEntity entityP = planet.ProjectileList.Get(i);
+                    ProjectileEntity entityP = GameState.Planet.ProjectileList.Get(i);
                 UnityEngine.Vector3 startPos = new UnityEngine.Vector3(entityP.projectileStart.StarPos.X, entityP.projectileStart.StarPos.Y, 0);
                     startPos.x += entityP.physicsBox2DCollider.Size.X / 2.0f;
                     startPos.y += entityP.physicsBox2DCollider.Size.Y / 2.0f;

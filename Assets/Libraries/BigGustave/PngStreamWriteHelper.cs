@@ -8,7 +8,7 @@
     internal class PngStreamWriteHelper : Stream
     {
         private readonly Stream inner;
-        private readonly List<byte> written = new List<byte>();
+        private readonly List<byte> written = new();
 
         public override bool CanRead => inner.CanRead;
 

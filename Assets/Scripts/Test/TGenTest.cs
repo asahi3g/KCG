@@ -1,6 +1,5 @@
 using UnityEngine;
 using KMath;
-using Item;
 
 namespace Planet.Unity
 {
@@ -10,7 +9,7 @@ namespace Planet.Unity
         [SerializeField]
         private Material Material;
 
-        public PlanetState Planet;
+
 
         private static bool Init = false;
 
@@ -36,12 +35,12 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
+            GameState.Planet.Update(Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
         {
-            Planet.DrawHUD(player);
+            GameState.Planet.DrawHUD(player);
         }
 
         public void Initialize()
@@ -50,17 +49,17 @@ namespace Planet.Unity
            
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
 
-            player = Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            GameState.Planet.Init(mapSize);
+
+            player = GameState.Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
 
             inventoryManager = new Inventory.InventoryManager();
 
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD();
+            GameState.Planet.InitializeSystems(Material, transform);
+            GameState.Planet.InitializeHUD();
 
-            Planet.InitializeTGen(Material, transform);
+            GameState.Planet.InitializeTGen(Material, transform);
 
             GameState.TGenGrid.InitStage1(mapSize);
 
@@ -70,12 +69,12 @@ namespace Planet.Unity
             if (drawMapBorder)
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
-            materialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            materialBag = GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
             inventoryID = player.agentInventory.InventoryID;
 
             // Note: ItemType not exists
-            //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, Planet.EntitasContext);
+            //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, GameState.Planet.EntitasContext);
         }
 
     }

@@ -4,14 +4,14 @@ namespace Node
 {
     public class ToolActionPotion : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionPotion; } }
+        public override NodeType Type => NodeType.ToolActionPotion;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            var player = planet.Player;
+            var player = GameState.Planet.Player;
             player.UsePotion(2.0f);
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace RectpackSharp
     {
         /// <summary>A weak reference to the last list used, so it can be reused in subsequent packs.</summary>
         private static WeakReference<List<PackingRectangle>> oldListReference;
-        private static readonly object oldListReferenceLock = new object();
+        private static readonly object oldListReferenceLock = new();
 
         /// <summary>
         /// Finds a way to pack all the given rectangles into a single bin. Performance can be traded for

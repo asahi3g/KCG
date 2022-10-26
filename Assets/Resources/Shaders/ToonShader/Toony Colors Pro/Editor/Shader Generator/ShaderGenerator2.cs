@@ -60,13 +60,7 @@ namespace ToonyColorsPro
 			internal static bool NeedsHashUpdate = false;
 			internal static bool NeedsShaderPropertiesUpdate = false;
 
-			internal static bool IsURP
-			{
-				get
-				{
-					return TemplateID == "TEMPLATE_URP" || TemplateID == "TEMPLATE_LWRP";
-				}
-			}
+			internal static bool IsURP => TemplateID == "TEMPLATE_URP" || TemplateID == "TEMPLATE_LWRP";
 
 			internal static bool showDynamicTooltip;
 			internal static string dynamicTooltip;
@@ -111,7 +105,7 @@ namespace ToonyColorsPro
 
 			//Represents a template
 			Template _template;
-			Template template { get { return _template ?? (_template = new Template()); } }
+			Template template => _template ?? (_template = new Template());
 
 			static TextAsset[] LoadAllTemplates()
 			{
@@ -161,24 +155,24 @@ namespace ToonyColorsPro
 
 				// Fetch Shader Properties from previous Template
 				List<ShaderProperty> oldShaderProperties = null;
-				if (this.template != null)
+				if (template != null)
 				{
-					oldShaderProperties = new List<ShaderProperty>(this.template.shaderProperties);
+					oldShaderProperties = new List<ShaderProperty>(template.shaderProperties);
 				}
 
 				// Load new Template
 				if (newTemplate != null)
 				{
 					currentConfig.ClearShaderProperties();
-					this.template.SetTextAsset(newTemplate);
+					template.SetTextAsset(newTemplate);
 				}
 
 				// Copy old Shader Properties to new Template, if any, to retain user changes even when loading a new template
 				if (oldShaderProperties != null)
 				{
-					for (int i = 0; i < this.template.shaderProperties.Length; i++)
+					for (int i = 0; i < template.shaderProperties.Length; i++)
 					{
-						var match = oldShaderProperties.Find(oldSp => oldSp.Name == this.template.shaderProperties[i].Name);
+						var match = oldShaderProperties.Find(oldSp => oldSp.Name == template.shaderProperties[i].Name);
 						if (match != null)
 						{
 							// ----------------------------------------------------------------
@@ -190,7 +184,7 @@ namespace ToonyColorsPro
 								var defImp = match.implementations.Count >= 1 ? match.implementations[0] as ShaderProperty.Imp_MaterialProperty_Texture : null;
 								if (defImp != null && defImp.PropertyName == "_MainTex" || defImp.PropertyName == "_BaseMap")
 								{
-									newPropertyName = (this.template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName;
+									newPropertyName = (template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName;
 									restorePropertyName = true;
 								}
 							}
@@ -199,46 +193,46 @@ namespace ToonyColorsPro
 								var defImp = match.implementations.Count >= 1 ? match.implementations[0] as ShaderProperty.Imp_MaterialProperty_Color : null;
 								if (defImp != null && defImp.PropertyName == "_Color" || defImp.PropertyName == "_BaseColor")
 								{
-									newPropertyName = (this.template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName;
+									newPropertyName = (template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName;
 									restorePropertyName = true;
 								}
 							}
 
 							// ----------------------------------------------------------------
 
-							var originalImplementations = this.template.shaderProperties[i].implementations;
-							this.template.shaderProperties[i].implementations = match.implementations;
+							var originalImplementations = template.shaderProperties[i].implementations;
+							template.shaderProperties[i].implementations = match.implementations;
 
 							// Hook implementations shouldn't change
-							for (int j = 0; j < this.template.shaderProperties[i].implementations.Count; j++)
+							for (int j = 0; j < template.shaderProperties[i].implementations.Count; j++)
 							{
-								if (this.template.shaderProperties[i].implementations[j] is ShaderProperty.Imp_Hook)
+								if (template.shaderProperties[i].implementations[j] is ShaderProperty.Imp_Hook)
 								{
-									this.template.shaderProperties[i].implementations[j] = originalImplementations[j];
+									template.shaderProperties[i].implementations[j] = originalImplementations[j];
 								}
 							}
 
 							if (restorePropertyName)
 							{
-								(this.template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName = newPropertyName;
+								(template.shaderProperties[i].implementations[0] as ShaderProperty.Imp_MaterialProperty).PropertyName = newPropertyName;
 							}
 
-							this.template.shaderProperties[i].CheckHash();
-							this.template.shaderProperties[i].CheckErrors();
+							template.shaderProperties[i].CheckHash();
+							template.shaderProperties[i].CheckErrors();
 						}
 					}
 
-					for (int i = 0; i < this.template.shaderProperties.Length; i++)
+					for (int i = 0; i < template.shaderProperties.Length; i++)
 					{
-						this.template.shaderProperties[i].ResolveShaderPropertyReferences();
+						template.shaderProperties[i].ResolveShaderPropertyReferences();
 					}
 				}
 
 				// Apply keywords, update Shader Properties
 				if (currentConfig != null)
 				{
-					this.template.ApplyKeywords(currentConfig);
-					currentConfig.UpdateShaderProperties(this.template);
+					template.ApplyKeywords(currentConfig);
+					currentConfig.UpdateShaderProperties(template);
 				}
 
 				currentHash = currentConfig.ToHash();
@@ -250,7 +244,7 @@ namespace ToonyColorsPro
 			Config _currentConfig;
 			Config currentConfig
 			{
-				get { return _currentConfig; }
+				get => _currentConfig;
 				set { _currentConfig = value; CurrentConfig = _currentConfig; }
 			}
 			int currentHash;
@@ -260,7 +254,7 @@ namespace ToonyColorsPro
 
 			int tabIndex;
 			readonly Vector2[] scrollPositions = new Vector2[3];
-			readonly Color unsavedChangesColor = new Color(1f, 1f, 0.7f);
+			readonly Color unsavedChangesColor = new(1f, 1f, 0.7f);
 
 			//--------------------------------------------------------------------------------------------------
 			// Undo/Redo system
@@ -297,7 +291,7 @@ namespace ToonyColorsPro
 					this.uiFeaturesFoldouts = uiFeaturesFoldouts;
 					this.shaderPropertiesHeadersFoldouts = shaderPropertiesHeadersFoldouts;
 					this.shaderPropertiesFoldouts = shaderPropertiesFoldouts;
-					this.hash = (guid + tab + serializedConfig + uiFeaturesFoldouts + shaderPropertiesHeadersFoldouts + shaderPropertiesFoldouts).GetHashCode();
+					hash = (guid + tab + serializedConfig + uiFeaturesFoldouts + shaderPropertiesHeadersFoldouts + shaderPropertiesFoldouts).GetHashCode();
 				}
 
 				public override string ToString()
@@ -371,7 +365,7 @@ namespace ToonyColorsPro
 						currentConfig.UpdateShaderProperties(template);
 						template.ApplyKeywords(currentConfig);
 						NeedsHashUpdate = true;
-						this.Repaint();
+						Repaint();
 
 						// parse foldout states
 						setUIFeaturesFoldoutStates(state.uiFeaturesFoldouts);
@@ -428,7 +422,7 @@ namespace ToonyColorsPro
 
 				ProjectOptions.LoadProjectOptions();
 				GlobalOptions.LoadUserPrefs();
-				this.wantsMouseMove = true; // needed for contextual help boxes, and dynamic tooltip
+				wantsMouseMove = true; // needed for contextual help boxes, and dynamic tooltip
 				shouldReloadUserShaders = true;
 				NewShader();
 
@@ -710,7 +704,7 @@ namespace ToonyColorsPro
 
 					if (tabIndex == 0)
 					{
-						ShaderGenerator2.ContextualHelpBox(
+						ContextualHelpBox(
 							"Select the features you want for your shader here.\nLeave the cursor over a label to get a help tooltip, or click here to open the documentation to see details and screenshots.",
 							"featuresreference");
 
@@ -763,14 +757,14 @@ namespace ToonyColorsPro
 					{
 						scrollPositions[tabIndex] = EditorGUILayout.BeginScrollView(scrollPositions[tabIndex]);
 						{
-							ShaderGenerator2.ContextualHelpBox(
+							ContextualHelpBox(
 								"This section allows you to inject custom code parsed from your own file.\nThis is for advanced users who want extra control on the output shader file.\nPlease read the documentation to learn about how the system works and how you should format the source files.",
 								"codeinjection");
 
 							EditorGUILayout.HelpBox("Code Injection is experimental!\nIt allows to inject arbitrary code in the final shaders.\nPlease read the documentation about it and let me know if you have any feedback on it!", MessageType.Warning);
 							GUILayout.Space(8);
 
-							currentConfig.codeInjection.ShowGUI(this.template);
+							currentConfig.codeInjection.ShowGUI(template);
 						}
 						EditorGUILayout.EndScrollView();
 					}
@@ -860,7 +854,7 @@ namespace ToonyColorsPro
 						var newHash = currentConfig.ToHash();
 						unsavedChanges = (newHash != currentHash);
 						NeedsHashUpdate = false;
-						this.Repaint();
+						Repaint();
 					}
 				}
 
@@ -911,7 +905,7 @@ namespace ToonyColorsPro
 					GlobalOptions.data.ShowContextualHelp = GUILayout.Toggle(GlobalOptions.data.ShowContextualHelp, TCP2_GUI.TempContent("Show contextual help", "Will show help boxes throughout the UI regarding the usage of the Shader Generator"), GUILayout.Width(180f));
 					if (EditorGUI.EndChangeCheck())
 					{
-						this.wantsMouseMove = GlobalOptions.data.ShowContextualHelp;
+						wantsMouseMove = GlobalOptions.data.ShowContextualHelp;
 					}
 
 					GlobalOptions.data.DockableWindow = GUILayout.Toggle(GlobalOptions.data.DockableWindow, TCP2_GUI.TempContent("Dockable Window", "Makes the Shader Generator 2 window dockable in the Editor UI (close and reopen the tool to apply)"), GUILayout.ExpandWidth(false));
@@ -935,12 +929,12 @@ namespace ToonyColorsPro
 				//needed for hover to work correctly
 				if (Event.current.type == EventType.MouseMove)
 				{
-					this.Repaint();
+					Repaint();
 				}
 
 				if (showDynamicTooltip)
 				{
-					var realMousePosition = Event.current.mousePosition + new Vector2(this.position.x, this.position.y) + new Vector2(10, 14);
+					var realMousePosition = Event.current.mousePosition + new Vector2(position.x, position.y) + new Vector2(10, 14);
 					Tooltip.Show(realMousePosition, dynamicTooltip);
 
 					/*
@@ -1061,7 +1055,7 @@ namespace ToonyColorsPro
 					//Load appropriate template
 					template.TryLoadTextAsset(currentConfig);
 					LoadNewTemplate();
-					currentConfig.ParseSerializedDataAndHash(ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter, template, true);   //second run (see method comment)
+					currentConfig.ParseSerializedDataAndHash(AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter, template, true);   //second run (see method comment)
 					currentConfig.UpdateShaderProperties(template);
 					template.ApplyKeywords(currentConfig);
 
@@ -1136,7 +1130,7 @@ namespace ToonyColorsPro
 #else
 						string assetPath = "Assets" + path.Replace(Application.dataPath, "");
 #endif
-							var shaderImporter = ShaderImporter.GetAtPath(assetPath) as ShaderImporter;
+							var shaderImporter = AssetImporter.GetAtPath(assetPath) as ShaderImporter;
 							if (shaderImporter != null)
 							{
 								// Shader Generator 1 shaders: skip
@@ -1320,8 +1314,8 @@ namespace ToonyColorsPro
 					EditorUtility.DisplayProgressBar("Hold On", "Generating Shader: " + config.ShaderName, progress);
 
 				// Set up statics
-				ShaderGenerator2.CurrentConfig = config;
-				ShaderGenerator2.TemplateID = template.id;
+				CurrentConfig = config;
+				TemplateID = template.id;
 
 				//Generate source
 				var source = GenerateShaderSource(config, template, existingShader);
@@ -1379,9 +1373,9 @@ namespace ToonyColorsPro
 
 			class NotEmptyBlock
 			{
-				public StringBuilder stringBuilderToPrintBefore = new StringBuilder();
-				public StringBuilder stringBuilderNotEmptyBlock = new StringBuilder();
-				public StringBuilder stringBuilderToPrintAfter = new StringBuilder();
+				public StringBuilder stringBuilderToPrintBefore = new();
+				public StringBuilder stringBuilderNotEmptyBlock = new();
+				public StringBuilder stringBuilderToPrintAfter = new();
 
 				public NotEmptyBlock()
 				{
@@ -2815,7 +2809,7 @@ namespace ToonyColorsPro
 					}
 
 					//Set ShaderImporter userData
-					var shaderImporter = ShaderImporter.GetAtPath(assetPath) as ShaderImporter;
+					var shaderImporter = AssetImporter.GetAtPath(assetPath) as ShaderImporter;
 					if (shaderImporter != null)
 					{
 						//Set default textures
@@ -2897,7 +2891,7 @@ namespace ToonyColorsPro
 
 						if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && Event.current.clickCount == 1 && rect.Contains(Event.current.mousePosition))
 						{
-							Application.OpenURL(ToonyColorsPro.ShaderGenerator.ShaderGenerator2.DOCUMENTATION_URL + "#" + helpTopic);
+							Application.OpenURL(DOCUMENTATION_URL + "#" + helpTopic);
 						}
 					}
 				}

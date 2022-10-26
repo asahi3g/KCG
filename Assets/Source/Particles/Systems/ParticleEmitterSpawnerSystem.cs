@@ -1,7 +1,5 @@
 //imports UnityEngine
 
-using System.Collections.Generic;
-using Entitas;
 using KMath;
 
 namespace Particle
@@ -24,13 +22,13 @@ namespace Particle
                                      int spriteId)
         {
             // use an api to create different emitter entities
-            ParticleEntity entity = CreateParticleEmitterEntity(context, Particle.ParticleEmitterType.OreFountain, 
+            ParticleEntity entity = CreateParticleEmitterEntity(context, ParticleEmitterType.OreFountain, 
                                             position);
 
             return entity;
         }
 
-        public ParticleEntity Spawn(ParticleContext context, Particle.ParticleEmitterType type, 
+        public ParticleEntity Spawn(ParticleContext context, ParticleEmitterType type, 
                                         Vec2f position)
         {
             ParticleEntity entity = CreateParticleEmitterEntity(context, type, position);
@@ -39,7 +37,7 @@ namespace Particle
         }
 
         private ParticleEntity CreateParticleEmitterEntity(ParticleContext context, 
-                                Particle.ParticleEmitterType type, Vec2f position)
+                                ParticleEmitterType type, Vec2f position)
         {
             ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)type);

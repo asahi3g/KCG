@@ -1,14 +1,13 @@
 ﻿using AI;
-using System;
 using UnityEngine;
 
 namespace Node
 {
     public class SchedulerSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
-            NodeEntity[] nodes = planet.EntitasContext.node.GetEntities();
+            NodeEntity[] nodes = GameState.Planet.EntitasContext.node.GetEntities();
 
             for (int i = 0; i < nodes.Length; i++)
             {
@@ -19,17 +18,17 @@ namespace Node
                 switch (nodes[i].nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        AISystemState.Nodes[index].OnEnter(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnEnter(nodes[i]);
                         break;
                     case Enums.NodeState.Running:
-                        AISystemState.Nodes[index].OnUpdate(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnUpdate(nodes[i]);
                         break;
                     case Enums.NodeState.Success:
-                        AISystemState.Nodes[index].OnExit(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnExit(nodes[i]);
                         nodes[i].Destroy();
                         break;
                     case Enums.NodeState.Fail:
-                        AISystemState.Nodes[index].OnExit(ref planet, nodes[i]);
+                        AISystemState.Nodes[index].OnExit(nodes[i]);
                         nodes[i].Destroy();
                         break;
                     default:
@@ -38,35 +37,35 @@ namespace Node
                 }
             }
 
-            RunBehaviorTrees(ref planet);
+            RunBehaviorTrees();
         }
 
-        private void RunBehaviorTrees(ref Planet.PlanetState planet)
+        private void RunBehaviorTrees()
         {
-            for (int i = 0; i < planet.AgentList.Length; i++)
+            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
             {
-                AgentEntity agent = planet.AgentList.Get(i);
+                AgentEntity agent = GameState.Planet.AgentList.Get(i);
                 if (!agent.hasAgentController || !agent.isAgentAlive)
                     continue;
 
                 AgentController controller = agent.agentController.Controller;
-                controller.Update(agent, ref planet);
-                NodeEntity nodeEntity = planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
+                controller.Update(agent);
+                NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
                 
                 int index = (int)nodeEntity.nodeID.TypeID;
                 switch (nodeEntity.nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        AISystemState.Nodes[index].OnEnter(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnEnter(nodeEntity);
                         break;
                     case Enums.NodeState.Running:
-                        AISystemState.Nodes[index].OnUpdate(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnUpdate(nodeEntity);
                         break;
                     case Enums.NodeState.Success:
-                        AISystemState.Nodes[index].OnExit(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnExit(nodeEntity);
                         break;
                     case Enums.NodeState.Fail:
-                        AISystemState.Nodes[index].OnExit(ref planet, nodeEntity);
+                        AISystemState.Nodes[index].OnExit(nodeEntity);
                         break;
                     default:
                         Debug.Log("Not valid Action state.");

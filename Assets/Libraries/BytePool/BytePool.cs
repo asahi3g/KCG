@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 
 public struct ByteData
@@ -35,12 +34,12 @@ public class BytePool
 
     // list of allocated bytes
     // can be accessed by index
-    List <ByteObject> IndexArray = new List<ByteObject>();
+    List <ByteObject> IndexArray = new();
 
     // double linked list of free blocks
     // for fast insertion deletion
     // we wont be deallocating much
-    LinkedList <int> FreeIndices = new LinkedList<int>();
+    LinkedList <int> FreeIndices = new();
 
     Int64 TotalAllocations;
     Int64 TotalDeallocations;

@@ -1,5 +1,4 @@
 using KMath;
-using System;
 
 namespace Collisions
 {

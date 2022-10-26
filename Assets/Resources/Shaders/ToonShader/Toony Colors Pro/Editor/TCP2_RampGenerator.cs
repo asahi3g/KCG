@@ -92,12 +92,12 @@ namespace ToonyColorsPro
 
 			m2dGradients = new Gradient[]
 			{
-				new Gradient()
+				new()
 				{
 					colorKeys = new[] { new GradientColorKey(Color.black, 0.49f), new GradientColorKey(Color.white, 0.51f) },
 					alphaKeys = new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
 				},
-				new Gradient()
+				new()
 				{
 					colorKeys = new[] { new GradientColorKey(Color.black, 0.0f), new GradientColorKey(Color.white, 1.0f) },
 					alphaKeys = new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
@@ -165,8 +165,8 @@ namespace ToonyColorsPro
 		ReorderableList gradients2dList;
 		SerializedProperty gradientProperty;
 
-		bool isRamp1d { get { return !isRamp2d; } }
-		bool isRamp2d { get { return (editMode && editedTextureIs2d) || (!editMode && tabIndex == 1); } }
+		bool isRamp1d => !isRamp2d;
+		bool isRamp2d => (editMode && editedTextureIs2d) || (!editMode && tabIndex == 1);
 
 		void OnGUI()
 		{

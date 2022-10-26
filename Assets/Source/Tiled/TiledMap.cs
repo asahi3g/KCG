@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using System;
-using UnityEngine;
 
 namespace Tiled
 {
@@ -16,13 +15,13 @@ namespace Tiled
         public TileMapTileset[] tilesets;
         public TiledMapLayer[] layers;
 
-        Tiled.TiledTilesetCache tilesetCache;
+        TiledTilesetCache tilesetCache;
 
         string RootFolder;
 
         public TiledMap(string rootFolder)
         {
-             tilesetCache = new Tiled.TiledTilesetCache();
+             tilesetCache = new TiledTilesetCache();
              RootFolder = rootFolder;
         }
 
@@ -53,7 +52,7 @@ namespace Tiled
 
                 if (foundTileset == null)
                 {
-                    foundTileset = Tiled.TiledTileset.FromJson(RootFolder + tilesetName);
+                    foundTileset = TiledTileset.FromJson(RootFolder + tilesetName);
 
                     tilesetCache.AddTileset(tilesetName, foundTileset);
                 }

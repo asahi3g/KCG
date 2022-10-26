@@ -1,22 +1,19 @@
-﻿using Entitas;
-using Unity.VisualScripting;
-
-namespace Projectile
+﻿namespace Projectile
 {
     public class DeleteSystem
     {
         // Remove projectile only at the end of the frame.
 
         /// <summary> Should be called at the end of the frame.</summary>
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
-            for (int i = 0; i < planet.ProjectileList.Length; i++)
+            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
             {
-                ProjectileEntity entityP = planet.ProjectileList.Get(i);
+                ProjectileEntity entityP = GameState.Planet.ProjectileList.Get(i);
 
                 if (entityP.isProjectileDelete)
                 {
-                    planet.RemoveProjectile(entityP.projectileID.Index);
+                    GameState.Planet.RemoveProjectile(entityP.projectileID.Index);
                 }
             }
         }

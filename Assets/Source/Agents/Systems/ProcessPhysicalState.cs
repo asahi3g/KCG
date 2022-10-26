@@ -1,15 +1,13 @@
-﻿using System;
-using Enums;
-using Planet;
+﻿using Enums;
 using KMath;
 
 namespace Agent
 {
     public class ProcessPhysicalState
     {
-        public void Update(ref PlanetState planet, float deltaTime)
+        public void Update(float deltaTime)
         {
-            var EntitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
+            var EntitiesWithMovementState = GameState.Planet.EntitasContext.agent.GetGroup(
                 AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
 
             foreach (var entity in EntitiesWithMovementState)
@@ -224,7 +222,7 @@ namespace Agent
                 // if we are dashing we add some particles
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
+                    GameState.Planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
                 }
 
                 // if we are sliding
@@ -241,7 +239,7 @@ namespace Agent
                     else
                     {
                         physicsState.Velocity.Y = -1.75f;
-                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                        GameState.Planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
                     }
                     physicsState.AffectedByGravity = false;
                     
@@ -259,7 +257,7 @@ namespace Agent
                     else
                     {
                         physicsState.Velocity.Y = -1.75f;
-                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                        GameState.Planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
                     }
                     physicsState.AffectedByGravity = false;
                 }
@@ -280,7 +278,7 @@ namespace Agent
                     {
                         stats.Fuel -= 10.0f;
                     }
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
+                    GameState.Planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
 
                     //physicsState.MovementState = AgentMovementState.None;
                 }

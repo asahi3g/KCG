@@ -6,7 +6,6 @@ using Inventory;
 using KGUI.Statistics;
 using KMath;
 using Mech;
-using Planet;
 using PlanetTileMap;
 using UnityEngine.UI;
 
@@ -16,28 +15,28 @@ namespace ECSInput
     {
         private Mode mode = Mode.Camera;
 
-        private void UpdateMode(ref PlanetState planetState, AgentEntity agentEntity)
+        private void UpdateMode(AgentEntity agentEntity)
         {
             agentEntity.agentPhysicsState.Invulnerable = false;
             UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
-            planetState.cameraFollow.canFollow = false;
+            GameState.Planet.cameraFollow.canFollow = false;
 
             if (mode == Mode.Agent)
             {
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
-                planetState.cameraFollow.canFollow = true;
+                GameState.Planet.cameraFollow.canFollow = true;
 
             }
             else if (mode == Mode.Camera)
             {
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
-                planetState.cameraFollow.canFollow = false;
+                GameState.Planet.cameraFollow.canFollow = false;
             }
         }
 
-        public void Update(ref PlanetState planet)
+        public void Update()
         {
-            Contexts contexts = planet.EntitasContext;
+            Contexts contexts = GameState.Planet.EntitasContext;
 
             var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
@@ -172,7 +171,7 @@ namespace ECSInput
 
                         foreach (var mech in mechEntities)
                         {
-                            if (mech.mechType.mechType == Enums.MechType.CraftingTable)
+                            if (mech.mechType.mechType == MechType.CraftingTable)
                             {
                                 if (mech.mechCraftingTable.InputInventory.hasInventoryDraw ||
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
@@ -180,14 +179,14 @@ namespace ECSInput
                                     mech.mechCraftingTable.InputInventory.hasInventoryDraw = false;
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw = false;
 
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                                    GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, playerInventory);
+                                    GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, equipmentInventory);
                                 }
 
                                 if (Vec2f.Distance(player.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
                                 {
-                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
-                                    GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                                    GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, playerInventory);
+                                    GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, equipmentInventory);
 
                                     mech.mechCraftingTable.InputInventory.hasInventoryDraw = true;
                                     mech.mechCraftingTable.OutputInventory.hasInventoryDraw = true;
@@ -270,7 +269,7 @@ namespace ECSInput
 
                     InventoryEntity Inventory = null;
                     float smallestDistance = 2.0f;
-                    var agents = planet.AgentList;
+                    var agents = GameState.Planet.AgentList;
                     for (int i =0; i < agents.Length; i++)
                     {
                         AgentEntity corpse = agents.Get(i);
@@ -306,7 +305,7 @@ namespace ECSInput
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
                         if (mechProperties.Action != NodeType.None)
-                            GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, mechProperties.Action, player.agentID.ID);
+                            GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, mechProperties.Action, player.agentID.ID);
                     }
 
                     if (Inventory == null)
@@ -320,15 +319,15 @@ namespace ECSInput
 
                     if (!Inventory.hasInventoryDraw)
                     {
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, Inventory);
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, playerInventory);
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                        GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, Inventory);
+                        GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, equipmentInventory);
                     }
                     else 
                     {
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, Inventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                        GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, Inventory);
+                        GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, playerInventory);
+                        GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, equipmentInventory);
                     }
                 }
             }
@@ -338,7 +337,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext,NodeType.ChargeAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext,NodeType.ChargeAction, player.agentID.ID);
             }
 
             // Drop Action. 
@@ -346,7 +345,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.DropAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, NodeType.DropAction, player.agentID.ID);
             }
 
             // Reload Weapon.
@@ -354,7 +353,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.ReloadAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, NodeType.ReloadAction, player.agentID.ID);
             }
 
             // Shield Action.
@@ -362,7 +361,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, NodeType.ShieldAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, NodeType.ShieldAction, player.agentID.ID);
 
             }
 
@@ -380,14 +379,14 @@ namespace ECSInput
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
             {
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                planet.TileMap.RemoveFrontTile((int)worldPosition.x, (int)worldPosition.y);
+                GameState.Planet.TileMap.RemoveFrontTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
             // Remove Tile Back At Cursor Position.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
             {
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
+                GameState.Planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
             // Enable tile collision isotype rendering.
@@ -410,19 +409,19 @@ namespace ECSInput
 
                     if (!inventory.hasInventoryDraw)
                     {
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, inventory);
-                        GameState.InventoryManager.OpenInventory(planet.InventoryList, equipmentInventory);
+                        GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, inventory);
+                        GameState.InventoryManager.OpenInventory(GameState.Planet.InventoryList, equipmentInventory);
                     }
                     else
                     {
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
+                        GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, inventory);
+                        GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, equipmentInventory);
                         if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
                         {
-                            for (int i = 0; i < planet.InventoryList.Length; i++)
+                            for (int i = 0; i < GameState.Planet.InventoryList.Length; i++)
                             {
-                                if (planet.InventoryList.Get(i).hasInventoryDraw)
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, planet.InventoryList.Get(i));
+                                if (GameState.Planet.InventoryList.Get(i).hasInventoryDraw)
+                                    GameState.InventoryManager.CloseInventory(GameState.Planet.InventoryList, GameState.Planet.InventoryList.Get(i));
                             }
                         }
                     }
@@ -441,19 +440,19 @@ namespace ECSInput
                     if (!inventoryModel.HasToolBar)
                         return;
 
-                    var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
 
                     if (item.itemType.Type == ItemType.PulseWeapon)
                     {
                         if (!item.itemPulseWeaponPulse.GrenadeMode)
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = true;
-                            planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
+                            GameState.Planet.AddFloatingText("Grenade Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
                         }
                         else
                         {
                             item.itemPulseWeaponPulse.GrenadeMode = false;
-                            planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
+                            GameState.Planet.AddFloatingText("Bullet Mode", 1.0f, Vec2f.Zero, entity.agentPhysicsState.Position);
                         }
                     }
                 }
@@ -471,7 +470,7 @@ namespace ECSInput
                     return;
 
                 // Get Inventory
-                var item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                var item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, inventory.inventoryEntity.SelectedSlotID);
                 if (item == null) return;
                 var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
@@ -502,19 +501,19 @@ namespace ECSInput
                             entity.HandleItemDeselected(item);
                         }
                         inventory.inventoryEntity.SelectedSlotID = i;
-                        item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, i);
+                        item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, i);
                         if (item == null) return;
 
                         entity.HandleItemSelected(item);
                         
-                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
+                        GameState.Planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
                                     entity.agentPhysicsState.Position.Y));
                     }
                 }
 
 
                 int selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-                var selectedItem = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                var selectedItem = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
                 var selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
 
 
@@ -528,7 +527,7 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, selectedItemProperty.ToolActionType, 
                                         entity.agentID.ID, item.itemID.ID);
                                 }
                             }
@@ -541,7 +540,7 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(planet.EntitasContext, selectedItemProperty.ToolActionType, 
+                                    GameState.ActionCreationSystem.CreateAction(GameState.Planet.EntitasContext, selectedItemProperty.ToolActionType, 
                                         entity.agentID.ID, item.itemID.ID);
                                 }
                             }
@@ -559,8 +558,7 @@ namespace ECSInput
                     else if (mode == Mode.Camera)
                         mode = Mode.Agent;
 
-                    UpdateMode(ref planet, entity);
-
+                    UpdateMode(entity);
                 }
             }
         }

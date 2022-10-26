@@ -1,7 +1,6 @@
 ﻿//imports UnityEngine
 
 using Physics;
-using Planet;
 
 namespace Projectile
 {
@@ -49,12 +48,12 @@ namespace Projectile
             physicsState.Acceleration = KMath.Vec2f.Zero;
         }
 
-        public void Update(ref PlanetState planet)
+        public void Update()
         {
             float deltaTime = UnityEngine.Time.deltaTime;
-            for (int i = 0; i < planet.ProjectileList.Length; i++)
+            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
             {
-                Update(planet.ProjectileList.Get(i), deltaTime);
+                Update(GameState.Planet.ProjectileList.Get(i), deltaTime);
             }
         }
     }

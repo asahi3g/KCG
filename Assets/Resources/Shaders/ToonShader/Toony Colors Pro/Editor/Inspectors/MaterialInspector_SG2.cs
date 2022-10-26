@@ -20,10 +20,10 @@ namespace ToonyColorsPro
 		public class MaterialInspector_SG2 : ShaderGUI
 		{
 			//Properties
-			private Material targetMaterial { get { return (_materialEditor == null) ? null : _materialEditor.target as Material; } }
+			private Material targetMaterial => (_materialEditor == null) ? null : _materialEditor.target as Material;
 			private MaterialEditor _materialEditor;
 			private MaterialProperty[] _properties;
-			private Stack<bool> toggledGroups = new Stack<bool>();
+			private Stack<bool> toggledGroups = new();
 			private bool hasAutoTransparency;
 
 			//--------------------------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ namespace ToonyColorsPro
 						var newRenderingMode = (RenderingMode)EditorGUILayout.EnumPopup(GUIContent.none, (RenderingMode)renderingModeProp.floatValue, GUILayout.Width(118));
 						if ((float)newRenderingMode != renderingModeProp.floatValue)
 						{
-							Undo.RecordObjects(this._materialEditor.targets, "Change Material Rendering Mode");
+							Undo.RecordObjects(_materialEditor.targets, "Change Material Rendering Mode");
 							SetRenderingMode(newRenderingMode);
 						}
 					}
@@ -226,7 +226,7 @@ namespace ToonyColorsPro
 
 			void IterateMaterials(System.Action<Material> action)
 			{
-				foreach (var target in this._materialEditor.targets)
+				foreach (var target in _materialEditor.targets)
 				{
 					action(target as Material);
 				}

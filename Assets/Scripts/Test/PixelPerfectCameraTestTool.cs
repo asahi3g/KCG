@@ -107,14 +107,14 @@ public class PixelPerfectCameraTestTool : UnityEngine.MonoBehaviour
         float verticalFOV = horizontalFOV / AR;
 
         // ------ GUI Calculations  -----
-        this.cameraSize = new UnityEngine.Vector2(horizontalFOV / 2, verticalFOV / 2);
-        bool unconstrained = ratioTarget >= UnityEngine.Mathf.Max(ratioHorizontal, ratioVertical) && ratioTargetOriginal >= UnityEngine.Mathf.Max(ratioHorizontal, ratioVertical);
-        this.contraintUsed = (unconstrained) ? ConstraintType.None : (ratioHorizontal > ratioVertical) ? ConstraintType.Horizontal : ConstraintType.Vertical;
-        this.cameraPixelsPerUnit = (float)res.width / horizontalFOV;
-        this.ratio = ratioUsed;
-        this.nativeAssetResolution = new UnityEngine.Vector2(horizontalFOV * assetsPixelsPerUnit, verticalFOV * assetsPixelsPerUnit);
-        this.fovCoverage = ratioTargetOriginal / ratioUsed;
-        this.isInitialized = true;
+        cameraSize = new Vector2(horizontalFOV / 2, verticalFOV / 2);
+        bool unconstrained = ratioTarget >= Mathf.Max(ratioHorizontal, ratioVertical) && ratioTargetOriginal >= Mathf.Max(ratioHorizontal, ratioVertical);
+        contraintUsed = (unconstrained) ? ConstraintType.None : (ratioHorizontal > ratioVertical) ? ConstraintType.Horizontal : ConstraintType.Vertical;
+        cameraPixelsPerUnit = (float)res.width / horizontalFOV;
+        ratio = ratioUsed;
+        nativeAssetResolution = new Vector2(horizontalFOV * assetsPixelsPerUnit, verticalFOV * assetsPixelsPerUnit);
+        fovCoverage = ratioTargetOriginal / ratioUsed;
+        isInitialized = true;
         // ------ GUI Calculations End  -----
 
         return verticalFOV / 2;

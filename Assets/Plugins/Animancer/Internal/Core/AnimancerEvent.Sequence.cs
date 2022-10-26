@@ -49,16 +49,10 @@ namespace Animancer
             /************************************************************************************************************************/
 
             /// <summary>Indicates whether the sequence has any events in it (including the <see cref="EndEvent"/>).</summary>
-            public bool IsEmpty
-            {
-                get
-                {
-                    return
-                        _EndEvent.callback == null &&
-                        float.IsNaN(_EndEvent.normalizedTime) &&
-                        Count == 0;
-                }
-            }
+            public bool IsEmpty =>
+                _EndEvent.callback == null &&
+                float.IsNaN(_EndEvent.normalizedTime) &&
+                Count == 0;
 
             /************************************************************************************************************************/
 
@@ -173,7 +167,7 @@ namespace Animancer
             #region End Event
             /************************************************************************************************************************/
 
-            private AnimancerEvent _EndEvent = new AnimancerEvent(float.NaN, null);
+            private AnimancerEvent _EndEvent = new(float.NaN, null);
 
             /// <summary>
             /// A <see cref="callback "/> that will be triggered every frame after the <see cref="normalizedTime"/> has
@@ -521,7 +515,7 @@ namespace Animancer
             /// <see cref="EndEvent"/>.
             /// </summary>
             public FastEnumerator<AnimancerEvent> GetEnumerator()
-                => new FastEnumerator<AnimancerEvent>(_Events, Count);
+                => new(_Events, Count);
 
             IEnumerator<AnimancerEvent> IEnumerable<AnimancerEvent>.GetEnumerator()
                 => GetEnumerator();

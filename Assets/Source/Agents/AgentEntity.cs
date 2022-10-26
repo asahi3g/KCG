@@ -7,19 +7,18 @@ using Enums;
 using Inventory;
 using KMath;
 using Physics;
-using Planet;
 
 public partial class AgentEntity 
 {
-    public ItemInventoryEntity GetItem(ref PlanetState planet)
+    public ItemInventoryEntity GetItem()
     {
         if (!hasAgentInventory)
             return null;
 
         int inventoryID = agentInventory.InventoryID;
-        EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+        EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
         int selectedSlot = inventory.SelectedSlotID;
-        return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
+        return GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
     }
     public void DestroyEntity()
     {
@@ -28,7 +27,7 @@ public partial class AgentEntity
             var model3D = agentModel3D;
             if (model3D.GameObject != null)
             {
-                UnityEngine.GameObject.Destroy(model3D.GameObject);
+                UnityEngine.Object.Destroy(model3D.GameObject);
             }
         }
     }
@@ -158,7 +157,7 @@ public partial class AgentEntity
 
             if (model3d.Weapon != null)
             {
-                UnityEngine.GameObject.Destroy(model3d.Weapon);
+                UnityEngine.Object.Destroy(model3d.Weapon);
             }
 
             switch(itemProperty.ToolType)
@@ -210,7 +209,7 @@ public partial class AgentEntity
 
             if (model3d.Weapon != null)
             {
-                UnityEngine.GameObject.Destroy(model3d.Weapon);
+                UnityEngine.Object.Destroy(model3d.Weapon);
             }
 
             switch(weapon)
@@ -220,7 +219,7 @@ public partial class AgentEntity
                         UnityEngine.GameObject hand = model3d.LeftHand;
 
                     UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                        UnityEngine.GameObject rapier = UnityEngine.GameObject.Instantiate(rapierPrefab);
+                        UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
 
                     var gunRotation = rapier.transform.rotation;
                     rapier.transform.parent = hand.transform;
@@ -238,7 +237,7 @@ public partial class AgentEntity
                     if (hand != null)
                     {
                         UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
-                            UnityEngine.GameObject gun = UnityEngine.GameObject.Instantiate(prefab);
+                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
                         gun.transform.parent = hand.transform;
@@ -259,7 +258,7 @@ public partial class AgentEntity
                     {
 
                         UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
-                            UnityEngine.GameObject gun = UnityEngine.GameObject.Instantiate(prefab);
+                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
                         gun.transform.parent = hand.transform;

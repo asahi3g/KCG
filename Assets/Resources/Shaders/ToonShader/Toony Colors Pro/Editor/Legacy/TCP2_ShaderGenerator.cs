@@ -302,7 +302,7 @@ namespace ToonyColorsPro
 			private Vector2 mScrollPosition;
 			private int mConfigChoice;
 			private bool mDirtyConfig;
-			private Color unsavedChangesColor = new Color(1f, 1f, 0.7f);
+			private Color unsavedChangesColor = new(1f, 1f, 0.7f);
 
 			//Static
 			private static bool sHideDisabled;
@@ -311,7 +311,7 @@ namespace ToonyColorsPro
 			private static bool sLoadAllShaders;
 			private static bool sSelectGeneratedShader;
 			private static bool sGUIEnabled;
-			private static List<string> sOpenedFoldouts = new List<string>();
+			private static List<string> sOpenedFoldouts = new();
 
 #if DEBUG_MODE
 	private string mDebugText;
@@ -889,7 +889,7 @@ namespace ToonyColorsPro
 #else
 				string assetPath = "Assets" + path.Replace(Application.dataPath, "");
 #endif
-						var shaderImporter = ShaderImporter.GetAtPath(assetPath) as ShaderImporter;
+						var shaderImporter = AssetImporter.GetAtPath(assetPath) as ShaderImporter;
 						if (shaderImporter != null)
 						{
 							if (shaderImporter.userData.Contains("USER"))

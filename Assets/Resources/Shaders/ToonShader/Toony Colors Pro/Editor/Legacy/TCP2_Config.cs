@@ -23,9 +23,9 @@ namespace ToonyColorsPro
 			public string configType = "Normal";
 			public string templateFile = "TCP2_ShaderTemplate_Default";
 			public int shaderTarget = 30;
-			public List<string> Features = new List<string>();
-			public List<string> Flags = new List<string>();
-			public Dictionary<string, string> Keywords = new Dictionary<string, string>();
+			public List<string> Features = new();
+			public List<string> Flags = new();
+			public Dictionary<string, string> Keywords = new();
 			public bool isModifiedExternally;
 
 			//--------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ namespace ToonyColorsPro
 
 			public static TCP2_Config CreateFromShader(Shader shader)
 			{
-				var shaderImporter = ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
+				var shaderImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
 
 				var config = new TCP2_Config();
 				config.ShaderName = shader.name;

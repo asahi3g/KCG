@@ -23,7 +23,7 @@ namespace ToonyColorsPro
 				cachedLineParts.Clear();
 			}
 
-			static Dictionary<string, List<Token>.Enumerator> cachedTokenEnumerators = new Dictionary<string, List<Token>.Enumerator>();
+			static Dictionary<string, List<Token>.Enumerator> cachedTokenEnumerators = new();
 
 
 			//--------------------------------------------------------------------------------------------------------------------------------
@@ -37,8 +37,8 @@ namespace ToonyColorsPro
 				Else
 			};
 
-			static Dictionary<string, TagType> cachedLineTags = new Dictionary<string, TagType>();
-			static Dictionary<string, string[]> cachedLineParts = new Dictionary<string, string[]>();
+			static Dictionary<string, TagType> cachedLineTags = new();
+			static Dictionary<string, string[]> cachedLineParts = new();
 
 			public static string ProcessCondition(string line, List<string> features, ref int depth, ref List<bool> stack, ref List<bool> done)
 			{

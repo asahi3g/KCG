@@ -9,23 +9,23 @@ namespace Node.Action
 {
     public class MoveToAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.MoveToAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.MoveToAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
 #if DEBUG
             float deltaTime = UnityEngine.Time.realtimeSinceStartup;
 #endif
             const int MAX_FALL_HEIGHT = 6;
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             var characterMov = new CharacterMovement(agentEntity.agentPhysicsState.InitialJumpVelocity, 
                 agentEntity.agentPhysicsState.Speed, MAX_FALL_HEIGHT, agentEntity.physicsBox2DCollider.Size);
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
             var movTo = nodeEntity.nodeMoveTo;
-            movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
+            movTo.path = GameState.PathFinding.getPath(GameState.Planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
             deltaTime = (UnityEngine.Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
@@ -34,16 +34,16 @@ namespace Node.Action
 
             if (movTo.path == null)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                nodeEntity.nodeExecution.State = NodeState.Fail;
                 return;
             }
 
             movTo.pathLength = movTo.path.Length;
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
+            nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         // Todo: Improve path following algorithm
-        public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnUpdate(NodeEntity nodeEntity)
         {
             var movTo = nodeEntity.nodeMoveTo;
 
@@ -52,7 +52,7 @@ namespace Node.Action
 #if DEBUG
             GameState.PathFindingDebugSystem.AddPath(ref movTo.path, movTo.pathLength);
 #endif
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             Vec2f direction = targetPos - agentEntity.agentPhysicsState.Position;
             if (Math.Abs(direction.X) < 0.2)
@@ -68,7 +68,7 @@ namespace Node.Action
             {
                 if (--movTo.pathLength == 0)
                 {
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                    nodeEntity.nodeExecution.State = NodeState.Success;
                     return;
                 }
                 movTo.reachedX = false;
@@ -77,7 +77,7 @@ namespace Node.Action
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
 
-            if (movProperties.MovType == Enums.AgentMovementType.FlyingMovemnt)
+            if (movProperties.MovType == AgentMovementType.FlyingMovemnt)
             {
                 direction.Normalize();
                 agentEntity.agentPhysicsState.Acceleration = direction * 2 * agentEntity.agentPhysicsState.Speed / Physics.Constants.TimeToMax;
@@ -91,7 +91,7 @@ namespace Node.Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.PlanetTileMap.TileID.Platform)
+                    GameState.Planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }

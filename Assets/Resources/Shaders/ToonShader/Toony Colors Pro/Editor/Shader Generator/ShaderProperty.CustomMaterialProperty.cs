@@ -113,12 +113,12 @@ namespace ToonyColorsPro
 				public string GetPropertyName() { return implementation.PropertyName; }
 				public string PropertyName
 				{
-					get { return implementation.PropertyName; }
-					set { implementation.PropertyName = value; }
+					get => implementation.PropertyName;
+					set => implementation.PropertyName = value;
 				}
-				public string Label { get { return implementation.Label; } }
-				public bool HasErrors { get { return implementation.HasErrors; } }
-				public bool IsGpuInstanced { get { return implementation.IsGpuInstanced; } }
+				public string Label => implementation.Label;
+				public bool HasErrors => implementation.HasErrors;
+				public bool IsGpuInstanced => implementation.IsGpuInstanced;
 
 				internal OptionFeatures[] NeededFeatures() { return implementation.NeededFeatures(); }
 
@@ -205,7 +205,7 @@ namespace ToonyColorsPro
 					if (implementation is Imp_MaterialProperty_Texture)
 					{
 						// TODO variable precision option
-						return string.Format("half{0} {1} = {2};\n", "4", this.PrintVariableFragment(), implementation.PrintVariableFragment(inputSource, outputSource, null));
+						return string.Format("half{0} {1} = {2};\n", "4", PrintVariableFragment(), implementation.PrintVariableFragment(inputSource, outputSource, null));
 					}
 
 					return null;
@@ -215,7 +215,7 @@ namespace ToonyColorsPro
 				{
 					if (implementation is Imp_MaterialProperty_Texture)
 					{
-						return string.Format("half{0} {1} = {2};\n", "4", this.PrintVariableVertex(), implementation.PrintVariableVertex(inputSource, outputSource, null));
+						return string.Format("half{0} {1} = {2};\n", "4", PrintVariableVertex(), implementation.PrintVariableVertex(inputSource, outputSource, null));
 					}
 
 					return null;

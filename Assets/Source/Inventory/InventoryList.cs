@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Entitas;
 using Utility;
 
 namespace Inventory

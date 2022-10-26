@@ -22,7 +22,7 @@ namespace Utility
     public class FileLoadingManager
     {
 
-        private List<FileData> fileDataArray = new List<FileData>();
+        private List<FileData> fileDataArray = new();
 
         public int count { get; set; }
         public Dictionary<string, int> DictionaryID { get; set; }

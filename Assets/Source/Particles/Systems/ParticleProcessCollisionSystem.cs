@@ -1,10 +1,7 @@
 //imports UnityEngine
 
-using Collisions;
 using KMath;
-using PlanetTileMap;
 using Utility;
-using Enums.Tile;
 
 namespace Particle
 {
@@ -24,7 +21,7 @@ namespace Particle
                 // Collising with terrain with raycasting
                 var rayCastingResult =
                 Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                new KMath.Line2D(physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
+                new Line2D(physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)

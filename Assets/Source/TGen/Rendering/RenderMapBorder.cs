@@ -8,7 +8,7 @@ namespace TGen
     {
         public Utility.FrameMesh Mesh;
 
-        private Color borderColor = new Color(1F, 0F, 0F, 1F);
+        private Color borderColor = new(1F, 0F, 0F, 1F);
 
         private float borderThickness = 0.1F;
 

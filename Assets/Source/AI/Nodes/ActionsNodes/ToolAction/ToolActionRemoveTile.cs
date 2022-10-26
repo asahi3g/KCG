@@ -6,24 +6,24 @@ namespace Node
 {
     public class ToolActionRemoveTile : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionRemoveTile; } }
+        public override NodeType Type => NodeType.ToolActionRemoveTile;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
             
-            if (x >= 0 && x < planet.TileMap.MapSize.X &&
-            y >= 0 && y < planet.TileMap.MapSize.Y)
+            if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X &&
+            y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
             {
-                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(planet.TileMap.GetFrontTileID(x, y));
+                ref PlanetTileMap.TileProperty tileProprieties = ref GameState.TileCreationApi.GetTileProperty(GameState.Planet.TileMap.GetFrontTileID(x, y));
                 GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(x, y));
 
-                planet.TileMap.RemoveFrontTile(x, y);
+                GameState.Planet.TileMap.RemoveFrontTile(x, y);
             }
             
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using Enums.PlanetTileMap;
 using KMath;
-using Item;
 using Particle;
 using PlanetTileMap;
 
@@ -14,7 +13,7 @@ namespace Planet.Unity
         [SerializeField]
         private bool enableGeometryPlacementTool;
 
-        public PlanetState Planet;
+
         Inventory.InventoryManager inventoryManager;
         Inventory.DrawSystem inventoryDrawSystem;
 
@@ -40,15 +39,15 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
-            Planet.DrawHUD(Player);
+            GameState.Planet.Update(Time.deltaTime, Material, transform);
+            GameState.Planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
 
-            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+            MaterialBag.hasInventoryDraw = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
@@ -56,12 +55,12 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            Planet.DrawHUD(Player);
+            GameState.Planet.DrawHUD(Player);
 
             if (Event.current.type != EventType.Repaint)
                 return;
             // Draw Statistics
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+            KGUI.Statistics.StatisticsDisplay.DrawStatistics();
         }
 
         private void OnDrawGizmos()
@@ -70,8 +69,8 @@ namespace Planet.Unity
             Gizmos.color = Color.green;
 
             // Draw a cube around the map
-            if (Planet.TileMap != null)
-                Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+            if (GameState.Planet.TileMap != null)
+                Gizmos.DrawWireCube(Vector3.zero, new Vector3(GameState.Planet.TileMap.MapSize.X, GameState.Planet.TileMap.MapSize.Y, 0.0f));
 
             Gizmos.color = Color.yellow;
             CircleSmoke.DrawGizmos();
@@ -79,7 +78,7 @@ namespace Planet.Unity
 
             // Draw lines around player if out of bounds
             if (Player != null)
-                if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
+                if (Player.agentPhysicsState.Position.X - 10.0f >= GameState.Planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
 
@@ -97,7 +96,7 @@ namespace Planet.Unity
                 }
 
             // Draw Chunk Visualizer
-            ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
+            ChunkVisualizer.Draw(0.5f, 0.0f);
         }
 
         // create the sprite atlas for testing purposes
@@ -113,42 +112,42 @@ namespace Planet.Unity
 
             // Generating the map
             Vec2i mapSize = new Vec2i(256, 16);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
+
+            GameState.Planet.Init(mapSize);
 
             GenerateMap();
             SpawnStuff();
 
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD();
+            GameState.Planet.InitializeSystems(Material, transform);
+            GameState.Planet.InitializeHUD();
 
             if (enableGeometryPlacementTool)
             {
                 geometryPlacementTool = new GeometryBlockPlacementTool(true, true);
-                geometryPlacementTool.Initialize(ref Planet, Material, transform);
+                geometryPlacementTool.Initialize(Material, transform);
             }
 
-            //TileMapManager.Save(Planet.TileMap, "map.kmap");
+            //TileMapManager.Save(GameState.Planet.TileMap, "map.kmap");
 
-            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
             InventoryID = Player.agentInventory.InventoryID;
 
             // Admin API Spawn Items
-            Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, Planet.EntitasContext);
-            Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, Planet.EntitasContext);
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, GameState.Planet.EntitasContext);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon, 64, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon, 64, GameState.Planet.EntitasContext);
         }
 
         void GenerateMap()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
 
             for (int i = 0; i < tileMap.MapSize.X; i++)
             {
@@ -170,30 +169,30 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            Player = GameState.Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
 
-            Planet.AddFixedFloatingText("BASIC MOTIONS\n1>Use arrow keys to move aronud and jump.", new Vec2f(10, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("BASIC MOTIONS\n1>Use arrow keys to move aronud and jump.", new Vec2f(10, 5), Color.white, 20);
 
-            Planet.AddFixedFloatingText("Use Space Bar To Dash.", new Vec2f(30, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("Use Space Bar To Dash.", new Vec2f(30, 5), Color.white, 20);
 
-            Planet.AddFixedFloatingText("Use 'F' To Start Jetpack", new Vec2f(45, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("Use 'F' To Start Jetpack", new Vec2f(45, 5), Color.white, 20);
 
-            Planet.AddFixedFloatingText("Use 'Control' To Crouch\nPlayer also can move while crouching.", new Vec2f(60, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("Use 'Control' To Crouch\nPlayer also can move while crouching.", new Vec2f(60, 5), Color.white, 20);
 
-            Planet.AddFixedFloatingText("Use 'K' To Roll", new Vec2f(75, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("Use 'K' To Roll", new Vec2f(75, 5), Color.white, 20);
 
-            Planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
+            GameState.Planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
+            GameState.Planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
 
-            Planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);
+            GameState.Planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
+            GameState.Planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);
 
-            Planet.AddFixedFloatingText("Climb To Platforms Using Up Arrow", new Vec2f(140, 5), Color.white, 20);
+            GameState.Planet.AddFixedFloatingText("Climb To Platforms Using Up Arrow", new Vec2f(140, 5), Color.white, 20);
             tileMap.SetFrontTile(140, 2, TileID.Platform);
             tileMap.SetFrontTile(141, 2, TileID.Platform);
             tileMap.SetFrontTile(142, 2, TileID.Platform);
@@ -212,13 +211,13 @@ namespace Planet.Unity
             tileMap.SetFrontTile(143, 7, TileID.Platform);
             tileMap.SetFrontTile(144, 7, TileID.Platform);
 
-            Planet.AddFixedFloatingText("PISTOL\n1>Take the gun.\n2>Shoot it using 'LMB'.\nPress 'R' to reload the clip.", new Vec2f(155, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(155, 7), Enums.ItemType.Pistol);
+            GameState.Planet.AddFixedFloatingText("PISTOL\n1>Take the gun.\n2>Shoot it using 'LMB'.\nPress 'R' to reload the clip.", new Vec2f(155, 5), Color.white, 20);
+            GameState.Planet.AddItemParticle(new Vec2f(155, 7), Enums.ItemType.Pistol);
 
 
-            Planet.AddFixedFloatingText("Eliminate the enemies.", new Vec2f(180, 5), Color.white, 20);
-            Planet.AddAgent(new Vec2f(180, 7), Enums.AgentType.EnemyGunner);
-            Planet.AddAgent(new Vec2f(185, 7), Enums.AgentType.EnemyHeavy);
+            GameState.Planet.AddFixedFloatingText("Eliminate the enemies.", new Vec2f(180, 5), Color.white, 20);
+            GameState.Planet.AddAgent(new Vec2f(180, 7), Enums.AgentType.EnemyGunner);
+            GameState.Planet.AddAgent(new Vec2f(185, 7), Enums.AgentType.EnemyHeavy);
 
             tileMap.SetFrontTile(180, 3, TileID.Platform);
             tileMap.SetFrontTile(181, 3, TileID.Platform);
@@ -238,8 +237,8 @@ namespace Planet.Unity
             tileMap.SetFrontTile(183, 7, TileID.Platform);
             tileMap.SetFrontTile(184, 7, TileID.Platform);
 
-            Planet.AddFixedFloatingText("ENEMY PLACEMENT TOOL.", new Vec2f(200, 5), Color.white, 20);
-            Planet.AddItemParticle(new Vec2f(200, 5), Enums.ItemType.SpawnEnemySwordmanTool);
+            GameState.Planet.AddFixedFloatingText("ENEMY PLACEMENT TOOL.", new Vec2f(200, 5), Color.white, 20);
+            GameState.Planet.AddItemParticle(new Vec2f(200, 5), Enums.ItemType.SpawnEnemySwordmanTool);
         }
     }
 }

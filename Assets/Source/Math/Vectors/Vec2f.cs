@@ -21,7 +21,7 @@ namespace KMath
         public float X;
         public float Y;
 
-        public Vector2 GetVector2() => new Vector2(X, Y);
+        public Vector2 GetVector2() => new(X, Y);
 
         public Vec2f(float x, float y)
         {
@@ -83,10 +83,10 @@ namespace KMath
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(Vec2f other) => this.X * other.X + this.Y * other.Y;
+        public float Dot(Vec2f other) => X * other.X + Y * other.Y;
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(float x, float y) => this.X * x + this.Y * y;
+        public float Dot(float x, float y) => X * x + Y * y;
 
 
         [MethodImpl((MethodImplOptions) 256)]
@@ -98,7 +98,7 @@ namespace KMath
         [MethodImpl((MethodImplOptions) 256)]
         public Vec2f Normalize()
         {
-            var magnitude = this.Magnitude;
+            var magnitude = Magnitude;
             if (magnitude > 9.99999974737875E-06)
                 this /= magnitude;
             else
