@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6380194810264442703}
   - component: {fileID: 6873856669392245956}
   m_Layer: 5
-  m_Name: Wrapper
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5744913345578627941}
-  - component: {fileID: 5966366774508987560}
+  - component: {fileID: 1594931581674673732}
   m_Layer: 5
   m_Name: PlacementMaterialToolPanel
   m_TagString: Untagged
@@ -621,7 +621,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5966366774508987560
+--- !u!114 &1594931581674673732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -633,10 +633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb6c37e49811b04991641a2e42a958e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bedrockElementUI: {fileID: 9008258913253621741}
-  dirtElementUI: {fileID: 7559881266198269183}
-  pipeElementUI: {fileID: 4944413632008146025}
-  wireElementUI: {fileID: 6204882685525660389}
 --- !u!1 &6355226478428059929
 GameObject:
   m_ObjectHideFlags: 0

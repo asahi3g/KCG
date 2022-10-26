@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6380194810264442703}
   - component: {fileID: 6873856669392245956}
   m_Layer: 5
-  m_Name: Wrapper
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5744913345578627941}
-  - component: {fileID: 5733655218128768398}
+  - component: {fileID: 758070290488224336}
   m_Layer: 5
   m_Name: PotionToolPanel
   m_TagString: Untagged
@@ -307,7 +307,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5733655218128768398
+--- !u!114 &758070290488224336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -319,4 +319,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fd7b1ff847eee4a817efa3510582e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPotionElementUI: {fileID: 3119243582539065592}

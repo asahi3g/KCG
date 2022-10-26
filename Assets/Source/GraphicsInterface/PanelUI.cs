@@ -6,8 +6,7 @@ namespace KGUI
     [DefaultExecutionOrder (101)]
     public class PanelUI : MonoBehaviour
     {
-        public Dictionary<ElementEnums, ElementUI> UIElementList = new();
-        
+        public Dictionary<ElementEnums, ElementUI> ElementList = new();
         public PanelEnums ID { get; protected set; }
 
         private void Start()
@@ -17,10 +16,18 @@ namespace KGUI
 
         public virtual void Init()
         {
-            if(!GameState.GUIManager.PanelList.ContainsKey(ID))
-                GameState.GUIManager.PanelList.Add(ID, this);
+            var components = GetComponentsInChildren<ElementUI>();
+
+            foreach (var element in components)
+            {
+                ElementList.Add(element.ID, element);
+            }
+            
+            GameState.GUIManager.PanelList.Add(ID, this);
             OnActivate();
         }
+
+        public virtual void HandleClickEvent(ElementEnums elementID) { }
         
         public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }

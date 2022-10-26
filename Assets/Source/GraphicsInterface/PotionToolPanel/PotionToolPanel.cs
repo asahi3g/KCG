@@ -1,19 +1,23 @@
+using System.Linq;
 using Enums;
-using UnityEngine;
 
 namespace KGUI
 {
-    public class PotionTool : PanelUI
+    public class PotionToolPanel : PanelUI
     {
-        [SerializeField] private HealthPotionElementUI healthPotionElementUI;
-
         public override void Init()
         {
             ID = PanelEnums.PotionTool;
-            
-            UIElementList.Add(healthPotionElementUI.ID, healthPotionElementUI);
 
             base.Init();
+        }
+        
+        public override void HandleClickEvent(ElementEnums elementID)
+        {
+            foreach (var element in ElementList.Values.Where(element => element.ID != elementID))
+            {
+                ((IToggleElement)element).Toggle(false);
+            }
         }
         
         public override void OnActivate()
@@ -38,11 +42,9 @@ namespace KGUI
                     var materialBagSlot = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventory.inventoryID.ID, i);
                     if (materialBagSlot == null) continue;
 
-                    healthPotionElementUI.gameObject.SetActive(materialBagSlot.itemType.Type == ItemType.HealthPositon);
-
-                    if (selectedInventoryItem.hasItemPotion)
+                    if (ElementList.TryGetValue(ElementEnums.Wire, out var healthPotionElementUI))
                     {
-                        healthPotionElementUI.Border.SetImageColor(selectedInventoryItem.itemPotion.potionType == PotionType.HealthPotion ? Color.red : Color.yellow);
+                        healthPotionElementUI.gameObject.SetActive(materialBagSlot.itemType.Type == ItemType.HealthPositon);
                     }
                 }
             }
@@ -53,7 +55,10 @@ namespace KGUI
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             selectedInventoryItem.itemPotion.potionType = PotionType.Error;
             
-            healthPotionElementUI.Border.SetImageColor(Color.yellow);
+            foreach (var element in ElementList.Values)
+            {
+                ((IToggleElement)element).Toggle(false);
+            }
         }
     }
 }

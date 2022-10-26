@@ -6,11 +6,11 @@ using Utility;
 
 namespace KGUI
 {
-    public class DirtElementUI : ElementUI
+    public class DirtElementUI : ElementUI, IToggleElement
     {
         [UnityEngine.SerializeField] private Image borderImage;
 
-        public ImageWrapper Border;
+        private ImageWrapper border;
 
         public override void Init()
         {
@@ -21,14 +21,13 @@ namespace KGUI
             ID = ElementEnums.Dirt;
 
             Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", AtlasType.Gui);
-
-            Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
             Icon.Draw();
-            Border.Draw();
+            border.Draw();
         }
 
         public override void OnMouseStay()
@@ -46,8 +45,14 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = global::Enums.Tile.TileID.Moon;
+                item.itemTile.TileID = Enums.Tile.TileID.Moon;
+                Toggle(true);
             }
+        }
+
+        public void Toggle(bool value)
+        {
+            border.SetImageColor(value ? Color.red : Color.yellow);
         }
     }
 }
