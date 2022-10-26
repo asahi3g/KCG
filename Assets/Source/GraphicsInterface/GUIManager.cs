@@ -34,6 +34,8 @@ namespace KGUI
         public void InitStage1(PlanetState planet)
         {
             Planet = planet;
+            if (Planet.TileMap == null)
+                return;
 
             UnityEngine.Cursor.visible = true;
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
@@ -95,6 +97,9 @@ namespace KGUI
 
         public void Update(AgentEntity agentEntity)
         {
+            if (Planet.TileMap == null)
+                return;
+
             canvas.GetComponent<CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
@@ -166,12 +171,16 @@ namespace KGUI
 
         public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
-            TextWrapper textWrapper = new TextWrapper();
-            textWrapper.Create("TempText", _text, canvas.transform, 1);
-            textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
-            textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
+            if (Planet.TileMap != null)
+            {
+                TextWrapper textWrapper = new TextWrapper();
+                textWrapper.Create("TempText", _text, canvas.transform, 1);
+                textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
+                textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
+                return textWrapper;
+            }
 
-            return textWrapper;
+            return null;
         }
     }
 }
