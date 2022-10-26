@@ -19,7 +19,7 @@ namespace KGUI
             
             ID = ElementEnums.Pipe;
 
-            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
+            //Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", AtlasType.Gui);
 
             border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
@@ -46,14 +46,14 @@ namespace KGUI
 
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Pipe;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Pipe;
                 Toggle(true);
             }
         }
         
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? Color.red : Color.yellow);
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }

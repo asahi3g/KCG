@@ -45,14 +45,14 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Moon;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Moon;
                 Toggle(true);
             }
         }
 
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? Color.red : Color.yellow);
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }

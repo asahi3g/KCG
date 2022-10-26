@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 
 namespace CollisionsTest

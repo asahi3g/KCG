@@ -91,7 +91,7 @@ namespace Node.Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
+                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.PlanetTileMap.TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }

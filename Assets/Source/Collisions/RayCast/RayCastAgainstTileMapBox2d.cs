@@ -1,6 +1,7 @@
+//import UnityEngine
+
 using KMath;
 using System;
-using UnityEngine;
 
 namespace Collisions
 {
@@ -111,9 +112,9 @@ namespace Collisions
                 {
                     if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
                     {
-                        Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
+                        Enums.PlanetTileMap.TileID tileID = tileMap.GetFrontTileID(x, y);
                         PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                        if (tileID != Enums.Tile.TileID.Air && tileID != Enums.Tile.TileID.Platform)
+                        if (tileID != Enums.PlanetTileMap.TileID.Air && tileID != Enums.PlanetTileMap.TileID.Platform)
                         {
                             float diffx = (x + 0.5f) - currentPoint.X;
                             float diffy = (y + 0.5f) - currentPoint.Y;

@@ -1,8 +1,6 @@
 ﻿//imports UnityEngine
 
-
 using KMath;
-using Enums.Tile;
 
 namespace Planet.Unity
 {
@@ -57,7 +55,7 @@ namespace Planet.Unity
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
                     if (j == 0)
-                        tileMap.SetFrontTile(i, j, TileID.Moon);
+                        tileMap.SetFrontTile(i, j, Enums.PlanetTileMap.TileID.Moon);
                 }
             }
         }

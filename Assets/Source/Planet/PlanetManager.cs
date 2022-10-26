@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
 

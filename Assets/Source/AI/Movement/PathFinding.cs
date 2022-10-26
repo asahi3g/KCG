@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
 

@@ -1,6 +1,10 @@
 //import UnityEngine
 
 
+using System.Windows.Forms;
+using UnityEngine;
+using UnityEngine.UIElements;
+
 public class InputManager : UnityEngine.MonoBehaviour
 {
     // Key struct to keep key settings
@@ -16,6 +20,8 @@ public class InputManager : UnityEngine.MonoBehaviour
 
     // Currently Active Key
     public Key activeKey;
+
+    public float scale = 1.0f;
 
     // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
     void Awake()
@@ -92,6 +98,9 @@ public class InputManager : UnityEngine.MonoBehaviour
     {
         // Detect Key Call
         //DetectKey();
+
+        scale += UnityEngine.Input.GetAxis("Mouse ScrollWheel") * 0.5f * scale;
+        Camera.main.orthographicSize = 20.0f / scale;
 
         Controls();
     }

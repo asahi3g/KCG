@@ -1,5 +1,5 @@
 using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using System.Linq;
 using System.Collections.Generic;

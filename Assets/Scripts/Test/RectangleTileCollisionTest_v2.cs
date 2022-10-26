@@ -1,14 +1,13 @@
+//import UnityEngine
+
 using System;
-using System.Linq;
 using Collisions;
 using CollisionsTest;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using Planet;
-using PlanetTileMap;
-using UnityEngine;
 
-public class RectangleTileCollisionTest_v2 : MonoBehaviour 
+public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour 
 {
     struct Rect
     {
@@ -20,7 +19,7 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
     
     // 16x16 background grid
     public PlanetState Planet;
-    public Material Material;
+    public UnityEngine.Material Material;
     
     public TestSquare square;
     public TestSquare R0; //not used except tests
@@ -30,7 +29,7 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
     AgentEntity player;
 
     // Colors for primary test squares
-    public Color square_color = new(1.0f, 1.0f, 1.0f, 1.0f);
+    public UnityEngine.Color square_color = new(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Amount of squares in grid
     public Vec2i mapSize   = new(32, 32);
@@ -40,7 +39,7 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
 
     public TestSquare SetSquare(Vec2f center, Vec2f halfSize)
     {
-        var square_obj = new GameObject
+        var square_obj = new UnityEngine.GameObject
         {
             name = "Test square"
         };
@@ -91,29 +90,29 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         R2.ymin = r2_ymin;
         R2.ymax = r2_ymax;
 
-        R1.no_collision_color = Color.yellow;
-        R1.color              = Color.yellow;
+        R1.no_collision_color = UnityEngine.Color.yellow;
+        R1.color              = UnityEngine.Color.yellow;
         
-        R2.no_collision_color = Color.magenta;
-        R2.color              = Color.magenta;
+        R2.no_collision_color = UnityEngine.Color.magenta;
+        R2.color              = UnityEngine.Color.magenta;
     }
 
     void Start()
     {
-        GameObject.Find("Main Camera").transform.position = new Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
+        UnityEngine.GameObject.Find("Main Camera").transform.position = new UnityEngine.Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
 
         var halfSize1 = new Vec2f(square_size.X / 2f, square_size.Y / 2f);
         var center1 = new Vec2f(halfSize1.X, halfSize1.Y);
         square = SetSquare(center1, halfSize1);
         square.color              = square_color;
         
-        var region1_obj = new GameObject
+        var region1_obj = new UnityEngine.GameObject
         {
             name = "Test Region 1"
         };
         R1       = region1_obj.AddComponent<TestSquare>();
 
-        var region2_obj = new GameObject
+        var region2_obj = new UnityEngine.GameObject
         {
             name = "Test Region 2"
         };
@@ -147,22 +146,22 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
         var chunk1Pos = new Vec2f(halfSize.X, halfSize.Y);
         var chunk1 = SetSquare(chunk1Pos, halfSize);
         chunk1.draggable = false;
-        chunk1.color              = Color.white;
+        chunk1.color              = UnityEngine.Color.white;
         
         var chunk2Pos = new Vec2f(halfSize.X + 16f, halfSize.Y);
         var chunk2 = SetSquare(chunk2Pos, halfSize);
         chunk2.draggable = false;
-        chunk2.color              = Color.white;
+        chunk2.color              = UnityEngine.Color.white;
         
         var chunk3Pos = new Vec2f(halfSize.X, halfSize.Y + 16f);
         var chunk3 = SetSquare(chunk3Pos, halfSize);
         chunk3.draggable = false;
-        chunk3.color              = Color.white;
+        chunk3.color              = UnityEngine.Color.white;
         
         var chunk4Pos = new Vec2f(halfSize.X + 16f, halfSize.Y + 16f);
         var chunk4 = SetSquare(chunk4Pos, halfSize);
         chunk4.draggable = false;
-        chunk4.color              = Color.white;
+        chunk4.color              = UnityEngine.Color.white;
         
         for (int x = 0; x < mapSize.X; x++)
         {
@@ -219,9 +218,9 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
     {
         if(square.draggable) 
         {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
-            if(Input.GetMouseButton(0) && Collisions.Collisions.PointOverlapRect(mouse.x, mouse.y, square.xmin, square.xmax, square.ymin, square.ymax)) 
+            if(UnityEngine.Input.GetMouseButton(0) && Collisions.Collisions.PointOverlapRect(mouse.x, mouse.y, square.xmin, square.xmax, square.ymin, square.ymax)) 
             {
                 square.xmin = mouse.x - square_size.X / 2f;
                 square.xmax = mouse.x + square_size.X / 2f;
@@ -241,16 +240,16 @@ public class RectangleTileCollisionTest_v2 : MonoBehaviour
 
         if (hit.time <= 1)
         {
-            Debug.Log(Collisions.Collisions.RectOverlapRect(
+            UnityEngine.Debug.Log(Collisions.Collisions.RectOverlapRect(
                 square.xmin + velocity.X, square.xmax + velocity.X,
                 square.ymin + velocity.Y, square.ymax + velocity.Y, 
                 hit.point.X, hit.point.X + 1, hit.point.Y, hit.point.Y + 1));
         }
         else
         {
-            Debug.Log("False");
+            UnityEngine.Debug.Log("False");
         }
 
-        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 }

@@ -1,5 +1,5 @@
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace PlanetTileMap
 {

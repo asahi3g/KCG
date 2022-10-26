@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Utility;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ namespace KGUI
 {
 	public class SSQ_0Element : ElementUI, IToggleElement
 	{
-		[SerializeField] private Image borderImage;
+		[UnityEngine.SerializeField] private Image borderImage;
 
 		private ImageWrapper border;
 	    
@@ -39,13 +40,13 @@ namespace KGUI
 		public override void OnMouseClick()
 		{
 			var item = GameState.GUIManager.SelectedInventoryItem;
-			item.itemTile.TileID = Enums.Tile.TileID.QP_R0_Metal;
+			item.itemTile.TileID = Enums.PlanetTileMap.TileID.QP_R0_Metal;
 			Toggle(true);
 		}
         
 		public void Toggle(bool value)
 		{
-			border.SetImageColor(value ? Color.red : Color.yellow);
+			border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
 		}
     }
 }

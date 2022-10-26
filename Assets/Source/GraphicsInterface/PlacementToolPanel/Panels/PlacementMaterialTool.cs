@@ -1,11 +1,18 @@
+//imports UnityEngine
+
 using System.Linq;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace KGUI
 {
     public class PlacementMaterialTool : PanelUI
     {
+        [UnityEngine.SerializeField] private BedrockElementUI bedrockElementUI;
+        [UnityEngine.SerializeField] private DirtElementUI dirtElementUI;
+        [UnityEngine.SerializeField] private PipeElementUI pipeElementUI;
+        [UnityEngine.SerializeField] private WireElementUI wireElementUI;
+
         public override void Init()
         {
             ID = PanelEnums.PlacementMaterialTool;
@@ -71,6 +78,24 @@ namespace KGUI
                             }
                             break;
                     }
+
+                    //if (materialBagSlot.hasItemStack)
+                    //{
+                    //    bedrockElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Bedrock
+                    //        ? UnityEngine.Color.red
+                    //        : UnityEngine.Color.yellow);
+                    //    dirtElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Moon
+                    //        ? UnityEngine.Color.red
+                    //        : UnityEngine.Color.yellow);
+
+                    //    pipeElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Pipe
+                    //        ? UnityEngine.Color.red
+                    //        : UnityEngine.Color.yellow);
+
+                    //    wireElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Wire
+                    //        ? UnityEngine.Color.red
+                    //        : UnityEngine.Color.yellow);
+                    //}
                 }
             }
         }
@@ -82,7 +107,7 @@ namespace KGUI
             {
                 item.itemTile.TileID = TileID.Error;
             }
-            
+
             foreach (var element in ElementList.Values)
             {
                 ((IToggleElement)element).Toggle(false);

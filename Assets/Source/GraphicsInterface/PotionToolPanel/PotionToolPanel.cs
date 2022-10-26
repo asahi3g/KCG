@@ -1,3 +1,5 @@
+//imports UnityEngine
+
 using System.Linq;
 using Enums;
 
@@ -5,6 +7,8 @@ namespace KGUI
 {
     public class PotionToolPanel : PanelUI
     {
+        [UnityEngine.SerializeField] private HealthPotionElementUI healthPotionElementUI;
+
         public override void Init()
         {
             ID = PanelEnums.PotionTool;
@@ -44,6 +48,8 @@ namespace KGUI
 
                     if (ElementList.TryGetValue(ElementEnums.Wire, out var healthPotionElementUI))
                     {
+                        //healthPotionElementUI.Border.SetImageColor(selectedInventoryItem.itemPotion.potionType == PotionType.HealthPotion ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+
                         healthPotionElementUI.gameObject.SetActive(materialBagSlot.itemType.Type == ItemType.HealthPositon);
                     }
                 }
@@ -55,6 +61,8 @@ namespace KGUI
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             selectedInventoryItem.itemPotion.potionType = PotionType.Error;
             
+            //healthPotionElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
+
             foreach (var element in ElementList.Values)
             {
                 ((IToggleElement)element).Toggle(false);

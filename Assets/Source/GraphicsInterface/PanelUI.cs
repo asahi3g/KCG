@@ -1,10 +1,11 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace KGUI
 {
-    [DefaultExecutionOrder (101)]
-    public class PanelUI : MonoBehaviour
+    [UnityEngine.DefaultExecutionOrder (101)]
+    public class PanelUI : UnityEngine.MonoBehaviour
     {
         public Dictionary<ElementEnums, ElementUI> ElementList = new();
         public PanelEnums ID { get; protected set; }

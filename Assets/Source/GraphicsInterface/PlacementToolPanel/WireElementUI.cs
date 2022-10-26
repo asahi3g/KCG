@@ -1,5 +1,6 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 
@@ -7,7 +8,7 @@ namespace KGUI
 {
     public class WireElementUI : ElementUI, IToggleElement
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
         private ImageWrapper border;
 
@@ -45,14 +46,14 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Wire;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Wire;
                 Toggle(true);
             }
         }
         
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? Color.red : Color.yellow);
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }
