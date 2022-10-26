@@ -1,6 +1,7 @@
+//import UnityEngine
+
 using Enums;
-using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Node.Action
 {
@@ -21,7 +22,7 @@ namespace Node.Action
 
                 if (ItemEntity.itemTile.InputsActive)
                 {
-                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 

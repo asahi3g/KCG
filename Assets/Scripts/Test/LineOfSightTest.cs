@@ -1,7 +1,7 @@
 //imports UnityEngine
 
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using KMath.Random;
 using Planet;

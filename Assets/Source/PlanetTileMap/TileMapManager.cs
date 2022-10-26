@@ -1,18 +1,12 @@
-using System;
 using System.IO;
 using System.Text;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 
 namespace PlanetTileMap
 {
-
-
-
     public class TileMapManager
     {
-
-
         public static TileMap Load(string filePath, int playerPositionX, int playerPositionY)
         {
             TileMap tileMap;

@@ -46,7 +46,7 @@ namespace KGUI
 
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Pipe;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Pipe;
                 Toggle(true);
             }
         }

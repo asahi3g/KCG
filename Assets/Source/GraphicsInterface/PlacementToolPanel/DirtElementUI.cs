@@ -45,7 +45,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Moon;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Moon;
                 Toggle(true);
             }
         }

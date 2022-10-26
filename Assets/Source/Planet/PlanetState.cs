@@ -1,7 +1,7 @@
 //imports UnityEngine
 
 using Agent;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using Mech;
 using Vehicle;
 using Projectile;

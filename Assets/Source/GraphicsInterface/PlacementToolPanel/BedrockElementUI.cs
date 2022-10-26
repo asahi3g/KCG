@@ -47,7 +47,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Bedrock;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Bedrock;
                 Toggle(true);
             }
         }

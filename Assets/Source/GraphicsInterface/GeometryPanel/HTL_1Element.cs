@@ -40,7 +40,7 @@ namespace KGUI
 		public override void OnMouseClick()
 		{
 			var item = GameState.GUIManager.SelectedInventoryItem;
-			item.itemTile.TileID = Enums.Tile.TileID.L1_R1_Metal;
+			item.itemTile.TileID = Enums.PlanetTileMap.TileID.L1_R1_Metal;
 			Toggle(true);
 		}
         

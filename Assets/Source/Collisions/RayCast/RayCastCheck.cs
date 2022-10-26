@@ -1,7 +1,8 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 
 // Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm

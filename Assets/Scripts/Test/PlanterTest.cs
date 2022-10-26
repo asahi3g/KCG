@@ -1,7 +1,7 @@
 //imports UnityEngine
 
 using KMath;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using Planet;
 using PlanetTileMap;
 

@@ -1,4 +1,4 @@
-namespace Enums.Tile
+namespace Enums.PlanetTileMap
 {
     /// <param name="Error">Not initialized chunk</param>
     /// <param name="Empty">Chunk with only Air tiles</param>

@@ -1,13 +1,13 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
-using UnityEngine;
-using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class TileVariantTest : MonoBehaviour
+    class TileVariantTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         static bool Init = false;
         public PlanetState Planet;
@@ -25,12 +25,12 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
-                Debug.Log(x + " " + y);
+                UnityEngine.Debug.Log(x + " " + y);
                 Planet.TileMap.RemoveFrontTile(x, y);                
             }
 

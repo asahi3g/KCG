@@ -2,7 +2,7 @@
 
 using System.Linq;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace KGUI
 {

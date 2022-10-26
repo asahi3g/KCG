@@ -1,6 +1,6 @@
 ﻿//imports UnityEngine
 
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using Item;
 using KMath;
 using PlanetTileMap;

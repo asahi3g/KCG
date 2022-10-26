@@ -1,6 +1,6 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Item
 {
