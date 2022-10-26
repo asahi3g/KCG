@@ -4,9 +4,7 @@
 
 public static class GameState
 {
-    //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
-
-    #region Atinmation
+    #region Aninmation
     public static readonly Animation.AnimationManager AnimationManager;
     public static readonly Animation.UpdateSystem AnimationUpdateSystem;
     #endregion
@@ -16,7 +14,7 @@ public static class GameState
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
     #endregion
 
-    #region Action
+    #region PlayerActions
     public static readonly Node.CreationSystem            ActionCreationSystem;
     public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
     public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
