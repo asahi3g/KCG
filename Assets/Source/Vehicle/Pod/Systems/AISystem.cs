@@ -8,7 +8,9 @@ namespace Vehicle.Pod
     {
         public void Update()
         {
-            IGroup<PodEntity> pods = GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
+            ref var planet = ref GameState.Planet;
+            
+            IGroup<PodEntity> pods = planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var pod in pods)
             {
                 if(pod.hasVehiclePodStatus)
@@ -36,9 +38,9 @@ namespace Vehicle.Pod
                         // If Player was not alive, add to dead members array.
                         // Roadcheck - Scan the drive path to see if it's clear.
 
-                        for(int i = 0; i < agentIds.Length; i++)
+                        foreach (var agentID in agentIds)
                         {
-                            var agent = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(agentIds[i]);
+                            var agent = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
 
                             if (pod.hasVehiclePodRadar)
                             {
@@ -50,9 +52,9 @@ namespace Vehicle.Pod
                                         pod.vehiclePodRadar.DeadMembers.Add(agent);
                                 }
 
-                                if (pod.vehiclePodRadar.Members.Contains(GameState.Planet.Player))
+                                if (pod.vehiclePodRadar.Members.Contains(planet.Player))
                                 {
-                                    var agents = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentID);
+                                    var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentID);
                                     foreach (var entity in agents)
                                     {
                                         entity.agentAction.Action = Agent.AgentAlertState.Alert;
@@ -66,8 +68,8 @@ namespace Vehicle.Pod
                             var roadCheckSizeX = 4.0f;
                             var roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(roadCheckSizeX, 1.0f));
 
-                            if (roadCheck.IsCollidingRight(GameState.Planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity) ||
-                                roadCheck.IsCollidingLeft(GameState.Planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity))
+                            if (roadCheck.IsCollidingRight(pod.vehiclePodPhysicsState2D.angularVelocity) ||
+                                roadCheck.IsCollidingLeft(pod.vehiclePodPhysicsState2D.angularVelocity))
                             {
                                 roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(-roadCheckSizeX, 1.0f));
 

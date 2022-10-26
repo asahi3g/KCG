@@ -10,15 +10,16 @@ namespace Inventory
         // todo: Right now each inventory has a grid. Use on single grid for every inventory.
         // If inventory ovelap with another. Find empty spot and put it there.
         // It will make this simpler to position all inventories in the screen.
-        public void OnOpenWindow(InventoryEntity inventory, InventoryList inventoryList)
+        public void OnOpenWindow(InventoryEntity inventory)
         {
             const int MAX_OPEN_INVENTORY_COUNT = 10;
             int[] openInventoryIndices = new int[MAX_OPEN_INVENTORY_COUNT];
             int length = 0;
 
-            for (int i = 0; i < inventoryList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.InventoryList.Length; i++)
             {
-                if (inventoryList.Get(i).hasInventoryDraw)
+                if (planet.InventoryList.Get(i).hasInventoryDraw)
                 {
                     Utils.Assert(length < MAX_OPEN_INVENTORY_COUNT);
 
@@ -103,10 +104,10 @@ namespace Inventory
                     openWindows[index].GridPosition.Y = openWindows[index].Position.Y + posOffsetY;
 
                     relativePosition += openWindows[index].Size.Y + INVENTORIES_GAP;
-                    if (!inventoryList.Get(openInventoryIndices[index]).hasInventoryWindowAdjustment)
-                        inventoryList.Get(openInventoryIndices[index]).AddInventoryWindowAdjustment(openWindows[index]);
+                    if (!planet.InventoryList.Get(openInventoryIndices[index]).hasInventoryWindowAdjustment)
+                        planet.InventoryList.Get(openInventoryIndices[index]).AddInventoryWindowAdjustment(openWindows[index]);
                     else
-                        inventoryList.Get(openInventoryIndices[index]).inventoryWindowAdjustment.window = openWindows[index];
+                        planet.InventoryList.Get(openInventoryIndices[index]).inventoryWindowAdjustment.window = openWindows[index];
 
                     hiddenWindowsIndex[j] = hiddenWindowsIndex[--hiddenWindowLength]; // Decrease hiddenWindowsLength and remove ajusted window.
                 }

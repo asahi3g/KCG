@@ -42,15 +42,16 @@ namespace Node
 
         private void RunBehaviorTrees()
         {
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity agent = GameState.Planet.AgentList.Get(i);
+                AgentEntity agent = planet.AgentList.Get(i);
                 if (!agent.hasAgentController || !agent.isAgentAlive)
                     continue;
 
                 AgentController controller = agent.agentController.Controller;
                 controller.Update(agent);
-                NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
+                NodeEntity nodeEntity = planet.EntitasContext.node.GetEntityWithNodeIDID(controller.BehaviorTreeRoot);
                 
                 int index = (int)nodeEntity.nodeID.TypeID;
                 switch (nodeEntity.nodeExecution.State)

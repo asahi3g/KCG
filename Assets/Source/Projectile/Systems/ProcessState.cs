@@ -8,16 +8,18 @@ namespace Projectile
     {
         public void Update()
         {
-            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            
+            for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
-                ProjectileEntity entityP = GameState.Planet.ProjectileList.Get(i);
+                ProjectileEntity entityP = planet.ProjectileList.Get(i);
 
                 if (entityP.hasProjectileRange)
                 {
                     if ((entityP.projectilePhysicsState.Position - entityP.projectileStart.StarPos).Magnitude > entityP.projectileRange.Range)
                     {
                         entityP.isProjectileDelete = true;
-                        GameState.Planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
+                        planet.AddParticleEmitter(entityP.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
                     }
                 }
 

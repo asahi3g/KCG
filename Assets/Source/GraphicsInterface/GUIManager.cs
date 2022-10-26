@@ -99,7 +99,7 @@ namespace KGUI
             var inventoryID = agentEntity.agentInventory.InventoryID;
             var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
+            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }

@@ -12,7 +12,8 @@ namespace Mech
             var spriteSize = mechProperties.SpriteSize;
             var spriteId = mechProperties.SpriteID;
 
-            var entity = GameState.Planet.EntitasContext.mech.CreateEntity();
+            ref var planet = ref GameState.Planet;
+            var entity = planet.EntitasContext.mech.CreateEntity();
             entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
             entity.AddMechPositionLimits(mechProperties.XMin, mechProperties.XMax, mechProperties.YMin, mechProperties.YMax);
@@ -26,15 +27,15 @@ namespace Mech
                 entity.AddMechPlanter(false, -1);
 
             if (mechProperties.HasInventory())
-                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(GameState.Planet.EntitasContext, mechProperties.InventoryModelID, "Chest").inventoryID.ID);
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryModelID, "Chest").inventoryID.ID);
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.Durability);
 
             if (mechType == MechType.CraftingTable)
             {
-                entity.AddMechCraftingTable(GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
-                    GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
+                entity.AddMechCraftingTable(planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
+                    planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
             }
 
             if (mechType == MechType.Tree)

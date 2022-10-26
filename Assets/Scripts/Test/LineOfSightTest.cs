@@ -37,10 +37,10 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
         CircleSector.color = standard;
         GameResources.Initialize();
 
-
-        GameState.Planet.Init(mapSize);
-        GameState.Planet.InitializeSystems(Material, transform);
-        Player = GameState.Planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime, 0);
+        ref var planet = ref GameState.Planet;
+        planet.Init(mapSize);
+        planet.InitializeSystems(Material, transform);
+        Player = planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime, 0);
         Player.AddAgentsLineOfSight(new CircleSector());
 
         GenerateMap();
@@ -100,8 +100,9 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
             theta = newTheta;
             CircleSector.radius = dir.Magnitude;
         }
-
-        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        
+        ref var planet = ref GameState.Planet;
+        planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
         Vec2f sectorDir = new Vec2f(MathF.Cos(theta * UnityEngine.Mathf.Deg2Rad), MathF.Sin(theta * UnityEngine.Mathf.Deg2Rad));
 
@@ -111,11 +112,12 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
         circleSector.StartPos = pos;
         circleSector.Dir = sectorDir.Normalized;
 
-        for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+        var agentList = planet.AgentList;
+
+        for (int i = 0; i < agentList.Length; i++)
         {
-            AgentEntity entity = GameState.Planet.AgentList.Get(i);
-            if (entity.agentID.ID == Player.agentID.ID)
-                continue;
+            AgentEntity entity = agentList.Get(i);
+            if (entity.agentID.ID == Player.agentID.ID) continue;
 
             bool intersect = LineOfSight.CanSee(Player.agentID.ID, entity.agentID.ID);
             if (intersect)
@@ -141,8 +143,9 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
 
         XorShift64Star random = new XorShift64Star();
         random.SetSeed((ulong)seed);
-
-        ref var tileMap = ref GameState.Planet.TileMap;
+        
+        ref var planet = ref GameState.Planet;
+        ref var tileMap = ref planet.TileMap;
 
         for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)
         {
@@ -162,7 +165,7 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
 
                 if (rand >= 98)
                 {
-                    GameState.Planet.AddAgent(new Vec2f(i, tileMap.MapSize.Y - 1 - j), 
+                    planet.AddAgent(new Vec2f(i, tileMap.MapSize.Y - 1 - j), 
                         Enums.AgentType.FlyingSlime);
                 }
             }

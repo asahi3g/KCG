@@ -7,22 +7,23 @@ namespace PlanetTileMap
         // Display Chunk Visualizer
         public static void Draw(float xOffset, float yOffset)
         {
-            if (GameState.Planet.TileMap == null)
+            ref var planet = ref GameState.Planet;
+            if (planet.TileMap == null)
                 return;
 
             // Draw square to every tile
-            for (int y = 0; y < GameState.Planet.TileMap.MapSize.Y; y++)
+            for (int y = 0; y < planet.TileMap.MapSize.Y; y++)
             {
-                for (int x = 0; x < GameState.Planet.TileMap.MapSize.X; x++)
+                for (int x = 0; x < planet.TileMap.MapSize.X; x++)
                 {
                     // If chunk is empty/air make it black
-                    if (GameState.Planet.TileMap.GetFrontTileID(x, y) == TileID.Air)
+                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Air)
                         UnityEngine.Gizmos.color = UnityEngine.Color.black;
-                    if (GameState.Planet.TileMap.GetFrontTileID(x, y) != TileID.Air)
+                    if (planet.TileMap.GetFrontTileID(x, y) != TileID.Air)
                         UnityEngine.Gizmos.color = UnityEngine.Color.green;
-                    if (GameState.Planet.TileMap.GetBackTileID(x, y) != TileID.Air)
+                    if (planet.TileMap.GetBackTileID(x, y) != TileID.Air)
                         UnityEngine.Gizmos.color = UnityEngine.Color.cyan;
-                    if (GameState.Planet.TileMap.GetMidTileID(x, y) != TileID.Air)
+                    if (planet.TileMap.GetMidTileID(x, y) != TileID.Air)
                         UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
 
                     if (!Utility.ObjectMesh.isOnScreen(x, y))

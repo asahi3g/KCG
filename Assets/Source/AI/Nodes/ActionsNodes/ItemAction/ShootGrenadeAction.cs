@@ -12,9 +12,10 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            var WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
@@ -44,12 +45,12 @@ namespace Node
             ProjectileEntity projectileEntity = null;
             if (itemEntity.itemType.Type == ItemType.GrenadeLauncher)
             {
-                projectileEntity = GameState.Planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, ProjectileType.Grenade, agentEntity.agentID.ID);
-                GameState.Planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
+                projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, ProjectileType.Grenade, agentEntity.agentID.ID);
+                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
             }
             else if (itemEntity.itemType.Type == ItemType.RPG)
             {
-                projectileEntity = GameState.Planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, ProjectileType.Rocket, agentEntity.agentID.ID);
+                projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, ProjectileType.Rocket, agentEntity.agentID.ID);
             }
             else
             {
@@ -58,7 +59,7 @@ namespace Node
             }
 
             projectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
-            GameState.ActionCoolDownSystem.SetCoolDown(GameState.Planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
     }

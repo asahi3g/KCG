@@ -7,13 +7,14 @@
         /// <summary> Should be called at the end of the frame.</summary>
         public void Update()
         {
-            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
-                ProjectileEntity entityP = GameState.Planet.ProjectileList.Get(i);
+                ProjectileEntity entityP = planet.ProjectileList.Get(i);
 
                 if (entityP.isProjectileDelete)
                 {
-                    GameState.Planet.RemoveProjectile(entityP.projectileID.Index);
+                    planet.RemoveProjectile(entityP.projectileID.Index);
                 }
             }
         }

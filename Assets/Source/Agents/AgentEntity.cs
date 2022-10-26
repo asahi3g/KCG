@@ -18,7 +18,7 @@ public partial class AgentEntity
         int inventoryID = agentInventory.InventoryID;
         EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
         int selectedSlot = inventory.SelectedSlotID;
-        return GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
+        return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }
     public void DestroyEntity()
     {

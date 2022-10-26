@@ -10,7 +10,8 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemInventory = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)
             {
@@ -20,18 +21,18 @@ namespace Node
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
-                    if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X && y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
                         switch (itemInventory.itemTile.Layer)
                         {
                             case MapLayerType.Back:
-                                GameState.Planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
+                                planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Mid:
-                                GameState.Planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
+                                planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                             case MapLayerType.Front:
-                                GameState.Planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
+                                planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                                 break;
                         }
                     }
@@ -43,18 +44,18 @@ namespace Node
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
 
-                if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X && y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
+                if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
                     switch (itemInventory.itemTile.Layer)
                     {
                         case MapLayerType.Back:
-                            GameState.Planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
+                            planet.TileMap.SetBackTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Mid:
-                            GameState.Planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
+                            planet.TileMap.SetMidTile(x, y, itemInventory.itemTile.TileID);
                             break;
                         case MapLayerType.Front:
-                            GameState.Planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
+                            planet.TileMap.SetFrontTile(x, y, itemInventory.itemTile.TileID);
                             break;
                     }
                 }   

@@ -15,7 +15,7 @@ namespace AI
         public int SensorCount;
 
 
-        int CreateTree(Contexts EntitasContext, int agentID, int index)
+        int CreateTree(int agentID, int index)
         {
             NodeInfo node = Nodes[index];
             int nodeID;
@@ -24,17 +24,17 @@ namespace AI
                 entriesCount = node.entriesID.Count;
 
             if (entriesCount != 0)
-                nodeID = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext, node.type, agentID, node.entriesID.ToArray());
+                nodeID = GameState.ActionCreationSystem.CreateBehaviorTreeNode(node.type, agentID, node.entriesID.ToArray());
             else
-                nodeID = GameState.ActionCreationSystem.CreateBehaviorTreeNode(EntitasContext, node.type, agentID);
+                nodeID = GameState.ActionCreationSystem.CreateBehaviorTreeNode(node.type, agentID);
 
             if (node.children == null)
                 return nodeID;
 
-            NodeEntity nodeEntity = EntitasContext.node.GetEntityWithNodeIDID(nodeID);
+            NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
             for (int i = 0; i < node.children.Count; i++)
             {
-                int childId = CreateTree(EntitasContext, agentID, node.children[i]);
+                int childId = CreateTree(agentID, node.children[i]);
                 switch (AISystemState.Nodes[(int)node.type].NodeGroup)
                 {
                     case NodeGroup.CompositeNode:
@@ -47,9 +47,9 @@ namespace AI
             }
             return nodeID;
         }
-        int CreateTree(Contexts EntitasContext, int agentID) => CreateTree(EntitasContext, agentID, 0);
+        int CreateTree(int agentID) => CreateTree(agentID, 0);
 
-        public AgentController InstatiateBehavior(Contexts EntitasContext, int agentID)
+        public AgentController InstatiateBehavior(int agentID)
         {
             AgentController controller = new AgentController();
             controller.Sensors = new SensorEntity[SensorCount];
@@ -58,7 +58,7 @@ namespace AI
                 controller.Sensors[i] = Sensors[i];
             }
             controller.BlackBoard = BlackBoard.Data;
-            controller.BehaviorTreeRoot = CreateTree(EntitasContext, agentID);
+            controller.BehaviorTreeRoot = CreateTree(agentID);
             controller.behaviorType = TypeID;
 
             return controller;

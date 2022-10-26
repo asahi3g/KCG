@@ -26,8 +26,9 @@ namespace KGUI
         {
             base.Init();
 
+            ref var planet = ref GameState.Planet;
             ID = ElementEnums.HealthIndicator;
-            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
+            healthAmount = planet.Player != null ? planet.Player.agentStats.Health : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
@@ -51,7 +52,8 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
+            ref var planet = ref GameState.Planet;
+            healthAmount = planet.Player != null ? planet.Player.agentStats.Health : 0.0f;
             progressBar.Update(healthAmount);
             infoTextWrapper.Update();
         }

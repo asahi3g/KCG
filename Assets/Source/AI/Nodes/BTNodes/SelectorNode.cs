@@ -25,6 +25,7 @@ namespace Node
         // Todo: Allow selection between more than two nodes.
         public override void OnUpdate(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             var childern = nodeEntity.nodeComposite.Children;
             if (nodeEntity.nodeComposite.CurrentID >= childern.Count)
             {
@@ -32,9 +33,9 @@ namespace Node
                 return;
             }
 
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             int nodeID = childern[nodeEntity.nodeComposite.CurrentID];
-            NodeEntity child = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
 
             ref var nodes = ref AISystemState.Nodes;
             int index = (int)child.nodeID.TypeID;

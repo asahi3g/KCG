@@ -7,10 +7,11 @@ namespace Item
         // Todo:
         //  Hash entities by their position.
         //  Only call this after an item or an agent has changed position. 
-        public void Update(Contexts contexts)
+        public void Update()
         {
-            var agents = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentInventory));
-            var pickableItems = contexts.itemParticle.GetGroup(
+            ref var planet = ref GameState.Planet;
+            var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentInventory));
+            var pickableItems = planet.EntitasContext.itemParticle.GetGroup(
                 ItemParticleMatcher.AllOf(ItemParticleMatcher.ItemID, ItemParticleMatcher.ItemPhysicsState).NoneOf(ItemParticleMatcher.ItemUnpickable));
 
             foreach (var item in pickableItems)
@@ -24,7 +25,7 @@ namespace Item
                         continue;
                     // Todo: Use action center Position.
                     if ((agent.agentPhysicsState.Position - centerPos).Magnitude <= 1.25f)
-                        GameState.ActionCreationSystem.CreateAction(contexts, Enums.NodeType.PickUpAction, agent.agentID.ID, item.itemID.ID);
+                        GameState.ActionCreationSystem.CreateAction(Enums.NodeType.PickUpAction, agent.agentID.ID, item.itemID.ID);
                 }    
             }
         }

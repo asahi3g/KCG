@@ -15,17 +15,18 @@ namespace Node.Action
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
 #if DEBUG
             float deltaTime = UnityEngine.Time.realtimeSinceStartup;
 #endif
             const int MAX_FALL_HEIGHT = 6;
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             var characterMov = new CharacterMovement(agentEntity.agentPhysicsState.InitialJumpVelocity, 
                 agentEntity.agentPhysicsState.Speed, MAX_FALL_HEIGHT, agentEntity.physicsBox2DCollider.Size);
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
             var movTo = nodeEntity.nodeMoveTo;
-            movTo.path = GameState.PathFinding.getPath(GameState.Planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
+            movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
             deltaTime = (UnityEngine.Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
@@ -45,6 +46,7 @@ namespace Node.Action
         // Todo: Improve path following algorithm
         public override void OnUpdate(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             var movTo = nodeEntity.nodeMoveTo;
 
             Vec2f targetPos = movTo.path[movTo.pathLength - 1];
@@ -52,7 +54,7 @@ namespace Node.Action
 #if DEBUG
             GameState.PathFindingDebugSystem.AddPath(ref movTo.path, movTo.pathLength);
 #endif
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             Vec2f direction = targetPos - agentEntity.agentPhysicsState.Position;
             if (Math.Abs(direction.X) < 0.2)
@@ -91,7 +93,7 @@ namespace Node.Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    GameState.Planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
+                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }

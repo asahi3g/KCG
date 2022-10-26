@@ -31,19 +31,18 @@ namespace Node.Action
                 int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
 
 
-                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext,
-                    agentEntity.agentInventory.InventoryID, selected);
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(agentEntity.agentInventory.InventoryID, selected);
                 if (itemInventory == null)
                 {
                     nodeEntity.nodeExecution.State = NodeState.Fail;
                     return;
                 }
 
-                GameState.InventoryManager.RemoveItem(GameState.Planet.EntitasContext, inventoryID, selected);
+                GameState.InventoryManager.RemoveItem(inventoryID, selected);
 
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
-                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(GameState.Planet.EntitasContext, itemInventory, pos);
+                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
                 itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
                 itemParticle.isItemUnpickable = true;
                 nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);

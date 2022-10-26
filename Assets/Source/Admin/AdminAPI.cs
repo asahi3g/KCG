@@ -4,47 +4,35 @@ namespace Admin
     public static class AdminAPI
     {
         // Spawn Item Function
-        public static ItemInventoryEntity SpawnItem(Enums.ItemType itemID, Contexts contexts)
+        public static ItemInventoryEntity SpawnItem(Enums.ItemType itemID)
         {
-            if(contexts == null)
-                return null;
-
             // Spawn Item
-            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(contexts, itemID);
+            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(itemID);
 
             // Return Item
             return item;
         }
 
         // Give Item to Active Agent Function
-        public static void AddItem(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, Contexts contexts)
+        public static void AddItem(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID)
         {
-            if (contexts == null)
-                return;
-
-            manager.AddItem(contexts, SpawnItem(itemID, contexts), inventoryID);
+            manager.AddItem(SpawnItem(itemID), inventoryID);
         }
 
-        public static void AddItemStackable(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, int count, Contexts contexts)
+        public static void AddItemStackable(Inventory.InventoryManager manager, int inventoryID, Enums.ItemType itemID, int count)
         {
-            if (contexts == null)
-                return;
-
             // Testing stackable items.
             for (uint i = 0; i < count; i++)
             {
-                manager.AddItem(contexts, GameState.ItemSpawnSystem.SpawnInventoryItem(contexts, itemID), inventoryID);
+                manager.AddItem(GameState.ItemSpawnSystem.SpawnInventoryItem(itemID), inventoryID);
             }
 
         }
 
         // Give Item to Agent Function
-        public static void AddItem(Inventory.InventoryManager manager, AgentEntity agentID, Enums.ItemType itemID, Contexts contexts)
+        public static void AddItem(Inventory.InventoryManager manager, AgentEntity agentID, Enums.ItemType itemID)
         {
-            if (contexts == null)
-                return;
-
-            manager.AddItem(contexts, SpawnItem(itemID, contexts), agentID.agentInventory.InventoryID);
+            manager.AddItem(SpawnItem(itemID), agentID.agentInventory.InventoryID);
         }
     }
 }

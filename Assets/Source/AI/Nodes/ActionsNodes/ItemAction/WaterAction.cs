@@ -22,7 +22,8 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             MechEntity plant = null;
             Vec2f planterPosition = Vec2f.Zero;
             if (agentEntity.isAgentPlayer)
@@ -31,16 +32,16 @@ namespace Node
                 float x = worldPosition.x;
                 float y = worldPosition.y;
 
-                for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+                for (int i = 0; i < planet.MechList.Length; i++)
                 {
-                    MechEntity mech = (GameState.Planet.MechList.Get(i));
+                    MechEntity mech = (planet.MechList.Get(i));
 
                     if (mech.GetProperties().Group == MechGroup.Plant)
                         plant = mech;
                     else if (mech.mechType.mechType == MechType.Planter)
                     {
                         if (mech.mechPlanter.GotPlant)
-                            plant = GameState.Planet.EntitasContext.mech.GetEntityWithMechID(mech.mechPlanter.PlantMechID);
+                            plant = planet.EntitasContext.mech.GetEntityWithMechID(mech.mechPlanter.PlantMechID);
                         else
                             continue;
                     }
@@ -48,8 +49,8 @@ namespace Node
                         continue;
 
                     // Is mouse over mech?
-                    planterPosition = GameState.Planet.MechList.Get(i).mechPosition2D.Value;
-                    Vec2f size = GameState.Planet.MechList.Get(i).mechSprite2D.Size;
+                    planterPosition = planet.MechList.Get(i).mechPosition2D.Value;
+                    Vec2f size = planet.MechList.Get(i).mechSprite2D.Size;
                     if (x < planterPosition.X || y < planterPosition.Y)
                     {
                         plant = null;
@@ -66,7 +67,7 @@ namespace Node
             else
             {
                 if (nodeEntity.hasNodeBlackboardData)
-                    plant = GameState.Planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
+                    plant = planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
             }
 
             if (plant != null)

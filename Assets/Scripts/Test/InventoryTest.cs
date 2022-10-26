@@ -4,8 +4,6 @@ using System;
 
 public class InventoryTest : UnityEngine.MonoBehaviour
 {
-    Contexts context;
-
     Inventory.InventoryManager inventoryManager;
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
@@ -28,7 +26,6 @@ public class InventoryTest : UnityEngine.MonoBehaviour
     public void Start()
     {
         Initialize();
-        context = Contexts.sharedInstance;
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
@@ -37,29 +34,29 @@ public class InventoryTest : UnityEngine.MonoBehaviour
 
         int inventoryID = 0;
         int equipmentInventoryID = 1;
-        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
-        materialBag = inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID()));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID));
+        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory());
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
+        materialBag = inventoryList.Add(GameState.InventoryManager.CreateInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID()));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(terrariaLikeInventoryModelID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(customRestrictionInventoryModelID));
 
 
-        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
-        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);
+        inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Helmet), inventoryID);
+        inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Suit), inventoryID);
 
 
         // Test not stackable items.
         for (int i = 0; i < 10; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + i), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + 4 + i), terrariaLikeInventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol + i), inventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol + 4 + i), terrariaLikeInventoryID);
         }
 
         // Testing stackable items.
         for (uint i = 0; i < 256; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), materialBag.inventoryID.ID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Ore), inventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Ore), materialBag.inventoryID.ID);
         }
 
         // Set basic inventory draw to on at the beggining:
@@ -110,17 +107,17 @@ public class InventoryTest : UnityEngine.MonoBehaviour
             return;
 
         if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseDown)
-            GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance, inventoryList);
+            GameState.InventoryMouseSelectionSystem.OnMouseDown(inventoryList);
 
         if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseUp)
-            GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance, inventoryList);
+            GameState.InventoryMouseSelectionSystem.OnMouseUP(inventoryList);
 
         if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
-        GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
+        GameState.InventoryMouseSelectionSystem.Update();
 
-        inventoryDrawSystem.Draw(Contexts.sharedInstance, inventoryList);
+        inventoryDrawSystem.Draw();
     }
 
     private void Initialize()

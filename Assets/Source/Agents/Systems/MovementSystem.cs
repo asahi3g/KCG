@@ -155,11 +155,11 @@ namespace Agent
             physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
         }
 
-        public void Update(AgentContext agentContext)
+        public void Update()
         {
 
             float deltaTime = UnityEngine.Time.deltaTime;
-            var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            var EntitiesWithVelocity = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in EntitiesWithVelocity)
             {
                 if (GameState.AgentCreationApi.GetMovementProperties((int)entity.agentID.Type).MovType != AgentMovementType.FlyingMovemnt || !entity.isAgentAlive)

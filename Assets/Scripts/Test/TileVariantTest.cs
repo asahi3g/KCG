@@ -34,7 +34,7 @@ namespace Planet.Unity
                 GameState.Planet.TileMap.RemoveFrontTile(x, y);                
             }
 
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(GameState.Planet.TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh();
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
         }
 
@@ -44,11 +44,11 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             var mapSize = new Vec2i(16, 16);
-
             AgentEntity player = new AgentEntity();
 
-            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            var entities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in entities)
             {
                 if (entity.isAgentPlayer)
@@ -57,10 +57,10 @@ namespace Planet.Unity
             }
 
 
-            GameState.Planet.Init(mapSize);
-            GameState.Planet.InitializeSystems(Material, transform);
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
 
-            ref var tileMap = ref GameState.Planet.TileMap;
+            ref var tileMap = ref planet.TileMap;
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
@@ -96,7 +96,7 @@ namespace Planet.Unity
                        frontTile = TileID.Air;
                     }
 
-                    GameState.Planet.TileMap.SetFrontTile(i,j, frontTile);
+                    planet.TileMap.SetFrontTile(i,j, frontTile);
                 }
             }
         }

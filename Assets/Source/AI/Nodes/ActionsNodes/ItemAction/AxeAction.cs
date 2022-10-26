@@ -11,9 +11,10 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
-            var mechs = GameState.Planet.EntitasContext.mech.GetGroup(MechMatcher.MechID);
+            var mechs = planet.EntitasContext.mech.GetGroup(MechMatcher.MechID);
 
             if (agentEntity.isAgentPlayer)
             {
@@ -29,23 +30,23 @@ namespace Node
 
                                 if (mech.mechStatus.Health <= 0)
                                 {
-                                    GameState.Planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
+                                    planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
 
-                                    GameState.Planet.RemoveMech(mech.creationIndex);
+                                    planet.RemoveMech(mech.creationIndex);
 
                                     nodeEntity.nodeExecution.State = NodeState.Success;
                                     return;
                                 }
 
-                                GameState.Planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
-                                GameState.Planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
-                                GameState.Planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
+                                planet.AddParticleEmitter(mech.mechPosition2D.Value, Particle.ParticleEmitterType.WoodEmitter);
+                                planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
+                                planet.AddParticleEmitter(mech.mechPosition2D.Value + UnityEngine.Random.Range(-0.3f, 0.3f), Particle.ParticleEmitterType.WoodEmitter);
 
                                 mech.mechStatus.Health -= 20;
 
                                 if (mech.mechStatus.TreeSize > 0)
                                 {
-                                    GameState.Planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + UnityEngine.Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
+                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + UnityEngine.Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
                                 }
 
                             }

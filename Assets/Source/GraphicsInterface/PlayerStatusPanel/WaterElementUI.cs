@@ -20,7 +20,8 @@ namespace KGUI
             
             ID = ElementEnums.WaterIndicator;
             
-            waterAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Water : 0.0f;
+            ref var planet = ref GameState.Planet;
+            waterAmount = planet.Player != null ? planet.Player.agentStats.Water : 0.0f;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Water\\hud_status_water.png", AtlasType.Gui);
@@ -33,7 +34,8 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            waterAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Water : 0.0f;
+            ref var planet = ref GameState.Planet;
+            waterAmount = planet.Player != null ? planet.Player.agentStats.Water : 0.0f;
             progressBar.Update(waterAmount);
             infoTextWrapper.Update();
 

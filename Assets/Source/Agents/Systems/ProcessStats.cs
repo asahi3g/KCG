@@ -4,14 +4,15 @@
     {
         public void Update()
         {
-            ref AgentList agentList = ref GameState.Planet.AgentList;
+            ref var planet = ref GameState.Planet;
+            ref AgentList agentList = ref planet.AgentList;
 
             for (int i = 0; i < agentList.Length; i++)
             {
                 AgentEntity agentEntity = agentList.Get(i);
                 
                 if (agentEntity.agentStats.Health <= 0 && agentEntity.isAgentAlive)
-                    GameState.Planet.KillAgent(i);
+                    planet.KillAgent(i);
             }
         }
     }

@@ -11,8 +11,7 @@ namespace Planet.Unity
     {
         [UnityEngine.SerializeField] UnityEngine.Material Material;
 
-        [UnityEngine.SerializeField]
-        private bool enableGeometryPlacementTool;
+        [UnityEngine.SerializeField] private bool enableGeometryPlacementTool;
 
 
         Inventory.InventoryManager inventoryManager;
@@ -37,15 +36,18 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
-            GameState.Planet.DrawHUD(Player);
+            ref var planet = ref GameState.Planet;
+
+            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
 
-            MaterialBag.hasInventoryDraw = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+            MaterialBag.hasInventoryDraw =
+                planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
@@ -65,14 +67,17 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            GameState.Planet.DrawDebug();
+            ref var planet = ref GameState.Planet;
+
+            planet.DrawDebug();
 
             // Set the color of gizmos
             UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
             // Draw a cube around the map
-            if (GameState.Planet.TileMap != null)
-                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(GameState.Planet.TileMap.MapSize.X, GameState.Planet.TileMap.MapSize.Y, 0.0f));
+            if (planet.TileMap != null)
+                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero,
+                    new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
             UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
             CircleSmoke.DrawGizmos();
@@ -80,21 +85,37 @@ namespace Planet.Unity
 
             // Draw lines around player if out of bounds
             if (Player != null)
-                if (Player.agentPhysicsState.Position.X - 10.0f >= GameState.Planet.TileMap.MapSize.X)
+                if (Player.agentPhysicsState.Position.X - 10.0f >= planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
 
                     // X+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f,
+                            Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f,
+                            Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
+                            Player.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -111,15 +132,15 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
-
-            GameState.Planet.Init(mapSize);
+            planet.Init(mapSize);
 
             GenerateMap();
             SpawnStuff();
 
-            GameState.Planet.InitializeSystems(Material, transform);
-            GameState.Planet.InitializeHUD();
+            planet.InitializeSystems(Material, transform);
+            planet.InitializeHUD();
 
             if (enableGeometryPlacementTool)
             {
@@ -127,32 +148,36 @@ namespace Planet.Unity
                 geometryPlacementTool.Initialize(Material, transform);
             }
 
-            //TileMapManager.Save(GameState.Planet.TileMap, "map.kmap");
+            //TileMapManager.Save(planet.TileMap, "map.kmap");
 
-            MaterialBag = GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(),
+                "MaterialBag");
 
             InventoryID = Player.agentInventory.InventoryID;
 
             // Admin API Spawn Items
-            Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol);
+            Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Flare, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64, GameState.Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon, 64, GameState.Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Flare);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool);
+            Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64);
+            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPositon,
+                64);
         }
 
         void GenerateMap()
         {
-            KMath.Random.Mt19937.init_genrand((ulong)System.DateTime.Now.Ticks);
+            KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
 
-            ref var tileMap = ref GameState.Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+
+            ref var tileMap = ref planet.TileMap;
 
             for (int y = 0; y < 16; y++)
             {
@@ -212,16 +237,17 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var tileMap = ref GameState.Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            Player = GameState.Planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(GameState.Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(GameState.Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
-            //GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
+            //planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
         }
     }
 }

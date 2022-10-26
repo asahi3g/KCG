@@ -54,18 +54,18 @@ namespace Vehicle
             // Scan planet and find open-sky area.
             // Spawn vehicle to open sky area found.
 
-
+            ref var planet = ref GameState.Planet;
             if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
                 if(!vehicle.vehicleHeightMap.OpenSky)
                 {
-                    for(int i = 0; i < GameState.Planet.TileMap.MapSize.X; i++)
+                    for(int i = 0; i < planet.TileMap.MapSize.X; i++)
                     {
-                        var tile = GameState.Planet.TileMap.GetTile(i, 30);
+                        var tile = planet.TileMap.GetTile(i, 30);
                         if(tile.FrontTileID == Enums.Tile.TileID.Air)
                         {
                             vehicle.vehicleHeightMap.OpenSky = true;
-                            vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, GameState.Planet.TileMap.MapSize.Y - 3);
+                            vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);
 
                             vehicle.vehiclePhysicsState2D.Position = vehicle.vehicleHeightMap.SpawnPosition;
                         }
@@ -111,7 +111,7 @@ namespace Vehicle
                     }
                 }
 
-                var pods = GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+                var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
                 foreach (var pod in pods)
                 {
                     if(Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
@@ -139,7 +139,7 @@ namespace Vehicle
                     UnityEngine.Debug.Log("LANDING");
                     movementSpeed = new Vec2f(movementSpeed.X, -25f);
 
-                    if(entityBoxBorders.IsCollidingBottom(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                    if(entityBoxBorders.IsCollidingBottom(vehicle.vehiclePhysicsState2D.angularVelocity))
                     {
                         vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
                         GameState.VehicleAISystem.StopAI();
@@ -157,15 +157,15 @@ namespace Vehicle
                 return false;
 
             // If is colliding bottom-top stop y movement
-            if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            if (entityBoxBorders.IsCollidingTop(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
-            else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            else if (entityBoxBorders.IsCollidingRight(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
-            else if (entityBoxBorders.IsCollidingLeft(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            else if (entityBoxBorders.IsCollidingLeft(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }

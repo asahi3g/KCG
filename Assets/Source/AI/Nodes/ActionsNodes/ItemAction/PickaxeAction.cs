@@ -12,7 +12,8 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 
             UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
@@ -20,7 +21,7 @@ namespace Node
             float y = worldPosition.y;
 
 
-            var tile = GameState.Planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
+            var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
             if(tile == Enums.Tile.TileID.Bedrock)
             {
                 nodeEntity.nodeExecution.State = NodeState.Success;
@@ -31,7 +32,7 @@ namespace Node
 
             GameState.LootDropSystem.Add(tileProprieties.DropTableID, new Vec2f(x, y));
 
-            GameState.Planet.TileMap.RemoveFrontTile((int)x, (int)y);
+            planet.TileMap.RemoveFrontTile((int)x, (int)y);
             agentEntity.agentPhysicsState.MovementState = AgentMovementState.PickaxeHit;
 
             nodeEntity.nodeExecution.State = NodeState.Success;

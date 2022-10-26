@@ -22,7 +22,8 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             if (!agentEntity.hasAgentInventory)
             {
                 nodeEntity.nodeExecution.State = NodeState.Fail;
@@ -30,9 +31,9 @@ namespace Node
             }
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
-            InventoryEntity inventoryEntity = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
-            ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selected);
+            ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
             if (itemEntity == null)
             {
                 nodeEntity.nodeExecution.State = NodeState.Fail;
@@ -53,7 +54,7 @@ namespace Node
 
                 if (agentEntity.hasAgentController)
                 {
-                    ref AI.BlackBoard blackboard = ref GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(
+                    ref AI.BlackBoard blackboard = ref planet.EntitasContext.agent.GetEntityWithAgentID(
                         nodeEntity.nodeOwner.AgentID).agentController.Controller.BlackBoard;
                     blackboard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out target);
                 }
@@ -87,7 +88,7 @@ namespace Node
                 if (Math.Sign(target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.FacingDirection))
                     agentEntity.agentPhysicsState.FacingDirection *= -1;
 
-                GameState.ActionCoolDownSystem.SetCoolDown(GameState.Planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+                GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
                 nodeEntity.nodeExecution.State = NodeState.Running;
             }
             else
@@ -98,17 +99,18 @@ namespace Node
 
         public override void OnUpdate(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             const float FIRE_DELAY = 0.25f;
             float elapsed = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
             Vec2f target = nodeEntity.nodeTarget.TargetPos;
 
             if (elapsed >= FIRE_DELAY)
             {
-                AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+                AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
                 int inventoryID = agentEntity.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+                InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
                 int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
-                ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selected);
+                ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
                 Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
                 Vec2f startPos = agentEntity.GetGunFiringPosition();
@@ -117,7 +119,7 @@ namespace Node
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
                     float randomSpread = UnityEngine.Random.Range(-spread, spread);
-                    ProjectileEntity projectileEntity = GameState.Planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
+                    ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
                         target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
 
                     if (WeaponProperty.ProjectileType == ProjectileType.Arrow)

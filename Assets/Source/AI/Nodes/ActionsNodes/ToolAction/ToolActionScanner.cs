@@ -10,10 +10,11 @@ namespace Node
         // Todo: Fix scanner item crashing bug and fix this action.
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
-            var entities = GameState.Planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechPosition2D));
+            var entities = planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechPosition2D));
             foreach (var entity in entities)
             {
                 if (Vec2f.Distance(new Vec2f(agentEntity.agentPhysicsState.Position.X, agentEntity.agentPhysicsState.Position.Y), 

@@ -122,11 +122,11 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         GameResources.Initialize();
 
         // Generating the map
-
-        GameState.Planet.Init(mapSize);
+        ref var planet = ref GameState.Planet;
+        planet.Init(mapSize);
         player = new AgentEntity();
 
-        var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+        var entities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
         foreach (var entity in entities)
         {
             if (entity.isAgentPlayer)
@@ -134,13 +134,15 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
 
         }
 
-        GameState.Planet.InitializeSystems(Material, transform);
+        planet.InitializeSystems(Material, transform);
 
         GenerateMap();
     }
 
     void GenerateMap()
     {
+        ref var planet = ref GameState.Planet;
+        
         var halfSize = new Vec2f(16f / 2f, 16f / 2f);
         
         var chunk1Pos = new Vec2f(halfSize.X, halfSize.Y);
@@ -167,7 +169,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -175,7 +177,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -183,17 +185,18 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
     void RegenerateMap()
     {
+        ref var planet = ref GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -201,7 +204,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -209,7 +212,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                GameState.Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
@@ -235,8 +238,8 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
 
         var velocity = new Vec2f(3f, 3f);
         var square_halfsize = new Vec2f((square.xmax - square.xmin) / 2f, (square.ymax - square.ymin) / 2f);
-        var hit = TileCollisions.GetCollisionHitAABB_AABB(GameState.Planet.TileMap, square.xmin, square.xmax, square.ymin, square.ymax, velocity);
-        var circleHit = CircleTileMapSweepCollision.GetCollisionHitCircle_AABB(GameState.Planet.TileMap, 2.5f, new Vec2f(square.xmin + square_halfsize.X, square.ymin + square_halfsize.Y), velocity);
+        var hit = TileCollisions.GetCollisionHitAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax, velocity);
+        var circleHit = CircleTileMapSweepCollision.GetCollisionHitCircle_AABB(2.5f, new Vec2f(square.xmin + square_halfsize.X, square.ymin + square_halfsize.Y), velocity);
 
         if (hit.time <= 1)
         {

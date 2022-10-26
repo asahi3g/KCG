@@ -13,8 +13,9 @@ namespace Node.Action
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemParticleEntity itemEntity = GameState.Planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 #if DEBUG
             if (itemEntity == null)
@@ -42,8 +43,9 @@ namespace Node.Action
 
         public override void OnUpdate( NodeEntity nodeEntity)
         {
-            ItemParticleEntity itemEntity = GameState.Planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             
             if (itemEntity.hasItemType && itemEntity.hasItemDrawPosition2D)
             {
@@ -56,7 +58,7 @@ namespace Node.Action
                     if (agentEntity.hasAgentInventory)
                     {
                         int inventoryID = agentEntity.agentInventory.InventoryID;
-                        GameState.InventoryManager.PickUp(GameState.Planet.EntitasContext, itemEntity, inventoryID);
+                        GameState.InventoryManager.PickUp(itemEntity, inventoryID);
                         nodeEntity.nodeExecution.State = NodeState.Success;
                         return;
                     }

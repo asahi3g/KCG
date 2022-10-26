@@ -74,13 +74,13 @@ namespace Collisions
 
         // Function for ray casting tile grid, that changes ray color if collided with only first not empty tile
         // Works with front tiles
-        public void RayTileCollisionCheck(TileMap tileMap)
+        public void RayTileCollisionCheck()
         {
             var rayCoordinates = RayCastCheck.GetRayCoordinates((Vec2i) Line.A, (Vec2i) Line.B);
 
             foreach (var coordinate in rayCoordinates)
             {
-                var tile = tileMap.GetTile(coordinate.X, coordinate.Y);
+                var tile = GameState.Planet.TileMap.GetTile(coordinate.X, coordinate.Y);
                 if (tile.FrontTileID != TileID.Air)
                 {
                     color = UnityEngine.Color.red;

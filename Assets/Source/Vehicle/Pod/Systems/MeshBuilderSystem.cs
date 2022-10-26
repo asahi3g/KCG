@@ -12,9 +12,9 @@ namespace Vehicle.Pod
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle), drawOrder);
         }
 
-        public void UpdateMesh(PodContext contexts)
+        public void UpdateMesh()
         {
-            var PodsWithSprite = contexts.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+            var PodsWithSprite = GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
 
             Mesh.Clear();
             int index = 0;

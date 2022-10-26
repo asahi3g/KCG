@@ -56,7 +56,7 @@ namespace Planet.Unity
             {
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 Vec2f goalPos = new Vec2f(worldPosition.x, worldPosition.y);
-                GameState.ActionCreationSystem.CreateMovementAction(GameState.Planet.EntitasContext, Enums.NodeType.MoveToAction,
+                GameState.ActionCreationSystem.CreateMovementAction(Enums.NodeType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
 
@@ -71,7 +71,7 @@ namespace Planet.Unity
             if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
-            GameState.InventoryDrawSystem.Draw(GameState.Planet.EntitasContext, GameState.Planet.InventoryList);
+            GameState.InventoryDrawSystem.Draw();
         }
 
         private void OnDrawGizmos()
@@ -126,14 +126,14 @@ namespace Planet.Unity
                 };
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
 
-            GameState.Planet.Init(mapSize);
-            GameState.Planet.InitializeSystems(Material, transform);
-
-            Slime = GameState.Planet.AddAgent(new Vec2f(0f, 22f), Enums.AgentType.Slime);
-            FlyingSlime = GameState.Planet.AddAgent(new Vec2f(0f, 18f), Enums.AgentType.FlyingSlime);
-            Agent = GameState.Planet.AddAgent(new Vec2f(1, 22f), Enums.AgentType.Agent);
+            Slime = planet.AddAgent(new Vec2f(0f, 22f), Enums.AgentType.Slime);
+            FlyingSlime = planet.AddAgent(new Vec2f(0f, 18f), Enums.AgentType.FlyingSlime);
+            Agent = planet.AddAgent(new Vec2f(1, 22f), Enums.AgentType.Agent);
 
             SelectedAgent = Slime;
 
@@ -142,7 +142,8 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var tileMap = ref GameState.Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
 
             for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)
             {

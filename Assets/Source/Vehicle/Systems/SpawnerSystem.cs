@@ -26,7 +26,8 @@ namespace Vehicle
             // Add default agents 
 
 
-            var entity = GameState.Planet.EntitasContext.vehicle.CreateEntity();
+            ref var planet = ref GameState.Planet;
+            var entity = planet.EntitasContext.vehicle.CreateEntity();
 
             entity.AddVehicleID(UniqueID, -1);
 
@@ -59,7 +60,7 @@ namespace Vehicle
 
                 for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
                 {
-                    var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
+                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyInsect);
                     enemy.agentModel3D.GameObject.gameObject.SetActive(false);
                     enemy.isAgentAlive = false;
                     enemy.agentAction.Action = Agent.AgentAlertState.Alert;

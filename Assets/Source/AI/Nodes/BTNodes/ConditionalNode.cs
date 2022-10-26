@@ -31,9 +31,10 @@ namespace Node
 
         public override void OnUpdate(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             BlackBoard blackBoard = agentEntity.agentController.Controller.BlackBoard;
-            NodeEntity child = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
+            NodeEntity child = planet.EntitasContext.node.GetEntityWithNodeIDID(nodeEntity.nodeDecorator.ChildID);
 
             bool conditional;
             blackBoard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out conditional);

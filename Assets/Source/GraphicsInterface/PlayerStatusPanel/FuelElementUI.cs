@@ -19,8 +19,9 @@ namespace KGUI
         {
             base.Init();
 
+            ref var planet = ref GameState.Planet;
             ID = ElementEnums.FuelIndicator;
-            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
+            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", AtlasType.Gui);
@@ -34,7 +35,8 @@ namespace KGUI
         {
             base.Update();
             
-            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
+            ref var planet = ref GameState.Planet;
+            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
             
             if (fuelLevel <= 0)
             {

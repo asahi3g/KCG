@@ -19,9 +19,10 @@ namespace Mech
 
             List<MechEntity> meches = new List<MechEntity>(5);
 
-            for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.MechList.Length; i++)
             {
-                MechEntity mech = GameState.Planet.MechList.Get(i);
+                MechEntity mech = planet.MechList.Get(i);
                 Vec2f pos = Vec2f.Zero;
                 Vec2f size = Vec2f.Zero;
                 if (mech.hasMechPosition2D)
@@ -44,19 +45,20 @@ namespace Mech
 
         public void Update()
         {
+            ref var planet = ref GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
-            Vec2f playerPos = GameState.Planet.Player.agentPhysicsState.Position;
+            Vec2f playerPos = planet.Player.agentPhysicsState.Position;
 
-            for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+            for (int i = 0; i < planet.MechList.Length; i++)
             {
                 Vec2f pos = Vec2f.Zero;
                 Vec2f size = Vec2f.Zero;
 
-                if (GameState.Planet.MechList.Get(i).hasMechPosition2D)
+                if (planet.MechList.Get(i).hasMechPosition2D)
                 {
-                    pos = GameState.Planet.MechList.Get(i).mechPosition2D.Value;
-                    size = GameState.Planet.MechList.Get(i).mechSprite2D.Size;
+                    pos = planet.MechList.Get(i).mechPosition2D.Value;
+                    size = planet.MechList.Get(i).mechSprite2D.Size;
                 }
 
                 // Is mouse over it?
@@ -66,7 +68,7 @@ namespace Mech
                 if (mousePos.X > pos.X + size.X || mousePos.Y > pos.Y + size.Y)
                     continue;
 
-                var proprieties = GameState.Planet.MechList.Get(i).GetProperties();
+                var proprieties = planet.MechList.Get(i).GetProperties();
                 string str;
 
                 if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.NodeType.None)

@@ -15,13 +15,13 @@ namespace Item
     // http://www.cs.yorku.ca/~amana/research/grid.pdf
     public class ProcessCollisionSystem
     {
-        private void Update(ref TileMap tileMap, PhysicsStateComponent physicsState, Box2DColliderComponent box2DCollider, float deltaTime)
+        private void Update(PhysicsStateComponent physicsState, Box2DColliderComponent box2DCollider, float deltaTime)
         {
             var entityBoxBorders = new AABox2D(new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-            if (entityBoxBorders.IsCollidingBottom(tileMap, physicsState.Velocity))
+            if (entityBoxBorders.IsCollidingBottom(physicsState.Velocity))
             {
-                var tile = tileMap.GetTile((int)physicsState.Position.X, (int)physicsState.Position.Y);
+                var tile = GameState.Planet.TileMap.GetTile((int)physicsState.Position.X, (int)physicsState.Position.Y);
                 var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
                 physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
@@ -32,7 +32,7 @@ namespace Item
             else
                 physicsState.OnGrounded = false;
 
-            if (entityBoxBorders.IsCollidingTop(tileMap, physicsState.Velocity))
+            if (entityBoxBorders.IsCollidingTop(physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                 physicsState.Velocity.Y = 0.0f;
@@ -41,13 +41,13 @@ namespace Item
 
             entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y) + box2DCollider.Offset, box2DCollider.Size);
 
-            if (entityBoxBorders.IsCollidingLeft(tileMap, physicsState.Velocity))
+            if (entityBoxBorders.IsCollidingLeft(physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
             }
-            else if (entityBoxBorders.IsCollidingRight(tileMap, physicsState.Velocity))
+            else if (entityBoxBorders.IsCollidingRight(physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
@@ -61,17 +61,17 @@ namespace Item
             entityBoxBorders.DrawBox();
         }
 
-        public void Update(ItemParticleContext itemContext, ref TileMap tileMap)
+        public void Update()
         {
             float deltaTime = Time.deltaTime;
-            var entitiesWithBox = itemContext.GetGroup(ItemParticleMatcher.AllOf(ItemParticleMatcher.PhysicsBox2DCollider, ItemParticleMatcher.ItemPhysicsState));
+            var entitiesWithBox = GameState.Planet.EntitasContext.itemParticle.GetGroup(ItemParticleMatcher.AllOf(ItemParticleMatcher.PhysicsBox2DCollider, ItemParticleMatcher.ItemPhysicsState));
 
             foreach (var entity in entitiesWithBox)
             {
                 var physicsState = entity.itemPhysicsState;
                 var box2DColider = entity.physicsBox2DCollider;
 
-                Update(ref tileMap, physicsState, box2DColider, deltaTime);
+                Update(physicsState, box2DColider, deltaTime);
             }
         }
     }

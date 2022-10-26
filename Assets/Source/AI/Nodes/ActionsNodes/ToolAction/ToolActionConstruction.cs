@@ -11,7 +11,8 @@ namespace Node.Action
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
@@ -19,8 +20,8 @@ namespace Node.Action
 
             if(itemEntity.itemMech.InputsActive)
             {
-                if (x >= 0 && x < GameState.Planet.TileMap.MapSize.X &&
-                y >= 0 && y < GameState.Planet.TileMap.MapSize.Y)
+                if (x >= 0 && x < planet.TileMap.MapSize.X &&
+                y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
                     var mech = GameState.MechCreationApi.Get(itemEntity.itemMech.MechID);
 
@@ -33,7 +34,7 @@ namespace Node.Action
                     {
                         for (int j = 0; j < yRange; j++)
                         {
-                            if (GameState.Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                            if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
                             {
                                 allTilesAir = false;
                                 break;
@@ -43,13 +44,13 @@ namespace Node.Action
 
                     if (allTilesAir)
                     {
-                        GameState.Planet.AddMech(new KMath.Vec2f(x, y), itemEntity.itemMech.MechID);
+                        planet.AddMech(new KMath.Vec2f(x, y), itemEntity.itemMech.MechID);
 
                         for (int i = 0; i < xRange; i++)
                         {
                             for (int j = 0; j < yRange; j++)
                             {
-                                GameState.Planet.TileMap.SetMidTile(x + i, y + j, TileID.Mech);
+                                planet.TileMap.SetMidTile(x + i, y + j, TileID.Mech);
                             }
                         }
                     }

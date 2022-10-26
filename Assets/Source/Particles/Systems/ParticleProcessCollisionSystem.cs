@@ -8,10 +8,10 @@ namespace Particle
     public class ParticleProcessCollisionSystem
     {
 
-        public void Update(ParticleContext context, ref PlanetTileMap.TileMap tileMap)
+        public void Update()
         {
             float deltaTime = UnityEngine.Time.deltaTime;
-            var entitiesWithBox = context.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleBox2DCollider));
+            var entitiesWithBox = GameState.Planet.EntitasContext.particle.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleBox2DCollider));
 
             foreach (var entity in entitiesWithBox)
             {
@@ -20,8 +20,7 @@ namespace Particle
 
                 // Collising with terrain with raycasting
                 var rayCastingResult =
-                Collisions.Collisions.RayCastAgainstTileMapBox2d(tileMap, 
-                new Line2D(physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
+                Collisions.Collisions.RayCastAgainstTileMapBox2d(new Line2D(physicsState.PreviousPosition, physicsState.Position), box2DCollider.Size.X, box2DCollider.Size.Y);
                 Vec2f oppositeDirection = (physicsState.PreviousPosition - physicsState.Position).Normalized;
 
                 if (rayCastingResult.Intersect)

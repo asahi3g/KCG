@@ -11,12 +11,13 @@ namespace Particle
         List<ParticleEntity> ToDestroy = new();
 
 
-        public void Update(ParticleContext particleContext)
+        public void Update()
         {
             ToDestroy.Clear();
 
+            ref var planet = ref GameState.Planet;
             float deltaTime = UnityEngine.Time.deltaTime;
-            IGroup<ParticleEntity> entities = particleContext.GetGroup(ParticleMatcher.ParticleState);
+            IGroup<ParticleEntity> entities = planet.EntitasContext.particle.GetGroup(ParticleMatcher.ParticleState);
             foreach (var gameEntity in entities)
             {
 
@@ -57,7 +58,7 @@ namespace Particle
             {
                 //Object.Destroy(gameEntity.particleState.GameObject);
                 //gameEntity.Destroy();
-                GameState.Planet.RemoveParticle(gameEntity.particleID.Index);
+                planet.RemoveParticle(gameEntity.particleID.Index);
             }
         }
     }

@@ -6,13 +6,14 @@ namespace Agent
     {
         public void Update()
         {
+            ref var planet = ref GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
-            Vec2f playerPos = GameState.Planet.Player.agentPhysicsState.Position;
+            Vec2f playerPos = planet.Player.agentPhysicsState.Position;
 
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity agentEntity = GameState.Planet.AgentList.Get(i);
+                AgentEntity agentEntity = planet.AgentList.Get(i);
                 if (agentEntity.isAgentPlayer)
                     continue;
                     

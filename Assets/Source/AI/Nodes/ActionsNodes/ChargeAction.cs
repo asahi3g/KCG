@@ -13,18 +13,20 @@ namespace Node.Action
 
         ItemInventoryEntity GetItem(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var entitasContext = planet.EntitasContext;
+            AgentEntity agentEntity = entitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             if (!agentEntity.hasAgentInventory)
                 return null;
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            EntityComponent inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
             ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
 
             if (inventoryModel.HasToolBar)
             {
                 int selectedSlot = inventory.SelectedSlotID;
-                return GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, inventoryID, selectedSlot);
+                return GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
             }
 
             return null;

@@ -20,11 +20,12 @@ namespace AI.Sensor
 
         public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard)
         {
+            ref var planet = ref GameState.Planet;
             int canSeedID = sensor.EntriesID[0];
 
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity entity = GameState.Planet.AgentList.Get(i);
+                AgentEntity entity = planet.AgentList.Get(i);
                 if (entity.agentID.ID == agent.agentID.ID)
                     continue;
 

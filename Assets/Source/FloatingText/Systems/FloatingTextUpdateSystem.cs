@@ -9,7 +9,8 @@ namespace FloatingText
 
         public void Update(float deltaTime)
         {
-            FloatingTextEntity[] entities = GameState.Planet.EntitasContext.floatingText.GetEntities();
+            ref var planet = ref GameState.Planet;
+            FloatingTextEntity[] entities = planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {
@@ -40,7 +41,7 @@ namespace FloatingText
 
             foreach(var entity in ToRemoveEntities)
             {
-                GameState.Planet.RemoveFloatingText(entity.floatingTextID.Index);
+                planet.RemoveFloatingText(entity.floatingTextID.Index);
             }
             ToRemoveEntities.Clear();
         }

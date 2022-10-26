@@ -38,9 +38,11 @@ namespace Planet.Unity
 
             Vec2i mapSize = new Vec2i(32, 16);
 
-            GameState.Planet.Init(mapSize);
-            GameState.Planet.InitializeSystems(Material, transform);
-            GameState.Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
+            ref var planet = ref GameState.Planet;
+
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
+            planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
             LastSpawn = UnityEngine.Time.realtimeSinceStartup;
@@ -48,7 +50,8 @@ namespace Planet.Unity
 
         private void GenerateMap()
         {
-            ref var tileMap = ref GameState.Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)
             {

@@ -22,12 +22,13 @@ namespace Node.Action
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agent = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             AgentEntity target = null;
             float dist = float.MaxValue;
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity entity = GameState.Planet.AgentList.Get(i);
+                AgentEntity entity = planet.AgentList.Get(i);
                 if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
                     continue;
 

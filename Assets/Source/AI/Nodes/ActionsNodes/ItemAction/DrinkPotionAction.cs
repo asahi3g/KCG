@@ -12,38 +12,39 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity ItemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            if (ItemEntity.itemPotion.potionType == PotionType.Error)
-                ItemEntity.itemPotion.potionType = PotionType.HealthPotion;
+            if (itemEntity.itemPotion.potionType == PotionType.Error)
+                itemEntity.itemPotion.potionType = PotionType.HealthPotion;
 
-            var player = GameState.Planet.Player;
-            if (ItemEntity.hasItemPotion)
+            var player = planet.Player;
+            if (itemEntity.hasItemPotion)
             {
-                var entities = GameState.Planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
+                var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
                 {
                     if (entity.hasInventoryName)
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var Slots = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
 
                             for (int i = 0; i < Slots.Length; i++)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(GameState.Planet.EntitasContext, entity.inventoryID.ID, i);
+                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
 
                                 if (item != null)
                                 {
                                     if (item.hasItemStack)
                                     {
-                                        if (ItemEntity.itemPotion.potionType == PotionType.Error)
+                                        if (itemEntity.itemPotion.potionType == PotionType.Error)
                                         {
                                             nodeEntity.nodeExecution.State = NodeState.Success;
                                             return;
                                         }
 
-                                        switch (ItemEntity.itemPotion.potionType)
+                                        switch (itemEntity.itemPotion.potionType)
                                         {
                                             case PotionType.HealthPotion:
                                                 if (item.itemType.Type == ItemType.HealthPositon)
@@ -56,7 +57,7 @@ namespace Node
                                                     item.itemStack.Count--;
                                                     if (item.itemStack.Count < 1)
                                                     {
-                                                        GameState.InventoryManager.RemoveItem(GameState.Planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         nodeEntity.nodeExecution.State = NodeState.Success;
                                                         return;

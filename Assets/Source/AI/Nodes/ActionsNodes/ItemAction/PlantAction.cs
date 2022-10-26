@@ -23,8 +23,9 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-            ItemInventoryEntity itemEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             MechEntity planter = null;
             Vec2f planterPosition = Vec2f.Zero;
@@ -34,31 +35,31 @@ namespace Node
                 float x = worldPosition.x;
                 float y = worldPosition.y;
 
-                for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+                for (int i = 0; i < planet.MechList.Length; i++)
                 {
-                    if (GameState.Planet.MechList.Get(i).mechType.mechType != MechType.Planter)
+                    if (planet.MechList.Get(i).mechType.mechType != MechType.Planter)
                         continue;
 
-                    if (GameState.Planet.MechList.Get(i).mechPlanter.GotPlant)
+                    if (planet.MechList.Get(i).mechPlanter.GotPlant)
                         continue;
 
                     // Is mouse over it?
-                    planterPosition = GameState.Planet.MechList.Get(i).mechPosition2D.Value;
-                    Vec2f size = GameState.Planet.MechList.Get(i).mechSprite2D.Size;
+                    planterPosition = planet.MechList.Get(i).mechPosition2D.Value;
+                    Vec2f size = planet.MechList.Get(i).mechSprite2D.Size;
                     if (x < planterPosition.X || y < planterPosition.Y)
                         continue;
 
                     if (x > planterPosition.X + size.X || y > planterPosition.Y + size.Y)
                         continue;
 
-                    planter = GameState.Planet.MechList.Get(i);
+                    planter = planet.MechList.Get(i);
                     break;
                 }
             }
             else
             {
                 if (nodeEntity.hasNodeBlackboardData)
-                    planter = GameState.Planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
+                    planter = planet.EntitasContext.mech.GetEntityWithMechID(nodeEntity.nodeBlackboardData.entriesIDs[0]);
             }
 
             if (planter == null)
@@ -72,22 +73,22 @@ namespace Node
             switch (itemEntity.itemType.Type)
             {
                 case ItemType.MajestyPalm:
-                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.MajestyPalm);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.MajestyPalm);
                     break;
                 case ItemType.SagoPalm:
-                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.SagoPalm);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.SagoPalm);
                     break;
                 case ItemType.DracaenaTrifasciata:
-                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
                     break;
                 default:
-                    plant = GameState.Planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
+                    plant = planet.AddMech(new Vec2f(planterPosition.X, planterPosition.Y), MechType.DracaenaTrifasciata);
                     break;
             }
 
             planter.mechPlanter.GotPlant = true;
             planter.mechPlanter.PlantMechID = plant.mechID.ID;
-            GameState.InventoryManager.RemoveItem(GameState.Planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
+            GameState.InventoryManager.RemoveItem(agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }

@@ -12,16 +12,17 @@ namespace Mech
         {
             List<MechEntity> lights = new List<MechEntity>();
 
-            for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.MechList.Length; i++)
             {
-                MechEntity mech = GameState.Planet.MechList.Get(i);
+                MechEntity mech = planet.MechList.Get(i);
                 if (mech.mechType.mechType == Enums.MechType.Light)
                     lights.Add(mech);
             }
 
-            for (int i = 0; i < GameState.Planet.MechList.Length; i++)
+            for (int i = 0; i < planet.MechList.Length; i++)
             {
-                MechEntity plant = GameState.Planet.MechList.Get(i);
+                MechEntity plant = planet.MechList.Get(i);
 
                 if (plant.GetProperties().Group != Enums.MechGroup.Plant)
                     continue;

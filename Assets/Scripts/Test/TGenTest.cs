@@ -48,18 +48,18 @@ namespace Planet.Unity
             GameResources.Initialize();
            
             // Generating the map
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
+            planet.Init(mapSize);
 
-            GameState.Planet.Init(mapSize);
-
-            player = GameState.Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
 
             inventoryManager = new Inventory.InventoryManager();
 
-            GameState.Planet.InitializeSystems(Material, transform);
-            GameState.Planet.InitializeHUD();
+            planet.InitializeSystems(Material, transform);
+            planet.InitializeHUD();
 
-            GameState.Planet.InitializeTGen(Material, transform);
+            planet.InitializeTGen(Material, transform);
 
             GameState.TGenGrid.InitStage1(mapSize);
 
@@ -69,12 +69,12 @@ namespace Planet.Unity
             if (drawMapBorder)
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
-            materialBag = GameState.Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            materialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
             inventoryID = player.agentInventory.InventoryID;
 
             // Note: ItemType not exists
-            //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool, GameState.Planet.EntitasContext);
+            //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool);
         }
 
     }

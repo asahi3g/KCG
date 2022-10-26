@@ -19,6 +19,7 @@ namespace KGUI.Statistics
 
         public static void DrawStatistics()
         {
+            ref var planet = ref GameState.Planet;
             frameCount++;
             dt += Time.deltaTime;
             if (dt > 1.0 / updateRate)
@@ -30,19 +31,18 @@ namespace KGUI.Statistics
             ms = 1 / Time.deltaTime;
             if (canDraw)
             {
-
                 // Get Player Position Info
-                IGroup<AgentEntity> Playerentities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentPlayer);
-                foreach (var entity in Playerentities)
+                IGroup<AgentEntity> playerEntities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentPlayer);
+                foreach (var entity in playerEntities)
                 {
                     playerPosition = entity.agentPhysicsState.Position;
                 }
 
                 // Render Position Info in 16:09
-                TextWrapper = GameState.GUIManager.AddText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + GameState.Planet.TileMap.MapSize.X + ", Y: " + GameState.Planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps, new KMath.Vec2f(350.0f, 150.0f), new KMath.Vec2f(250,120));
+                TextWrapper = GameState.GUIManager.AddText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + planet.TileMap.MapSize.X + ", Y: " + planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps, new KMath.Vec2f(350.0f, 150.0f), new KMath.Vec2f(250,120));
             }
             // Render Position Info in 16:09
-            TextWrapper.UpdateText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + GameState.Planet.TileMap.MapSize.X + ", Y: " + GameState.Planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps);
+            TextWrapper.UpdateText("Position: X: " + playerPosition.X + ", Y: " + playerPosition.Y + " \n" + "World Size: X: " + planet.TileMap.MapSize.X + ", Y: " + planet.TileMap.MapSize.Y + " \n" + "MS: " + ms.ToString() + " \n" + "FPS: " + (int)fps);
             canDraw = false;
         }
     }

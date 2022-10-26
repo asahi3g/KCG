@@ -8,16 +8,17 @@ namespace Projectile
     {
         public void Update()
         {
-            for (int i = 0; i < GameState.Planet.ProjectileList.Length; i++)
+            ref var planet = ref GameState.Planet;
+            for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
-                ProjectileEntity projectileEntity = GameState.Planet.ProjectileList.Get(i);
+                ProjectileEntity projectileEntity = planet.ProjectileList.Get(i);
 
                 if (!projectileEntity.hasProjectileOnHit)
                     continue;
 
                 if (projectileEntity.projectileOnHit.AgentID != -1)
                 {
-                    AgentEntity agent = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(projectileEntity.projectileOnHit.AgentID);
+                    AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(projectileEntity.projectileOnHit.AgentID);
                     OnHitAgent(projectileEntity, agent);
                 }
 
@@ -73,8 +74,10 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
+            ref var planet = ref GameState.Planet;
+            
             if (elapse <= 0.05f)
-                GameState.Planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
+                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
 
             if (elapse - pEntity.projectileExplosive.Elapse <= 0.05f)
                 return;
@@ -85,9 +88,9 @@ namespace Projectile
 
             Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
 
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity agentEntity = GameState.Planet.AgentList.Get(i);
+                AgentEntity agentEntity = planet.AgentList.Get(i);
                 if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
                 {
                     var agentPhysicsState = agentEntity.agentPhysicsState;
@@ -100,7 +103,7 @@ namespace Projectile
                     if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                        GameState.Planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
+                        planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
                     }
                 }
             }
@@ -113,8 +116,10 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            GameState.Planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
-            GameState.Planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
+            ref var planet = ref GameState.Planet;
+            
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
 
             Vec2f pos = pEntity.projectileOnHit.LastHitPos;
             float radius = pEntity.projectileExplosive.BlastRadius;
@@ -122,9 +127,9 @@ namespace Projectile
 
             Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
 
-            for (int i = 0; i < GameState.Planet.AgentList.Length; i++)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                AgentEntity agentEntity = GameState.Planet.AgentList.Get(i);
+                AgentEntity agentEntity = planet.AgentList.Get(i);
                 if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
                 {
                     var agentPhysicsState = agentEntity.agentPhysicsState;
@@ -137,7 +142,7 @@ namespace Projectile
                     if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                        GameState.Planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
+                        planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
                     }
                 }
             }
