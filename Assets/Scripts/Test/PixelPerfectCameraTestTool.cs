@@ -1,13 +1,13 @@
-using UnityEngine;
-using System.Collections;
+//imports UnityEngine
+
 using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-[ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
-public class PixelPerfectCameraTestTool : MonoBehaviour
+[UnityEngine.ExecuteInEditMode]
+[UnityEngine.RequireComponent(typeof(UnityEngine.Camera))]
+public class PixelPerfectCameraTestTool : UnityEngine.MonoBehaviour
 {
     //Pixels per unit stores
     public static int PIXELS_PER_UNIT = 100;
@@ -30,7 +30,7 @@ public class PixelPerfectCameraTestTool : MonoBehaviour
 
     // Outputs
     [NonSerialized]
-    public Vector2 cameraSize;
+    public UnityEngine.Vector2 cameraSize;
     [NonSerialized]
     public ConstraintType contraintUsed;
     [NonSerialized]
@@ -38,17 +38,17 @@ public class PixelPerfectCameraTestTool : MonoBehaviour
     [NonSerialized]
     public float ratio;
     [NonSerialized]
-    public Vector2 nativeAssetResolution;
+    public UnityEngine.Vector2 nativeAssetResolution;
     [NonSerialized]
     public float fovCoverage;
     [NonSerialized]
     public bool isInitialized;
 
     // Internals
-    Resolution res;
-    Camera cam;
+    UnityEngine.Resolution res;
+    UnityEngine.Camera cam;
 
-    float calculatePixelPerfectCameraSize(bool pixelPerfect, Resolution res, float assetsPixelsPerUnit, float maxCameraHalfWidth, float maxCameraHalfHeight
+    float calculatePixelPerfectCameraSize(bool pixelPerfect, UnityEngine.Resolution res, float assetsPixelsPerUnit, float maxCameraHalfWidth, float maxCameraHalfHeight
         , float targetHalfWidth, float targetHalfHeight, Dimension targetDimension)
     {
         float maxHorizontalFOV = 2f * maxCameraHalfWidth;
@@ -74,7 +74,7 @@ public class PixelPerfectCameraTestTool : MonoBehaviour
         float ratioTargetOriginal = ratioTarget;
         if (pixelPerfect)
         {
-            float ratioSnapped = Mathf.Ceil(ratioTarget);
+            float ratioSnapped = UnityEngine.Mathf.Ceil(ratioTarget);
             float ratioSnappedPrevious = ratioSnapped - 1;
             // choose the ratio whose fov (or native asset resolution) is nearest to the ratioTarget's fov
             ratioTarget = (1 / ratioTarget - 1 / ratioSnapped < 1 / ratioSnappedPrevious - 1 / ratioTarget) ? ratioSnapped : ratioSnappedPrevious;
@@ -96,23 +96,23 @@ public class PixelPerfectCameraTestTool : MonoBehaviour
             float assetsHeight = assetsPixelsPerUnit * maxVerticalFOV;
             ratioVertical = (float)res.height / assetsHeight;
         }
-        float ratioMin = Mathf.Max(ratioHorizontal, ratioVertical);
+        float ratioMin = UnityEngine.Mathf.Max(ratioHorizontal, ratioVertical);
         if (pixelPerfect)
         {
-            ratioMin = Mathf.Ceil(ratioMin);
+            ratioMin = UnityEngine.Mathf.Ceil(ratioMin);
         }
-        float ratioUsed = Mathf.Max(ratioMin, ratioTarget);
+        float ratioUsed = UnityEngine.Mathf.Max(ratioMin, ratioTarget);
 
         float horizontalFOV = res.width / (assetsPixelsPerUnit * ratioUsed);
         float verticalFOV = horizontalFOV / AR;
 
         // ------ GUI Calculations  -----
-        this.cameraSize = new Vector2(horizontalFOV / 2, verticalFOV / 2);
-        bool unconstrained = ratioTarget >= Mathf.Max(ratioHorizontal, ratioVertical) && ratioTargetOriginal >= Mathf.Max(ratioHorizontal, ratioVertical);
+        this.cameraSize = new UnityEngine.Vector2(horizontalFOV / 2, verticalFOV / 2);
+        bool unconstrained = ratioTarget >= UnityEngine.Mathf.Max(ratioHorizontal, ratioVertical) && ratioTargetOriginal >= UnityEngine.Mathf.Max(ratioHorizontal, ratioVertical);
         this.contraintUsed = (unconstrained) ? ConstraintType.None : (ratioHorizontal > ratioVertical) ? ConstraintType.Horizontal : ConstraintType.Vertical;
         this.cameraPixelsPerUnit = (float)res.width / horizontalFOV;
         this.ratio = ratioUsed;
-        this.nativeAssetResolution = new Vector2(horizontalFOV * assetsPixelsPerUnit, verticalFOV * assetsPixelsPerUnit);
+        this.nativeAssetResolution = new UnityEngine.Vector2(horizontalFOV * assetsPixelsPerUnit, verticalFOV * assetsPixelsPerUnit);
         this.fovCoverage = ratioTargetOriginal / ratioUsed;
         this.isInitialized = true;
         // ------ GUI Calculations End  -----
@@ -124,12 +124,12 @@ public class PixelPerfectCameraTestTool : MonoBehaviour
     {
         if (cam == null)
         {
-            cam = GetComponent<Camera>();
+            cam = GetComponent<UnityEngine.Camera>();
         }
-        res = new Resolution();
+        res = new UnityEngine.Resolution();
         res.width = cam.pixelWidth;
         res.height = cam.pixelHeight;
-        res.refreshRate = Screen.currentResolution.refreshRate;
+        res.refreshRate = UnityEngine.Screen.currentResolution.refreshRate;
 
         if (res.width == 0 || res.height == 0)
         {
@@ -207,22 +207,22 @@ public class PixelPerfectCameraTestToolEditor : Editor
         targetDimension.enumValueIndex = (int)(PixelPerfectCameraTestTool.Dimension)EditorGUILayout.EnumPopup("Target size", dimensionType);
         if (targetDimension.enumValueIndex == (int)PixelPerfectCameraTestTool.Dimension.Width)
         {
-            EditorGUILayout.PropertyField(targetCameraHalfWidth, new GUIContent("Width", "The targetted half width of the camera."));
+            EditorGUILayout.PropertyField(targetCameraHalfWidth, new UnityEngine.GUIContent("Width", "The targetted half width of the camera."));
         }
         else
         {
-            EditorGUILayout.PropertyField(targetCameraHalfHeight, new GUIContent("Height", "The targetted half height of the camera."));
+            EditorGUILayout.PropertyField(targetCameraHalfHeight, new UnityEngine.GUIContent("Height", "The targetted half height of the camera."));
         }
         EditorGUILayout.BeginHorizontal();
-        maxCameraHalfWidthEnabled.boolValue = EditorGUILayout.Toggle(maxCameraHalfWidthEnabled.boolValue, GUILayout.Width(12));
+        maxCameraHalfWidthEnabled.boolValue = EditorGUILayout.Toggle(maxCameraHalfWidthEnabled.boolValue, UnityEngine.GUILayout.Width(12));
         EditorGUI.BeginDisabledGroup(!maxCameraHalfWidthEnabled.boolValue);
-        EditorGUILayout.PropertyField(maxCameraHalfWidth, new GUIContent("Max Width", "The maximum allowed half width of the camera."));
+        EditorGUILayout.PropertyField(maxCameraHalfWidth, new UnityEngine.GUIContent("Max Width", "The maximum allowed half width of the camera."));
         EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-        maxCameraHalfHeightEnabled.boolValue = EditorGUILayout.Toggle(maxCameraHalfHeightEnabled.boolValue, GUILayout.Width(12));
+        maxCameraHalfHeightEnabled.boolValue = EditorGUILayout.Toggle(maxCameraHalfHeightEnabled.boolValue, UnityEngine.GUILayout.Width(12));
         EditorGUI.BeginDisabledGroup(!maxCameraHalfHeightEnabled.boolValue);
-        EditorGUILayout.PropertyField(maxCameraHalfHeight, new GUIContent("Max Height", "The maximum allowed half height of the camera."));
+        EditorGUILayout.PropertyField(maxCameraHalfHeight, new UnityEngine.GUIContent("Max Height", "The maximum allowed half height of the camera."));
         EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndHorizontal();
 
@@ -230,7 +230,7 @@ public class PixelPerfectCameraTestToolEditor : Editor
         EditorGUILayout.PropertyField(assetsPixelsPerUnit);
 
         // Pixel Perfect toggle
-        pixelPerfect.boolValue = EditorGUILayout.Toggle(new GUIContent("Pixel Perfect",
+        pixelPerfect.boolValue = EditorGUILayout.Toggle(new UnityEngine.GUIContent("Pixel Perfect",
             "Makes the camera's pixels per unit to be a multiple of the assets' pixels per unit."), pixelPerfect.boolValue);
 
         serializedObject.ApplyModifiedProperties();
@@ -238,9 +238,9 @@ public class PixelPerfectCameraTestToolEditor : Editor
         // Show results
         if (!((PixelPerfectCameraTestTool)target).isInitialized)
             return;
-        GUILayout.BeginVertical();
-        GUILayout.Space(5);
-        GUILayout.EndVertical();
+        UnityEngine.GUILayout.BeginVertical();
+        UnityEngine.GUILayout.Space(5);
+        UnityEngine.GUILayout.EndVertical();
     }
 
     private string makeBold(string str)

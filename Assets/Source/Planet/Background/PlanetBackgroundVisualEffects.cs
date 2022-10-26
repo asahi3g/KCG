@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//imports UnityEngine
 
 namespace Planet.Background
 {
@@ -10,7 +8,7 @@ namespace Planet.Background
 
         private bool Init;
 
-        public void Initialize(Material material, Transform transform, int drawOrder)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder)
         {
             if(GameManager.BackgroundDraw)
             {
@@ -21,7 +19,7 @@ namespace Planet.Background
             }
         }
 
-        public void Draw(Material material, Transform transform, int drawOrder)
+        public void Draw(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder)
         {
             if(Init)
             {

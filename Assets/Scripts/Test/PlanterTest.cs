@@ -1,12 +1,13 @@
-using UnityEngine;
+//imports UnityEngine
+
 using KMath;
 using Enums.Tile;
 using Planet;
 using PlanetTileMap;
 
-class PlanterTest : MonoBehaviour
+class PlanterTest : UnityEngine.MonoBehaviour
 {
-    [SerializeField] Material Material;
+    [UnityEngine.SerializeField] UnityEngine.Material Material;
     public PlanetState Planet;
 
     AgentEntity Player;
@@ -24,7 +25,7 @@ class PlanterTest : MonoBehaviour
 
     public void Update()
     {
-        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
     private void OnGUI()
@@ -33,7 +34,7 @@ class PlanterTest : MonoBehaviour
             return;
 
         Planet.DrawHUD(Player);
-        if (Event.current.type != EventType.Repaint)
+        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
@@ -44,11 +45,11 @@ class PlanterTest : MonoBehaviour
         Planet.DrawDebug();
 
         // Set the color of gizmos
-        Gizmos.color = Color.green;
+        UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
         // Draw a cube around the map
         if (Planet.TileMap != null)
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+            UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
 
         // Draw lines around player if out of bounds
         if (Player != null)
@@ -57,16 +58,16 @@ class PlanterTest : MonoBehaviour
                 // Out of bounds
 
                 // X+
-                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector3(Player.agentPhysicsState.Position.X + 10.0f,Player.agentPhysicsState.Position.Y));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f,Player.agentPhysicsState.Position.Y));
 
                 // X-
-                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X-10.0f,Player.agentPhysicsState.Position.Y));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X-10.0f,Player.agentPhysicsState.Position.Y));
 
                 // Y+
-                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y + 10.0f));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y + 10.0f));
 
                 // Y-
-                Gizmos.DrawLine(new Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y - 10.0f));
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y - 10.0f));
             }
 
         // Draw Chunk Visualizer

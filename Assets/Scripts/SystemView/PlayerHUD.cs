@@ -1,11 +1,12 @@
+//imports UnityEngine
+
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class PlayerHUD : MonoBehaviour {
+        public class PlayerHUD : UnityEngine.MonoBehaviour {
             public SystemState State;
 
             public Text SpeedText;

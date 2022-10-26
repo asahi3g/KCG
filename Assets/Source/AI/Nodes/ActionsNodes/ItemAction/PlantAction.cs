@@ -1,8 +1,7 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 using KMath;
-using System.Web.WebPages;
-using Entitas;
 using System.Collections.Generic;
 using System;
 
@@ -30,7 +29,7 @@ namespace Node
             Vec2f planterPosition = Vec2f.Zero;
             if (agentEntity.isAgentPlayer)
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 float x = worldPosition.x;
                 float y = worldPosition.y;
 

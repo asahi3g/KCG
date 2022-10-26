@@ -1,3 +1,5 @@
+//imports UnityEngine
+
 using Agent;
 using Enums.Tile;
 using Mech;
@@ -9,8 +11,6 @@ using Enums;
 using Item;
 using Inventory;
 using KMath;
-using UnityEngine;
-using KGUI.Elements;
 using Vehicle.Pod;
 using Utility;
 
@@ -66,7 +66,7 @@ namespace Planet
             }
         }
 
-        public void InitializeSystems(Material material, Transform transform)
+        public void InitializeSystems(UnityEngine.Material material, UnityEngine.Transform transform)
         {
             GameState.PathFinding.Initialize();
 
@@ -83,7 +83,7 @@ namespace Planet
 
         }
 
-        public void InitializeTGen(Material material, Transform transform)
+        public void InitializeTGen(UnityEngine.Material material, UnityEngine.Transform transform)
         {
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
@@ -297,7 +297,7 @@ namespace Planet
             GameState.LootDropSystem.Add(properties.InventoryDropTableID, entity.agentInventory.InventoryID);
         }
 
-        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position, Color color, int fontSize)
+        public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position, UnityEngine.Color color, int fontSize)
         {
             FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText
                 (EntitasContext.floatingText, text, timeToLive, velocity, position, color, fontSize));
@@ -307,11 +307,11 @@ namespace Planet
         public FloatingTextEntity AddFloatingText(string text, float timeToLive, Vec2f velocity, Vec2f position)
         {
             FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFloatingText(
-                EntitasContext.floatingText, text, timeToLive, velocity, position, Color.red, 18));
+                EntitasContext.floatingText, text, timeToLive, velocity, position, UnityEngine.Color.red, 18));
             return newEntity;
         }
 
-        public FloatingTextEntity AddFixedFloatingText(string text, Vec2f position, Color color, int fontSize)
+        public FloatingTextEntity AddFixedFloatingText(string text, Vec2f position, UnityEngine.Color color, int fontSize)
         {
             FloatingTextEntity newEntity = FloatingTextList.Add(GameState.FloatingTextSpawnerSystem.SpawnFixedFloatingText(
                 EntitasContext.floatingText, text, position, color, fontSize));
@@ -322,7 +322,7 @@ namespace Planet
         {
             FloatingTextEntity entity = FloatingTextList.Get(index);
             Utils.Assert(entity.isEnabled);
-            GameObject.Destroy(entity.floatingTextGameObject.GameObject);
+            UnityEngine.GameObject.Destroy(entity.floatingTextGameObject.GameObject);
             FloatingTextList.Remove(index);
         }
 
@@ -415,7 +415,7 @@ namespace Planet
         }
 
         // updates the entities, must call the systems and so on ..
-        public void Update(float deltaTime, Material material, Transform transform)
+        public void Update(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform)
         {
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
@@ -532,17 +532,17 @@ namespace Planet
 
         public void DrawHUD(AgentEntity agentEntity)
         { 
-            if(Event.current == null) return;
+            if(UnityEngine.Event.current == null) return;
             
-            switch (Event.current.type)
+            switch (UnityEngine.Event.current.type)
             {
-                case EventType.MouseDown:
+                case UnityEngine.EventType.MouseDown:
                     GameState.InventoryMouseSelectionSystem.OnMouseDown(EntitasContext, InventoryList);
                     return;
-                case EventType.MouseUp:
+                case UnityEngine.EventType.MouseUp:
                     GameState.InventoryMouseSelectionSystem.OnMouseUP(EntitasContext, InventoryList);
                     return;
-                case not EventType.Repaint:
+                case not UnityEngine.EventType.Repaint:
                     return;
             }
 

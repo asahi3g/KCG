@@ -1,11 +1,12 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 
 namespace KGUI
 {
     public class PotionTool : PanelUI
     {
-        [SerializeField] private HealthPotionElementUI healthPotionElementUI;
+        [UnityEngine.SerializeField] private HealthPotionElementUI healthPotionElementUI;
 
         public override void Init()
         {
@@ -42,7 +43,7 @@ namespace KGUI
 
                     if (selectedInventoryItem.hasItemPotion)
                     {
-                        healthPotionElementUI.Border.SetImageColor(selectedInventoryItem.itemPotion.potionType == PotionType.HealthPotion ? Color.red : Color.yellow);
+                        healthPotionElementUI.Border.SetImageColor(selectedInventoryItem.itemPotion.potionType == PotionType.HealthPotion ? UnityEngine.Color.red : UnityEngine.Color.yellow);
                     }
                 }
             }
@@ -53,7 +54,7 @@ namespace KGUI
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             selectedInventoryItem.itemPotion.potionType = PotionType.Error;
             
-            healthPotionElementUI.Border.SetImageColor(Color.yellow);
+            healthPotionElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
         }
     }
 }

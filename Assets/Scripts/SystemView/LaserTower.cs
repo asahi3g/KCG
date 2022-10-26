@@ -1,7 +1,6 @@
 //import UnityEngine
 
 using System;
-using System.Collections;
 using Source.SystemView;
 using UnityEngine.Serialization;
 

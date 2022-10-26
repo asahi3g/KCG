@@ -1,6 +1,7 @@
-﻿using Enums;
+﻿//imports UnityEngine
+
+using Enums;
 using Planet;
-using UnityEngine;
 using AI;
 using System.Collections.Generic;
 using System;
@@ -62,7 +63,7 @@ namespace Node
                     nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
                     break;
                 default:
-                    Debug.Log("Not valid Action state.");
+                    UnityEngine.Debug.Log("Not valid Action state.");
                     break;
             }
         }

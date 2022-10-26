@@ -1,15 +1,16 @@
-using Enums;
+//imports UnityEngine
+
+
 using Enums.Tile;
-using UnityEngine;
 
 namespace KGUI
 {
     public class PlacementTool : PanelUI
     {
-        [SerializeField] private BedrockElementUI bedrockElementUI;
-        [SerializeField] private DirtElementUI dirtElementUI;
-        [SerializeField] private PipeElementUI pipeElementUI;
-        [SerializeField] private WireElementUI wireElementUI;
+        [UnityEngine.SerializeField] private BedrockElementUI bedrockElementUI;
+        [UnityEngine.SerializeField] private DirtElementUI dirtElementUI;
+        [UnityEngine.SerializeField] private PipeElementUI pipeElementUI;
+        [UnityEngine.SerializeField] private WireElementUI wireElementUI;
 
         public override void Init()
         {
@@ -36,17 +37,17 @@ namespace KGUI
             // If Selected     = Red
             // If Not Selected = Yellow
             bedrockElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Bedrock
-                ? Color.red
-                : Color.yellow);
+                ? UnityEngine.Color.red
+                : UnityEngine.Color.yellow);
             dirtElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Moon
-                ? Color.red
-                : Color.yellow);
+                ? UnityEngine.Color.red
+                : UnityEngine.Color.yellow);
             pipeElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Pipe
-                ? Color.red
-                : Color.yellow);
+                ? UnityEngine.Color.red
+                : UnityEngine.Color.yellow);
             wireElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Wire
-                ? Color.red
-                : Color.yellow);
+                ? UnityEngine.Color.red
+                : UnityEngine.Color.yellow);
         }
 
         public override void OnDeactivate()
@@ -57,10 +58,10 @@ namespace KGUI
                 item.itemTile.TileID = TileID.Error;
             }
             
-            bedrockElementUI.Border.SetImageColor(Color.yellow);
-            dirtElementUI.Border.SetImageColor(Color.yellow);
-            pipeElementUI.Border.SetImageColor(Color.yellow);
-            wireElementUI.Border.SetImageColor(Color.yellow);
+            bedrockElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
+            dirtElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
+            pipeElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
+            wireElementUI.Border.SetImageColor(UnityEngine.Color.yellow);
         }
     }
 }

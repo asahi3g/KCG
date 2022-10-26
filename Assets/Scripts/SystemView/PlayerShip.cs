@@ -1,10 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿//imports UnityEngine
+
+using System;
 using Source.SystemView;
 
 namespace Scripts {
     namespace SystemView {
-        public class PlayerShip : MonoBehaviour {
+        public class PlayerShip : UnityEngine.MonoBehaviour {
             private enum SelectedWeaponType {
                 MAIN_WEAPONS = 1 << 1,
                 BROADSIDES   = 1 << 2,
@@ -13,7 +14,7 @@ namespace Scripts {
 
             public SystemShip ship;
 
-            public GameObject o;
+            public UnityEngine.GameObject o;
             public SystemShipRenderer systemShipRenderer;
 
             public float last_time;
@@ -56,12 +57,12 @@ namespace Scripts {
             public CameraController camera_controller;
             public SystemState state;
 
-            public LineRenderer rudder_renderer;
-            public LineRenderer angular_velocity_in_direction_of_movement;
-            public LineRenderer angular_velocity_perpendicular_to_movement;
+            public UnityEngine.LineRenderer rudder_renderer;
+            public UnityEngine.LineRenderer angular_velocity_in_direction_of_movement;
+            public UnityEngine.LineRenderer angular_velocity_perpendicular_to_movement;
 
-            public GameObject   angular_velocity_direction_renderer;
-            public GameObject   angular_velocity_perpendicular_renderer;
+            public UnityEngine.GameObject   angular_velocity_direction_renderer;
+            public UnityEngine.GameObject   angular_velocity_perpendicular_renderer;
 
             public void rotate_to(float angle) {
                 rotating_to = angle;
@@ -69,16 +70,16 @@ namespace Scripts {
             }
 
             private void Start() {
-                camera_controller  = GameObject.Find("Main Camera").GetComponent<CameraController>();
+                camera_controller  = UnityEngine.GameObject.Find("Main Camera").GetComponent<CameraController>();
 
                 state              = GetComponent<GameManager>().CurrentSystemState;
-                rudder_renderer    = gameObject.AddComponent<LineRenderer>();
+                rudder_renderer    = gameObject.AddComponent<UnityEngine.LineRenderer>();
 
-                last_time          = Time.time * 1000.0f;
+                last_time          = UnityEngine.Time.time * 1000.0f;
 
                 ship               = new SystemShip();
 
-                o                  = new GameObject();
+                o                  = new UnityEngine.GameObject();
                 o.name             = "Player ship";
 
                 ship.self.posx     = 0.0f;
@@ -90,7 +91,7 @@ namespace Scripts {
 
                 systemShipRenderer           = o.AddComponent<SystemShipRenderer>();
                 systemShipRenderer.ship      = ship;
-                systemShipRenderer.shipColor = Color.blue;
+                systemShipRenderer.shipColor = UnityEngine.Color.blue;
                 systemShipRenderer.width     = 3.0f;
 
                 ship.health        =
@@ -100,9 +101,9 @@ namespace Scripts {
 
                 ship.shield_regeneration_rate = 3;
 
-                Shader shader = Shader.Find("Hidden/Internal-Colored");
-                Material mat  = new Material(shader);
-                mat.hideFlags = HideFlags.HideAndDontSave;
+                UnityEngine.Shader shader = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+                UnityEngine.Material mat  = new UnityEngine.Material(shader);
+                mat.hideFlags = UnityEngine.HideFlags.HideAndDontSave;
 
                 mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -115,34 +116,34 @@ namespace Scripts {
                 rudder_renderer.material                                 = mat;
                 rudder_renderer.useWorldSpace                            = true;
                 rudder_renderer.startColor                               =
-                rudder_renderer.endColor                                 = Color.white;
+                rudder_renderer.endColor                                 = UnityEngine.Color.white;
                 
-                angular_velocity_direction_renderer                      = new GameObject();
-                angular_velocity_in_direction_of_movement                = angular_velocity_direction_renderer.AddComponent<LineRenderer>();
+                angular_velocity_direction_renderer                      = new UnityEngine.GameObject();
+                angular_velocity_in_direction_of_movement                = angular_velocity_direction_renderer.AddComponent<UnityEngine.LineRenderer>();
 
-                angular_velocity_perpendicular_renderer                  = new GameObject();
-                angular_velocity_perpendicular_to_movement               = angular_velocity_perpendicular_renderer.AddComponent<LineRenderer>();
+                angular_velocity_perpendicular_renderer                  = new UnityEngine.GameObject();
+                angular_velocity_perpendicular_to_movement               = angular_velocity_perpendicular_renderer.AddComponent<UnityEngine.LineRenderer>();
 
                 angular_velocity_in_direction_of_movement.material       = mat;
                 angular_velocity_in_direction_of_movement.useWorldSpace  = true;
                 angular_velocity_in_direction_of_movement.startColor     =
-                angular_velocity_in_direction_of_movement.endColor       = Color.blue;
+                angular_velocity_in_direction_of_movement.endColor       = UnityEngine.Color.blue;
 
                 angular_velocity_perpendicular_to_movement.material      = mat;
                 angular_velocity_perpendicular_to_movement.useWorldSpace = true;
                 angular_velocity_perpendicular_to_movement.startColor    =
-                angular_velocity_perpendicular_to_movement.endColor      = Color.green;
+                angular_velocity_perpendicular_to_movement.endColor      = UnityEngine.Color.green;
             }
 
             private void Update() {
-                float current_time = Time.time - last_time;
+                float current_time = UnityEngine.Time.time - last_time;
 
                 if (current_time == 0.0f) return;
 
                 current_time *= time_scale;
 
-                last_time = Time.time;
-                Vector3[] vertices = new Vector3[2];
+                last_time = UnityEngine.Time.time;
+                UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[2];
 
                 if(ship.descriptor.central_body != null) {
                     float angular_velocity_x     = ship.self.velx - ship.descriptor.central_body.velx;
@@ -168,11 +169,11 @@ namespace Scripts {
                     float in_direction           = Tools.magnitude(sintheta * angular_velocity_x, sintheta * angular_velocity_y);
                     float perpendicular          = Tools.magnitude(costheta * angular_velocity_x, costheta * angular_velocity_y);
 
-                    Vector3[] vertices1          = new Vector3[2];
-                    Vector3[] vertices2          = new Vector3[2];
+                    UnityEngine.Vector3[] vertices1          = new UnityEngine.Vector3[2];
+                    UnityEngine.Vector3[] vertices2          = new UnityEngine.Vector3[2];
 
-                    vertices1[0] = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
-                    vertices1[1] = new Vector3(ship.self.posx + (float)Math.Cos(velocity_angle)
+                    vertices1[0] = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices1[1] = new UnityEngine.Vector3(ship.self.posx + (float)Math.Cos(velocity_angle)
                                                               * 0.1f * in_direction / camera_controller.scale,
                                                ship.self.posy + (float)Math.Sin(velocity_angle)
                                                               * 0.1f * in_direction / camera_controller.scale,
@@ -186,8 +187,8 @@ namespace Scripts {
 
 
 
-                    vertices2[0] = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
-                    vertices2[1] = new Vector3(ship.self.posx + (float)Math.Cos(velocity_angle + Tools.halfpi)
+                    vertices2[0] = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices2[1] = new UnityEngine.Vector3(ship.self.posx + (float)Math.Cos(velocity_angle + Tools.halfpi)
                                                               * 0.1f * perpendicular / camera_controller.scale,
                                                ship.self.posy + (float)Math.Sin(velocity_angle + Tools.halfpi)
                                                               * 0.1f * perpendicular / camera_controller.scale,
@@ -201,10 +202,10 @@ namespace Scripts {
 
                 } else {
 
-                    Vector3[] vertices1 = new Vector3[2];
+                    UnityEngine.Vector3[] vertices1 = new UnityEngine.Vector3[2];
 
-                    vertices1[0]        = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
-                    vertices1[1]        = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices1[0]        = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices1[1]        = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
 
                     angular_velocity_in_direction_of_movement.SetPositions(vertices1);
                     angular_velocity_in_direction_of_movement.positionCount  = 0;
@@ -215,8 +216,8 @@ namespace Scripts {
                 }
 
                 if(rudder_enabled) {
-                    vertices[0] = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
-                    vertices[1] = new Vector3(ship.self.posx + (float)Math.Cos(ship.rotation + sail_angle) * 5.0f / camera_controller.scale,
+                    vertices[0] = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices[1] = new UnityEngine.Vector3(ship.self.posx + (float)Math.Cos(ship.rotation + sail_angle) * 5.0f / camera_controller.scale,
                                               ship.self.posy + (float)Math.Sin(ship.rotation + sail_angle) * 5.0f / camera_controller.scale,
                                               0.0f);
 
@@ -226,8 +227,8 @@ namespace Scripts {
                     rudder_renderer.startWidth    =
                     rudder_renderer.endWidth      = 0.1f / camera_controller.scale;
                 } else {
-                    vertices[0] = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
-                    vertices[1] = new Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices[0] = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
+                    vertices[1] = new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f);
 
                     rudder_renderer.SetPositions(vertices);
                     rudder_renderer.positionCount = 0;
@@ -237,7 +238,7 @@ namespace Scripts {
                 if(ship.orbital_autopilot_tick(periapsis, apoapsis, rotation, current_time))          return;
                 if(circularizing) { circularizing = !ship.circularize(current_time);                  return; }
 
-                if (Input.GetKeyDown("tab")) mouse_steering = !mouse_steering;
+                if (UnityEngine.Input.GetKeyDown("tab")) mouse_steering = !mouse_steering;
 
                 float horizontal_movement = 0.0f;
 
@@ -245,16 +246,16 @@ namespace Scripts {
 
                 float direction     = ship.rotation;
                 bool  move_to_mouse = false;
-                float movement      = Input.GetAxis("Vertical");
+                float movement      = UnityEngine.Input.GetAxis("Vertical");
 
                 if(rotating && ship.rotation != rotating_to) ship.rotate_to(rotating_to, current_time);
                 else rotating = false;
 
                 if (!mouse_steering) {
                     ship.rotation         += ship.self.angular_vel * current_time;
-                    if(Input.GetKey("left ctrl")) horizontal_movement = -Input.GetAxis("Horizontal");
+                    if(UnityEngine.Input.GetKey("left ctrl")) horizontal_movement = -UnityEngine.Input.GetAxis("Horizontal");
                     else if(!rotating) {
-                        float acc              = (float)Math.Sqrt(ship.torque / ship.self.angular_inertia) * -Input.GetAxis("Horizontal");
+                        float acc              = (float)Math.Sqrt(ship.torque / ship.self.angular_inertia) * -UnityEngine.Input.GetAxis("Horizontal");
                         ship.rotation         += 0.5f * acc * current_time * current_time;
                         if(constant_rate_turning)
                             ship.self.angular_vel = acc;
@@ -264,28 +265,28 @@ namespace Scripts {
                         }
                     }
                 } else {
-                    horizontal_movement = -Input.GetAxis("Horizontal");
-                    Vector3 RelPos = camera_controller.get_rel_pos(new Vector3(ship.self.posx, ship.self.posy, 0.0f));
+                    horizontal_movement = -UnityEngine.Input.GetAxis("Horizontal");
+                    UnityEngine.Vector3 RelPos = camera_controller.get_rel_pos(new UnityEngine.Vector3(ship.self.posx, ship.self.posy, 0.0f));
 
-                    float dx    = Input.mousePosition.x - RelPos.x;
-                    float dy    = Input.mousePosition.y - RelPos.y;
+                    float dx    = UnityEngine.Input.mousePosition.x - RelPos.x;
+                    float dy    = UnityEngine.Input.mousePosition.y - RelPos.y;
 
                     float angle = Tools.get_angle(dx, dy);
 
                     if(turn_towards_mouse) { if(!rotating) ship.rotate_to(angle, current_time); }
-                    else if(Input.GetMouseButton(0)) {
+                    else if(UnityEngine.Input.GetMouseButton(0)) {
                         direction     = angle;
                         move_to_mouse = true;
                     }
                 }
 
-                if(Input.GetKey("q")) sail_angle += sail_speed * current_time;
-                if(Input.GetKey("e")) sail_angle -= sail_speed * current_time;
+                if(UnityEngine.Input.GetKey("q")) sail_angle += sail_speed * current_time;
+                if(UnityEngine.Input.GetKey("e")) sail_angle -= sail_speed * current_time;
 
                 rotation_change -= ship.rotation;
 
-                if (movement == 0.0f && Input.GetKey("w")) movement =  1.0f;
-                if (movement == 0.0f && Input.GetKey("s")) movement = -1.0f;
+                if (movement == 0.0f && UnityEngine.Input.GetKey("w")) movement =  1.0f;
+                if (movement == 0.0f && UnityEngine.Input.GetKey("s")) movement = -1.0f;
 
                 float cos  = (float)Math.Cos(ship.rotation);
                 float sin  = (float)Math.Sin(ship.rotation);
@@ -430,9 +431,9 @@ namespace Scripts {
                     ship.path_planned = true;
                 }
 
-                     if(Input.GetKey(main_weapon_key)) selectedWeapon = SelectedWeaponType.MAIN_WEAPONS;
-                else if(Input.GetKey( broadsides_key)) selectedWeapon = SelectedWeaponType.BROADSIDES;
-                else if(Input.GetKey(    turrets_key)) selectedWeapon = SelectedWeaponType.TURRETS;
+                     if(UnityEngine.Input.GetKey(main_weapon_key)) selectedWeapon = SelectedWeaponType.MAIN_WEAPONS;
+                else if(UnityEngine.Input.GetKey( broadsides_key)) selectedWeapon = SelectedWeaponType.BROADSIDES;
+                else if(UnityEngine.Input.GetKey(    turrets_key)) selectedWeapon = SelectedWeaponType.TURRETS;
 
                 foreach(ShipWeapon weapon in ship.weapons) {
                     weapon.update();
@@ -442,8 +443,8 @@ namespace Scripts {
                 }
 
                 if(!mouse_steering) {
-                    if(Input.GetKey("space") || Input.GetMouseButton(0)) {
-                        Vector3 mouse_position = camera_controller.get_abs_pos(Input.mousePosition);
+                    if(UnityEngine.Input.GetKey("space") || UnityEngine.Input.GetMouseButton(0)) {
+                        UnityEngine.Vector3 mouse_position = camera_controller.get_abs_pos(UnityEngine.Input.mousePosition);
 
                         foreach(ShipWeapon weapon in ship.weapons) {
                             if(((int)selectedWeapon & (int)weapon.flags) == 0) continue;
@@ -453,7 +454,7 @@ namespace Scripts {
                         }
                     }
                 } else {
-                    if(Input.GetKey("space"))
+                    if(UnityEngine.Input.GetKey("space"))
                         foreach(ShipWeapon weapon in ship.weapons) {
                             if(((int)selectedWeapon & (int)weapon.flags) == 0) continue;
 
@@ -467,10 +468,10 @@ namespace Scripts {
             }
 
             void OnDestroy() {
-                GameObject.Destroy(angular_velocity_perpendicular_renderer);
-                GameObject.Destroy(angular_velocity_direction_renderer);
-                GameObject.Destroy(systemShipRenderer);
-                GameObject.Destroy(o);
+                UnityEngine.GameObject.Destroy(angular_velocity_perpendicular_renderer);
+                UnityEngine.GameObject.Destroy(angular_velocity_direction_renderer);
+                UnityEngine.GameObject.Destroy(systemShipRenderer);
+                UnityEngine.GameObject.Destroy(o);
             }
         }   
     }

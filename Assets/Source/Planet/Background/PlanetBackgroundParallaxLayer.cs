@@ -1,9 +1,7 @@
-using System.Collections;
+//imports UnityEngine
+
 using System.Collections.Generic;
-using UnityEngine;
 using KMath.Noise;
-using Enums.Tile;
-using Utility;
 
 namespace Planet.Background
 {
@@ -34,7 +32,7 @@ namespace Planet.Background
 
         private int SpaceID = 0;
 
-        public void Initialize(Material material, Transform transform)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform)
         {
             PlanetSpriteIDs = new List<int>();
             StarSpriteIDs = new List<int>();
@@ -182,20 +180,20 @@ namespace Planet.Background
 
             perlinGrid = GenPerlin(256, 256, 3, 20);
 
-            int random = Random.Range(0, 256);
+            int random = UnityEngine.Random.Range(0, 256);
             float rand1 = perlinGrid[random, random];
 
             for(int i = 0; i < PlanetSpriteIDs.Count; i++)
             {
                 if (rand1 >= .5)
                 {
-                    planetRandomGridX.Add(Random.Range(-10.0f, 10.0f));
-                    planetRandomGridY.Add(Random.Range(-10.0f, 10.0f));
+                    planetRandomGridX.Add(UnityEngine.Random.Range(-10.0f, 10.0f));
+                    planetRandomGridY.Add(UnityEngine.Random.Range(-10.0f, 10.0f));
                 }
                 else
                 {
-                    planetRandomGridX.Add(Random.Range(-100.0f, 100.0f));
-                    planetRandomGridY.Add(Random.Range(-100.0f, 100.0f));
+                    planetRandomGridX.Add(UnityEngine.Random.Range(-100.0f, 100.0f));
+                    planetRandomGridY.Add(UnityEngine.Random.Range(-100.0f, 100.0f));
                 }
             }
 
@@ -203,16 +201,16 @@ namespace Planet.Background
             {
                 if (rand1 >= .5)
                 {
-                    starRandomGridX.Add(Random.Range(-10.0f, 10.0f));
-                    starRandomGridY.Add(Random.Range(-10.0f, 10.0f));
+                    starRandomGridX.Add(UnityEngine.Random.Range(-10.0f, 10.0f));
+                    starRandomGridY.Add(UnityEngine.Random.Range(-10.0f, 10.0f));
                 }
                 else
                 {
-                    starRandomGridX.Add(Random.Range(-100.0f, 100.0f));
-                    starRandomGridY.Add(Random.Range(-100.0f, 100.0f));
+                    starRandomGridX.Add(UnityEngine.Random.Range(-100.0f, 100.0f));
+                    starRandomGridY.Add(UnityEngine.Random.Range(-100.0f, 100.0f));
                 }
 
-                int starRandom = Random.Range(0, 10);
+                int starRandom = UnityEngine.Random.Range(0, 10);
                 StarSpriteIDs.Add(StarSpriteIDs[starRandom]);
             }
 
@@ -237,7 +235,7 @@ namespace Planet.Background
                 {
                     int spriteId = PlanetSpriteIDs[n];
 
-                    Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.BackGround).TextureCoords;
+                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.BackGround).TextureCoords;
 
                     var x = planetRandomGridX[n];
                     var y = planetRandomGridY[n];
@@ -259,12 +257,12 @@ namespace Planet.Background
             {
                 Space.Clear();
 
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpaceID, Enums.AtlasType.BackGround).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpaceID, Enums.AtlasType.BackGround).TextureCoords;
 
-                var x = Camera.main.transform.position.x - 50;
-                var y = Camera.main.transform.position.y - 50;
-                var width = Camera.main.pixelWidth;
-                var height = Camera.main.pixelHeight;
+                var x = UnityEngine.Camera.main.transform.position.x - 50;
+                var y = UnityEngine.Camera.main.transform.position.y - 50;
+                var width = UnityEngine.Camera.main.pixelWidth;
+                var height = UnityEngine.Camera.main.pixelHeight;
 
                 // Update UVs
                 Space.UpdateUV(textureCoords, 0);
@@ -283,7 +281,7 @@ namespace Planet.Background
                 {
                     int spriteId = StarSpriteIDs[n];
 
-                    Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.BackGround).TextureCoords;
+                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.BackGround).TextureCoords;
 
                     var x = starRandomGridX[n];
                     var y = starRandomGridY[n];
@@ -318,7 +316,7 @@ namespace Planet.Background
                 for (int y = 0; y < height; y++)
                 {
                     var result = perlinField.GetNoise(x, y);
-                    result = Mathf.Clamp(result - min / (max - min), 0.0f, 1.0f);
+                    result = UnityEngine.Mathf.Clamp(result - min / (max - min), 0.0f, 1.0f);
                     grid[x, y] = result;
                 }
             }

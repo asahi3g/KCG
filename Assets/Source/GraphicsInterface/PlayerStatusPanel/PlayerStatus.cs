@@ -1,14 +1,14 @@
-using UnityEngine;
+//imports UnityEngine
 
 namespace KGUI
 {
     public class PlayerStatus : PanelUI
     {
-        [SerializeField] private HealthElementUI healthElementUI;
-        [SerializeField] private FoodElementUI foodElementUI;
-        [SerializeField] private WaterElementUI waterElementUI;
-        [SerializeField] private OxygenElementUI oxygenElementUI;
-        [SerializeField] private FuelElementUI fuelElementUI;
+        [UnityEngine.SerializeField] private HealthElementUI healthElementUI;
+        [UnityEngine.SerializeField] private FoodElementUI foodElementUI;
+        [UnityEngine.SerializeField] private WaterElementUI waterElementUI;
+        [UnityEngine.SerializeField] private OxygenElementUI oxygenElementUI;
+        [UnityEngine.SerializeField] private FuelElementUI fuelElementUI;
 
         public override void Init()
         {
