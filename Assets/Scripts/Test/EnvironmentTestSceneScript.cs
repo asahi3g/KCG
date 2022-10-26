@@ -2,21 +2,24 @@
 
 using Enums.Tile;
 using KMath;
-using Item;
-using Animancer;
 using PlanetTileMap;
 using System.Linq;
 using System.Collections.Generic;
 using Enums;
 
-namespace Planet.Unity
+namespace Planet.Foreground
 {
-    class EnvironmentScript : UnityEngine.MonoBehaviour
+    // This script controls the scene of environment test scene.
+    // Everything spawned, removed, inits in Environment Test Scene
+    // Going through this script.
+
+    // Environment Scene path: Assets\\Scenes\\Test\\EnvironmentTest.unity
+
+    class EnvironmentTestSceneScript : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         public PlanetState Planet;
-
 
         AgentEntity Player;
         int PlayerID;
@@ -41,16 +44,14 @@ namespace Planet.Unity
         {
             if (!Init)
             {
-
                 Initialize();
                 Init = true;
             }
         }
 
-                // create the sprite atlas for testing purposes
+        // create the sprite atlas for testing purposes
         public void Initialize()
         {
-
             UnityEngine.Application.targetFrameRate = 60;
 
             GameResources.Initialize();
