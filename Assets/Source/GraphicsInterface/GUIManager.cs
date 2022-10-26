@@ -43,11 +43,11 @@ namespace KGUI
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
 
-            PanelPrefabList.Add(PanelEnums.PlayerStatus, Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PotionTool, Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
-            PanelPrefabList.Add(PanelEnums.GeometryTool, Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
+            PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
         }
 
         public void InitStage2()
@@ -157,7 +157,7 @@ namespace KGUI
                 }
             }
 
-            if (ElementUnderCursor != null && PanelUnderCursor != null && Input.GetMouseButton(0))
+            if (ElementUnderCursor != null && PanelUnderCursor != null && UnityEngine.Input.GetMouseButton(0))
             {
                 PanelUnderCursor.HandleClickEvent(ElementUnderCursor.ID);
                 ElementUnderCursor.OnMouseClick();
