@@ -1,15 +1,11 @@
-using System.Collections.Generic;
-using UnityEngine;
-using KMath;
-
 namespace Animation
 {
     public class UpdateSystem
     {
 
-        public void Update(Contexts contexts, float deltaTime)
+        public void Update(float deltaTime)
         {
-            var entities = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AnimationState));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AnimationState));
 
             foreach (var entity in entities)
             {

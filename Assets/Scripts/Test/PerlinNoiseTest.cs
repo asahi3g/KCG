@@ -3,7 +3,6 @@
 using KMath.Noise;
 using UnityEngine.UI;
 using TMPro;
-using TreeEditor;
 
 
 public class PerlinNoiseTest : UnityEngine.MonoBehaviour

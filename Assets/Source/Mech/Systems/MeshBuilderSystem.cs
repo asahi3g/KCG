@@ -13,9 +13,9 @@ namespace Mech
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Mech), drawOrder);
         }
 
-        public void UpdateMesh(MechContext context)
+        public void UpdateMesh()
         {
-            var MechsWithSprite = context.GetGroup(MechMatcher.AllOf(MechMatcher.MechSprite2D));
+            var MechsWithSprite = GameState.Planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechSprite2D));
 
             int index = 0;
             Mesh.Clear();

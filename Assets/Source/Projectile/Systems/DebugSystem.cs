@@ -1,13 +1,12 @@
 ﻿//imports UnityEngine
 
-using System;
-
 namespace Projectile
 {
     public class DebugSystem
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
+            ref var planet = ref GameState.Planet;
             if (planet.ProjectileList == null)
                 return;
                 

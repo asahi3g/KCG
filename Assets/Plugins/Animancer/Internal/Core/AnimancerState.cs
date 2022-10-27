@@ -149,10 +149,7 @@ namespace Animancer
 
                 return layer.Index;
             }
-            set
-            {
-                Root.Layers[value].AddChild(this);
-            }
+            set => Root.Layers[value].AddChild(this);
         }
 
         /************************************************************************************************************************/

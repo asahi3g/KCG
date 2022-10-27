@@ -653,7 +653,7 @@ namespace ToonyColorsPro
 					}
 
 					//Set ShaderImporter userData
-					var shaderImporter = ShaderImporter.GetAtPath(assetPath) as ShaderImporter;
+					var shaderImporter = AssetImporter.GetAtPath(assetPath) as ShaderImporter;
 					if (shaderImporter != null)
 					{
 						//Set default textures

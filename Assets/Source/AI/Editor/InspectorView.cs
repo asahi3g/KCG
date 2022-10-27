@@ -1,11 +1,9 @@
-﻿using Entitas;
-using Enums;
+﻿using Enums;
 using Node;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace AI
@@ -14,12 +12,12 @@ namespace AI
     {
         public new class UxmlFactory : UxmlFactory<InspectorView, UxmlTraits> { }
 
-        Enums.BehaviorType Type;
+        BehaviorType Type;
         ScrollView scrollView;
 
         public InspectorView()
         {
-            Type = Enums.BehaviorType.Error;
+            Type = BehaviorType.Error;
             VisualElement container = new VisualElement();
             container.name = "Container";
             container.style.flexGrow = 1;

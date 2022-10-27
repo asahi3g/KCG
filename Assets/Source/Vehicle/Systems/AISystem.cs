@@ -46,7 +46,7 @@ namespace Vehicle
             }
         }
 
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
             if (vehicle == null || particlePosition == null || movementSpeed == null)
                 return;
@@ -54,7 +54,7 @@ namespace Vehicle
             // Scan planet and find open-sky area.
             // Spawn vehicle to open sky area found.
 
-
+            ref var planet = ref GameState.Planet;
             if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
                 if(!vehicle.vehicleHeightMap.OpenSky)
@@ -90,7 +90,7 @@ namespace Vehicle
                 entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
                     new Vec2f(1.0f, -1));
 
-                if (!GameState.VehicleAISystem.IsPathEmpty(ref planet))
+                if (!GameState.VehicleAISystem.IsPathEmpty())
                 {
                     vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
 
@@ -129,7 +129,7 @@ namespace Vehicle
                 entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
                     new Vec2f(1.0f, 5));
 
-                if (GameState.VehicleAISystem.IsPathEmpty(ref planet))
+                if (GameState.VehicleAISystem.IsPathEmpty())
                 {
                     vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
                     GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
@@ -139,7 +139,7 @@ namespace Vehicle
                     UnityEngine.Debug.Log("LANDING");
                     movementSpeed = new Vec2f(movementSpeed.X, -25f);
 
-                    if(entityBoxBorders.IsCollidingBottom(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+                    if(entityBoxBorders.IsCollidingBottom(vehicle.vehiclePhysicsState2D.angularVelocity))
                     {
                         vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
                         GameState.VehicleAISystem.StopAI();
@@ -151,21 +151,21 @@ namespace Vehicle
         // Check if giving path is empty.
         // Definition of method.
 
-        public bool IsPathEmpty(ref Planet.PlanetState planet)
+        public bool IsPathEmpty()
         {
             if (vehicle == null || particlePosition == null || movementSpeed == null)
                 return false;
 
             // If is colliding bottom-top stop y movement
-            if (entityBoxBorders.IsCollidingTop(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            if (entityBoxBorders.IsCollidingTop(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
-            else if (entityBoxBorders.IsCollidingRight(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            else if (entityBoxBorders.IsCollidingRight(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
-            else if (entityBoxBorders.IsCollidingLeft(planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
+            else if (entityBoxBorders.IsCollidingLeft(vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }

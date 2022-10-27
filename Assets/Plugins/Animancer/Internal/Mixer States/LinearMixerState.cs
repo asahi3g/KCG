@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
-using Object = UnityEngine.Object;
 
 namespace Animancer
 {

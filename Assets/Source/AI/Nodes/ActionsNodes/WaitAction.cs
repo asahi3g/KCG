@@ -1,6 +1,4 @@
-﻿using Entitas;
-using Enums;
-using Planet;
+﻿using Enums;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +7,9 @@ namespace Node
 {
     public class WaitAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.WaitAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.WaitAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
+
         public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
@@ -20,15 +19,15 @@ namespace Node
             return blackboardEntries;
         }
 
-        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
             nodeEntity.nodeTime.StartTime = Time.realtimeSinceStartup;
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
-        public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnUpdate(NodeEntity nodeEntity)
         {
-            ref AI.BlackBoard blackboard = ref planet.EntitasContext.agent.GetEntityWithAgentID(
+            ref AI.BlackBoard blackboard = ref GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(
                 nodeEntity.nodeOwner.AgentID).agentController.Controller.BlackBoard;
 
             float elapsed = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
@@ -38,7 +37,7 @@ namespace Node
                 nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
-        public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnExit(NodeEntity nodeEntity)
         {
         }
     }

@@ -1,6 +1,5 @@
 ﻿//imports UnityEngine
 
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using KMath;
 
 namespace Collisions

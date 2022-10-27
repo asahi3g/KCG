@@ -13,14 +13,15 @@ namespace KGUI
         
         private ProgressBar progressBar;
         private float fuelLevel;
-        private readonly TextWrapper infoTextWrapper = new();
+        private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {
             base.Init();
 
+            ref var planet = ref GameState.Planet;
             ID = ElementEnums.FuelIndicator;
-            fuelLevel = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Fuel : 0.0f;
+            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", AtlasType.Gui);
@@ -34,7 +35,8 @@ namespace KGUI
         {
             base.Update();
             
-            fuelLevel = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Fuel : 0.0f;
+            ref var planet = ref GameState.Planet;
+            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
             
             if (fuelLevel <= 0)
             {

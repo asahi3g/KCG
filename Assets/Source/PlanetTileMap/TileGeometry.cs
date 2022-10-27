@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using Collisions;
-using Enums.Tile;
 using KMath;
 
 namespace PlanetTileMap
@@ -25,81 +24,81 @@ namespace PlanetTileMap
             {
                 // Error
                 default,
-                
+
                 // C1, C2, C3, C4
-                new(0f, 1f), new(1f, 1f), new(1f, 0f), new(0f, 0f),
-                
+                new Vec2f(0f, 1f), new Vec2f(1f, 1f), new Vec2f(1f, 0f), new Vec2f(0f, 0f),
+
                 // M1, M2, M3, M4
-                new(0.5f, 1f), new(1f, 0.5f), new(0.5f, 0f), new(0f, 0.5f)
+                new Vec2f(0.5f, 1f), new Vec2f(1f, 0.5f), new Vec2f(0.5f, 0f), new Vec2f(0f, 0.5f)
             };
             
             LinesArray = new Line2D[]
             {
                 default, // Error
-                
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C2]), // L_C1_C2
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C3]), // L_C1_C3
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C4]), // L_C1_C4
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M1]), // L_C1_M1
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M2]), // L_C1_M2
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M3]), // L_C1_M3
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M4]), // L_C1_M4
-                
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C1]), // L_C2_C1
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C3]), // L_C2_C3
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C4]), // L_C2_C4
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M1]), // L_C2_M1
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M2]), // L_C2_M2
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M3]), // L_C2_M3
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M4]), // L_C2_M4
-                
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C1]), // L_C3_C1
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C2]), // L_C3_C2
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C4]), // L_C3_C4
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M1]), // L_C3_M1
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M2]), // L_C3_M2
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M3]), // L_C3_M3
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M4]), // L_C3_M4
-                
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C1]), // L_C4_C1
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C2]), // L_C4_C2
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C3]), // L_C4_C3
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M1]), // L_C4_M1
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M2]), // L_C4_M2
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M3]), // L_C4_M3
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M4]), // L_C4_M4
-                
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C1]), // L_M1_C1
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C2]), // L_M1_C2
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C3]), // L_M1_C3
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C4]), // L_M1_M1
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M2]), // L_M1_M2
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M3]), // L_M1_M3
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M4]), // L_M1_M4
-                
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C1]), // L_M2_C1
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C2]), // L_M2_C2
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C3]), // L_M2_C3
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C4]), // L_M2_M1
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M1]), // L_M2_M1
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M3]), // L_M2_M3
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M4]), // L_M2_M4
-                
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C1]), // L_M3_C1
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C2]), // L_M3_C2
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C3]), // L_M3_C3
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C4]), // L_M3_M1
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M1]), // L_M3_M1
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M2]), // L_M3_M2
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M4]), // L_M3_M4
-                
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C1]), // L_M4_C1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C2]), // L_M4_C2
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C3]), // L_M4_C3
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C4]), // L_M4_M1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M1]), // L_M4_M1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M2]), // L_M4_M2
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M3]), // L_M4_M3
+
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.C2]), // L_C1_C2
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.C3]), // L_C1_C3
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.C4]), // L_C1_C4
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.M1]), // L_C1_M1
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.M2]), // L_C1_M2
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.M3]), // L_C1_M3
+                new Line2D(PointsArray[(int) TilePoint.C1], PointsArray[(int) TilePoint.M4]), // L_C1_M4
+
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.C1]), // L_C2_C1
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.C3]), // L_C2_C3
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.C4]), // L_C2_C4
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.M1]), // L_C2_M1
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.M2]), // L_C2_M2
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.M3]), // L_C2_M3
+                new Line2D(PointsArray[(int) TilePoint.C2], PointsArray[(int) TilePoint.M4]), // L_C2_M4
+
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.C1]), // L_C3_C1
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.C2]), // L_C3_C2
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.C4]), // L_C3_C4
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.M1]), // L_C3_M1
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.M2]), // L_C3_M2
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.M3]), // L_C3_M3
+                new Line2D(PointsArray[(int) TilePoint.C3], PointsArray[(int) TilePoint.M4]), // L_C3_M4
+
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.C1]), // L_C4_C1
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.C2]), // L_C4_C2
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.C3]), // L_C4_C3
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.M1]), // L_C4_M1
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.M2]), // L_C4_M2
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.M3]), // L_C4_M3
+                new Line2D(PointsArray[(int) TilePoint.C4], PointsArray[(int) TilePoint.M4]), // L_C4_M4
+
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.C1]), // L_M1_C1
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.C2]), // L_M1_C2
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.C3]), // L_M1_C3
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.C4]), // L_M1_M1
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.M2]), // L_M1_M2
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.M3]), // L_M1_M3
+                new Line2D(PointsArray[(int) TilePoint.M1], PointsArray[(int) TilePoint.M4]), // L_M1_M4
+
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.C1]), // L_M2_C1
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.C2]), // L_M2_C2
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.C3]), // L_M2_C3
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.C4]), // L_M2_M1
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.M1]), // L_M2_M1
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.M3]), // L_M2_M3
+                new Line2D(PointsArray[(int) TilePoint.M2], PointsArray[(int) TilePoint.M4]), // L_M2_M4
+
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.C1]), // L_M3_C1
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.C2]), // L_M3_C2
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.C3]), // L_M3_C3
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.C4]), // L_M3_M1
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.M1]), // L_M3_M1
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.M2]), // L_M3_M2
+                new Line2D(PointsArray[(int) TilePoint.M3], PointsArray[(int) TilePoint.M4]), // L_M3_M4
+
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.C1]), // L_M4_C1
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.C2]), // L_M4_C2
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.C3]), // L_M4_C3
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.C4]), // L_M4_M1
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.M1]), // L_M4_M1
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.M2]), // L_M4_M2
+                new Line2D(PointsArray[(int) TilePoint.M4], PointsArray[(int) TilePoint.M3]), // L_M4_M3
             };
 
             ShapeLinesCount = new[]

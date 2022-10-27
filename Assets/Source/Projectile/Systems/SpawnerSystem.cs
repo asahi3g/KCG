@@ -7,13 +7,13 @@ namespace Projectile
     {
         private static int UniqueID;
 
-        public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction, 
+        public ProjectileEntity Spawn(Vec2f position, Vec2f direction, 
             Enums.ProjectileType projectileType, int agentOwnerId, bool isFirstHit = true)
         {
             ProjectileProperties projectileProperties = 
                                     GameState.ProjectileCreationApi.GetRef((int)projectileType);
 
-            ProjectileEntity entity = projectileContext.CreateEntity();
+            ProjectileEntity entity = GameState.Planet.EntitasContext.projectile.CreateEntity();
             entity.isProjectileFirstFrame = true;
             entity.AddProjectileID(UniqueID++, -1, agentOwnerId);
             entity.AddProjectileStart(position, Time.realtimeSinceStartup);
@@ -39,10 +39,10 @@ namespace Projectile
             return entity;
         }
 
-        public ProjectileEntity Spawn(ProjectileContext projectileContext, Vec2f position, Vec2f direction,
+        public ProjectileEntity Spawn(Vec2f position, Vec2f direction,
             Enums.ProjectileType projectileType, int damage, int agentOwnerId, bool isFirstHit = true)
         {
-            ProjectileEntity entity = Spawn(projectileContext, position, direction, projectileType, agentOwnerId, isFirstHit);
+            ProjectileEntity entity = Spawn(position, direction, projectileType, agentOwnerId, isFirstHit);
             entity.AddProjectileDamage(damage);
 
             return entity;

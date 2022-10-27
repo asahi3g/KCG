@@ -4,9 +4,9 @@ namespace FloatingText
 {
     public class FloatingTextDrawSystem
     {
-        public void Draw(FloatingTextContext FloatingTextContext, UnityEngine.Transform transform, int drawOrder)
+        public void Draw(UnityEngine.Transform transform, int drawOrder)
         {
-            var entities = FloatingTextContext.GetEntities();
+            var entities = GameState.Planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {

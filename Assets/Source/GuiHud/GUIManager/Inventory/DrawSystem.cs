@@ -9,8 +9,11 @@ namespace Inventory
     {
         const int DEFAULT_SCREEN_HIGHT = 1080;
 
-        public void Draw(Contexts contexts, InventoryList inventoryList)
+        public void Draw()
         {
+            ref var planet = ref GameState.Planet;
+            var inventoryList = planet.InventoryList;
+            
             // Draw tool bar.
             for (int i = 0; i < inventoryList.Length; i++)
             {
@@ -21,7 +24,7 @@ namespace Inventory
                 ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
                     inventoryEntity.inventoryEntity.InventoryModelID);
                 
-                DrawInventory(contexts, inventoryEntity, ref inventoryModel, true);
+                DrawInventory(inventoryEntity, ref inventoryModel, true);
             }
 
             for (int i = 0; i < inventoryList.Length; i++)
@@ -31,7 +34,7 @@ namespace Inventory
                     continue;
                 ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
                     inventoryEntity.inventoryEntity.InventoryModelID);
-                DrawInventory(contexts, inventoryEntity, ref inventoryModel, false);
+                DrawInventory(inventoryEntity, ref inventoryModel, false);
             }
 
             if (InventorySystemsState.MouseHold)
@@ -41,7 +44,7 @@ namespace Inventory
                 Vec2f pos = new Vec2f(mousePos.x, mousePos.y);
                 float size = 60f * scaleFacor;
 
-                ItemInventoryEntity itemEntity = contexts.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID);
+                ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID);
                 int SpriteID = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).InventorSpriteID;
 
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle);
@@ -49,7 +52,7 @@ namespace Inventory
             }
         }
 
-        private void DrawInventory(Contexts entitasContext, InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, bool isDrawingToolBar)
+        private void DrawInventory(InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, bool isDrawingToolBar)
         {
             // Get Inventory Info.
             int width = inventoryModel.Width;
@@ -84,7 +87,7 @@ namespace Inventory
             
                 DrawBorder(tilePosX, tilePosY, window.TileSize, window.SlotBorderOffset, i, inventoryEntity, ref inventoryModel, isDrawingToolBar);
            
-                DrawSlot(entitasContext, tilePosX, tilePosY, window.TileSize, window.SlotOffset, scaleFactor, inventoryEntity,
+                DrawSlot(tilePosX, tilePosY, window.TileSize, window.SlotOffset, scaleFactor, inventoryEntity,
                     ref inventoryModel, inventoryModel.Slots[i], isDrawingToolBar);
 
                 // Draw tool bar numbers.
@@ -143,7 +146,7 @@ namespace Inventory
             }
         }
 
-        void DrawSlot(Contexts contexts, float tilePosX, float tilePosY, float tileSize, float slotOffset,
+        void DrawSlot(float tilePosX, float tilePosY, float tileSize, float slotOffset,
             float scaleFactor, InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, GridSlot gridSlot, bool isDrawingToolBar)
         {
             float sizeX = tileSize - 2 * slotOffset;
@@ -180,7 +183,7 @@ namespace Inventory
             Slot slot = inventoryEntity.inventoryEntity.Slots[gridSlot.SlotID];
             if (slot.ItemID != -1)
             {
-                ItemInventoryEntity entity = contexts.itemInventory.GetEntityWithItemID(slot.ItemID);
+                ItemInventoryEntity entity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(slot.ItemID);
                 ItemProprieties itemProprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(itemProprieties.InventorSpriteID, Enums.AtlasType.Particle);
                 GameState.Renderer.DrawSpriteGui(posX, posY, sizeX, sizeY, sprite);

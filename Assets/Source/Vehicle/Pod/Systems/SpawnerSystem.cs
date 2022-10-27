@@ -1,8 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
-using Entitas;
 using KMath;
-using Projectile;
 using Enums;
 
 namespace Vehicle.Pod
@@ -18,13 +15,13 @@ namespace Vehicle.Pod
             PodCreationApi = podCreationApi;
         }
 
-        public PodEntity Spawn(PodContext contexts, PodType podType, Vec2f position)
+        public PodEntity Spawn(PodType podType, Vec2f position)
         {
             PodProperties podProperties =
                                     PodCreationApi.GetRef((int)podType);
 
             // Create Entity
-            var entity = contexts.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.pod.CreateEntity();
 
             // Add ID Component
             entity.AddVehiclePodID(UniqueID, -1);

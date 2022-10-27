@@ -35,7 +35,7 @@ namespace AI
         static void Init()
         {
             // Get existing open window or if none, make a new one:
-            AIEditor window = (AIEditor)EditorWindow.GetWindow(typeof(AIEditor));
+            AIEditor window = (AIEditor)GetWindow(typeof(AIEditor));
             window.minSize = new Vector2(800, 600);
             window.Show();
         }

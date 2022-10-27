@@ -1,7 +1,6 @@
 //imports UnityEngine
 
 using KMath;
-using KGUI.Elements;
 using Utility;
 
 namespace TGen
@@ -19,7 +18,7 @@ namespace TGen
 
         private int selectedTileIsotype;
 
-        public void Initialize(ref Planet.PlanetState Planet)
+        public void Initialize()
         {
             var xInterval = cellSize * interval;
 

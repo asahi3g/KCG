@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using KMath;
-using Planet;
 using Enums;
 using System;
 
@@ -9,8 +8,9 @@ namespace Node
 {
     public class WaterAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.WaterAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.WaterAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
+
         public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
@@ -20,9 +20,10 @@ namespace Node
             return blackboardEntries;
         }
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             MechEntity plant = null;
             Vec2f planterPosition = Vec2f.Zero;
             if (agentEntity.isAgentPlayer)
@@ -35,9 +36,9 @@ namespace Node
                 {
                     MechEntity mech = (planet.MechList.Get(i));
 
-                    if (mech.GetProperties().Group == Enums.MechGroup.Plant)
+                    if (mech.GetProperties().Group == MechGroup.Plant)
                         plant = mech;
-                    else if (mech.mechType.mechType == Enums.MechType.Planter)
+                    else if (mech.mechType.mechType == MechType.Planter)
                     {
                         if (mech.mechPlanter.GotPlant)
                             plant = planet.EntitasContext.mech.GetEntityWithMechID(mech.mechPlanter.PlantMechID);
@@ -72,10 +73,10 @@ namespace Node
             if (plant != null)
             {
                 plant.mechPlant.WaterLevel = Mathf.Min(plant.mechPlant.WaterLevel + 10f, 100);
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                nodeEntity.nodeExecution.State = NodeState.Success;
                 return;
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+            nodeEntity.nodeExecution.State = NodeState.Fail;
         }
     }
 }

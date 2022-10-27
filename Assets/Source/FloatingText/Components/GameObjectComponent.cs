@@ -1,7 +1,6 @@
 ﻿//imports UnityEngine
 
 using Entitas;
-using KMath;
 
 namespace FloatingText
 {

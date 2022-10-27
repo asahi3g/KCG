@@ -5,11 +5,12 @@ namespace Node
 {
     public class ToolActionRemoveMech : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionRemoveMech; } }
+        public override NodeType Type => NodeType.ToolActionRemoveMech;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
@@ -24,7 +25,7 @@ namespace Node
                 planet.RemoveMech(mech.mechID.Index);
             }
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

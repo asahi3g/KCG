@@ -25,12 +25,12 @@ namespace Planet
             placementTool.UpdateToolGrid();
         }
 
-        public void Initialize(ref PlanetState Planet, UnityEngine.Material Material, UnityEngine.Transform transform)
+        public void Initialize(UnityEngine.Material Material, UnityEngine.Transform transform)
         {
             // Generating the map
             Vec2i mapSize = new Vec2i(32, 32);
 
-            Planet.InitializeTGen(Material, transform);
+            GameState.Planet.InitializeTGen(Material, transform);
 
             GameState.TGenGrid.InitStage1(mapSize);
 
@@ -41,7 +41,7 @@ namespace Planet
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
             placementTool = new ForegroundPlacementTool();
-            placementTool.Initialize(ref Planet);
+            placementTool.Initialize();
         }
     }
 }

@@ -1,17 +1,14 @@
-﻿using Entitas;
-using KMath;
+﻿using KMath;
 using Particle;
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Projectile
 {
     public class ProcessOnHit
     {
-        public void Update(ref Planet.PlanetState planet)
+        public void Update()
         {
+            ref var planet = ref GameState.Planet;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
                 ProjectileEntity projectileEntity = planet.ProjectileList.Get(i);
@@ -22,37 +19,37 @@ namespace Projectile
                 if (projectileEntity.projectileOnHit.AgentID != -1)
                 {
                     AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(projectileEntity.projectileOnHit.AgentID);
-                    OnHitAgent(projectileEntity, agent, ref planet);
+                    OnHitAgent(projectileEntity, agent);
                 }
 
                 switch (projectileEntity.projectileType.Type)
                 {
                     case Enums.ProjectileType.FragGrenade:
-                        FragGrenadeExplosive(ref planet, projectileEntity);
+                        FragGrenadeExplosive(projectileEntity);
                         break;
                     case Enums.ProjectileType.Grenade:
-                        Explosive(ref planet, projectileEntity);
+                        Explosive(projectileEntity);
                         break;
                     case Enums.ProjectileType.Rocket:
-                        Explosive(ref planet, projectileEntity);
+                        Explosive(projectileEntity);
                         break;
                     case Enums.ProjectileType.Arrow:
-                        Arrow(ref planet, projectileEntity);
+                        Arrow(projectileEntity);
                         break;
                     case Enums.ProjectileType.GasGrenade:
-                        GasGrenade(ref planet, projectileEntity);
+                        GasGrenade(projectileEntity);
                         break;
                     case Enums.ProjectileType.Flare:
-                        FlareGrenade(ref planet, projectileEntity);
+                        FlareGrenade(projectileEntity);
                         break;
                     default:
-                        Default(ref planet, projectileEntity);
+                        Default(projectileEntity);
                         break;
                 }
             }
         }
 
-        public void OnHitAgent(ProjectileEntity projectileEntity, AgentEntity agentEntity, ref Planet.PlanetState planet)
+        public void OnHitAgent(ProjectileEntity projectileEntity, AgentEntity agentEntity)
         {
             if (!agentEntity.hasAgentStats)
                 return;
@@ -62,23 +59,25 @@ namespace Projectile
             {
                 int damage = projectileEntity.projectileDamage.Damage;
 
-                planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
+                GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
             }
         }
 
-        public void Default(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void Default(ProjectileEntity pEntity)
         {
-            planet.AddParticleEmitter(
-                pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+            GameState.Planet.AddParticleEmitter(
+                pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
             pEntity.isProjectileDelete = true;
         }
 
-        public void Explosive(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void Explosive(ProjectileEntity pEntity)
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
+            ref var planet = ref GameState.Planet;
+            
             if (elapse <= 0.05f)
-                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
 
             if (elapse - pEntity.projectileExplosive.Elapse <= 0.05f)
                 return;
@@ -113,12 +112,14 @@ namespace Projectile
         }
 
 
-        public void FragGrenadeExplosive(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void FragGrenadeExplosive(ProjectileEntity pEntity)
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ExplosionEmitter);
-            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.ShrapnelEmitter);
+            ref var planet = ref GameState.Planet;
+            
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
+            planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
 
             Vec2f pos = pEntity.projectileOnHit.LastHitPos;
             float radius = pEntity.projectileExplosive.BlastRadius;
@@ -149,14 +150,14 @@ namespace Projectile
             pEntity.isProjectileDelete = true;
         }
 
-        public void Arrow(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void Arrow(ProjectileEntity pEntity)
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
             if (elapse <= 0.05f)
             {
-                planet.AddParticleEmitter(
-                    pEntity.projectilePhysicsState.Position, Particle.ParticleEmitterType.DustEmitter);
+                GameState.Planet.AddParticleEmitter(
+                    pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
                 pEntity.projectilePhysicsState.Velocity = Vec2f.Zero;
                 return;
             }
@@ -165,7 +166,7 @@ namespace Projectile
                 pEntity.isProjectileDelete = true;
         }
 
-        public void GasGrenade(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void GasGrenade(ProjectileEntity pEntity)
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
@@ -173,7 +174,7 @@ namespace Projectile
                 pEntity.isProjectileDelete = true;
         }
 
-        public void FlareGrenade(ref Planet.PlanetState planet, ProjectileEntity pEntity)
+        public void FlareGrenade(ProjectileEntity pEntity)
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
@@ -182,7 +183,7 @@ namespace Projectile
             if(!pEntity.projectileOnHit.ParticleSpawned)
             {
                 pEntity.projectileOnHit.ParticleSpawned = true;
-                planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(0,0));
+                GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(0,0));
             }
 
             if (elapse >= 7.0f)

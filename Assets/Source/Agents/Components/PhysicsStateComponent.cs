@@ -1,6 +1,5 @@
 using Entitas;
 using KMath;
-using System;
 
 namespace Agent
 {

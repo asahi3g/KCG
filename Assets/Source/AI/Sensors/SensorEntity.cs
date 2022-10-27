@@ -1,6 +1,5 @@
 ﻿using Enums;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 
 namespace AI.Sensor
 {

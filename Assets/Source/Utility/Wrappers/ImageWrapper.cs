@@ -3,8 +3,6 @@
 using Enums;
 using KMath;
 using UnityEngine.UI;
-using Utility;
-using Texture = Utility.Texture;
 
 namespace Utility
 {

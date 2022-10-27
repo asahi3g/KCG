@@ -4,6 +4,7 @@ using KMath;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Collisions;
 using PlanetTileMap;
 
 namespace Planet.Unity
@@ -12,7 +13,7 @@ namespace Planet.Unity
     {
         [SerializeField] Material Material;
 
-        public PlanetState Planet;
+
 
 
         AgentEntity Player;
@@ -48,13 +49,13 @@ namespace Planet.Unity
 
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/untitled.tmj", "generated-maps/");
 
-            int materialCount = Enum.GetNames(typeof(PlanetTileMap.MaterialType)).Length;
+            int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.GeometryTileShape)).Length;
 
-            PlanetTileMap.TileProperty[][] MaterialGeometryMap = new PlanetTileMap.TileProperty[materialCount][];
+            TileProperty[][] MaterialGeometryMap = new TileProperty[materialCount][];
             for(int i = 0; i < materialCount; i++)
             {
-                MaterialGeometryMap[i] = new PlanetTileMap.TileProperty[geometryTilesCount];
+                MaterialGeometryMap[i] = new TileProperty[geometryTilesCount];
             }
 
 
@@ -66,7 +67,7 @@ namespace Planet.Unity
 
              for(int i = 0; i < GameState.TileCreationApi.TilePropertyArray.Length; i++)
             {
-                ref PlanetTileMap.TileProperty property = ref GameState.TileCreationApi.TilePropertyArray[i];
+                ref TileProperty property = ref GameState.TileCreationApi.TilePropertyArray[i];
 
                 MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
 
@@ -85,28 +86,29 @@ namespace Planet.Unity
             mapHeight = ((mapHeight + 16 - 1) / 16) * 16; // multiple of 16
 
             Debug.Log(mapWidth + " " + mapHeight);
+            
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
+            planet.Init(mapSize);
 
             int PlayerFaction = 0;
 
-            Player = Planet.AddPlayer(new Vec2f(3.0f, 4), PlayerFaction);
+            Player = planet.AddPlayer(new Vec2f(3.0f, 4), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
+            //planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD();
-            GameState.MechGUIDrawSystem.Initialize(ref Planet);
+            planet.InitializeSystems(Material, transform);
+            planet.InitializeHUD();
+            GameState.MechGUIDrawSystem.Initialize();
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-            /*Planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+            /*planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
                 Debug.Log("loaded!");*/
 
             for(int j = 0; j < tileMap.height; j++)
@@ -120,28 +122,28 @@ namespace Planet.Unity
 
                         TileID tileID = MaterialGeometryMap[(int)tileMaterialAndShape.Material][(int)tileMaterialAndShape.Shape].TileID;
 
-                        Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
+                        planet.TileMap.GetTile(i, j).FrontTileID = tileID;
                     }
                 }
             }
 
-            /*for(int i = 0; i < Planet.TileMap.MapSize.X; i++)
+            /*for(int i = 0; i < planet.TileMap.MapSize.X; i++)
             {
-                Planet.TileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
-                Planet.TileMap.GetTile(i, Planet.TileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
+                planet.TileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
+                planet.TileMap.GetTile(i, planet.TileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
             }
 
-            for(int j = 0; j < Planet.TileMap.MapSize.Y; j++)
+            for(int j = 0; j < planet.TileMap.MapSize.Y; j++)
             {
-                Planet.TileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
-                Planet.TileMap.GetTile(Planet.TileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
+                planet.TileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
+                planet.TileMap.GetTile(planet.TileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
             }*/
 
             //GenerateMap();
 
-            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
             AddItemsToPlayer();
 
@@ -157,8 +159,8 @@ namespace Planet.Unity
 
             //UpdateMode(ref Planet, Player);
         }
-        Collisions.Box2D otherBox = new Collisions.Box2D{x = 7, y = 21, w = 1.0f, h = 1.0f};
-        Collisions.Box2D orrectedBox = new Collisions.Box2D{x = 0, y = 17, w = 1.0f, h = 1.0f};
+        Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
+        Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
 
         public void Update()
         {
@@ -179,8 +181,8 @@ namespace Planet.Unity
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
 
-            
-            ref var tileMap = ref Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
             Material material = Material;
 
             if(Input.GetKeyDown(KeyCode.RightArrow))
@@ -195,7 +197,7 @@ namespace Planet.Unity
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                PlanetManager.Save(Planet, "generated-maps/movement-map.kmap");
+                PlanetManager.Save(planet, "generated-maps/movement-map.kmap");
                 Debug.Log("saved!");
             }
 
@@ -204,18 +206,18 @@ namespace Planet.Unity
                 var camera = Camera.main;
                 Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
 
-                Planet.Destroy();
-                Planet = PlanetManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.Destroy();
+                planet = PlanetManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
 
-               Planet.InitializeSystems(Material, transform);
-               Planet.InitializeHUD();
-               GameState.MechGUIDrawSystem.Initialize(ref Planet);
+               planet.InitializeSystems(Material, transform);
+               planet.InitializeHUD();
+               GameState.MechGUIDrawSystem.Initialize();
 
-               Player = Planet.AddPlayer(new Vec2f(3.0f, 20));
+               Player = planet.AddPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;
                inventoryID = Player.agentInventory.InventoryID;
 
@@ -226,7 +228,7 @@ namespace Planet.Unity
 
 
             CharacterDisplay.Update();
-            Planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(Time.deltaTime, Material, transform);
 
         }
         Texture2D texture;
@@ -236,7 +238,7 @@ namespace Planet.Unity
             /*if (!Init)
                 return;
 
-            Planet.DrawHUD(Player); 
+            GameState.Planet.DrawHUD(Player); 
             GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
 
             if (showMechInventory)
@@ -289,14 +291,15 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
+            ref var planet = ref GameState.Planet;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
-            if (x >= 0 && x < Planet.TileMap.MapSize.X &&
-            y >= 0 && y < Planet.TileMap.MapSize.Y)
+            if (x >= 0 && x < planet.TileMap.MapSize.X &&
+            y >= 0 && y < planet.TileMap.MapSize.Y)
             {
                 //TODO: SET TO Get(selectedMechIndex)
                 var mech = GameState.MechCreationApi.Get((Enums.MechType)selectedMechIndex);
@@ -312,13 +315,13 @@ namespace Planet.Unity
                 {
                     for (int j = 0; j < yRange; j++)
                     {
-                        if (Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                        if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
                             DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
                             break;
                         }
-                        if (Planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
+                        if (planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
                             DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
@@ -343,18 +346,19 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            Planet.DrawDebug();
+            ref var planet = ref GameState.Planet;
+            planet.DrawDebug();
 
             // Set the color of gizmos
             Gizmos.color = Color.green;
             
             // Draw a cube around the map
-            if(Planet.TileMap != null)
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+            if(planet.TileMap != null)
+            Gizmos.DrawWireCube(Vector3.zero, new Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
             // Draw lines around player if out of bounds
             if (Player != null)
-                if(Player.agentPhysicsState.Position.X -10.0f >= Planet.TileMap.MapSize.X)
+                if(Player.agentPhysicsState.Position.X -10.0f >= planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
                 
@@ -372,7 +376,7 @@ namespace Planet.Unity
                 }
 
             // Draw Chunk Visualizer
-            ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
+            ChunkVisualizer.Draw(0.5f, 0.0f);
 
 
             bool drawRayCast = false;
@@ -384,7 +388,7 @@ namespace Planet.Unity
                 p.z = 20;
                 Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
 
-                var rayCastResult = Collisions.Collisions.RayCastAgainstTileMap(Planet.TileMap, new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
+                var rayCastResult = Collisions.Collisions.RayCastAgainstTileMap(new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)));
                 
                 Vec2f startPos = Player.agentPhysicsState.Position;
                 Vec2f endPos = new Vec2f(mouse.x, mouse.y);
@@ -407,7 +411,7 @@ namespace Planet.Unity
 
             if (testCircleCollision)
             {
-                int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(Planet, new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
+                int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
 
                 Gizmos.color = Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
@@ -420,8 +424,7 @@ namespace Planet.Unity
 
             if (testRectangleCollision)
             {
-                int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(Planet, 
-                new KMath.AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
+                int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(new AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
 
                 Gizmos.color = Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
@@ -474,27 +477,28 @@ namespace Planet.Unity
 
         public void AddItemsToPlayer()
         {
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG, Planet.EntitasContext);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol, Planet.EntitasContext);
-            //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword, Planet.EntitasContext);
-           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade, Planet.EntitasContext);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+            //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
+           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
         }
 
-            private void UpdateMode(ref Planet.PlanetState planetState, AgentEntity agentEntity)
+            private void UpdateMode(AgentEntity agentEntity)
         {
+            ref var planet = ref GameState.Planet;
             agentEntity.agentPhysicsState.Invulnerable = false;
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
-            planetState.cameraFollow.canFollow = false;
+            planet.CameraFollow.canFollow = false;
 
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
-            planetState.cameraFollow.canFollow = true;
+            planet.CameraFollow.canFollow = true;
         }
 
 

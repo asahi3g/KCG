@@ -96,7 +96,7 @@ namespace Utility
                 timeLeft -= Time.deltaTime;
                 if(timeLeft <= 0)
                 {
-                    GameObject.Destroy(textObject);
+                    Object.Destroy(textObject);
                 }
             }
         }

@@ -2,7 +2,6 @@
 
 using Enums;
 using KGUI.Elements;
-using KMath;
 using UnityEngine.UI;
 using Utility;
 
@@ -14,15 +13,16 @@ namespace KGUI
         
         private ProgressBar progressBar;
         private float foodAmount;
-        private readonly TextWrapper infoText = new();
+        private readonly TextWrapper infoText = new TextWrapper();
 
         public override void Init()
         {
+            ref var planet = ref GameState.Planet;
             base.Init();
             
             ID = ElementEnums.FoodIndicator;
             
-            foodAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Food : 0.0f;
+            foodAmount = planet.Player != null ? planet.Player.agentStats.Food : 0.0f;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", AtlasType.Gui);
@@ -35,7 +35,8 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            foodAmount = GameState.GUIManager.Planet.Player != null ? GameState.GUIManager.Planet.Player.agentStats.Food : 0.0f;
+            ref var planet = ref GameState.Planet;
+            foodAmount = planet.Player != null ? planet.Player.agentStats.Food : 0.0f;
             progressBar.Update(foodAmount);
             infoText.Update();
         }

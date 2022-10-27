@@ -40,7 +40,7 @@ namespace TGen
             {
                 for (int x = (int)(bottomLeft.x - 10); x < grid.GridTiles.GetLength(0) && x <= (bottomRight.x + 10); x++)
                 {
-                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                    if (!ObjectMesh.isOnScreen(x, y))
                         continue;
 
                     if (x >= 0 && y >= 0)

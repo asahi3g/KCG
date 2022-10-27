@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KMath
+﻿namespace KMath
 {
     public class Projectiles
     {

@@ -82,9 +82,9 @@ public class RayCastTest : UnityEngine.MonoBehaviour
     public SquareWithRenderer squareWithRenderer;
     public RayRendererDebug rayRenderer;
 
-    public PlanetState Planet;
+
     public UnityEngine.Material Material;
-    public Vec2i mapSize = new(32, 32);
+    public Vec2i mapSize = new Vec2i(32, 32);
     
     // Start is called before the first frame update
 
@@ -100,9 +100,10 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         rayRenderer.Init(new Line2D(squareWithRenderer.Box.center, new Vec2f(0f, 0f)));
 
         GameResources.Initialize();
-        Planet = new PlanetState();
-        Planet.Init(mapSize);
-        Planet.InitializeSystems(Material, transform);
+
+        ref var planet = ref GameState.Planet;
+        planet.Init(mapSize);
+        planet.InitializeSystems(Material, transform);
         
         GenerateMap();
     }
@@ -134,11 +135,11 @@ public class RayCastTest : UnityEngine.MonoBehaviour
             UnityEngine.Debug.Log($"{(int)mouse.x}, {(int)mouse.y}");
         }
         
-        rayRenderer.RayTileCollisionCheck(Planet.TileMap);
+        rayRenderer.RayTileCollisionCheck();
 
         RegenerateMap();
         
-        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
     SquareWithRenderer CreateSquare(Vec2f position, Vec2f size, UnityEngine.Color color, bool isDraggable, string name = "Square")
@@ -155,6 +156,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
     
     void GenerateMap()
     {
+        ref var planet = ref GameState.Planet;
         CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
         CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
         CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
@@ -174,7 +176,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -182,7 +184,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -190,17 +192,18 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
     void RegenerateMap()
     {
+        ref var planet = ref GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -208,7 +211,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -216,7 +219,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }

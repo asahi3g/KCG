@@ -14,7 +14,7 @@ using ToonyColorsPro.Utilities;
 public class TCP2_OutlineInspector : MaterialEditor
 {
 	//Properties
-	private Material targetMaterial { get { return target as Material; } }
+	private Material targetMaterial => target as Material;
 	private Shader mCurrentShader;
 	private bool mIsOutlineBlending;
 	private bool mShaderModel2;

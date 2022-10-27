@@ -7,25 +7,26 @@ namespace Node.Action
 {
     public class PickUpAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.PickUpAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.PickUpAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemParticleEntity itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 #if DEBUG
             if (itemEntity == null)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                nodeEntity.nodeExecution.State = NodeState.Fail;
                 return;
             }
 
             if (!agentEntity.hasAgentInventory)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                nodeEntity.nodeExecution.State = NodeState.Success;
                 return;
             }
 #endif
@@ -37,13 +38,14 @@ namespace Node.Action
             }
             itemEntity.isItemUnpickable = true;
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
+            nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
-        public override void OnUpdate( ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnUpdate( NodeEntity nodeEntity)
         {
-            ItemParticleEntity itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             
             if (itemEntity.hasItemType && itemEntity.hasItemDrawPosition2D)
             {
@@ -56,11 +58,11 @@ namespace Node.Action
                     if (agentEntity.hasAgentInventory)
                     {
                         int inventoryID = agentEntity.agentInventory.InventoryID;
-                        GameState.InventoryManager.PickUp(planet.EntitasContext, itemEntity, inventoryID);
-                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                        GameState.InventoryManager.PickUp(itemEntity, inventoryID);
+                        nodeEntity.nodeExecution.State = NodeState.Success;
                         return;
                     }
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                    nodeEntity.nodeExecution.State = NodeState.Fail;
                 }
 
                 var itemDrawPosition2D = itemEntity.itemDrawPosition2D;

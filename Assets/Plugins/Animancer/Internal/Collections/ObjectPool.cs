@@ -146,8 +146,8 @@ namespace Animancer
             /// <see cref="ObjectPool{T}.Disposable.Item"/> and `item`.
             /// </summary>
             public static ObjectPool<T>.Disposable Acquire<T>(out T item)
-                where T : class, new()
-                => new ObjectPool<T>.Disposable(out item);
+                where T : class, new() =>
+                new ObjectPool<T>.Disposable(out item);
 
             /************************************************************************************************************************/
 

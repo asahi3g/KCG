@@ -66,7 +66,7 @@ namespace ToonyColorsPro
 		{
 #pragma warning disable 414
 			[Serialization.SerializeAs("ver")] string tcp2version = ShaderGenerator2.TCP2_VERSION;
-			[Serialization.SerializeAs("unity")] string unityVersion { get { return Application.unityVersion; } }
+			[Serialization.SerializeAs("unity")] string unityVersion => Application.unityVersion;
 #pragma warning restore 414
 
 			internal const string kSerializationPrefix = "/* TCP_DATA ";
@@ -82,8 +82,10 @@ namespace ToonyColorsPro
 			[Serialization.SerializeAs("features")] internal List<string> Features = new List<string>();
 			internal List<string> ExtraTempFeatures = new List<string>();
 			[Serialization.SerializeAs("flags")] internal List<string> Flags = new List<string>();
-			[Serialization.SerializeAs("flags_extra")] internal Dictionary<string, List<string>> FlagsExtra = new Dictionary<string, List<string>>();
-			[Serialization.SerializeAs("keywords")] internal Dictionary<string, string> Keywords = new Dictionary<string, string>();
+			[Serialization.SerializeAs("flags_extra")] internal Dictionary<string, List<string>> FlagsExtra =
+				new Dictionary<string, List<string>>();
+			[Serialization.SerializeAs("keywords")] internal Dictionary<string, string> Keywords =
+				new Dictionary<string, string>();
 			internal bool isModifiedExternally = false;
 
 			// UI list of Shader Properties
@@ -98,20 +100,24 @@ namespace ToonyColorsPro
 			Dictionary<string, bool> headersExpanded = new Dictionary<string, bool>(); // the struct array above is always recreated, so we can't track expanded state there
 			List<ShaderProperty> visibleShaderProperties = new List<ShaderProperty>();
 			//Serialize all cached Shader Properties so that their custom implementation is saved, even if they are not used in the shader
-			[Serialization.SerializeAs("shaderProperties")] List<ShaderProperty> cachedShaderProperties = new List<ShaderProperty>();
+			[Serialization.SerializeAs("shaderProperties")] List<ShaderProperty> cachedShaderProperties =
+				new List<ShaderProperty>();
 			List<List<ShaderProperty>> shaderPropertiesPerPass;
-			[Serialization.SerializeAs("customTextures")] List<ShaderProperty.CustomMaterialProperty> customMaterialPropertiesList = new List<ShaderProperty.CustomMaterialProperty>();
+			[Serialization.SerializeAs("customTextures")] List<ShaderProperty.CustomMaterialProperty> customMaterialPropertiesList =
+				new List<ShaderProperty.CustomMaterialProperty>();
 			ReorderableLayoutList customTexturesLayoutList = new ReorderableLayoutList();
 
-			public ShaderProperty customMaterialPropertyShaderProperty = new ShaderProperty("_CustomMaterialPropertyDummy", ShaderProperty.VariableType.color_rgba);
+			public ShaderProperty customMaterialPropertyShaderProperty =
+				new ShaderProperty("_CustomMaterialPropertyDummy", ShaderProperty.VariableType.color_rgba);
 
-			internal ShaderProperty.CustomMaterialProperty[] CustomMaterialProperties { get { return customMaterialPropertiesList.ToArray(); } }
-			internal ShaderProperty[] VisibleShaderProperties { get { return visibleShaderProperties.ToArray(); } }
-			internal ShaderProperty[] AllShaderProperties { get { return cachedShaderProperties.ToArray(); } }
+			internal ShaderProperty.CustomMaterialProperty[] CustomMaterialProperties => customMaterialPropertiesList.ToArray();
+			internal ShaderProperty[] VisibleShaderProperties => visibleShaderProperties.ToArray();
+			internal ShaderProperty[] AllShaderProperties => cachedShaderProperties.ToArray();
 
 
 			// Code Injection properties
-			[Serialization.SerializeAs("codeInjection")] internal CodeInjectionManager codeInjection = new CodeInjectionManager();
+			[Serialization.SerializeAs("codeInjection")] internal CodeInjectionManager codeInjection =
+				new CodeInjectionManager();
 
 
 			internal string[] GetShaderPropertiesNeededFeaturesForPass(int passIndex)
@@ -180,7 +186,7 @@ namespace ToonyColorsPro
 			{
 				foreach (var f in ShaderProperty.AllOptionFeatures())
 				{
-					Utils.RemoveIfExists(this.Features, f);
+					Utils.RemoveIfExists(Features, f);
 				}
 			}
 
@@ -250,7 +256,7 @@ namespace ToonyColorsPro
 
 			internal static Config CreateFromShader(Shader shader)
 			{
-				var shaderImporter = ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
+				var shaderImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
 
 				var config = new Config
 				{
@@ -294,13 +300,13 @@ namespace ToonyColorsPro
 			//Copy implementations from this config to another
 			public void CopyImplementationsTo(Config otherConfig)
 			{
-				for (int i = 0; i < this.cachedShaderProperties.Count; i++)
+				for (int i = 0; i < cachedShaderProperties.Count; i++)
 				{
 					for (int j = 0; j < otherConfig.cachedShaderProperties.Count; j++)
 					{
-						if (this.cachedShaderProperties[i].Name == otherConfig.cachedShaderProperties[j].Name)
+						if (cachedShaderProperties[i].Name == otherConfig.cachedShaderProperties[j].Name)
 						{
-							otherConfig.cachedShaderProperties[j].implementations = this.cachedShaderProperties[i].implementations;
+							otherConfig.cachedShaderProperties[j].implementations = cachedShaderProperties[i].implementations;
 							otherConfig.cachedShaderProperties[j].CheckHash();
 							otherConfig.cachedShaderProperties[j].CheckErrors();
 							break;
@@ -316,7 +322,7 @@ namespace ToonyColorsPro
 
 			public void CopyCustomTexturesTo(Config otherConfig)
 			{
-				otherConfig.customMaterialPropertiesList = this.customMaterialPropertiesList;
+				otherConfig.customMaterialPropertiesList = customMaterialPropertiesList;
 				for (int i = 0; i < otherConfig.cachedShaderProperties.Count; i++)
 				{
 					otherConfig.cachedShaderProperties[i].ResolveShaderPropertyReferences();
@@ -532,7 +538,7 @@ namespace ToonyColorsPro
 							string normalizedLineEndings = sb.ToString().Replace("\r\n", "\n");
 							var fileHash = ShaderGenerator2.GetHash(normalizedLineEndings);
 
-							this.isModifiedExternally = string.Compare(fileHash, hash, StringComparison.Ordinal) != 0;
+							isModifiedExternally = string.Compare(fileHash, hash, StringComparison.Ordinal) != 0;
 						}
 
 						if (line.StartsWith(serializedPrefix) || line.StartsWith(serializedPrefixU))
@@ -620,7 +626,7 @@ namespace ToonyColorsPro
 
 								Func<object, string, object> onDeserializeImplementation = (impObj, impData) =>
 								{
-									return this.DeserializeImplementationHandler(impObj, impData, matchedSp);
+									return DeserializeImplementationHandler(impObj, impData, matchedSp);
 								};
 
 								var implementationHandling = new Dictionary<Type, Func<object, string, object>> { { typeof(ShaderProperty.Implementation), onDeserializeImplementation } };
@@ -1131,13 +1137,13 @@ namespace ToonyColorsPro
 
 			ShaderProperty.CustomMaterialProperty CreateUniqueCustomTexture(Type impType)
 			{
-				return new ShaderProperty.CustomMaterialProperty(this.customMaterialPropertyShaderProperty, impType);
+				return new ShaderProperty.CustomMaterialProperty(customMaterialPropertyShaderProperty, impType);
 			}
 
 			internal void ClearShaderProperties()
 			{
-				this.cachedShaderProperties.Clear();
-				this.visibleShaderProperties.Clear();
+				cachedShaderProperties.Clear();
+				visibleShaderProperties.Clear();
 			}
 
 			//Update available Shader Properties based on conditions
@@ -1154,25 +1160,25 @@ namespace ToonyColorsPro
 				Utils.AddIfMissing(Features, "UNITY_5_6");
 #endif
 #if UNITY_2017_1_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2017_1");
+				Utils.AddIfMissing(Features, "UNITY_2017_1");
 #endif
 #if UNITY_2018_1_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2018_1");
+				Utils.AddIfMissing(Features, "UNITY_2018_1");
 #endif
 #if UNITY_2018_2_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2018_2");
+				Utils.AddIfMissing(Features, "UNITY_2018_2");
 #endif
 #if UNITY_2018_3_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2018_3");
+				Utils.AddIfMissing(Features, "UNITY_2018_3");
 #endif
 #if UNITY_2019_1_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2019_1");
+				Utils.AddIfMissing(Features, "UNITY_2019_1");
 #endif
 #if UNITY_2019_2_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2019_2");
+				Utils.AddIfMissing(Features, "UNITY_2019_2");
 #endif
 #if UNITY_2019_3_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2019_3");
+				Utils.AddIfMissing(Features, "UNITY_2019_3");
 #endif
 				var parsedLines = template.GetParsedLinesFromConditions(this, null, null);
 
