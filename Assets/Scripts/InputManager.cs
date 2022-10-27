@@ -123,23 +123,23 @@ public class InputManager : UnityEngine.MonoBehaviour
     }
 
     // Detecting Input device from input actions
-    private Enums.eInputDevice DetectInputDevice()
+    private Enums.InputDeviceType DetectInputDevice()
     {
         // If any mouse or keyboard key detected, set input device to keyboard+mouse
         if(UnityEngine.Event.current.isKey ||
             UnityEngine.Event.current.isMouse)
         {
-            return Enums.eInputDevice.KeyboardMouse;
+            return Enums.InputDeviceType.KeyboardMouse;
         }
 
         // If any mouse hover event detected, set input device to keyboard+mouse
         if (UnityEngine.Input.GetAxis("Mouse X") != 0.0f ||
             UnityEngine.Input.GetAxis("Mouse Y") != 0.0f)
         {
-            return Enums.eInputDevice.KeyboardMouse;
+            return Enums.InputDeviceType.KeyboardMouse;
         }
 
         // Else, return none device.
-        return Enums.eInputDevice.Invalid;
+        return Enums.InputDeviceType.InvalidInputDeviceType;
     }
 }
