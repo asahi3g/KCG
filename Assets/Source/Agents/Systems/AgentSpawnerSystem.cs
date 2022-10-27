@@ -200,7 +200,7 @@ namespace Agent
                             Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
 
 
-                        entity.agentPhysicsState.Speed = 10.0f;
+                       // entity.agentPhysicsState.Speed = 10.0f;
                         entity.isAgentPlayer = true;
                         entity.isECSInput = true;
                         entity.AddECSInputXY(new Vec2f(0, 0), false, false);

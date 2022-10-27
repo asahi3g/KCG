@@ -154,12 +154,12 @@ namespace Particle
                         Smokes[i].transform.localScale += new UnityEngine.Vector3(UnityEngine.Random.Range(0.0f, Scales[i].X), UnityEngine.Random.Range(0.0f, Scales[i].Y), 0.0f) * UnityEngine.Time.deltaTime;
 
                         AABox2D tempCollision = Collisions[i];
-                        if (tempCollision.IsCollidingTop(Velocities[i]))
+                        if (tempCollision.IsCollidingTop(GameState.Planet.TileMap, Velocities[i]))
                         {
                             Smokes[i].transform.position += new UnityEngine.Vector3(0f, UnityEngine.Random.Range(0.0f, -Velocities[i].Y - UnityEngine.Random.Range(0, 12)), 0.0f) * UnityEngine.Time.deltaTime;
                         }
 
-                        if(tempCollision.IsCollidingRight(Velocities[i]))
+                        if(tempCollision.IsCollidingRight(GameState.Planet.TileMap,Velocities[i]))
                         {
                             Smokes[i].transform.position += new UnityEngine.Vector3(UnityEngine.Random.Range(0.0f, -Velocities[i].X - UnityEngine.Random.Range(-1, 12)), 0f) * UnityEngine.Time.deltaTime;
                         }

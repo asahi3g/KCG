@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Collisions;
 using PlanetTileMap;
 using Enums;
+using UnityEngine;
 
 namespace Planet.Unity
 {
@@ -37,12 +38,13 @@ namespace Planet.Unity
 
         Vec2f[] ShapeTemp;
         Vec2f[] Shape2;
+        Vec2f[] Shape3;
 
         Vec2f LastMousePosition;
 
         bool IsShapeColliding = false;
 
-        Vec2f CircleCenter = new Vec2f(12, 12);
+        Vec2f CircleCenter = new Vec2f(3, 24);
 
 
         Vec2f CircleVelocity = new Vec2f();
@@ -109,8 +111,16 @@ namespace Planet.Unity
 
             Shape2[0] = new Vec2f(15.0f, 15.0f);
             Shape2[1] = new Vec2f(16.0f, 15.0f);
-            Shape2[2] = new Vec2f(16.0f, 16.0f);
-            Shape2[3] = new Vec2f(15.0f, 15.2f);
+            Shape2[2] = new Vec2f(16.0f, 14.0f);
+            Shape2[3] = new Vec2f(15.0f, 14.0f);
+
+            Shape3 = new Vec2f[4];
+
+            Shape3[0] = new Vec2f(15.0f, 14.0f);
+            Shape3[1] = new Vec2f(16.0f, 14.0f);
+            Shape3[2] = new Vec2f(16.0f, 13.0f);
+            Shape3[3] = new Vec2f(15.0f, 13.0f);
+
 
 
            // Shape2[3] = new Vec2f(15.0f, 16.0f);
@@ -129,7 +139,11 @@ namespace Planet.Unity
 
             int playerFaction = 0;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, 20), playerFaction);
+            Player = planet.AddPlayer(new Vec2f(3.0f, 24), playerFaction);
+            PlayerID = Player.agentID.ID;
+
+            //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
+
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
@@ -158,7 +172,7 @@ namespace Planet.Unity
            // CharacterDisplay = new KGui.CharacterDisplay();
             //CharacterDisplay.setPlayer(Player);
 
-          //  UpdateMode(ref Planet, Player);
+            UpdateMode(Player);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -279,10 +293,36 @@ namespace Planet.Unity
             LastMousePosition = Shape1[0];
 
 
-            CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
+            float speed = 0.1f;
+
+            CircleVelocity = new Vec2f();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                CircleVelocity.Y += speed;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                CircleVelocity.Y -= speed;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                CircleVelocity.X += speed;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                CircleVelocity.X -= speed;
+            }
+
+            //CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
 
 
             var circleCollisionResult = Collisions.CirclePolygonSweepTest.TestCollision(CircleCenter, CircleRadius, CircleVelocity, Shape2);
+            var circleCollisionResult2 = Collisions.CirclePolygonSweepTest.TestCollision(CircleCenter, CircleRadius, CircleVelocity, Shape3);
+            if (circleCollisionResult2.CollisionTime < circleCollisionResult.CollisionTime)
+            {
+                circleCollisionResult = circleCollisionResult2;
+            }
           /*  var rs1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1 + 0.001f, P2 - 0.001f);
             var rs2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P2 + 0.001f, P3 - 0.001f);
             var rs3 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3 + 0.001f, P1 - 0.001f);
@@ -335,13 +375,11 @@ namespace Planet.Unity
 
             CircleCenter = CircleCenter - CircleVelocity * 0.01f;
 
-            UnityEngine.Debug.Log("normal " + circleCollisionResult.CollisionNormal);
+            Vec2f remainingVelocity = CircleVelocity * (1.0f - CollisionDistance);
 
+            Vec2f refl = remainingVelocity - 1.0f * Vec2f.Dot(remainingVelocity, circleCollisionResult.CollisionNormal) * circleCollisionResult.CollisionNormal;
 
-
-            Vec2f refl = CircleVelocity - 1.0f * Vec2f.Dot(CircleVelocity, circleCollisionResult.CollisionNormal) * circleCollisionResult.CollisionNormal;
-
-            CircleCenter = CircleCenter + refl * (1.0f - CollisionDistance);
+            CircleCenter = CircleCenter + refl;
 
             //distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
            // distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
@@ -752,6 +790,16 @@ namespace Planet.Unity
                     }
                     UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Shape2[i].X, Shape2[i].Y, 1), new UnityEngine.Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
                 }
+
+                for(int i = 0; i < Shape3.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape3.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.DrawLine(new Vector3(Shape3[i].X, Shape3[i].Y, 1), new Vector3(Shape3[nextPosition].X, Shape3[nextPosition].Y, 1));
+                }
                 
                 UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);
                 UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(collisionPoint.X, collisionPoint.Y, 1.0f), 0.2f);
@@ -780,6 +828,20 @@ namespace Planet.Unity
 
 
             }
+
+                var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
+
+                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+
+
+                UnityEngine.Debug.Log(GameState.Planet.DebugLinesCount);
+                for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
+                {
+                    Line2D line = GameState.Planet.DebugLines[i];
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
+                }
+
         }
 
 

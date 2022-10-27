@@ -55,7 +55,7 @@ namespace Agent
             {
                 UnityEngine.Object.Destroy(entity.agentModel3D.GameObject);
             }
-            entity.DestroyEntity();
+            entity.Destroy();
 
             if (index != Length - 1)
             {

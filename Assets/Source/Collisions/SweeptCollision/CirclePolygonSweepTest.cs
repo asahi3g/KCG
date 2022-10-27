@@ -22,8 +22,8 @@ namespace Collisions
             {
                 Line2D testLine = new Line2D(polygonB[j], polygonB[(j == (polygonB.Length - 1)) ? 0 : (j + 1)]);
                 Vec2f edge = testLine.B - testLine.A;
-                testLine.A += 0.001f;
-                testLine.B -= 0.001f;
+              //  testLine.A += 0.001f;
+              //  testLine.B -= 0.001f;
 
                 var res = CircleLineCollision.TestCollision(circleCenter, circleRadius, velocity, testLine.A, testLine.B);
 

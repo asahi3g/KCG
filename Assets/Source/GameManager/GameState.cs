@@ -72,6 +72,9 @@ public static class GameState
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
+    public static readonly Collisions.LineCreationApi LineCreationApi;
+    public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
+
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
     public static readonly Inventory.InventoryManager InventoryManager;
@@ -160,6 +163,8 @@ public static class GameState
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
+        LineCreationApi.InitStage1();
+        GeometryCreationApi.InitStage1();
     }
 
     public static void InitStage2()
@@ -167,6 +172,8 @@ public static class GameState
         TileSpriteAtlasManager.InitStage2();
         SpriteAtlasManager.InitStage2();
         AgentMovementAnimationTable.InitStage2();
+        LineCreationApi.InitStage2();
+        GeometryCreationApi.InitStage2();
     }
 
 
@@ -198,6 +205,12 @@ public static class GameState
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessStats = new Agent.ProcessStats();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
+
+        LineCreationApi = new Collisions.LineCreationApi();
+        GeometryCreationApi = new Collisions.GeometryCreationApi();
+
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
 
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();

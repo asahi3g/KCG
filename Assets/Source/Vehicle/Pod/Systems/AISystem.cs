@@ -68,7 +68,7 @@ namespace Vehicle.Pod
                             var roadCheckSizeX = 4.0f;
                             var roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(roadCheckSizeX, 1.0f));
 
-                            if (roadCheck.IsCollidingRight(pod.vehiclePodPhysicsState2D.angularVelocity) ||
+                            if (roadCheck.IsCollidingRight(GameState.Planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity) ||
                                 roadCheck.IsCollidingLeft(pod.vehiclePodPhysicsState2D.angularVelocity))
                             {
                                 roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(-roadCheckSizeX, 1.0f));

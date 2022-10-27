@@ -13,7 +13,7 @@ namespace ECSInput
 {
     public class InputProcessSystem
     {
-        private Mode mode = Mode.Camera;
+        private Mode mode = Mode.Agent;
 
         private void UpdateMode(AgentEntity agentEntity)
         {

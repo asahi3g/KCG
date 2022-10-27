@@ -62,6 +62,7 @@ namespace Collisions
             for (int i = 0; i < axes2.Length; i++) 
             {
                 Vec2f axis = axes2[i];
+
                 // project both shapes onto the axis
                 Projection p1 = ProjectShape(verticesA, axis);
                 Projection p2 = ProjectShape(verticesB, axis);
@@ -100,7 +101,7 @@ namespace Collisions
             }
 
             
-            MinimumMagnitudeVector mtv = new MinimumMagnitudeVector{Axis=smallestAxis, Value=overlap};
+            MinimumMagnitudeVector mtv = new MinimumMagnitudeVector{Colliding=true, Axis=smallestAxis, Value=overlap};
             // if we get here then we know that every axis had overlap on it
             // so we can guarantee an intersection
             return mtv;

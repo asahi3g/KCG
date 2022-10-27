@@ -16,7 +16,7 @@ using Utility;
 
 namespace Planet
 {
-    public struct PlanetState
+    public class PlanetState
     {
         //
         public int Index;
@@ -37,6 +37,10 @@ namespace Planet
 
         public AgentEntity Player;
 
+        public Line2D[] DebugLines;
+        public UnityEngine.Color[] DebugLinesColors;
+        public int DebugLinesCount;
+
         public Contexts EntitasContext;
 
         public void Init(Vec2i mapSize)
@@ -54,6 +58,10 @@ namespace Planet
             InventoryList = new InventoryList();
             CameraFollow = new CameraFollow();
 
+            DebugLines = new Line2D[1024];
+            DebugLinesColors = new UnityEngine.Color[1024];
+            DebugLinesCount = 0;
+
             EntitasContext = new Contexts();
         }
 
@@ -63,7 +71,7 @@ namespace Planet
             {
                 AgentEntity entity = AgentList.Get(agentId);
 
-                entity.DestroyEntity();
+                entity.Destroy();
             }
         }
 
@@ -94,6 +102,18 @@ namespace Planet
             // GUI/HUD
             GameState.GUIManager.InitStage1();
             GameState.GUIManager.InitStage2();
+        }
+
+        public void AddDebugLine(Line2D line, UnityEngine.Color color)
+        {
+            if (DebugLinesCount + 1 >= DebugLines.Length)
+            {
+                System.Array.Resize(ref DebugLines, DebugLines.Length + 1024);
+                System.Array.Resize(ref DebugLinesColors, DebugLines.Length + 1024);
+            }
+            DebugLinesColors[DebugLinesCount] = color;
+            DebugLines[DebugLinesCount++] = line;
+
         }
 
         // Note(Mahdi): Deprecated will be removed soon
@@ -467,7 +487,7 @@ namespace Planet
             GameState.VehicleAISystem.Update();
 
             // Collision systems.
-            GameState.AgentProcessCollisionSystem.Update();
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, this);
             GameState.ItemProcessCollisionSystem.Update();
             GameState.ParticleProcessCollisionSystem.Update();
             GameState.ProjectileCollisionSystem.UpdateEx(deltaTime);
@@ -487,6 +507,9 @@ namespace Planet
                 GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
                 GameState.TGenRenderMapMesh.Draw();
             }
+
+            GameState.AgentModel3DMovementSystem.Update();
+            GameState.AgentModel3DAnimationSystem.Update();
 
             // Update Meshes.
             GameState.TileMapRenderer.UpdateBackLayerMesh();
@@ -516,6 +539,9 @@ namespace Planet
 
             // Delete Entities.
             GameState.ProjectileDeleteSystem.Update();
+
+
+            DebugLinesCount = 0;
         }
 
         public void DrawDebug()

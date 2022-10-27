@@ -24,7 +24,7 @@ namespace Vehicle
                 var entityBoxBorders = new AABox2D(new Vec2f(pos.Position.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
                 // If is colliding bottom-top stop y movement
-                if (entityBoxBorders.IsCollidingTop(pos.angularVelocity))
+                if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
                 }
@@ -44,7 +44,7 @@ namespace Vehicle
                 {
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }
-                else if (entityBoxBorders.IsCollidingRight(pos.angularVelocity))
+                else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, pos.angularVelocity))
                 {
                     pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
                 }

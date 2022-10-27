@@ -157,11 +157,11 @@ namespace Vehicle
                 return false;
 
             // If is colliding bottom-top stop y movement
-            if (entityBoxBorders.IsCollidingTop(vehicle.vehiclePhysicsState2D.angularVelocity))
+            if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
-            else if (entityBoxBorders.IsCollidingRight(vehicle.vehiclePhysicsState2D.angularVelocity))
+            else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, vehicle.vehiclePhysicsState2D.angularVelocity))
             {
                 return false;
             }
