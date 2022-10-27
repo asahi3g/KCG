@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+
+
 using Entitas;
 using KMath;
 using Sprites;
@@ -10,7 +11,7 @@ namespace Item
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("ItemsGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
@@ -27,7 +28,7 @@ namespace Item
                 ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
                 int SpriteID = proprieties.SpriteID;
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle).TextureCoords;
 
 
                 float x, y;

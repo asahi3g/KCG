@@ -1,20 +1,18 @@
-using UnityEngine;
+//imports UnityEngine
+
 using System;
 using System.Collections.Generic;
-using Enums.Tile;
-using KMath;
-
 
 namespace Engine3D
 {
     public class AnimationLoader
     {
-        public AnimationClip[] ClipArray;
+        public UnityEngine.AnimationClip[] ClipArray;
         public Dictionary<string, int> AnimationID;
 
         public AnimationLoader()
         {
-            ClipArray = new AnimationClip[1024];
+            ClipArray = new UnityEngine.AnimationClip[1024];
             AnimationID = new Dictionary<string, int>();
         }
 
@@ -31,11 +29,11 @@ namespace Engine3D
             }
 
             AnimationID.Add(filename, index);
-            AnimationClip animation = (AnimationClip)Resources.Load(filename, typeof(AnimationClip));
+            UnityEngine.AnimationClip animation = (UnityEngine.AnimationClip)UnityEngine.Resources.Load(filename, typeof(UnityEngine.AnimationClip));
             ClipArray[index] = animation;
         }
 
-        public ref AnimationClip GetAnimationClip(AnimationType animationType)
+        public ref UnityEngine.AnimationClip GetAnimationClip(AnimationType animationType)
         {
             return ref ClipArray[(int)animationType];
         }

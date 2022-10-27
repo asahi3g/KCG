@@ -1,8 +1,9 @@
 using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using Item;
 using Particle;
+using PlanetTileMap;
 
 namespace Planet.Unity
 {
@@ -96,7 +97,7 @@ namespace Planet.Unity
                 }
 
             // Draw Chunk Visualizer
-            Admin.AdminAPI.DrawChunkVisualizer(Planet.TileMap);
+            ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
         }
 
         // create the sprite atlas for testing purposes

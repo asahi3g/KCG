@@ -1,6 +1,8 @@
-using UnityEngine;
+//imports UnityEngine
+
 using KMath;
 using KGUI.Elements;
+using Utility;
 
 namespace TGen
 {
@@ -36,13 +38,17 @@ namespace TGen
 
             for (int i = 0; i < GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length; i++)
             {
-                PlaceBlockButtons[i] = Planet.AddUIImage(((BlockTypeAndRotation)i).ToString(),
-                    GameObject.Find("Canvas").transform, GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i],
-                    new Vec2f(initialX + column * xInterval, initialY + row * yInterval), new Vec3f(size, -size, size), cellSize, cellSize).kGUIElementsImage.ImageWrapper;
+                PlaceBlockButtons[i] = new ImageWrapper(((BlockTypeAndRotation) i).ToString(),
+                    UnityEngine.GameObject.Find("Canvas").transform, cellSize, cellSize,
+                    GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i]);
+                
+                PlaceBlockButtons[i].SetPosition(new UnityEngine.Vector3(initialX + column * xInterval, initialY + row * yInterval));
+                PlaceBlockButtons[i].SetScale(new UnityEngine.Vector3(size, -size, size));
+
 
                 column++;
 
-                if(column == 4)
+                if (column == 4)
                 {
                     column = 0;
                     row++;
@@ -52,25 +58,25 @@ namespace TGen
 
         public void UpdateToolGrid()
         {
-            if(Input.GetMouseButtonUp(0))
+            if(UnityEngine.Input.GetMouseButtonUp(0))
             {
                 for (int i = 0; i < PlaceBlockButtons.Length; i++)
                 {
-                    if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(Input.mousePosition.x, Input.mousePosition.y)))
+                    if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y)))
                     {
                         selectedTileIsotype = i + 1;
 
                         var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
 
-          
 
-                        Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
+
+                        UnityEngine.Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
                     }
                 }
             }
-            else if(Input.GetMouseButtonUp(2))
+            else if(UnityEngine.Input.GetMouseButtonUp(2))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;

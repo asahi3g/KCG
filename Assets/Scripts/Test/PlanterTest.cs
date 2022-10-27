@@ -1,11 +1,13 @@
-using UnityEngine;
-using KMath;
-using Enums.Tile;
-using Planet;
+//imports UnityEngine
 
-class PlanterTest : MonoBehaviour
+using KMath;
+using Enums.PlanetTileMap;
+using Planet;
+using PlanetTileMap;
+
+class PlanterTest : UnityEngine.MonoBehaviour
 {
-    [SerializeField] Material Material;
+    [UnityEngine.SerializeField] UnityEngine.Material Material;
     public PlanetState Planet;
 
     AgentEntity Player;
@@ -23,7 +25,7 @@ class PlanterTest : MonoBehaviour
 
     public void Update()
     {
-        Planet.Update(Time.deltaTime, Material, transform);
+        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
     private void OnGUI()
@@ -32,12 +34,47 @@ class PlanterTest : MonoBehaviour
             return;
 
         Planet.DrawHUD(Player);
-        if (Event.current.type != EventType.Repaint)
+        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
         KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
     }
 
+    private void OnDrawGizmos()
+    {
+        Planet.DrawDebug();
+
+        // Set the color of gizmos
+        UnityEngine.Gizmos.color = UnityEngine.Color.green;
+
+        // Draw a cube around the map
+        if (Planet.TileMap != null)
+            UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+
+        // Draw lines around player if out of bounds
+        if (Player != null)
+            if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
+            {
+                // Out of bounds
+
+                // X+
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f,Player.agentPhysicsState.Position.Y));
+
+                // X-
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X-10.0f,Player.agentPhysicsState.Position.Y));
+
+                // Y+
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y + 10.0f));
+
+                // Y-
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector2(Player.agentPhysicsState.Position.X,Player.agentPhysicsState.Position.Y - 10.0f));
+            }
+
+        // Draw Chunk Visualizer
+        ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
+    }
+
+    // create the sprite atlas for testing purposes
     public void Initialize()
     {
         GameResources.Initialize();
@@ -117,6 +154,5 @@ class PlanterTest : MonoBehaviour
         Planet.AddMech(new Vec2f(4, 4), Enums.MechType.Light);
         Planet.AddMech(new Vec2f(8, 4), Enums.MechType.Light);
         Planet.AddMech(new Vec2f(12, 4), Enums.MechType.Light);
-        Planet.AddUIText("SampleText", new Vec2f(-250.67f, 94.3f), new Vec2f(200, 120));
     }
 }

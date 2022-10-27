@@ -1,11 +1,10 @@
 using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
-using Utility;
 using System.Linq;
 using System.Collections.Generic;
 using System;
-using Mech;
+using PlanetTileMap;
 
 namespace Planet.Unity
 {
@@ -21,8 +20,6 @@ namespace Planet.Unity
 
         int CharacterSpriteId;
         int inventoryID;
-
-        bool showMechInventory = false;
 
         private int totalMechs;
         private int selectedMechIndex;
@@ -93,7 +90,6 @@ namespace Planet.Unity
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
-            int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
             PlayerID = Player.agentID.ID;

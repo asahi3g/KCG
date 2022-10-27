@@ -1,18 +1,6 @@
 using Entitas;
 using KMath;
-using Projectile;
-using Enums;
-using UnityEngine.UIElements;
-using Particle;
-using static UnityEditor.PlayerSettings;
-using System.Drawing;
 using Collisions;
-using Unity.Mathematics;
-using System.Diagnostics;
-using UnityEngine;
-using System.Collections;
-using Unity.VisualScripting;
-using System.Linq;
 
 namespace Vehicle.Pod
 {
@@ -76,7 +64,7 @@ namespace Vehicle.Pod
                                     var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentID);
                                     foreach (var entity in agents)
                                     {
-                                        entity.agentAction.Action = Agent.AgentAction.Alert;
+                                        entity.agentAction.Action = Agent.AgentAlertState.Alert;
                                     }
                                 }
                             }

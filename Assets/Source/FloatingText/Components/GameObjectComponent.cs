@@ -1,5 +1,6 @@
-﻿using Entitas;
-using UnityEngine;
+﻿//imports UnityEngine
+
+using Entitas;
 using KMath;
 
 namespace FloatingText
@@ -7,6 +8,6 @@ namespace FloatingText
     [FloatingText]
     public class GameObjectComponent : IComponent
     {
-        public GameObject GameObject; // used for unity rendering
+        public UnityEngine.GameObject GameObject; // used for unity rendering
     }
 }

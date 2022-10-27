@@ -1,3 +1,5 @@
+//imports UnityEngine
+
 using Agent;
 using Enums;
 using Inventory;
@@ -6,7 +8,6 @@ using KMath;
 using Mech;
 using Planet;
 using PlanetTileMap;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace ECSInput
@@ -18,24 +19,21 @@ namespace ECSInput
         private void UpdateMode(ref PlanetState planetState, AgentEntity agentEntity)
         {
             agentEntity.agentPhysicsState.Invulnerable = false;
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planetState.cameraFollow.canFollow = false;
 
             if (mode == Mode.Agent)
             {
-                Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+                UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
                 planetState.cameraFollow.canFollow = true;
 
             }
             else if (mode == Mode.Camera)
             {
-                Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
+                UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = true;
                 planetState.cameraFollow.canFollow = false;
-
             }
         }
-
-       
 
         public void Update(PlanetState planet)
         {
@@ -45,11 +43,11 @@ namespace ECSInput
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
 
             int x = 0;
-            if (Input.GetKey(KeyCode.D) && mode == Mode.Agent)
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) && mode == Mode.Agent)
             {
                 x += 1;
             }
-            if (Input.GetKey(KeyCode.A) && mode == Mode.Agent)
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.A) && mode == Mode.Agent)
             {
                 x -= 1;
             }
@@ -62,25 +60,25 @@ namespace ECSInput
                 
 
                 // Jump
-                if (Input.GetKeyDown(KeyCode.W) && mode == Mode.Agent)
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W) && mode == Mode.Agent)
                 {
                     player.Jump();
                 }
                 // Dash
-                if (Input.GetKeyDown(KeyCode.Space) && mode == Mode.Agent)
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space) && mode == Mode.Agent)
                 {
                     player.Dash(x);
                 }
 
                 // Attack
-                if (Input.GetKeyDown(KeyCode.K) && mode == Mode.Agent)
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.K) && mode == Mode.Agent)
                 {
                     player.Roll(x);
                 }
 
 
                 // Running
-                if (Input.GetKey(KeyCode.LeftAlt))
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftAlt))
                 {
                     if(mode == Mode.Agent)
                     player.Run(x);
@@ -91,7 +89,7 @@ namespace ECSInput
                     player.Walk(x);
                 }
 
-                if (Input.GetKey(KeyCode.LeftControl) && mode == Mode.Agent)
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) && mode == Mode.Agent)
                 {
                     if(mode == Mode.Agent)
                     player.Crouch(x);
@@ -103,7 +101,7 @@ namespace ECSInput
                 }
 
                 // JetPack
-                if (Input.GetKey(KeyCode.F) && player.agentStats.Fuel > 0)
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel > 0)
                 {
                     GameState.AgentProcessPhysicalState.JetPackFlying(player);
                 }
@@ -115,14 +113,14 @@ namespace ECSInput
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.S))
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S))
                 {
                     if(mode == Mode.Agent)
                     player.Walk(x);
                 }
 
 
-                var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var mouseWorldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
                 if (player.CanFaceMouseDirection())
                 {
@@ -141,19 +139,19 @@ namespace ECSInput
                 }
 
                 // JetPack
-                if (Input.GetKey(KeyCode.F))
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))
                 {
                     GameState.AgentProcessPhysicalState.JetPackFlying(player);
                 }
 
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow))
                 {
                     player.agentPhysicsState.Droping = true;
                 }
             }
 
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
                 var mechEntities = contexts.mech.GetGroup(MechMatcher.MechID);
@@ -219,7 +217,7 @@ namespace ECSInput
 
                                 if (vehicle.vehicleType.Type == VehicleType.DropShip)
                                 {
-                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
                                     // Player Gets inside of Rocket
                                     // Hide Agent/Player
@@ -227,7 +225,7 @@ namespace ECSInput
                                     player.isAgentAlive = false;
                                     vehicle.vehicleType.HasAgent = true;
 
-                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
                                     vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
                                     vehicle.vehicleThruster.Jet = true;
@@ -336,7 +334,7 @@ namespace ECSInput
             }
 
             // Recharge Weapon.
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
@@ -344,7 +342,7 @@ namespace ECSInput
             }
 
             // Drop Action. 
-            if (Input.GetKeyUp(KeyCode.T))
+            if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
@@ -352,7 +350,7 @@ namespace ECSInput
             }
 
             // Reload Weapon.
-            if (Input.GetKeyDown(KeyCode.R))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
@@ -360,7 +358,7 @@ namespace ECSInput
             }
 
             // Shield Action.
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
@@ -369,7 +367,7 @@ namespace ECSInput
             }
 
             // Show/Hide Statistics
-            if (Input.GetKeyDown(KeyCode.F1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
             {
                 if (StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled)
                     StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled = false;
@@ -379,27 +377,27 @@ namespace ECSInput
             }
 
             // Remove Tile Front At Cursor Position.
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 planet.TileMap.RemoveFrontTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
             // Remove Tile Back At Cursor Position.
-            if (Input.GetKeyDown(KeyCode.F3))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
             }
 
             // Enable tile collision isotype rendering.
-            if (Input.GetKeyDown(KeyCode.F4))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F4))
             {
                 TileMapRenderer.TileCollisionDebugging = !TileMapRenderer.TileCollisionDebugging;
             }
 
             //  Open Inventory with Tab.        
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
                 foreach (var player in players)
@@ -432,7 +430,7 @@ namespace ECSInput
             }
 
             // Change Pulse Weapon Mode.
-            if (Input.GetKeyDown(KeyCode.N))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.N))
             {
                 var PlayerWithToolBarPulse = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var entity in PlayerWithToolBarPulse)
@@ -482,22 +480,22 @@ namespace ECSInput
                 {
                     if(entity.hasAgentAction)
                     {
-                        entity.agentAction.Action = AgentAction.Alert;
+                        entity.agentAction.Action = AgentAlertState.Alert;
                     }
                 }
                 else
                 {
                     if (entity.hasAgentAction)
                     {
-                        entity.agentAction.Action = AgentAction.UnAlert;
+                        entity.agentAction.Action = AgentAlertState.UnAlert;
                     }
                 }
                 
 
                 for (int i = 0; i < inventoryModel.Width; i++)
                 {
-                    var keyCode = KeyCode.Alpha1 + i;
-                    if (Input.GetKeyDown(keyCode))
+                    var keyCode = UnityEngine.KeyCode.Alpha1 + i;
+                    if (UnityEngine.Input.GetKeyDown(keyCode))
                     {
                         if (inventory.inventoryEntity.SelectedSlotID != i)
                         {
@@ -526,7 +524,7 @@ namespace ECSInput
                     {
                         case ItemKeyUsage.KeyPressed:
                         {
-                            if (Input.GetKeyDown(KeyCode.Mouse0) && entity.IsStateFree())
+                            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0) && entity.IsStateFree())
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
@@ -539,7 +537,7 @@ namespace ECSInput
                         }
                         case ItemKeyUsage.KeyDown:
                         {
-                            if (Input.GetKey(KeyCode.Mouse0) && entity.IsStateFree())
+                            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Mouse0) && entity.IsStateFree())
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
@@ -554,7 +552,7 @@ namespace ECSInput
                 }
 
                 // Remove Tile Back At Cursor Position.
-                if (Input.GetKeyDown(KeyCode.BackQuote))
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.BackQuote))
                 {
                     if (mode == Mode.Agent)
                         mode = Mode.Camera;

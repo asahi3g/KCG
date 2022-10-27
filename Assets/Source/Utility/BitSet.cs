@@ -15,9 +15,9 @@ namespace Utility
 
     public class BitSet
     {
-        public UInt32 Length;   // Length of Bits in Bits.
-        UInt64[] Bits;          // 0 Is the least significant bit.
-        UInt64 BitMask;         // Bit mask for most significant UInt64.
+        public UInt32 Length;           // Length of Bits in Bits.
+        private UInt64[] bits;          // 0 Is the least significant bit.
+        private UInt64 bitMask;         // Bit mask for most significant UInt64.
 
         public BitSet(UInt32 bitLength)
         {
@@ -27,34 +27,34 @@ namespace Utility
             if (bitLength % 64 != 0)
                 length++;
 
-            BitMask = 1ul << (int)(bitLength % 64);
-            BitMask -= 1;
-            Bits = new UInt64[length];
+            bitMask = 1ul << (int)(bitLength % 64);
+            bitMask -= 1;
+            bits = new UInt64[length];
         }
 
         public void Set(int pos)
         {
             int offset = pos >> 6;
-            Bits[offset] |= 1uL << pos;
+            bits[offset] |= 1uL << pos;
         }
 
         public void UnSet(int pos)
         {
             int offset = pos >> 6;
-            Bits[offset] &= ~(1uL << pos);
+            bits[offset] &= ~(1uL << pos);
         }
 
         public bool Get(int pos)
         {
             int offset = pos >> 6;
-            if (offset >= Bits.Length)
+            if (offset >= bits.Length)
                 return false;
-            return (Bits[offset] & (1uL << pos)) != 0;
+            return (bits[offset] & (1uL << pos)) != 0;
         }
 
         public void SetAll()
         {
-            Array.Fill<UInt64>(Bits, UInt64.MaxValue);
+            Array.Fill<UInt64>(bits, UInt64.MaxValue);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Utility
         /// </summary>
         public void Clear()
         {
-            Array.Fill<UInt64>(Bits, 0ul);
+            Array.Fill<UInt64>(bits, 0ul);
         }
 
         /// <summary>
@@ -70,18 +70,18 @@ namespace Utility
         /// </summary>
         public void Flip()
         {
-            for (int i = 0; i < Bits.Length; i++)
+            for (int i = 0; i < bits.Length; i++)
             {
-                Bits[i] = ~Bits[i];
+                bits[i] = ~bits[i];
             }
         }
 
         // Test if any bit is 1.
         public bool Any()
         {
-            for (int i = 0; i < Bits.Length; i++)
+            for (int i = 0; i < bits.Length; i++)
             {
-                if (Bits[i] != 0)
+                if (bits[i] != 0)
                     return false;
             }
             return true;
@@ -90,13 +90,13 @@ namespace Utility
         // Test if all Bits are set to 1.
         public bool All()
         {
-            for (int i = 0; i < (Bits.Length - 1); i++)
+            for (int i = 0; i < (bits.Length - 1); i++)
             {
-                if (Bits[i] != UInt64.MaxValue)
+                if (bits[i] != UInt64.MaxValue)
                     return false;
             }
 
-            if (Bits[Bits.Length - 1] != BitMask)
+            if (bits[bits.Length - 1] != bitMask)
             {
                 return false;
             }
@@ -123,9 +123,9 @@ namespace Utility
 #endif
             BitSet newBitSet = new BitSet(lhs.Length);
 
-            for (int i = 0; i < lhs.Bits.Length; i++)
+            for (int i = 0; i < lhs.bits.Length; i++)
             {
-                newBitSet.Bits[i] = lhs.Bits[i] & rhs.Bits[i];
+                newBitSet.bits[i] = lhs.bits[i] & rhs.bits[i];
             }
 
             return newBitSet;
@@ -138,12 +138,12 @@ namespace Utility
 #endif
             BitSet newBitSet = new BitSet(lhs.Length);
 
-            for (int i = 0; i < (lhs.Bits.Length - 1); i++)
+            for (int i = 0; i < (lhs.bits.Length - 1); i++)
             {
-                newBitSet.Bits[i] = lhs.Bits[i] | rhs.Bits[i];
+                newBitSet.bits[i] = lhs.bits[i] | rhs.bits[i];
             }
-            newBitSet.Bits[lhs.Bits.Length - 1] = 
-                (lhs.Bits[lhs.Bits.Length - 1] | rhs.Bits[lhs.Bits.Length - 1]) & lhs.BitMask;
+            newBitSet.bits[lhs.bits.Length - 1] = 
+                (lhs.bits[lhs.bits.Length - 1] | rhs.bits[lhs.bits.Length - 1]) & lhs.bitMask;
 
             return newBitSet;
         }
@@ -155,12 +155,12 @@ namespace Utility
 #endif
             BitSet newBitSet = new BitSet(lhs.Length);
 
-            for (int i = 0; i < (lhs.Bits.Length - 1); i++)
+            for (int i = 0; i < (lhs.bits.Length - 1); i++)
             {
-                newBitSet.Bits[i] = lhs.Bits[i] ^ rhs.Bits[i];
+                newBitSet.bits[i] = lhs.bits[i] ^ rhs.bits[i];
             }
-            newBitSet.Bits[lhs.Bits.Length - 1] =
-                (lhs.Bits[lhs.Bits.Length - 1] ^ rhs.Bits[lhs.Bits.Length - 1]) & lhs.BitMask;
+            newBitSet.bits[lhs.bits.Length - 1] =
+                (lhs.bits[lhs.bits.Length - 1] ^ rhs.bits[lhs.bits.Length - 1]) & lhs.bitMask;
 
             return newBitSet;
         }
@@ -173,9 +173,9 @@ namespace Utility
             IsOperationValid(lhs, rhs);
 #endif
 
-            for (int i = 0; i < lhs.Bits.Length; i++)
+            for (int i = 0; i < lhs.bits.Length; i++)
             {
-                if (lhs.Bits[i] != rhs.Bits[i])
+                if (lhs.bits[i] != rhs.bits[i])
                     return false;
             }
 
@@ -189,6 +189,24 @@ namespace Utility
             {
                 throw new ArgumentOutOfRangeException("Can't do BitSets operation with different lengths.");
             }
+        }
+        
+        protected bool Equals(BitSet other)
+        {
+            return Length == other.Length && Equals(bits, other.bits) && bitMask == other.bitMask;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((BitSet) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Length, bits, bitMask);
         }
     }
 }

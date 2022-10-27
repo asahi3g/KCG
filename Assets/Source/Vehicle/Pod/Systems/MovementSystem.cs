@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Entitas;
 using System.Collections;
 using KMath;
@@ -32,9 +33,9 @@ namespace Vehicle.Pod
 
                     // Process Gravity
                     if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
-                        vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * Time.deltaTime;
+                        vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * UnityEngine.Time.deltaTime;
 
-                    vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * Time.deltaTime;
+                    vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
                 }
             }
         }

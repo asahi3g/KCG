@@ -1,10 +1,11 @@
+//imports UnityEngine
+
 using Collisions;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 using Utility;
 using Physics;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Agent
 {
@@ -343,7 +344,7 @@ namespace Agent
 
         public void Update(AgentContext agentContext, Planet.PlanetState planet)
         {
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));
 
             foreach (var agentEntity in agentEntitiesWithBox)

@@ -1,7 +1,8 @@
-using System;
-using UnityEngine;
+//import UntiyEngine
 
-public class InventoryTest : MonoBehaviour
+using System;
+
+public class InventoryTest : UnityEngine.MonoBehaviour
 {
     Contexts context;
 
@@ -22,7 +23,7 @@ public class InventoryTest : MonoBehaviour
 
     Func<int, InventoryEntity> GetInventory = Contexts.sharedInstance.inventory.GetEntityWithInventoryID;
 
-    [SerializeField] Material material;
+    [UnityEngine.SerializeField] UnityEngine.Material material;
 
     public void Start()
     {
@@ -88,7 +89,7 @@ public class InventoryTest : MonoBehaviour
         }
 
         //  Open Inventory with Tab.        
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
         {
             GetInventory(defaultInventoryID).hasInventoryToolBarDraw = !GetInventory(defaultInventoryID).hasInventoryToolBarDraw;
             GetInventory(defaultInventoryID).hasInventoryDraw = !GetInventory(defaultInventoryID).hasInventoryDraw;
@@ -108,13 +109,13 @@ public class InventoryTest : MonoBehaviour
         if (!Init)
             return;
 
-        if (Event.current.type == EventType.MouseDown)
+        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseDown)
             GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance, inventoryList);
 
-        if (Event.current.type == EventType.MouseUp)
+        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseUp)
             GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance, inventoryList);
 
-        if (Event.current.type != EventType.Repaint)
+        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
         GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
@@ -133,8 +134,8 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetToolBar();
         GameState.InventoryCreationApi.SetSize(10, 5);
         GameState.InventoryCreationApi.SetInventoryPos(50, 680);
-        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.29f, 0.31f, 0.59f, 0.75f));
-        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new UnityEngine.Color(0.29f, 0.31f, 0.59f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new UnityEngine.Color(1f, 0.92f, 0.016f, 0.75f));
         GameState.InventoryCreationApi.SetSlotOffset(5);
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();
@@ -153,8 +154,8 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetRestriction(7, Enums.ItemGroups.Belt);
         GameState.InventoryCreationApi.SetSize(3, 3);
         GameState.InventoryCreationApi.SetInventoryPos(1_650f, 430f);
-        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.0f, 0.70f, 0.55f, 0.75f));
-        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new UnityEngine.Color(0.0f, 0.70f, 0.55f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new UnityEngine.Color(1f, 0.92f, 0.016f, 0.75f));
         GameState.InventoryCreationApi.SetSlotOffset(5);
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();

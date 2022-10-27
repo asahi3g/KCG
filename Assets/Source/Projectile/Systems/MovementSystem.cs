@@ -1,10 +1,6 @@
-﻿using Entitas;
-using System.Collections.Generic;
-using System.Collections;
-using KMath;
-using UnityEngine;
+﻿//imports UnityEngine
+
 using Physics;
-using Enums;
 using Planet;
 
 namespace Projectile
@@ -26,7 +22,7 @@ namespace Projectile
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.AffectedByGravity))
                 physicsState.Acceleration.Y -= Constants.Gravity;
 
-            Vec2f dir = physicsState.Velocity.Normalized;
+            KMath.Vec2f dir = physicsState.Velocity.Normalized;
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.CanRamp) && physicsState.Velocity.Magnitude < projectileProperties.MaxVelocity)
                 physicsState.Acceleration += dir * projectileProperties.RampAcceleration;
 
@@ -34,8 +30,8 @@ namespace Projectile
                 && physicsState.Velocity.Magnitude > 0.005f)
                 physicsState.Acceleration -= dir * projectileProperties.LinearDrag;
 
-            Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
-            Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
+            KMath.Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
+            KMath.Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
             dir = newVelocity.Normalized;
             if (physicsState.Velocity.Magnitude > projectileProperties.MaxVelocity)
@@ -45,17 +41,17 @@ namespace Projectile
             if (physicsState.OnGrounded)
                 newVelocity *= 0.8f;
 
-            Vec2f newPosition = physicsState.Position + displacement;
+            KMath.Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
             physicsState.Position = newPosition;
 
             physicsState.Velocity = newVelocity;
-            physicsState.Acceleration = Vec2f.Zero;
+            physicsState.Acceleration = KMath.Vec2f.Zero;
         }
 
         public void Update(PlanetState planet)
         {
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
                 Update(planet.ProjectileList.Get(i), deltaTime);

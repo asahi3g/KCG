@@ -1,14 +1,15 @@
-﻿using Enums.Tile;
+﻿//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using Item;
 using KMath;
-using UnityEngine;
 using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class PathFindingTest : MonoBehaviour
+    class PathFindingTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         Planet.PlanetState Planet;
         AgentEntity Slime;
@@ -23,8 +24,8 @@ namespace Planet.Unity
 
         public void Start()
         {
-            Debug.Log("Click somewhere to set slime target gol.");
-            Debug.Log("Click 1 to select slime, 2 to select flying slime, and 3 to select agent");
+            UnityEngine.Debug.Log("Click somewhere to set slime target gol.");
+            UnityEngine.Debug.Log("Click 1 to select slime, 2 to select flying slime, and 3 to select agent");
             if (!Init)
             {
                 Initialize();
@@ -35,32 +36,32 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha1))
             {
-                Debug.Log("Slime selected.");
+                UnityEngine.Debug.Log("Slime selected.");
                 SelectedAgent = Slime;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha2))
             {
-                Debug.Log("Flying Slime selected.");
+                UnityEngine.Debug.Log("Flying Slime selected.");
                 SelectedAgent = FlyingSlime;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha3))
             {
-                Debug.Log("Agent selected.");
+                UnityEngine.Debug.Log("Agent selected.");
                 SelectedAgent = Agent;
             }
 
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 Vec2f goalPos = new Vec2f(worldPosition.x, worldPosition.y);
                 GameState.ActionCreationSystem.CreateMovementAction(Planet.EntitasContext, Enums.NodeType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -68,7 +69,7 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            if (Event.current.type != EventType.Repaint)
+            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
             GameState.InventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);

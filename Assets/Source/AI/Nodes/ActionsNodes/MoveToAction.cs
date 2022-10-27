@@ -1,7 +1,8 @@
-﻿using AI.Movement;
+﻿//import UnityEngine
+
+using AI.Movement;
 using KMath;
 using System;
-using UnityEngine;
 using Enums;
 
 namespace Node.Action
@@ -15,7 +16,7 @@ namespace Node.Action
         public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
 #if DEBUG
-            float deltaTime = Time.realtimeSinceStartup;
+            float deltaTime = UnityEngine.Time.realtimeSinceStartup;
 #endif
             const int MAX_FALL_HEIGHT = 6;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
@@ -27,8 +28,8 @@ namespace Node.Action
             movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
-            deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
-            Debug.Log("Found time in " + deltaTime.ToString() + "ms");
+            deltaTime = (UnityEngine.Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
+            UnityEngine.Debug.Log("Found time in " + deltaTime.ToString() + "ms");
 #endif
 
             if (movTo.path == null)
@@ -90,7 +91,7 @@ namespace Node.Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
+                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.PlanetTileMap.TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }

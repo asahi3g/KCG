@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Entitas;
+//imports UntiyEngine
+
 using Utility;
 
 
@@ -54,9 +53,9 @@ namespace Agent
             ref AgentEntity entity = ref List[index];
             if (entity.hasAgentModel3D)
             {
-                GameObject.Destroy(entity.agentModel3D.GameObject);
+                UnityEngine.GameObject.Destroy(entity.agentModel3D.GameObject);
             }
-            entity.Destroy();
+            entity.DestroyEntity();
 
             if (index != Length - 1)
             {

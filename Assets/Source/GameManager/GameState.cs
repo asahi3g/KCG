@@ -1,12 +1,11 @@
+
+using Planet;
 /// <summary>
 /// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 /// </summary>
-
 public static class GameState
 {
-    //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
-
-    #region Atinmation
+    #region Aninmation
     public static readonly Animation.AnimationManager AnimationManager;
     public static readonly Animation.UpdateSystem AnimationUpdateSystem;
     #endregion
@@ -16,7 +15,7 @@ public static class GameState
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
     #endregion
 
-    #region Action
+    #region PlayerActions
     public static readonly Node.CreationSystem            ActionCreationSystem;
     public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
     public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
@@ -151,9 +150,7 @@ public static class GameState
     #region GUI/HUD
 
     public static readonly KGUI.GUIManager GUIManager;
-    public static KGUI.Elements.ElementSpawnerSystem ElementSpawnerSystem;
-    public static KGUI.Elements.ElementDrawSystem ElementDrawSystem;
-    public static KGUI.Elements.ElementUpdateSystem ElementUpdateSystem;
+
     #endregion
 
 
@@ -277,9 +274,6 @@ public static class GameState
         TGenRenderMapMesh = new TGen.RenderMapMesh();
 
         GUIManager = new KGUI.GUIManager();
-        ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
-        ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
-        ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
 
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();

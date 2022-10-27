@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//imports UnityEngine
+
 using KMath;
 using System.Collections.Generic;
 using System;
@@ -37,8 +38,8 @@ namespace Mech
 
                 if (plant.mechPlant.WaterLevel > 0 && lightLevel > 0)
                 {
-                    plant.mechPlant.WaterLevel = Math.Max(plant.mechPlant.WaterLevel - Time.deltaTime * 0.4f, 0);
-                    plant.mechPlant.PlantGrowth = Math.Min(plant.mechPlant.PlantGrowth + (Time.deltaTime * 5f), plant.mechPlant.GrowthTarget);
+                    plant.mechPlant.WaterLevel = Math.Max(plant.mechPlant.WaterLevel - UnityEngine.Time.deltaTime * 0.4f, 0);
+                    plant.mechPlant.PlantGrowth = Math.Min(plant.mechPlant.PlantGrowth + (UnityEngine.Time.deltaTime * 5f), plant.mechPlant.GrowthTarget);
                 }
 
                 if (plant.mechPlant.PlantGrowth > 50 && (plant.mechPlant.PlantGrowth - 100) < -0.005f)

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Entitas;
-using UnityEngine;
-
-
-namespace AI
+﻿namespace AI
 {
     /*
     public class PlannerSystem

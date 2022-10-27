@@ -1,7 +1,7 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 using KMath;
-using Planet;
 
 namespace Node
 {
@@ -15,13 +15,13 @@ namespace Node
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
-            if(tile == Enums.Tile.TileID.Bedrock)
+            if(tile == Enums.PlanetTileMap.TileID.Bedrock)
             {
                 nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                 return;

@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Entitas;
 using KMath;
 
@@ -8,7 +9,7 @@ public class CameraFollow
     private Vec2f offset = new Vec2f(0f, 0f);
 
     // Camera Follow Speed
-    [Range(0, 10)]
+    [UnityEngine.Range(0, 10)]
     public float followSpeed = 3.0f;
 
     // Player Position
@@ -35,7 +36,7 @@ public class CameraFollow
             }
 
             // Follow Player Position
-            Camera.main.transform.position = Vector3.Slerp(Camera.main.transform.position, new Vector3(PlayerPos.X, PlayerPos.Y, -10.0f), followSpeed * Time.deltaTime);
+            UnityEngine.Camera.main.transform.position = UnityEngine.Vector3.Slerp(UnityEngine.Camera.main.transform.position, new UnityEngine.Vector3(PlayerPos.X, PlayerPos.Y, -10.0f), followSpeed * UnityEngine.Time.deltaTime);
         }
         
     }

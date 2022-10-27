@@ -1,5 +1,5 @@
 using System;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
 using Utility;

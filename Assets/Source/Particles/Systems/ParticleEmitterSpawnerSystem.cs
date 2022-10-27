@@ -1,7 +1,8 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
 using Entitas;
 using KMath;
-using UnityEngine;
 
 namespace Particle
 {
@@ -19,7 +20,7 @@ namespace Particle
         }
 
         //Note(Mahdi): Deprecated will be removed later
-        public ParticleEntity Spawn(ParticleContext context, Material material, Vec2f position, Vec2f size,
+        public ParticleEntity Spawn(ParticleContext context, UnityEngine.Material material, Vec2f position, Vec2f size,
                                      int spriteId)
         {
             // use an api to create different emitter entities
@@ -46,7 +47,7 @@ namespace Particle
                         ParticleCreationApi.Get((int)emitterProperties.ParticleType);
             var e = context.CreateEntity();
             e.AddParticleEmitterID(uniqueID++, -1);
-            e.AddParticleEmitter2dPosition(new Vector2(position.X, position.Y), new Vector2(), new Vector2());
+            e.AddParticleEmitter2dPosition(new UnityEngine.Vector2(position.X, position.Y), new UnityEngine.Vector2(), new UnityEngine.Vector2());
             e.AddParticleEmitterState(emitterProperties.ParticleType, type, emitterProperties.Duration, 0.0f);
 
             return e;

@@ -1,8 +1,4 @@
-
-using System;
-using Enums.Tile;
-using KMath;
-
+using Enums.PlanetTileMap;
 
 namespace PlanetTileMap
 {

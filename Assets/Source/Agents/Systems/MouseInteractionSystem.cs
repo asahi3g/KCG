@@ -1,5 +1,4 @@
 ﻿using Planet;
-using UnityEngine;
 using KMath;
 
 namespace Agent
@@ -8,7 +7,7 @@ namespace Agent
     {
         public void Update(PlanetState planet)
         {
-            Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;
 
@@ -50,10 +49,10 @@ namespace Agent
                 float w = 512;
                 int fontSize = 30;
 
-                float scale = Screen.height / 1080f;
+                float scale = UnityEngine.Screen.height / 1080f;
 
-                GameState.Renderer.DrawStringGui(Input.mousePosition.x, Input.mousePosition.y, 
-                    w * scale, h * scale, str, (int)(fontSize* scale) ,TextAnchor.LowerLeft, Color.white);
+                GameState.Renderer.DrawStringGui(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y, 
+                    w * scale, h * scale, str, (int)(fontSize* scale) , UnityEngine.TextAnchor.LowerLeft, UnityEngine.Color.white);
                 return;
             }
         }

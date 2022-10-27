@@ -1,15 +1,16 @@
-using UnityEngine;
+//import UnityEngine
+
 using KMath.Noise;
 using UnityEngine.UI;
 using TMPro;
 using TreeEditor;
 
 
-public class PerlinNoiseTest : MonoBehaviour
+public class PerlinNoiseTest : UnityEngine.MonoBehaviour
 {
     // Unlit
-    [SerializeField]
-    private Material Unlit;
+    [UnityEngine.SerializeField]
+    private UnityEngine.Material Unlit;
 
     float lastDrawTime = 0;
 
@@ -17,8 +18,8 @@ public class PerlinNoiseTest : MonoBehaviour
     private PerlinField2D perlin2D;
     private PerlinField3D perlin3D;
 
-    private Texture2D MathFGeneratedPerlin;
-    private Texture2D KMathGeneratedPerlin;
+    private UnityEngine.Texture2D MathFGeneratedPerlin;
+    private UnityEngine.Texture2D KMathGeneratedPerlin;
 
     TMP_InputField Seed;
     TMP_InputField SamplingRate;
@@ -29,8 +30,7 @@ public class PerlinNoiseTest : MonoBehaviour
     TMP_InputField PositionZ;
     Toggle UnityToggle;
     TMP_Dropdown Dimension;
-
-    bool Init;
+    
     bool MovingRight = false;
     bool MovingUp = false;
 
@@ -47,8 +47,8 @@ public class PerlinNoiseTest : MonoBehaviour
         perlin2D = new PerlinField2D();
         perlin3D = new PerlinField3D();
 
-        MathFGeneratedPerlin = new Texture2D(1024, 1024);
-        KMathGeneratedPerlin = new Texture2D(1024, 1024);
+        MathFGeneratedPerlin = new UnityEngine.Texture2D(1024, 1024);
+        KMathGeneratedPerlin = new UnityEngine.Texture2D(1024, 1024);
 
         Samples = new float[KMathGeneratedPerlin.height * KMathGeneratedPerlin.width];
         MathfGenerateTexture();
@@ -56,15 +56,13 @@ public class PerlinNoiseTest : MonoBehaviour
         GameState.Renderer.Initialize(Unlit);
 
         GeneratePerlin();
-
-        Init = true;
     }
 
     private void Update()
     {
         if (MovingUp || MovingRight)
         {
-            if ((Time.realtimeSinceStartup - lastDrawTime) >= 1)
+            if ((UnityEngine.Time.realtimeSinceStartup - lastDrawTime) >= 1)
             {
                 if (MovingRight)
                 {
@@ -87,22 +85,22 @@ public class PerlinNoiseTest : MonoBehaviour
 
     public void InitializeCanvas()
     {
-        NoiseImage = GameObject.Find("Noise Texture").GetComponent<RawImage>();
+        NoiseImage = UnityEngine.GameObject.Find("Noise Texture").GetComponent<RawImage>();
 
-        Seed            = GameObject.Find("Seed").GetComponent<TMP_InputField>();
-        SamplingRate    = GameObject.Find("Sampling Rate").GetComponent<TMP_InputField>();
-        Octaves         = GameObject.Find("Octaves").GetComponent<TMP_InputField>();
-        Lacunarity      = GameObject.Find("Lacunarity").GetComponent<TMP_InputField>();
-        Gain            = GameObject.Find("Gain").GetComponent<TMP_InputField>();
-        Offset          = GameObject.Find("Offset").GetComponent<TMP_InputField>();
-        PositionZ       = GameObject.Find("Position Z").GetComponent<TMP_InputField>();
+        Seed            = UnityEngine.GameObject.Find("Seed").GetComponent<TMP_InputField>();
+        SamplingRate    = UnityEngine.GameObject.Find("Sampling Rate").GetComponent<TMP_InputField>();
+        Octaves         = UnityEngine.GameObject.Find("Octaves").GetComponent<TMP_InputField>();
+        Lacunarity      = UnityEngine.GameObject.Find("Lacunarity").GetComponent<TMP_InputField>();
+        Gain            = UnityEngine.GameObject.Find("Gain").GetComponent<TMP_InputField>();
+        Offset          = UnityEngine.GameObject.Find("Offset").GetComponent<TMP_InputField>();
+        PositionZ       = UnityEngine.GameObject.Find("Position Z").GetComponent<TMP_InputField>();
 
-        UnityToggle = GameObject.Find("Unity Toggle").GetComponent<Toggle>();
-        Dimension = GameObject.Find("Dropdown").GetComponent<TMP_Dropdown>();
+        UnityToggle = UnityEngine.GameObject.Find("Unity Toggle").GetComponent<Toggle>();
+        Dimension = UnityEngine.GameObject.Find("Dropdown").GetComponent<TMP_Dropdown>();
         Dimension.value = 2;
-        GameObject.Find("Generate Button").GetComponent<Button>().onClick.AddListener(delegate { GeneratePerlin(); });
-        GameObject.Find("Move Up").GetComponent<Button>().onClick.AddListener(delegate { MovingUp = !MovingUp; });
-        GameObject.Find("Move Right").GetComponent<Button>().onClick.AddListener(delegate { MovingRight = !MovingRight; });
+        UnityEngine.GameObject.Find("Generate Button").GetComponent<Button>().onClick.AddListener(delegate { GeneratePerlin(); });
+        UnityEngine.GameObject.Find("Move Up").GetComponent<Button>().onClick.AddListener(delegate { MovingUp = !MovingUp; });
+        UnityEngine.GameObject.Find("Move Right").GetComponent<Button>().onClick.AddListener(delegate { MovingRight = !MovingRight; });
 
         UnityToggle.isOn = false;
 
@@ -117,7 +115,7 @@ public class PerlinNoiseTest : MonoBehaviour
 
     void GeneratePerlin()
     {
-        float lastDrawTime = Time.realtimeSinceStartup;
+        float lastDrawTime = UnityEngine.Time.realtimeSinceStartup;
 
         if (Dimension.value == 0)
         {
@@ -160,7 +158,7 @@ public class PerlinNoiseTest : MonoBehaviour
 
     void KMathGenerateTexture()
     {
-        float deltaTime = Time.realtimeSinceStartup;
+        float deltaTime = UnityEngine.Time.realtimeSinceStartup;
 
         if (Dimension.value == 0)
             KMathGenerateTexture1D();
@@ -169,8 +167,8 @@ public class PerlinNoiseTest : MonoBehaviour
         else if (Dimension.value == 2)
             KMathGenerateTexture3D();
 
-        deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000; // get time and transform to ms.
-        Debug.Log("Texture Generate " + deltaTime.ToString() + "ms");
+        deltaTime = (UnityEngine.Time.realtimeSinceStartup - deltaTime) * 1000; // get time and transform to ms.
+        UnityEngine.Debug.Log("Texture Generate " + deltaTime.ToString() + "ms");
     }
 
     void KMathGenerateTexture1D()
@@ -180,7 +178,7 @@ public class PerlinNoiseTest : MonoBehaviour
         {
             for (int x = 0; x < KMathGeneratedPerlin.width; x++)
             {
-                KMathGeneratedPerlin.SetPixel(x, y, Color.white);
+                KMathGeneratedPerlin.SetPixel(x, y, UnityEngine.Color.white);
             }
         }
 
@@ -196,7 +194,7 @@ public class PerlinNoiseTest : MonoBehaviour
 
             for (int i = 0; i < 10; i++)
             {
-                KMathGeneratedPerlin.SetPixel(x, y - 4 + i, Color.grey);
+                KMathGeneratedPerlin.SetPixel(x, y - 4 + i, UnityEngine.Color.grey);
             }
         }
 
@@ -231,7 +229,7 @@ public class PerlinNoiseTest : MonoBehaviour
             for (int x = 0; x < KMathGeneratedPerlin.width; x++)
             {
                 float value = (Samples[index++] + 1) / 2;
-                Color color = new Color(value, value, value);
+                UnityEngine.Color color = new UnityEngine.Color(value, value, value);
                 KMathGeneratedPerlin.SetPixel(x, y, color);
             }
         }
@@ -257,7 +255,7 @@ public class PerlinNoiseTest : MonoBehaviour
             for (int x = 0; x < KMathGeneratedPerlin.width; x++)
             {
                 float value = (Samples[index++] + 1) / 2;
-                Color color = new Color(value, value, value);
+                UnityEngine.Color color = new UnityEngine.Color(value, value, value);
                 KMathGeneratedPerlin.SetPixel(x, y, color);
             }
         }
@@ -272,20 +270,20 @@ public class PerlinNoiseTest : MonoBehaviour
         {
             for (int y = 0; y < MathFGeneratedPerlin.height; y++)
             {
-                Color color = MathfCalculateColor(x, y);
+                UnityEngine.Color color = MathfCalculateColor(x, y);
                 MathFGeneratedPerlin.SetPixel(x, y, color);
             }
         }
         MathFGeneratedPerlin.Apply();
     }
 
-    Color MathfCalculateColor(int x, int y)
+    UnityEngine.Color MathfCalculateColor(int x, int y)
     {
         const int scale = 20;
         float xCoord = (float)x / MathFGeneratedPerlin.width * scale;
         float yCoord = (float)y / MathFGeneratedPerlin.height * scale;
 
-        float sample = Mathf .PerlinNoise(xCoord, yCoord);
-        return new Color(sample, sample, sample);
+        float sample = UnityEngine.Mathf .PerlinNoise(xCoord, yCoord);
+        return new UnityEngine.Color(sample, sample, sample);
     }
 }

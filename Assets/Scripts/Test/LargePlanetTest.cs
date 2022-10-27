@@ -1,14 +1,15 @@
-using UnityEngine;
-using Enums.Tile;
+//import UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using Item;
 using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class LargePlanetTest : MonoBehaviour
+    class LargePlanetTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
         public PlanetState Planet;
         Inventory.InventoryManager inventoryManager;
         Inventory.DrawSystem inventoryDrawSystem;
@@ -37,14 +38,14 @@ namespace Planet.Unity
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
                 {
                     GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, 
                         itemProperty.ToolActionType, Player.agentID.ID);
                 }
             }
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
@@ -55,7 +56,7 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            if (Event.current.type != EventType.Repaint)
+            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
 
             inventoryDrawSystem.Draw(Planet.EntitasContext, Planet.InventoryList);
@@ -200,8 +201,8 @@ namespace Planet.Unity
             }
 */
 
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+            var camera = UnityEngine.Camera.main;
+            UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2, camera.nearClipPlane));
 
             tileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
             tileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);

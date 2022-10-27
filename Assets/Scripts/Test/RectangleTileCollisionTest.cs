@@ -1,11 +1,12 @@
 using System;
 using KMath;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestSquare : MonoBehaviour 
 {
     // Renderer
-    public LineRenderer renderer;
+    [FormerlySerializedAs("renderer")] public LineRenderer lineRenderer;
     public Shader       shader;
     public Material     material;
 
@@ -41,14 +42,14 @@ public class TestSquare : MonoBehaviour
         {
             hideFlags = HideFlags.HideAndDontSave
         };
-        renderer               = gameObject.AddComponent<LineRenderer>();
-        renderer.material      = material;
-        renderer.useWorldSpace = true;
-        renderer.loop          = true;
+        lineRenderer               = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material      = material;
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.loop          = true;
 
-        renderer.startWidth    = renderer.endWidth = LineThickness;
+        lineRenderer.startWidth    = lineRenderer.endWidth = LineThickness;
 
-        renderer.sortingOrder = 10;
+        lineRenderer.sortingOrder = 10;
 
         corners[0]             = new Vector3();
         corners[1]             = new Vector3();
@@ -84,10 +85,10 @@ public class TestSquare : MonoBehaviour
         corners[2].z = -0.1f;
         corners[3].z = -0.1f;
 
-        renderer.SetPositions(corners);
-        renderer.positionCount = 4;
+        lineRenderer.SetPositions(corners);
+        lineRenderer.positionCount = 4;
 
-        renderer.startColor = renderer.endColor = color;
+        lineRenderer.startColor = lineRenderer.endColor = color;
     }
 }
 

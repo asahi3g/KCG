@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
-using UnityEngine;
 
 namespace CollisionsTest
 {

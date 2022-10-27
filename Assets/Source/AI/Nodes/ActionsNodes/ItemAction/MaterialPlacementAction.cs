@@ -1,5 +1,6 @@
-using UnityEngine;
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using Planet;
 using Enums;
 
@@ -49,7 +50,7 @@ namespace Node.Action
                                             case TileID.Moon:
                                                 if (item.itemType.Type == Enums.ItemType.Dirt)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
                                                     int y = (int)worldPosition.y;
 
@@ -75,7 +76,7 @@ namespace Node.Action
                                             case TileID.Bedrock:
                                                 if (item.itemType.Type == Enums.ItemType.Bedrock)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
                                                     int y = (int)worldPosition.y;
 
@@ -102,7 +103,7 @@ namespace Node.Action
                                             case TileID.Pipe:
                                                 if (item.itemType.Type == Enums.ItemType.Pipe)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
                                                     int y = (int)worldPosition.y;
 
@@ -128,7 +129,7 @@ namespace Node.Action
                                             case TileID.Wire:
                                                 if (item.itemType.Type == Enums.ItemType.Wire)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;
                                                     int y = (int)worldPosition.y;
 
@@ -161,7 +162,7 @@ namespace Node.Action
 
                 if (itemEntity.itemTile.InputsActive && CanPlace)
                 {
-                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
 
@@ -172,7 +173,7 @@ namespace Node.Action
             }
             else
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
 

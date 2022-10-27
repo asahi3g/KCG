@@ -1,4 +1,5 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 using KMath;
 
@@ -14,7 +15,7 @@ namespace Node.Action
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 

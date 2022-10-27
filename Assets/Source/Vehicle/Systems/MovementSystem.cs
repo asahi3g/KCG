@@ -1,4 +1,5 @@
-using UnityEngine;
+
+
 using Entitas;
 using System.Collections;
 using KMath;
@@ -32,16 +33,16 @@ namespace Vehicle
 
                 // Process Gravity
                 if(vehicle.vehiclePhysicsState2D.AffectedByGravity)
-                    velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
+                    velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * UnityEngine.Time.deltaTime;
 
                 if(vehicle.hasVehicleThruster)
                 {
                     if(vehicle.vehicleThruster.Jet)
-                        vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                        vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
                 }
                 else
                 {
-                    vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                    vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
                 }
 
             }

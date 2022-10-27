@@ -1,14 +1,15 @@
-﻿using UnityEngine;
-using Enums.Tile;
+﻿//import UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using Inventory;
 using Item;
 
 namespace Planet.Unity
 {
-    class ItemTest : MonoBehaviour
+    class ItemTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material   Material;
+        [UnityEngine.SerializeField] UnityEngine.Material   Material;
 
         public Planet.PlanetState       Planet;
         AgentEntity                     Player;
@@ -26,7 +27,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(Time.deltaTime, Material, transform);
+            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()

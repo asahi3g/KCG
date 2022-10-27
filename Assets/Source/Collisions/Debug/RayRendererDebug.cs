@@ -1,41 +1,42 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 
 namespace Collisions
 {
-    public class RayRendererDebug : MonoBehaviour
+    public class RayRendererDebug : UnityEngine.MonoBehaviour
     {
         public void Init(Line2D line)
         {
             Line = line;
-            color = Color.green;
+            color = UnityEngine.Color.green;
         }
         
         public Line2D Line;
         
         // Renderer
-        public LineRenderer lineRenderer;
-        public Shader       shader;
-        public Material     material;
+        public UnityEngine.LineRenderer lineRenderer;
+        public UnityEngine.Shader       shader;
+        public UnityEngine.Material     material;
         
         // Current color of square
-        public Color color;
+        public UnityEngine.Color color;
         
         // Used by renderer
-        public Vector3[] corners   = new Vector3[2];
+        public UnityEngine.Vector3[] corners   = new UnityEngine.Vector3[2];
         public const float LineThickness = 0.1f;
     
         void Start() 
         {
             // Initialize test shader, material, and renderer
-            shader                 = Shader.Find("Hidden/Internal-Colored");
-            material               = new Material(shader)
+            shader                 = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+            material               = new UnityEngine.Material(shader)
             {
-                hideFlags = HideFlags.HideAndDontSave
+                hideFlags = UnityEngine.HideFlags.HideAndDontSave
             };
-            lineRenderer               = gameObject.AddComponent<LineRenderer>();
+            lineRenderer               = gameObject.AddComponent<UnityEngine.LineRenderer>();
             lineRenderer.material      = material;
             lineRenderer.useWorldSpace = true;
             lineRenderer.loop          = true;
@@ -44,8 +45,8 @@ namespace Collisions
     
             lineRenderer.sortingOrder = 10;
     
-            corners[0]             = new Vector3();
-            corners[1]             = new Vector3();
+            corners[0]             = new UnityEngine.Vector3();
+            corners[1]             = new UnityEngine.Vector3();
     
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -82,11 +83,11 @@ namespace Collisions
                 var tile = tileMap.GetTile(coordinate.X, coordinate.Y);
                 if (tile.FrontTileID != TileID.Air)
                 {
-                    color = Color.red;
+                    color = UnityEngine.Color.red;
                     return;
                 }
 
-                color = Color.green;
+                color = UnityEngine.Color.green;
             }
         }
     }

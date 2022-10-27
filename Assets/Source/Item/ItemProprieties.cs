@@ -1,10 +1,12 @@
-﻿using System;
+﻿//import UnityEngine
+
+using System;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
 using Mech;
-using UnityEngine;
+
 
 namespace Item
 {
@@ -88,7 +90,7 @@ namespace Item
 
         /// Melee Attack Properties
         public float StaggerTime;
-        [Range(0, 1)]
+        [UnityEngine.Range(0, 1)]
         public float StaggerRate;
         public bool ShieldActive;
 
