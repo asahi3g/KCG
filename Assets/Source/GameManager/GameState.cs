@@ -60,6 +60,7 @@ public static class GameState
     public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
     public static readonly Agent.MovementSystem AgentMovementSystem;
+    public static readonly Agent.AgentIKSystem AgentIKSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
@@ -156,7 +157,7 @@ public static class GameState
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
-       
+        
     }
 
     public static void InitStage2()
@@ -189,6 +190,7 @@ public static class GameState
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
+        AgentIKSystem = new Agent.AgentIKSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();

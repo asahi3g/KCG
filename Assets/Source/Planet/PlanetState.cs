@@ -452,6 +452,7 @@ namespace Planet
             // Movement Systems
             GameState.AgentProcessPhysicalState.Update(ref this, frameTime);
             GameState.AgentMovementSystem.Update(EntitasContext.agent);
+            GameState.AgentIKSystem.Update(EntitasContext.agent);
             GameState.AgentModel3DMovementSystem.Update(EntitasContext.agent);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
