@@ -6,6 +6,7 @@ using CollisionsTest;
 using Enums.PlanetTileMap;
 using KMath;
 using Planet;
+using UnityEngine;
 
 public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour 
 {
@@ -29,13 +30,13 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
     AgentEntity player;
 
     // Colors for primary test squares
-    public UnityEngine.Color square_color = new(1.0f, 1.0f, 1.0f, 1.0f);
+    public UnityEngine.Color square_color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Amount of squares in grid
-    public Vec2i mapSize   = new(32, 32);
+    public Vec2i mapSize   = new Vec2i(32, 32);
 
     // Size of square 1
-    public Vec2f square_size = new(5, 5);
+    public Vec2f square_size = new Vec2f(5, 5);
 
     public TestSquare SetSquare(Vec2f center, Vec2f halfSize)
     {

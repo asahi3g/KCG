@@ -83,10 +83,10 @@ namespace ToonyColorsPro
 				public const float shurikenLineHeight = 16;
 #endif
 
-				internal static Color colorFieldBorderColor = new(0, 0, 0, 0.17f);
-				internal static Color colorFieldBorderColorHover = new(0, 0, 0, 0.5f);
-				internal static Color colorFieldBorderColorPro = new(0, 0, 0, 0.4f);
-				internal static Color colorFieldBorderColorHoverPro = new(1, 1, 1, 0.22f);
+				internal static Color colorFieldBorderColor = new Color(0, 0, 0, 0.17f);
+				internal static Color colorFieldBorderColorHover = new Color(0, 0, 0, 0.5f);
+				internal static Color colorFieldBorderColorPro = new Color(0, 0, 0, 0.4f);
+				internal static Color colorFieldBorderColorHoverPro = new Color(1, 1, 1, 0.22f);
 
 				static GUIStyle _GrayLabel;
 				internal static GUIStyle GrayLabel

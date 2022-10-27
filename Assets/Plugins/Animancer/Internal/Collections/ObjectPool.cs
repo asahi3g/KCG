@@ -146,8 +146,8 @@ namespace Animancer
             /// <see cref="ObjectPool{T}.Disposable.Item"/> and `item`.
             /// </summary>
             public static ObjectPool<T>.Disposable Acquire<T>(out T item)
-                where T : class, new()
-                => new(out item);
+                where T : class, new() =>
+                new ObjectPool<T>.Disposable(out item);
 
             /************************************************************************************************************************/
 
@@ -239,7 +239,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         private static readonly List<T>
-            Items = new();
+            Items = new List<T>();
 
         /************************************************************************************************************************/
 

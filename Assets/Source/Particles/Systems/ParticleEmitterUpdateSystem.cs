@@ -9,7 +9,7 @@ namespace Particle
 
     public class ParticleEmitterUpdateSystem
     {
-        List<ParticleEntity> ToDestroy = new();
+        List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
         ParticleEmitterCreationApi ParticleEmitterCreationApi;
         ParticleCreationApi ParticleCreationApi;

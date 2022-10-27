@@ -7,13 +7,13 @@ namespace KMath
     // Vector 2D Integer
     public struct Vec2i
     {
-        private static readonly Vec2i zeroVector = new(0, 0);
-        private static readonly Vec2i oneVector = new(1, 1);
+        private static readonly Vec2i zeroVector = new Vec2i(0, 0);
+        private static readonly Vec2i oneVector = new Vec2i(1, 1);
         
         public int X;
         public int Y;
 
-        public Vector2Int GetVector2() => new(X, Y);
+        public Vector2Int GetVector2() => new Vector2Int(X, Y);
 
         public Vec2i(int x, int y)
         {
@@ -98,21 +98,21 @@ namespace KMath
         }
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator *(Vec2i a, int d) => new(a.X * d, a.Y * d);
+        public static Vec2i operator *(Vec2i a, int d) => new Vec2i(a.X * d, a.Y * d);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator *(int d, Vec2i a) => new(a.X * d, a.Y * d);
+        public static Vec2i operator *(int d, Vec2i a) => new Vec2i(a.X * d, a.Y * d);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator <<(Vec2i a, int d) => new(a.X << d, a.Y << d);
+        public static Vec2i operator <<(Vec2i a, int d) => new Vec2i(a.X << d, a.Y << d);
         
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator /(Vec2i a, int d) => new(a.X / d, a.Y / d);
+        public static Vec2i operator /(Vec2i a, int d) => new Vec2i(a.X / d, a.Y / d);
         
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator -(Vec2i a, Vec2i b) => new(a.X - b.X, a.Y - b.Y);
+        public static Vec2i operator -(Vec2i a, Vec2i b) => new Vec2i(a.X - b.X, a.Y - b.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator -(Vec2i a, int b) => new(a.X - b, a.Y - b);
+        public static Vec2i operator -(Vec2i a, int b) => new Vec2i(a.X - b, a.Y - b);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2i operator +(Vec2i a, Vec2i b) => new(a.X + b.X, a.Y + b.Y);
+        public static Vec2i operator +(Vec2i a, Vec2i b) => new Vec2i(a.X + b.X, a.Y + b.Y);
         [MethodImpl((MethodImplOptions)256)]
         public static bool operator ==(Vec2i lhs, Vec2i rhs)
         {

@@ -13,7 +13,7 @@ namespace KGUI
         
         private ProgressBar progressBar;
         private float fuelLevel;
-        private readonly TextWrapper infoTextWrapper = new();
+        private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {

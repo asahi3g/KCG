@@ -16,7 +16,7 @@ namespace ToonyColorsPro
 	{
 		public static class TCP2_GUI
 		{
-			static GUIContent tempGuiContent = new();
+			static GUIContent tempGuiContent = new GUIContent();
 
 			public static GUIContent TempContent(string label, Texture2D icon)
 			{
@@ -34,7 +34,7 @@ namespace ToonyColorsPro
 				return tempGuiContent;
 			}
 
-			private static Dictionary<string, Texture2D> CustomEditorTextures = new();
+			private static Dictionary<string, Texture2D> CustomEditorTextures = new Dictionary<string, Texture2D>();
 			public static Texture2D GetCustomTexture(string name)
 			{
 				var uiName = name + (EditorGUIUtility.isProSkin ? "pro" : "");
@@ -532,8 +532,8 @@ namespace ToonyColorsPro
 				return null;
 			}
 
-			static Color hoverColor = new(0, 0, 0, 0.05f);
-			static Color hoverColorDark = new(1, 1, 1, 0.05f);
+			static Color hoverColor = new Color(0, 0, 0, 0.05f);
+			static Color hoverColorDark = new Color(1, 1, 1, 0.05f);
 			static Color HoverColor => EditorGUIUtility.isProSkin ? hoverColorDark : hoverColor;
 
 			public static void DrawHoverRect(Rect rect,
@@ -1046,10 +1046,10 @@ namespace ToonyColorsPro
 		public class TCP2OutlineNormalsGUIDrawer : MaterialPropertyDrawer
 		{
 			readonly GUIContent[] labels = {
-			new("Regular", "Use regular vertex normals"),
-			new("Vertex Colors", "Use vertex colors as normals (with smoothed mesh)"),
-			new("Tangents", "Use tangents as normals (with smoothed mesh)"),
-			new("UV2", "Use second texture coordinates as normals (with smoothed mesh)")
+				new GUIContent("Regular", "Use regular vertex normals"),
+				new GUIContent("Vertex Colors", "Use vertex colors as normals (with smoothed mesh)"),
+				new GUIContent("Tangents", "Use tangents as normals (with smoothed mesh)"),
+				new GUIContent("UV2", "Use second texture coordinates as normals (with smoothed mesh)")
 	};
 			readonly string[] keywords = { "TCP2_NONE", "TCP2_COLORS_AS_NORMALS", "TCP2_TANGENT_AS_NORMALS", "TCP2_UV2_AS_NORMALS" };
 
@@ -1252,8 +1252,10 @@ namespace ToonyColorsPro
 			static Texture2D DefaultRampTexture;
 			static bool DefaultTextureSearched;     //Avoid searching each update if texture isn't found
 
-			private static GUIContent editButtonLabel = new("Edit Gradient", "Edit the ramp texture using Unity's gradient editor");
-			private static GUIContent editButtonDisabledLabel = new("Edit Gradient", "Can't edit the ramp texture because it hasn't been generated with the Ramp Generator\n\n(Tools/Toony Colors Pro 2/Ramp Generator)");
+			private static GUIContent editButtonLabel =
+				new GUIContent("Edit Gradient", "Edit the ramp texture using Unity's gradient editor");
+			private static GUIContent editButtonDisabledLabel = new GUIContent("Edit Gradient",
+				"Can't edit the ramp texture because it hasn't been generated with the Ramp Generator\n\n(Tools/Toony Colors Pro 2/Ramp Generator)");
 
 			private AssetImporter assetImporter;
 
@@ -1780,8 +1782,7 @@ namespace ToonyColorsPro
 		{
 			private static readonly GUIContent[] s_UVLabels = new GUIContent[]
 			{
-		new("U"),
-		new("V")
+				new GUIContent("U"), new GUIContent("V")
 			};
 
 			private static readonly float[] s_UVValues = new float[]

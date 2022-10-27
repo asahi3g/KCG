@@ -167,7 +167,7 @@ namespace Animancer
             #region End Event
             /************************************************************************************************************************/
 
-            private AnimancerEvent _EndEvent = new(float.NaN, null);
+            private AnimancerEvent _EndEvent = new AnimancerEvent(float.NaN, null);
 
             /// <summary>
             /// A <see cref="callback "/> that will be triggered every frame after the <see cref="normalizedTime"/> has
@@ -514,8 +514,7 @@ namespace Animancer
             /// Returns a <see cref="FastEnumerator{T}"/> for the events in this sequence excluding the
             /// <see cref="EndEvent"/>.
             /// </summary>
-            public FastEnumerator<AnimancerEvent> GetEnumerator()
-                => new(_Events, Count);
+            public FastEnumerator<AnimancerEvent> GetEnumerator() => new FastEnumerator<AnimancerEvent>(_Events, Count);
 
             IEnumerator<AnimancerEvent> IEnumerable<AnimancerEvent>.GetEnumerator()
                 => GetEnumerator();

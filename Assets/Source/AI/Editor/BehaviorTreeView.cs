@@ -177,6 +177,7 @@ namespace AI
                           endPort.node != startPort.node).ToList();
         }
 
-        private Vec2f SetRootPos() => new((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
+        private Vec2f SetRootPos() =>
+            new Vec2f((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
     }
 }

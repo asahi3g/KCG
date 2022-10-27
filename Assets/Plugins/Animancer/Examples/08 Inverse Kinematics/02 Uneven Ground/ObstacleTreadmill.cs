@@ -28,7 +28,7 @@ namespace Animancer.Examples.InverseKinematics
 
         /************************************************************************************************************************/
 
-        private readonly List<Transform> Obstacles = new();
+        private readonly List<Transform> Obstacles = new List<Transform>();
 
         /************************************************************************************************************************/
 

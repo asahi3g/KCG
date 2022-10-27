@@ -84,7 +84,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
 
 
     public UnityEngine.Material Material;
-    public Vec2i mapSize = new(32, 32);
+    public Vec2i mapSize = new Vec2i(32, 32);
     
     // Start is called before the first frame update
 

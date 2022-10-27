@@ -7,7 +7,7 @@ namespace KGUI
     [UnityEngine.DefaultExecutionOrder (101)]
     public class PanelUI : UnityEngine.MonoBehaviour
     {
-        public Dictionary<ElementEnums, ElementUI> ElementList = new();
+        public Dictionary<ElementEnums, ElementUI> ElementList = new Dictionary<ElementEnums, ElementUI>();
         public PanelEnums ID { get; protected set; }
 
         private void Start()

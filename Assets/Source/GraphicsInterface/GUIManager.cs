@@ -16,8 +16,8 @@ namespace KGUI
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
 
-        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new();
-        public Dictionary<PanelEnums, PanelUI> PanelList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new Dictionary<PanelEnums, PanelUI>();
+        public Dictionary<PanelEnums, PanelUI> PanelList = new Dictionary<PanelEnums, PanelUI>();
 
         public Vec2f CursorPosition;
         public ElementUI ElementUnderCursor;
@@ -25,7 +25,7 @@ namespace KGUI
         
         private UnityEngine.Canvas canvas;
 
-        private TextWrapper text = new();
+        private TextWrapper text = new TextWrapper();
         
         public void InitStage1()
         {

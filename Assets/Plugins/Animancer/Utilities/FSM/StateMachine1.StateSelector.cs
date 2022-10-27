@@ -65,7 +65,7 @@ namespace Animancer.FSM
     public class ReverseComparer<T> : IComparer<T>
     {
         /// <summary>The singleton instance.</summary>
-        public static readonly ReverseComparer<T> Instance = new();
+        public static readonly ReverseComparer<T> Instance = new ReverseComparer<T>();
 
         /// <summary>No need to let users create other instances.</summary>
         private ReverseComparer() { }

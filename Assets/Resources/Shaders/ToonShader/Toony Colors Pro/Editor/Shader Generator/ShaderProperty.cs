@@ -323,7 +323,7 @@ namespace ToonyColorsPro
 
 			//================================================================================================================================
 
-			ReorderableLayoutList layoutList = new();
+			ReorderableLayoutList layoutList = new ReorderableLayoutList();
 
 			public string Name { get => _name;
 				private set => _name = value;
@@ -333,12 +333,12 @@ namespace ToonyColorsPro
 			public VariableType Type { get; private set; }
 			public ProgramType Program = ProgramType.Undefined;
 			public bool IsUsedInLightingFunction = false;   //TODO same process for IsUsedInVertexFunction for vert/frag shaders and automatic float4 texcoordN packing
-			public List<int> usedImplementationsForCustomCode = new();
+			public List<int> usedImplementationsForCustomCode = new List<int>();
 
 			int passBitmask;    //bitmask that determines in which passes the shader property is used
 			Implementation[] defaultImplementations;
 			public bool expanded;
-			public List<int> implementationsExpandedStates = new();
+			public List<int> implementationsExpandedStates = new List<int>();
 			string helpMessage;
 			string displayName = null;
 			public string DisplayName
@@ -1122,13 +1122,14 @@ namespace ToonyColorsPro
 				return implementationsMenu;
 			}
 
-			static readonly GUIContent gc_copyImplementations = new("Copy Implementations");
-			static readonly GUIContent gc_PasteImplementations = new("Paste Implementations");
-			static GUIContent gc_cantPasteImplementations = new();
-			static readonly GUIContent gc_ExportImplementations = new("Export Implementations...");
-			static readonly GUIContent gc_ImportImplementations = new("Import Implementations...");
-			static readonly GUIContent gc_ResetImplementations = new("Reset Default Implementation");
-			static readonly GUIContent gc_debugCompareImplementations = new("Debug: compare implementations with defaults");
+			static readonly GUIContent gc_copyImplementations = new GUIContent("Copy Implementations");
+			static readonly GUIContent gc_PasteImplementations = new GUIContent("Paste Implementations");
+			static GUIContent gc_cantPasteImplementations = new GUIContent();
+			static readonly GUIContent gc_ExportImplementations = new GUIContent("Export Implementations...");
+			static readonly GUIContent gc_ImportImplementations = new GUIContent("Import Implementations...");
+			static readonly GUIContent gc_ResetImplementations = new GUIContent("Reset Default Implementation");
+			static readonly GUIContent gc_debugCompareImplementations =
+				new GUIContent("Debug: compare implementations with defaults");
 			static List<Implementation> s_copiedImplementationsBuffer;
 			static VariableType s_copiedImplementationsType;
 
@@ -1626,7 +1627,8 @@ namespace ToonyColorsPro
 				return associatedData;
 			}
 
-			static Dictionary<string, ShaderProperty> CachedShaderPropertiesFromTemplate = new();
+			static Dictionary<string, ShaderProperty> CachedShaderPropertiesFromTemplate =
+				new Dictionary<string, ShaderProperty>();
 
 			public static void ClearCache()
 			{

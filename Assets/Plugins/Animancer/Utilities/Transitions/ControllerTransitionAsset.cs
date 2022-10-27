@@ -184,8 +184,8 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Creates a new <see cref="ControllerTransition"/> with the specified Animator Controller.</summary>
-        public static implicit operator ControllerTransition(RuntimeAnimatorController controller)
-            => new(controller);
+        public static implicit operator ControllerTransition(RuntimeAnimatorController controller) =>
+            new ControllerTransition(controller);
 
         /************************************************************************************************************************/
 

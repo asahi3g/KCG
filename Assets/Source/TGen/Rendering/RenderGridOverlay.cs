@@ -8,7 +8,7 @@ namespace TGen
     {
         public Utility.FrameMesh Mesh;
 
-        private Color gridColor = new(0.5F, 0.5F, 0.5F, 0.5F);
+        private Color gridColor = new Color(0.5F, 0.5F, 0.5F, 0.5F);
 
         private float gridThickness = 0.1F;
 

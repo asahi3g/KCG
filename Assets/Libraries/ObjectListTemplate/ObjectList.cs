@@ -5,7 +5,7 @@ namespace Assets.src.Library.GenerationalIndices
 {
     public class ObjectList<T> where T: struct
     {
-        private List<GenerationalEntry<T>> _entries = new();
+        private List<GenerationalEntry<T>> _entries = new List<GenerationalEntry<T>>();
 
         public GenerationalIndexKey Add(T val)
         {

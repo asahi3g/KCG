@@ -7,12 +7,12 @@ namespace ToonyColorsPro
 	{
 		static bool assemblyReload;
 		static Tooltip instance;
-		static GUIContent guiContent = new();
+		static GUIContent guiContent = new GUIContent();
 		static float closeTime;
 		const float closeDelay = 0.1f;
 		static bool updateEvent;
 		static bool isHiding;
-		static Rect _labelRect = new();
+		static Rect _labelRect = new Rect();
 
 		static GUIStyle _style;
 		static GUIStyle style

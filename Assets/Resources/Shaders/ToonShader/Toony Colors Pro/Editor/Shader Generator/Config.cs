@@ -79,11 +79,13 @@ namespace ToonyColorsPro
 			internal string Filename = "My TCP2 Shader";
 			internal string ShaderName = "Toony Colors Pro 2/User/My TCP2 Shader";
 			[Serialization.SerializeAs("tmplt")] internal string templateFile = "TCP2_ShaderTemplate_Default";
-			[Serialization.SerializeAs("features")] internal List<string> Features = new();
-			internal List<string> ExtraTempFeatures = new();
-			[Serialization.SerializeAs("flags")] internal List<string> Flags = new();
-			[Serialization.SerializeAs("flags_extra")] internal Dictionary<string, List<string>> FlagsExtra = new();
-			[Serialization.SerializeAs("keywords")] internal Dictionary<string, string> Keywords = new();
+			[Serialization.SerializeAs("features")] internal List<string> Features = new List<string>();
+			internal List<string> ExtraTempFeatures = new List<string>();
+			[Serialization.SerializeAs("flags")] internal List<string> Flags = new List<string>();
+			[Serialization.SerializeAs("flags_extra")] internal Dictionary<string, List<string>> FlagsExtra =
+				new Dictionary<string, List<string>>();
+			[Serialization.SerializeAs("keywords")] internal Dictionary<string, string> Keywords =
+				new Dictionary<string, string>();
 			internal bool isModifiedExternally = false;
 
 			// UI list of Shader Properties
@@ -94,16 +96,19 @@ namespace ToonyColorsPro
 				public bool hasErrors;
 				public List<ShaderProperty> shaderProperties;
 			}
-			List<ShaderPropertyGroup> shaderPropertiesUIGroups = new();
-			Dictionary<string, bool> headersExpanded = new(); // the struct array above is always recreated, so we can't track expanded state there
-			List<ShaderProperty> visibleShaderProperties = new();
+			List<ShaderPropertyGroup> shaderPropertiesUIGroups = new List<ShaderPropertyGroup>();
+			Dictionary<string, bool> headersExpanded = new Dictionary<string, bool>(); // the struct array above is always recreated, so we can't track expanded state there
+			List<ShaderProperty> visibleShaderProperties = new List<ShaderProperty>();
 			//Serialize all cached Shader Properties so that their custom implementation is saved, even if they are not used in the shader
-			[Serialization.SerializeAs("shaderProperties")] List<ShaderProperty> cachedShaderProperties = new();
+			[Serialization.SerializeAs("shaderProperties")] List<ShaderProperty> cachedShaderProperties =
+				new List<ShaderProperty>();
 			List<List<ShaderProperty>> shaderPropertiesPerPass;
-			[Serialization.SerializeAs("customTextures")] List<ShaderProperty.CustomMaterialProperty> customMaterialPropertiesList = new();
-			ReorderableLayoutList customTexturesLayoutList = new();
+			[Serialization.SerializeAs("customTextures")] List<ShaderProperty.CustomMaterialProperty> customMaterialPropertiesList =
+				new List<ShaderProperty.CustomMaterialProperty>();
+			ReorderableLayoutList customTexturesLayoutList = new ReorderableLayoutList();
 
-			public ShaderProperty customMaterialPropertyShaderProperty = new("_CustomMaterialPropertyDummy", ShaderProperty.VariableType.color_rgba);
+			public ShaderProperty customMaterialPropertyShaderProperty =
+				new ShaderProperty("_CustomMaterialPropertyDummy", ShaderProperty.VariableType.color_rgba);
 
 			internal ShaderProperty.CustomMaterialProperty[] CustomMaterialProperties => customMaterialPropertiesList.ToArray();
 			internal ShaderProperty[] VisibleShaderProperties => visibleShaderProperties.ToArray();
@@ -111,7 +116,8 @@ namespace ToonyColorsPro
 
 
 			// Code Injection properties
-			[Serialization.SerializeAs("codeInjection")] internal CodeInjectionManager codeInjection = new();
+			[Serialization.SerializeAs("codeInjection")] internal CodeInjectionManager codeInjection =
+				new CodeInjectionManager();
 
 
 			internal string[] GetShaderPropertiesNeededFeaturesForPass(int passIndex)

@@ -23,7 +23,7 @@ namespace ToonyColorsPro
 			private Material targetMaterial => (_materialEditor == null) ? null : _materialEditor.target as Material;
 			private MaterialEditor _materialEditor;
 			private MaterialProperty[] _properties;
-			private Stack<bool> toggledGroups = new();
+			private Stack<bool> toggledGroups = new Stack<bool>();
 			private bool hasAutoTransparency;
 
 			//--------------------------------------------------------------------------------------------------

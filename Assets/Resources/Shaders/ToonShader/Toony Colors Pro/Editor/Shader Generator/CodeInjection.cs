@@ -27,7 +27,8 @@ namespace ToonyColorsPro
 					[Serialization.SerializeAs("displayName")] internal string displayName;
 					[Serialization.SerializeAs("blockName")] internal string blockName;
 					[Serialization.SerializeAs("program")] internal ShaderProperty.ProgramType program;
-					[Serialization.SerializeAs("shaderProperties")] internal List<ShaderProperty> shaderProperties = new();
+					[Serialization.SerializeAs("shaderProperties")] internal List<ShaderProperty> shaderProperties =
+						new List<ShaderProperty>();
 					internal InjectableBlock block;
 
 					// Contains the serialized properties as text, temporarily:
@@ -251,7 +252,7 @@ namespace ToonyColorsPro
 				{
 					internal string name;
 					internal string[] codeLines;
-					internal List<ShaderPropertyInfo> shaderPropertiesInfos = new();
+					internal List<ShaderPropertyInfo> shaderPropertiesInfos = new List<ShaderPropertyInfo>();
 
 					internal bool isReplaceBlock;
 					internal string searchString;
@@ -278,14 +279,15 @@ namespace ToonyColorsPro
 					[Serialization.SerializeAs("guid")] string guid;
 					[Serialization.SerializeAs("filename")] string filename;
 
-					[Serialization.SerializeAs("injectedPoints")] internal List<InjectedPoint> injectedPoints = new();
-					internal List<InjectableBlock> injectableBlocks = new();
+					[Serialization.SerializeAs("injectedPoints")] internal List<InjectedPoint> injectedPoints =
+						new List<InjectedPoint>();
+					internal List<InjectableBlock> injectableBlocks = new List<InjectableBlock>();
 					int replaceBlockCount;
 
 					// UI
-					Dictionary<string, bool> headersExpanded = new();
+					Dictionary<string, bool> headersExpanded = new Dictionary<string, bool>();
 					GenericMenu pendingBlockMenu;
-					ReorderableLayoutList injectedPointsList = new();
+					ReorderableLayoutList injectedPointsList = new ReorderableLayoutList();
 
 
 					[Serialization.OnDeserializeCallback]
@@ -829,10 +831,10 @@ namespace ToonyColorsPro
 
 				internal static CodeInjectionManager instance;
 
-				[Serialization.SerializeAs("injectedFiles")] List<InjectedFile> injectedFiles = new();
+				[Serialization.SerializeAs("injectedFiles")] List<InjectedFile> injectedFiles = new List<InjectedFile>();
 				[Serialization.SerializeAs("mark")] bool markInjectionPoints = false;
 
-				ReorderableLayoutList injectedFilesList = new();
+				ReorderableLayoutList injectedFilesList = new ReorderableLayoutList();
 
 				public CodeInjectionManager()
 				{

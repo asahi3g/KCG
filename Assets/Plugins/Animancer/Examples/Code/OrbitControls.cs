@@ -17,8 +17,8 @@ namespace Animancer.Examples
     {
         /************************************************************************************************************************/
 
-        [SerializeField] private Vector3 _FocalPoint = new(0, 1, 0);
-        [SerializeField] private Vector3 _Sensitivity = new(1, -0.75f, -0.1f);
+        [SerializeField] private Vector3 _FocalPoint = new Vector3(0, 1, 0);
+        [SerializeField] private Vector3 _Sensitivity = new Vector3(1, -0.75f, -0.1f);
         [SerializeField] private float _MinZoom = 0.5f;
 
         private float _Distance;

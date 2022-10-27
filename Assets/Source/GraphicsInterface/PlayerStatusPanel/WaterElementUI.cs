@@ -12,7 +12,7 @@ namespace KGUI
         
         private ProgressBar progressBar;
         private float waterAmount;
-        private readonly TextWrapper infoTextWrapper = new();
+        private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {

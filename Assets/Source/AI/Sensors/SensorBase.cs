@@ -6,7 +6,7 @@ namespace AI.Sensor
 {
     public class SensorBase
     {
-        protected Tuple<string, Type> CreateEntry(string name, Type type) => new(name, type);
+        protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
         public virtual SensorType Type => SensorType.Error;
 

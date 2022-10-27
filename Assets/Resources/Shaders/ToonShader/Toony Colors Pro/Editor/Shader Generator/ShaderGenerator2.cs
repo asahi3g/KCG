@@ -254,7 +254,7 @@ namespace ToonyColorsPro
 
 			int tabIndex;
 			readonly Vector2[] scrollPositions = new Vector2[3];
-			readonly Color unsavedChangesColor = new(1f, 1f, 0.7f);
+			readonly Color unsavedChangesColor = new Color(1f, 1f, 0.7f);
 
 			//--------------------------------------------------------------------------------------------------
 			// Undo/Redo system
@@ -1373,9 +1373,9 @@ namespace ToonyColorsPro
 
 			class NotEmptyBlock
 			{
-				public StringBuilder stringBuilderToPrintBefore = new();
-				public StringBuilder stringBuilderNotEmptyBlock = new();
-				public StringBuilder stringBuilderToPrintAfter = new();
+				public StringBuilder stringBuilderToPrintBefore = new StringBuilder();
+				public StringBuilder stringBuilderNotEmptyBlock = new StringBuilder();
+				public StringBuilder stringBuilderToPrintAfter = new StringBuilder();
 
 				public NotEmptyBlock()
 				{

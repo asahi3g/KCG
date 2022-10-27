@@ -4,6 +4,7 @@ using Enums.PlanetTileMap;
 using KMath;
 using System.Linq;
 using System.Collections.Generic;
+using Collisions;
 using PlanetTileMap;
 using Enums;
 
@@ -41,19 +42,19 @@ namespace Planet.Unity
 
         bool IsShapeColliding = false;
 
-        Vec2f CircleCenter = new(12, 12);
+        Vec2f CircleCenter = new Vec2f(12, 12);
 
 
-        Vec2f CircleVelocity = new();
+        Vec2f CircleVelocity = new Vec2f();
 
         float CollisionDistance = 0.0f;
 
 
         float CircleRadius = 0.5f;
-        Vec2f P1 = new(15, 15);
-        Vec2f P2 = new(18, 15);
+        Vec2f P1 = new Vec2f(15, 15);
+        Vec2f P2 = new Vec2f(18, 15);
 
-        Vec2f P3 = new(18, 18);
+        Vec2f P3 = new Vec2f(18, 18);
 
         Vec2f collisionPoint;
 
@@ -159,8 +160,8 @@ namespace Planet.Unity
 
           //  UpdateMode(ref Planet, Player);
         }
-        Collisions.Box2D otherBox = new() {x = 7, y = 21, w = 1.0f, h = 1.0f};
-        Collisions.Box2D orrectedBox = new() {x = 0, y = 17, w = 1.0f, h = 1.0f};
+        Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
+        Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
 
         public void Update()
         {

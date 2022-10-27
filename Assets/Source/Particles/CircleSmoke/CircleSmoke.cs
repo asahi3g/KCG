@@ -3,6 +3,7 @@
 using Collisions;
 using KMath;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Particle
@@ -10,12 +11,12 @@ namespace Particle
     public static class CircleSmoke
     {
         // Lists
-        private static List<UnityEngine.MeshRenderer> Smokes = new();
-        private static List<Vec2f> Velocities = new();
-        private static List<Vec2f> Positions = new();
-        private static List<Vec2f> Scales = new();
-        private static List<AABox2D> Collisions = new();
-        private static List<UnityEngine.Material> Materials = new();
+        private static List<UnityEngine.MeshRenderer> Smokes = new List<MeshRenderer>();
+        private static List<Vec2f> Velocities = new List<Vec2f>();
+        private static List<Vec2f> Positions = new List<Vec2f>();
+        private static List<Vec2f> Scales = new List<Vec2f>();
+        private static List<AABox2D> Collisions = new List<AABox2D>();
+        private static List<UnityEngine.Material> Materials = new List<Material>();
 
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
         {

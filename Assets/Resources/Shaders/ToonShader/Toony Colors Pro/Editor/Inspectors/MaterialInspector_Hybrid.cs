@@ -56,7 +56,7 @@ namespace ToonyColorsPro
 			//--------------------------------------------------------------------------------------------------
 
 			// Set by custom conditions (IF_KEYWORD, IF_PROPERTY) to tell if the next properties should be visible
-			static Stack<bool> ShowStack = new();
+			static Stack<bool> ShowStack = new Stack<bool>();
 
 			static public bool ShowNextProperty { get; private set; }
 			static public void PushShowProperty(bool value)
@@ -70,7 +70,7 @@ namespace ToonyColorsPro
 			}
 
 			// Set by custom conditions (IF_PROPERTY_DISABLE) to tell if the next properties should be disabled
-			static Stack<bool> DisableStack = new();
+			static Stack<bool> DisableStack = new Stack<bool>();
 			static public bool DisableNextProperty { get; private set; }
 			static public void PushDisableProperty(bool value)
 			{
@@ -97,8 +97,8 @@ namespace ToonyColorsPro
 			const string kGC_HelpBox = "HELP_BOX";
 			const string kGC_Label = "LABEL";
 
-			Dictionary<int, List<GUICommand>> guiCommands = new();
-			Dictionary<int, string[]> splitLabels = new();
+			Dictionary<int, List<GUICommand>> guiCommands = new Dictionary<int, List<GUICommand>>();
+			Dictionary<int, string[]> splitLabels = new Dictionary<int, string[]>();
 
 			bool initialized = false;
 			AssetImporter shaderImporter;

@@ -26,7 +26,7 @@ namespace ToonyColorsPro
 			static int LastIndent;
 			static bool LastVisible;
 
-			static GUIContent tempContent = new();
+			static GUIContent tempContent = new GUIContent();
 			protected static GUIContent TempContent(string label, string tooltip = null)
 			{
 				tempContent.text = label;
@@ -52,7 +52,7 @@ namespace ToonyColorsPro
 
 			UIFeature parent; // simple hierarchy system to handle visibility and vertical/horizontal line hierarchy drawing
 
-			protected static Stack<bool> FoldoutStack = new();
+			protected static Stack<bool> FoldoutStack = new Stack<bool>();
 			internal static void ClearFoldoutStack()
 			{
 				UIFeature_DropDownStart.ClearDropDownsList();
@@ -551,7 +551,7 @@ namespace ToonyColorsPro
 			string[] labels;
 			string[] values;
 			string cachedKeywordValue;
-			List<string> flagsList = new();
+			List<string> flagsList = new List<string>();
 			int cachedFlagListCount;
 
 			string popupLabel = "None";
@@ -1257,7 +1257,7 @@ namespace ToonyColorsPro
 
 		internal class UIFeature_DropDownStart : UIFeature
 		{
-			static List<UIFeature_DropDownStart> AllDropDowns = new();
+			static List<UIFeature_DropDownStart> AllDropDowns = new List<UIFeature_DropDownStart>();
 			internal static void ClearDropDownsList()
 			{
 				AllDropDowns.Clear();

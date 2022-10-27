@@ -10,7 +10,7 @@ namespace InteliMap
         [Tooltip("The tilemap to fill by generating. Each seperate entry into the list should be a different layer of the map to fill.")]
         public List<Tilemap> mapToFill;
         [Tooltip("The bounds of the given tilemap to fill by generating. Already placed tiles will be incorporated into the new generation in-place.")]
-        public BoundsInt boundsToFill = new(new Vector3Int(0, 0), new Vector3Int(25, 25, 1));
+        public BoundsInt boundsToFill = new BoundsInt(new Vector3Int(0, 0), new Vector3Int(25, 25, 1));
         [Tooltip("Wether to start generation upon the scene starting.")]
         public bool generateOnStart = true;
         [Tooltip("When this is set to true, if the generator encounters an area impossible to generate in, instead of throw an exception, it will forcefully generate by changing some of the previously set tiles.")]

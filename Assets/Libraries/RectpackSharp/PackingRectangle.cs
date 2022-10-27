@@ -84,11 +84,12 @@ namespace RectpackSharp
 
         }
 
-        public static implicit operator Rectangle(PackingRectangle rectangle)
-            => new((int)rectangle.X, (int)rectangle.Y, (int)rectangle.Width, (int)rectangle.Height);
+        public static implicit operator Rectangle(PackingRectangle rectangle) =>
+            new Rectangle((int) rectangle.X, (int) rectangle.Y, (int) rectangle.Width, (int) rectangle.Height);
 
-        public static implicit operator PackingRectangle(Rectangle rectangle)
-            => new((uint)rectangle.X, (uint)rectangle.Y, (uint)rectangle.Width, (uint)rectangle.Height);
+        public static implicit operator PackingRectangle(Rectangle rectangle) =>
+            new PackingRectangle((uint) rectangle.X, (uint) rectangle.Y, (uint) rectangle.Width,
+                (uint) rectangle.Height);
 
         public static bool operator ==(PackingRectangle left, PackingRectangle right) => left.Equals(right);
         public static bool operator !=(PackingRectangle left, PackingRectangle right) => !left.Equals(right);

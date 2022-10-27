@@ -30,9 +30,9 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private readonly Dictionary<TKey, CachedValue>
-            Cache = new();
+            Cache = new Dictionary<TKey, CachedValue>();
         private readonly List<TKey>
-            Keys = new();
+            Keys = new List<TKey>();
         private readonly Func<TKey, TValue>
             Converter;
 

@@ -11,13 +11,13 @@ namespace KMath.Noise
         /// Unit vector with angle from 0 to 360.
         /// </summary>
         public static readonly Vec2f[] GradientArray = new Vec2f[8] {
-                new( 1f, 0f),                     // 0
-                new Vec2f( 1f, 1f).Normalize(),         // 45
-                new( 0f, 1f),                     // 90
-                new Vec2f(-1f, 1f).Normalize(),         // 135
-                new(-1f, 0f),                     // 180
-                new Vec2f( 1f,-1f).Normalize(),         // 225
-                new( 0f,-1f),                     // 270
+            new Vec2f(1f, 0f),                     // 0
+                new Vec2f( 1f, 1f).Normalize(), // 45
+                new Vec2f(0f, 1f),                     // 90
+                new Vec2f(-1f, 1f).Normalize(), // 135
+                new Vec2f(-1f, 0f),                     // 180
+                new Vec2f( 1f,-1f).Normalize(), // 225
+                new Vec2f(0f, -1f),                     // 270
                 new Vec2f(-1f,-1f).Normalize()          // 315
             };
 

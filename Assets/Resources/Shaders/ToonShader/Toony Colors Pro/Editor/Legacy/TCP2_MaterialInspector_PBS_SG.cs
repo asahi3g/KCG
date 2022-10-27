@@ -35,33 +35,35 @@ internal class TCP2_MaterialInspector_PBS_SG : ShaderGUI
 	private static class Styles
 	{
 		//public static GUIStyle optionsButton = "PaneOptions";
-		public static GUIContent uvSetLabel = new("UV Set");
+		public static GUIContent uvSetLabel = new GUIContent("UV Set");
 		//public static GUIContent[] uvSetOptions = { new GUIContent("UV channel 0"), new GUIContent("UV channel 1") };
 
 		//public static string emptyTootip = "";
-		public static GUIContent albedoText = new("Albedo", "Albedo (RGB) and Transparency (A)");
-		public static GUIContent alphaCutoffText = new("Alpha Cutoff", "Threshold for alpha cutoff");
-		public static GUIContent specularMapText = new("Specular", "Specular (RGB) and Smoothness (A)");
-		public static GUIContent metallicMapText = new("Metallic", "Metallic (R) and Smoothness (A)");
-		public static GUIContent smoothnessText = new("Smoothness", "Smoothness Value");
-		public static GUIContent smoothnessScaleText = new("Smoothness", "Smoothness scale factor");
-		public static GUIContent smoothnessMapChannelText = new("Source", "Smoothness texture and channel");
+		public static GUIContent albedoText = new GUIContent("Albedo", "Albedo (RGB) and Transparency (A)");
+		public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
+		public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
+		public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
+		public static GUIContent smoothnessText = new GUIContent("Smoothness", "Smoothness Value");
+		public static GUIContent smoothnessScaleText = new GUIContent("Smoothness", "Smoothness scale factor");
+		public static GUIContent smoothnessMapChannelText = new GUIContent("Source", "Smoothness texture and channel");
 //		public static GUIContent highlightsText = new GUIContent("Specular Highlights", "Specular Highlights");
 //		public static GUIContent reflectionsText = new GUIContent("Reflections", "Glossy Reflections");
-		public static GUIContent normalMapText = new("Normal Map", "Normal Map");
-		public static GUIContent heightMapText = new("Height Map", "Height Map (G)");
-		public static GUIContent occlusionText = new("Occlusion", "Occlusion (G)");
-		public static GUIContent emissionText = new("Emission", "Emission (RGB)");
-		public static GUIContent detailMaskText = new("Detail Mask", "Mask for Secondary Maps (A)");
-		public static GUIContent detailAlbedoText = new("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
-		public static GUIContent detailNormalMapText = new("Normal Map", "Normal Map");
+		public static GUIContent normalMapText = new GUIContent("Normal Map", "Normal Map");
+		public static GUIContent heightMapText = new GUIContent("Height Map", "Height Map (G)");
+		public static GUIContent occlusionText = new GUIContent("Occlusion", "Occlusion (G)");
+		public static GUIContent emissionText = new GUIContent("Emission", "Emission (RGB)");
+		public static GUIContent detailMaskText = new GUIContent("Detail Mask", "Mask for Secondary Maps (A)");
+		public static GUIContent detailAlbedoText = new GUIContent("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
+		public static GUIContent detailNormalMapText = new GUIContent("Normal Map", "Normal Map");
 
 		//public static string whiteSpaceString = " ";
 		public static string primaryMapsText = "Main Maps";
 		public static string secondaryMapsText = "Secondary Maps";
 //		public static string forwardText = "Forward Rendering Options";
 		public static string renderingMode = "Rendering Mode";
-		public static GUIContent emissiveWarning = new("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
+		public static GUIContent emissiveWarning =
+			new GUIContent(
+				"Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
 		//public static GUIContent emissiveColorWarning = new GUIContent ("Ensure emissive color is non-black for emission to have effect.");
 		public static readonly string[] blendNames = Enum.GetNames (typeof (BlendMode));
 

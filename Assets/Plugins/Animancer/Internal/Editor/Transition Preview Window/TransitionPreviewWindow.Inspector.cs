@@ -33,7 +33,7 @@ namespace Animancer.Editor
             private int _CurrentTab;
 
             private readonly AnimancerPlayableDrawer
-                PlayableDrawer = new();
+                PlayableDrawer = new AnimancerPlayableDrawer();
 
             public TransitionPreviewWindow Target { get; private set; }
 

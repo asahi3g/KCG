@@ -28,10 +28,10 @@ public class AsmdefDebug
     private static string AssemblyTotalCompilationTimeEditorPref = "AssemblyTotalCompilationTime";
 
     // Local Start Times
-    static Dictionary<string, DateTime> s_StartTimes = new();
+    static Dictionary<string, DateTime> s_StartTimes = new Dictionary<string, DateTime>();
 
     // Build Events
-    static StringBuilder s_BuildEvents = new();
+    static StringBuilder s_BuildEvents = new StringBuilder();
 
     // Compilation Total Time
     static double s_CompilationTotalTime;

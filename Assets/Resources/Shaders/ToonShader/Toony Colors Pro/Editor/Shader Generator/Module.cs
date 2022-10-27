@@ -36,11 +36,11 @@ namespace ToonyColorsPro
 			public string[] Functions = new string[0];
 			public string[] Variables = new string[0];
 			public string[] InputStruct = new string[0];
-			Dictionary<string, string[]> Vertices = new();
-			Dictionary<string, string[]> Fragments = new();
+			Dictionary<string, string[]> Vertices = new Dictionary<string, string[]>();
+			Dictionary<string, string[]> Fragments = new Dictionary<string, string[]>();
 
-			Dictionary<string, Argument[]> VerticesArgs = new();
-			Dictionary<string, Argument[]> FragmentsArgs = new();
+			Dictionary<string, Argument[]> VerticesArgs = new Dictionary<string, Argument[]>();
+			Dictionary<string, Argument[]> FragmentsArgs = new Dictionary<string, Argument[]>();
 
 			static public Module CreateFromName(string moduleName)
 			{

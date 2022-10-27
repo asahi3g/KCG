@@ -11,17 +11,17 @@ namespace KMath
         /// <summary>
         ///   <para>Shorthand for writing Vec2f(0, 0).</para>
         /// </summary>
-        public static Vec2f Zero { [MethodImpl((MethodImplOptions) 256)] get; } = new(0f, 0f);
+        public static Vec2f Zero { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(0f, 0f);
 
         /// <summary>
         ///   <para>Shorthand for writing Vector2(1, 1).</para>
         /// </summary>
-        public static Vec2f One { [MethodImpl((MethodImplOptions) 256)] get; } = new(1f, 1f);
+        public static Vec2f One { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(1f, 1f);
         
         public float X;
         public float Y;
 
-        public Vector2 GetVector2() => new(X, Y);
+        public Vector2 GetVector2() => new Vector2(X, Y);
 
         public Vec2f(float x, float y)
         {
@@ -90,7 +90,8 @@ namespace KMath
 
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) => new(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
+        public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) =>
+            new Vec2f(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
 
         /// <summary>
         ///   <para>Makes this vector have a magnitude of 1.</para>
@@ -144,7 +145,7 @@ namespace KMath
         ///   <para>The perpendicular direction.</para>
         /// </returns>
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f Perpendicular(Vec2f inDirection) => new(-inDirection.Y, inDirection.X);
+        public static Vec2f Perpendicular(Vec2f inDirection) => new Vec2f(-inDirection.Y, inDirection.X);
 
         /// <summary>
         /// </summary>
@@ -215,27 +216,27 @@ namespace KMath
         }
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator *(Vec2f a, float d) => new(a.X * d, a.Y * d);
+        public static Vec2f operator *(Vec2f a, float d) => new Vec2f(a.X * d, a.Y * d);
 
 
-        public static Vec2f operator *(Vec2f a, Vec2f b) => new(a.X * b.X, a.Y * b.Y);
-
-        [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator *(float d, Vec2f a) => new(a.X * d, a.Y * d);
+        public static Vec2f operator *(Vec2f a, Vec2f b) => new Vec2f(a.X * b.X, a.Y * b.Y);
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator /(Vec2f a, float d) => new(a.X / d, a.Y / d);
+        public static Vec2f operator *(float d, Vec2f a) => new Vec2f(a.X * d, a.Y * d);
+
+        [MethodImpl((MethodImplOptions) 256)]
+        public static Vec2f operator /(Vec2f a, float d) => new Vec2f(a.X / d, a.Y / d);
         
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a, Vec2f b) => new(a.X - b.X, a.Y - b.Y);
+        public static Vec2f operator -(Vec2f a, Vec2f b) => new Vec2f(a.X - b.X, a.Y - b.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a, float b) => new(a.X - b, a.Y - b);
+        public static Vec2f operator -(Vec2f a, float b) => new Vec2f(a.X - b, a.Y - b);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a) => new(-a.X, -a.Y);
+        public static Vec2f operator -(Vec2f a) => new Vec2f(-a.X, -a.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator +(Vec2f a, Vec2f b) => new(a.X + b.X, a.Y + b.Y);
+        public static Vec2f operator +(Vec2f a, Vec2f b) => new Vec2f(a.X + b.X, a.Y + b.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator +(Vec2f a, float b) => new(a.X + b, a.Y + b);
+        public static Vec2f operator +(Vec2f a, float b) => new Vec2f(a.X + b, a.Y + b);
         [MethodImpl((MethodImplOptions) 256)]
         public static bool operator ==(Vec2f lhs, Vec2f rhs)
         {

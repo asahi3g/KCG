@@ -8,7 +8,7 @@ namespace Particle
 {
      public class ParticleUpdateSystem
     {
-        List<ParticleEntity> ToDestroy = new();
+        List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
 
         public void Update()

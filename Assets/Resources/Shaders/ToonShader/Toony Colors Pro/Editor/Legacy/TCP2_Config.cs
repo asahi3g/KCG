@@ -23,9 +23,9 @@ namespace ToonyColorsPro
 			public string configType = "Normal";
 			public string templateFile = "TCP2_ShaderTemplate_Default";
 			public int shaderTarget = 30;
-			public List<string> Features = new();
-			public List<string> Flags = new();
-			public Dictionary<string, string> Keywords = new();
+			public List<string> Features = new List<string>();
+			public List<string> Flags = new List<string>();
+			public Dictionary<string, string> Keywords = new Dictionary<string, string>();
 			public bool isModifiedExternally;
 
 			//--------------------------------------------------------------------------------------------------

@@ -17,7 +17,7 @@ public class TCP2_MaterialInspector_SG : ShaderGUI
 	//Properties
 	private Material targetMaterial => (mMaterialEditor == null) ? null : mMaterialEditor.target as Material;
 	private MaterialEditor mMaterialEditor;
-	private Stack<bool> toggledGroups = new();
+	private Stack<bool> toggledGroups = new Stack<bool>();
 
 	//--------------------------------------------------------------------------------------------------
 

@@ -9,7 +9,7 @@ namespace KMath
         public int y;
         public int z;
 
-        public Vector3Int GetVector3() => new(x, y, z);
+        public Vector3Int GetVector3() => new Vector3Int(x, y, z);
 
         public Vec3i(int x, int y, int z)
         {

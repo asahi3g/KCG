@@ -16,7 +16,7 @@ namespace Node
         public virtual List<Tuple<string, Type>> RegisterEntries() => null;
 
         // 
-        protected Tuple<string, Type> CreateEntry(string name, Type type) => new(name, type);
+        protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
         /// <summary> Run once at the beggining of the action. </summary>
         public virtual void OnEnter(NodeEntity nodeEntity)

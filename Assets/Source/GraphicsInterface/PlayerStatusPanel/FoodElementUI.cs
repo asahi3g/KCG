@@ -13,7 +13,7 @@ namespace KGUI
         
         private ProgressBar progressBar;
         private float foodAmount;
-        private readonly TextWrapper infoText = new();
+        private readonly TextWrapper infoText = new TextWrapper();
 
         public override void Init()
         {

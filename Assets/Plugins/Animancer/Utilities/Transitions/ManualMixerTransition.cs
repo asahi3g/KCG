@@ -61,7 +61,7 @@ namespace Animancer
             public static SerializedProperty CurrentSynchronizeChildren { get; private set; }
 
             private readonly Dictionary<string, ReorderableList>
-                PropertyPathToStates = new();
+                PropertyPathToStates = new Dictionary<string, ReorderableList>();
 
             private ReorderableList _MultiSelectDummyList;
 

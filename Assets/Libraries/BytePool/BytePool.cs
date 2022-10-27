@@ -34,12 +34,12 @@ public class BytePool
 
     // list of allocated bytes
     // can be accessed by index
-    List <ByteObject> IndexArray = new();
+    List <ByteObject> IndexArray = new List<ByteObject>();
 
     // double linked list of free blocks
     // for fast insertion deletion
     // we wont be deallocating much
-    LinkedList <int> FreeIndices = new();
+    LinkedList <int> FreeIndices = new LinkedList<int>();
 
     Int64 TotalAllocations;
     Int64 TotalDeallocations;

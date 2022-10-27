@@ -34,7 +34,7 @@ public class TCP2_MaterialInspector : ShaderGUI
 	private string mVariantError;
 
 	//Shader Variants 
-	private List<string> ShaderVariants = new()
+	private List<string> ShaderVariants = new List<string>
 	{
 		"Specular",
 		"Reflection",
@@ -47,7 +47,7 @@ public class TCP2_MaterialInspector : ShaderGUI
 		"Alpha",
 		"Cutout"
 	};
-	private List<bool> ShaderVariantsEnabled = new()
+	private List<bool> ShaderVariantsEnabled = new List<bool>
 	{
 		false,
 		false,

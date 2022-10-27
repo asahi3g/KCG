@@ -302,7 +302,7 @@ namespace ToonyColorsPro
 			private Vector2 mScrollPosition;
 			private int mConfigChoice;
 			private bool mDirtyConfig;
-			private Color unsavedChangesColor = new(1f, 1f, 0.7f);
+			private Color unsavedChangesColor = new Color(1f, 1f, 0.7f);
 
 			//Static
 			private static bool sHideDisabled;
@@ -311,7 +311,7 @@ namespace ToonyColorsPro
 			private static bool sLoadAllShaders;
 			private static bool sSelectGeneratedShader;
 			private static bool sGUIEnabled;
-			private static List<string> sOpenedFoldouts = new();
+			private static List<string> sOpenedFoldouts = new List<string>();
 
 #if DEBUG_MODE
 	private string mDebugText;

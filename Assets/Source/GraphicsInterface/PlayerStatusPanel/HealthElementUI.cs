@@ -20,7 +20,7 @@ namespace KGUI
         private ImageWrapper progressBarDiv2;
 
         float healthAmount;
-        private readonly TextWrapper infoTextWrapper = new();
+        private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {

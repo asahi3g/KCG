@@ -911,7 +911,7 @@ namespace ToonyColorsPro
 					get => _linkedShaderProperty;
 					set => SetLinkedShaderProperty(value);
 				}
-				public List<ShaderProperty> Dependencies = new();
+				public List<ShaderProperty> Dependencies = new List<ShaderProperty>();
 
 				public void TryToFindLinkedShaderProperty()
 				{
@@ -2737,11 +2737,13 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("needed_features")] public string NeededFeaturesStr = "";
 				[Serialization.SerializeAs("custom_code_compatible")] public bool WorksWithCustomCode = false;
 				public string OptionsString = "";
-				[Serialization.SerializeAs("options_v")] public Dictionary<string, bool> OptionsEnabled = new();
+				[Serialization.SerializeAs("options_v")] public Dictionary<string, bool> OptionsEnabled =
+					new Dictionary<string, bool>();
 				
 				string DefaultChannels = "X";
 
-				static Dictionary<string, List<Imp_GenericFromTemplate>> AllGenericImplementations = new();
+				static Dictionary<string, List<Imp_GenericFromTemplate>> AllGenericImplementations =
+					new Dictionary<string, List<Imp_GenericFromTemplate>>();
 
 				List<Option> options;
 				struct Option
@@ -3315,7 +3317,8 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("prepend_code")] public string prependCode = "";
 				[Serialization.SerializeAs("prepend_file")] public string prependFileGuid = "";
 				[Serialization.SerializeAs("prepend_file_block")] public string prependFileBlock = "";
-				[Serialization.SerializeAs("preprend_params")] public Dictionary<string, string> prependParametersValues = new(); // values for the parameters of the defined block in the prepend file
+				[Serialization.SerializeAs("preprend_params")] public Dictionary<string, string> prependParametersValues =
+					new Dictionary<string, string>(); // values for the parameters of the defined block in the prepend file
 
 				TextAsset prependFile;
 				bool prependFileBlockFound;
@@ -3345,8 +3348,8 @@ namespace ToonyColorsPro
 
 				[Serialization.SerializeAs("code")] public string code = "";
 				public bool usesReplacementTags = false;
-				Dictionary<string, List<string>> replacementParts = new();
-				List<int> usedImplementations = new();
+				Dictionary<string, List<string>> replacementParts = new Dictionary<string, List<string>>();
+				List<int> usedImplementations = new List<int>();
 				public string tagError = null;
 
 				public override bool HasErrors => base.HasErrors | !string.IsNullOrEmpty(tagError) | (prependType == PrependType.ExternalFile && prependFile != null && !prependFileBlockFound);
@@ -4520,7 +4523,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("lsp")] public string LinkedShaderPropertyName;
 				string DefaultChannels = "RGB";
 
-				public List<ShaderProperty> Dependencies = new();
+				public List<ShaderProperty> Dependencies = new List<ShaderProperty>();
 
 				ShaderProperty _linkedShaderProperty;
 				public ShaderProperty LinkedShaderProperty

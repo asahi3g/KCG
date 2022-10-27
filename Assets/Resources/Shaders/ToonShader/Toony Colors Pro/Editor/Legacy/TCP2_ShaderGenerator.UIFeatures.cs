@@ -27,7 +27,7 @@ namespace ToonyColorsPro
 				static Rect LastPositionFull;
 				static bool LastVisible;
 
-				static GUIContent tempContent = new();
+				static GUIContent tempContent = new GUIContent();
 				protected static GUIContent TempContent(string label, string tooltip = null)
 				{
 					tempContent.text = label;
@@ -50,7 +50,7 @@ namespace ToonyColorsPro
 				private bool inline;        //draw next to previous position
 				private bool halfWidth;     //draw in half space of the position (for inline)
 
-				protected static Stack<bool> FoldoutStack = new();
+				protected static Stack<bool> FoldoutStack = new Stack<bool>();
 				public static void ClearFoldoutStack()
 				{
 					UIFeature_DropDownStart.ClearDropDownsList();
@@ -871,7 +871,7 @@ namespace ToonyColorsPro
 
 			public class UIFeature_DropDownStart : UIFeature
 			{
-				static List<UIFeature_DropDownStart> AllDropDowns = new();
+				static List<UIFeature_DropDownStart> AllDropDowns = new List<UIFeature_DropDownStart>();
 				public static void ClearDropDownsList()
 				{
 					AllDropDowns.Clear();

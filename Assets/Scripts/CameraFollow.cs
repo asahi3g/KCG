@@ -5,7 +5,7 @@ using KMath;
 public class CameraFollow
 {
     // Follow Offset
-    private Vec2f offset = new(0f, 0f);
+    private Vec2f offset = new Vec2f(0f, 0f);
 
     // Camera Follow Speed
     [UnityEngine.Range(0, 10)]

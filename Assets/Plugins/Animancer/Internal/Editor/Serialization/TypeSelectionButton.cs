@@ -171,8 +171,9 @@ namespace Animancer.Editor
             PrefMenuPrefix = "Display Options/";
 
         private static readonly BoolPref
-            UseFullNames = new(PrefKeyPrefix + nameof(UseFullNames), PrefMenuPrefix + "Show Full Names", false),
-            UseTypeHierarchy = new(PrefKeyPrefix + nameof(UseTypeHierarchy), PrefMenuPrefix + "Show Type Hierarchy", false);
+            UseFullNames = new BoolPref(PrefKeyPrefix + nameof(UseFullNames), PrefMenuPrefix + "Show Full Names", false),
+            UseTypeHierarchy = new BoolPref(PrefKeyPrefix + nameof(UseTypeHierarchy),
+                PrefMenuPrefix + "Show Type Hierarchy", false);
 
         private static string GetSelectorLabel(Type fieldType, Type newType)
         {
@@ -236,9 +237,9 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private static readonly List<Type>
-            AllTypes = new(1024);
+            AllTypes = new List<Type>(1024);
         private static readonly Dictionary<Type, List<Type>>
-            TypeToDerived = new();
+            TypeToDerived = new Dictionary<Type, List<Type>>();
 
         /// <summary>Returns a list of all types that inherit from the `baseType`.</summary>
         public static List<Type> GetDerivedTypes(Type baseType)

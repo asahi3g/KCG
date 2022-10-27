@@ -11,7 +11,7 @@ namespace KMath
         public float Y;
         public float Z;
 
-        public Vector3 GetVector3() => new(X, Y, Z);
+        public Vector3 GetVector3() => new Vector3(X, Y, Z);
 
         public Vec3f(float x, float y)
         {
@@ -84,15 +84,15 @@ namespace KMath
         }
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec3f operator+(Vec3f a, Vec3f b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        public static Vec3f operator+(Vec3f a, Vec3f b) => new Vec3f(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec3f operator-(Vec3f a, Vec3f b) => new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+        public static Vec3f operator-(Vec3f a, Vec3f b) => new Vec3f(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec3f operator*(Vec3f a, Vec3f b) => new(a.X * b.X, a.Y * b.Y, a.Z * b.Z);
+        public static Vec3f operator*(Vec3f a, Vec3f b) => new Vec3f(a.X * b.X, a.Y * b.Y, a.Z * b.Z);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec3f operator/(Vec3f a, Vec3f b) => new(a.X / b.X, a.Y / b.Y, a.Z / b.Z);
+        public static Vec3f operator/(Vec3f a, Vec3f b) => new Vec3f(a.X / b.X, a.Y / b.Y, a.Z / b.Z);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec3f operator/(Vec3f a, float b) => new(a.X / b, a.Y / b, a.Z / b);
+        public static Vec3f operator/(Vec3f a, float b) => new Vec3f(a.X / b, a.Y / b, a.Z / b);
         
     }
 }

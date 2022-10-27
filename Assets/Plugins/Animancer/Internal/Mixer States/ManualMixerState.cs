@@ -47,8 +47,8 @@ namespace Animancer
         public override AnimancerState GetChild(int index) => _Children[index];
 
         /// <inheritdoc/>
-        public override FastEnumerator<AnimancerState> GetEnumerator()
-            => new(_Children, _Children.Length);
+        public override FastEnumerator<AnimancerState> GetEnumerator() =>
+            new FastEnumerator<AnimancerState>(_Children, _Children.Length);
 
         /************************************************************************************************************************/
         #endregion

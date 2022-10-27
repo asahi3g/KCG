@@ -788,7 +788,7 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private static readonly Dictionary<Type, Dictionary<string, PropertyAccessor>>
-            TypeToPathToAccessor = new();
+            TypeToPathToAccessor = new Dictionary<Type, Dictionary<string, PropertyAccessor>>();
 
         /************************************************************************************************************************/
 

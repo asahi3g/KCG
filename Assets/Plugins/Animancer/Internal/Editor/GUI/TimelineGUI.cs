@@ -19,12 +19,12 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private static readonly ConversionCache<float, string>
-            G2Cache = new((value) =>
+            G2Cache = new ConversionCache<float, string>((value) =>
             {
                 if (Math.Abs(value) <= 99)
                     return value.ToString("G2");
                 else
-                    return ((int)value).ToString();
+                    return ((int) value).ToString();
             });
 
         private static Texture _EventIcon;
@@ -35,11 +35,11 @@ namespace Animancer.Editor
             (_EventIcon = AnimancerGUI.LoadIcon("Animation.EventMarker"));
 
         private static readonly Color
-            FadeHighlightColor = new(0.35f, 0.5f, 1, 0.5f),
-            SelectedEventColor = new(0.3f, 0.55f, 0.95f),
-            UnselectedEventColor = new(0.9f, 0.9f, 0.9f),
-            PreviewTimeColor = new(1, 0.25f, 0.1f),
-            BaseTimeColor = new(0.5f, 0.5f, 0.5f, 0.75f);
+            FadeHighlightColor = new Color(0.35f, 0.5f, 1, 0.5f),
+            SelectedEventColor = new Color(0.3f, 0.55f, 0.95f),
+            UnselectedEventColor = new Color(0.9f, 0.9f, 0.9f),
+            PreviewTimeColor = new Color(1, 0.25f, 0.1f),
+            BaseTimeColor = new Color(0.5f, 0.5f, 0.5f, 0.75f);
 
         private Rect _Area;
 
@@ -50,7 +50,7 @@ namespace Animancer.Editor
         private bool _HasEndTime;
 
         private readonly List<float>
-            EventTimes = new();
+            EventTimes = new List<float>();
 
         /// <summary>The height of the time ticks.</summary>
         public float TickHeight { get; private set; }
@@ -79,7 +79,7 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private TimelineGUI() { }
-        private static readonly TimelineGUI Instance = new();
+        private static readonly TimelineGUI Instance = new TimelineGUI();
 
         /// <summary>The currently drawing <see cref="TimelineGUI"/> (or null if none is drawing).</summary>
         public static TimelineGUI Current { get; private set; }
@@ -283,7 +283,7 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private static readonly int EventHash = "Event".GetHashCode();
-        private static readonly List<int> EventControlIDs = new();
+        private static readonly List<int> EventControlIDs = new List<int>();
 
         /// <summary>Draws the details of the <see cref="SerializableEventSequenceDrawer.Context.Callbacks"/>.</summary>
         private void DoEventsGUI(SerializableEventSequenceDrawer.Context context, out float addEventNormalizedTime)
@@ -634,7 +634,7 @@ namespace Animancer.Editor
         #region Ticks
         /************************************************************************************************************************/
 
-        private static readonly List<float> TickTimes = new();
+        private static readonly List<float> TickTimes = new List<float>();
 
         /// <summary>Draws ticks and labels for important times throughout the area.</summary>
         private void DoRulerGUI()

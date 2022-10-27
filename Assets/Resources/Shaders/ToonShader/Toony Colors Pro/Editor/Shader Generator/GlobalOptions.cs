@@ -65,7 +65,7 @@ namespace ToonyColorsPro
 				public bool LoadAllShaders = false;
 				public string CustomOutputPath = ShaderGenerator2.OUTPUT_PATH;
 				public string LastImplementationExportImportPath = Application.dataPath;
-				public List<string> OpenedFoldouts = new();
+				public List<string> OpenedFoldouts = new List<string>();
 				public bool UseCustomFont = false;
 				public Font CustomFont = null;
 

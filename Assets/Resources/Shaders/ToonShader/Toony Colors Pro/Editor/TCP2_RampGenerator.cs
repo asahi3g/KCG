@@ -92,12 +92,12 @@ namespace ToonyColorsPro
 
 			m2dGradients = new Gradient[]
 			{
-				new()
+				new Gradient
 				{
 					colorKeys = new[] { new GradientColorKey(Color.black, 0.49f), new GradientColorKey(Color.white, 0.51f) },
 					alphaKeys = new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
 				},
-				new()
+				new Gradient
 				{
 					colorKeys = new[] { new GradientColorKey(Color.black, 0.0f), new GradientColorKey(Color.white, 1.0f) },
 					alphaKeys = new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }

@@ -33,52 +33,62 @@ internal class TCP2_MaterialInspector_PBS : ShaderGUI
 	private static class Styles
 	{
 		//public static GUIStyle optionsButton = "PaneOptions";
-		public static GUIContent uvSetLabel = new("UV Set");
+		public static GUIContent uvSetLabel = new GUIContent("UV Set");
 		//public static GUIContent[] uvSetOptions = { new GUIContent("UV channel 0"), new GUIContent("UV channel 1") };
 
 		public static string emptyTootip = "";
-		public static GUIContent albedoText = new("Albedo", "Albedo (RGB) and Transparency (A)");
-		public static GUIContent alphaCutoffText = new("Alpha Cutoff", "Threshold for alpha cutoff");
-		public static GUIContent specularMapText = new("Specular", "Specular (RGB) and Smoothness (A)");
-		public static GUIContent metallicMapText = new("Metallic", "Metallic (R) and Smoothness (A)");
-		public static GUIContent smoothnessText = new("Smoothness", "Smoothness Value");
-		public static GUIContent smoothnessScaleText = new("Smoothness", "Smoothness scale factor");
-		public static GUIContent smoothnessMapChannelText = new("Source", "Smoothness texture and channel");
-		public static GUIContent highlightsText = new("Specular Highlights", "Specular Highlights");
-		public static GUIContent reflectionsText = new("Reflections", "Glossy Reflections");
-		public static GUIContent normalMapText = new("Normal Map", "Normal Map");
-		public static GUIContent heightMapText = new("Height Map", "Height Map (G)");
-		public static GUIContent occlusionText = new("Occlusion", "Occlusion (G)");
-		public static GUIContent emissionText = new("Emission", "Emission (RGB)");
-		public static GUIContent detailMaskText = new("Detail Mask", "Mask for Secondary Maps (A)");
-		public static GUIContent detailAlbedoText = new("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
-		public static GUIContent detailNormalMapText = new("Normal Map", "Normal Map");
+		public static GUIContent albedoText = new GUIContent("Albedo", "Albedo (RGB) and Transparency (A)");
+		public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
+		public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
+		public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
+		public static GUIContent smoothnessText = new GUIContent("Smoothness", "Smoothness Value");
+		public static GUIContent smoothnessScaleText = new GUIContent("Smoothness", "Smoothness scale factor");
+		public static GUIContent smoothnessMapChannelText = new GUIContent("Source", "Smoothness texture and channel");
+		public static GUIContent highlightsText = new GUIContent("Specular Highlights", "Specular Highlights");
+		public static GUIContent reflectionsText = new GUIContent("Reflections", "Glossy Reflections");
+		public static GUIContent normalMapText = new GUIContent("Normal Map", "Normal Map");
+		public static GUIContent heightMapText = new GUIContent("Height Map", "Height Map (G)");
+		public static GUIContent occlusionText = new GUIContent("Occlusion", "Occlusion (G)");
+		public static GUIContent emissionText = new GUIContent("Emission", "Emission (RGB)");
+		public static GUIContent detailMaskText = new GUIContent("Detail Mask", "Mask for Secondary Maps (A)");
+		public static GUIContent detailAlbedoText = new GUIContent("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
+		public static GUIContent detailNormalMapText = new GUIContent("Normal Map", "Normal Map");
 
 		//public static string whiteSpaceString = " ";
 		public static string primaryMapsText = "Main Maps";
 		public static string secondaryMapsText = "Secondary Maps";
 		public static string forwardText = "Forward Rendering Options";
 		public static string renderingMode = "Rendering Mode";
-		public static GUIContent emissiveWarning = new("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
+		public static GUIContent emissiveWarning =
+			new GUIContent(
+				"Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
 		//public static GUIContent emissiveColorWarning = new GUIContent ("Ensure emissive color is non-black for emission to have effect.");
 		public static readonly string[] blendNames = Enum.GetNames (typeof (BlendMode));
 
 		//public static string tcp2_HeaderText = "Toony Colors Pro 2 - Stylization";
 		public static string tcp2_highlightColorText = "Highlight Color";
 		public static string tcp2_shadowColorText = "Shadow Color";
-		public static GUIContent tcp2_rampText = new("Ramp Texture", "Ramp 1D Texture (R)");
-		public static GUIContent tcp2_rampThresholdText = new("Threshold", "Threshold for the separation between shadows and highlights");
-		public static GUIContent tcp2_rampSmoothText = new("Main Light Smoothing", "Main Light smoothing of the separation between shadows and highlights");
-		public static GUIContent tcp2_rampSmoothAddText = new("Other Lights Smoothing", "Additional Lights smoothing of the separation between shadows and highlights");
-		public static GUIContent tcp2_specSmoothText = new("Specular Smoothing", "Stylized Specular smoothing");
-		public static GUIContent tcp2_SpecBlendText = new("Specular Blend", "Stylized Specular contribution over regular Specular");
-		public static GUIContent tcp2_rimStrengthText = new("Fresnel Strength", "Stylized Fresnel overall strength");
-		public static GUIContent tcp2_rimMinText = new("Fresnel Min", "Stylized Fresnel min ramp threshold");
-		public static GUIContent tcp2_rimMaxText = new("Fresnel Max", "Stylized Fresnel max ramp threshold");
-		public static GUIContent tcp2_outlineColorText = new("Outline Color", "Color of the outline");
-		public static GUIContent tcp2_outlineWidthText = new("Outline Width", "Width of the outline");
-		public static GUIContent tcp2_normalsSourceText = new("Outline Normals Source", "Vertex data source to use as smoothed normals, see the Smoothed Normals Utility in the documentation");
-		public static GUIContent tcp2_uvDataTypeText = new("UV Data Type", "Defines how the smoothed normals are encoded in the selected UV channel");
+		public static GUIContent tcp2_rampText = new GUIContent("Ramp Texture", "Ramp 1D Texture (R)");
+		public static GUIContent tcp2_rampThresholdText =
+			new GUIContent("Threshold", "Threshold for the separation between shadows and highlights");
+		public static GUIContent tcp2_rampSmoothText = new GUIContent("Main Light Smoothing",
+			"Main Light smoothing of the separation between shadows and highlights");
+		public static GUIContent tcp2_rampSmoothAddText = new GUIContent("Other Lights Smoothing",
+			"Additional Lights smoothing of the separation between shadows and highlights");
+		public static GUIContent tcp2_specSmoothText =
+			new GUIContent("Specular Smoothing", "Stylized Specular smoothing");
+		public static GUIContent tcp2_SpecBlendText =
+			new GUIContent("Specular Blend", "Stylized Specular contribution over regular Specular");
+		public static GUIContent tcp2_rimStrengthText =
+			new GUIContent("Fresnel Strength", "Stylized Fresnel overall strength");
+		public static GUIContent tcp2_rimMinText = new GUIContent("Fresnel Min", "Stylized Fresnel min ramp threshold");
+		public static GUIContent tcp2_rimMaxText = new GUIContent("Fresnel Max", "Stylized Fresnel max ramp threshold");
+		public static GUIContent tcp2_outlineColorText = new GUIContent("Outline Color", "Color of the outline");
+		public static GUIContent tcp2_outlineWidthText = new GUIContent("Outline Width", "Width of the outline");
+		public static GUIContent tcp2_normalsSourceText = new GUIContent("Outline Normals Source",
+			"Vertex data source to use as smoothed normals, see the Smoothed Normals Utility in the documentation");
+		public static GUIContent tcp2_uvDataTypeText = new GUIContent("UV Data Type",
+			"Defines how the smoothed normals are encoded in the selected UV channel");
 
 		public static string tcp2_TexLodText = "Outline Texture LOD";
 		public static string tcp2_ZSmoothText = "ZSmooth Value";

@@ -5,6 +5,7 @@ using Enums.PlanetTileMap;
 using KMath;
 using KMath.Random;
 using System;
+using UnityEngine;
 
 public class LineOfSightTest : UnityEngine.MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
     public CircleSectorRenderDebug CircleSector;
     public AgentEntity Player;
     
-    UnityEngine.Color standard = new(1.0f, 1.0f, 1.0f, 0.6f);
-    UnityEngine.Color hitColor = new(1.0f, 0.0f, 0.0f, 0.6f);
-    Vec2i mapSize = new(64, 32);
+    UnityEngine.Color standard = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+    UnityEngine.Color hitColor = new Color(1.0f, 0.0f, 0.0f, 0.6f);
+    Vec2i mapSize = new Vec2i(64, 32);
     float theta = 0;
     bool mousePressed = false;
     bool PressedW = false;

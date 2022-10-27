@@ -20,11 +20,11 @@ namespace Animancer.Editor
 
         /// <summary>The highlight color used for fields showing a warning.</summary>
         public static readonly Color
-            WarningFieldColor = new(1, 0.9f, 0.6f);
+            WarningFieldColor = new Color(1, 0.9f, 0.6f);
 
         /// <summary>The highlight color used for fields showing an error.</summary>
         public static readonly Color
-            ErrorFieldColor = new(1, 0.6f, 0.6f);
+            ErrorFieldColor = new Color(1, 0.6f, 0.6f);
 
         /************************************************************************************************************************/
 
@@ -248,8 +248,8 @@ namespace Animancer.Editor
         /// Creates a <see cref="ConversionCache{TKey, TValue}"/> for calculating the GUI width occupied by text using the
         /// specified `style`.
         /// </summary>
-        public static ConversionCache<string, float> CreateWidthCache(GUIStyle style)
-            => new((text) => style.CalculateWidth(text));
+        public static ConversionCache<string, float> CreateWidthCache(GUIStyle style) =>
+            new ConversionCache<string, float>((text) => style.CalculateWidth(text));
 
         /************************************************************************************************************************/
 

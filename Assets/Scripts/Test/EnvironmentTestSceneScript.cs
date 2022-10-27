@@ -5,6 +5,7 @@ using KMath;
 using PlanetTileMap;
 using System.Linq;
 using System.Collections.Generic;
+using Collisions;
 using Enums;
 
 namespace Planet.Foreground
@@ -101,8 +102,8 @@ namespace Planet.Foreground
             UpdateMode(Player);
         }
 
-        Collisions.Box2D otherBox = new() {x = 7, y = 21, w = 1.0f, h = 1.0f};
-        Collisions.Box2D orrectedBox = new() {x = 0, y = 17, w = 1.0f, h = 1.0f};
+        Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
+        Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
 
         public void Update()
         {

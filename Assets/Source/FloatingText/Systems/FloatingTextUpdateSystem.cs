@@ -5,7 +5,7 @@ namespace FloatingText
 {
     public class FloatingTextUpdateSystem
     {
-        List<FloatingTextEntity> ToRemoveEntities = new();
+        List<FloatingTextEntity> ToRemoveEntities = new List<FloatingTextEntity>();
 
         public void Update(float deltaTime)
         {
