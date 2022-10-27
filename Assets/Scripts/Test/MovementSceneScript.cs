@@ -35,12 +35,13 @@ namespace Planet.Unity
 
         Vec2f[] ShapeTemp;
         Vec2f[] Shape2;
+        Vec2f[] Shape3;
 
         Vec2f LastMousePosition;
 
         bool IsShapeColliding = false;
 
-        Vec2f CircleCenter = new Vec2f(12, 12);
+        Vec2f CircleCenter = new Vec2f(3, 24);
 
 
         Vec2f CircleVelocity = new Vec2f();
@@ -106,8 +107,16 @@ namespace Planet.Unity
 
             Shape2[0] = new Vec2f(15.0f, 15.0f);
             Shape2[1] = new Vec2f(16.0f, 15.0f);
-            Shape2[2] = new Vec2f(16.0f, 16.0f);
-            Shape2[3] = new Vec2f(15.0f, 15.2f);
+            Shape2[2] = new Vec2f(16.0f, 14.0f);
+            Shape2[3] = new Vec2f(15.0f, 14.0f);
+
+            Shape3 = new Vec2f[4];
+
+            Shape3[0] = new Vec2f(15.0f, 14.0f);
+            Shape3[1] = new Vec2f(16.0f, 14.0f);
+            Shape3[2] = new Vec2f(16.0f, 13.0f);
+            Shape3[3] = new Vec2f(15.0f, 13.0f);
+
 
 
            // Shape2[3] = new Vec2f(15.0f, 16.0f);
@@ -281,10 +290,36 @@ namespace Planet.Unity
             LastMousePosition = Shape1[0];
 
 
-            CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
+            float speed = 0.1f;
+
+            CircleVelocity = new Vec2f();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                CircleVelocity.Y += speed;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                CircleVelocity.Y -= speed;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                CircleVelocity.X += speed;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                CircleVelocity.X -= speed;
+            }
+
+            //CircleVelocity = new Vec2f(mouse.x, mouse.y) - CircleCenter;
 
 
             var circleCollisionResult = Collisions.CirclePolygonSweepTest.TestCollision(CircleCenter, CircleRadius, CircleVelocity, Shape2);
+            var circleCollisionResult2 = Collisions.CirclePolygonSweepTest.TestCollision(CircleCenter, CircleRadius, CircleVelocity, Shape3);
+            if (circleCollisionResult2.CollisionTime < circleCollisionResult.CollisionTime)
+            {
+                circleCollisionResult = circleCollisionResult2;
+            }
           /*  var rs1 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P1 + 0.001f, P2 - 0.001f);
             var rs2 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P2 + 0.001f, P3 - 0.001f);
             var rs3 = Collisions.CircleLineCollision.TestCollision(CircleCenter, CircleRadius, CircleVelocity, P3 + 0.001f, P1 - 0.001f);
@@ -337,11 +372,11 @@ namespace Planet.Unity
 
             CircleCenter = CircleCenter - CircleVelocity * 0.01f;
 
+            Vec2f remainingVelocity = CircleVelocity * (1.0f - CollisionDistance);
 
+            Vec2f refl = remainingVelocity - 1.0f * Vec2f.Dot(remainingVelocity, circleCollisionResult.CollisionNormal) * circleCollisionResult.CollisionNormal;
 
-            Vec2f refl = CircleVelocity - 1.0f * Vec2f.Dot(CircleVelocity, circleCollisionResult.CollisionNormal) * circleCollisionResult.CollisionNormal;
-
-            CircleCenter = CircleCenter + refl * (1.0f - CollisionDistance);
+            CircleCenter = CircleCenter + refl;
 
             //distance1 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P1, P2);
            // distance2 = Collisions.CircleLineCollision.TestCollision(CircleCenter + new Vec2f(1.0f, 0.0f), CircleRadius, CircleVelocity, P3, P4);
@@ -750,6 +785,16 @@ namespace Planet.Unity
                         nextPosition = 0;
                     }
                     Gizmos.DrawLine(new Vector3(Shape2[i].X, Shape2[i].Y, 1), new Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
+                }
+
+                for(int i = 0; i < Shape3.Length; i++)
+                {
+                    int nextPosition = i + 1;
+                    if (i == Shape3.Length - 1)
+                    {
+                        nextPosition = 0;
+                    }
+                    Gizmos.DrawLine(new Vector3(Shape3[i].X, Shape3[i].Y, 1), new Vector3(Shape3[nextPosition].X, Shape3[nextPosition].Y, 1));
                 }
                 
                 Gizmos.DrawSphere(new Vector3(CircleCenter.X, CircleCenter.Y, 1.0f), CircleRadius);

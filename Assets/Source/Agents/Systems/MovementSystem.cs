@@ -118,7 +118,7 @@ namespace Agent
                 }
             }
 
-            /*float speed = 20.0f;
+            /*float speed = 5.0f;
 
             physicsState.Velocity = new Vec2f();
             physicsState.Acceleration = new Vec2f();

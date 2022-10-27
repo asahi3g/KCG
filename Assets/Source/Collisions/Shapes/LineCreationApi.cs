@@ -69,7 +69,7 @@ namespace Collisions
 
         public void InitializeResources()
         {
-            float epsilon = 0.00000f;
+            float epsilon = 0.00f;
             Vec2f C0 = new Vec2f(0.0f, 1.0f);
             Vec2f C1 = new Vec2f(1.0f, 1.0f);
             Vec2f C2 = new Vec2f(1.0f, 0.0f);

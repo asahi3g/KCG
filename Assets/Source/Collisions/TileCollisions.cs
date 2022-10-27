@@ -342,314 +342,7 @@ namespace Collisions
         {
             public float MinTime;
             public Vec2f MinNormal;
-            public bool isCollidingBottom;
-            public bool isCollidingTop;
-            public bool isCollidingRight;
-            public bool isSlidingRight;
-            public bool isCollidingLeft;
-            public bool isSlidingLeft;
-        }
-
-        public static HandleCollisionResult HandleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet, bool reflect)
-        {
-            HandleCollisionResult result = new HandleCollisionResult();
-
-           PlanetTileMap.TileMap tileMap = planet.TileMap;
-
-            var physicsState = entity.agentPhysicsState;
-            var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
-            
-            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
-            
-            int ymin = (int)(colliderPosition.Y);
-            int ymax = (int)(colliderPosition.Y + box2dCollider.Size.Y);
-
-
-            int xmin = (int)(colliderPosition.X);
-            int xmax = (int)(colliderPosition.X + box2dCollider.Size.X);
-
-            Line2D[] lines = new Line2D[128];
-            Vec2f[] normals = new Vec2f[128];
-            int[] positions = new int[128]; // top bottom right left
-            int linesCount = 0;
-
-            //lines[linesCount++] = new Line2D(new Vec2f(7.0f, 16.0f), new Vec2f(7.0f, 17.0f));
-
-
-         
-            // right collision
-             for(int x = xmax; x <= xmax + 1; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                                if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 2;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-            // left
-             for(int x = xmin - 1; x <= xmin; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                                 if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 3;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-             // top collision
-            for(int x = xmin - 1; x <= xmax + 1; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymax; y <= ymax + 1; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                                if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 0;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-
-            // bottom collision
-             for(int x = xmin - 1; x <= xmax + 1; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymin - 1; y <= ymin; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                               if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 1;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-
-            
-           float minTime = 1.0f;
-            Vec2f minNormal = new Vec2f();
-            int minPosition = 0;
-            for(int i = 0; i < linesCount; i++)
-            {
-                
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                int collisionPosition = positions[i];
-
-               // planet.AddDebugLine(line);
-              /*  var result = 
-                CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);*/
-
-
-                Line2D testLine = new Line2D(colliderPosition, colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f));
-             //   planet.AddDebugLine(testLine);
-                float time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y));
-             //   planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y), colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y));
-             //   planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y), colliderPosition);
-            //    planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-
-            }
-
-            if (minTime < 1.0)
-            {
-
-                if (minPosition == 0)
-               {
-                result.isCollidingTop = true;
-               }
-               else if (minPosition == 1)
-               {
-                result.isCollidingBottom = true;
-               }
-               else if (minPosition == 2)
-               {
-                result.isCollidingRight = true;
-               }
-               else 
-               {
-                result.isCollidingLeft = true;
-               }
-               
-
-            }
-
-
-            result.MinTime = minTime;
-            result.MinNormal = minNormal;
-
-
-            return result;
-
+            public Enums.GeometryTileShape GeometryTileShape;
         }
 
 
@@ -664,30 +357,53 @@ namespace Collisions
            // if (delta.X <= 0) return false;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X / 2.0f);
-            
-            int ymin = (int)(colliderPosition.Y);
-            int ymax = (int)(colliderPosition.Y + box2dCollider.Size.Y);
+
+            int y1 = (int)(colliderPosition.Y + delta.Y);
+            int y2 = (int)(colliderPosition.Y + box2dCollider.Size.Y + delta.Y);
+
+            int ymin;
+            int ymax;
+            if (y1 >= y2)
+            {
+                ymin = y2;
+                ymax = y1;
+            }
+            else
+            {
+                ymin = y1;
+                ymax = y2;
+            }
 
 
-            int xmin = (int)(colliderPosition.X);
-            int xmax = (int)(colliderPosition.X + box2dCollider.Size.X);
+            int x1 = (int)(colliderPosition.X + delta.X);
+            int x2 = (int)(colliderPosition.X + box2dCollider.Size.X + delta.X);
+
+            int xmin;
+            int xmax;
+            if (x1 >= x2)
+            {
+                xmin = x2;
+                xmax = x1;
+            }
+            else
+            {
+                xmin = x1;
+                xmax = x2;
+            }
 
             Line2D[] lines = new Line2D[128];
             Vec2f[] normals = new Vec2f[128];
-            int[] positions = new int[128]; // top bottom right left
+            Enums.GeometryTileShape[] shapeArray = new Enums.GeometryTileShape[128];
             int linesCount = 0;
 
-            //lines[linesCount++] = new Line2D(new Vec2f(7.0f, 16.0f), new Vec2f(7.0f, 17.0f));
 
-                         // top collision
-
-            if (delta.Y > 0.0f)
-            {
-            for(int x = xmin; x <= xmax; x++)
+           /* if (delta.Y > 0.0f)
+            {*/
+            for(int x = xmin -1 ; x <= xmax + 1; x++)
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymax; y <= ymax + 1; y++)
+                for (int y = ymin - 1; y <= ymax + 1; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -708,7 +424,7 @@ namespace Collisions
                                 {
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
+                                    Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
 
                                 line.A.X += (float)x;
@@ -718,7 +434,7 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                positions[linesCount] = 0;
+                                shapeArray[linesCount] = properties.BlockShapeType;
 
                                 linesCount++;
                             }
@@ -727,10 +443,10 @@ namespace Collisions
                 }
             }
             }
-            }
+           // }
          
 
-            if (delta.X > 0.0f)
+          /*  if (delta.X > 0.0f)
             {
             // right collision
              for(int x = xmax; x <= xmax + 1; x++)
@@ -842,24 +558,19 @@ namespace Collisions
                 }
             }
             }
-            }
+            }*/
 
 
             
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
-            int minPosition = 0;
+            Enums.GeometryTileShape minShape = 0;
             for(int i = 0; i < linesCount; i++)
             {
                 
                 Line2D line = lines[i];
                 Vec2f normal = normals[i];
-                int collisionPosition = positions[i];
-
-                if (collisionPosition == 1)
-                {
-                    planet.AddDebugLine(line, UnityEngine.Color.blue);
-                }
+                Enums.GeometryTileShape shape = shapeArray[i];
 
                 var collisionResult = 
                 CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
@@ -868,57 +579,22 @@ namespace Collisions
                 {
                     minTime = collisionResult.Time;
                     minNormal = collisionResult.Normal;
-                    minPosition = collisionPosition;
+                    minShape = shape;
                 }
-
-            }
-
-
-            if (minTime < 1.0)
-            {
-
-
-            
-                if (minPosition == 0)
-               {
-                result.isCollidingTop = true;
-               }
-               else if (minPosition == 1)
-               {
-                result.isCollidingBottom = true;
-               }
-               else if (minPosition == 2)
-               {
-                result.isCollidingRight = true;
-               }
-               else if (minPosition == 3)
-               {
-                result.isCollidingLeft = true;
-               }
-               else if (minPosition == 4)
-               {
-                result.isCollidingRight = true;
-                result.isSlidingRight = true;
-               }
-               else if (minPosition == 5)
-               {
-                result.isCollidingLeft = true;
-                result.isSlidingLeft = true;
-               }
-
 
             }
 
 
             result.MinTime = minTime;
             result.MinNormal = minNormal;
+            result.GeometryTileShape = minShape;
 
 
             return result;
 
         }
 
-        public static HandleCollisionResult HandleCollisionCircleBottom(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
+        public static HandleCollisionResult RaycastGround(AgentEntity entity, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
 
@@ -939,18 +615,15 @@ namespace Collisions
 
             Line2D[] lines = new Line2D[128];
             Vec2f[] normals = new Vec2f[128];
-            int[] positions = new int[128]; // top bottom right left
+            Enums.GeometryTileShape[] shapeArray = new Enums.GeometryTileShape[128];
             int linesCount = 0;
 
 
-            if (delta.X > 0.0f)
-            {
-            // right collision
-             for(int x = xmax; x <= xmax + 1; x++)
+             for(int x = xmin - 1; x <= xmax + 1; x++)
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin; y <= ymax - 1; y++)
+                for (int y = ymin - 1; y <= ymin + 1; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -971,7 +644,7 @@ namespace Collisions
                                 {
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
+                                    Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
 
                                 line.A.X += (float)x;
@@ -981,14 +654,8 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
-                                {
-                                    positions[linesCount] = 4;
-                                }
-                                else
-                                {
-                                    positions[linesCount] = 2;
-                                }
+                                shapeArray[linesCount] = properties.BlockShapeType;
+        
 
                                 linesCount++;
                             }
@@ -997,11 +664,159 @@ namespace Collisions
                 }
             }
             }
+
+
+ 
+
+            Vec2f pointOfCollision = new Vec2f();
+            Line2D minLine = new Line2D();
+           float minTime = 1.0f;
+            Vec2f minNormal = new Vec2f();
+            Enums.GeometryTileShape minShape = 0;
+            for(int i = 0; i < linesCount; i++)
+            {
+                
+                Line2D line = lines[i];
+                Vec2f normal = normals[i];
+                Enums.GeometryTileShape shape = shapeArray[i];
+
+
+                Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X * 0.5f, box2dCollider.Size.Y * 0.5f);
+                start.X += box2dCollider.Size.X * 0.5f * physicsState.MovingDirection; // raycasting in front of the agent
+                Vec2f end = start + new Vec2f(0.0f, -1.25f);
+
+                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+
+                planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
+                if (rs < minTime)
+                {
+                    minTime = rs;
+                    minNormal = normal;
+                    minShape = shape;
+                    minLine = line;
+                    pointOfCollision = start;
+                }
+
+            }
+
+            planet.AddDebugLine(new Line2D(pointOfCollision + new Vec2f(0.0f, -1.25f) * minTime, pointOfCollision + new Vec2f(0.0f, -1.25f) * minTime + new Vec2f(minNormal.Y, -minNormal.X)), UnityEngine.Color.red);
+            //planet.AddDebugLine(minLine, UnityEngine.Color.red);
+
+
+            result.MinTime = minTime;
+            result.MinNormal = minNormal;
+            result.GeometryTileShape = minShape;
+
+
+            return result;
+
+        }
+
+        public static HandleCollisionResult HandleCollisionCircleBottom(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
+        {
+            HandleCollisionResult result = new HandleCollisionResult();
+
+           PlanetTileMap.TileMap tileMap = planet.TileMap;
+
+            var physicsState = entity.agentPhysicsState;
+            var box2dCollider = entity.physicsBox2DCollider;
+           // if (delta.X <= 0) return false;
+
+           Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
+            
+            int y1 = (int)(colliderPosition.Y + delta.Y);
+            int y2 = (int)(colliderPosition.Y + box2dCollider.Size.Y + delta.Y);
+
+            int ymin;
+            int ymax;
+            if (y1 >= y2)
+            {
+                ymin = y2;
+                ymax = y1;
+            }
+            else
+            {
+                ymin = y1;
+                ymax = y2;
             }
 
 
+            int x1 = (int)(colliderPosition.X + delta.X);
+            int x2 = (int)(colliderPosition.X + box2dCollider.Size.X + delta.X);
 
-            if (delta.X < 0.0f)
+            int xmin;
+            int xmax;
+            if (x1 >= x2)
+            {
+                xmin = x2;
+                xmax = x1;
+            }
+            else
+            {
+                xmin = x1;
+                xmax = x2;
+            }
+
+
+            Line2D[] lines = new Line2D[128];
+            Vec2f[] normals = new Vec2f[128];
+            Enums.GeometryTileShape[] shapeArray = new Enums.GeometryTileShape[128];
+            int linesCount = 0;
+
+
+            /*if (delta.X > 0.0f)
+            {*/
+            // right collision
+             for(int x = xmin - 1; x <= xmax + 1; x++)
+            {
+            if (x >= 0 && x < tileMap.MapSize.X)
+            {
+                for (int y = ymin - 1; y <= ymax + 1; y++)
+                {
+                    if (y >= 0 && y < tileMap.MapSize.Y)
+                    {
+                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
+                        {
+                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
+
+                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+
+                            for(int i = 0; i < geometryProperties.Size; i++)
+                            {
+                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+
+                                if (linesCount + 1 >= lines.Length)
+                                {
+                                    Array.Resize(ref lines, lines.Length * 2);
+                                    Array.Resize(ref normals, lines.Length * 2);
+                                    Array.Resize(ref shapeArray, lines.Length * 2);
+                                }
+
+                                line.A.X += (float)x;
+                                line.A.Y += (float)y;
+                                line.B.X += (float)x;
+                                line.B.Y += (float)y;
+
+                                lines[linesCount] = line;
+                                normals[linesCount] = normal;
+                                shapeArray[linesCount] = properties.BlockShapeType;
+        
+
+                                linesCount++;
+                            }
+                        }
+                    }
+                }
+            }
+            }
+            //}
+
+
+
+           /* if (delta.X < 0.0f)
             {
             // left
              for(int x = xmin - 1; x <= xmin; x++)
@@ -1105,24 +920,20 @@ namespace Collisions
                 }
             }
             }
-            }
+            }*/
 
 
             
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
-            int minPosition = 0;
+            Enums.GeometryTileShape minShape = 0;
             for(int i = 0; i < linesCount; i++)
             {
                 
                 Line2D line = lines[i];
                 Vec2f normal = normals[i];
-                int collisionPosition = positions[i];
+                Enums.GeometryTileShape shape = shapeArray[i];
 
-                if (collisionPosition == 1)
-                {
-                    planet.AddDebugLine(line, UnityEngine.Color.blue);
-                }
 
                 var collisionResult = 
                 CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
@@ -1131,57 +942,22 @@ namespace Collisions
                 {
                     minTime = collisionResult.Time;
                     minNormal = collisionResult.Normal;
-                    minPosition = collisionPosition;
+                    minShape = shape;
                 }
-
-            }
-
-
-            if (minTime < 1.0)
-            {
-
-
-            
-                if (minPosition == 0)
-               {
-                result.isCollidingTop = true;
-               }
-               else if (minPosition == 1)
-               {
-                result.isCollidingBottom = true;
-               }
-               else if (minPosition == 2)
-               {
-                result.isCollidingRight = true;
-               }
-               else if (minPosition == 3)
-               {
-                result.isCollidingLeft = true;
-               }
-               else if (minPosition == 4)
-               {
-                result.isCollidingRight = true;
-                result.isSlidingRight = true;
-               }
-               else if (minPosition == 5)
-               {
-                result.isCollidingLeft = true;
-                result.isSlidingLeft = true;
-               }
-
 
             }
 
 
             result.MinTime = minTime;
             result.MinNormal = minNormal;
+            result.GeometryTileShape = minShape;
 
 
             return result;
 
         }
 
-        public static HandleCollisionResult HandleCollisionH(AgentEntity entity, Vec2f delta, Planet.PlanetState planet, bool reflect)
+        public static HandleCollisionResult HandleCollisionSides(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
 
@@ -1190,8 +966,8 @@ namespace Collisions
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
            // if (delta.X <= 0) return false;
-            
-            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
+
+           Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
             
             int ymin = (int)(colliderPosition.Y);
             int ymax = (int)(colliderPosition.Y + box2dCollider.Size.Y);
@@ -1205,16 +981,16 @@ namespace Collisions
             int[] positions = new int[128]; // top bottom right left
             int linesCount = 0;
 
-            //lines[linesCount++] = new Line2D(new Vec2f(7.0f, 16.0f), new Vec2f(7.0f, 17.0f));
 
 
-         
+            if (delta.X > 0.0f)
+            {
             // right collision
              for(int x = xmax; x <= xmax + 1; x++)
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
+                for (int y = ymin; y <= ymax - 1; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -1245,7 +1021,14 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                positions[linesCount] = 2;
+                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                {
+                                    positions[linesCount] = 4;
+                                }
+                                else
+                                {
+                                    positions[linesCount] = 2;
+                                }
 
                                 linesCount++;
                             }
@@ -1254,13 +1037,18 @@ namespace Collisions
                 }
             }
             }
+            }
 
+
+
+            if (delta.X < 0.0f)
+            {
             // left
              for(int x = xmin - 1; x <= xmin; x++)
             {
             if (x >= 0 && x < tileMap.MapSize.X)
             {
-                for (int y = ymin - 1; y <= ymax + 1; y++)
+                for (int y = ymin; y <= ymax; y++)
                 {
                     if (y >= 0 && y < tileMap.MapSize.Y)
                     {
@@ -1291,7 +1079,14 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                positions[linesCount] = 3;
+                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                {
+                                    positions[linesCount] = 5;
+                                }
+                                else
+                                {
+                                    positions[linesCount] = 3;
+                                }
 
                                 linesCount++;
                             }
@@ -1300,9 +1095,16 @@ namespace Collisions
                 }
             }
             }
+            }
 
 
-            
+            Line2D leftLine = new Line2D(colliderPosition + new Vec2f(0.0f, box2dCollider.Size.X * 0.5f), colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X * 0.5f));
+            Line2D rightLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.X * 0.5f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y - box2dCollider.Size.X * 0.5f));
+
+
+            planet.AddDebugLine(leftLine, UnityEngine.Color.red);
+            planet.AddDebugLine(rightLine, UnityEngine.Color.red);
+
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             int minPosition = 0;
@@ -1313,107 +1115,34 @@ namespace Collisions
                 Vec2f normal = normals[i];
                 int collisionPosition = positions[i];
 
-               // planet.AddDebugLine(line);
-              /*  var result = 
-                CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);*/
+  
+                planet.AddDebugLine(line, UnityEngine.Color.blue);
 
+        
+                float collisionResult = 
+                LineLineSweepTest.TestCollision(rightLine, delta, line.A, line.B);
 
-                Line2D testLine = new Line2D(colliderPosition, colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f));
-              //  planet.AddDebugLine(testLine);
-                float time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-
-                if (time < minTime)
+                if (collisionResult < minTime)
                 {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y));
-              //  planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y), colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y));
-            //    planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y), colliderPosition);
-            //    planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
+                    minTime = collisionResult;
                     minNormal = normal;
                     minPosition = collisionPosition;
                 }
 
-               /* if (result.Time < minTime)
+                collisionResult = 
+                LineLineSweepTest.TestCollision(leftLine, delta, line.A, line.B);
+
+                if (collisionResult < minTime)
                 {
-                    minTime = result.Time;
-                    minNormal = result.Normal;
-                }*/
+                    minTime = collisionResult;
+                    minNormal = normal;
+                    minPosition = collisionPosition;
+                }
+
+
+
             }
 
-            if (minTime < 1.0)
-            {
-                //physicsState.Position.X = physicsState.PreviousPosition.X;
-
-               // physicsState.Position = physicsState.PreviousPosition + delta * minTime;
-                //physicsState.Position -= delta.Normalize() * 0.01f;
-
-                //physicsState.Velocity = new Vec2f();
-                //physicsState.Acceleration = new Vec2f();
-
-                //float mag = delta.Magnitude * (1.0f - minTime);
-                //float dot = Vec2f.Dot(delta, minNormal);
-
-
-                /*if (dot > 0.0f) dot = 1.0f; 
-                else if (dot < 0.0f) dot = -1.0f; */
-
-                //Vec2f reflectVelocity = dot * minNormal * (1.0f - minTime);
-
-               //Vec2f reflectVelocity = delta * (1.0f - minTime) - 1.0f * Vec2f.Dot(delta * (1.0f - minTime), minNormal) * minNormal;
-
-
-               // physicsState.PreviousPosition = physicsState.Position;
-              // Vec2f reflectVelocity = -delta;
-               if (reflect)
-               {
-                //physicsState.Position += reflectVelocity * 0.1f;
-
-                //physicsState.Position += reflectVelocity * (1.0f - minTime) * 1.0f;
-               }
-
-
-                if (minPosition == 0)
-               {
-                result.isCollidingTop = true;
-               }
-               else if (minPosition == 1)
-               {
-                result.isCollidingBottom = true;
-               }
-               else if (minPosition == 2)
-               {
-                result.isCollidingRight = true;
-               }
-               else 
-               {
-                result.isCollidingLeft = true;
-               }
-               
-
-            }
 
 
             result.MinTime = minTime;
@@ -1423,221 +1152,6 @@ namespace Collisions
             return result;
 
         }
-
-
-
-
-
-
-        public static HandleCollisionResult HandleCollisionV(AgentEntity entity, Vec2f delta, Planet.PlanetState planet, bool reflect)
-        {
-            HandleCollisionResult result = new HandleCollisionResult();
-
-           PlanetTileMap.TileMap tileMap = planet.TileMap;
-
-            var physicsState = entity.agentPhysicsState;
-            var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
-            
-            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
-            
-            int ymin = (int)(colliderPosition.Y);
-            int ymax = (int)(colliderPosition.Y + box2dCollider.Size.Y);
-
-
-            int xmin = (int)(colliderPosition.X);
-            int xmax = (int)(colliderPosition.X + box2dCollider.Size.X);
-
-            Line2D[] lines = new Line2D[128];
-            Vec2f[] normals = new Vec2f[128];
-            int[] positions = new int[128]; // top bottom right left
-            int linesCount = 0;
-
-            //lines[linesCount++] = new Line2D(new Vec2f(7.0f, 16.0f), new Vec2f(7.0f, 17.0f));
-
-
-            // top collision
-            for(int x = xmin - 1; x <= xmax + 1; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymax; y <= ymax + 1; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                                if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 0;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-
-            // bottom collision
-             for(int x = xmin - 1; x <= xmax + 1; x++)
-            {
-            if (x >= 0 && x < tileMap.MapSize.X)
-            {
-                for (int y = ymin - 1; y <= ymin; y++)
-                {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
-                    {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
-                        if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
-                        {
-                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
-
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
-
-                            for(int i = 0; i < geometryProperties.Size; i++)
-                            {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
-
-                               if (linesCount + 1 >= lines.Length)
-                                {
-                                    Array.Resize(ref lines, lines.Length * 2);
-                                    Array.Resize(ref normals, lines.Length * 2);
-                                    Array.Resize(ref positions, lines.Length * 2);
-                                }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
-
-                                lines[linesCount] = line;
-                                normals[linesCount] = normal;
-                                positions[linesCount] = 1;
-
-                                linesCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-
-    
-            
-           float minTime = 1.0f;
-            Vec2f minNormal = new Vec2f();
-            int minPosition = 0;
-            for(int i = 0; i < linesCount; i++)
-            {
-                
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                int collisionPosition = positions[i];
-
-           //     planet.AddDebugLine(line);
-              /*  var result = 
-                CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);*/
-
-
-                Line2D testLine = new Line2D(colliderPosition, colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f));
-          //      planet.AddDebugLine(testLine);
-                float time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, 0.0f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y));
-           //     planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y), colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y));
-            //    planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-                testLine = new Line2D(colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y), colliderPosition);
-          //      planet.AddDebugLine(testLine);
-                time = LineLineSweepTest.TestCollision(testLine, delta, line.A, line.B);
-                if (time < minTime)
-                {
-                    minTime = time;
-                    minNormal = normal;
-                    minPosition = collisionPosition;
-                }
-            }
-
-            if (minTime < 1.0)
-            {
-
-                if (minPosition == 0)
-               {
-                result.isCollidingTop = true;
-               }
-               else if (minPosition == 1)
-               {
-                result.isCollidingBottom = true;
-               }
-               else if (minPosition == 2)
-               {
-                result.isCollidingRight = true;
-               }
-               else 
-               {
-                result.isCollidingLeft = true;
-               }
-               
-
-            }
-
-
-            result.MinTime = minTime;
-            result.MinNormal = minNormal;
-
-
-            return result;
-
-        }
-
 
 
         public static bool HandleCollidingRight(AgentEntity entity, Planet.PlanetState planet, bool reflect)

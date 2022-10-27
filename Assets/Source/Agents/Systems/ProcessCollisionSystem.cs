@@ -38,30 +38,43 @@ namespace Agent
             Vec2f minNormal = new Vec2f();
 
             
-            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity, delta, planet);
+            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
 
             var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+
+            //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
+
+
 
             if (bottomCollision.MinTime <= topCollision.MinTime)
             {
                 minTime = bottomCollision.MinTime;
                 minNormal = bottomCollision.MinNormal;
             }
-            else
+            else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
             {
-                minTime = topCollision.MinTime;
+               minTime = topCollision.MinTime;
                 minNormal = topCollision.MinNormal;
             }
+            /*else
+            {
+                minTime = sidesCollidion.MinTime;
+                minNormal = sidesCollidion.MinNormal;
+            }*/
+
+
 
             
             
-            physicsState.Position = physicsState.PreviousPosition + delta * (minTime - 0.01f);
+            float epsilon = 0.01f;
+            physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
+            Vec2f deltaLeft = delta  * (1.0f - (minTime - epsilon));
 
-            if (minTime < 1.0)
+            if (minTime < 1.0 && (minNormal.X != 0 || minNormal.Y != 0))
             {
 
                // physicsState.Position -= delta.Normalize() * 0.02f;
-               float coefficientOfRest = 0.6f;
+               float coefficientOfRest = 0.2f;
                Vec2f velocity = delta;
 
 
@@ -70,40 +83,23 @@ namespace Agent
 
                normalized = normalized - 2.0f * Vec2f.Dot(normalized, minNormal) * minNormal;
                 Vec2f reflectVelocity = normalized * coefficientOfRest * N;
-                physicsState.Position += reflectVelocity;
+                //physicsState.Velocity = physicsState.Velocity - 1.0f * Vec2f.Dot(physicsState.Velocity, minNormal) * minNormal;
+               physicsState.Position += reflectVelocity;
+             //physicsState.Velocity = reflectVelocity * 60.0f;
+               //physicsState.Position += new Vec2f(minNormal.Y, -minNormal.X) * deltaLeft;
+               //physicsState.Position += deltaLeft - 1.0f * Vec2f.Dot(deltaLeft, minNormal) * minNormal;
             }
 
 
-           // if (isColliding)
-           // {
-                //TileCollisions.HandleCollision(entity, planet, false);
-          //  }
 
-        /*    bool collidingBottom = verticalCollisionResult.isCollidingBottom;
-            bool collidingLeft = horizontalCollisionResult.isCollidingLeft ;//physicsState.Velocity.X < 0 && isColliding;
-            bool collidingRight = horizontalCollisionResult.isCollidingRight ; //physicsState.Velocity.X > 0 && isColliding;
-            bool collidingTop = verticalCollisionResult.isCollidingTop ; //physicsState.Velocity.Y > 0 && isColliding;*/
-
-
-            bool collidingBottom = bottomCollision.isCollidingBottom || topCollision.isCollidingBottom;
-            bool collidingLeft = bottomCollision.isCollidingLeft || topCollision.isCollidingLeft;//physicsState.Velocity.X < 0 && isColliding;
-            bool collidingRight = bottomCollision.isCollidingRight || topCollision.isCollidingRight; //physicsState.Velocity.X > 0 && isColliding;
-            bool collidingTop = bottomCollision.isCollidingTop || topCollision.isCollidingTop; //physicsState.Velocity.Y > 0 && isColliding;      
-            bool slidingLeft = bottomCollision.isSlidingLeft || topCollision.isSlidingLeft;//physicsState.Velocity.X < 0 && isColliding;
-            bool slidingRight = bottomCollision.isSlidingRight || topCollision.isSlidingRight; //physicsState.Velocity.X > 0 && isColliding;
-
-
-            collidingBottom = false;
-            collidingLeft = false;
-            collidingRight = false;
-            collidingTop = false;
+            bool collidingBottom = false;
+            bool collidingLeft = false;
+            bool collidingRight = false;
+            bool collidingTop = false;
 
 
 
             Vec2f collisionDirection = -minNormal;
-
-            UnityEngine.Debug.Log(minNormal);
-            UnityEngine.Debug.Log(collisionDirection);
 
 
             if (minTime < 1.0)
@@ -138,34 +134,107 @@ namespace Agent
                 }
             }
 
+            bool slidingLeft = collidingLeft && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
+             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+
+             bool slidingRight = collidingRight && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
+             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+
+             slidingLeft = false;
+             slidingRight = false;
+
+
+
+             var rs = TileCollisions.RaycastGround(entity, planet);
+
+             if (rs.MinTime < 1.0f)
+             {
+                physicsState.GroundNormal = rs.MinNormal;
+                if (physicsState.Velocity.Y < 10.0f)
+                {
+                    physicsState.OnGrounded = true;
+                }
+                else
+                {
+                    physicsState.OnGrounded = false;
+                }
+             }
+             else
+             {
+                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+                physicsState.OnGrounded = false;
+             }
+
+             UnityEngine.Debug.Log("velocity : " + physicsState.Velocity);
+
+            // physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
+
+           /*  UnityEngine.Debug.Log(rs.MinTime);            
+             UnityEngine.Debug.Log(physicsState.GroundNormal);
+             UnityEngine.Debug.Log(rs.GeometryTileShape);*/
+
+             //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
 
           
 
-          /*  if (collidingTop)
-            UnityEngine.Debug.Log(minNormal);*/
-            if (collidingBottom)UnityEngine.Debug.Log("collidingBottom " + collidingBottom);
+          /*  if (collidingBottom)UnityEngine.Debug.Log("collidingBottom " + collidingBottom);
             if (collidingLeft)UnityEngine.Debug.Log("collidingLeft " + collidingLeft);
             if (collidingRight)UnityEngine.Debug.Log("collidingRight " + collidingRight);
             if (collidingTop)UnityEngine.Debug.Log("collidingTop " + collidingTop);
 
 
-
+*/
            // physicsState.OnGrounded = true;
             //return ;
 
 
+            
+            /*Vec2f colliderPosition = physicsState.Position + box2DCollider.Offset;
+            int X1 = (int)(colliderPosition.X + box2DCollider.Size.X * 0.5f);
+            int Y1 = (int)(colliderPosition.Y);
 
-           /* bool collidingBottom = TileCollisions.HandleCollidingBottom(entity, planet, true);
-            bool collidingLeft = TileCollisions.HandleCollidingLeft(entity, planet, true);
-            bool collidingRight = TileCollisions.HandleCollidingRight(entity, planet, true);
-            bool collidingTop = TileCollisions.HandleCollidingTop(entity, planet, true);
+            planet.AddDebugLine(new Line2D(new Vec2f((float)X1, (float)Y1), new Vec2f((float)X1 + 1.0f, (float)Y1)), Color.blue);
 
-            TileCollisions.HandleCollidingBottom(entity, planet, false);
-            TileCollisions.HandleCollidingLeft(entity, planet, false);
-            TileCollisions.HandleCollidingRight(entity, planet, false);
-             TileCollisions.HandleCollidingTop(entity, planet, false);*/
+            TileID id = tileMap.GetFrontTileID(X1, Y1);
+
+            var properties = GameState.TileCreationApi.GetTileProperty(id);
+            if (properties.BlockShapeType == Enums.GeometryTileShape.TB_R0)
+            {
+                physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
+            }
+            else if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+            {
+                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+            }
+            else
+            {
+                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+            }
 
 
+            int X2 = (int)(colliderPosition.X + box2DCollider.Size.X * 0.5f + 1.0f);
+            int Y2 = (int)(colliderPosition.Y);
+
+            planet.AddDebugLine(new Line2D(new Vec2f((float)X2, (float)Y2), new Vec2f((float)X2 + 1.0f, (float)Y2)), Color.blue);
+
+            id = tileMap.GetFrontTileID(X2, Y2);
+
+            properties = GameState.TileCreationApi.GetTileProperty(id);
+            if (properties.BlockShapeType == Enums.GeometryTileShape.TB_R0)
+            {
+                physicsState.GroundNormal += new Vec2f(-1.0f, 1.0f).Normalized;
+  
+            }
+            else if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+            {
+                physicsState.GroundNormal += new Vec2f(0.0f, 1.0f);
+            }
+            else
+            {
+                physicsState.GroundNormal += new Vec2f(0.0f, 1.0f);
+            }
+
+              physicsState.GroundNormal.Normalize();*/
 
 
 
@@ -174,6 +243,7 @@ namespace Agent
 
             if (collidingBottom)
             {
+                physicsState.OnGrounded = true;
                 bool isPlatform = true; // if all colliding blocks are plataforms.
                 for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
                 {
@@ -192,25 +262,25 @@ namespace Agent
                    // physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                     physicsState.Velocity.Y = 0.0f;
                     physicsState.Acceleration.Y = 0.0f;
-                    physicsState.OnGrounded = true;
+                  //  physicsState.OnGrounded = true;
                     if (!isPlatform)
                         physicsState.Droping = false;
                 }
                 else
                 {
-                    physicsState.OnGrounded = false;
+                 //   physicsState.OnGrounded = false;
                 }
             }
             else
             {
-                physicsState.OnGrounded = false;
+             //   physicsState.OnGrounded = false;
                 physicsState.Droping = false;
             }
 
 
             if (collidingTop)
             {   
-                /*physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);*/
+                //physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                 physicsState.Velocity.Y = 0.0f;
                 physicsState.Acceleration.Y = 0.0f;
             }
@@ -222,7 +292,7 @@ namespace Agent
 
            if (collidingLeft)
             {
-                /*physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);*/
+                //physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingLeft)
@@ -232,7 +302,7 @@ namespace Agent
            }
             else if (collidingRight)
             {
-               /* physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);*/
+               // physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingRight)
@@ -268,7 +338,7 @@ namespace Agent
                 }
             }
 
-            entityBoxBorders.DrawBox();
+            //entityBoxBorders.DrawBox();
         }
 
         public void Update(AgentContext agentContext, Planet.PlanetState planet)

@@ -549,11 +549,44 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       // PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       if (PhysicsState.OnGrounded)
+                       {
+                        if (horizontalDir != 0)
+                        {
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+                        PhysicsState.Velocity = 5.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        PhysicsState.Velocity *= horizontalDir;
+                        }
+                       }
+                       else 
+                       {
+                        PhysicsState.Velocity.X = 1 * horizontalDir * 5.0f;
+                        //PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       }
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       // PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                      if (PhysicsState.OnGrounded)
+                       {
+                        if (horizontalDir != 0)
+                        {
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+
+                        PhysicsState.Velocity = 5.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        PhysicsState.Velocity *= horizontalDir;
+                        }
+                       }
+                       else 
+                       {
+                        PhysicsState.Velocity.X = horizontalDir * 5.0f;
+                        //PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       }
                     }
                 }
             }
@@ -610,6 +643,8 @@ public partial class AgentEntity
                         physicsState.JumpCounter++;
                     }
                 }
+
+                physicsState.OnGrounded = false;
             }
         }
 

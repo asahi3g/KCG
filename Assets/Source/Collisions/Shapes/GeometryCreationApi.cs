@@ -92,9 +92,6 @@ namespace Collisions
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
-            /*GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);*/
             GameState.GeometryCreationApi.End();
 
 

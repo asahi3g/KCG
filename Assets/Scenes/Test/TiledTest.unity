@@ -554,7 +554,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 6000
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
 --- !u!224 &1776466744
 RectTransform:
   m_ObjectHideFlags: 0

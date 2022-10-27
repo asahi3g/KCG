@@ -95,7 +95,7 @@ namespace Planet.Unity
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(7.0f, 12), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
