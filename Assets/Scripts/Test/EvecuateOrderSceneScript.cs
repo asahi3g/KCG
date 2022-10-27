@@ -223,6 +223,8 @@ namespace Planet.Unity
             GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
             //Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
+
+            Planet.AddAgent(new Vec2f(6.0f, spawnHeight), Enums.AgentType.EnemyMarine);
         }
     }
 }

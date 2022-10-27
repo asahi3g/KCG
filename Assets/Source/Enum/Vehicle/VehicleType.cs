@@ -2,7 +2,7 @@ namespace Enums
 {
     public enum VehicleType
     {
-        None,
+        None = 0,
         AlienFleet,
         Carrier,
         Fighter,

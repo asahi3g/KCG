@@ -1,11 +1,8 @@
 //imports UnityEngine
 
-using System.Collections.Generic;
 using KMath;
 using Animancer;
-using UnityEngine.Animations.Rigging;
 using AI;
-using static UnityEditor.PlayerSettings;
 
 namespace Agent
 {
@@ -67,6 +64,7 @@ namespace Agent
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
                  newRollImpactDuration: 0);
+
 
             return entity;
         }
@@ -346,15 +344,17 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemyMarine:
                     {
+                        properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+
                         UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
 
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
                         UnityEngine.GameObject model = UnityEngine.GameObject.Instantiate(prefab);
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(3).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        UnityEngine.GameObject leftHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(0).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        UnityEngine.GameObject rightHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(1).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
 
                         UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
                         animancerComponentGO.transform.parent = model.transform;
@@ -365,6 +365,17 @@ namespace Agent
                             Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
 
                         entity.agentPhysicsState.Speed = 10.0f;
+
+                        // This is for testin purposes,
+                        // will be deleted soon.
+
+                        UnityEngine.SpriteRenderer renderer = properties.TrackStub.AddComponent<UnityEngine.SpriteRenderer>();
+                        renderer.sprite = UnityEditor.AssetDatabase.GetBuiltinExtraResource<UnityEngine.Sprite>("UI/Skin/UISprite.psd");
+                        renderer.color = UnityEngine.Color.red;
+                        properties.TrackStub.transform.position = model.transform.position;
+                        properties.TrackStub.transform.localScale = new UnityEngine.Vector3(2, 2, 2);
+
+                        //---
 
                         if (!entity.hasAgentAction)
                             entity.AddAgentAction(AgentAlertState.Alert);
