@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using Enums.PlanetTileMap;
+using Enums.Tile;
 using KMath;
 using System;
 using Utility;
+using Enums.PlanetTileMap;
 
 namespace Collisions
 {
@@ -357,7 +358,7 @@ namespace Collisions
            // if (delta.X <= 0) return false;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X / 2.0f);
-
+           
             int y1 = (int)(colliderPosition.Y + delta.Y);
             int y2 = (int)(colliderPosition.Y + box2dCollider.Size.Y + delta.Y);
 
@@ -681,10 +682,8 @@ namespace Collisions
                 Enums.GeometryTileShape shape = shapeArray[i];
 
 
-                Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X * 0.5f, box2dCollider.Size.Y * 0.5f);
-                start.X += box2dCollider.Size.X * 0.5f * physicsState.MovingDirection; // raycasting in front of the agent
+                Vec2f start = colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y * 0.5f);
                 Vec2f end = start + new Vec2f(0.0f, -1.25f);
-
                 var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
 
                 planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
@@ -697,9 +696,25 @@ namespace Collisions
                     pointOfCollision = start;
                 }
 
+                start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
+                end = start + new Vec2f(0.0f, -1.25f);
+                
+                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+
+                planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
+                
+                if (rs < minTime)
+                {
+                    minTime = rs;
+                    minNormal = normal;
+                    minShape = shape;
+                    minLine = line;
+                    pointOfCollision = start;
+                }
+
             }
 
-            planet.AddDebugLine(new Line2D(pointOfCollision + new Vec2f(0.0f, -1.25f) * minTime, pointOfCollision + new Vec2f(0.0f, -1.25f) * minTime + new Vec2f(minNormal.Y, -minNormal.X)), UnityEngine.Color.red);
+           
             //planet.AddDebugLine(minLine, UnityEngine.Color.red);
 
 

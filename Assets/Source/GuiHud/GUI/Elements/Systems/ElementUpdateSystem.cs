@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using UnityEngine;
 using KMath;
 
@@ -59,5 +59,5 @@ namespace KGUI.Elements
             BuildCursor_ = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor_, 1, 1, Enums.AtlasType.Particle);
         }
     }
-}
+}*/
 

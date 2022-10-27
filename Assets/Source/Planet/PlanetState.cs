@@ -58,7 +58,7 @@ namespace Planet
             cameraFollow = new CameraFollow();
 
             DebugLines = new Line2D[1024];
-            DebugLinesColors = new Color[1024];
+            DebugLinesColors = new UnityEngine.Color[1024];
             DebugLinesCount = 0;
 
             EntitasContext = new Contexts();
@@ -70,7 +70,7 @@ namespace Planet
             {
                 AgentEntity entity = AgentList.Get(agentId);
 
-                entity.DestroyEntity();
+                entity.Destroy();
             }
         }
 
@@ -473,7 +473,7 @@ namespace Planet
             GameState.InputProcessSystem.Update(this);
             // Movement Systems
             GameState.AgentProcessPhysicalState.Update(this, frameTime);
-            GameState.AgentMovementSystem.Update(EntitasContext.agent);
+            GameState.AgentMovementSystem.Update(EntitasContext.agent, this);
             GameState.ItemMovableSystem.Update(EntitasContext.itemParticle);
             GameState.VehicleMovementSystem.UpdateEx(EntitasContext.vehicle);
             GameState.PodMovementSystem.UpdateEx(EntitasContext.pod);
