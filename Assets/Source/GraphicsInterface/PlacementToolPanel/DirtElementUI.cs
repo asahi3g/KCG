@@ -1,14 +1,12 @@
 //imports UnityEngine
 
-using Enums;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class DirtElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
 
         private ImageWrapper border;
 
@@ -20,7 +18,7 @@ namespace KGUI
             
             ID = ElementEnums.Dirt;
 
-            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", AtlasType.Gui);
+            Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", Enums.AtlasType.Gui);
             border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 

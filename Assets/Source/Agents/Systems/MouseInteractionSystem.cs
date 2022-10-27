@@ -1,12 +1,12 @@
-﻿using Planet;
-using KMath;
+﻿using KMath;
 
 namespace Agent
 {
     public class MouseInteractionSystem
     {
-        public void Update(PlanetState planet)
+        public void Update()
         {
+            ref var planet = ref GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;

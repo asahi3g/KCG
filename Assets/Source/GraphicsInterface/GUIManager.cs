@@ -1,10 +1,7 @@
 //imports UnityEngine
 
 using System.Collections.Generic;
-using Enums;
 using KMath;
-using Planet;
-using UnityEngine.UI;
 using Utility;
 
 
@@ -14,14 +11,13 @@ namespace KGUI
     {
         public bool ShowGUI = true;
         
-        public PlanetState Planet;
         public ItemInventoryEntity SelectedInventoryItem;
 
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
 
-        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new();
-        public Dictionary<PanelEnums, PanelUI> PanelList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new Dictionary<PanelEnums, PanelUI>();
+        public Dictionary<PanelEnums, PanelUI> PanelList = new Dictionary<PanelEnums, PanelUI>();
 
         public Vec2f CursorPosition;
         public ElementUI ElementUnderCursor;
@@ -29,21 +25,17 @@ namespace KGUI
         
         private UnityEngine.Canvas canvas;
 
-        private TextWrapper text = new();
+        private TextWrapper text = new TextWrapper();
         
-        public void InitStage1(PlanetState planet)
+        public void InitStage1()
         {
-            Planet = planet;
-            if (Planet.TileMap == null)
-                return;
-
             UnityEngine.Cursor.visible = true;
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
 
             ProgressBar = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, AtlasType.Gui);
+                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
+                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
 
             PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
             PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
@@ -97,10 +89,7 @@ namespace KGUI
 
         public void Update(AgentEntity agentEntity)
         {
-            if (Planet.TileMap == null)
-                return;
-
-            canvas.GetComponent<CanvasScaler>().referenceResolution =
+            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
@@ -108,9 +97,9 @@ namespace KGUI
             text.Update();
 
             var inventoryID = agentEntity.agentInventory.InventoryID;
-            var inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }
@@ -171,7 +160,7 @@ namespace KGUI
 
         public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
-            if (Planet.TileMap != null)
+            if (GameState.Planet.TileMap != null)
             {
                 TextWrapper textWrapper = new TextWrapper();
                 textWrapper.Create("TempText", _text, canvas.transform, 1);

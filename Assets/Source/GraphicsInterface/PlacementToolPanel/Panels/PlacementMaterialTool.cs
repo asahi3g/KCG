@@ -30,10 +30,10 @@ namespace KGUI
         
         public override void OnActivate()
         {
+            ref var planet = ref GameState.Planet;
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
-
-            var planet = GameState.GUIManager.Planet;
+            
             var inventories =
                 planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID,
                     InventoryMatcher.InventoryName));
@@ -47,8 +47,7 @@ namespace KGUI
 
                 for (int i = 0; i < materialBag.Length; i++)
                 {
-                    var materialBagSlot =
-                        GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventory.inventoryID.ID, i);
+                    var materialBagSlot = GameState.InventoryManager.GetItemInSlot(inventory.inventoryID.ID, i);
                     if (materialBagSlot == null) continue;
 
                     switch (materialBagSlot.itemType.Type)

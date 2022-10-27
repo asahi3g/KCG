@@ -548,9 +548,9 @@ namespace ToonyColorsPro
 
 			public class UIFeature_Mask : UIFeature
 			{
-				public string Keyword { get { return keyword; } }
-				public string MaskKeyword { get { return maskKeyword; } }
-				public string DisplayName { get { return displayName; } }
+				public string Keyword => keyword;
+				public string MaskKeyword => maskKeyword;
+				public string DisplayName => displayName;
 
 				string maskKeyword;
 				string channelKeyword;

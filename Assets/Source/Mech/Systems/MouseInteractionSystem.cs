@@ -1,6 +1,5 @@
 ﻿//import UnityEngine
 
-using Planet;
 using KMath;
 using System.Collections.Generic;
 using System.Web.WebPages;
@@ -13,13 +12,18 @@ namespace Mech
         /// Return list of meches mouse is over.
         /// </summary>
         /// <returns>If error return null</returns>
+<<<<<<< HEAD
         public List<MechEntity> GetMechFromMousePos( PlanetState planet)
+=======
+        public List<MechEntity> GetMechFromMousePos()
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
 
             List<MechEntity> meches = new List<MechEntity>(5);
 
+            ref var planet = ref GameState.Planet;
             for (int i = 0; i < planet.MechList.Length; i++)
             {
                 MechEntity mech = planet.MechList.Get(i);
@@ -43,8 +47,13 @@ namespace Mech
             return meches;
         }
 
+<<<<<<< HEAD
         public void Update( PlanetState planet)
+=======
+        public void Update()
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
+            ref var planet = ref GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;

@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using KMath;
-using Planet;
-using Entitas;
-using Enums.Tile;
+
 
 /*
 public class RasterScanTest : MonoBehaviour

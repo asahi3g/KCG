@@ -1,10 +1,4 @@
-using BigGustave; //SHOULD NOT IMPORT
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using TiledCS;
+//SHOULD NOT IMPORT
 
 
 //Note:

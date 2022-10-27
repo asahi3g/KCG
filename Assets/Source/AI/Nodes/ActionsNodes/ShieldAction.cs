@@ -1,17 +1,17 @@
 using Inventory;
-using Planet;
 using Enums;
 
 namespace Node.Action
 {
     public class ShieldAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ShieldAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.ShieldAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity) 
+        public override void OnEnter(NodeEntity nodeEntity) 
         {
+            ref var planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             if (!agentEntity.hasAgentInventory)
@@ -24,25 +24,25 @@ namespace Node.Action
             if (inventoryModel.HasToolBar)
             {
                 int selectedSlot = inventory.SelectedSlotID;
-                ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, inventoryID, selectedSlot);
+                ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
                 if(itemEntity != null)
                 {
-                    if(itemEntity.itemType.Type is Enums.ItemType.Sword or Enums.ItemType.StunBaton)
+                    if(itemEntity.itemType.Type is ItemType.Sword or ItemType.StunBaton)
                     {
                         if(agentEntity.hasAgentPhysicsState)
                             agentEntity.agentPhysicsState.Invulnerable = !agentEntity.agentPhysicsState.Invulnerable;
                     }
                 }
 
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                nodeEntity.nodeExecution.State = NodeState.Success;
             }
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+            nodeEntity.nodeExecution.State = NodeState.Fail;
         }
 
-        public override void OnExit(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnExit(NodeEntity nodeEntity)
         {
-            base.OnExit(ref planet, nodeEntity);
+            base.OnExit(nodeEntity);
         }
     }
 }

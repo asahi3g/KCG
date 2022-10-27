@@ -1,5 +1,4 @@
-﻿using Planet;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using Enums;
 
@@ -7,7 +6,7 @@ namespace AI.Sensor
 {
     public class EnemySensor : SensorBase
     {
-        public override SensorType Type { get { return SensorType.EnemySensor; } }
+        public override SensorType Type => SensorType.EnemySensor;
 
         public override List<Tuple<string, Type>> GetBlackboardEntries()
         {
@@ -18,8 +17,9 @@ namespace AI.Sensor
             return blackboardEntries;
         }
 
-        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard, ref PlanetState planet)
+        public override void Update(AgentEntity agent, in SensorEntity sensor, ref BlackBoard blackBoard)
         {
+            ref var planet = ref GameState.Planet;
             int AnyEnemiesAlive = sensor.EntriesID[0];
 
             for (int i = 0; i < planet.AgentList.Length; i++)

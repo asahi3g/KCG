@@ -16,10 +16,7 @@ namespace InteliMap
         protected Tilemap map;
 
         private GUIContent icon;
-        public override GUIContent toolbarIcon
-        {
-            get { return icon; }
-        }
+        public override GUIContent toolbarIcon => icon;
 
         public virtual void OnEnable()
         {
@@ -77,10 +74,7 @@ namespace InteliMap
             }
         }
 
-        public virtual Color handleColor
-        {
-            get { return Color.white; }
-        }
+        public virtual Color handleColor => Color.white;
 
         public void OnDrawHandles()
         {

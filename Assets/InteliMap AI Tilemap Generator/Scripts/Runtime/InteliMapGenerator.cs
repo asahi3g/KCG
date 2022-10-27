@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -452,7 +451,7 @@ namespace InteliMap
 
             public CSPState(HighPriority hp, SparseSet[,] domains, CSPConnectivity connectivity, BoundsInt bounds, GeneratorEngine engine, float temperature, int[] mapIndicies, bool isHighPriority)
             {
-                this.pos = hp.pos;
+                pos = hp.pos;
                 this.isHighPriority = isHighPriority;
 
                 domain = domains[pos.x, pos.y].ToArray();

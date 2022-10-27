@@ -18,7 +18,7 @@ namespace ToonyColorsPro
 			private const string BASE_SHADER_NAME_MOB = "Mobile";
 
 			private static List<string[]> ShaderVariants = new List<string[]>
-	{
+			{
 		new[]{ "Specular", "TCP2_SPEC" },
 		new[]{ "Reflection", "TCP2_REFLECTION", "TCP2_REFLECTION_MASKED" },
 		new[]{ "Matcap", "TCP2_MC" },

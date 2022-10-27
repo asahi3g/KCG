@@ -5,6 +5,8 @@ using Planet;
 /// </summary>
 public static class GameState
 {
+    public static Planet.PlanetState Planet;
+    
     #region Aninmation
     public static readonly Animation.AnimationManager AnimationManager;
     public static readonly Animation.UpdateSystem AnimationUpdateSystem;
@@ -156,6 +158,8 @@ public static class GameState
 
     public static void InitStage1()
     {
+        Planet = new Planet.PlanetState();
+        
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();

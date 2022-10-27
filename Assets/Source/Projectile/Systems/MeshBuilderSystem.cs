@@ -10,9 +10,9 @@
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
         }
 
-        public void UpdateMesh(ProjectileContext context)
+        public void UpdateMesh()
         {
-            var projectilessWithSprite = context.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileSprite2D));
+            var projectilessWithSprite = GameState.Planet.EntitasContext.projectile.GetGroup(ProjectileMatcher.AllOf(ProjectileMatcher.ProjectileSprite2D));
 
             Mesh.Clear();
             int index = 0;

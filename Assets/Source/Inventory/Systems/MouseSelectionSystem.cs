@@ -1,34 +1,34 @@
 ﻿//import UnityEngine
 
-using Entitas;
 using KMath;
 
 namespace Inventory
 {
     public class MouseSelectionSystem
     {
-        public void OnMouseUP(Contexts contexts, Inventory.InventoryList inventoryList)
+        public void OnMouseUP(InventoryList inventoryList)
         {
             // Initialize states.
             if (InventorySystemsState.ClickedSlotslotID < 0)
                 return;
 
+            ref var planet = ref GameState.Planet;
             InventorySystemsState.MouseDown = false;
-            InventoryEntity inventoryEntity = contexts.inventory.GetEntityWithInventoryID(InventorySystemsState.ClickedInventoryID);
+            InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventorySystemsState.ClickedInventoryID);
 
             if (!InventorySystemsState.MouseHold) // if less than 250ms consider it a click.
             {
-                var player = GameState.GUIManager.Planet.Player;
+                var player = planet.Player;
                 if (player != null && inventoryEntity.inventoryEntity.SelectedSlotID !=
                     InventorySystemsState.ClickedSlotslotID)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
                     player.HandleItemDeselected(item);
                 }
                 inventoryEntity.inventoryEntity.SelectedSlotID = InventorySystemsState.ClickedSlotslotID;
                 if (player != null)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(contexts, inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
                     player.HandleItemSelected(item);
                 }
                 InventorySystemsState.ClickedSlotslotID = -1;
@@ -47,7 +47,7 @@ namespace Inventory
 
                 if (!openInventoryEntity.hasInventoryDraw)
                     continue;
-                if (TryAddItemToInv(contexts, ref openInventory, openInventoryEntity, mPos, false))
+                if (TryAddItemToInv(ref openInventory, openInventoryEntity, mPos, false))
                     return;
             }
 
@@ -60,19 +60,19 @@ namespace Inventory
                 
                 if (!openInventory.HasToolBar || !inventoryEntity.hasInventoryToolBarDraw)
                     continue;
-                if (TryAddItemToInv(contexts, ref openInventory, openInventoryEntity, mPos, true))
+                if (TryAddItemToInv(ref openInventory, openInventoryEntity, mPos, true))
                     return;
             }
 
             // If mouse is in not in a valid slot.
-            GameState.InventoryManager.AddItemAtSlot(contexts, contexts.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID), InventorySystemsState.ClickedInventoryID, InventorySystemsState.ClickedSlotslotID);
+            GameState.InventoryManager.AddItemAtSlot(planet.EntitasContext.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID), InventorySystemsState.ClickedInventoryID, InventorySystemsState.ClickedSlotslotID);
             // Reset values.
             InventorySystemsState.MouseHold = false;
             InventorySystemsState.ClickedSlotslotID = -1;
             InventorySystemsState.ClickedInventoryID = -1;
         }
 
-        public void OnMouseDown(Contexts contexts, Inventory.InventoryList inventoryList)
+        public void OnMouseDown(InventoryList inventoryList)
         {
             UnityEngine.Vector3 mousePos = UnityEngine.Input.mousePosition;
             float scaleFacor = 1080f / UnityEngine.Screen.height;
@@ -86,7 +86,7 @@ namespace Inventory
                 
                 if (!openInventoryEntity.hasInventoryDraw)
                     continue;
-                if (TryPickingUpItemFromInv(contexts, ref openInventory, openInventoryEntity, mPos, false))
+                if (TryPickingUpItemFromInv(ref openInventory, openInventoryEntity, mPos, false))
                     return;
             }
 
@@ -99,12 +99,12 @@ namespace Inventory
 
                 if (!openInventory.HasToolBar || !openInventoryEntity.hasInventoryToolBarDraw)
                     continue;
-                if (TryPickingUpItemFromInv(contexts, ref openInventory, openInventoryEntity, mPos, true))
+                if (TryPickingUpItemFromInv(ref openInventory, openInventoryEntity, mPos, true))
                     return;
             }
         }
 
-        public void Update(Contexts contexts)
+        public void Update()
         {
             if (InventorySystemsState.MouseDown == false)
                 return;
@@ -116,14 +116,14 @@ namespace Inventory
             if (!InventorySystemsState.MouseHold)
             {
                 InventorySystemsState.MouseHold = true;
-                GameState.InventoryManager.RemoveItem(contexts, InventorySystemsState.ClickedInventoryID, InventorySystemsState.ClickedSlotslotID);
+                GameState.InventoryManager.RemoveItem(InventorySystemsState.ClickedInventoryID, InventorySystemsState.ClickedSlotslotID);
             }
         }
 
         /// <summary>
         /// Add Item To inventory if mouse is over it.
         /// </summary>
-        private bool TryAddItemToInv(Contexts contexts, ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
+        private bool TryAddItemToInv(ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
             Window window = isToolBar ? inventoryModel.ToolBarWindow :
                 (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
@@ -142,7 +142,7 @@ namespace Inventory
                 if (slotID == -1)
                     return false;
 
-                if (GameState.InventoryManager.AddItemAtSlot(contexts, contexts.itemInventory.GetEntityWithItemID(
+                if (GameState.InventoryManager.AddItemAtSlot(GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(
                     InventorySystemsState.GrabbedItemID), inventoryEntity.inventoryID.ID, slotID))
                 {
                     inventoryEntity.inventoryEntity.SelectedSlotID = slotID;
@@ -156,7 +156,7 @@ namespace Inventory
             }
         }
 
-        public bool TryPickingUpItemFromInv(Contexts contexts, ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
+        public bool TryPickingUpItemFromInv(ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
             Window window = isToolBar ? inventoryModel.ToolBarWindow :
                 (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;

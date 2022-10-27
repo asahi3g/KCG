@@ -1,7 +1,4 @@
-﻿using System;
-using KMath;
-
-namespace Agents
+﻿namespace Agents
 {
     public static class PositionPrediction
     {

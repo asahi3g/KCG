@@ -1,6 +1,5 @@
 ﻿using AI;
 using Enums;
-using Planet;
 using KMath;
 using System.Collections.Generic;
 using System;
@@ -9,8 +8,9 @@ namespace Node.Action
 {
     public class SelectClosestTarget : NodeBase
     {
-        public override NodeType Type { get { return NodeType.SelectClosestTarget; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.SelectClosestTarget;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
+
         public override List<Tuple<string, Type>> RegisterEntries()
         {
             List<Tuple<string, Type>> blackboardEntries = new List<Tuple<string, Type>>()
@@ -20,8 +20,9 @@ namespace Node.Action
             return blackboardEntries;
         }
 
-        public override void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             AgentEntity target = null;
             float dist = float.MaxValue;

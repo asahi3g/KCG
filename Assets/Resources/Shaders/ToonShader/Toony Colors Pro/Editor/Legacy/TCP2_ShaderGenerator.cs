@@ -889,7 +889,7 @@ namespace ToonyColorsPro
 #else
 				string assetPath = "Assets" + path.Replace(Application.dataPath, "");
 #endif
-						var shaderImporter = ShaderImporter.GetAtPath(assetPath) as ShaderImporter;
+						var shaderImporter = AssetImporter.GetAtPath(assetPath) as ShaderImporter;
 						if (shaderImporter != null)
 						{
 							if (shaderImporter.userData.Contains("USER"))

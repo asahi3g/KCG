@@ -2,13 +2,12 @@
 
 using KMath;
 using Enums.PlanetTileMap;
-using Planet;
 using PlanetTileMap;
 
 class PlanterTest : UnityEngine.MonoBehaviour
 {
     [UnityEngine.SerializeField] UnityEngine.Material Material;
-    public PlanetState Planet;
+
 
     AgentEntity Player;
     int InventoryID;
@@ -25,7 +24,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     public void Update()
     {
-        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
     private void OnGUI()
@@ -33,27 +32,28 @@ class PlanterTest : UnityEngine.MonoBehaviour
         if (!Init)
             return;
 
-        Planet.DrawHUD(Player);
+        GameState.Planet.DrawHUD(Player);
         if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
-        KGUI.Statistics.StatisticsDisplay.DrawStatistics(ref Planet);
+        KGUI.Statistics.StatisticsDisplay.DrawStatistics();
     }
 
     private void OnDrawGizmos()
     {
-        Planet.DrawDebug();
+        ref var planet = ref GameState.Planet;
+        planet.DrawDebug();
 
         // Set the color of gizmos
         UnityEngine.Gizmos.color = UnityEngine.Color.green;
 
         // Draw a cube around the map
-        if (Planet.TileMap != null)
-            UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(Planet.TileMap.MapSize.X, Planet.TileMap.MapSize.Y, 0.0f));
+        if (planet.TileMap != null)
+            UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
         // Draw lines around player if out of bounds
         if (Player != null)
-            if (Player.agentPhysicsState.Position.X - 10.0f >= Planet.TileMap.MapSize.X)
+            if (Player.agentPhysicsState.Position.X - 10.0f >= planet.TileMap.MapSize.X)
             {
                 // Out of bounds
 
@@ -71,7 +71,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
             }
 
         // Draw Chunk Visualizer
-        ChunkVisualizer.Draw(Planet.TileMap, 0.5f, 0.0f);
+        ChunkVisualizer.Draw(0.5f, 0.0f);
     }
 
     // create the sprite atlas for testing purposes
@@ -80,30 +80,31 @@ class PlanterTest : UnityEngine.MonoBehaviour
         GameResources.Initialize();
 
         // Generating the map
+        ref var planet = ref GameState.Planet;
         Vec2i mapSize = new Vec2i(32, 32);
-        Planet = new Planet.PlanetState();
-        Planet.Init(mapSize);
+        planet.Init(mapSize);
 
         GenerateMap();
         SpawnStuff();
 
-        Planet.InitializeSystems(Material, transform);
-        Planet.InitializeHUD();
+        planet.InitializeSystems(Material, transform);
+        planet.InitializeHUD();
 
         InventoryID = Player.agentInventory.InventoryID;
 
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.PlacementTool, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.WaterBottle, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.MajestyPalm, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.SagoPalm, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.DracaenaTrifasciata, Planet.EntitasContext);
-        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.HarvestTool, Planet.EntitasContext);
-        //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ScannerTool, Planet.EntitasContext);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.PlacementTool);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.WaterBottle);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.MajestyPalm);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.SagoPalm);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.DracaenaTrifasciata);
+        Admin.AdminAPI.AddItem(GameState.InventoryManager, InventoryID, Enums.ItemType.HarvestTool);
+        //Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.ScannerTool);
     }
 
     void GenerateMap()
     {
-        ref var tileMap = ref Planet.TileMap;
+        ref var planet = ref GameState.Planet;
+        ref var tileMap = ref planet.TileMap;
 
         for (int j = 0; j < tileMap.MapSize.Y; j++)
         {
@@ -147,12 +148,13 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     void SpawnStuff()
     {
-        Player = Planet.AddPlayer(new Vec2f(2, 2), 0);
-        Planet.AddMech(new Vec2f(4, 2), Enums.MechType.Planter);
-        Planet.AddMech(new Vec2f(8, 2), Enums.MechType.Planter);
-        Planet.AddMech(new Vec2f(12, 2), Enums.MechType.Planter);
-        Planet.AddMech(new Vec2f(4, 4), Enums.MechType.Light);
-        Planet.AddMech(new Vec2f(8, 4), Enums.MechType.Light);
-        Planet.AddMech(new Vec2f(12, 4), Enums.MechType.Light);
+        ref var planet = ref GameState.Planet;
+        Player = planet.AddPlayer(new Vec2f(2, 2), 0);
+        planet.AddMech(new Vec2f(4, 2), Enums.MechType.Planter);
+        planet.AddMech(new Vec2f(8, 2), Enums.MechType.Planter);
+        planet.AddMech(new Vec2f(12, 2), Enums.MechType.Planter);
+        planet.AddMech(new Vec2f(4, 4), Enums.MechType.Light);
+        planet.AddMech(new Vec2f(8, 4), Enums.MechType.Light);
+        planet.AddMech(new Vec2f(12, 4), Enums.MechType.Light);
     }
 }

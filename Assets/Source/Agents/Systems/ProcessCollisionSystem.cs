@@ -17,8 +17,9 @@ namespace Agent
     // http://www.cs.yorku.ca/~amana/research/grid.pdf
     public class ProcessCollisionSystem
     {
-        private void Update(Planet.PlanetState planet, AgentEntity entity, float deltaTime)
+        private void Update(AgentEntity entity, float deltaTime)
         {       
+            var planet = GameState.Planet;
             PhysicsStateComponent physicsState = entity.agentPhysicsState;
             Box2DColliderComponent box2DCollider = entity.physicsBox2DCollider;
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
@@ -175,7 +176,7 @@ namespace Agent
                 bool isPlatform = true; // if all colliding blocks are plataforms.
                 for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
                 {
-                    var tile = tileMap.GetTile(i, (int)entityBoxBorders.ymin);
+                    var tile = planet.TileMap.GetTile(i, (int)entityBoxBorders.ymin);
                     var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
                     if (!property.IsAPlatform)
@@ -246,20 +247,20 @@ namespace Agent
             position.X += box2DCollider.Size.X / 2.0f;
             //position.Y -= box2DCollider.Size.Y / 2.0f;
 
-            if ((int)position.X > 0 && (int)position.X + 1 < tileMap.MapSize.X &&
-            (int)position.Y > 0 && (int)position.Y < tileMap.MapSize.Y)
+            if ((int)position.X > 0 && (int)position.X + 1 < planet.TileMap.MapSize.X &&
+            (int)position.Y > 0 && (int)position.Y < planet.TileMap.MapSize.Y)
             {
-                if (tileMap.GetFrontTileID((int)position.X + 1, (int)position.Y)== TileID.Air)
+                if (planet.TileMap.GetFrontTileID((int)position.X + 1, (int)position.Y)== TileID.Air)
                 {
                     if (physicsState.MovementState == Enums.AgentMovementState.SlidingRight)
                         physicsState.MovementState = Enums.AgentMovementState.None;
                 }
             }
 
-            if ((int)position.X > 0 && (int)position.X - 1 < tileMap.MapSize.X &&
-            (int)position.Y > 0 && (int)position.Y < tileMap.MapSize.Y)
+            if ((int)position.X > 0 && (int)position.X - 1 < planet.TileMap.MapSize.X &&
+            (int)position.Y > 0 && (int)position.Y < planet.TileMap.MapSize.Y)
             {
-                if (tileMap.GetFrontTileID((int)position.X - 1, (int)position.Y) == TileID.Air)
+                if (planet.TileMap.GetFrontTileID((int)position.X - 1, (int)position.Y) == TileID.Air)
                 {
                     if (physicsState.MovementState == Enums.AgentMovementState.SlidingLeft)
                         physicsState.MovementState = Enums.AgentMovementState.None;
@@ -272,11 +273,11 @@ namespace Agent
         public void Update(AgentContext agentContext, Planet.PlanetState planet)
         {
             float deltaTime = UnityEngine.Time.deltaTime;
-            var agentEntitiesWithBox = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));
+            var agentEntitiesWithBox = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));
 
             foreach (var agentEntity in agentEntitiesWithBox)
             {
-                Update(planet, agentEntity, deltaTime); 
+                Update(agentEntity, deltaTime); 
             }
         }
     }

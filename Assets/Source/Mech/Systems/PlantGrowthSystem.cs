@@ -8,10 +8,15 @@ namespace Mech
 {
     public class PlantGrowthSystem
     {
+<<<<<<< HEAD
         public void Update(Planet.PlanetState planet)
+=======
+        public void Update()
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             List<MechEntity> lights = new List<MechEntity>();
 
+            ref var planet = ref GameState.Planet;
             for (int i = 0; i < planet.MechList.Length; i++)
             {
                 MechEntity mech = planet.MechList.Get(i);

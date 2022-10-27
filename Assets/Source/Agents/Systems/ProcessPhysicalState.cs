@@ -1,18 +1,21 @@
-﻿using System;
-using Enums;
-using Planet;
+﻿using Enums;
 using KMath;
 
 namespace Agent
 {
     public class ProcessPhysicalState
     {
+<<<<<<< HEAD
         public void Update(PlanetState planet, float deltaTime)
+=======
+        public void Update(float deltaTime)
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
-            var EntitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
+            ref var planet = ref GameState.Planet;
+            var entitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
                 AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
 
-            foreach (var entity in EntitiesWithMovementState)
+            foreach (var entity in entitiesWithMovementState)
             {
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;

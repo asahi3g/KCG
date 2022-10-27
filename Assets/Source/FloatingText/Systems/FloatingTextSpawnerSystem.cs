@@ -7,10 +7,10 @@ namespace FloatingText
     public class FloatingTextSpawnerSystem
     {
         static int uniqueID = 0;
-        public FloatingTextEntity SpawnFloatingText(FloatingTextContext floatingTextContext, string text, 
+        public FloatingTextEntity SpawnFloatingText(string text, 
                                     float timeToLive, Vec2f velocity, Vec2f position, UnityEngine.Color color, int fontSize)
         {
-            var entity = floatingTextContext.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.floatingText.CreateEntity();
 
             entity.AddFloatingTextID(uniqueID++, -1);
             entity.AddFloatingTextTimeToLive(timeToLive);
@@ -21,10 +21,10 @@ namespace FloatingText
             return entity;
         }
 
-        public FloatingTextEntity SpawnFixedFloatingText(FloatingTextContext floatingTextContext, string text,
+        public FloatingTextEntity SpawnFixedFloatingText(string text,
                             Vec2f position, UnityEngine.Color color, int fontSize)
         {
-            var entity = floatingTextContext.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.floatingText.CreateEntity();
 
             entity.AddFloatingTextID(uniqueID++, -1);
             entity.AddFloatingTextMovement(Vec2f.Zero, position);

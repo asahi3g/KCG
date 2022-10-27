@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Entitas;
-
-namespace AI
+﻿namespace AI
 {
  //   internal class Node
  //   {

@@ -4,16 +4,16 @@
     {
         float currentTime;
 
-        public void SetCoolDown(Contexts contexts, Enums.NodeType type, int agentID, float time)
+        public void SetCoolDown(Enums.NodeType type, int agentID, float time)
         {
-            var entity = contexts.actionCoolDown.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.actionCoolDown.CreateEntity();
             entity.AddActionCoolDown(type, agentID);
             entity.AddActionCoolDownTime(currentTime + time);
         }
 
-        public bool InCoolDown(Contexts contexts, Enums.NodeType type, int agentID)
+        public bool InCoolDown(Enums.NodeType type, int agentID)
         {
-            var coolDownList = contexts.actionCoolDown.GetEntitiesWithActionCoolDownAgentID(agentID);
+            var coolDownList = GameState.Planet.EntitasContext.actionCoolDown.GetEntitiesWithActionCoolDownAgentID(agentID);
             foreach (var coolDown in coolDownList)
             {
                 if (coolDown.actionCoolDown.TypeID == type)
@@ -23,11 +23,11 @@
             return false;
         }
 
-        public void Update(Contexts contexts, float deltaTime)
+        public void Update(float deltaTime)
         {
             currentTime += deltaTime;
 
-            ActionCoolDownEntity[] coolDownList = contexts.actionCoolDown.GetEntities();
+            ActionCoolDownEntity[] coolDownList = GameState.Planet.EntitasContext.actionCoolDown.GetEntities();
             for (int i = 0; i < coolDownList.Length; i++)
             {
                 if (coolDownList[i].actionCoolDownTime.EndTime < currentTime)

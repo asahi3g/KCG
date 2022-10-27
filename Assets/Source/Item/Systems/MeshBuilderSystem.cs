@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-
-
-using Entitas;
-using KMath;
-using Sprites;
-
-namespace Item
+﻿namespace Item
 {
     public class MeshBuilderSystem
     {
@@ -17,12 +10,12 @@ namespace Item
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
         }
 
-        public void UpdateMesh(Contexts context)
+        public void UpdateMesh()
         {            
             Mesh.Clear();
             int index = 0;
 
-            ItemParticleEntity[] items = context.itemParticle.GetEntities();
+            ItemParticleEntity[] items = GameState.Planet.EntitasContext.itemParticle.GetEntities();
             foreach (var entity in items)
             {
                 ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);

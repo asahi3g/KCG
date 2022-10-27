@@ -7,10 +7,11 @@ namespace Node.Action
 {
     public class ToolActionConstruction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionConstruction; } }
+        public override NodeType Type => NodeType.ToolActionConstruction;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
@@ -55,7 +56,7 @@ namespace Node.Action
                     }
                 }
             }            
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

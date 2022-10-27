@@ -6,10 +6,15 @@ namespace Vehicle.Pod
 {
     public sealed class AISystem
     {
+<<<<<<< HEAD
         public void Update(Planet.PlanetState planet)
+=======
+        public void Update()
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
-            IGroup<PodEntity> pods =
-                planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
+            ref var planet = ref GameState.Planet;
+            
+            IGroup<PodEntity> pods = planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var pod in pods)
             {
                 if(pod.hasVehiclePodStatus)
@@ -21,17 +26,9 @@ namespace Vehicle.Pod
                         // Get all agents in collision box
                         // Size of radar size (AABox2D)
 
-                        int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(planet,
-                            new KMath.AABox2D(new Vec2f(pod.vehiclePodPhysicsState2D.Position.X - 4.0f, pod.vehiclePodPhysicsState2D.Position.Y - 2.0f), size));
+                        int[] agentIds = Collisions.Collisions.BroadphaseAgentBoxTest(new AABox2D(new Vec2f(pod.vehiclePodPhysicsState2D.Position.X - 4.0f, pod.vehiclePodPhysicsState2D.Position.Y - 2.0f), size));
 
-                        if(agentIds.Length <= 0)
-                        {
-                            pod.vehiclePodStatus.Freeze = true;
-                        }
-                        else
-                        {
-                            pod.vehiclePodStatus.Freeze = false;
-                        }
+                        pod.vehiclePodStatus.Freeze = agentIds.Length <= 0;
 
                         if(pod.hasVehiclePodRadar)
                         {
@@ -45,9 +42,9 @@ namespace Vehicle.Pod
                         // If Player was not alive, add to dead members array.
                         // Roadcheck - Scan the drive path to see if it's clear.
 
-                        for(int i = 0; i < agentIds.Length; i++)
+                        foreach (var agentID in agentIds)
                         {
-                            var agent = planet.EntitasContext.agent.GetEntityWithAgentID(agentIds[i]);
+                            var agent = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
 
                             if (pod.hasVehiclePodRadar)
                             {
@@ -73,10 +70,10 @@ namespace Vehicle.Pod
                         if(pod.hasVehiclePodPhysicsState2D)
                         {
                             var roadCheckSizeX = 4.0f;
-                            var roadCheck = new KMath.AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(roadCheckSizeX, 1.0f));
+                            var roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(roadCheckSizeX, 1.0f));
 
-                            if (roadCheck.IsCollidingRight(planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity) ||
-                                roadCheck.IsCollidingLeft(planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity))
+                            if (roadCheck.IsCollidingRight(pod.vehiclePodPhysicsState2D.angularVelocity) ||
+                                roadCheck.IsCollidingLeft(pod.vehiclePodPhysicsState2D.angularVelocity))
                             {
                                 roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(-roadCheckSizeX, 1.0f));
 

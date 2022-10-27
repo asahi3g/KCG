@@ -94,7 +94,7 @@ namespace ToonyColorsPro
 
 			public static TCP2_Config CreateFromShader(Shader shader)
 			{
-				var shaderImporter = ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
+				var shaderImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(shader)) as ShaderImporter;
 
 				var config = new TCP2_Config();
 				config.ShaderName = shader.name;

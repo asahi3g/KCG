@@ -9,7 +9,7 @@ namespace Collisions
         /// DDA Algorithm ==============================================
 		//  https://lodev.org/cgtutor/raycasting.html
         /// </summary>
-        public static RayCastResult RayCastAgainstTileMap(PlanetTileMap.TileMap tileMap, Line2D line)
+        public static RayCastResult RayCastAgainstTileMap(Line2D line)
         {
             // Form ray cast from A into B
             Vec2f vRayStart = line.A;
@@ -66,9 +66,10 @@ namespace Collisions
                 }
 
                 // Test tile at new test point
-                if (vMapCheck.X >= 0 && vMapCheck.X < tileMap.MapSize.X && vMapCheck.Y >= 0 && vMapCheck.Y < tileMap.MapSize.Y)
+                ref var planet = ref GameState.Planet;
+                if (vMapCheck.X >= 0 && vMapCheck.X < planet.TileMap.MapSize.X && vMapCheck.Y >= 0 && vMapCheck.Y < planet.TileMap.MapSize.Y)
                 {
-                    Enums.PlanetTileMap.TileID tileID = tileMap.GetFrontTileID(vMapCheck.X, vMapCheck.Y);
+                    Enums.PlanetTileMap.TileID tileID = planet.TileMap.GetFrontTileID(vMapCheck.X, vMapCheck.Y);
                     PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
                     
                     if (tileID != Enums.PlanetTileMap.TileID.Air)

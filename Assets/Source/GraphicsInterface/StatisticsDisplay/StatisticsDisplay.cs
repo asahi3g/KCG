@@ -1,6 +1,5 @@
 using UnityEngine;
 using Entitas;
-using Planet;
 using Utility;
 
 namespace KGUI.Statistics
@@ -18,8 +17,9 @@ namespace KGUI.Statistics
         public static bool canDraw = true;
         public static TextWrapper TextWrapper;
 
-        public static void DrawStatistics(ref PlanetState planet)
+        public static void DrawStatistics()
         {
+            ref var planet = ref GameState.Planet;
             frameCount++;
             dt += Time.deltaTime;
             if (dt > 1.0 / updateRate)
@@ -31,10 +31,9 @@ namespace KGUI.Statistics
             ms = 1 / Time.deltaTime;
             if (canDraw)
             {
-
                 // Get Player Position Info
-                IGroup<AgentEntity> Playerentities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentPlayer);
-                foreach (var entity in Playerentities)
+                IGroup<AgentEntity> playerEntities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AgentPlayer);
+                foreach (var entity in playerEntities)
                 {
                     playerPosition = entity.agentPhysicsState.Position;
                 }

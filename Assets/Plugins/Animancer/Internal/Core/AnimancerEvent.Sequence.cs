@@ -49,16 +49,10 @@ namespace Animancer
             /************************************************************************************************************************/
 
             /// <summary>Indicates whether the sequence has any events in it (including the <see cref="EndEvent"/>).</summary>
-            public bool IsEmpty
-            {
-                get
-                {
-                    return
-                        _EndEvent.callback == null &&
-                        float.IsNaN(_EndEvent.normalizedTime) &&
-                        Count == 0;
-                }
-            }
+            public bool IsEmpty =>
+                _EndEvent.callback == null &&
+                float.IsNaN(_EndEvent.normalizedTime) &&
+                Count == 0;
 
             /************************************************************************************************************************/
 
@@ -520,8 +514,7 @@ namespace Animancer
             /// Returns a <see cref="FastEnumerator{T}"/> for the events in this sequence excluding the
             /// <see cref="EndEvent"/>.
             /// </summary>
-            public FastEnumerator<AnimancerEvent> GetEnumerator()
-                => new FastEnumerator<AnimancerEvent>(_Events, Count);
+            public FastEnumerator<AnimancerEvent> GetEnumerator() => new FastEnumerator<AnimancerEvent>(_Events, Count);
 
             IEnumerator<AnimancerEvent> IEnumerable<AnimancerEvent>.GetEnumerator()
                 => GetEnumerator();

@@ -3,7 +3,7 @@ using System;
 
 namespace Collisions
 {
-    public class PointLineCollision
+    public class CircleLineCollision_
     {
 
         //collision between moving 2d point and stationary 2d line segment
@@ -36,7 +36,7 @@ namespace Collisions
         // step 6: see if the collision is valid and return the time of collision
 
 
-        public static float TestCollision(Vec2f point, Vec2f velocity, Vec2f p1, Vec2f p2)
+        public static float TestCollision(Vec2f point, float circleRadius, Vec2f velocity, Vec2f p1, Vec2f p2)
         {
 
             // step 1: p1 is the origin
@@ -67,41 +67,153 @@ namespace Collisions
 
             // step 5: compute the time of collision
             float k = p1.X;
-            float timeX = timeX = (k) / velocity.X;
+            float timeX = 1.0f;
+            if (k >= 0)
+            {
+                // if the line is on the right 
+                // the time is (k-circleRadius) / velocity.X
+
+                timeX = (k-circleRadius) / velocity.X;
+            }
+            else
+            {
+                // if the line is on the left 
+                // the time is (k+circleRadius) / velocity.X
+
+                timeX = (k+circleRadius) / velocity.X;
+            }
+
                 
 
-            // used to remove very small numbers that are supposed to be 0
-            float epsilon = 0.001f;
 
             // if the time is more than 1 or less than epsillon
             // that means we dont collide and the time should be 1
-            if (timeX >= 1.0f || timeX <= epsilon)
+            if (timeX >= 1.0f)
             {
                 timeX = 1.0f;
             }
 
-            // step 6: see if the collision is valid
+            if (timeX <= -1.0f)
+            {
+                timeX = -1.0f;
+            }
 
-            // if the point intersects the line we also need to see if 
-            // it managed to hit the segment [p1, p2]
-            // the line is infinite but the segment is not
-            if (timeX < 1.0f)
+
+            
+            Vec2f perp = new Vec2f(velocity.Y, -velocity.X).Normalize();
+            Vec2f pointA = point + perp * circleRadius;
+            Vec2f pointB = point - perp * circleRadius;
+
+            float pointATime = (k - pointA.X) / velocity.X;
+            float pointBTime = (k - pointB.X) / velocity.X;
+
+            float circleLimitA = pointA.Y + velocity.Y * pointATime;
+            float circleLimitB = pointB.Y + velocity.Y * pointBTime;
+
+            float difference = MathF.Abs(MathF.Max(circleLimitB, MathF.Max(circleLimitA, MathF.Max(p1.Y, p2.Y))) - 
+            MathF.Min(circleLimitB, MathF.Min(circleLimitA, MathF.Min(p1.Y, p2.Y))));
+
+            Line2D line = new Line2D(p1, p2);
+            Vec2f stopPoint = point + velocity * timeX;
+
+            if (k >= 0)
+            {
+                stopPoint.X += circleRadius;
+            }
+            else
+            {
+                stopPoint.X -= circleRadius;
+            }   
+
+            UnityEngine.Debug.Log("onLine : " + line.OnLine(stopPoint));
+
+            if (!line.OnLine(stopPoint))
+            {
+                timeX = 1.0f;
+
+                 RayCastResult rs1 = Collisions.RayCastAgainstCircle(new Line2D(point, point + velocity), p1, circleRadius);
+                 RayCastResult rs2 = Collisions.RayCastAgainstCircle(new Line2D(point, point + velocity), p2, circleRadius);
+
+                 float time1 = rs1.Intersect ? (rs1.Point.X - point.X) / velocity.X : 1.0f;
+                 float time2 = rs2.Intersect ? (rs2.Point.X - point.X) / velocity.X : 1.0f;
+
+                 timeX = MathF.Min(time1, time2);
+
+
+                /*float distanceToMove = MathF.Min(MathF.Abs(p1.Y - stopPoint.Y), MathF.Abs(p2.Y - stopPoint.Y));
+
+                float mag1 = (p1 - stopPoint).Magnitude;
+                float mag2 = (p2 - stopPoint).Magnitude;
+
+                float x1;
+                float y1;
+
+                if (mag1 < mag2)
+                {
+                    x1 = p1.X;
+                    y1 = p1.Y;
+                }
+                else
+                {
+                    x1 = p2.X;
+                    y1 = p2.Y;
+                }
+
+                float a = velocity.Y / velocity.X;
+
+                float A = 1 + (a * a);
+                float B = -2 * x1 + -2 * y1 * a;
+                float C = (x1 * x1) + (y1 * y1) - (circleRadius * circleRadius);
+
+                float delta = (B * B) - 4 * A * C;
+
+                if (delta < 0)
+                {
+                   // timeX = 1.0f;
+                }
+                else if (delta == 0)
+                {
+                    float x2 = (-B) / (2 * A);
+                    float y2 = a * x2;
+
+                    timeX = (x2) / velocity.X; 
+                }
+                else if (delta > 0)
+                {
+                    if (k >= 0)
+                    {
+                        float x2 = (-B - MathF.Sqrt(delta)) / (2 * A);
+                        float y2 = a * x2;
+
+                        timeX = (x2) / velocity.X; 
+                    }
+                    else
+                    {
+                        float x2 = (-B + MathF.Sqrt(delta)) / (2 * A);
+                        float y2 = a * x2;
+
+                        timeX = (x2) / velocity.X; 
+                    }
+                }*/
+            }
+            else if (difference > (MathF.Abs((circleLimitA - circleLimitB)) + MathF.Abs(p2.Y - p1.Y)))
+            {
+                timeX = 1.0f;
+            }
+
+           /* if (difference > (MathF.Abs((circleLimitA - circleLimitB)) + MathF.Abs(p2.Y - p1.Y)))
+            {
+                // no collision
+                timeX = 1.0f;
+            }
+            else
             {
 
-                // segment [p1, p2]
-                Line2D staticLine = new Line2D(p1, p2);
+               
+            }*/
 
-                // the line is just the point and the point + velocity
-                Line2D movingLine = new Line2D(point, point + velocity);
 
-                // check if the line intersects the segment [p1, p2]
-                if (!(movingLine.Intersects(staticLine)))
-                {
-                    // does not collide
-                    timeX = 1.0f;
-                }
-                            
-            }
+
 
             return timeX;
         }

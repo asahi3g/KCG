@@ -7,9 +7,14 @@ namespace FloatingText
     {
         List<FloatingTextEntity> ToRemoveEntities = new List<FloatingTextEntity>();
 
+<<<<<<< HEAD
         public void Update(Planet.PlanetState planetState, float deltaTime)
+=======
+        public void Update(float deltaTime)
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
-            FloatingTextEntity[] entities = planetState.EntitasContext.floatingText.GetEntities();
+            ref var planet = ref GameState.Planet;
+            FloatingTextEntity[] entities = planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {
@@ -40,7 +45,7 @@ namespace FloatingText
 
             foreach(var entity in ToRemoveEntities)
             {
-                planetState.RemoveFloatingText(entity.floatingTextID.Index);
+                planet.RemoveFloatingText(entity.floatingTextID.Index);
             }
             ToRemoveEntities.Clear();
         }

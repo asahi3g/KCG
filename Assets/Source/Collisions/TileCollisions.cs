@@ -9,7 +9,7 @@ namespace Collisions
 {
     public static class TileCollisions
     {
-        private static Vec2i[] GetTilesRegionBroadPhase(PlanetTileMap.TileMap tileMap, int xmin, int xmax, int ymin, int ymax)
+        private static Vec2i[] GetTilesRegionBroadPhase(int xmin, int xmax, int ymin, int ymax)
         {
             List<Vec2i> positions = new List<Vec2i>();
             
@@ -17,7 +17,7 @@ namespace Collisions
             {
                 for (int j = ymin; j < ymax; j++)
                 {
-                    var tile = tileMap.GetTile(i, j);
+                    var tile = GameState.Planet.TileMap.GetTile(i, j);
                     if (tile.FrontTileID != TileID.Air)
                     {
                         positions.Add(new Vec2i(i, j));
@@ -64,11 +64,11 @@ namespace Collisions
             return (R1, R2);
         }
         
-        public static Hit GetCollisionHitAABB_AABB(PlanetTileMap.TileMap tileMap, float xmin, float xmax, float ymin, float ymax, Vec2f velocity)
+        public static Hit GetCollisionHitAABB_AABB(float xmin, float xmax, float ymin, float ymax, Vec2f velocity)
         {
             var (r1, r2) = GetRegions(xmin, xmax, ymin, ymax, velocity);
-            var R1_tiles = GetTilesRegionBroadPhase(tileMap, (int)r1.xmin, (int)r1.xmax, (int)r1.ymin, (int)r1.ymax);
-            var R2_tiles = GetTilesRegionBroadPhase(tileMap, (int)r2.xmin, (int)r2.xmax, (int)r2.ymin, (int)r2.ymax);
+            var R1_tiles = GetTilesRegionBroadPhase((int)r1.xmin, (int)r1.xmax, (int)r1.ymin, (int)r1.ymax);
+            var R2_tiles = GetTilesRegionBroadPhase((int)r2.xmin, (int)r2.xmax, (int)r2.ymin, (int)r2.ymax);
 
             float lowestTime = float.MaxValue;
             Vec2i nearestTilePos = default;
@@ -139,19 +139,20 @@ namespace Collisions
             return Vec2f.Distance(line1, line2);
         }
         
-        public static bool IsCollidingLeft(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
+        public static bool IsCollidingLeft(this ref AABox2D borders, Vec2f velocity)
         {
+            ref var planet = ref GameState.Planet;
             if (velocity.X >= 0.0f) return false;
             
             int x = borders.xmin < 0 ? (int) borders.xmin - 1 : (int)borders.xmin;
             
-            if (x >= 0 && x < tileMap.MapSize.X)
+            if (x >= 0 && x < planet.TileMap.MapSize.X)
             {
                 for (int y = (int)borders.ymin; y <= (int)borders.ymax; y++)
                 {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
+                    if (y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        var frontTileID = planet.TileMap.GetFrontTileID(x, y);
                         if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
@@ -165,6 +166,7 @@ namespace Collisions
             return false;
         }
 
+<<<<<<< HEAD
         public static bool HandleCollidingLeft(AgentEntity entity, Planet.PlanetState planet, bool reflect)
         {
             PlanetTileMap.TileMap tileMap = planet.TileMap;
@@ -314,18 +316,22 @@ namespace Collisions
         }
 
         public static bool IsCollidingRight(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
+=======
+        public static bool IsCollidingRight(this ref AABox2D borders, Vec2f velocity)
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
+            ref var planet = ref GameState.Planet;
             if (velocity.X <= 0.0f) return false;
             
             int x = borders.xmax < 0 ? (int) borders.xmax - 1 : (int)borders.xmax;
             
-            if (x >= 0 && x < tileMap.MapSize.X)
+            if (x >= 0 && x < planet.TileMap.MapSize.X)
             {
                 for (int y = (int)borders.ymin; y <= (int)borders.ymax; y++)
                 {
-                    if (y >= 0 && y < tileMap.MapSize.Y)
+                    if (y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        var frontTileID = planet.TileMap.GetFrontTileID(x, y);
                         if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);
@@ -1318,8 +1324,9 @@ namespace Collisions
             return minTime < 1.0f;
         }
         
-        public static bool IsCollidingBottom(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
+        public static bool IsCollidingBottom(this ref AABox2D borders, Vec2f velocity)
         {
+            ref var planet = ref GameState.Planet;
             if (velocity.Y >= 0.0f) return false;
             
             // LeftBottom.X >= 0f ? (int)LeftBottom.X : (int)LeftBottom.X - 1;
@@ -1328,13 +1335,13 @@ namespace Collisions
             int leftX = borders.xmin < 0 ? (int) borders.xmin - 1 : (int)borders.xmin;
             int rightX = borders.xmax < 0 ? (int) borders.xmax - 1 : (int)borders.xmax;
             
-            if (y >= 0 && y < tileMap.MapSize.Y)
+            if (y >= 0 && y < planet.TileMap.MapSize.Y)
             {
                 for (int x = leftX; x <= rightX; x++)
                 {
-                    if (x >= 0 && x < tileMap.MapSize.X)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X)
                     {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        var frontTileID = planet.TileMap.GetFrontTileID(x, y);
                         if (frontTileID != TileID.Air)
                         {
                             
@@ -1353,6 +1360,7 @@ namespace Collisions
             return false;
         }
 
+<<<<<<< HEAD
 
         public static bool HandleCollidingTop(AgentEntity entity, Planet.PlanetState planet, bool reflect)
         {
@@ -1651,20 +1659,24 @@ namespace Collisions
         }
 
         public static bool IsCollidingTop(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
+=======
+        public static bool IsCollidingTop(this ref AABox2D borders, Vec2f velocity)
+>>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
+            ref var planet = ref GameState.Planet;
             if (velocity.Y <= 0.0f) return false;
             
             int y = (int)borders.ymax;
             int leftX = borders.xmin < 0 ? (int) borders.xmin - 1 : (int)borders.xmin;
             int rightX = borders.xmax < 0 ? (int) borders.xmax - 1 : (int)borders.xmax;
             
-            if (y >= 0 && y < tileMap.MapSize.Y)
+            if (y >= 0 && y < planet.TileMap.MapSize.Y)
             {
                 for (int x = leftX; x <= rightX; x++)
                 {
-                    if (x >= 0 && x < tileMap.MapSize.X)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X)
                     {
-                        var frontTileID = tileMap.GetFrontTileID(x, y);
+                        var frontTileID = planet.TileMap.GetFrontTileID(x, y);
                         if (frontTileID != TileID.Air && frontTileID != TileID.Platform)
                         {
                             var tileBorders = new AABox2D(x, y);

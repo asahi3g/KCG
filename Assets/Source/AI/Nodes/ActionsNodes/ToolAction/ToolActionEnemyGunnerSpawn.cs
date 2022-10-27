@@ -6,16 +6,16 @@ namespace Node.Action
 {
     public class ToolActionEnemyGunnerSpawn : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionEnemyGunnerSpawn; } }
+        public override NodeType Type => NodeType.ToolActionEnemyGunnerSpawn;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            planet.AddAgent(new Vec2f(x, y), Enums.AgentType.EnemyHeavy);
+            GameState.Planet.AddAgent(new Vec2f(x, y), AgentType.EnemyHeavy);
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -104,22 +104,22 @@ public class RectangleTileCollisionTest : MonoBehaviour
     public TestSquare R2;
 
     // Colors for primary test squares
-    public Color square1_collision_color    = new(0.0f, 1.0f, 0.0f, 1.0f);
-    public Color square2_collision_color    = new(0.0f, 0.0f, 1.0f, 1.0f);
+    public Color square1_collision_color    = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+    public Color square2_collision_color    = new Color(0.0f, 0.0f, 1.0f, 1.0f);
 
-    public Color square1_no_collision_color = new(1.0f, 1.0f, 1.0f, 1.0f);
-    public Color square2_no_collision_color = new(0.8f, 0.8f, 0.8f, 1.0f);
+    public Color square1_no_collision_color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    public Color square2_no_collision_color = new Color(0.8f, 0.8f, 0.8f, 1.0f);
 
     // Size of squares in grid
-    public Vec2i square_size = new(12, 12);
+    public Vec2i square_size = new Vec2i(12, 12);
 
     // Amount of squares in grid
-    public Vec2i grid_size   = new(12, 12);
+    public Vec2i grid_size   = new Vec2i(12, 12);
 
     // Size of square 1
-    public Vec2f square1_size = new(30, 18);
+    public Vec2f square1_size = new Vec2f(30, 18);
     // Size of square 2
-    public Vec2f square2_size = new(12, 24);
+    public Vec2f square2_size = new Vec2f(12, 24);
     public TestSquare SetSquare(Vec2f center, Vec2f halfSize)
     {
         var square1_obj = new GameObject
@@ -185,11 +185,11 @@ public class RectangleTileCollisionTest : MonoBehaviour
         grid                          = new TestSquare[grid_size.X, grid_size.Y];
 
         // Alternate colors for odd and even tiles to make grid more pleasurable to look at
-        Color odd_collision_color     = new(1.00f, 0.50f, 0.50f, 1.0f);
-        Color even_collision_color    = new(0.75f, 0.25f, 0.25f, 1.0f);
+        Color odd_collision_color     = new Color(1.00f, 0.50f, 0.50f, 1.0f);
+        Color even_collision_color    = new Color(0.75f, 0.25f, 0.25f, 1.0f);
 
-        Color odd_no_collision_color  = new(0.50f, 0.50f, 0.50f, 1.0f);
-        Color even_no_collision_color = new(0.25f, 0.25f, 0.25f, 1.0f);
+        Color odd_no_collision_color  = new Color(0.50f, 0.50f, 0.50f, 1.0f);
+        Color even_no_collision_color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
         
         var halfSize1 = new Vec2f(square1_size.X / 2f, square1_size.Y / 2f);
         var center1 = new Vec2f(halfSize1.X, halfSize1.Y);

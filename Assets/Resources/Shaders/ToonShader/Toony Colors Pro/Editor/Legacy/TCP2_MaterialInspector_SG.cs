@@ -15,7 +15,7 @@ using ToonyColorsPro.Legacy;
 public class TCP2_MaterialInspector_SG : ShaderGUI
 {
 	//Properties
-	private Material targetMaterial { get { return (mMaterialEditor == null) ? null : mMaterialEditor.target as Material; } }
+	private Material targetMaterial => (mMaterialEditor == null) ? null : mMaterialEditor.target as Material;
 	private MaterialEditor mMaterialEditor;
 	private Stack<bool> toggledGroups = new Stack<bool>();
 

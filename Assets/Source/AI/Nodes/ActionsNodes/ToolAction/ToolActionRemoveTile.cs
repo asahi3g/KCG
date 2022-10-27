@@ -6,10 +6,11 @@ namespace Node
 {
     public class ToolActionRemoveTile : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionRemoveTile; } }
+        public override NodeType Type => NodeType.ToolActionRemoveTile;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
@@ -23,7 +24,7 @@ namespace Node
                 planet.TileMap.RemoveFrontTile(x, y);
             }
             
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }
