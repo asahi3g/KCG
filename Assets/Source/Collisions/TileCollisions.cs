@@ -166,7 +166,6 @@ namespace Collisions
             return false;
         }
 
-<<<<<<< HEAD
         public static bool HandleCollidingLeft(AgentEntity entity, Planet.PlanetState planet, bool reflect)
         {
             PlanetTileMap.TileMap tileMap = planet.TileMap;
@@ -316,9 +315,6 @@ namespace Collisions
         }
 
         public static bool IsCollidingRight(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
-=======
-        public static bool IsCollidingRight(this ref AABox2D borders, Vec2f velocity)
->>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             ref var planet = ref GameState.Planet;
             if (velocity.X <= 0.0f) return false;
@@ -1360,7 +1356,6 @@ namespace Collisions
             return false;
         }
 
-<<<<<<< HEAD
 
         public static bool HandleCollidingTop(AgentEntity entity, Planet.PlanetState planet, bool reflect)
         {
@@ -1659,9 +1654,6 @@ namespace Collisions
         }
 
         public static bool IsCollidingTop(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
-=======
-        public static bool IsCollidingTop(this ref AABox2D borders, Vec2f velocity)
->>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             ref var planet = ref GameState.Planet;
             if (velocity.Y <= 0.0f) return false;

@@ -215,7 +215,7 @@ public partial class AgentEntity
             {
                 case Model3DWeapon.Sword:
                 {
-                    GameObject hand = model3d.LeftHand;
+                    UnityEngine.GameObject hand = model3d.LeftHand;
 
                     UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
                         UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
@@ -224,7 +224,7 @@ public partial class AgentEntity
                     rapier.transform.parent = hand.transform;
                     rapier.transform.position = hand.transform.position;
                     rapier.transform.localRotation = gunRotation;
-                    rapier.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
                     model3d.Weapon = rapier;
                     break;
@@ -232,7 +232,7 @@ public partial class AgentEntity
 
                 case Model3DWeapon.Pistol:
                 {
-                    GameObject hand = model3d.RightHand;
+                    UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
                         UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
@@ -242,7 +242,7 @@ public partial class AgentEntity
                         gun.transform.parent = hand.transform;
                         gun.transform.position = hand.transform.position;
                         gun.transform.localRotation = gunRotation;
-                        gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
                         model3d.Weapon = gun;
 
@@ -252,7 +252,7 @@ public partial class AgentEntity
 
                 case Model3DWeapon.Rifle:
                 {
-                    GameObject hand = model3d.RightHand;
+                    UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
 
@@ -263,7 +263,7 @@ public partial class AgentEntity
                         gun.transform.parent = hand.transform;
                         gun.transform.position = hand.transform.position;
                         gun.transform.localRotation = gunRotation;
-                        gun.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
                         model3d.Weapon = gun;
                     }

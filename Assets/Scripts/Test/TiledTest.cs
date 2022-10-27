@@ -89,13 +89,13 @@ namespace Planet.Unity
 
             Debug.Log(mapWidth + " " + mapHeight);
             
-            Planet = ref GameState.Planet;
+            Planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
-            planet.Init(mapSize);
+            Planet.Init(mapSize);
 
             int PlayerFaction = 0;
 
-            Player = planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             //planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -103,8 +103,8 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
-            planet.InitializeSystems(Material, transform);
-            planet.InitializeHUD();
+            Planet.InitializeSystems(Material, transform);
+            Planet.InitializeHUD();
             GameState.MechGUIDrawSystem.Initialize();
             //GenerateMap();
             var camera = Camera.main;
@@ -124,7 +124,7 @@ namespace Planet.Unity
 
                         TileID tileID = MaterialGeometryMap[(int)tileMaterialAndShape.Material][(int)tileMaterialAndShape.Shape].TileID;
 
-                        planet.TileMap.GetTile(i, j).FrontTileID = tileID;
+                        Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
                     }
                 }
             }
@@ -143,9 +143,9 @@ namespace Planet.Unity
 
             //GenerateMap();
 
-            planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
             AddItemsToPlayer();
 
@@ -159,7 +159,7 @@ namespace Planet.Unity
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
 
-            UpdateMode(ref Planet, Player);
+            UpdateMode(Player);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};

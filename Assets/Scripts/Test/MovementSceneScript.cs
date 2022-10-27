@@ -172,7 +172,7 @@ namespace Planet.Unity
            // CharacterDisplay = new KGui.CharacterDisplay();
             //CharacterDisplay.setPlayer(Player);
 
-            UpdateMode(ref Planet, Player);
+            UpdateMode(Player);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -834,10 +834,10 @@ namespace Planet.Unity
                 Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                UnityEngine.Debug.Log(Planet.DebugLinesCount);
-                for (int i = 0; i < Planet.DebugLinesCount; i++)
+                UnityEngine.Debug.Log(GameState.Planet.DebugLinesCount);
+                for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
                 {
-                    Line2D line = Planet.DebugLines[i];
+                    Line2D line = GameState.Planet.DebugLines[i];
                     Gizmos.color = Color.blue;
                     Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
                 }

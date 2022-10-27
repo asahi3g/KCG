@@ -32,7 +32,7 @@ namespace Item
             else
                 physicsState.OnGrounded = false;
 
-            if (entityBoxBorders.IsCollidingTop(physicsState.Velocity))
+            if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                 physicsState.Velocity.Y = 0.0f;
@@ -47,7 +47,7 @@ namespace Item
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
             }
-            else if (entityBoxBorders.IsCollidingRight(physicsState.Velocity))
+            else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, physicsState.Velocity))
             {
                 physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;

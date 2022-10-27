@@ -20,11 +20,7 @@ namespace Particle
             ParticleCreationApi = particleCreationApi;
         }
 
-<<<<<<< HEAD
-        public void Update(Planet.PlanetState planetState)
-=======
         public void Update()
->>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             ToDestroy.Clear();
 

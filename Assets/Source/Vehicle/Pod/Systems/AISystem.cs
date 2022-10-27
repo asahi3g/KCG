@@ -6,11 +6,7 @@ namespace Vehicle.Pod
 {
     public sealed class AISystem
     {
-<<<<<<< HEAD
-        public void Update(Planet.PlanetState planet)
-=======
         public void Update()
->>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             ref var planet = ref GameState.Planet;
             
@@ -72,7 +68,7 @@ namespace Vehicle.Pod
                             var roadCheckSizeX = 4.0f;
                             var roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(roadCheckSizeX, 1.0f));
 
-                            if (roadCheck.IsCollidingRight(pod.vehiclePodPhysicsState2D.angularVelocity) ||
+                            if (roadCheck.IsCollidingRight(GameState.Planet.TileMap, pod.vehiclePodPhysicsState2D.angularVelocity) ||
                                 roadCheck.IsCollidingLeft(pod.vehiclePodPhysicsState2D.angularVelocity))
                             {
                                 roadCheck = new AABox2D(pod.vehiclePodPhysicsState2D.Position, new Vec2f(-roadCheckSizeX, 1.0f));

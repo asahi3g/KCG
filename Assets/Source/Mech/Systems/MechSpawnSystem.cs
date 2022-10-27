@@ -6,11 +6,7 @@ namespace Mech
     public class MechSpawnSystem
     {
         static private int UniqueID;
-<<<<<<< HEAD
-        public MechEntity Spawn(Planet.PlanetState planet, Vec2f position, MechType mechType)
-=======
         public MechEntity Spawn(Vec2f position, MechType mechType)
->>>>>>> 3b95f36247fe313ba5f5f7bfd4f38797fb5b6059
         {
             ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef(mechType);
             var spriteSize = mechProperties.SpriteSize;

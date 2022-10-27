@@ -187,7 +187,7 @@ namespace Agent
             foreach (var entity in EntitiesWithVelocity)
             {
                 if (GameState.AgentCreationApi.GetMovementProperties((int)entity.agentID.Type).MovType != AgentMovementType.FlyingMovemnt || !entity.isAgentAlive)
-                    UpdateLand(entity, deltaTime, planet);
+                    UpdateLand(entity, deltaTime, GameState.Planet);
                 else
                     UpdateFlying(entity, deltaTime);
             }

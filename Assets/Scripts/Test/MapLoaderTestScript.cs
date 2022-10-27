@@ -62,7 +62,7 @@ namespace Planet.Unity
             AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
 
             AgentMeshBuilderSystem.Initialize(Material, transform, 12);
-            GameState.AgentSpawnerSystem.SpawnPlayer(Contexts.sharedInstance, CharacterSpriteId, 32, 48, new Vec2f(3.0f, 2.0f), 0, 100, 100, 100, 100, 100, 0.2f);
+           // GameState.AgentSpawnerSystem.SpawnPlayer(Contexts.sharedInstance, CharacterSpriteId, 32, 48, new Vec2f(3.0f, 2.0f), 0, 100, 100, 100, 100, 100, 0.2f);
             GameState.TileMapRenderer.Initialize(Material, transform, 7);
 
         }
@@ -111,11 +111,11 @@ namespace Planet.Unity
 
 
             //InputProcessSystems.Update(Contexts.sharedInstance);
-            PhysicsMovableSystem.Update(Contexts.sharedInstance.agent, PlanetState);
+           // PhysicsMovableSystem.Update(Contexts.sharedInstance.agent, PlanetState);
             AgentProcessCollisionSystem.Update(Contexts.sharedInstance.agent, PlanetState);
 
-            AgentMeshBuilderSystem.UpdateMesh(Contexts.sharedInstance.agent);
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
+           // AgentMeshBuilderSystem.UpdateMesh(Contexts.sharedInstance.agent);
+          //  GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
 
             //GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
             GameState.Renderer.DrawFrame(ref AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));
