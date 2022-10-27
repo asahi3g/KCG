@@ -156,6 +156,7 @@ public static class GameState
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
+       
     }
 
     public static void InitStage2()
