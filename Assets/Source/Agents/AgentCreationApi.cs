@@ -164,14 +164,6 @@ namespace Agent
             }
         }
 
-        public void SetTrackStub(UnityEngine.GameObject TrackStub)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].TrackStub = TrackStub;
-            }
-        }
-
         public void SetAttackCooldown(float attackCooldown)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
@@ -290,13 +282,6 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetHealth(100.0f);
-
-            // This is for testin purposes,
-            // will be deleted soon.
-            UnityEngine.GameObject TrackStub = new UnityEngine.GameObject("TrackStub");
-            GameState.AgentCreationApi.SetTrackStub(TrackStub);
-
-
             GameState.AgentCreationApi.End();
         }
     }
