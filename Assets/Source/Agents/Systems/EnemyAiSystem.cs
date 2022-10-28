@@ -7,10 +7,11 @@ namespace Agent
 {
     public class EnemyAiSystem
     {
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(float deltaTime)
         {
-            var players = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-            var entities = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentEnemy));
+            ref var planet = ref GameState.Planet;
+            var players = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+            var entities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentEnemy));
 
 
             if (players.count > 0)
@@ -29,7 +30,7 @@ namespace Agent
                         enemyComponent.EnemyCooldown -= deltaTime;
 
                         Vec2f direction = targetPhysicsState.Position - physicsState.Position;
-                        float YDiff = System.Math.Abs(targetPhysicsState.Position.Y - physicsState.Position.Y);
+                        float YDiff = Math.Abs(targetPhysicsState.Position.Y - physicsState.Position.Y);
                         int KnockbackDir = 0;
                         if (direction.X > 0)
                         {
@@ -58,7 +59,7 @@ namespace Agent
                                 
 
                                 // spawns a debug floating text for damage 
-                                planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
+                                planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
                                 
                                 // knockback test
@@ -114,10 +115,10 @@ namespace Agent
                                 stats.Health -= (int)damage;
 
                                 // spawns a debug floating text for damage 
-                                planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
+                                planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
                                 // knockback test
-                                float sumOfVelocity = System.Math.Abs(physicsState.Velocity.X) + System.Math.Abs(targetPhysicsState.Velocity.X);
+                                float sumOfVelocity = Math.Abs(physicsState.Velocity.X) + Math.Abs(targetPhysicsState.Velocity.X);
                                 GameState.AgentProcessPhysicalState.Knockback(entity, sumOfVelocity * 1.2f, -KnockbackDir);
                                 GameState.AgentProcessPhysicalState.Knockback(closestPlayer, sumOfVelocity * 1.2f, KnockbackDir);
                             }
@@ -224,7 +225,7 @@ namespace Agent
 
                                 float damage = 25.0f;
                                 // spawns a debug floating text for damage 
-                                planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
+                                planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
                                 enemyComponent.EnemyCooldown = 1.0f;
 
@@ -282,11 +283,11 @@ namespace Agent
                                 physicsState.Position.Y + box2DComponent.Offset.Y);
 
                                 
-                                int [] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(planetState, swordPosition, 1.0f);
+                                int [] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(swordPosition, 1.0f);
                                 for(int agentIndex = 0; agentIndex < agentIds.Length; agentIndex++)
                                 {
                                     int agentID = agentIds[agentIndex];
-                                    AgentEntity thisAgent = planetState.AgentList.Get(agentID);
+                                    AgentEntity thisAgent = planet.AgentList.Get(agentID);
                                     if (thisAgent != entity)
                                     {
                                         var thisAgentPhysicsState = thisAgent.agentPhysicsState;
@@ -306,7 +307,7 @@ namespace Agent
 
                                         float damage = 25.0f;
                                         // spawns a debug floating text for damage 
-                                        planetState.AddFloatingText("" + damage, 0.5f, new Vec2f(thisDirection.X * 0.05f, thisDirection.Y * 0.05f), 
+                                        planet.AddFloatingText("" + damage, 0.5f, new Vec2f(thisDirection.X * 0.05f, thisDirection.Y * 0.05f), 
                                     new Vec2f(thisAgentPhysicsState.Position.X, thisAgentPhysicsState.Position.Y + 0.35f));
                                     }
 

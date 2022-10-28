@@ -23,14 +23,9 @@ namespace Animancer.Editor
             [SerializeField] private ObjectReference[] _TargetObjects;
 
             /// <summary>[<see cref="SerializeField"/>] The <see cref="SerializedObject.targetObject"/>.</summary>
-            public ObjectReference TargetObject
-            {
-                get
-                {
-                    return _TargetObjects != null && _TargetObjects.Length > 0 ?
-                        _TargetObjects[0] : null;
-                }
-            }
+            public ObjectReference TargetObject =>
+                _TargetObjects != null && _TargetObjects.Length > 0 ?
+                    _TargetObjects[0] : null;
 
             /// <summary>[<see cref="SerializeField"/>] The <see cref="SerializedObject.targetObjects"/>.</summary>
             public ObjectReference[] TargetObjects => _TargetObjects;
@@ -90,7 +85,8 @@ namespace Animancer.Editor
             /// <summary>
             /// Creates a new <see cref="PropertyReference"/> which wraps the specified `property`.
             /// </summary>
-            public static implicit operator PropertyReference(SerializedProperty property) => new PropertyReference(property);
+            public static implicit operator PropertyReference(SerializedProperty property) =>
+                new PropertyReference(property);
 
             /// <summary>
             /// Returns the target <see cref="Property"/>.

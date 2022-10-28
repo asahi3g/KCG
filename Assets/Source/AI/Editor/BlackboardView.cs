@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-using Entitas;
 using KMath;
 
 namespace AI
@@ -17,7 +16,7 @@ namespace AI
 
         public BlackboardView()
         {
-            Type = Enums.BehaviorType.Error;
+            Type = BehaviorType.Error;
             VisualElement container = new VisualElement();
             container.name = "Container";
             container.style.flexGrow = 1;

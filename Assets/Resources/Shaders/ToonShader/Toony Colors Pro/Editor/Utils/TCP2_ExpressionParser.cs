@@ -23,7 +23,8 @@ namespace ToonyColorsPro
 				cachedLineParts.Clear();
 			}
 
-			static Dictionary<string, List<Token>.Enumerator> cachedTokenEnumerators = new Dictionary<string, List<Token>.Enumerator>();
+			static Dictionary<string, List<Token>.Enumerator> cachedTokenEnumerators =
+				new Dictionary<string, List<Token>.Enumerator>();
 
 
 			//--------------------------------------------------------------------------------------------------------------------------------

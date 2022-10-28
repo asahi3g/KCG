@@ -6,17 +6,17 @@ namespace Node.Action
 {
     public class ToolActionPlaceChest : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionPlaceChest; } }
+        public override NodeType Type => NodeType.ToolActionPlaceChest;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            planet.AddMech(new Vec2f(x, y), Enums.MechType.Storage);
+            GameState.Planet.AddMech(new Vec2f(x, y), MechType.Storage);
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -59,12 +59,12 @@ namespace Agent
             physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
         }
 
-        private void UpdateLand(AgentEntity entity, float deltaTime)
+        private void UpdateLand(AgentEntity entity, float deltaTime, Planet.PlanetState planet)
         {
             // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
             var physicsState = entity.agentPhysicsState;
 
-            if (physicsState.AffectedByGravity)
+            if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
@@ -119,10 +119,34 @@ namespace Agent
                 }
             }
 
+            /*float speed = 5.0f;
+
+            physicsState.Velocity = new Vec2f();
+            physicsState.Acceleration = new Vec2f();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                physicsState.Velocity.Y += speed;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                physicsState.Velocity.Y -= speed;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                physicsState.Velocity.X += speed;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                physicsState.Velocity.X -= speed;
+            }*/
+
+            planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + physicsState.Velocity), UnityEngine.Color.red);
+
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
-            if (entity.isAgentAlive && System.Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
+            if (entity.isAgentAlive && Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
                 physicsState.MovementState != AgentMovementState.Stagger)
             {
                 if (newVelocity.X > 0)
@@ -155,15 +179,15 @@ namespace Agent
             physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
         }
 
-        public void Update(AgentContext agentContext)
+        public void Update()
         {
 
             float deltaTime = UnityEngine.Time.deltaTime;
-            var EntitiesWithVelocity = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            var EntitiesWithVelocity = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in EntitiesWithVelocity)
             {
                 if (GameState.AgentCreationApi.GetMovementProperties((int)entity.agentID.Type).MovType != AgentMovementType.FlyingMovemnt || !entity.isAgentAlive)
-                    UpdateLand(entity, deltaTime);
+                    UpdateLand(entity, deltaTime, GameState.Planet);
                 else
                     UpdateFlying(entity, deltaTime);
             }

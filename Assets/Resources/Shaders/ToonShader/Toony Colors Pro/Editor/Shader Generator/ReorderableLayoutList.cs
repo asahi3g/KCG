@@ -98,7 +98,7 @@ public class ReorderableLayoutList
 				//swapped element animation: slide towards target position
 				float delta = Mathf.Clamp01((Time.realtimeSinceStartup - swappedElementAnimationTime) / kSwappedElementDuration);
 				//simple easing animation (ease out quad)
-				System.Func<float, float> animationEasing = (x) => { return -1f * x * (x-2); };
+				Func<float, float> animationEasing = (x) => { return -1f * x * (x-2); };
 				swappedElementOffset = Mathf.Lerp(swappedElementPosOffset, 0, animationEasing(delta));
 				GUILayout.Space(-swappedElementOffset);
 			}

@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Enums.Tile;
-using KMath;
 
 
 namespace Engine3D

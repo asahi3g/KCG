@@ -6,9 +6,9 @@ namespace Agent
 {
     public class Model3DMovementSystem
     {
-        public void Update(AgentContext agentContext)
+        public void Update()
         {
-            var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
             foreach (var entity in entities)
             {
                 ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)AgentType.EnemyMarine);

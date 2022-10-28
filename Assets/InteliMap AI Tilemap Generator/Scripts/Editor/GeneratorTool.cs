@@ -27,10 +27,7 @@ namespace InteliMap
             areaSelected = false;
         }
 
-        public override Color handleColor
-        {
-            get { return areaSelected ? new Color(1.0f, 0.0f, 1.0f, 1.0f) : Color.cyan; }
-        }
+        public override Color handleColor => areaSelected ? new Color(1.0f, 0.0f, 1.0f, 1.0f) : Color.cyan;
 
         public override void OnToolGUI(EditorWindow window)
         {

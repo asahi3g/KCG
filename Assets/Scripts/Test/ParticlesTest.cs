@@ -1,10 +1,6 @@
 //imports UnityEngine
 
-using System.Collections.Generic;
-using KMath;
-
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 namespace Planet.Unity
 {

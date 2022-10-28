@@ -7,13 +7,14 @@ namespace Node.Action
 {
     public class MechPlacementAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.MechPlacementAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.MechPlacementAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
@@ -21,21 +22,22 @@ namespace Node.Action
 
             planet.AddMech(new Vec2f(x, y), itemEntity.itemMech.MechID);
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
-        public override void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnExit(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             if (itemEntity != null)
             {
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, 
+                GameState.InventoryManager.RemoveItem(agentEntity.agentInventory.InventoryID, 
                     itemEntity.itemInventory.SlotID);
                 itemEntity.Destroy();
             }
-            base.OnExit(ref planet, nodeEntity);
+            base.OnExit(nodeEntity);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Planet.Background
         {
             if(GameManager.BackgroundDraw)
             {
-                parallaxLayer = new Planet.Background.PlanetBackgroundParallaxLayer();
+                parallaxLayer = new PlanetBackgroundParallaxLayer();
                 parallaxLayer.Initialize(material, transform);
 
                 Init = true;

@@ -13,9 +13,9 @@ namespace Vehicle
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle), drawOrder);
         }
 
-        public void UpdateMesh(VehicleContext contexts)
+        public void UpdateMesh()
         {
-            var VehiclesWithSprite = contexts.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.VehicleSprite2D));
+            var VehiclesWithSprite = GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.VehicleSprite2D));
             
             Mesh.Clear();
             int index = 0;

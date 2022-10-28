@@ -6,6 +6,7 @@ using CollisionsTest;
 using Enums.PlanetTileMap;
 using KMath;
 using Planet;
+using UnityEngine;
 
 public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour 
 {
@@ -18,7 +19,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
     }
     
     // 16x16 background grid
-    public PlanetState Planet;
+
     public UnityEngine.Material Material;
     
     public TestSquare square;
@@ -29,13 +30,13 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
     AgentEntity player;
 
     // Colors for primary test squares
-    public UnityEngine.Color square_color = new(1.0f, 1.0f, 1.0f, 1.0f);
+    public UnityEngine.Color square_color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Amount of squares in grid
-    public Vec2i mapSize   = new(32, 32);
+    public Vec2i mapSize   = new Vec2i(32, 32);
 
     // Size of square 1
-    public Vec2f square_size = new(5, 5);
+    public Vec2f square_size = new Vec2f(5, 5);
 
     public TestSquare SetSquare(Vec2f center, Vec2f halfSize)
     {
@@ -122,11 +123,11 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         GameResources.Initialize();
 
         // Generating the map
-        Planet = new PlanetState();
-        Planet.Init(mapSize);
+        ref var planet = ref GameState.Planet;
+        planet.Init(mapSize);
         player = new AgentEntity();
 
-        var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+        var entities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
         foreach (var entity in entities)
         {
             if (entity.isAgentPlayer)
@@ -134,13 +135,15 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
 
         }
 
-        Planet.InitializeSystems(Material, transform);
+        planet.InitializeSystems(Material, transform);
 
         GenerateMap();
     }
 
     void GenerateMap()
     {
+        ref var planet = ref GameState.Planet;
+        
         var halfSize = new Vec2f(16f / 2f, 16f / 2f);
         
         var chunk1Pos = new Vec2f(halfSize.X, halfSize.Y);
@@ -167,7 +170,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -175,7 +178,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -183,17 +186,18 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
     void RegenerateMap()
     {
+        ref var planet = ref GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -201,7 +205,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -209,7 +213,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
@@ -235,8 +239,8 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
 
         var velocity = new Vec2f(3f, 3f);
         var square_halfsize = new Vec2f((square.xmax - square.xmin) / 2f, (square.ymax - square.ymin) / 2f);
-        var hit = TileCollisions.GetCollisionHitAABB_AABB(Planet.TileMap, square.xmin, square.xmax, square.ymin, square.ymax, velocity);
-        var circleHit = CircleTileMapSweepCollision.GetCollisionHitCircle_AABB(Planet.TileMap, 2.5f, new Vec2f(square.xmin + square_halfsize.X, square.ymin + square_halfsize.Y), velocity);
+        var hit = TileCollisions.GetCollisionHitAABB_AABB(square.xmin, square.xmax, square.ymin, square.ymax, velocity);
+        var circleHit = CircleTileMapSweepCollision.GetCollisionHitCircle_AABB(2.5f, new Vec2f(square.xmin + square_halfsize.X, square.ymin + square_halfsize.Y), velocity);
 
         if (hit.time <= 1)
         {
@@ -250,6 +254,6 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
             UnityEngine.Debug.Log("False");
         }
 
-        Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 }

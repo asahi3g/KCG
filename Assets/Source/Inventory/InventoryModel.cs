@@ -1,7 +1,4 @@
-﻿using System;
-using Utility;
-
-namespace Inventory
+﻿namespace Inventory
 {
     // Todo: Allow personalize toolbar.
     public struct InventoryModel

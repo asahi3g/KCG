@@ -15,7 +15,7 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public VehicleEntity Spawn(ref Planet.PlanetState planet, VehicleType vehicleType, Vec2f position)
+        public VehicleEntity Spawn(VehicleType vehicleType, Vec2f position)
         {
             VehicleProperties vehicleProperties =
                                     VehicleCreationApi.GetRef((int)vehicleType);
@@ -26,6 +26,7 @@ namespace Vehicle
             // Add default agents 
 
 
+            ref var planet = ref GameState.Planet;
             var entity = planet.EntitasContext.vehicle.CreateEntity();
 
             entity.AddVehicleID(UniqueID, -1);

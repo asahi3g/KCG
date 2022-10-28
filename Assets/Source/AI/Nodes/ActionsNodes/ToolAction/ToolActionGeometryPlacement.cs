@@ -7,20 +7,21 @@ namespace Node.Action
 {
     public class ToolActionGeometryPlacement : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionGeometryPlacement; } }
+        public override NodeType Type => NodeType.ToolActionGeometryPlacement;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            if (ItemEntity.hasItemTile)
+            if (itemEntity.hasItemTile)
             {
-                ItemEntity.itemTile.Layer = MapLayerType.Front;
+                itemEntity.itemTile.Layer = MapLayerType.Front;
 
-                if (ItemEntity.itemTile.TileID == TileID.Error)
-                    ItemEntity.itemTile.TileID = TileID.TB_R1_Metal;
+                if (itemEntity.itemTile.TileID == TileID.Error)
+                    itemEntity.itemTile.TileID = TileID.TB_R1_Metal;
 
-                if (ItemEntity.itemTile.InputsActive)
+                if (itemEntity.itemTile.InputsActive)
                 {
                     UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                     int x = (int)worldPosition.x;
@@ -28,22 +29,22 @@ namespace Node.Action
 
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        switch (ItemEntity.itemTile.Layer)
+                        switch (itemEntity.itemTile.Layer)
                         {
                             case MapLayerType.Back:
-                                planet.TileMap.SetBackTile(x, y, ItemEntity.itemTile.TileID);
+                                planet.TileMap.SetBackTile(x, y, itemEntity.itemTile.TileID);
                                 break;
                             case MapLayerType.Mid:
-                                planet.TileMap.SetMidTile(x, y, ItemEntity.itemTile.TileID);
+                                planet.TileMap.SetMidTile(x, y, itemEntity.itemTile.TileID);
                                 break;
                             case MapLayerType.Front:
-                                planet.TileMap.SetFrontTile(x, y, ItemEntity.itemTile.TileID);
+                                planet.TileMap.SetFrontTile(x, y, itemEntity.itemTile.TileID);
                                 break;
                         }
                     }
                 }
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 using AI.Sensor;
 using System.Collections.Generic;
 using Enums;
 using System;
 using System.Linq;
-using static Unity.Burst.Intrinsics.X86.Avx;
-using static UnityEngine.EventSystems.EventTrigger;
-using UnityEditor.Experimental.GraphView;
 
 namespace AI
 {
@@ -15,11 +11,11 @@ namespace AI
     {
         public new class UxmlFactory : UxmlFactory<SensorView, UxmlTraits> { }
 
-        Enums.BehaviorType Type;
+        BehaviorType Type;
         ScrollView scrollView;
         public SensorView()
         {
-            Type = Enums.BehaviorType.Error;
+            Type = BehaviorType.Error;
             VisualElement container = new VisualElement();
             container.name = "Container";
             container.style.flexGrow = 1;

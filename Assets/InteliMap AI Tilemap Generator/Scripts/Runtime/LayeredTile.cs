@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,7 +8,7 @@ public struct LayeredTile : IEqualityComparer<LayeredTile>
     // Creates an empty LayeredTile with the appropriate layer count
     public LayeredTile(int layerCount)
     {
-        this.tiles = new TileBase[layerCount];
+        tiles = new TileBase[layerCount];
     }
 
     // Creates a LayeredTile with the corresponding tile array

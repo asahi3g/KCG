@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/Collisions/Shapes/GeometryProperties.cs.meta
+guid: 48b0539a736f6d840869536ec6f24756
+========
+guid: 89b099f5fa6cd26439b72b515560c44d
+>>>>>>>> 1932ce55a27842a8d736195a98b50296d77ccb9a:Assets/Source/Mech/Systems/PlantGrowthSystem.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

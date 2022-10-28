@@ -53,9 +53,9 @@ namespace Agent
             ref AgentEntity entity = ref List[index];
             if (entity.hasAgentModel3D)
             {
-                UnityEngine.GameObject.Destroy(entity.agentModel3D.GameObject);
+                UnityEngine.Object.Destroy(entity.agentModel3D.GameObject);
             }
-            entity.DestroyEntity();
+            entity.Destroy();
 
             if (index != Length - 1)
             {

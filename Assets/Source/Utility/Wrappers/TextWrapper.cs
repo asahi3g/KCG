@@ -98,6 +98,8 @@ namespace Utility
                 if(timeLeft <= 0)
                 {
                     UnityEngine.GameObject.Destroy(textObject);
+
+                    UnityEngine.Object.Destroy(textObject);
                 }
             }
         }

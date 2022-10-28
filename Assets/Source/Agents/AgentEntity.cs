@@ -1,34 +1,32 @@
-//imports UnityEngine
-
 using System;
 using Agent;
 using Engine3D;
 using Enums;
 using Inventory;
+using Item;
 using KMath;
 using Physics;
-using Planet;
 
 public partial class AgentEntity 
 {
-    public ItemInventoryEntity GetItem(ref PlanetState planet)
+    public ItemInventoryEntity GetItem()
     {
         if (!hasAgentInventory)
             return null;
 
         int inventoryID = agentInventory.InventoryID;
-        EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+        EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
         int selectedSlot = inventory.SelectedSlotID;
-        return GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, agentInventory.InventoryID, selectedSlot);
+        return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }
-    public void DestroyEntity()
+    public void DestroyModel()
     {
         if (hasAgentModel3D)
         {
             var model3D = agentModel3D;
             if (model3D.GameObject != null)
             {
-                UnityEngine.GameObject.Destroy(model3D.GameObject);
+                UnityEngine.Object.Destroy(model3D.GameObject);
             }
         }
     }
@@ -158,7 +156,7 @@ public partial class AgentEntity
 
             if (model3d.Weapon != null)
             {
-                UnityEngine.GameObject.Destroy(model3d.Weapon);
+                UnityEngine.Object.Destroy(model3d.Weapon);
             }
 
             switch(itemProperty.ToolType)
@@ -210,17 +208,17 @@ public partial class AgentEntity
 
             if (model3d.Weapon != null)
             {
-                UnityEngine.GameObject.Destroy(model3d.Weapon);
+                UnityEngine.Object.Destroy(model3d.Weapon);
             }
 
             switch(weapon)
             {
                 case Model3DWeapon.Sword:
                 {
-                        UnityEngine.GameObject hand = model3d.LeftHand;
+                    UnityEngine.GameObject hand = model3d.LeftHand;
 
                     UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                        UnityEngine.GameObject rapier = UnityEngine.GameObject.Instantiate(rapierPrefab);
+                        UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
 
                     var gunRotation = rapier.transform.rotation;
                     rapier.transform.parent = hand.transform;
@@ -234,11 +232,11 @@ public partial class AgentEntity
 
                 case Model3DWeapon.Pistol:
                 {
-                        UnityEngine.GameObject hand = model3d.RightHand;
+                    UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
                         UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
-                            UnityEngine.GameObject gun = UnityEngine.GameObject.Instantiate(prefab);
+                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
                         gun.transform.parent = hand.transform;
@@ -254,12 +252,12 @@ public partial class AgentEntity
 
                 case Model3DWeapon.Rifle:
                 {
-                        UnityEngine.GameObject hand = model3d.RightHand;
+                    UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
 
                         UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
-                            UnityEngine.GameObject gun = UnityEngine.GameObject.Instantiate(prefab);
+                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
                         var gunRotation = gun.transform.rotation;
                         gun.transform.parent = hand.transform;
@@ -549,11 +547,44 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       // PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       if (PhysicsState.OnGrounded)
+                       {
+                        if (horizontalDir != 0)
+                        {
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+                        PhysicsState.Velocity = PhysicsState.Speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        PhysicsState.Velocity *= horizontalDir;
+                        }
+                       }
+                       else 
+                       {
+                        PhysicsState.Velocity.X = 1 * horizontalDir * PhysicsState.Speed;
+                        //PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       }
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       // PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                      if (PhysicsState.OnGrounded)
+                       {
+                        if (horizontalDir != 0)
+                        {
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+
+                        PhysicsState.Velocity = PhysicsState.Speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        PhysicsState.Velocity *= horizontalDir;
+                        }
+                       }
+                       else 
+                       {
+                        PhysicsState.Velocity.X = horizontalDir * PhysicsState.Speed;
+                        //PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                       }
                     }
                 }
             }
@@ -610,6 +641,8 @@ public partial class AgentEntity
                         physicsState.JumpCounter++;
                     }
                 }
+
+                physicsState.OnGrounded = false;
             }
         }
 

@@ -6,10 +6,11 @@ namespace Node
 {
     public class ToolActionMiningLaser : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionMiningLaser; } }
+        public override NodeType Type => NodeType.ToolActionMiningLaser;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeID.ID);
             Vec2f   agentPosition = agentEntity.agentPhysicsState.Position;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -41,7 +42,7 @@ namespace Node
                 planet.TileMap.RemoveFrontTile(cell.x, cell.y);
                 Debug.DrawLine(new Vector3(agentPosition.X, agentPosition.Y, 0.0f), new Vector3(worldPosition.x, worldPosition.y, 0.0f), Color.red);
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

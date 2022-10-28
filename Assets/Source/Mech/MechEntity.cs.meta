@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/Collisions/Shapes/GeometryCreationApi.cs.meta
+guid: bea818a742fce29489161721fe990087
+========
 guid: 67e6148e4c8b1d545be873623cf50c66
+>>>>>>>> 1932ce55a27842a8d736195a98b50296d77ccb9a:Assets/Source/Mech/MechEntity.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

@@ -1,12 +1,10 @@
-﻿using Entitas;
-using Planet;
-
-namespace Agent
+﻿namespace Agent
 {
     public class ProcessStats
     {
-        public void Update(ref PlanetState planet)
+        public void Update()
         {
+            ref var planet = ref GameState.Planet;
             ref AgentList agentList = ref planet.AgentList;
 
             for (int i = 0; i < agentList.Length; i++)

@@ -500,7 +500,8 @@ namespace Animancer.Editor
             HideInactiveStates = new BoolPref(KeyPrefix, MenuPrefix + "Hide Inactive States", false),
             HideSingleLayerHeader = new BoolPref(KeyPrefix, MenuPrefix + "Hide Single Layer Header", true),
             RepaintConstantly = new BoolPref(KeyPrefix, MenuPrefix + "Repaint Constantly", true),
-            SeparateActiveFromInactiveStates = new BoolPref(KeyPrefix, MenuPrefix + "Separate Active From Inactive States", false),
+            SeparateActiveFromInactiveStates =
+                new BoolPref(KeyPrefix, MenuPrefix + "Separate Active From Inactive States", false),
             ScaleTimeBarByWeight = new BoolPref(KeyPrefix, MenuPrefix + "Scale Time Bar by Weight", true),
             ShowInternalDetails = new BoolPref(KeyPrefix, MenuPrefix + "Show Internal Details", false),
             VerifyAnimationBindings = new BoolPref(KeyPrefix, MenuPrefix + "Verify Animation Bindings", true),

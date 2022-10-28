@@ -52,8 +52,8 @@ namespace Animancer
         public override AnimancerState GetChild(int index) => ChildStates[index];
 
         /// <inheritdoc/>
-        public override FastEnumerator<AnimancerState> GetEnumerator()
-            => new FastEnumerator<AnimancerState>(ChildStates);
+        public override FastEnumerator<AnimancerState> GetEnumerator() =>
+            new FastEnumerator<AnimancerState>(ChildStates);
 
         /************************************************************************************************************************/
 

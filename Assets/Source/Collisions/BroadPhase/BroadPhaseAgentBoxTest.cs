@@ -1,5 +1,3 @@
-
-using Entitas;
 using KMath;
 using System;
 
@@ -8,12 +6,12 @@ namespace Collisions
     public static partial class Collisions
     {
 
-        public static int[] BroadphaseAgentBoxTest(Planet.PlanetState planet, AABox2D box)
+        public static int[] BroadphaseAgentBoxTest(AABox2D box)
         {
             int[] result = new int[128];
             int resultCount = 0;
 
-            Agent.AgentList agentList = planet.AgentList;
+            Agent.AgentList agentList = GameState.Planet.AgentList;
 
 
             for(int i = 0; i < agentList.Length; i++)
@@ -29,7 +27,7 @@ namespace Collisions
 
                     AABox2D testBox = new AABox2D(position, collider.Size);
 
-                    if (Collisions.RectOverlapRect(testBox.xmin, testBox.xmax, testBox.ymin, testBox.ymax,
+                    if (RectOverlapRect(testBox.xmin, testBox.xmax, testBox.ymin, testBox.ymax,
                     box.xmin, box.xmax, box.ymin, box.ymax))
                     {
                         result[resultCount++] = i;

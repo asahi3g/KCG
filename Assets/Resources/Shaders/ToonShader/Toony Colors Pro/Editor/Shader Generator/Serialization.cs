@@ -34,7 +34,7 @@ namespace ToonyColorsPro
 
 				public SerializeAsAttribute(string name, string conditionalField = null)
 				{
-					this.serializedName = name;
+					serializedName = name;
 					this.conditionalField = conditionalField;
 				}
 			}

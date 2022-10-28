@@ -56,9 +56,7 @@ namespace Animancer.Units
 
         private static new readonly CompactUnitConversionCache[] DisplayConverters =
         {
-            XSuffix,
-            new CompactUnitConversionCache("s"),
-            new CompactUnitConversionCache("f"),
+            XSuffix, new CompactUnitConversionCache("s"), new CompactUnitConversionCache("f"),
         };
 
         /************************************************************************************************************************/

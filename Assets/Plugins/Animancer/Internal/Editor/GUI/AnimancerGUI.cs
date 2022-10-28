@@ -248,8 +248,8 @@ namespace Animancer.Editor
         /// Creates a <see cref="ConversionCache{TKey, TValue}"/> for calculating the GUI width occupied by text using the
         /// specified `style`.
         /// </summary>
-        public static ConversionCache<string, float> CreateWidthCache(GUIStyle style)
-            => new ConversionCache<string, float>((text) => style.CalculateWidth(text));
+        public static ConversionCache<string, float> CreateWidthCache(GUIStyle style) =>
+            new ConversionCache<string, float>((text) => style.CalculateWidth(text));
 
         /************************************************************************************************************************/
 

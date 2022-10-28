@@ -1,15 +1,11 @@
 //imports UnityEngine
-
-using Enums;
-using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class HealthPotionElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
 
         private ImageWrapper border;
 
@@ -22,7 +18,7 @@ namespace KGUI
             ID = ElementEnums.HealthPotion;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
+                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
 
             border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
@@ -40,7 +36,7 @@ namespace KGUI
         public override void OnMouseClick()
         {
             var item = GameState.GUIManager.SelectedInventoryItem;
-            item.itemPotion.potionType = PotionType.HealthPotion;
+            item.itemPotion.potionType = Enums.PotionType.HealthPotion;
             Toggle(true);
         }
         

@@ -13,15 +13,16 @@ namespace AI.Movement
         public const int MAX_NUM_NODES = 2048; // Maximum size of open/closed Map.
 
         readonly PathAdjacency[] directions = new PathAdjacency[8]
-            {   new PathAdjacency() { dir = new Vec2i(1, 0),  cost = 100 },   // Right
-                new PathAdjacency() { dir = new Vec2i(-1, 0), cost = 100 },   // Left
-                new PathAdjacency() { dir = new Vec2i(0, 1),  cost = 100 },   // Up
-                new PathAdjacency() { dir = new Vec2i(0, -1), cost = 100 },   // Down
+            {
+                new PathAdjacency { dir = new Vec2i(1, 0),  cost = 100 }, // Right
+                new PathAdjacency { dir = new Vec2i(-1, 0), cost = 100 }, // Left
+                new PathAdjacency { dir = new Vec2i(0, 1),  cost = 100 }, // Up
+                new PathAdjacency { dir = new Vec2i(0, -1), cost = 100 }, // Down
                 // Used for flying paths only
-                new PathAdjacency() { dir = new Vec2i(1, 1), cost = 144 },    // Up - Right
-                new PathAdjacency() { dir = new Vec2i(-1, 1), cost = 144 },   // Up - Left
-                new PathAdjacency() { dir = new Vec2i(1, -1), cost = 144 },   // Down - Right
-                new PathAdjacency() { dir = new Vec2i(-1, -1), cost = 144 }    // Down - Left
+                new PathAdjacency { dir = new Vec2i(1, 1), cost = 144 }, // Up - Right
+                new PathAdjacency { dir = new Vec2i(-1, 1), cost = 144 }, // Up - Left
+                new PathAdjacency { dir = new Vec2i(1, -1), cost = 144 }, // Down - Right
+                new PathAdjacency { dir = new Vec2i(-1, -1), cost = 144 }    // Down - Left
             };
 
         Node[] openList;

@@ -2,16 +2,16 @@
 
 using KMath;
 using Enums;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Node
 {
     public class AxeAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.AxeAction; } }
+        public override NodeType Type => NodeType.AxeAction;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             var mechs = planet.EntitasContext.mech.GetGroup(MechMatcher.MechID);
@@ -20,7 +20,7 @@ namespace Node
             {
                 foreach (var mech in mechs)
                 {
-                    if (mech.mechType.mechType == Enums.MechType.Tree)
+                    if (mech.mechType.mechType == MechType.Tree)
                     {
                         if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 1.3f)
                         {
@@ -34,7 +34,7 @@ namespace Node
 
                                     planet.RemoveMech(mech.creationIndex);
 
-                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                    nodeEntity.nodeExecution.State = NodeState.Success;
                                     return;
                                 }
 
@@ -54,7 +54,7 @@ namespace Node
                     }
                 }
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Animancer.Editor
                 if (Math.Abs(value) <= 99)
                     return value.ToString("G2");
                 else
-                    return ((int)value).ToString();
+                    return ((int) value).ToString();
             });
 
         private static Texture _EventIcon;
