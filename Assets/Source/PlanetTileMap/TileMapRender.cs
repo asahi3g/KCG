@@ -46,8 +46,8 @@ namespace PlanetTileMap
             {
                 for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
-                    if (!ObjectMesh.isOnScreen(x, y))
-                        continue;
+                  /*  if (!ObjectMesh.isOnScreen(x, y))
+                        continue;*/
 
                     if (x >= 0 && y >= 0)
                     {
@@ -80,8 +80,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                   /* if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Mid].UpdateUV(textureCoords, (index) * 4);
@@ -120,8 +120,8 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!ObjectMesh.isOnScreen(x, y))
-                            continue;
+                        /*if (!ObjectMesh.isOnScreen(x, y))
+                            continue;*/
 
                         ref var tile = ref planet.TileMap.GetTile(x, y);
 
@@ -162,8 +162,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                    /*if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Front].UpdateUV(textureCoords, (index) * 4);
@@ -203,8 +203,8 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!ObjectMesh.isOnScreen(x, y))
-                            continue;
+                       /* if (!ObjectMesh.isOnScreen(x, y))
+                            continue;*/
 
                         ref var tile = ref planet.TileMap.GetTile(x, y);
 
@@ -236,8 +236,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                  /*  if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);

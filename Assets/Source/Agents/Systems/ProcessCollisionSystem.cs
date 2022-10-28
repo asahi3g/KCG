@@ -34,22 +34,22 @@ namespace Agent
             
             var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
 
-            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+           // var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
 
             //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
 
 
 
-            if (bottomCollision.MinTime <= topCollision.MinTime)
-            {
+           /* if (bottomCollision.MinTime <= topCollision.MinTime)
+            {*/
                 minTime = bottomCollision.MinTime;
                 minNormal = bottomCollision.MinNormal;
-            }
+          /*  }
             else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
-            {
+            /*{
                 minTime = topCollision.MinTime;
                 minNormal = topCollision.MinNormal;
-            }
+            }*/
             /*else
             {
                 minTime = sidesCollidion.MinTime;
@@ -124,14 +124,14 @@ namespace Agent
                 }
             }
 
-            bool slidingLeft = collidingLeft && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
+            /*bool slidingLeft = collidingLeft && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
              bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
 
              bool slidingRight = collidingRight && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
-             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);*/
 
-             slidingLeft = false;
-             slidingRight = false;
+             bool slidingLeft = false;
+             bool slidingRight = false;
 
             
 
