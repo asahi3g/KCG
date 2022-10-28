@@ -6,7 +6,6 @@ using Utility;
 
 namespace Mech
 {
-
     public class MechGUIDrawSystem
     {
         private ImageWrapper Chest;
@@ -346,14 +345,14 @@ namespace Mech
                 }
                 else
                 {
-                    ChestBackground.GameObject.SetActive(false);
-                    PlanterBackground.GameObject.SetActive(false);
-                    LightBackground.GameObject.SetActive(false);
-                    MajestyPalmBackground.GameObject.SetActive(false);
-                    SagoPalmBackground.GameObject.SetActive(false);
-                    DracaenaTrifasciataBackground.GameObject.SetActive(false);
-                    SmashableBoxBackground.GameObject.SetActive(false);
-                    SmashableEggBackground.GameObject.SetActive(false);
+                    //ChestBackground.GameObject.SetActive(false);
+                    //PlanterBackground.GameObject.SetActive(false);
+                    //LightBackground.GameObject.SetActive(false);
+                    //MajestyPalmBackground.GameObject.SetActive(false);
+                    //SagoPalmBackground.GameObject.SetActive(false);
+                    //DracaenaTrifasciataBackground.GameObject.SetActive(false);
+                    //SmashableBoxBackground.GameObject.SetActive(false);
+                    //SmashableEggBackground.GameObject.SetActive(false);
                 }
             }
         }

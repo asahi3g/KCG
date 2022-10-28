@@ -166,6 +166,7 @@ public static class GameState
         AgentMovementAnimationTable.InitStage1(); 
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
+        GUIManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -175,6 +176,7 @@ public static class GameState
         AgentMovementAnimationTable.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
+        GUIManager.InitStage2(Planet);
     }
 
 
@@ -265,13 +267,6 @@ public static class GameState
         ProjectileDeleteSystem = new Projectile.DeleteSystem();
         ProjectileDebugSystem = new Projectile.DebugSystem();
 
-        MechCreationApi = new Mech.MechCreationApi();
-        MechSpawnerSystem = new Mech.MechSpawnSystem();
-        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
-        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
-        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
-        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
-
         Renderer = new Utility.Render();
 
         TGenGrid = new TGen.Grid();
@@ -298,5 +293,12 @@ public static class GameState
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
+
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
+        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
+        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
+        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
+        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
     }
 }

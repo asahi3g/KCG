@@ -97,13 +97,6 @@ namespace Planet
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
 
-        public void InitializeHUD()
-        {
-            // GUI/HUD
-            GameState.GUIManager.InitStage1();
-            GameState.GUIManager.InitStage2();
-        }
-
         public void AddDebugLine(Line2D line, UnityEngine.Color color)
         {
             if (DebugLinesCount + 1 >= DebugLines.Length)

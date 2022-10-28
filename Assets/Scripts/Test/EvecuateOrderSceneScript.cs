@@ -140,7 +140,6 @@ namespace Planet.Unity
             SpawnStuff();
 
             planet.InitializeSystems(Material, transform);
-            planet.InitializeHUD();
 
             if (enableGeometryPlacementTool)
             {
