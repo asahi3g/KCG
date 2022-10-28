@@ -143,7 +143,7 @@ namespace Agent
 
             float angle = System.MathF.Atan2(-bottomCollision.MinNormal.X, bottomCollision.MinNormal.Y);
 
-            var rs = TileCollisions.RaycastGround(entity, planet);
+           // var rs = TileCollisions.RaycastGround(entity, planet);
 
              if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f )
              {
@@ -168,6 +168,8 @@ namespace Agent
 
 
              //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
+
+             planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + physicsState.GroundNormal), UnityEngine.Color.red);
 
 
             if (collidingBottom)

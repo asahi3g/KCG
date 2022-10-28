@@ -159,6 +159,9 @@ namespace Planet.Unity
             CharacterDisplay = new KGui.CharacterDisplay();
             CharacterDisplay.setPlayer(Player);
 
+
+            PlanetTileMap.TileMapGeometry.BuildGeometry(Planet.TileMap);
+
             UpdateMode(Player);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
@@ -365,6 +368,15 @@ namespace Planet.Unity
             {
                 Line2D line = Planet.DebugLines[i];
                 Gizmos.color = Planet.DebugLinesColors[i];
+                Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
+            }
+
+
+            UnityEngine.Debug.Log(Planet.TileMap.GeometryArrayCount);
+            for (int i = 0; i < Planet.TileMap.GeometryArrayCount; i++)
+            {
+                Line2D line = Planet.TileMap.GeometryArray[i];
+                Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
         }

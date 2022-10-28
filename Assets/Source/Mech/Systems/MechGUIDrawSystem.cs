@@ -346,14 +346,14 @@ namespace Mech
                 }
                 else
                 {
-                    ChestBackground.GameObject.SetActive(false);
+                   /* ChestBackground.GameObject.SetActive(false);
                     PlanterBackground.GameObject.SetActive(false);
                     LightBackground.GameObject.SetActive(false);
                     MajestyPalmBackground.GameObject.SetActive(false);
                     SagoPalmBackground.GameObject.SetActive(false);
                     DracaenaTrifasciataBackground.GameObject.SetActive(false);
                     SmashableBoxBackground.GameObject.SetActive(false);
-                    SmashableEggBackground.GameObject.SetActive(false);
+                    SmashableEggBackground.GameObject.SetActive(false);*/
                 }
             }
         }

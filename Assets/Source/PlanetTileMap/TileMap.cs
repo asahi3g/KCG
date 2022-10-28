@@ -22,6 +22,9 @@ namespace PlanetTileMap
         public int ChunkArrayLength;
         public int ChunkArrayCapacity;
 
+        public Line2D[] GeometryArray;
+        public int GeometryArrayCount = 0;
+
         public TileMap(Vec2i mapSize)
         {
             ChunkArrayLength = 0;
@@ -67,6 +70,35 @@ namespace PlanetTileMap
             }
 
             MapSize = mapSize;
+
+            GeometryArray = new Line2D[1024];
+            GeometryArrayCount = 0;
+        }
+
+
+        
+        public void AddGeometryLine(Line2D line)
+        {
+            if (GeometryArrayCount + 1 >= GeometryArray.Length)
+            {
+                System.Array.Resize(ref GeometryArray, GeometryArray.Length + 1024);
+            }
+
+            GeometryArray[GeometryArrayCount++] = line;
+        }
+
+        public Enums.GeometryTileShape GetFrontTileGeometry(int x, int y)
+        {
+            if (x >= 0 && x < MapSize.X && y >= 0 && y < MapSize.Y)
+            {
+                TileID tile = GetFrontTileID(x, y);
+                var properties = GameState.TileCreationApi.GetTileProperty(tile);
+                return properties.BlockShapeType;
+            }
+            else
+            {
+                return Enums.GeometryTileShape.Error;
+            }
         }
         
         /// <summary>

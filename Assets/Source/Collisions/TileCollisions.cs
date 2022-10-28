@@ -212,7 +212,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -220,11 +220,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -420,7 +415,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -429,11 +424,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -640,7 +630,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -649,11 +639,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -802,7 +787,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -811,11 +796,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1021,7 +1001,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1030,11 +1010,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref positions, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1079,7 +1054,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                  if (linesCount + 1 >= lines.Length)
@@ -1088,11 +1063,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref positions, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1218,7 +1188,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1226,11 +1196,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1403,7 +1368,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1411,11 +1376,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1551,7 +1511,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1559,11 +1519,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1733,18 +1688,13 @@ namespace Collisions
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
                                     TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                     Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 1 >= tileVertices.Length)
                                     {
                                         Array.Resize(ref tileVertices, tileVertices.Length * 2);
                                     }
-
-                                    line.A.X += (float)x;
-                                    line.A.Y += (float)y;
-                                    line.B.X += (float)x;
-                                    line.B.Y += (float)y;
 
                                     tileVertices[tileVerticesCount] = line.A;
                                     tileVerticesCount++;
@@ -1823,18 +1773,13 @@ namespace Collisions
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
                                     TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                     Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 2 >= tileVertices.Length)
                                     {
                                         Array.Resize(ref tileVertices, tileVertices.Length * 2);
                                     }
-
-                                    line.A.X += (float)x;
-                                    line.A.Y += (float)y;
-                                    line.B.X += (float)x;
-                                    line.B.Y += (float)y;
 
                                     
 

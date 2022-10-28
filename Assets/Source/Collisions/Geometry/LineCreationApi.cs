@@ -32,11 +32,17 @@ namespace Collisions
             InitializeResources();
         }
 
-        public Line2D GetLine(TileLineSegment Id)
+        public Line2D GetLine(TileLineSegment Id, int positionX, int positionY)
         {
             if ((int)Id >= 0 && (int)Id < PropertiesArray.Length)
             {
-                return PropertiesArray[(int)Id].Line;
+                Line2D line = PropertiesArray[(int)Id].Line;
+                line.A.X += positionX;
+                line.A.Y += positionY;
+
+                line.B.X += positionX;
+                line.B.Y += positionY;
+                return line;
             }
 
             return new Line2D();
