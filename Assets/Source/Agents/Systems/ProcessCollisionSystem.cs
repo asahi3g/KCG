@@ -34,22 +34,22 @@ namespace Agent
             
             var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
 
-           // var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
 
             //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
 
 
 
-           /* if (bottomCollision.MinTime <= topCollision.MinTime)
-            {*/
+            if (bottomCollision.MinTime <= topCollision.MinTime)
+            {
                 minTime = bottomCollision.MinTime;
                 minNormal = bottomCollision.MinNormal;
-          /*  }
+            }
             else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
-            /*{
+            {
                 minTime = topCollision.MinTime;
                 minNormal = topCollision.MinNormal;
-            }*/
+            }
             /*else
             {
                 minTime = sidesCollidion.MinTime;
@@ -59,7 +59,7 @@ namespace Agent
 
 
             
-            
+                
             float epsilon = 0.01f;
             physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
             Vec2f deltaLeft = delta  * (1.0f - (minTime - epsilon));
@@ -68,7 +68,7 @@ namespace Agent
             {
 
                // physicsState.Position -= delta.Normalize() * 0.02f;
-               float coefficientOfRest = 0.2f;
+               float coefficientOfRest = 0.0f;
                Vec2f velocity = delta;
 
 

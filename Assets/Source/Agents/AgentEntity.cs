@@ -547,8 +547,8 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                     {
-                       // PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
-                       if (PhysicsState.OnGrounded)
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                     /*  if (PhysicsState.OnGrounded)
                        {
                         if (horizontalDir != 0)
                         {
@@ -563,12 +563,12 @@ public partial class AgentEntity
                        {
                         PhysicsState.Velocity.X = 1 * horizontalDir * PhysicsState.Speed;
                         //PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
-                       }
+                       }*/
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
-                       // PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
-                      if (PhysicsState.OnGrounded)
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                    /*  if (PhysicsState.OnGrounded)
                        {
                         if (horizontalDir != 0)
                         {
@@ -584,7 +584,7 @@ public partial class AgentEntity
                        {
                         PhysicsState.Velocity.X = horizontalDir * PhysicsState.Speed;
                         //PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
-                       }
+                       }*/
                     }
                 }
             }
