@@ -23,6 +23,7 @@ namespace PlanetTileMap
         public int ChunkArrayCapacity;
 
         public Line2D[] GeometryArray;
+        public Vec2f[] GeometryNormalArray;
         public int GeometryArrayCount = 0;
 
         public TileMap(Vec2i mapSize)
@@ -72,18 +73,21 @@ namespace PlanetTileMap
             MapSize = mapSize;
 
             GeometryArray = new Line2D[1024];
+            GeometryNormalArray = new Vec2f[1024];
             GeometryArrayCount = 0;
         }
 
 
         
-        public void AddGeometryLine(Line2D line)
+        public void AddGeometryLine(Line2D line, Vec2f normal)
         {
             if (GeometryArrayCount + 1 >= GeometryArray.Length)
             {
                 System.Array.Resize(ref GeometryArray, GeometryArray.Length + 1024);
+                System.Array.Resize(ref GeometryNormalArray, GeometryArray.Length + 1024);
             }
 
+            GeometryNormalArray[GeometryArrayCount] = normal;
             GeometryArray[GeometryArrayCount++] = line;
         }
 
@@ -351,6 +355,7 @@ namespace PlanetTileMap
         {
             TileSpriteUpdateQueue.UpdateTileSprites(this);
         }
+
 
         #endregion
     }

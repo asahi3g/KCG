@@ -44,6 +44,7 @@ namespace PlanetTileMap
 
         public static void BuildGeometry(TileMap tileMap)
         {
+            tileMap.GeometryArrayCount = 0;
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
                 for(int i = 0; i < tileMap.MapSize.X; i++)
@@ -56,9 +57,9 @@ namespace PlanetTileMap
                         case Enums.GeometryTileShape.SB_R0:
                         {
                             bool topLine = true;
-                        bool rightLine = true;
-                        bool leftLine = true;
-                        bool bottomLine = true;
+                            bool rightLine = true;
+                          bool leftLine = true;
+                          bool bottomLine = true;
 
 
                         Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
@@ -88,22 +89,22 @@ namespace PlanetTileMap
 
                         if (topLine)
                         {
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j));
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1));
                         }
 
                         if (rightLine)
                         {
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j));
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2));
                         }
 
                         if (bottomLine)
                         {
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j));
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3));
                         }
 
                         if (leftLine)
                         {
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j));
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0));
                         }
                             break;
                         }
@@ -116,7 +117,7 @@ namespace PlanetTileMap
 
 
                             Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
+                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
@@ -130,21 +131,66 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C1, i, j));
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C1, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C1));
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j));
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2));
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j));
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3));
                             }
 
                             break;
                         }
+
+
+                        case Enums.GeometryTileShape.TB_R1:
+                        {
+                            bool topLine = true;
+                            bool leftLine = true;
+                            bool bottomLine = true;
+
+
+                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
+                            {
+                                leftLine = false;
+                            }
+
+                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
+                            {
+                                bottomLine = false;
+                            }
+
+
+                            if (topLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C2, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C2));
+                            }
+
+                            if (bottomLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3));
+                            }
+
+                            if (leftLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j), GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0));
+                            }
+
+
+
+                            break;
+                        }
+
+
+
+                        
                     }
                 }
             }

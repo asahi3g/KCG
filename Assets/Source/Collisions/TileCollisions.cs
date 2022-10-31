@@ -347,12 +347,13 @@ namespace Collisions
         public static HandleCollisionResult HandleCollisionCircleTop(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
+            result.MinTime = 1.0f;
 
            PlanetTileMap.TileMap tileMap = planet.TileMap;
 
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
+            if (delta.X == 0 && delta.Y == 0) return result;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X / 2.0f);
            
@@ -558,12 +559,12 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.GeometryTileShape minShape = 0;
-            for(int i = 0; i < linesCount; i++)
+            for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                Enums.GeometryTileShape shape = shapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i];
+                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
+                Enums.GeometryTileShape shape = Enums.GeometryTileShape.Error;
 
                 var collisionResult = 
                 CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
@@ -714,15 +715,56 @@ namespace Collisions
 
         }
 
+        public struct CapsuleCollisionResult
+        {
+            public float MinTime;
+            public Vec2f MinNormal;
+            public Enums.GeometryTileShape GeometryTileShape;
+
+            public HandleCollisionResult BottomCollision;
+        }
+
+        public static CapsuleCollisionResult CapsuleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
+        {
+            CapsuleCollisionResult result = new CapsuleCollisionResult();
+
+            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
+
+            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+
+            result.BottomCollision = bottomCollision;
+
+            //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
+
+
+
+            if (bottomCollision.MinTime <= topCollision.MinTime)
+            {
+                result.MinTime = bottomCollision.MinTime;
+                result.MinNormal = bottomCollision.MinNormal;
+                result.GeometryTileShape = bottomCollision.GeometryTileShape;
+            }
+            else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
+            {
+                result.MinTime = topCollision.MinTime;
+                result.MinNormal = topCollision.MinNormal;
+                result.GeometryTileShape = topCollision.GeometryTileShape;
+            }
+
+
+            return result;
+        }
+
         public static HandleCollisionResult HandleCollisionCircleBottom(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
+            result.MinTime = 1.0f;
 
            PlanetTileMap.TileMap tileMap = planet.TileMap;
 
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
+            if (delta.X == 0 && delta.Y == 0) return result;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
             
@@ -924,12 +966,12 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.GeometryTileShape minShape = 0;
-            for(int i = 0; i < linesCount; i++)
+            for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                Enums.GeometryTileShape shape = shapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i];
+                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
+                Enums.GeometryTileShape shape = Enums.GeometryTileShape.Error;
 
 
                 var collisionResult = 

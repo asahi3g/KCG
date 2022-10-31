@@ -484,6 +484,7 @@ namespace Planet.Unity
 
            // CharacterDisplay.Update();
             planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+                        PlanetTileMap.TileMapGeometry.BuildGeometry(GameState.Planet.TileMap);
 
         }
         UnityEngine.Texture2D texture;
