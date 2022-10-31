@@ -670,7 +670,7 @@ namespace Collisions
                 Enums.GeometryTileShape shape = shapeArray[i];
 
 
-                Vec2f start = colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y * 0.5f);
+                Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X, 1.25f);
                 Vec2f end = start + new Vec2f(0.0f, -1.5f);
                 var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
@@ -684,7 +684,7 @@ namespace Collisions
                     pointOfCollision = start;
                 }
 
-                start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
+                /*start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
                 end = start + new Vec2f(0.0f, -1.5f);
                 
                 rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
@@ -698,7 +698,7 @@ namespace Collisions
                     minShape = shape;
                     minLine = line;
                     pointOfCollision = start;
-                }
+                }*/
 
             }
 

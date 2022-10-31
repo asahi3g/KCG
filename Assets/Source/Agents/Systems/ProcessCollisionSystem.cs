@@ -42,17 +42,17 @@ namespace Agent
             if (agentCollision.MinTime < 1.0 && (agentCollision.MinNormal.X != 0 || agentCollision.MinNormal.Y != 0))
             {
 
-            // physicsState.Position -= delta.Normalize() * 0.02f;
-            float coefficientOfRest = 0.6f;
-            Vec2f velocity = deltaLeft;
+                // physicsState.Position -= delta.Normalize() * 0.02f;
+                float coefficientOfRest = 0.6f;
+                Vec2f velocity = deltaLeft;
 
 
-            float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
-            Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
+                float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
+                Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
 
-            normalized = normalized - 2.0f * Vec2f.Dot(normalized, agentCollision.MinNormal) * agentCollision.MinNormal;
-                Vec2f reflectVelocity = normalized * coefficientOfRest * N;
-            newPosition += reflectVelocity;
+                normalized = normalized - 2.0f * Vec2f.Dot(normalized, agentCollision.MinNormal) * agentCollision.MinNormal;
+                    Vec2f reflectVelocity = normalized * coefficientOfRest * N;
+                newPosition += reflectVelocity;
 
                 // 2nd collision test
                 physicsState.PreviousPosition = physicsState.Position;
@@ -107,14 +107,9 @@ namespace Agent
                 }
             }
 
-            /*bool slidingLeft = collidingLeft && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
-             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+            bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
 
-             bool slidingRight = collidingRight && (topCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0 ||
-             bottomCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);*/
-
-             bool slidingLeft = false;
-             bool slidingRight = false;
+             bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
 
 
              var bottomCollision = agentCollision.BottomCollision;
