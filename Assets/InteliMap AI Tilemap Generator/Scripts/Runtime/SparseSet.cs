@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace InteliMap
 {
@@ -33,14 +31,11 @@ namespace InteliMap
         private int[] denseArr; // full of values
         private int[] sparseArr; // full of indexes to denseArr
 
-        public int Count
-        {
-            get { return count; }
-        }
+        public int Count => count;
 
         public SparseSet Clone()
         {
-            SparseSet returnable = new SparseSet(this.capacity, false);
+            SparseSet returnable = new SparseSet(capacity, false);
             for (int i = 0; i < count; i++)
             {
                 returnable.Add(denseArr[i]);

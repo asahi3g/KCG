@@ -1,8 +1,6 @@
 ﻿using Enums;
 using System.Collections.Generic;
 using KMath;
-using System.Windows.Forms.DataVisualization.Charting;
-using static Unity.VisualScripting.Metadata;
 using AI.Sensor;
 using System;
 
@@ -10,8 +8,9 @@ namespace AI
 {
     public class BehaviorBase
     {
-        public virtual BehaviorType Type { get { return BehaviorType.Error; } }
-        public virtual string Name { get { return Type.ToString(); } }
+        public virtual BehaviorType Type => BehaviorType.Error;
+        public virtual string Name => Type.ToString();
+
         public virtual List<NodeInfo> Nodes
         {
             get
@@ -29,7 +28,7 @@ namespace AI
             }
         }
 
-        public virtual int SensorCount { get { return 0; } }
+        public virtual int SensorCount => 0;
 
         public virtual SensorEntity[] Sensors
         {

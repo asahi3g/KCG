@@ -1,6 +1,7 @@
+//import UnityEngine
+
 using KMath;
 using System;
-using UnityEngine;
 
 namespace Collisions
 {
@@ -8,7 +9,7 @@ namespace Collisions
     {
         // DDA Algorithm ==============================================
 		// https://lodev.org/cgtutor/raycasting.html
-        public static RayCastResult RayCastAgainstTileMapBox2d(PlanetTileMap.TileMap tileMap, Line2D line, float width, float height)
+        public static RayCastResult RayCastAgainstTileMapBox2d(Line2D line, float width, float height)
         {
             if (line.A == line.B)
                 return new RayCastResult();
@@ -89,10 +90,11 @@ namespace Collisions
                 Vec2f currentPoint = vRayStart + vRayDir * fDistance - offset;
                 Vec2f limit = currentPoint + new Vec2f(width, height);
 
+                ref var planet = ref GameState.Planet;
                 if ((currentPoint.X < 0 && limit.X < 0) ||
                     (currentPoint.Y < 0 && limit.Y < 0) ||
-                    (currentPoint.X >= tileMap.MapSize.X && limit.X >= tileMap.MapSize.X) ||
-                    (currentPoint.Y >= tileMap.MapSize.Y && limit.Y >= tileMap.MapSize.Y))
+                    (currentPoint.X >= planet.TileMap.MapSize.X && limit.X >= planet.TileMap.MapSize.X) ||
+                    (currentPoint.Y >= planet.TileMap.MapSize.Y && limit.Y >= planet.TileMap.MapSize.Y))
                 {
                     continue;
                 }
@@ -107,11 +109,11 @@ namespace Collisions
 
                 while (true)
                 {
-                    if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
+                    if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
-                        Enums.Tile.TileID tileID = tileMap.GetFrontTileID(x, y);
+                        Enums.PlanetTileMap.TileID tileID = planet.TileMap.GetFrontTileID(x, y);
                         PlanetTileMap.TileProperty tileProperty = GameState.TileCreationApi.GetTileProperty(tileID);
-                        if (tileID != Enums.Tile.TileID.Air && tileID != Enums.Tile.TileID.Platform)
+                        if (tileID != Enums.PlanetTileMap.TileID.Air && tileID != Enums.PlanetTileMap.TileID.Platform)
                         {
                             float diffx = (x + 0.5f) - currentPoint.X;
                             float diffy = (y + 0.5f) - currentPoint.Y;

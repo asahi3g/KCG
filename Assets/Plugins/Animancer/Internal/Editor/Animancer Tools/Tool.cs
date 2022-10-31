@@ -40,7 +40,7 @@ namespace Animancer.Editor.Tools
             /// <summary>Is the body of this tool currently visible?</summary>
             public bool IsExpanded
             {
-                get { return Instance._CurrentTool == _Index; }
+                get => Instance._CurrentTool == _Index;
                 set
                 {
                     if (value)

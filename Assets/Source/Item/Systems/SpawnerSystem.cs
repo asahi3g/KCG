@@ -1,10 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-
-using Enums;
+﻿using Enums;
 using KMath;
-using UnityEngine.UIElements;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Item
 {
@@ -12,14 +8,14 @@ namespace Item
     {
         private static int ItemID;
 
-        public ItemParticleEntity SpawnItemParticle(Contexts entitasContext, ItemType itemType, Vec2f position)
+        public ItemParticleEntity SpawnItemParticle(ItemType itemType, Vec2f position)
         {
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(itemType);
             FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
             Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
 
-            var entity = entitasContext.itemParticle.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID);
             entity.AddItemType(itemType);
             entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
@@ -38,9 +34,9 @@ namespace Item
 
         // Spawn Item particle from item inventory. Used in dropItem action or after enemy dies.
         // Destroy itemParticle.
-        public ItemParticleEntity SpawnItemParticle(Contexts entitasContext, ItemInventoryEntity itemInventoryEntity, Vec2f pos)
+        public ItemParticleEntity SpawnItemParticle(ItemInventoryEntity itemInventoryEntity, Vec2f pos)
         {
-            var entity = SpawnItemParticle(entitasContext, itemInventoryEntity.itemType.Type, pos);
+            var entity = SpawnItemParticle(itemInventoryEntity.itemType.Type, pos);
 
             if(itemInventoryEntity.hasItemLabel)
                 entity.AddItemLabel(itemInventoryEntity.itemLabel.ItemName);
@@ -58,12 +54,12 @@ namespace Item
             return entity;
         }
 
-        public ItemInventoryEntity SpawnInventoryItem(Contexts entitasContext, ItemType itemType)
+        public ItemInventoryEntity SpawnInventoryItem(ItemType itemType)
         {
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(itemType);
             FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
-            var entity = entitasContext.itemInventory.CreateEntity();
+            var entity = GameState.Planet.EntitasContext.itemInventory.CreateEntity();
             entity.AddItemID(ItemID);
             entity.AddItemType(itemType);
 
@@ -84,7 +80,7 @@ namespace Item
 
                 if(entity.itemType.Type == ItemType.PotionTool)
                 {
-                    Enums.PotionType potionType = PotionType.Error;
+                    PotionType potionType = PotionType.Error;
                     entity.AddItemPotion(potionType);
                 }
             }
@@ -96,9 +92,9 @@ namespace Item
             return entity;
         }
 
-        public ItemInventoryEntity SpawnInventoryItem(Contexts entitasContext, ItemParticleEntity itemParticleEntity)
+        public ItemInventoryEntity SpawnInventoryItem(ItemParticleEntity itemParticleEntity)
         {
-            var entity = SpawnInventoryItem(entitasContext, itemParticleEntity.itemType.Type);
+            var entity = SpawnInventoryItem(itemParticleEntity.itemType.Type);
 
             if (itemParticleEntity.hasItemLabel)
                 entity.AddItemLabel(itemParticleEntity.itemLabel.ItemName);

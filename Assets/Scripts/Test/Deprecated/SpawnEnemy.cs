@@ -1,6 +1,4 @@
-using UnityEngine;
-using Entitas;
-using KMath;
+
 
 /*
 public class SpawnEnemy : MonoBehaviour
@@ -30,7 +28,7 @@ public class SpawnEnemy : MonoBehaviour
     private bool isHeld;
 
     // Planet State
-    Planet.PlanetState planetState;
+    GameState.Planet.PlanetState planetState;
 
     void Start()
     {
@@ -41,7 +39,7 @@ public class SpawnEnemy : MonoBehaviour
 
         // Generating the map
         var mapSize = new Vec2i(16, 16);
-        planetState = new Planet.PlanetState();
+        planetState = new GameState.Planet.PlanetState();
         planetState.Init(mapSize);
         planetState.InitializeSystems(Material, transform);
 

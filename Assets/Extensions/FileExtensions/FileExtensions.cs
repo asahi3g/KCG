@@ -9,9 +9,9 @@ using System.Reflection;
 public class FileExtensionGUI
 {
     private static GUIStyle _style;
-    private static readonly StringBuilder sb = new();
+    private static readonly StringBuilder sb = new StringBuilder();
     private static string _selectedGuid;
-    private static readonly HashSet<string> ShowExtExclude = new()
+    private static readonly HashSet<string> ShowExtExclude = new HashSet<string>
     {
         ".asmdef"
     };

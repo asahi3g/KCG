@@ -1,18 +1,17 @@
-﻿using System;
-using Enums;
-using Planet;
+﻿using Enums;
 using KMath;
 
 namespace Agent
 {
     public class ProcessPhysicalState
     {
-        public void Update(ref PlanetState planet, float deltaTime)
+        public void Update(float deltaTime)
         {
-            var EntitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
+         var planet = GameState.Planet;
+            var entitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
                 AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
 
-            foreach (var entity in EntitiesWithMovementState)
+            foreach (var entity in entitiesWithMovementState)
             {
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
@@ -20,6 +19,7 @@ namespace Agent
                 stats.IsLimping = stats.Health <= 50.0f;
 
                 float epsilon = 4.0f;
+
 
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&

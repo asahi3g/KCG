@@ -1,12 +1,9 @@
 //imports UnityEngine
 
 using System.Collections.Generic;
-using Enums;
-using KGUI.Elements;
 using KMath;
-using Planet;
-using UnityEngine.UI;
 using Utility;
+using Planet;
 
 
 namespace KGUI
@@ -15,49 +12,45 @@ namespace KGUI
     {
         public bool ShowGUI = true;
         
-        public PlanetState Planet;
         public ItemInventoryEntity SelectedInventoryItem;
 
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
 
-        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new();
-        public Dictionary<PanelEnums, PanelUI> PanelList = new();
+        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new Dictionary<PanelEnums, PanelUI>();
+        public Dictionary<PanelEnums, PanelUI> PanelList = new Dictionary<PanelEnums, PanelUI>();
 
         public Vec2f CursorPosition;
-        public ElementUI CursorElement;
+        public ElementUI ElementUnderCursor;
+        public PanelUI PanelUnderCursor;
         
         private UnityEngine.Canvas canvas;
 
-        private TextWrapper text = new();
-
-        GeometryGUI GeometryGUI;
-
-        // Initialize
-        public void InitStage1(PlanetState planet)
+        private TextWrapper text = new TextWrapper();
+        
+        public void InitStage1()
         {
-            Planet = planet;
-
             UnityEngine.Cursor.visible = true;
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
-
-            ProgressBar = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, AtlasType.Gui);
-            WhiteSquareBorder = GameState.Renderer.CreateSprite(
-                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, AtlasType.Gui);
-
-            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusUI"));
-            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolUI"));
-            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolUI"));
-            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolUI"));
-            
-            PanelPrefabList.Add(PanelEnums.Test, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/TestPanel"));
-
-            GeometryGUI = new GeometryGUI();
         }
 
-        public void InitStage2()
+        public void InitStage2(PlanetState planet)
         {
+            if (planet.TileMap == null)
+                return;
+
+            ProgressBar = GameState.Renderer.CreateSprite(
+                "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
+            WhiteSquareBorder = GameState.Renderer.CreateSprite(
+                "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
+
+            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
+            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
+            PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
+
+
             SetPanelActive(PanelEnums.PlayerStatus);
         }
 
@@ -101,7 +94,7 @@ namespace KGUI
 
         public void Update(AgentEntity agentEntity)
         {
-            canvas.GetComponent<CanvasScaler>().referenceResolution =
+            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
@@ -109,9 +102,9 @@ namespace KGUI
             text.Update();
 
             var inventoryID = agentEntity.agentInventory.InventoryID;
-            var inventory = Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(Planet.EntitasContext, inventoryID, selectedSlot);
+            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }
@@ -120,7 +113,7 @@ namespace KGUI
         {
             foreach (var panel in PanelList.Values)
             {
-                foreach (var element in panel.UIElementList.Values)
+                foreach (var element in panel.ElementList.Values)
                 {
                     element.Draw();
                 }
@@ -129,51 +122,59 @@ namespace KGUI
 
         public void HandleMouseEvents()
         {
-            if (CursorElement != null 
+            if (ElementUnderCursor != null 
                 && Collisions.Collisions.PointOverlapRect
                 (
                     CursorPosition.X, CursorPosition.Y,
-                    CursorElement.HitBox.xmin, CursorElement.HitBox.xmax, CursorElement.HitBox.ymin, CursorElement.HitBox.ymax)
+                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax)
                )
             {
-                CursorElement.OnMouseStay();
+                ElementUnderCursor.OnMouseStay();
             }
             else
             {
-                CursorElement?.OnMouseExited();
-                CursorElement = null;
+                ElementUnderCursor?.OnMouseExited();
+                ElementUnderCursor = null;
+                PanelUnderCursor = null;
                 foreach (var panel in PanelList.Values)
                 {
                     if (!panel.gameObject.activeSelf) continue;
+                    if (ElementUnderCursor != null) break;
                     
-                    foreach (var element in panel.UIElementList.Values)
+                    foreach (var element in panel.ElementList.Values)
                     {
                         if (!element.gameObject.activeSelf) continue;
                         
                         if (Collisions.Collisions.PointOverlapRect(CursorPosition.X, CursorPosition.Y, element.HitBox.xmin, element.HitBox.xmax, element.HitBox.ymin, element.HitBox.ymax))
                         {
-                            CursorElement = element;
-                            CursorElement.OnMouseEntered();
-                            return;
+                            ElementUnderCursor = element;
+                            PanelUnderCursor = panel;
+                            ElementUnderCursor.OnMouseEntered();
+                            break;
                         }
                     }
                 }
             }
-            
-            if (UnityEngine.Input.GetMouseButton(0))
+
+            if (ElementUnderCursor != null && PanelUnderCursor != null && UnityEngine.Input.GetMouseButton(0))
             {
-                CursorElement?.OnMouseClick();
+                PanelUnderCursor.HandleClickEvent(ElementUnderCursor.ID);
+                ElementUnderCursor.OnMouseClick();
             }
         }
 
         public TextWrapper AddText(string _text, Vec2f canvasPosition, Vec2f hudSize)
         {
-            TextWrapper textWrapper = new TextWrapper();
-            textWrapper.Create("TempText", _text, canvas.transform, 1);
-            textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
-            textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
+            if (GameState.Planet.TileMap != null)
+            {
+                TextWrapper textWrapper = new TextWrapper();
+                textWrapper.Create("TempText", _text, canvas.transform, 1);
+                textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
+                textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
+                return textWrapper;
+            }
 
-            return textWrapper;
+            return null;
         }
     }
 }

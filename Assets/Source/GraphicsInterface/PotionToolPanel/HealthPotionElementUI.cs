@@ -1,17 +1,13 @@
 //imports UnityEngine
-
-using Enums;
-using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
-    public class HealthPotionElementUI : ElementUI
+    public class HealthPotionElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
 
-        public ImageWrapper Border;
+        private ImageWrapper border;
 
         public override void Init()
         {
@@ -22,15 +18,15 @@ namespace KGUI
             ID = ElementEnums.HealthPotion;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
+                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
 
-            Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
             Icon.Draw();
-            Border.Draw();
+            border.Draw();
         }
 
         public override void OnMouseStay()
@@ -40,7 +36,13 @@ namespace KGUI
         public override void OnMouseClick()
         {
             var item = GameState.GUIManager.SelectedInventoryItem;
-            item.itemPotion.potionType = PotionType.HealthPotion;
+            item.itemPotion.potionType = Enums.PotionType.HealthPotion;
+            Toggle(true);
+        }
+        
+        public void Toggle(bool value)
+        {
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }

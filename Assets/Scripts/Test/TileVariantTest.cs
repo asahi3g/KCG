@@ -1,16 +1,16 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
-using UnityEngine;
-using PlanetTileMap;
 
 namespace Planet.Unity
 {
-    class TileVariantTest : MonoBehaviour
+    class TileVariantTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         static bool Init = false;
-        public PlanetState Planet;
+
         
 
         public void Start()
@@ -25,16 +25,16 @@ namespace Planet.Unity
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             {
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
-                Debug.Log(x + " " + y);
-                Planet.TileMap.RemoveFrontTile(x, y);                
+                UnityEngine.Debug.Log(x + " " + y);
+                GameState.Planet.TileMap.RemoveFrontTile(x, y);                
             }
 
-            GameState.TileMapRenderer.UpdateFrontLayerMesh(Planet.TileMap);
+            GameState.TileMapRenderer.UpdateFrontLayerMesh();
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
         }
 
@@ -44,11 +44,11 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             var mapSize = new Vec2i(16, 16);
-
             AgentEntity player = new AgentEntity();
 
-            var entities = Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
+            var entities = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
             foreach (var entity in entities)
             {
                 if (entity.isAgentPlayer)
@@ -56,11 +56,11 @@ namespace Planet.Unity
 
             }
 
-            Planet = new PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
 
-            ref var tileMap = ref Planet.TileMap;
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
+
+            ref var tileMap = ref planet.TileMap;
 
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
@@ -96,7 +96,7 @@ namespace Planet.Unity
                        frontTile = TileID.Air;
                     }
 
-                    Planet.TileMap.SetFrontTile(i,j, frontTile);
+                    planet.TileMap.SetFrontTile(i,j, frontTile);
                 }
             }
         }

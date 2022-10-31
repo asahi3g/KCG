@@ -1,5 +1,4 @@
-﻿using Enums.Tile;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PlanetTileMap
 {

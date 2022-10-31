@@ -1,17 +1,16 @@
 using System.Runtime.CompilerServices;
 using Collisions;
-using Enums.Tile;
 using KMath;
 
 namespace PlanetTileMap
 {
     public static class TileGeometry
     {
-        // Takes in TilePoint C1, C2 etc index
-        // Returns Vec2f point
+        // Takes in TilePoint C0, C1 etc index
+        // Returns VeC1f point
         private static readonly Vec2f[] PointsArray;
         
-        // Takes in TileLineSegment L_C0_M2, etc index
+        // Takes in TileLineSegment L_C0_M1, etc index
         // Returns the start and finish point of line
         private static readonly Line2D[] LinesArray;
         
@@ -26,10 +25,10 @@ namespace PlanetTileMap
                 // Error
                 default,
                 
-                // C1, C2, C3, C4
+                // C0, C1, C2, C3
                 new(0f, 1f), new(1f, 1f), new(1f, 0f), new(0f, 0f),
                 
-                // M1, M2, M3, M4
+                // M0, M1, M2, M3
                 new(0.5f, 1f), new(1f, 0.5f), new(0.5f, 0f), new(0f, 0.5f)
             };
             
@@ -37,69 +36,69 @@ namespace PlanetTileMap
             {
                 default, // Error
                 
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.C1]), // L_C0_C1
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.C2]), // L_C0_C2
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.C3]), // L_C0_C3
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.M0]), // L_C0_M0
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.M1]), // L_C0_M1
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.M2]), // L_C0_M2
+                new(PointsArray[(int)TilePoint.C0], PointsArray[(int)TilePoint.M3]), // L_C0_M3
+                
+                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C0]), // L_C1_C0
                 new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C2]), // L_C1_C2
                 new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C3]), // L_C1_C3
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.C4]), // L_C1_C4
+                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M0]), // L_C1_M0
                 new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M1]), // L_C1_M1
                 new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M2]), // L_C1_M2
                 new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M3]), // L_C1_M3
-                new(PointsArray[(int)TilePoint.C1], PointsArray[(int)TilePoint.M4]), // L_C1_M4
                 
+                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C0]), // L_C2_C0
                 new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C1]), // L_C2_C1
                 new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C3]), // L_C2_C3
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.C4]), // L_C2_C4
+                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M0]), // L_C2_M0
                 new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M1]), // L_C2_M1
                 new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M2]), // L_C2_M2
                 new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M3]), // L_C2_M3
-                new(PointsArray[(int)TilePoint.C2], PointsArray[(int)TilePoint.M4]), // L_C2_M4
                 
+                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C0]), // L_C3_C0
                 new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C1]), // L_C3_C1
                 new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C2]), // L_C3_C2
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.C4]), // L_C3_C4
+                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M0]), // L_C3_M0
                 new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M1]), // L_C3_M1
                 new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M2]), // L_C3_M2
                 new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M3]), // L_C3_M3
-                new(PointsArray[(int)TilePoint.C3], PointsArray[(int)TilePoint.M4]), // L_C3_M4
                 
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C1]), // L_C4_C1
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C2]), // L_C4_C2
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.C3]), // L_C4_C3
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M1]), // L_C4_M1
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M2]), // L_C4_M2
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M3]), // L_C4_M3
-                new(PointsArray[(int)TilePoint.C4], PointsArray[(int)TilePoint.M4]), // L_C4_M4
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.C0]), // L_M0_C0
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.C1]), // L_M0_C1
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.C2]), // L_M0_C2
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.C3]), // L_M0_M0
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.M1]), // L_M0_M1
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.M2]), // L_M0_M2
+                new(PointsArray[(int)TilePoint.M0], PointsArray[(int)TilePoint.M3]), // L_M0_M3
                 
+                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C0]), // L_M1_C0
                 new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C1]), // L_M1_C1
                 new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C2]), // L_M1_C2
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C3]), // L_M1_C3
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C4]), // L_M1_M1
+                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.C3]), // L_M1_M0
+                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M0]), // L_M1_M0
                 new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M2]), // L_M1_M2
                 new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M3]), // L_M1_M3
-                new(PointsArray[(int)TilePoint.M1], PointsArray[(int)TilePoint.M4]), // L_M1_M4
                 
+                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C0]), // L_M2_C0
                 new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C1]), // L_M2_C1
                 new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C2]), // L_M2_C2
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C3]), // L_M2_C3
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C4]), // L_M2_M1
+                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.C3]), // L_M2_M0
+                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M0]), // L_M2_M0
                 new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M1]), // L_M2_M1
                 new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M3]), // L_M2_M3
-                new(PointsArray[(int)TilePoint.M2], PointsArray[(int)TilePoint.M4]), // L_M2_M4
                 
+                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C0]), // L_M3_C0
                 new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C1]), // L_M3_C1
                 new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C2]), // L_M3_C2
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C3]), // L_M3_C3
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C4]), // L_M3_M1
+                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.C3]), // L_M3_M0
+                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M0]), // L_M3_M0
                 new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M1]), // L_M3_M1
                 new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M2]), // L_M3_M2
-                new(PointsArray[(int)TilePoint.M3], PointsArray[(int)TilePoint.M4]), // L_M3_M4
-                
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C1]), // L_M4_C1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C2]), // L_M4_C2
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C3]), // L_M4_C3
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.C4]), // L_M4_M1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M1]), // L_M4_M1
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M2]), // L_M4_M2
-                new(PointsArray[(int)TilePoint.M4], PointsArray[(int)TilePoint.M3]), // L_M4_M3
             };
 
             ShapeLinesCount = new[]
@@ -118,21 +117,21 @@ namespace PlanetTileMap
         }
         
         // Takes in TilePoint enum
-        /// <returns>Vec2f for point values</returns>
+        // returns Vec2f for point values
         [MethodImpl((MethodImplOptions) 256)] // Inline
         public static Vec2f GetTilePointPosition(TilePoint point)
         {
             return point switch
             {
                 TilePoint.Error => default,
+                TilePoint.C0 => PointsArray[(int) TilePoint.C0],
                 TilePoint.C1 => PointsArray[(int) TilePoint.C1],
                 TilePoint.C2 => PointsArray[(int) TilePoint.C2],
                 TilePoint.C3 => PointsArray[(int) TilePoint.C3],
-                TilePoint.C4 => PointsArray[(int) TilePoint.C4],
+                TilePoint.M0 => PointsArray[(int) TilePoint.M0],
                 TilePoint.M1 => PointsArray[(int) TilePoint.M1],
                 TilePoint.M2 => PointsArray[(int) TilePoint.M2],
                 TilePoint.M3 => PointsArray[(int) TilePoint.M3],
-                TilePoint.M4 => PointsArray[(int) TilePoint.M4],
                 _ => default
             };
         }
@@ -145,62 +144,62 @@ namespace PlanetTileMap
             return lineSegment switch
             {
                 TileLineSegment.Error   => LinesArray[(int) TileLineSegment.Error],
+                TileLineSegment.L_C0_C1 => LinesArray[(int) TileLineSegment.L_C0_C1],
+                TileLineSegment.L_C0_C2 => LinesArray[(int) TileLineSegment.L_C0_C2],
+                TileLineSegment.L_C0_C3 => LinesArray[(int) TileLineSegment.L_C0_C3],
+                TileLineSegment.L_C0_M0 => LinesArray[(int) TileLineSegment.L_C0_M0],
+                TileLineSegment.L_C0_M1 => LinesArray[(int) TileLineSegment.L_C0_M1],
+                TileLineSegment.L_C0_M2 => LinesArray[(int) TileLineSegment.L_C0_M2],
+                TileLineSegment.L_C0_M3 => LinesArray[(int) TileLineSegment.L_C0_M3],
+                TileLineSegment.L_C1_C0 => LinesArray[(int) TileLineSegment.L_C1_C0],
                 TileLineSegment.L_C1_C2 => LinesArray[(int) TileLineSegment.L_C1_C2],
                 TileLineSegment.L_C1_C3 => LinesArray[(int) TileLineSegment.L_C1_C3],
-                TileLineSegment.L_C1_C4 => LinesArray[(int) TileLineSegment.L_C1_C4],
+                TileLineSegment.L_C1_M0 => LinesArray[(int) TileLineSegment.L_C1_M0],
                 TileLineSegment.L_C1_M1 => LinesArray[(int) TileLineSegment.L_C1_M1],
                 TileLineSegment.L_C1_M2 => LinesArray[(int) TileLineSegment.L_C1_M2],
                 TileLineSegment.L_C1_M3 => LinesArray[(int) TileLineSegment.L_C1_M3],
-                TileLineSegment.L_C1_M4 => LinesArray[(int) TileLineSegment.L_C1_M4],
+                TileLineSegment.L_C2_C0 => LinesArray[(int) TileLineSegment.L_C2_C0],
                 TileLineSegment.L_C2_C1 => LinesArray[(int) TileLineSegment.L_C2_C1],
                 TileLineSegment.L_C2_C3 => LinesArray[(int) TileLineSegment.L_C2_C3],
-                TileLineSegment.L_C2_C4 => LinesArray[(int) TileLineSegment.L_C2_C4],
+                TileLineSegment.L_C2_M0 => LinesArray[(int) TileLineSegment.L_C2_M0],
                 TileLineSegment.L_C2_M1 => LinesArray[(int) TileLineSegment.L_C2_M1],
                 TileLineSegment.L_C2_M2 => LinesArray[(int) TileLineSegment.L_C2_M2],
                 TileLineSegment.L_C2_M3 => LinesArray[(int) TileLineSegment.L_C2_M3],
-                TileLineSegment.L_C2_M4 => LinesArray[(int) TileLineSegment.L_C2_M4],
+                TileLineSegment.L_C3_C0 => LinesArray[(int) TileLineSegment.L_C3_C0],
                 TileLineSegment.L_C3_C1 => LinesArray[(int) TileLineSegment.L_C3_C1],
                 TileLineSegment.L_C3_C2 => LinesArray[(int) TileLineSegment.L_C3_C2],
-                TileLineSegment.L_C3_C4 => LinesArray[(int) TileLineSegment.L_C3_C4],
+                TileLineSegment.L_C3_M0 => LinesArray[(int) TileLineSegment.L_C3_M0],
                 TileLineSegment.L_C3_M1 => LinesArray[(int) TileLineSegment.L_C3_M1],
                 TileLineSegment.L_C3_M2 => LinesArray[(int) TileLineSegment.L_C3_M2],
                 TileLineSegment.L_C3_M3 => LinesArray[(int) TileLineSegment.L_C3_M3],
-                TileLineSegment.L_C3_M4 => LinesArray[(int) TileLineSegment.L_C3_M4],
-                TileLineSegment.L_C4_C1 => LinesArray[(int) TileLineSegment.L_C4_C1],
-                TileLineSegment.L_C4_C2 => LinesArray[(int) TileLineSegment.L_C4_C2],
-                TileLineSegment.L_C4_C3 => LinesArray[(int) TileLineSegment.L_C4_C3],
-                TileLineSegment.L_C4_M1 => LinesArray[(int) TileLineSegment.L_C4_M1],
-                TileLineSegment.L_C4_M2 => LinesArray[(int) TileLineSegment.L_C4_M2],
-                TileLineSegment.L_C4_M3 => LinesArray[(int) TileLineSegment.L_C4_M3],
-                TileLineSegment.L_C4_M4 => LinesArray[(int) TileLineSegment.L_C4_M4],
+                TileLineSegment.L_M0_C0 => LinesArray[(int) TileLineSegment.L_M0_C0],
+                TileLineSegment.L_M0_C1 => LinesArray[(int) TileLineSegment.L_M0_C1],
+                TileLineSegment.L_M0_C2 => LinesArray[(int) TileLineSegment.L_M0_C2],
+                TileLineSegment.L_M0_C3 => LinesArray[(int) TileLineSegment.L_M0_C3],
+                TileLineSegment.L_M0_M1 => LinesArray[(int) TileLineSegment.L_M0_M1],
+                TileLineSegment.L_M0_M2 => LinesArray[(int) TileLineSegment.L_M0_M2],
+                TileLineSegment.L_M0_M3 => LinesArray[(int) TileLineSegment.L_M0_M3],
+                TileLineSegment.L_M1_C0 => LinesArray[(int) TileLineSegment.L_M1_C0],
                 TileLineSegment.L_M1_C1 => LinesArray[(int) TileLineSegment.L_M1_C1],
                 TileLineSegment.L_M1_C2 => LinesArray[(int) TileLineSegment.L_M1_C2],
                 TileLineSegment.L_M1_C3 => LinesArray[(int) TileLineSegment.L_M1_C3],
-                TileLineSegment.L_M1_C4 => LinesArray[(int) TileLineSegment.L_M1_C4],
+                TileLineSegment.L_M1_M0 => LinesArray[(int) TileLineSegment.L_M1_M0],
                 TileLineSegment.L_M1_M2 => LinesArray[(int) TileLineSegment.L_M1_M2],
                 TileLineSegment.L_M1_M3 => LinesArray[(int) TileLineSegment.L_M1_M3],
-                TileLineSegment.L_M1_M4 => LinesArray[(int) TileLineSegment.L_M1_M4],
+                TileLineSegment.L_M2_C0 => LinesArray[(int) TileLineSegment.L_M2_C0],
                 TileLineSegment.L_M2_C1 => LinesArray[(int) TileLineSegment.L_M2_C1],
                 TileLineSegment.L_M2_C2 => LinesArray[(int) TileLineSegment.L_M2_C2],
                 TileLineSegment.L_M2_C3 => LinesArray[(int) TileLineSegment.L_M2_C3],
-                TileLineSegment.L_M2_C4 => LinesArray[(int) TileLineSegment.L_M2_C4],
+                TileLineSegment.L_M2_M0 => LinesArray[(int) TileLineSegment.L_M2_M0],
                 TileLineSegment.L_M2_M1 => LinesArray[(int) TileLineSegment.L_M2_M1],
                 TileLineSegment.L_M2_M3 => LinesArray[(int) TileLineSegment.L_M2_M3],
-                TileLineSegment.L_M2_M4 => LinesArray[(int) TileLineSegment.L_M2_M4],
+                TileLineSegment.L_M3_C0 => LinesArray[(int) TileLineSegment.L_M3_C0],
                 TileLineSegment.L_M3_C1 => LinesArray[(int) TileLineSegment.L_M3_C1],
                 TileLineSegment.L_M3_C2 => LinesArray[(int) TileLineSegment.L_M3_C2],
                 TileLineSegment.L_M3_C3 => LinesArray[(int) TileLineSegment.L_M3_C3],
-                TileLineSegment.L_M3_C4 => LinesArray[(int) TileLineSegment.L_M3_C4],
+                TileLineSegment.L_M3_M0 => LinesArray[(int) TileLineSegment.L_M3_M0],
                 TileLineSegment.L_M3_M1 => LinesArray[(int) TileLineSegment.L_M3_M1],
                 TileLineSegment.L_M3_M2 => LinesArray[(int) TileLineSegment.L_M3_M2],
-                TileLineSegment.L_M3_M4 => LinesArray[(int) TileLineSegment.L_M3_M4],
-                TileLineSegment.L_M4_C1 => LinesArray[(int) TileLineSegment.L_M4_C1],
-                TileLineSegment.L_M4_C2 => LinesArray[(int) TileLineSegment.L_M4_C2],
-                TileLineSegment.L_M4_C3 => LinesArray[(int) TileLineSegment.L_M4_C3],
-                TileLineSegment.L_M4_C4 => LinesArray[(int) TileLineSegment.L_M4_C4],
-                TileLineSegment.L_M4_M1 => LinesArray[(int) TileLineSegment.L_M4_M1],
-                TileLineSegment.L_M4_M2 => LinesArray[(int) TileLineSegment.L_M4_M2],
-                TileLineSegment.L_M4_M3 => LinesArray[(int) TileLineSegment.L_M4_M3],
                 _ => default
             };
         }
@@ -238,44 +237,44 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.FB_R0:
                     return new[]
                     {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
 
                 #region Half Block
                 case TileShapeAndRotation.HB_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M0),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M0_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.HB_R1:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C0),
                     };
                 case TileShapeAndRotation.HB_R2:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M0),
                     };
                 case TileShapeAndRotation.HB_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
                     };
                 #endregion
                 
@@ -283,30 +282,30 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.TB_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.TB_R1:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C0),
+                    };
+                case TileShapeAndRotation.TB_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_C1),
                     };
-                case TileShapeAndRotation.TB_R2:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C2),
-                    };
                 case TileShapeAndRotation.TB_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 #endregion
                 
@@ -314,58 +313,58 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.L1_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M0),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M0_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.L1_R1:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C0),
+                    };
+                case TileShapeAndRotation.L1_R2:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
                         GetTileLineSegmentPosition(TileLineSegment.L_M2_C1),
                     };
-                case TileShapeAndRotation.L1_R2:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C2),
-                    };
                 case TileShapeAndRotation.L1_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C0),
                     };
                 case TileShapeAndRotation.L1_R4:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.L1_R5:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C0),
                     };
                 case TileShapeAndRotation.L1_R6:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M1),
                     };
                 case TileShapeAndRotation.L1_R7:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C1),
                     };
                 #endregion
                 
@@ -373,37 +372,46 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.L2_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.L2_R1:
                     return new[]
                     {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C0),
                     };
                 case TileShapeAndRotation.L2_R2:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                         GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M0),
                     };
                 case TileShapeAndRotation.L2_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
 
                 case TileShapeAndRotation.L2_R4:
+                    return new[]
+                    {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M2_C0),
+                    };
+ 
+                case TileShapeAndRotation.L2_R5:
                     return new[]
                     {
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
@@ -411,31 +419,22 @@ namespace PlanetTileMap
                         GetTileLineSegmentPosition(TileLineSegment.L_C3_M3),
                         GetTileLineSegmentPosition(TileLineSegment.L_M3_C1),
                     };
- 
-                case TileShapeAndRotation.L2_R5:
-                    return new[]
-                    {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C2),
-                    };
 
                 case TileShapeAndRotation.L2_R6:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_M1),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M1_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_M0),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M0_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 case TileShapeAndRotation.L2_R7:
                     return new[]
                     {
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                         GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_M4),
-                        GetTileLineSegmentPosition(TileLineSegment.L_M4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_M3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_M3_C0),
                     };
                 #endregion
 
@@ -443,22 +442,22 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.QP_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                     };
                 case TileShapeAndRotation.QP_R1:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                     };
                 case TileShapeAndRotation.QP_R2:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                     };
                 case TileShapeAndRotation.QP_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 #endregion
 
@@ -466,22 +465,22 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.HP_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                     };
                 case TileShapeAndRotation.HP_R1:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                     };
                 case TileShapeAndRotation.HP_R2:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                     };
                 case TileShapeAndRotation.HP_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 #endregion
 
@@ -489,22 +488,22 @@ namespace PlanetTileMap
                 case TileShapeAndRotation.FP_R0:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C0_C1),
                     };
                 case TileShapeAndRotation.FP_R1:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C1_C2),
                     };
                 case TileShapeAndRotation.FP_R2:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C4),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C2_C3),
                     };
                 case TileShapeAndRotation.FP_R3:
                     return new[]
                     {
-                        GetTileLineSegmentPosition(TileLineSegment.L_C4_C1),
+                        GetTileLineSegmentPosition(TileLineSegment.L_C3_C0),
                     };
                 #endregion
                 

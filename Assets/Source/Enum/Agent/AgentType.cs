@@ -2,7 +2,7 @@ namespace Enums
 {
     public enum AgentType
     {
-        Player,
+        Player = 0,
         Agent,
         Slime,
         FlyingSlime,

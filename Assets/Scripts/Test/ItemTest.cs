@@ -1,17 +1,14 @@
 ﻿//import UnityEngine
 
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
-using Inventory;
-using Item;
 
 namespace Planet.Unity
 {
     class ItemTest : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField] UnityEngine.Material   Material;
-
-        public Planet.PlanetState       Planet;
+        
         AgentEntity                     Player;
 
         static bool Init = false;
@@ -27,7 +24,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
         }
 
         private void OnGUI()
@@ -35,12 +32,12 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            Planet.DrawHUD(Player);
+            GameState.Planet.DrawHUD(Player);
         }
 
         private void OnDrawGizmos()
         {
-            Planet.DrawDebug();
+            GameState.Planet.DrawDebug();
         }
 
         // Create the sprite atlas for testing purposes
@@ -49,51 +46,51 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 64);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
-            Player = Planet.AddPlayer(new Vec2f(6.0f, 4.0f));
-            Planet.InitializeHUD();
+
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
+            Player = planet.AddPlayer(new Vec2f(6.0f, 4.0f));
 
             int inventoryID = Player.agentInventory.InventoryID;
 
             GenerateMap();
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
 
-            var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
-            var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Pistol);
-            var SpawnPumpShotgun = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.Shotgun);
-            var SpawnWaterBottle = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.WaterBottle);
-            var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.MajestyPalm);
-            var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.HarvestTool);
-            var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.ScannerTool);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPistol, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPumpShotgun, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnWaterBottle, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnPlanterTool, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnHarvestTool, inventoryID);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnScannerTool, inventoryID);
+            var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SpawnEnemySlimeTool);
+            var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol);
+            var SpawnPumpShotgun = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Shotgun);
+            var SpawnWaterBottle = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.WaterBottle);
+            var SpawnPlanterTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.MajestyPalm);
+            var SpawnHarvestTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.HarvestTool);
+            var SpawnScannerTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.ScannerTool);
+            GameState.InventoryManager.AddItem(SpawnEnemyTool, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnPistol, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnPumpShotgun, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnWaterBottle, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnPlanterTool, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnHarvestTool, inventoryID);
+            GameState.InventoryManager.AddItem(SpawnScannerTool, inventoryID);
         }
 
         void GenerateMap()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var tileMap = ref GameState.Planet.TileMap;
 
              for (int i = 0; i < tileMap.MapSize.X; i++)
              {

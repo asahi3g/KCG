@@ -1,6 +1,5 @@
 //imports UnityEngine
 
-using Entitas;
 using KMath;
 
 public class CameraFollow
@@ -13,25 +12,25 @@ public class CameraFollow
     public float followSpeed = 3.0f;
 
     // Player Position
-    KMath.Vec2f PlayerPos;
+    Vec2f PlayerPos;
 
     // Follow Condition
     public bool canFollow = false;
 
     // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
-    public void Update(ref Planet.PlanetState planetState)
+    public void Update()
     {
         // Can Camera Follow Player?
         if(canFollow)
         {
             // Check if projectile has hit a enemy.
-            var entities = planetState.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
             foreach (var entity in entities)
             {
                 if(entity.isAgentPlayer)
                 {
                     // Set Player Position from Player Entity
-                    PlayerPos = new KMath.Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y) + offset;
+                    PlayerPos = new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y) + offset;
                 }
             }
 

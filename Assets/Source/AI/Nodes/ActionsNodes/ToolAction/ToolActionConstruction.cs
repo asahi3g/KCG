@@ -1,18 +1,20 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Node.Action
 {
     public class ToolActionConstruction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionConstruction; } }
+        public override NodeType Type => NodeType.ToolActionConstruction;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
@@ -23,8 +25,8 @@ namespace Node.Action
                 {
                     var mech = GameState.MechCreationApi.Get(itemEntity.itemMech.MechID);
 
-                    var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                    var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                    var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);
+                    var yRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.Y);
 
                     var allTilesAir = true;
 
@@ -54,7 +56,7 @@ namespace Node.Action
                     }
                 }
             }            
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

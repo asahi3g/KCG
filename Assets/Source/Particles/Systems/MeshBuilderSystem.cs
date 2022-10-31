@@ -14,9 +14,9 @@ namespace Particle
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
         }
 
-        public void UpdateMesh(ParticleContext context)
+        public void UpdateMesh()
         {
-            var entities = context.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleSprite2D));
+            var entities = GameState.Planet.EntitasContext.particle.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleSprite2D));
             
             Mesh.Clear();
             int index = 0;

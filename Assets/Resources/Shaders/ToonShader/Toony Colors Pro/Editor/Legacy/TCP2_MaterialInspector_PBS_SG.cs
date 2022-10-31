@@ -61,7 +61,9 @@ internal class TCP2_MaterialInspector_PBS_SG : ShaderGUI
 		public static string secondaryMapsText = "Secondary Maps";
 //		public static string forwardText = "Forward Rendering Options";
 		public static string renderingMode = "Rendering Mode";
-		public static GUIContent emissiveWarning = new GUIContent ("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
+		public static GUIContent emissiveWarning =
+			new GUIContent(
+				"Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
 		//public static GUIContent emissiveColorWarning = new GUIContent ("Ensure emissive color is non-black for emission to have effect.");
 		public static readonly string[] blendNames = Enum.GetNames (typeof (BlendMode));
 

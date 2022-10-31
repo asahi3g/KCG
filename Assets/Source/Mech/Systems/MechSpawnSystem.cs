@@ -6,12 +6,13 @@ namespace Mech
     public class MechSpawnSystem
     {
         static private int UniqueID;
-        public MechEntity Spawn(ref Planet.PlanetState planet, Vec2f position, MechType mechType)
+        public MechEntity Spawn(Vec2f position, MechType mechType)
         {
             ref MechProperties mechProperties = ref GameState.MechCreationApi.GetRef(mechType);
             var spriteSize = mechProperties.SpriteSize;
             var spriteId = mechProperties.SpriteID;
 
+            ref var planet = ref GameState.Planet;
             var entity = planet.EntitasContext.mech.CreateEntity();
             entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);
@@ -26,7 +27,7 @@ namespace Mech
                 entity.AddMechPlanter(false, -1);
 
             if (mechProperties.HasInventory())
-                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(planet.EntitasContext, mechProperties.InventoryModelID, "Chest").inventoryID.ID);
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryModelID, "Chest").inventoryID.ID);
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.Durability);

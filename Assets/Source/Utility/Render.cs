@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Object = UnityEngine.Object;
 
 namespace Utility
 {
@@ -23,7 +24,7 @@ namespace Utility
             // Initialzie materials.
             for (int i = 0; i < 64; i++)
             {
-                Materials[i] = Material.Instantiate(material);
+                Materials[i] = Object.Instantiate(material);
             }
         }
 
@@ -33,7 +34,7 @@ namespace Utility
             Array.Resize(ref Materials, Materials.Length + 64);
             for (int i = 0; i < 64; i++)
             {
-                Materials[currentLegnth + i] = Material.Instantiate(Materials[0]);
+                Materials[currentLegnth + i] = Object.Instantiate(Materials[0]);
             }
         }
 

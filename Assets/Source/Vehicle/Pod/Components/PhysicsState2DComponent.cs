@@ -1,7 +1,5 @@
 //imports UnityEngine
 
-using System.Collections;
-using System.Collections.Generic;
 using Entitas;
 using KMath;
 

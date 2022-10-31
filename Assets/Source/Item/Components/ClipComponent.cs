@@ -1,6 +1,4 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
-using Enums;
 
 namespace Item.FireWeapon
 {

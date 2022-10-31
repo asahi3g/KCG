@@ -5,11 +5,12 @@ namespace Node
 {
     public class ToolActionScanner : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionScanner; } }
+        public override NodeType Type => NodeType.ToolActionScanner;
 
         // Todo: Fix scanner item crashing bug and fix this action.
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
@@ -21,7 +22,7 @@ namespace Node
                 {
                     if (entity.hasMechType)
                     {
-                        if (entity.mechType.mechType == Enums.MechType.Planter)
+                        if (entity.mechType.mechType == MechType.Planter)
                         {
                             if (entity.hasMechPlanter)
                             {
@@ -33,7 +34,7 @@ namespace Node
                     }
                 }
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

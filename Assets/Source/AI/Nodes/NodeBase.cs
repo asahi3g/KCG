@@ -1,6 +1,4 @@
-﻿using AI.Movement;
-using Entitas;
-using Enums;
+﻿using Enums;
 using System;
 using System.Collections.Generic;
 
@@ -8,8 +6,8 @@ namespace Node
 { 
     public class NodeBase
     {
-        public virtual NodeType Type { get { return NodeType.None; } }
-        public virtual NodeGroup NodeGroup { get { return NodeGroup.PlayerAction; } }
+        public virtual NodeType Type => NodeType.None;
+        public virtual NodeGroup NodeGroup => NodeGroup.PlayerAction;
 
         // List of blackboard entries used in the node.
         // This allows states parameters to show in AI visual tool.
@@ -18,24 +16,24 @@ namespace Node
         protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
         // Run once at the beggining of the action.
-        public virtual void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public virtual void OnEnter(NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         // Run once per frame until action state is changed to sucess or fail.
-        public virtual void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public virtual void OnUpdate(NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
         // Run once if action succeeded.
-        public virtual void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public virtual void OnExit(NodeEntity nodeEntity)
         {
         }
 
         // Run once if action failed
-        public virtual void OnFail(ref Planet.PlanetState plane, NodeEntity nodeEntity)
+        public virtual void OnFail(NodeEntity nodeEntity)
         {
         }
     }

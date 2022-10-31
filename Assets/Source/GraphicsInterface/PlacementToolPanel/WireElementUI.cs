@@ -1,15 +1,16 @@
+//imports UnityEngine
+
 using Enums;
-using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
-    public class WireElementUI : ElementUI
+    public class WireElementUI : ElementUI, IToggleElement
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private Image borderImage;
 
-        public ImageWrapper Border;
+        private ImageWrapper border;
 
         public override void Init()
         {
@@ -21,13 +22,13 @@ namespace KGUI
 
             Icon = new ImageWrapper(iconImage, 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", AtlasType.Gui);
 
-            Border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
             Icon.Draw();
-            Border.Draw();
+            border.Draw();
         }
 
         public override void OnMouseStay()
@@ -45,8 +46,14 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if (item != null)
             {
-                item.itemTile.TileID = Enums.Tile.TileID.Wire;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Wire;
+                Toggle(true);
             }
+        }
+        
+        public void Toggle(bool value)
+        {
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }

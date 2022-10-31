@@ -1,15 +1,13 @@
 ﻿//imports UnityEngine
 
-
 using KMath;
-using Enums.Tile;
 
 namespace Planet.Unity
 {
     public class AimAITest : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField] UnityEngine.Material Material;
-        public PlanetState Planet;
+
         bool Init = false;
         float LastSpawn = 0;
 
@@ -24,7 +22,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
             const float SPAWN_DELAY = 2.0f;
             if ((UnityEngine.Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY)
@@ -39,10 +37,12 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             Vec2i mapSize = new Vec2i(32, 16);
-            Planet = new PlanetState();
-            Planet.Init(mapSize);
-            Planet.InitializeSystems(Material, transform);
-            Planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
+
+            ref var planet = ref GameState.Planet;
+
+            planet.Init(mapSize);
+            planet.InitializeSystems(Material, transform);
+            planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
             LastSpawn = UnityEngine.Time.realtimeSinceStartup;
@@ -50,14 +50,15 @@ namespace Planet.Unity
 
         private void GenerateMap()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)
             {
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
                     if (j == 0)
-                        tileMap.SetFrontTile(i, j, TileID.Moon);
+                        tileMap.SetFrontTile(i, j, Enums.PlanetTileMap.TileID.Moon);
                 }
             }
         }
@@ -65,7 +66,7 @@ namespace Planet.Unity
         private void SpawnTarget()
         {
             float x = UnityEngine.Random.Range(1.0f, 31.0f);
-            Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
+            GameState.Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
         }
     }
 }

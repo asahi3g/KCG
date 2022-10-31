@@ -9,10 +9,10 @@ namespace KMath
     public struct Vec2f
     {
         // Shorthand for writing Vec2f(0, 0).
-        public static Vec2f Zero { [MethodImpl((MethodImplOptions) 256)] get; } = new(0f, 0f);
+        public static Vec2f Zero { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(0f, 0f);
 
         // Shorthand for writing Vector2(1, 1).
-        public static Vec2f One { [MethodImpl((MethodImplOptions) 256)] get; } = new(1f, 1f);
+        public static Vec2f One { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(1f, 1f);
         
         public float X;
         public float Y;
@@ -71,20 +71,21 @@ namespace KMath
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(Vec2f other) => this.X * other.X + this.Y * other.Y;
+        public float Dot(Vec2f other) => X * other.X + Y * other.Y;
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(float x, float y) => this.X * x + this.Y * y;
+        public float Dot(float x, float y) => X * x + Y * y;
 
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) => new(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
+        public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) =>
+            new Vec2f(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
 
         // Makes this vector have a magnitude of 1
         [MethodImpl((MethodImplOptions) 256)]
         public Vec2f Normalize()
         {
-            var magnitude = this.Magnitude;
+            var magnitude = Magnitude;
             if (magnitude > 9.99999974737875E-06)
                 this /= magnitude;
             else
@@ -118,8 +119,8 @@ namespace KMath
         // Returns the 2D vector perpendicular to this 2D vector. The result is always rotated 90-degrees in a counter-clockwise direction for a
         // 2D coordinate system where the positive Y axis goes up.
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f Perpendicular(Vec2f inDirection) => new(-inDirection.Y, inDirection.X);
-         
+        public static Vec2f Perpendicular(Vec2f inDirection) => new Vec2f(-inDirection.Y, inDirection.X);
+
         // Angle in rad
         [MethodImpl((MethodImplOptions)256)]
         public Vec2f Rotate(float angle)
@@ -182,27 +183,27 @@ namespace KMath
         }
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator *(Vec2f a, float d) => new(a.X * d, a.Y * d);
+        public static Vec2f operator *(Vec2f a, float d) => new Vec2f(a.X * d, a.Y * d);
 
 
-        public static Vec2f operator *(Vec2f a, Vec2f b) => new(a.X * b.X, a.Y * b.Y);
-
-        [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator *(float d, Vec2f a) => new(a.X * d, a.Y * d);
+        public static Vec2f operator *(Vec2f a, Vec2f b) => new Vec2f(a.X * b.X, a.Y * b.Y);
 
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator /(Vec2f a, float d) => new(a.X / d, a.Y / d);
+        public static Vec2f operator *(float d, Vec2f a) => new Vec2f(a.X * d, a.Y * d);
+
+        [MethodImpl((MethodImplOptions) 256)]
+        public static Vec2f operator /(Vec2f a, float d) => new Vec2f(a.X / d, a.Y / d);
         
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a, Vec2f b) => new(a.X - b.X, a.Y - b.Y);
+        public static Vec2f operator -(Vec2f a, Vec2f b) => new Vec2f(a.X - b.X, a.Y - b.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a, float b) => new(a.X - b, a.Y - b);
+        public static Vec2f operator -(Vec2f a, float b) => new Vec2f(a.X - b, a.Y - b);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator -(Vec2f a) => new(-a.X, -a.Y);
+        public static Vec2f operator -(Vec2f a) => new Vec2f(-a.X, -a.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator +(Vec2f a, Vec2f b) => new(a.X + b.X, a.Y + b.Y);
+        public static Vec2f operator +(Vec2f a, Vec2f b) => new Vec2f(a.X + b.X, a.Y + b.Y);
         [MethodImpl((MethodImplOptions) 256)]
-        public static Vec2f operator +(Vec2f a, float b) => new(a.X + b, a.Y + b);
+        public static Vec2f operator +(Vec2f a, float b) => new Vec2f(a.X + b, a.Y + b);
         [MethodImpl((MethodImplOptions) 256)]
         public static bool operator ==(Vec2f lhs, Vec2f rhs)
         {

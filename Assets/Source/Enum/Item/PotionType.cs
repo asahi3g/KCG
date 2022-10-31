@@ -1,5 +1,3 @@
-using System;
-
 namespace Enums
 {
     public enum PotionType

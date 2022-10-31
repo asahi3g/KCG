@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using ToonyColorsPro.ShaderGenerator;
 using ToonyColorsPro.Utilities;
 using System.IO;
 using System.Globalization;
@@ -29,7 +27,8 @@ namespace ToonyColorsPro
 					[Serialization.SerializeAs("displayName")] internal string displayName;
 					[Serialization.SerializeAs("blockName")] internal string blockName;
 					[Serialization.SerializeAs("program")] internal ShaderProperty.ProgramType program;
-					[Serialization.SerializeAs("shaderProperties")] internal List<ShaderProperty> shaderProperties = new List<ShaderProperty>();
+					[Serialization.SerializeAs("shaderProperties")] internal List<ShaderProperty> shaderProperties =
+						new List<ShaderProperty>();
 					internal InjectableBlock block;
 
 					// Contains the serialized properties as text, temporarily:
@@ -89,9 +88,9 @@ namespace ToonyColorsPro
 						this.displayName = displayName;
 						this.program = program;
 						this.block = block;
-						this.blockName = block.name;
+						blockName = block.name;
 
-						this.UpdateShaderProperties();
+						UpdateShaderProperties();
 					}
 
 					string GetShaderPropertyNameSuffix()
@@ -107,7 +106,7 @@ namespace ToonyColorsPro
 							{
 								string spName = string.Format("{0}{1}", spi.name, GetShaderPropertyNameSuffix());
 								var sp = new ShaderProperty(spName, spi.variableType);
-								sp.Program = this.program;
+								sp.Program = program;
 								sp.DisplayName = spi.name;
 								sp.deferredSampling = true;
 
@@ -280,7 +279,8 @@ namespace ToonyColorsPro
 					[Serialization.SerializeAs("guid")] string guid;
 					[Serialization.SerializeAs("filename")] string filename;
 
-					[Serialization.SerializeAs("injectedPoints")] internal List<InjectedPoint> injectedPoints = new List<InjectedPoint>();
+					[Serialization.SerializeAs("injectedPoints")] internal List<InjectedPoint> injectedPoints =
+						new List<InjectedPoint>();
 					internal List<InjectableBlock> injectableBlocks = new List<InjectableBlock>();
 					int replaceBlockCount;
 
@@ -319,10 +319,10 @@ namespace ToonyColorsPro
 								return;
 							}
 
-							var matchingBlock = this.injectableBlocks.Find(block => block.name == ip.blockName);
+							var matchingBlock = injectableBlocks.Find(block => block.name == ip.blockName);
 							if (matchingBlock == null)
 							{
-								Debug.LogError(string.Format("Block wasn't found in source file. Block name: \"{0}\", Source file: \"{1}\"", ip.blockName, this.filename));
+								Debug.LogError(string.Format("Block wasn't found in source file. Block name: \"{0}\", Source file: \"{1}\"", ip.blockName, filename));
 								injectedPoints.RemoveAt(i);
 								return;
 							}
@@ -370,7 +370,7 @@ namespace ToonyColorsPro
 								InjectableBlock currentBlock = null;
 								var codeLines = new List<string>();
 
-								System.Action addCurrentBlock = () =>
+								Action addCurrentBlock = () =>
 								{
 									if (currentBlock != null)
 									{
@@ -438,11 +438,11 @@ namespace ToonyColorsPro
 										{
 											if (currentBlock == null)
 											{
-												throw new System.Exception("'WITH:' tag outside of block");
+												throw new Exception("'WITH:' tag outside of block");
 											}
 											if (!currentBlock.isReplaceBlock)
 											{
-												throw new System.Exception("'WITH:' tag only works with 'REPLACE:' blocks");
+												throw new Exception("'WITH:' tag only works with 'REPLACE:' blocks");
 											}
 
 											// replace block replacement
@@ -452,7 +452,7 @@ namespace ToonyColorsPro
 										{
 											if (currentBlock == null)
 											{
-												throw new System.Exception("'Inject @' tag outside of block");
+												throw new Exception("'Inject @' tag outside of block");
 											}
 
 											string autoInjectPoint = trimmedLine.Substring("//# inject @".Length).Trim();
@@ -462,11 +462,11 @@ namespace ToonyColorsPro
 										{
 											if (currentBlock == null)
 											{
-												throw new System.Exception("'INFO:' tag outside of block");
+												throw new Exception("'INFO:' tag outside of block");
 											}
 											if (!currentBlock.isReplaceBlock)
 											{
-												throw new System.Exception("'INFO:' tag only works with 'REPLACE:' blocks");
+												throw new Exception("'INFO:' tag only works with 'REPLACE:' blocks");
 											}
 
 											currentBlock.info = trimmedLine.Substring("//# info:".Length).Trim();
@@ -476,10 +476,10 @@ namespace ToonyColorsPro
 										{
 											if (currentBlock == null)
 											{
-												throw new System.Exception("Property declaration outside of block");
+												throw new Exception("Property declaration outside of block");
 											}
 
-											string[] parts = trimmedLine.Split(new char[] { ' ', '\t' }, System.StringSplitOptions.RemoveEmptyEntries);
+											string[] parts = trimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
 											var variableType = ShaderProperty.VariableType.@float;
 											switch (parts[1])
@@ -490,7 +490,7 @@ namespace ToonyColorsPro
 												case "float4": variableType = ShaderProperty.VariableType.float4; break;
 												case "color": variableType = ShaderProperty.VariableType.color_rgba; break;
 												case "color_rgba": variableType = ShaderProperty.VariableType.color_rgba; break;
-												default: throw new System.Exception("Invalid parsed property type: " + parts[1]);
+												default: throw new Exception("Invalid parsed property type: " + parts[1]);
 											}
 											string name = parts[2];
 											string defaultValue = (parts.Length >= 4) ? parts[3] : null;
@@ -500,7 +500,7 @@ namespace ToonyColorsPro
 											{
 												if (existingSpi.name == name)
 												{
-													throw new System.Exception("A property already exists with the same name: " + name);
+													throw new Exception("A property already exists with the same name: " + name);
 												}
 											}
 
@@ -529,7 +529,7 @@ namespace ToonyColorsPro
 								}
 								addCurrentBlock();
 							}
-							catch (System.Exception e)
+							catch (Exception e)
 							{
 								Debug.LogError("Couldn't load code injection include file, error at line " + lineNb + ":\n" + e.ToString());
 								return false;
@@ -571,7 +571,7 @@ namespace ToonyColorsPro
 						// Include file
 
 						TextAsset newIncludeFile = includeFile;
-						System.Action parseNewFile = () =>
+						Action parseNewFile = () =>
 						{
 							if (newIncludeFile != includeFile)
 							{
@@ -797,7 +797,7 @@ namespace ToonyColorsPro
 						{
 							if (block.isReplaceBlock) continue;
 
-							if (this.injectedPoints.Exists(item => item.block == block))
+							if (injectedPoints.Exists(item => item.block == block))
 							{
 								blocksMenu.AddDisabledItem(new GUIContent(block.name + "(already added)"));
 							}
@@ -846,7 +846,7 @@ namespace ToonyColorsPro
 					markInjectionPoints = EditorGUILayout.Toggle(TCP2_GUI.TempContent("Mark injection points", "Add a comment for each injection point in the output file, to easily identify their locations, e.g.\n\"// Injection Point: Properties/Start\""), markInjectionPoints);
 
 					// Info
-					if (this.injectedFiles.Count == 0)
+					if (injectedFiles.Count == 0)
 					{
 						EditorGUILayout.HelpBox("No injected file added.", MessageType.Info);
 					}
@@ -876,7 +876,7 @@ namespace ToonyColorsPro
 
 					if (injectedFileToRemove >= 0)
 					{
-						this.injectedFiles.RemoveAt(injectedFileToRemove);
+						injectedFiles.RemoveAt(injectedFileToRemove);
 					}
 
 					// Add button
@@ -945,7 +945,7 @@ namespace ToonyColorsPro
 							if (block.isReplaceBlock)
 							{
 								string[] replaceLines = new string[block.codeLines.Length + 3];
-								System.Array.Copy(block.codeLines, 0, replaceLines, 2, block.codeLines.Length);
+								Array.Copy(block.codeLines, 0, replaceLines, 2, block.codeLines.Length);
 								replaceLines[0] = "//================================";
 								replaceLines[1] = "// Replaced through Code Injection:";
 								replaceLines[replaceLines.Length-1] = "//================================";

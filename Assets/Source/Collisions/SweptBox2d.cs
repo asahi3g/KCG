@@ -1,4 +1,3 @@
-using Entitas;
 using KMath;
 using System;
 
@@ -44,7 +43,7 @@ namespace Collisions
                 AABox2D b1AABB = new AABox2D(new Vec2f(b1.x, b1.y) + moveDir * i, new Vec2f(b1.w, b1.h));
                 AABox2D b2AABB = new AABox2D(new Vec2f(b2.x, b2.y), new Vec2f(b2.w, b2.h));
 
-                 if (Collisions.RectOverlapRect(b1AABB.xmin, b1AABB.xmax, b1AABB.ymin, b1AABB.ymax,
+                 if (RectOverlapRect(b1AABB.xmin, b1AABB.xmax, b1AABB.ymin, b1AABB.ymax,
                         b2AABB.xmin, b2AABB.xmax, b2AABB.ymin, b2AABB.ymax))
                 {
                     Vec2f centerB2 = new Vec2f(b2AABB.xmin + b2.w * 0.5f, b2AABB.ymin + b2.h * 0.5f);

@@ -2,10 +2,9 @@
 
 using System;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
-using Mech;
 
 
 namespace Item

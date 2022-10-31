@@ -102,7 +102,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R4"
+                 "value":"TB_R2"
                 }]
         }, 
         {
@@ -111,7 +111,7 @@
                 {
                  "name":"Type",
                  "type":"string",
-                 "value":"TB_R5"
+                 "value":"TB_R3"
                 }]
         }, 
         {

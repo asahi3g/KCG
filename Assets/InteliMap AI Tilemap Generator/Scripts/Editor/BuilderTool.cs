@@ -16,10 +16,7 @@ namespace InteliMap
             map = FindObjectOfType<Tilemap>();
         }
 
-        public override Color handleColor
-        {
-            get { return Color.magenta; }
-        }
+        public override Color handleColor => Color.magenta;
 
         public override void OnToolGUI(EditorWindow window)
         {

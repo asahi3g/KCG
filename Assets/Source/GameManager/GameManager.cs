@@ -1,13 +1,9 @@
 //imports UnityEngine
 
-using Scripts.SystemView;
-
 // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
 
 public class GameManager : UnityEngine.MonoBehaviour
 {
-    public SystemState CurrentSystemState;
-
     public static bool BackgroundDraw = true;
 
     //Documentation: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html

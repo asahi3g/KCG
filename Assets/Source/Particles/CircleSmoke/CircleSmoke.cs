@@ -3,6 +3,7 @@
 using Collisions;
 using KMath;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Particle
@@ -10,12 +11,12 @@ namespace Particle
     public static class CircleSmoke
     {
         // Lists
-        private static List<UnityEngine.MeshRenderer> Smokes = new();
-        private static List<Vec2f> Velocities = new();
-        private static List<Vec2f> Positions = new();
-        private static List<Vec2f> Scales = new();
-        private static List<AABox2D> Collisions = new();
-        private static List<UnityEngine.Material> Materials = new();
+        private static List<UnityEngine.MeshRenderer> Smokes = new List<MeshRenderer>();
+        private static List<Vec2f> Velocities = new List<Vec2f>();
+        private static List<Vec2f> Positions = new List<Vec2f>();
+        private static List<Vec2f> Scales = new List<Vec2f>();
+        private static List<AABox2D> Collisions = new List<AABox2D>();
+        private static List<UnityEngine.Material> Materials = new List<Material>();
 
         public static void Spawn(int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
         {
@@ -28,11 +29,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -65,11 +66,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -102,11 +103,11 @@ namespace Particle
             {
                 UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
                 CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                UnityEngine.GameObject.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
                 UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
                 CircleSmoke.name = "CircleSmoke";
 
-                UnityEngine.Material SmokeMaterial = UnityEngine.MonoBehaviour.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
 
                 meshRenderer.material = SmokeMaterial;
 
@@ -129,7 +130,7 @@ namespace Particle
             }
         }
 
-        public static void Update(ref PlanetTileMap.TileMap tileMap)
+        public static void Update()
         {
             // Decrease Alpha Blending over time
             // Apply Velocity
@@ -153,23 +154,23 @@ namespace Particle
                         Smokes[i].transform.localScale += new UnityEngine.Vector3(UnityEngine.Random.Range(0.0f, Scales[i].X), UnityEngine.Random.Range(0.0f, Scales[i].Y), 0.0f) * UnityEngine.Time.deltaTime;
 
                         AABox2D tempCollision = Collisions[i];
-                        if (tempCollision.IsCollidingTop(tileMap, Velocities[i]))
+                        if (tempCollision.IsCollidingTop(GameState.Planet.TileMap, Velocities[i]))
                         {
                             Smokes[i].transform.position += new UnityEngine.Vector3(0f, UnityEngine.Random.Range(0.0f, -Velocities[i].Y - UnityEngine.Random.Range(0, 12)), 0.0f) * UnityEngine.Time.deltaTime;
                         }
 
-                        if(tempCollision.IsCollidingRight(tileMap, Velocities[i]))
+                        if(tempCollision.IsCollidingRight(GameState.Planet.TileMap,Velocities[i]))
                         {
                             Smokes[i].transform.position += new UnityEngine.Vector3(UnityEngine.Random.Range(0.0f, -Velocities[i].X - UnityEngine.Random.Range(-1, 12)), 0f) * UnityEngine.Time.deltaTime;
                         }
-                        else if(tempCollision.IsCollidingLeft(tileMap, Velocities[i]))
+                        else if(tempCollision.IsCollidingLeft(Velocities[i]))
                         {
                             Smokes[i].transform.position += new UnityEngine.Vector3(UnityEngine.Random.Range(0.0f, Velocities[i].X + UnityEngine.Random.Range(-1, 12)), 0f) * UnityEngine.Time.deltaTime;
                         }
                         Collisions[i] = tempCollision;
 
                         if (Materials[i].color.a <= 0.5f)
-                            UnityEngine.GameObject.Destroy(Smokes[i].gameObject);
+                            UnityEngine.Object.Destroy(Smokes[i].gameObject);
                     }
                 }
             }

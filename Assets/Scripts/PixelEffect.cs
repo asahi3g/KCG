@@ -1,23 +1,22 @@
-using UnityEngine;
-using System.Collections;
+//imports UnityEngine
 
 namespace PixelEffect
 {
-    [ExecuteInEditMode]
-    [RequireComponent(typeof(Camera))]
-    public class PixelEffect : MonoBehaviour
+    [UnityEngine.ExecuteInEditMode]
+    [UnityEngine.RequireComponent(typeof(UnityEngine.Camera))]
+    public class PixelEffect : UnityEngine.MonoBehaviour
     {
-        [Header("Pixels size")]
-        [Range(1.0f, 20f)]
+        [UnityEngine.Header("Pixels size")]
+        [UnityEngine.Range(1.0f, 20f)]
         public float pixelWidth = 0.05f;
-        [Range(1.0f, 20f)]
+        [UnityEngine.Range(1.0f, 20f)]
         public float pixelHeight = 0.05f;
 
-        private Material pixelMaterial = null;
+        private UnityEngine.Material pixelMaterial = null;
 
         void SetMaterial()
         {
-            pixelMaterial = new Material(Shader.Find("Hidden/PixelShader"));
+            pixelMaterial = new UnityEngine.Material(UnityEngine.Shader.Find("Hidden/PixelShader"));
         }
 
         void OnEnable()
@@ -30,12 +29,12 @@ namespace PixelEffect
             pixelMaterial = null;
         }
 
-        void OnRenderImage(RenderTexture source, RenderTexture destination)
+        void OnRenderImage(UnityEngine.RenderTexture source, UnityEngine.RenderTexture destination)
         {
 
             if (pixelMaterial == null)
             {
-                Graphics.Blit(source, destination);
+                UnityEngine.Graphics.Blit(source, destination);
                 return;
             }
 
@@ -44,7 +43,7 @@ namespace PixelEffect
             pixelMaterial.SetFloat("_ScreenWidth", source.width);
             pixelMaterial.SetFloat("_ScreenHeight", source.height);
 
-            Graphics.Blit(source, destination, pixelMaterial);
+            UnityEngine.Graphics.Blit(source, destination, pixelMaterial);
         }
     }
 

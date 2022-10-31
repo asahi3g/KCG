@@ -3,6 +3,7 @@ namespace Enums
 
     public enum GeometryTileShape
     {
+        Error,
         SB_R0,
         SA_R0,
         HB_R0,

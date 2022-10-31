@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 
 namespace CollisionsTest
 {
     public static class CircleTileMapSweepCollision
     {
-        private static Vec2i[] GetTilesRegionBroadPhase(PlanetTileMap.TileMap tileMap, int xmin, int xmax, int ymin, int ymax)
+        private static Vec2i[] GetTilesRegionBroadPhase(int xmin, int xmax, int ymin, int ymax)
         {
             List<Vec2i> positions = new List<Vec2i>();
 
@@ -16,7 +16,7 @@ namespace CollisionsTest
             {
                 for (int j = ymin; j < ymax; j++)
                 {
-                    var tile = tileMap.GetTile(i, j);
+                    var tile = GameState.Planet.TileMap.GetTile(i, j);
                     if (tile.FrontTileID != TileID.Air)
                     {
                         positions.Add(new Vec2i(i, j));
@@ -78,11 +78,11 @@ namespace CollisionsTest
             return Vec2f.Distance(edgePosition, closestPoint);
         }
 
-        public static Hit GetCollisionHitCircle_AABB(PlanetTileMap.TileMap tileMap, float radius, Vec2f center, Vec2f velocity)
+        public static Hit GetCollisionHitCircle_AABB(float radius, Vec2f center, Vec2f velocity)
         {
             var (r1, r2) = GetRegions(center.X - radius, center.X + radius, center.Y - radius, center.Y + radius, velocity);
-            var R1_tiles = GetTilesRegionBroadPhase(tileMap, (int)r1.xmin, (int)r1.xmax, (int)r1.ymin, (int)r1.ymax);
-            var R2_tiles = GetTilesRegionBroadPhase(tileMap, (int)r2.xmin, (int)r2.xmax, (int)r2.ymin, (int)r2.ymax);
+            var R1_tiles = GetTilesRegionBroadPhase((int)r1.xmin, (int)r1.xmax, (int)r1.ymin, (int)r1.ymax);
+            var R2_tiles = GetTilesRegionBroadPhase((int)r2.xmin, (int)r2.xmax, (int)r2.ymin, (int)r2.ymax);
             
             float lowestTime = float.MaxValue;
             Vec2i nearestTilePos = default;

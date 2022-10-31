@@ -18,12 +18,12 @@ namespace Collisions
                 // get the next vertex
                 Vec2f p2 = Vertices[(i + 1 == Vertices.Length) ? 0 : i + 1];
                 // subtract the two to get the edge vector
-                Vec2f edge = p1 - p2;
+                Vec2f edge = p2 - p1;
                 // get either perpendicular vector
-                Vec2f normal = edge;
-                normal.X = -normal.X;
+                Vec2f normal = new Vec2f(edge.Y, -edge.X);
+
                 // the perp method is just (x, y) =&gt; (-y, x) or (y, -x)
-                axes[i] = normal;
+                axes[i] = normal.Normalize();
             }
 
             return axes;

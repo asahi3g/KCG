@@ -2,15 +2,14 @@
 
 using AI;
 using Node;
-using Planet;
 using System.Collections.Generic;
 
 public partial class NodeEntity
 {
-    public ItemInventoryEntity GetItem(ref PlanetState planet)
+    public ItemInventoryEntity GetItem()
     {
-        AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeOwner.AgentID);
-        return agentEntity.GetItem(ref planet);
+        AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeOwner.AgentID);
+        return agentEntity.GetItem();
     }
 
     public bool AddChild(NodeEntity nodeEntity) => AddChild(nodeEntity.nodeID.ID);

@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//imports UnityEngine
+
 using Planet.Background;
 
-public class PlanetVisualEffectsTest : MonoBehaviour
+public class PlanetVisualEffectsTest : UnityEngine.MonoBehaviour
 {
     // ATLAS
-    [SerializeField]
-    private Material Material;
+    [UnityEngine.SerializeField]
+    private UnityEngine.Material Material;
 
     PlanetBackgroundVisualEffects planetVisualEffects;
 

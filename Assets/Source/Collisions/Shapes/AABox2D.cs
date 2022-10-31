@@ -1,5 +1,3 @@
-using System;
-
 namespace KMath
 {
     /*
@@ -16,7 +14,7 @@ namespace KMath
     // Axis-aligned Bounding Box 2D
     public struct AABox2D
     {
-        public Vec2f center => new(xmin + halfSize.X, ymin + halfSize.Y);
+        public Vec2f center => new Vec2f(xmin + halfSize.X, ymin + halfSize.Y);
         
         public float xmin;
         public float xmax;

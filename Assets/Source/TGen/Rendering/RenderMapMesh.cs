@@ -1,18 +1,18 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using System;
-using UnityEngine;
 using Utility;
 
 namespace TGen
 {
-    
     public class RenderMapMesh
     {
         FrameMesh Mesh;
         public static readonly int LayerCount = Enum.GetNames(typeof(MapLayerType)).Length;
         public static bool TileCollisionDebugging = false;
 
-        public void Initialize(Material material, Transform transform, int drawOrder)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder)
         {
             Mesh = new FrameMesh(("TGenMesh"), material, transform,
                     GameState.TileSpriteAtlasManager.GetSpriteAtlas(0), drawOrder);           
@@ -20,27 +20,27 @@ namespace TGen
 
         public void UpdateMesh(Grid grid)
         {
-            if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
+            if (UnityEngine.Camera.main == null) { UnityEngine.Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
-            var cam = Camera.main;
-            if (!cam.orthographic) { Debug.LogError("Camera.main is not Orthographic, failed to create edge colliders"); return; }
+            var cam = UnityEngine.Camera.main;
+            if (!cam.orthographic) { UnityEngine.Debug.LogError("Camera.main is not Orthographic, failed to create edge colliders"); return; }
 
             Mesh.Clear();
 
             if (TileCollisionDebugging)
                 return;
 
-            var bottomLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
-            var topLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
-            var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
-            var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
+            var bottomLeft = (UnityEngine.Vector2)cam.ScreenToWorldPoint(new UnityEngine.Vector3(0, 0, cam.nearClipPlane));
+            var topLeft = (UnityEngine.Vector2)cam.ScreenToWorldPoint(new UnityEngine.Vector3(0, cam.pixelHeight, cam.nearClipPlane));
+            var topRight = (UnityEngine.Vector2)cam.ScreenToWorldPoint(new UnityEngine.Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
+            var bottomRight = (UnityEngine.Vector2)cam.ScreenToWorldPoint(new UnityEngine.Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
 
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < grid.GridTiles.GetLength(1) && y <= (topRight.y + 10); y++)
             {
                 for (int x = (int)(bottomLeft.x - 10); x < grid.GridTiles.GetLength(0) && x <= (bottomRight.x + 10); x++)
                 {
-                    if (!Utility.ObjectMesh.isOnScreen(x, y))
+                    if (!ObjectMesh.isOnScreen(x, y))
                         continue;
 
                     if (x >= 0 && y >= 0)
@@ -54,7 +54,7 @@ namespace TGen
                             if (spriteId >= 0)
                             {
                                 {
-                                    Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.TGen).TextureCoords;
+                                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.TGen).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;

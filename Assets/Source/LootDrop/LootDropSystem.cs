@@ -22,7 +22,7 @@ namespace LootDrop
             DropEntities[length++].InventoryID = inventoryID;
         }
 
-        public void Update(Contexts contexts)
+        public void Update()
         {
             while (length > 0)
             {
@@ -50,12 +50,12 @@ namespace LootDrop
                     if (entity.InventoryID < 0)
                     {
                         for(int j = 0; j < itemCountList[i]; j++)
-                            GameState.ItemSpawnSystem.SpawnItemParticle(contexts, tableEntry.ItemDrops[i].Type, entity.DropPos);
+                            GameState.ItemSpawnSystem.SpawnItemParticle(tableEntry.ItemDrops[i].Type, entity.DropPos);
                     }
                     else
                     {
                         for (int j = 0; j < itemCountList[i]; j++)
-                            Admin.AdminAPI.AddItem(GameState.InventoryManager, entity.InventoryID, tableEntry.ItemDrops[i].Type, contexts);
+                            Admin.AdminAPI.AddItem(GameState.InventoryManager, entity.InventoryID, tableEntry.ItemDrops[i].Type);
                     }
                 }
             }

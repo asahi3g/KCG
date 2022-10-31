@@ -1,6 +1,4 @@
-using System.Collections;
-using UnityEngine;
-using UnityEditor;
+
 
 /*[CustomEditor(typeof(SpriteSheetManager))]
 public class SpriteManagerEditor : Editor

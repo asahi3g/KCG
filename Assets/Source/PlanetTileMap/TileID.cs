@@ -1,4 +1,4 @@
-﻿namespace Enums.Tile
+﻿namespace Enums.PlanetTileMap
 {
     public enum TileID
     {

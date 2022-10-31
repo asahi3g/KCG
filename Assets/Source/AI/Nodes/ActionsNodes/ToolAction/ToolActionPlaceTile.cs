@@ -1,6 +1,6 @@
 ﻿using Enums;
 using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Node
 {
@@ -8,9 +8,10 @@ namespace Node
     {
         public override NodeType Type => NodeType.ToolActionPlaceTile;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ref var planet = ref GameState.Planet;
+            var itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)
             {
@@ -59,7 +60,7 @@ namespace Node
                     }
                 }   
             }
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

@@ -2,8 +2,7 @@ namespace Enums
 {
     public enum PodType
     {
-        Error = -1,
-        Default,
+        Default = 0,
         Insect,
         Marine
     }

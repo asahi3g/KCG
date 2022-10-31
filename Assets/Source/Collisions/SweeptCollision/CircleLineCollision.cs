@@ -163,7 +163,7 @@ namespace Collisions
             collisionPoint += tmpP1;
 
 
-            result.Normal = (collisionPoint - originalPoint).Normalize();
+            result.Normal = (originalPoint - collisionPoint).Normalize();
 
 
             return result;
@@ -294,8 +294,8 @@ namespace Collisions
         public static Vec2f rotatePoint(Vec2f pos, float angle) 
         {
             Vec2f newv;
-            newv.X = pos.X * System.MathF.Cos(angle) - pos.Y * System.MathF.Sin(angle);
-            newv.Y = pos.X * System.MathF.Sin(angle) + pos.Y * System.MathF.Cos(angle);
+            newv.X = pos.X * MathF.Cos(angle) - pos.Y * MathF.Sin(angle);
+            newv.Y = pos.X * MathF.Sin(angle) + pos.Y * MathF.Cos(angle);
 
             return newv;
         }

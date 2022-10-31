@@ -1,5 +1,4 @@
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
 
 namespace Animation
 {

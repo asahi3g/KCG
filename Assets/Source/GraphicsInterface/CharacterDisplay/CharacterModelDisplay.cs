@@ -33,7 +33,7 @@ namespace KGui
 
             Material.mainTexture = _Texture;
 
-            UnityEngine.Camera OffscreenCamera = UnityEngine.Camera.Instantiate(UnityEngine.Camera.main);
+            UnityEngine.Camera OffscreenCamera = UnityEngine.Object.Instantiate(UnityEngine.Camera.main);
             OffscreenCamera.backgroundColor = new UnityEngine.Color(0.2f, 0.2f, 0.2f, 0.0f);
             OffscreenCamera.name = "OffScreen camera";
 
@@ -41,7 +41,7 @@ namespace KGui
             {
                 if (!(comp is UnityEngine.Transform) && !(comp is UnityEngine.Camera))
                 {
-                    UnityEngine.Component.Destroy(comp);
+                    UnityEngine.Object.Destroy(comp);
                 }
             }
 
@@ -63,10 +63,10 @@ namespace KGui
         {
             if (Model != null)
             {
-                UnityEngine.GameObject.Destroy(Model);
+                UnityEngine.Object.Destroy(Model);
             }
 
-            Model = UnityEngine.GameObject.Instantiate(model);
+            Model = UnityEngine.Object.Instantiate(model);
             Model.transform.position = new UnityEngine.Vector3(-1000.0f - 2.5f, -1000.0f - 4.5f, 20.0f);
             Model.transform.localScale = new UnityEngine.Vector3(1.5f * 4, 1.5f * 4, 1.5f * 4);
 
@@ -91,7 +91,7 @@ namespace KGui
             {
                 if (GuiTexture != null)
                 {
-                    UnityEngine.Texture2D.Destroy(GuiTexture);
+                    UnityEngine.Object.Destroy(GuiTexture);
                 }
 
                 GuiTexture = new UnityEngine.Texture2D((int)width, (int)height, UnityEngine.TextureFormat.RGBA32, false);

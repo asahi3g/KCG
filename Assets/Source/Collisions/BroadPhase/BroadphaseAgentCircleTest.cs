@@ -1,5 +1,3 @@
-
-using Entitas;
 using KMath;
 using System;
 
@@ -10,12 +8,12 @@ namespace Collisions
 
     public static partial class Collisions
     {
-        public static int[] BroadphaseAgentCircleTest(Planet.PlanetState planet, Vec2f point, float distance)
+        public static int[] BroadphaseAgentCircleTest(Vec2f point, float distance)
         {
             int[] result = new int[128];
             int resultCount = 0;
 
-            Agent.AgentList agentList = planet.AgentList;
+            Agent.AgentList agentList = GameState.Planet.AgentList;
 
 
             for(int i = 0; i < agentList.Length; i++)

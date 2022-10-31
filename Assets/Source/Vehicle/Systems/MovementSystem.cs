@@ -1,11 +1,4 @@
-
-
 using Entitas;
-using System.Collections;
-using KMath;
-using Projectile;
-using Enums;
-using UnityEngine.UIElements;
 
 namespace Vehicle
 {
@@ -19,11 +12,11 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public void UpdateEx(VehicleContext vehicleContexts)
+        public void UpdateEx()
         {
             // Get Vehicle Entites
             IGroup<VehicleEntity> entities =
-            vehicleContexts.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
+                GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
             foreach (var vehicle in entities)
             {
                 VehicleProperties vehicleProperties =

@@ -1,18 +1,14 @@
 //import UnityEngine
 
-using System;
-using KMath;
-using Enums;
-
 namespace Agent
 {
     public class Model3DAnimationSystem
     {
-        public void Update(AgentContext agentContext)
+        public void Update()
         {
             
             float deltaTime = UnityEngine.Time.deltaTime;
-            var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
 
             foreach (var entity in entities)
             {
@@ -46,7 +42,7 @@ namespace Agent
                     }
 
 
-                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation != agentAnimation))
+                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation.AnimationsAreEqual(agentAnimation)))
                     {
                         physicsState.SetMovementState = false;
                         currentClip.Time = agentAnimation.StartTime;

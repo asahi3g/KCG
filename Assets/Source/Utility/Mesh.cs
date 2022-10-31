@@ -1,9 +1,6 @@
 ﻿//imports UnityEngine
 
-using Entitas;
-using Entitas.CodeGeneration.Attributes;
 using KMath;
-using Sprites;
 using System.Collections.Generic;
 
 namespace Utility
@@ -20,7 +17,7 @@ namespace Utility
             obj = new UnityEngine.GameObject(name, typeof(UnityEngine.MeshFilter), typeof(UnityEngine.MeshRenderer));
             obj.transform.SetParent(transform);
 
-            var mat = UnityEngine.Material.Instantiate(material);
+            var mat = UnityEngine.Object.Instantiate(material);
             mat.SetTexture("MainTex", Atlassprite.Texture);
 
             var mesh = new UnityEngine.Mesh
@@ -157,7 +154,7 @@ namespace Utility
             var mf = go.GetComponent<UnityEngine.MeshFilter>();
             mf.sharedMesh = mesh;
 
-            var mat = UnityEngine.Material.Instantiate(material);
+            var mat = UnityEngine.Object.Instantiate(material);
             var mr = go.GetComponent<UnityEngine.MeshRenderer>();
 
             mr.sharedMaterial = mat;

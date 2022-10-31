@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using ToonyColorsPro.Utilities;
 
 internal class TCP2_MaterialInspector_PBS : ShaderGUI
 {
@@ -60,7 +59,9 @@ internal class TCP2_MaterialInspector_PBS : ShaderGUI
 		public static string secondaryMapsText = "Secondary Maps";
 		public static string forwardText = "Forward Rendering Options";
 		public static string renderingMode = "Rendering Mode";
-		public static GUIContent emissiveWarning = new GUIContent ("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
+		public static GUIContent emissiveWarning =
+			new GUIContent(
+				"Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
 		//public static GUIContent emissiveColorWarning = new GUIContent ("Ensure emissive color is non-black for emission to have effect.");
 		public static readonly string[] blendNames = Enum.GetNames (typeof (BlendMode));
 
@@ -68,18 +69,26 @@ internal class TCP2_MaterialInspector_PBS : ShaderGUI
 		public static string tcp2_highlightColorText = "Highlight Color";
 		public static string tcp2_shadowColorText = "Shadow Color";
 		public static GUIContent tcp2_rampText = new GUIContent("Ramp Texture", "Ramp 1D Texture (R)");
-		public static GUIContent tcp2_rampThresholdText = new GUIContent("Threshold", "Threshold for the separation between shadows and highlights");
-		public static GUIContent tcp2_rampSmoothText = new GUIContent("Main Light Smoothing", "Main Light smoothing of the separation between shadows and highlights");
-		public static GUIContent tcp2_rampSmoothAddText = new GUIContent("Other Lights Smoothing", "Additional Lights smoothing of the separation between shadows and highlights");
-		public static GUIContent tcp2_specSmoothText = new GUIContent("Specular Smoothing", "Stylized Specular smoothing");
-		public static GUIContent tcp2_SpecBlendText = new GUIContent("Specular Blend", "Stylized Specular contribution over regular Specular");
-		public static GUIContent tcp2_rimStrengthText = new GUIContent("Fresnel Strength", "Stylized Fresnel overall strength");
+		public static GUIContent tcp2_rampThresholdText =
+			new GUIContent("Threshold", "Threshold for the separation between shadows and highlights");
+		public static GUIContent tcp2_rampSmoothText = new GUIContent("Main Light Smoothing",
+			"Main Light smoothing of the separation between shadows and highlights");
+		public static GUIContent tcp2_rampSmoothAddText = new GUIContent("Other Lights Smoothing",
+			"Additional Lights smoothing of the separation between shadows and highlights");
+		public static GUIContent tcp2_specSmoothText =
+			new GUIContent("Specular Smoothing", "Stylized Specular smoothing");
+		public static GUIContent tcp2_SpecBlendText =
+			new GUIContent("Specular Blend", "Stylized Specular contribution over regular Specular");
+		public static GUIContent tcp2_rimStrengthText =
+			new GUIContent("Fresnel Strength", "Stylized Fresnel overall strength");
 		public static GUIContent tcp2_rimMinText = new GUIContent("Fresnel Min", "Stylized Fresnel min ramp threshold");
 		public static GUIContent tcp2_rimMaxText = new GUIContent("Fresnel Max", "Stylized Fresnel max ramp threshold");
 		public static GUIContent tcp2_outlineColorText = new GUIContent("Outline Color", "Color of the outline");
 		public static GUIContent tcp2_outlineWidthText = new GUIContent("Outline Width", "Width of the outline");
-		public static GUIContent tcp2_normalsSourceText = new GUIContent("Outline Normals Source", "Vertex data source to use as smoothed normals, see the Smoothed Normals Utility in the documentation");
-		public static GUIContent tcp2_uvDataTypeText = new GUIContent("UV Data Type", "Defines how the smoothed normals are encoded in the selected UV channel");
+		public static GUIContent tcp2_normalsSourceText = new GUIContent("Outline Normals Source",
+			"Vertex data source to use as smoothed normals, see the Smoothed Normals Utility in the documentation");
+		public static GUIContent tcp2_uvDataTypeText = new GUIContent("UV Data Type",
+			"Defines how the smoothed normals are encoded in the selected UV channel");
 
 		public static string tcp2_TexLodText = "Outline Texture LOD";
 		public static string tcp2_ZSmoothText = "ZSmooth Value";
