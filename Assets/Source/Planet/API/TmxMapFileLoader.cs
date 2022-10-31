@@ -1,6 +1,3 @@
-//SHOULD NOT IMPORT
-
-
 //Note:
 //TMX files are created by map editor "Tiled"
 //Tiled can be downloaded at mapeditor.org

@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using Collisions;
 using KMath;
-using UnityEngine;
 
 namespace Vehicle
 {
@@ -9,7 +10,7 @@ namespace Vehicle
         public void Update()
         {
             // Get Delta Time
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
 
             // Get Vehicle Physics Entity
             var entities = GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.PhysicsBox2DCollider, VehicleMatcher.VehiclePhysicsState2D));
@@ -56,7 +57,7 @@ namespace Vehicle
         public void DrawGizmos()
         {
             // Get Delta Time
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
 
             // Get Vehicle Physics Entity
             var entities = GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.AllOf(VehicleMatcher.PhysicsBox2DCollider, VehicleMatcher.VehiclePhysicsState2D));
@@ -71,8 +72,8 @@ namespace Vehicle
                 // Create Box Borders
                 var entityBoxBorders = new AABox2D(new Vec2f(pos.TempPosition.X, pos.Position.Y) + entity.physicsBox2DCollider.Offset, size);
 
-                Gizmos.color = Color.red;
-                Gizmos.DrawCube(new Vector3(entityBoxBorders.center.X, entityBoxBorders.center.Y), new Vector3(entityBoxBorders.halfSize.X * 2, entityBoxBorders.halfSize.Y * 2));
+                UnityEngine.Gizmos.color = UnityEngine.Color.red;
+                UnityEngine.Gizmos.DrawCube(new UnityEngine.Vector3(entityBoxBorders.center.X, entityBoxBorders.center.Y), new UnityEngine.Vector3(entityBoxBorders.halfSize.X * 2, entityBoxBorders.halfSize.Y * 2));
             }
         }
     }

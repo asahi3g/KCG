@@ -2,6 +2,7 @@ namespace Enums
 {
     public enum ProjectileType
     {
+        Invalid = 0,
         Grenade,
         FragGrenade,
         Arrow,
@@ -11,18 +12,5 @@ namespace Enums
         Missile,
         GasGrenade,
         Flare,
-        Invalid
-    }
-
-    public enum ProjectileDrawType
-    {
-        Standard,
-        Invalid
-    }
-
-    public enum DragType
-    {
-        Off,
-        Linear
     }
 }
