@@ -270,13 +270,13 @@ namespace PlanetTileMap
                                  GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape);
                             }
 
-                            if (leftLine)
+                            if (rightLine)
                             {
                                 tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C3, i, j),
                                  GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C3), shape);
                             }
 
-                            if (rightLine)
+                            if (leftLine)
                             {
                                 tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
                                  GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape);

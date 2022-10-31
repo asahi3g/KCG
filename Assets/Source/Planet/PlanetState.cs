@@ -97,13 +97,6 @@ namespace Planet
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
 
-        public void InitializeHUD()
-        {
-            // GUI/HUD
-            GameState.GUIManager.InitStage1();
-            GameState.GUIManager.InitStage2();
-        }
-
         public void AddDebugLine(Line2D line, UnityEngine.Color color)
         {
             if (DebugLinesCount + 1 >= DebugLines.Length)
@@ -448,6 +441,8 @@ namespace Planet
 
             }*/
 
+              PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
+
             // check if the sprite atlas teSetTilextures needs to be updated
             for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
             {
@@ -464,6 +459,7 @@ namespace Planet
 
             GameState.InputProcessSystem.Update();
             // Movement Systems
+            GameState.AgentIKSystem.Update(EntitasContext.agent);
             GameState.AgentProcessPhysicalState.Update(frameTime);
             GameState.AgentMovementSystem.Update();
             GameState.AgentModel3DMovementSystem.Update();
@@ -471,6 +467,7 @@ namespace Planet
             GameState.VehicleMovementSystem.UpdateEx();
             GameState.PodMovementSystem.UpdateEx();
             GameState.ProjectileMovementSystem.Update();
+
 
             GameState.AgentModel3DAnimationSystem.Update();
             GameState.LootDropSystem.Update();

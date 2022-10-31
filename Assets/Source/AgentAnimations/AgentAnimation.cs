@@ -15,25 +15,6 @@ namespace Agent
 
         public float MovementSpeedFactor;
         public bool UseActionDurationForSpeed;
-
-
-        public static bool operator !=(AgentAnimation a, AgentAnimation b) => 
-            a.Animation != b.Animation ||
-            a.FadeTime != b.FadeTime ||
-            a.Speed != b.Speed ||
-            a.StartTime != b.StartTime ||
-            a.Looping != b.Looping ||
-            a.MovementSpeedFactor != b.MovementSpeedFactor ||
-            a.UseActionDurationForSpeed != b.UseActionDurationForSpeed;
-
-        public static bool operator ==(AgentAnimation a, AgentAnimation b) => 
-            a.Animation == b.Animation &&
-            a.FadeTime == b.FadeTime &&
-            a.Speed == b.Speed &&
-            a.StartTime == b.StartTime &&
-            a.Looping == b.Looping &&
-            a.MovementSpeedFactor == b.MovementSpeedFactor &&
-            a.UseActionDurationForSpeed == b.UseActionDurationForSpeed;
         
         public bool Equals(AgentAnimation other)
         {
@@ -54,6 +35,16 @@ namespace Agent
         public override int GetHashCode()
         {
             return HashCode.Combine((int) Animation, FadeTime, Speed, StartTime, Looping, MovementSpeedFactor, UseActionDurationForSpeed);
+        }
+
+        public bool AnimationsAreEqual(Engine3D.AnimationType animation)
+        {
+            return Animation == animation;
+        }
+
+        public bool AnimationsAreEqual(AgentAnimation other)
+        {
+            return Animation == other.Animation;
         }
     }
 }

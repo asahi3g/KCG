@@ -1,12 +1,13 @@
+//imports UnityEngine
+
 using TMPro;
-using UnityEngine;
 
 namespace Utility
 {
     public class TextWrapper
     {
-        private GameObject textObject;
-        private RectTransform rectTransform;
+        private UnityEngine.GameObject textObject;
+        private UnityEngine.RectTransform rectTransform;
         private TextMeshProUGUI textComponent;
 
         // Countdown
@@ -16,39 +17,39 @@ namespace Utility
         public bool StartLifeTime;
 
         // Constructor
-        public void Create(string objectName, string text, Transform parent, float lifeTime)
+        public void Create(string objectName, string text, UnityEngine.Transform parent, float lifeTime)
         {
             if (textObject != null)
                 return;
 
             timeLeft = lifeTime;
             
-            textObject = new GameObject(objectName)
+            textObject = new UnityEngine.GameObject(objectName)
             {
                 transform =
                 {
                     parent = parent,
-                    position = Vector3.zero,
-                    rotation = Quaternion.identity
+                    position = UnityEngine.Vector3.zero,
+                    rotation = UnityEngine.Quaternion.identity
                 }
             };
             
-            rectTransform = textObject.AddComponent<RectTransform>();
+            rectTransform = textObject.AddComponent<UnityEngine.RectTransform>();
             textComponent = textObject.AddComponent<TextMeshProUGUI>();
             
             textComponent.text = text;
-            textComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as TMP_FontAsset;
+            textComponent.font = UnityEngine.Resources.GetBuiltinResource(typeof(UnityEngine.Font), "Arial.ttf") as TMP_FontAsset;
             textComponent.fontSize = 20;
             textComponent.fontStyle = FontStyles.Normal;
             
-            rectTransform.anchorMin = new Vector2(0, 0);
-            rectTransform.anchorMax = new Vector2(0, 0);
-            rectTransform.pivot = new Vector2(0, 0);
+            rectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
+            rectTransform.anchorMax = new UnityEngine.Vector2(0, 0);
+            rectTransform.pivot = new UnityEngine.Vector2(0, 0);
 
             textComponent.enabled = false;
 
             // Reset Transform
-            SetPosition(Vector3.zero);
+            SetPosition(UnityEngine.Vector3.zero);
         }
 
         public void Draw()
@@ -59,27 +60,27 @@ namespace Utility
             }
         }
 
-        public GameObject GetGameObject()
+        public UnityEngine.GameObject GetGameObject()
         {
             return textObject;
         }
 
-        public void SetPosition(Vector3 newPos)
+        public void SetPosition(UnityEngine.Vector3 newPos)
         {
             rectTransform.localPosition = newPos;
         }
 
-        public void SetRotation(Quaternion newRot)
+        public void SetRotation(UnityEngine.Quaternion newRot)
         {
             rectTransform.localRotation = newRot;
         }
 
-        public void SetScale(Vector3 newScale)
+        public void SetScale(UnityEngine.Vector3 newScale)
         {
             rectTransform.localScale = newScale;
         }
 
-        public void SetSizeDelta(Vector2 newSize)
+        public void SetSizeDelta(UnityEngine.Vector2 newSize)
         {
             rectTransform.sizeDelta = newSize;
         }
@@ -93,10 +94,12 @@ namespace Utility
         {
             if(StartLifeTime)
             {
-                timeLeft -= Time.deltaTime;
+                timeLeft -= UnityEngine.Time.deltaTime;
                 if(timeLeft <= 0)
                 {
-                    Object.Destroy(textObject);
+                    UnityEngine.GameObject.Destroy(textObject);
+
+                    UnityEngine.Object.Destroy(textObject);
                 }
             }
         }

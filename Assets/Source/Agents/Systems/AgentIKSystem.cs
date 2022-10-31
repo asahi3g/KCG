@@ -46,13 +46,23 @@ namespace Agent
                 {
                     if (transform != null)
                     {
-                        if (AimTarget != null)
-                            AimTarget.position = new UnityEngine.Vector3(worldPosition.x, worldPosition.y, 0.0f);
-
                         if (PistolIK != null && RifleIK != null && AimTarget != null)
                         {
                             if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
                             {
+                                if (AimTarget != null)
+                                {
+                                    if (entity.hasAgentEnemy)
+                                    {
+                                        AimTarget.position = new UnityEngine.Vector3(model3d.GameObject.transform.position.x,
+                                            model3d.GameObject.transform.position.y, 0.0f);
+                                    }
+                                    else
+                                    {
+                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x, worldPosition.y, 0.0f);
+                                    }
+                                }
+
                                 if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
                                 {
                                     PistolIK.GetComponent<Rig>().weight = UnityEngine.Mathf.Lerp(

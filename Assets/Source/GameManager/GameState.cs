@@ -62,6 +62,7 @@ public static class GameState
     public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
     public static readonly Agent.MovementSystem AgentMovementSystem;
+    public static readonly Agent.AgentIKSystem AgentIKSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
@@ -167,6 +168,7 @@ public static class GameState
         PointCreationApi.InitStage1();
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
+        GUIManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -177,6 +179,7 @@ public static class GameState
         PointCreationApi.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
+        GUIManager.InitStage2(Planet);
     }
 
 
@@ -202,6 +205,7 @@ public static class GameState
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
+        AgentIKSystem = new Agent.AgentIKSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
@@ -267,13 +271,6 @@ public static class GameState
         ProjectileDeleteSystem = new Projectile.DeleteSystem();
         ProjectileDebugSystem = new Projectile.DebugSystem();
 
-        MechCreationApi = new Mech.MechCreationApi();
-        MechSpawnerSystem = new Mech.MechSpawnSystem();
-        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
-        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
-        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
-        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
-
         Renderer = new Utility.Render();
 
         TGenGrid = new TGen.Grid();
@@ -300,5 +297,12 @@ public static class GameState
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
+
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
+        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
+        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
+        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
+        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
     }
 }

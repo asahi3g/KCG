@@ -2,7 +2,7 @@
 {
     public enum AgentMovementState
     {
-        None,
+        None = 0,
         Idle,
         IdleAfterShooting,
         Move, // moving left or right

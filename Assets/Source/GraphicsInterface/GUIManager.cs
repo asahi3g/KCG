@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using KMath;
 using Utility;
+using Planet;
 
 
 namespace KGUI
@@ -31,6 +32,12 @@ namespace KGUI
         {
             UnityEngine.Cursor.visible = true;
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
+        }
+
+        public void InitStage2(PlanetState planet)
+        {
+            if (planet.TileMap == null)
+                return;
 
             ProgressBar = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
@@ -42,10 +49,8 @@ namespace KGUI
             PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
             PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
             PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
-        }
 
-        public void InitStage2()
-        {
+
             SetPanelActive(PanelEnums.PlayerStatus);
         }
 

@@ -65,6 +65,7 @@ namespace Agent
                  newRollCooldown: 0,
                  newRollImpactDuration: 0);
 
+
             return entity;
         }
 
@@ -348,10 +349,10 @@ namespace Agent
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
                         UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(3).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        UnityEngine.GameObject leftHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(0).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                        UnityEngine.GameObject rightHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(1).
+                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
 
                         UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
                         animancerComponentGO.transform.parent = model.transform;
