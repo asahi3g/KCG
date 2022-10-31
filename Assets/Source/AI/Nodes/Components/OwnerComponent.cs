@@ -3,7 +3,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Node
 {
-    /// <summary> Only add this when action is scheduled to be executed by the agent. </summary>
+    // Only add this when action is scheduled to be executed by the agent.
     [Node]
     public class OwnerComponent : IComponent
     {

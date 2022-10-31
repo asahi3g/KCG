@@ -120,9 +120,7 @@ namespace Inventory
             }
         }
 
-        /// <summary>
-        /// Add Item To inventory if mouse is over it.
-        /// </summary>
+        // Add Item To inventory if mouse is over it.
         private bool TryAddItemToInv(Contexts contexts, ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
             Window window = isToolBar ? inventoryModel.ToolBarWindow :

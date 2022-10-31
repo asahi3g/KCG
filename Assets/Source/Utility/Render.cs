@@ -7,7 +7,7 @@ namespace Utility
 
     public class Render
     {
-        /// Materials are used by immediate draw calls.
+        // Materials are used by immediate draw calls.
         Material[] Materials;
 
         // Update materials once every frame.
@@ -157,10 +157,8 @@ namespace Utility
             textMesh.color = color;
         }
 
-        /// <summary>
-        /// These functions draw immediately on screen. 
-        /// It doesn't work inside OnUpdate, because camera clear screen before drawing.
-        /// </summary>
+        // These functions draw immediately on screen. 
+        // It doesn't work inside OnUpdate, because camera clear screen before drawing.
         public void DrawSpriteNow(float x, float y, float w, float h, Sprites.Sprite sprite)
         {
             DrawGlSprite(x, y, w, h, sprite);
@@ -171,12 +169,10 @@ namespace Utility
             DrawGlQuad(x, y, w, h, color);
         }
 
-        /// <summary>
-        /// These functions should only be used inside OnGUI
-        /// We use GUI functions because of bugs with GL.Push and GL.Pop functions.
-        /// [x, y] = (0, 0) is lower left coner of the screen.
-        /// [x, y] = (Screen.Width, ScreenHeight) is upper right coner of the screen.
-        /// </summary>
+        // These functions should only be used inside OnGUI
+        // We use GUI functions because of bugs with GL.Push and GL.Pop functions.
+        // [x, y] = (0, 0) is lower left coner of the screen.
+        // [x, y] = (Screen.Width, ScreenHeight) is upper right coner of the screen.
         public void DrawSpriteGui(float x, float y, float w, float h, Sprites.Sprite sprite)
         {
             y += h;
@@ -219,9 +215,7 @@ namespace Utility
         }
 
 
-        /// <summary>
-        /// Helper Functions.
-        /// </summary>
+        // Helper Functions.
         private void DrawGlSprite(float x, float y, float w, float h,
             Sprites.Sprite sprite)
         {

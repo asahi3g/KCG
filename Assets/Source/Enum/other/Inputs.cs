@@ -1,8 +1,6 @@
 namespace Enums
 {
-    /// <summary>
-    /// Enum for detecting player's input device
-    /// </summary>
+    // Enum for detecting player's input device
     public enum eInputDevice
     {
         KeyboardMouse,
@@ -10,9 +8,7 @@ namespace Enums
         Invalid
     };
 
-    /// <summary>
-    /// Enum for detecting key event (Pressed, Released, or NULL)
-    /// </summary>
+    // Enum for detecting key event (Pressed, Released, or NULL)
     public enum eKeyEvent
     {
         Press,
@@ -21,9 +17,7 @@ namespace Enums
     }
 
 
-    /// <summary>
-    /// Enum for specifing player state to assign inputs
-    /// </summary>
+    // Enum for specifing player state to assign inputs
     public enum PlayerState
     {
         Pedestrian,

@@ -57,17 +57,13 @@ namespace Utility
             Array.Fill<UInt64>(bits, UInt64.MaxValue);
         }
 
-        /// <summary>
-        /// Set all bist to 0.
-        /// </summary>
+        // Set all bist to 0.
         public void Clear()
         {
             Array.Fill<UInt64>(bits, 0ul);
         }
 
-        /// <summary>
-        /// Flip the value of all Bits.
-        /// </summary>
+        // Flip the value of all Bits.
         public void Flip()
         {
             for (int i = 0; i < bits.Length; i++)

@@ -3,37 +3,21 @@ namespace Collisions
     public enum BlocksTypes
     {
         Error = 0,
-        /// <summary>
-        /// Square block
-        /// </summary>
+        // Square block
         SB,
-        /// <summary>
-        /// Half Block
-        /// </summary>
+        // Half Block
         HB,
-        /// <summary>
-        /// Triangle Block
-        /// </summary>
+        // Triangle Block
         TB,
-        /// <summary>
-        /// Part 1 of L block
-        /// </summary>
+        // Part 1 of L block
         L1,
-        /// <summary>
-        /// Part 2 of L block
-        /// </summary>
+        // Part 2 of L block
         L2,
-        /// <summary>
-        /// Quarter Platform
-        /// </summary>
+        // Quarter Platform
         QP,
-        /// <summary>
-        /// Half Platform
-        /// </summary>
+        // Half Platform
         HP,
-        /// <summary>
-        /// Full Platform
-        /// </summary>
+        // Full Platform
         FP
     }
 }

@@ -23,9 +23,7 @@ namespace KMath
 
         #region Methods
 
-        /// <summary>
-        /// Make X and Y positive
-        /// </summary>
+        // Make X and Y positive
         [MethodImpl((MethodImplOptions) 256)]
         public void Abs()
         {
@@ -52,34 +50,26 @@ namespace KMath
 
         #region Properties
 
-        /// <summary>
-        ///   <para>Returns the squared length of this vector (Read Only).</para>
-        /// </summary>
+        // Returns the squared length of this vector (Read Only).
         public int sqrMagnitude
         {
             [MethodImpl((MethodImplOptions) 256)] get => X * X + Y * Y;
         }
         
-        /// <summary>
-        ///   <para>Returns the length of this vector (Read Only).</para>
-        /// </summary>
+        // Returns the length of this vector (Read Only).
         public float magnitude
         {
             [MethodImpl((MethodImplOptions) 256)] get => Mathf.Sqrt(X * X + Y * Y);
         }
 
-        /// <summary>
-        ///   <para>Shorthand for writing Vec2f(0, 0).</para>
-        /// </summary>
+        // Shorthand for writing Vec2f(0, 0).
         public static Vec2i zero
         {
             [MethodImpl((MethodImplOptions) 256)] get => zeroVector;
         }
 
 
-        /// <summary>
-        ///   <para>Shorthand for writing Vec2f(1, 1).</para>
-        /// </summary>
+        // Shorthand for writing Vec2f(1, 1).
         public static Vec2i one
         {
             [MethodImpl((MethodImplOptions)256)]

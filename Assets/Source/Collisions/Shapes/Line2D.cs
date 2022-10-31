@@ -16,10 +16,8 @@ namespace KMath
             B = b;
         }
 
-        /// <summary>
-        /// LINE/LINE collision check
-        /// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
-        /// </summary>
+        // LINE/LINE collision check
+        // https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
         public bool Intersects(Line2D other)
         {
             int o1 = CheckOrientation(A, B, other.A);
@@ -44,10 +42,7 @@ namespace KMath
             return false;
         }
 
-        /// <summary>
-        ///  https://bryceboe.com/2006/10/23/line-segment-intersection-algorithm/
-        ///  
-        /// </summary>
+        //  https://bryceboe.com/2006/10/23/line-segment-intersection-algorithm/
         /// <returns>
         /// 0 - p1, p2 and p3 are collinear
         /// 1 - Clockwise
@@ -63,10 +58,7 @@ namespace KMath
             return (temp > 0) ? 1 : 2;
         }
 
-        /// <summary>
-        /// Given tree colinear points check if point lines in the line point1 to point3
-        /// </summary>
-        /// <returns></returns>
+        // Given tree colinear points check if point lines in the line point1 to point3
         [MethodImpl((MethodImplOptions)256)]
         public static bool OnSegment(Vec2f point1, Vec2f point2, Vec2f point3)
         {
@@ -80,9 +72,7 @@ namespace KMath
         }
 
 
-        /// <summary>
-        /// Check if point in on the line.
-        /// </summary>
+        // Check if point in on the line.
         [MethodImpl((MethodImplOptions)256)]
         public bool OnLine(Vec2f point)
         {

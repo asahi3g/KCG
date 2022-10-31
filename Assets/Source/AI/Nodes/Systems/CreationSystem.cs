@@ -36,10 +36,8 @@ namespace Node
             return ActionID++;
         }
 
-        /// <summary>
-        /// Create action and schedule it. Later we will be able to create action without scheduling immediately.
-        /// If actions is in cool down returns -1. 
-        /// </summary>
+        // Create action and schedule it. Later we will be able to create action without scheduling immediately.
+        // If actions is in cool down returns -1. 
         public int CreateAction(Contexts entitasContext, NodeType NodeTypeID, int agentID)
         {
             if (GameState.ActionCoolDownSystem.InCoolDown(entitasContext, NodeTypeID, agentID))

@@ -1,21 +1,12 @@
 namespace Enums.Tile
 {
-    /// <param name="Error">Not initialized chunk</param>
-    /// <param name="Empty">Chunk with only Air tiles</param>
-    /// <param name="NotEmpty">At least one non air tile exist</param>
     public enum MapChunkType
     {
-        /// <summary>
-        /// Not initialized chunk
-        /// </summary>
+        // Not initialized chunk
         Error = 0,
-        /// <summary>
-        /// Chunk with only Air tiles
-        /// </summary>
+        // Chunk with only Air tiles
         Empty,
-        /// <summary>
-        /// At least one non air tile exist
-        /// </summary>
+        // At least one non air tile exist
         NotEmpty
     }
 }

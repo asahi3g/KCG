@@ -43,9 +43,7 @@ namespace KMath
             Z = z;
         }
 
-        /// <summary>
-        ///   <para>Returns the length of this vector (Read Only).</para>
-        /// </summary>
+        //  <para>Returns the length of this vector (Read Only).</para>
         public float Magnitude
         {
             [MethodImpl((MethodImplOptions) 256)] get => (float) Math.Sqrt((double) this.X * (double) this.X + (double) this.Y * (double) this.Y + (double) this.Z * (double) this.Z);

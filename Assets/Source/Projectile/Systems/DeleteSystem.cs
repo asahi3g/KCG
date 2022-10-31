@@ -7,7 +7,7 @@ namespace Projectile
     {
         // Remove projectile only at the end of the frame.
 
-        /// <summary> Should be called at the end of the frame.</summary>
+        // Should be called at the end of the frame.
         public void Update(ref Planet.PlanetState planet)
         {
             for (int i = 0; i < planet.ProjectileList.Length; i++)

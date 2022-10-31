@@ -2,9 +2,7 @@ namespace KMath.Noise
 {
     public class PerlinField3D
     {
-        /// <summary>
-        /// Kerlin Perlin's 16 vectors.
-        /// </summary>
+        // Kerlin Perlin's 16 vectors.
         public static readonly Vec3f[] GradientArray = new Vec3f[16] {
                 new Vec3f( 1f, 1f, 0f).Normalize(),
                 new Vec3f(-1f, 1f, 0f).Normalize(),

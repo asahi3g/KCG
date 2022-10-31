@@ -69,11 +69,7 @@ namespace PlanetTileMap
             MapSize = mapSize;
         }
         
-        /// <summary>
-        /// Checks if position is inside Map Size
-        /// </summary>
-        /// <param name="x">TileMap coordinates</param>
-        /// <param name="y">TileMap coordinates</param>
+        // Checks if position is inside Map Size
         public bool IsValid(int x, int y)
         {
             return x >= 0 && x < MapSize.X &&

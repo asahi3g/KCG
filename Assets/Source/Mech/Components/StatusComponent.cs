@@ -4,9 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mech
 {
-    /// <summary>
-    /// Makes item destructable.
-    /// </summary>
+    // Makes item destructable.
     [Mech]
     public class StatusComponent : IComponent
     {
