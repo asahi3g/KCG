@@ -25,6 +25,11 @@ namespace Agent
 
     public class AgentIKSystem
     {
+        UnityEngine.Transform transform;
+        UnityEngine.Transform PistolIK;
+        UnityEngine.Transform RifleIK;
+        UnityEngine.Transform AimTarget;
+
         public void Update(AgentContext agentContext)
         {
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
@@ -36,11 +41,11 @@ namespace Agent
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
 
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-
-                var transform = entity.agentModel3D.GameObject.transform;
-                var PistolIK = transform.Find("Pistol");
-                var RifleIK = transform.Find("Rifle");
-                var AimTarget = transform.Find("AimTargetTest");
+                
+                transform = entity.agentModel3D.GameObject.transform;
+                PistolIK = transform.Find("Pistol");
+                RifleIK = transform.Find("Rifle");
+                AimTarget = transform.Find("AimTargetTest");
 
                 if (entity.hasAgentModel3D)
                 {
@@ -48,20 +53,21 @@ namespace Agent
                     {
                         if (PistolIK != null && RifleIK != null && AimTarget != null)
                         {
+                            if (AimTarget != null)
+                            {
+                                if (entity.hasAgentController || entity.hasAgentEnemy)
+                                {
+                                    AimTarget.position = new UnityEngine.Vector3(model3d.GameObject.transform.position.x,
+                                        model3d.GameObject.transform.position.y, model3d.GameObject.transform.position.z);
+                                }
+                                else
+                                {
+                                    AimTarget.position = new UnityEngine.Vector3(worldPosition.x, worldPosition.y, 0.0f);
+                                }
+                            }
+
                             if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
                             {
-                                if (AimTarget != null)
-                                {
-                                    if (entity.hasAgentEnemy)
-                                    {
-                                        AimTarget.position = new UnityEngine.Vector3(model3d.GameObject.transform.position.x,
-                                            model3d.GameObject.transform.position.y, 0.0f);
-                                    }
-                                    else
-                                    {
-                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x, worldPosition.y, 0.0f);
-                                    }
-                                }
 
                                 if (entity.agentPhysicsState.MovementState == Enums.AgentMovementState.FireGun)
                                 {
