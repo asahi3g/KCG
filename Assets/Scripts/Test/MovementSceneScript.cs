@@ -85,6 +85,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
+
            /* Vec2f slope = P2 - P1;
             float mag = slope.Magnitude;
             P2.X = P1.X;
@@ -128,7 +129,7 @@ namespace Planet.Unity
 
             LastMousePosition = Shape1[0];
 
-            UnityEngine.Application.targetFrameRate = 60;
+            UnityEngine.Application.targetFrameRate = 200;
 
             GameResources.Initialize();
 
@@ -481,6 +482,7 @@ namespace Planet.Unity
 
            // CharacterDisplay.Update();
             planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+                      
 
         }
         UnityEngine.Texture2D texture;
