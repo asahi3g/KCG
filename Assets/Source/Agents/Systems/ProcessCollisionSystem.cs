@@ -32,7 +32,7 @@ namespace Agent
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
         
-            float epsilon = 0.01f;
+            float epsilon = 0.1f;
 
 
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
@@ -63,10 +63,6 @@ namespace Agent
                 physicsState.Position = physicsState.PreviousPosition + delta * (bs.MinTime - epsilon);
 
             }
-
-            UnityEngine.Debug.Log("grounded : " + physicsState.OnGrounded);
-            UnityEngine.Debug.Log("velocity : " + physicsState.Velocity);
-            UnityEngine.Debug.Log("acceleration : " + physicsState.Acceleration);
             
 
             bool collidingBottom = false;
@@ -141,7 +137,7 @@ namespace Agent
                 physicsState.GroundNormal = bottomCollision.MinNormal;
               // physicsState.GroundNormal = rs.MinNormal;
                
-                if (physicsState.Velocity.Y < 10.0f)
+                if (physicsState.Velocity.Y < 0.0f)
                 {
                     physicsState.OnGrounded = true;
                 }
@@ -152,11 +148,12 @@ namespace Agent
              }
              else
              {
-                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+                
 
                 var rs = TileCollisions.RaycastGround(entity, planet);
                 
-                physicsState.OnGrounded = rs.MinTime < 1.0f;
+                physicsState.OnGrounded = rs.MinTime < 1.0f && physicsState.Velocity.Y <= 0.0f;
+                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
              }
 
              //physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);

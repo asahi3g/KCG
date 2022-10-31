@@ -564,7 +564,7 @@ namespace Collisions
                 
                 Line2D line = planet.TileMap.GeometryArray[i];
                 Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.GeometryTileShape shape = Enums.GeometryTileShape.Error;
+                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
 
                 var collisionResult = 
                 CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
@@ -971,7 +971,7 @@ namespace Collisions
                 
                 Line2D line = planet.TileMap.GeometryArray[i];
                 Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.GeometryTileShape shape = Enums.GeometryTileShape.Error;
+                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
 
 
                 var collisionResult = 
