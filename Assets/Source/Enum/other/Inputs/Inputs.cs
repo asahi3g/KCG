@@ -3,11 +3,11 @@ namespace Enums
     /// <summary>
     /// Enum for detecting player's input device
     /// </summary>
-    public enum eInputDevice
+    public enum InputDeviceType
     {
+        InvalidInputDeviceType,
         KeyboardMouse,
-        Controller,
-        Invalid
+        Controller
     };
 
     /// <summary>
@@ -15,9 +15,9 @@ namespace Enums
     /// </summary>
     public enum eKeyEvent
     {
+        Invalid,
         Press,
-        Release,
-        Invalid
+        Release
     }
 
 

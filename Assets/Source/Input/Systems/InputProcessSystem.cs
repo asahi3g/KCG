@@ -7,7 +7,9 @@ using KGUI.Statistics;
 using KMath;
 using Mech;
 using PlanetTileMap;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace ECSInput
 {
@@ -35,6 +37,8 @@ namespace ECSInput
             }
         }
 
+        public float scale = 1.0f;
+
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -42,6 +46,9 @@ namespace ECSInput
 
             var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
+
+            scale += UnityEngine.Input.GetAxis("Mouse ScrollWheel") * 0.5f * scale;
+            Camera.main.orthographicSize = 20.0f / scale;
 
             int x = 0;
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) && mode == Mode.Agent)

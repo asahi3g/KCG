@@ -140,7 +140,6 @@ namespace Planet.Unity
             SpawnStuff();
 
             planet.InitializeSystems(Material, transform);
-            planet.InitializeHUD();
 
             if (enableGeometryPlacementTool)
             {
@@ -246,6 +245,8 @@ namespace Planet.Unity
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+
+            planet.AddAgent(new Vec2f(6.0f, spawnHeight), Enums.AgentType.EnemyMarine);
 
             //planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
         }

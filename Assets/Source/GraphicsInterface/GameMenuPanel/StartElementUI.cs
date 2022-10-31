@@ -1,11 +1,12 @@
+//import UnityEngine
+
 using TMPro;
-using UnityEngine;
 
 namespace KGUI
 {
     public class StartElementUI : ElementUI
     {
-        [SerializeField] private TextMeshProUGUI text;
+        [UnityEngine.SerializeField] private TextMeshProUGUI text;
         
         public override void Init()
         {
