@@ -73,6 +73,7 @@ public static class GameState
     #endregion
 
     public static readonly Collisions.LineCreationApi LineCreationApi;
+    public static readonly Collisions.PointCreationApi PointCreationApi;
     public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
 
     #region Inventory
@@ -163,6 +164,7 @@ public static class GameState
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
+        PointCreationApi.InitStage1();
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
     }
@@ -172,6 +174,7 @@ public static class GameState
         TileSpriteAtlasManager.InitStage2();
         SpriteAtlasManager.InitStage2();
         AgentMovementAnimationTable.InitStage2();
+        PointCreationApi.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
     }
@@ -207,6 +210,7 @@ public static class GameState
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         LineCreationApi = new Collisions.LineCreationApi();
+        PointCreationApi = new Collisions.PointCreationApi();
         GeometryCreationApi = new Collisions.GeometryCreationApi();
 
         MechCreationApi = new Mech.MechCreationApi();

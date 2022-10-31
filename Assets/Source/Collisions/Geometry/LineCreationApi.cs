@@ -76,15 +76,15 @@ namespace Collisions
         public void InitializeResources()
         {
             float epsilon = 0.00f;
-            Vec2f C0 = new Vec2f(0.0f, 1.0f);
-            Vec2f C1 = new Vec2f(1.0f, 1.0f);
-            Vec2f C2 = new Vec2f(1.0f, 0.0f);
-            Vec2f C3 = new Vec2f(0.0f, 0.0f);
+            Vec2f C0 = GameState.PointCreationApi.GetPoint(TilePoint.C0);
+            Vec2f C1 = GameState.PointCreationApi.GetPoint(TilePoint.C1);
+            Vec2f C2 = GameState.PointCreationApi.GetPoint(TilePoint.C2);
+            Vec2f C3 = GameState.PointCreationApi.GetPoint(TilePoint.C3);
 
-            Vec2f M0 = new Vec2f(0.5f, 1.0f);
-            Vec2f M1 = new Vec2f(1.0f, 0.5f);
-            Vec2f M2 = new Vec2f(0.5f, 0.0f);
-            Vec2f M3 = new Vec2f(0.0f, 0.5f);
+            Vec2f M0 = GameState.PointCreationApi.GetPoint(TilePoint.M0);
+            Vec2f M1 = GameState.PointCreationApi.GetPoint(TilePoint.M1);
+            Vec2f M2 = GameState.PointCreationApi.GetPoint(TilePoint.M2);
+            Vec2f M3 = GameState.PointCreationApi.GetPoint(TilePoint.M3);
 
             GameState.LineCreationApi.Create(TileLineSegment.L_C0_C1, C0 + new Vec2f(epsilon, epsilon), C1 + new Vec2f(-epsilon, epsilon), new Vec2f(0.0f, 1.0f));
             GameState.LineCreationApi.Create(TileLineSegment.L_C1_C2, C1 + new Vec2f(epsilon, -epsilon), C2 + new Vec2f(epsilon, epsilon), new Vec2f(1.0f, 0.0f));
