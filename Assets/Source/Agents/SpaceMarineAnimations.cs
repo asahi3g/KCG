@@ -73,9 +73,6 @@ namespace Agent
 
 
 
-
-
-
             //rifle
 
 
@@ -99,6 +96,7 @@ namespace Agent
 
             SetAnimation(Enums.AgentMovementState.Crouch, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleCrouch, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+
 
             SetAnimation(Enums.AgentMovementState.Crouch_Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleCrouch_Walk, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -125,7 +123,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.FireGun, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=0.075f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 1.0f, UseActionDurationForSpeed = true});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=999.075f, Looping = true, Speed = 0.6f, MovementSpeedFactor = 0.1f, UseActionDurationForSpeed = true});
 
             SetAnimation(Enums.AgentMovementState.JetPackFlying, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJetPack, FadeTime=0.125f, Looping = true, Speed = 3.0f, MovementSpeedFactor = 0.0f});
