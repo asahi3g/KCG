@@ -671,8 +671,8 @@ namespace Collisions
 
 
                 Vec2f start = colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y * 0.5f);
-                Vec2f end = start + new Vec2f(0.0f, -1.25f);
-                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+                Vec2f end = start + new Vec2f(0.0f, -1.5f);
+                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
                 planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 if (rs < minTime)
@@ -685,9 +685,9 @@ namespace Collisions
                 }
 
                 start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
-                end = start + new Vec2f(0.0f, -1.25f);
+                end = start + new Vec2f(0.0f, -1.5f);
                 
-                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
                 planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 

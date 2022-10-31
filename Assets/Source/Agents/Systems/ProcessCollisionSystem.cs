@@ -33,6 +33,8 @@ namespace Agent
 
         
             float epsilon = 0.01f;
+
+
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
             Vec2f deltaLeft = delta  * (1.0f - (agentCollision.MinTime - epsilon));
             Vec2f newPosition = physicsState.Position;
@@ -40,17 +42,17 @@ namespace Agent
             if (agentCollision.MinTime < 1.0 && (agentCollision.MinNormal.X != 0 || agentCollision.MinNormal.Y != 0))
             {
 
-               // physicsState.Position -= delta.Normalize() * 0.02f;
-               float coefficientOfRest = 0.6f;
-               Vec2f velocity = deltaLeft;
+            // physicsState.Position -= delta.Normalize() * 0.02f;
+            float coefficientOfRest = 0.6f;
+            Vec2f velocity = deltaLeft;
 
 
-               float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
-               Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
+            float N = velocity.X * velocity.X + velocity.Y * velocity.Y; // length squared
+            Vec2f normalized = new Vec2f(velocity.X / N, velocity.Y / N); // normalized
 
-               normalized = normalized - 2.0f * Vec2f.Dot(normalized, agentCollision.MinNormal) * agentCollision.MinNormal;
+            normalized = normalized - 2.0f * Vec2f.Dot(normalized, agentCollision.MinNormal) * agentCollision.MinNormal;
                 Vec2f reflectVelocity = normalized * coefficientOfRest * N;
-               newPosition += reflectVelocity;
+            newPosition += reflectVelocity;
 
                 // 2nd collision test
                 physicsState.PreviousPosition = physicsState.Position;
@@ -59,7 +61,13 @@ namespace Agent
                 var bs = TileCollisions.CapsuleCollision(entity,  delta, planet);
 
                 physicsState.Position = physicsState.PreviousPosition + delta * (bs.MinTime - epsilon);
+
             }
+
+            UnityEngine.Debug.Log("grounded : " + physicsState.OnGrounded);
+            UnityEngine.Debug.Log("velocity : " + physicsState.Velocity);
+            UnityEngine.Debug.Log("acceleration : " + physicsState.Acceleration);
+            
 
             bool collidingBottom = false;
             bool collidingLeft = false;
@@ -125,7 +133,7 @@ namespace Agent
 
             float angle = System.MathF.Atan2(-bottomCollision.MinNormal.X, bottomCollision.MinNormal.Y);
 
-           // var rs = TileCollisions.RaycastGround(entity, planet);
+ 
 
              if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f )
              {
@@ -145,8 +153,13 @@ namespace Agent
              else
              {
                 physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
-                physicsState.OnGrounded = false;
+
+                var rs = TileCollisions.RaycastGround(entity, planet);
+                
+                physicsState.OnGrounded = rs.MinTime < 1.0f;
              }
+
+             //physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
 
 
              //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
