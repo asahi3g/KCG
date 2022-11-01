@@ -719,7 +719,7 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(SMGIcon);
             SetInventoryTexture(SMGIcon);
-            SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
+            SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
             SetRangedWeaponClip(50, 1, 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);

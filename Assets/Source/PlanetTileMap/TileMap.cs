@@ -22,6 +22,11 @@ namespace PlanetTileMap
         public int ChunkArrayLength;
         public int ChunkArrayCapacity;
 
+        public Line2D[] GeometryArray;
+        public Vec2f[] GeometryNormalArray;
+        public Enums.GeometryTileShape[] GeometryShapeArray;
+        public int GeometryArrayCount = 0;
+
         public TileMap(Vec2i mapSize)
         {
             ChunkArrayLength = 0;
@@ -67,6 +72,41 @@ namespace PlanetTileMap
             }
 
             MapSize = mapSize;
+
+            GeometryArray = new Line2D[1024];
+            GeometryNormalArray = new Vec2f[1024];
+            GeometryShapeArray = new Enums.GeometryTileShape[1024];
+            GeometryArrayCount = 0;
+        }
+
+
+        
+        public void AddGeometryLine(Line2D line, Vec2f normal, Enums.GeometryTileShape shape)
+        {
+            if (GeometryArrayCount + 1 >= GeometryArray.Length)
+            {
+                System.Array.Resize(ref GeometryArray, GeometryArray.Length + 1024);
+                System.Array.Resize(ref GeometryNormalArray, GeometryArray.Length + 1024);
+                System.Array.Resize(ref GeometryShapeArray, GeometryArray.Length + 1024);
+            }
+
+            GeometryShapeArray[GeometryArrayCount] = shape;
+            GeometryNormalArray[GeometryArrayCount] = normal;
+            GeometryArray[GeometryArrayCount++] = line;
+        }
+
+        public Enums.GeometryTileShape GetFrontTileGeometry(int x, int y)
+        {
+            if (x >= 0 && x < MapSize.X && y >= 0 && y < MapSize.Y)
+            {
+                TileID tile = GetFrontTileID(x, y);
+                var properties = GameState.TileCreationApi.GetTileProperty(tile);
+                return properties.BlockShapeType;
+            }
+            else
+            {
+                return Enums.GeometryTileShape.Error;
+            }
         }
         
         // Checks if position is inside Map Size
@@ -315,6 +355,7 @@ namespace PlanetTileMap
         {
             TileSpriteUpdateQueue.UpdateTileSprites(this);
         }
+
 
         #endregion
     }

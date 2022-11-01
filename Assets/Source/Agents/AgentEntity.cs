@@ -567,7 +567,7 @@ public partial class AgentEntity
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
-                       // PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
+                     //   PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                       if (PhysicsState.OnGrounded)
                        {
                         if (horizontalDir != 0)

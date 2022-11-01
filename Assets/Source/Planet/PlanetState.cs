@@ -439,6 +439,8 @@ namespace Planet
 
             }*/
 
+              PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
+
             // check if the sprite atlas teSetTilextures needs to be updated
             for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
             {

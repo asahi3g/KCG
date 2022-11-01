@@ -1500,7 +1500,7 @@ namespace PlanetTileMap
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Platform);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.Moon);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.SB_R0);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.GeometryTileShape.QP_R0);
             GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
             GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
             GameState.TileCreationApi.EndTileProperty();

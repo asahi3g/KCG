@@ -212,7 +212,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -220,11 +220,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -352,12 +347,13 @@ namespace Collisions
         public static HandleCollisionResult HandleCollisionCircleTop(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
+            result.MinTime = 1.0f;
 
            PlanetTileMap.TileMap tileMap = planet.TileMap;
 
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
+            if (delta.X == 0 && delta.Y == 0) return result;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X / 2.0f);
            
@@ -420,7 +416,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -429,11 +425,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -568,12 +559,12 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.GeometryTileShape minShape = 0;
-            for(int i = 0; i < linesCount; i++)
+            for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                Enums.GeometryTileShape shape = shapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i];
+                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
+                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
 
                 var collisionResult = 
                 CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
@@ -640,7 +631,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -649,11 +640,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -684,9 +670,9 @@ namespace Collisions
                 Enums.GeometryTileShape shape = shapeArray[i];
 
 
-                Vec2f start = colliderPosition + new Vec2f(0.0f, box2dCollider.Size.Y * 0.5f);
-                Vec2f end = start + new Vec2f(0.0f, -1.25f);
-                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+                Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X, 1.25f);
+                Vec2f end = start + new Vec2f(0.0f, -1.5f);
+                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
                 planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 if (rs < minTime)
@@ -698,10 +684,10 @@ namespace Collisions
                     pointOfCollision = start;
                 }
 
-                start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
-                end = start + new Vec2f(0.0f, -1.25f);
+                /*start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
+                end = start + new Vec2f(0.0f, -1.5f);
                 
-                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.25f), line.A, line.B);
+                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
                 planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 
@@ -712,7 +698,7 @@ namespace Collisions
                     minShape = shape;
                     minLine = line;
                     pointOfCollision = start;
-                }
+                }*/
 
             }
 
@@ -729,15 +715,56 @@ namespace Collisions
 
         }
 
+        public struct CapsuleCollisionResult
+        {
+            public float MinTime;
+            public Vec2f MinNormal;
+            public Enums.GeometryTileShape GeometryTileShape;
+
+            public HandleCollisionResult BottomCollision;
+        }
+
+        public static CapsuleCollisionResult CapsuleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
+        {
+            CapsuleCollisionResult result = new CapsuleCollisionResult();
+
+            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
+
+            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+
+            result.BottomCollision = bottomCollision;
+
+            //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
+
+
+
+            if (bottomCollision.MinTime <= topCollision.MinTime)
+            {
+                result.MinTime = bottomCollision.MinTime;
+                result.MinNormal = bottomCollision.MinNormal;
+                result.GeometryTileShape = bottomCollision.GeometryTileShape;
+            }
+            else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
+            {
+                result.MinTime = topCollision.MinTime;
+                result.MinNormal = topCollision.MinNormal;
+                result.GeometryTileShape = topCollision.GeometryTileShape;
+            }
+
+
+            return result;
+        }
+
         public static HandleCollisionResult HandleCollisionCircleBottom(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
+            result.MinTime = 1.0f;
 
            PlanetTileMap.TileMap tileMap = planet.TileMap;
 
             var physicsState = entity.agentPhysicsState;
             var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
+            if (delta.X == 0 && delta.Y == 0) return result;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
             
@@ -802,7 +829,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -811,11 +838,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref shapeArray, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -944,12 +966,12 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.GeometryTileShape minShape = 0;
-            for(int i = 0; i < linesCount; i++)
+            for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = lines[i];
-                Vec2f normal = normals[i];
-                Enums.GeometryTileShape shape = shapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i];
+                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
+                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
 
 
                 var collisionResult = 
@@ -1021,7 +1043,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1030,11 +1052,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref positions, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1079,7 +1096,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                  if (linesCount + 1 >= lines.Length)
@@ -1088,11 +1105,6 @@ namespace Collisions
                                     Array.Resize(ref normals, lines.Length * 2);
                                     Array.Resize(ref positions, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1218,7 +1230,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1226,11 +1238,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1403,7 +1410,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1411,11 +1418,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1551,7 +1553,7 @@ namespace Collisions
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
                                 TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                 Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
@@ -1559,11 +1561,6 @@ namespace Collisions
                                     Array.Resize(ref lines, lines.Length * 2);
                                     Array.Resize(ref normals, lines.Length * 2);
                                 }
-
-                                line.A.X += (float)x;
-                                line.A.Y += (float)y;
-                                line.B.X += (float)x;
-                                line.B.Y += (float)y;
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
@@ -1733,18 +1730,13 @@ namespace Collisions
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
                                     TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                     Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 1 >= tileVertices.Length)
                                     {
                                         Array.Resize(ref tileVertices, tileVertices.Length * 2);
                                     }
-
-                                    line.A.X += (float)x;
-                                    line.A.Y += (float)y;
-                                    line.B.X += (float)x;
-                                    line.B.Y += (float)y;
 
                                     tileVertices[tileVerticesCount] = line.A;
                                     tileVerticesCount++;
@@ -1823,18 +1815,13 @@ namespace Collisions
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
                                     TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum);  
+                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
                                     Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 2 >= tileVertices.Length)
                                     {
                                         Array.Resize(ref tileVertices, tileVertices.Length * 2);
                                     }
-
-                                    line.A.X += (float)x;
-                                    line.A.Y += (float)y;
-                                    line.B.X += (float)x;
-                                    line.B.Y += (float)y;
 
                                     
 
