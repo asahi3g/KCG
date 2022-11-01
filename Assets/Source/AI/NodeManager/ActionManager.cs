@@ -13,11 +13,7 @@ namespace NodeSystem
         
         public ActionManager()
         {
-            RegisterAction(NodeType.Decorator.ToString(), DecoratorNode.Execute);
-            RegisterAction(NodeType.Repeater.ToString(), RepeaterNode.Execute);
-            RegisterAction(NodeType.Sequence.ToString(), SequenceNode.Execute);
-            RegisterAction(NodeType.Selector.ToString(), SelectorNode.Execute);
-            RegisterAction(NodeType.ActionSequence.ToString(), ActionSequenceNode.Execute);
+            RegisterAction(NodeType.ActionSequence.ToString(), ActionSequenceNode.Action);
             RegisterAction("Default", DefaultAction);
         }
 

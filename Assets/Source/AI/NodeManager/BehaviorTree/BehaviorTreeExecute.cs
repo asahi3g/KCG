@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using static Unity.Collections.LowLevel.Unsafe.UnsafeUtility;
 
@@ -9,91 +10,195 @@ namespace NodeSystem.BehaviorTree
     {
         public int BehaviorTreeID;
         public int RootNodeId;
-        public int ActiveNodeId;
+        public int CurrentDepth;
+        public int[] StackTree;
+        NodeState LastResult;
         BehaviorTreeState Data;
-
-        void InitializeActionSequence(in Node node)
-        {
-            int dataSize = Data.NodeDataOffset[Data.NodeIdToIndex.Count];
-            Data.NodeDataOffset[Data.NodeIdToIndex.Count + 1] = dataSize + SizeOf<ActionSequenceNode.ActionSequenceData>();
-            Data.NodeDataOffset[Data.NodeIdToIndex.Count + 2] = dataSize + node.DataInit.Length;
-
-            Data.NodeIdToIndex.Add(node.ID, Data.NodeIdToIndex.Count);
-            Data.NodeIdToIndex.Add(node.ID + 1, Data.NodeIdToIndex.Count);
-        }
-
-        void InitializeTree(in Node node)
-        {
-            int dataSize = Data.NodeDataOffset[Data.NodeIdToIndex.Count];
-            if (node.DataInit != null)
-                dataSize += node.DataInit.Length;
-            Data.NodeDataOffset[Data.NodeIdToIndex.Count + 1] = dataSize;
-            Data.NodeIdToIndex.Add(node.ID, Data.NodeIdToIndex.Count);
-            
-            if (node.Children == null)
-                return;
-            
-            for (int i = 0; i < node.Children.Length; i++)
-            {
-                Node child = GameState.NodeManager.Get(node.Children[i]);
-                if (child.Type == NodeType.ActionSequence)
-                {
-                    InitializeActionSequence(in child);
-                    continue;
-                }
-                InitializeTree(in child);
-            }
-        }
-
-        void InitializeDataTree(in Node node)
-        {
-            int index = Data.NodeIdToIndex[node.ID];
-            int dataOffset = Data.NodeDataOffset[index];
-            if (node.DataInit != null) 
-                Array.Copy(node.DataInit, 0, Data.NodeData, dataOffset, node.DataInit.Length);
-
-            if (node.Children == null || node.Type == NodeType.ActionSequence)
-                return;
-
-            for (int i = 0; i < node.Children.Length; i++)
-            {
-                Node child = GameState.NodeManager.Get(node.Children[i]);
-                InitializeDataTree(in child);
-            }
-        }
 
         public BehaviorTreeExecute(int rootID, int agentID, int treeID)
         {
             BehaviorTreeID = treeID;
 
             RootNodeId = rootID;
-            ActiveNodeId = rootID;
-            Node node = GameState.NodeManager.Get(rootID);
+            CurrentDepth = 0;
+            ref Node node = ref GameState.NodeManager.GetRef(rootID);
             Data = new BehaviorTreeState()
             {
-                NodesExecutiondata = new NodeExcutionData[node.SubTreeNodeCount + 1], // Last pos has data size.
+                NodesExecutiondata = new NodeExcutionData[node.SubTreeNodeCount + 1], // Sum + 1 to count root node node.
                 AgentID = agentID,
                 BlackboardID = GameState.BlackboardManager.CreateBlackboard()
             };
-            InitializeTree(in node);
-            int dataSize = Data.NodesExecutiondata[node.SubTreeNodeCount].MemoryOffset + 
+            LastResult = NodeState.None;
+
+            // Initialize stack tree.
+            StackTree = null;
+            int depth = 1;
+            InitializeStackTree(in node, ref depth);
+            StackTree = new int[depth];
+            for (int i = 1; i < depth; i++)
+            {
+                StackTree[i] = BTSpecialChild.NotInitialized;
+            }
+
+            // Initialize memory.
+            InitializeTree(in node, 0);
+            int dataSize = Data.NodesExecutiondata[node.SubTreeNodeCount].MemoryOffset +
                 GameState.NodeManager.Get(Data.NodesExecutiondata[node.SubTreeNodeCount].Id).DataInit.Length;
             Data.NodeMemory = new byte[dataSize];
-            InitializeDataTree(in node);
+            Data.ResetNodeMemoryData();
+        }
+
+        public void Update()
+        {
+            for (int i = 0; i < Data.NodesExecutiondata.Length; i++)
+            {
+                if (!StackTree.Contains(i))
+                    Data.NodesExecutiondata[i].ExecutionTime = 0;
+                Data.NodesExecutiondata[i].ExecutionTime += Time.deltaTime;
+            }
+
+            UpdateTree();
         }
 
         public void UpdateTree()
         {
-            for (int i = 0; i < Data.NodesExecutiondata.Length; i++)
+            int index = StackTree[CurrentDepth];
+            ref Node currentNode = ref GameState.NodeManager.GetRef(Data.NodesExecutiondata[index].Id);
+            ulong ptr = Data.GetAddress();
+
+            if (LastResult == NodeState.Running)
             {
-                if (Data.NodeStates[i] != NodeState.Running)
-                    Data.NodeStartTime[i] = Time.realtimeSinceStartup;
+                ActionManager.Action action = GameState.ActionManager.Get(currentNode.ActionID);
+                LastResult = action(ptr, index);
+                if (LastResult != NodeState.Running)
+                    CurrentDepth -= 1;
+                return;
             }
 
-            ref Node node = ref GameState.NodeManager.GetRef(RootNodeId);
-            ActionManager.Action action = GameState.ActionManager.Get(node.ActionID);
-            ulong ptr = Data.GetAddress();
-            Data.NodeStates[0] = action(ptr, RootNodeId);
+            // Test condition.
+            ConditionManager.Condition condition = GameState.ConditionManager.Get(currentNode.ConditionalID);
+            if (!condition(ptr))
+            {
+                CurrentDepth -= 1;
+                LastResult = NodeState.Failure;
+                UpdateTree();
+                return;
+            }
+
+            int nextChildIndex = 0;
+            switch (currentNode.Type)
+            {
+                case NodeType.Decorator:
+                    nextChildIndex = DecoratorNode.NextRoute(GetCurrentChild());
+                    break;
+                case NodeType.Repeater:
+                    nextChildIndex = RepeaterNode.NextRoute(ptr, index, GetCurrentChild());
+                    break;
+                case NodeType.Sequence:
+                    nextChildIndex = SequenceNode.GetNextChildren(ptr, index, LastResult);
+                    break;
+                case NodeType.Selector:
+                    nextChildIndex = SelectorNode.GetNextChildren(ptr, index, LastResult);
+                    break;
+                default:
+                    ActionManager.Action action = GameState.ActionManager.Get(currentNode.ActionID);
+                    LastResult = action(ptr, index);
+                    for (int i = CurrentDepth + 1; i < StackTree.Length; i++)
+                    {
+                        StackTree[i] = BTSpecialChild.NotInitialized;
+                    }
+                    if (LastResult != NodeState.Running)
+                        CurrentDepth -= 1;
+                    return;
+            }
+
+            if (nextChildIndex == BTSpecialChild.ReturnToParent)
+            {
+                CurrentDepth--;
+                UpdateTree();
+            }
+            else
+            {
+                StackTree[CurrentDepth + 1] = GetIndexFromChildIndex(nextChildIndex);
+                CurrentDepth++;
+                UpdateTree();
+            }
         }
+
+        void InitializeTree(in Node node, int index)
+        {
+            Data.NodesExecutiondata[index].Id = node.ID;
+            int dataSize = Data.NodesExecutiondata[index].MemoryOffset;
+            
+            if (index == Data.NodesExecutiondata.Length - 1)
+                return;
+
+            if (node.DataInit != null)
+                dataSize += node.DataInit.Length;
+
+            int childIndex = index + 1;
+            Data.NodesExecutiondata[childIndex].MemoryOffset = dataSize;
+            
+            if (node.Children == null || node.Type == NodeType.ActionSequence)
+                return;
+            
+            for (int i = 0; i < node.Children.Length; i++)
+            {
+                ref Node child = ref GameState.NodeManager.GetRef(node.Children[i]);
+                InitializeTree(in child, childIndex);
+                childIndex += child.SubTreeNodeCount + 1;
+            }
+        }
+
+        public void InitializeStackTree(in Node node, ref int depth)
+        {
+            if (node.Children == null)
+                return;
+
+            depth++;
+            for (int i = 0; i < node.Children.Length; i++)
+            {
+                int childDeth = depth;
+                ref Node child = ref GameState.NodeManager.GetRef(node.Children[i]);
+                InitializeStackTree(in child, ref childDeth);
+                if (childDeth > depth)
+                    depth = childDeth;
+            }
+        }
+
+        public ref Node GetNodeFromIndex(int index)
+        {
+            int id = Data.NodesExecutiondata[index].Id;
+            return ref GameState.NodeManager.GetRef(Data.NodesExecutiondata[index].Id);
+        }
+
+        public int GetIndexFromChildIndex(int childIndex)
+        {
+            int currentIndex = StackTree[CurrentDepth];
+            int index = currentIndex + 1;
+            for (int i = 0; i < childIndex; i++)
+            {
+                ref Node node = ref GetNodeFromIndex(index);
+                index += node.SubTreeNodeCount + 1;
+            }
+            return index;
+        }
+
+        public int GetChildIndex(int parent, int child)
+        {
+            ref Node parentNode = ref GetNodeFromIndex(parent);
+            int childIndex = parent + 1;
+            for (int i = 0; i < parentNode.Children.Length; i++)
+            {
+                if (child == childIndex)
+                    return i;
+                ref Node childNode = ref GetNodeFromIndex(childIndex);
+                childIndex += childNode.SubTreeNodeCount + 1;
+            }
+
+            return BTSpecialChild.NotInitialized;
+        }
+
+        public int GetCurrentChild() => GetChildIndex(StackTree[CurrentDepth], StackTree[CurrentDepth + 1]);
     }
 }

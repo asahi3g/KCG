@@ -58,4 +58,11 @@ namespace NodeSystem
             }
         }
     }
+
+    // special value for child indices
+    public class BTSpecialChild
+    {
+        public const int ReturnToParent = -2; // return to parent node
+        public const int NotInitialized = -1;
+    }
 }

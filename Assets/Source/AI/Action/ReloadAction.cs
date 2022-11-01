@@ -33,8 +33,7 @@ namespace Action
             ItemInventoryEntity item = agentEntity.GetItem(ref planet);
             FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
 
-            float runningTime = Time.realtimeSinceStartup - data.GetTime(id);
-            if (runningTime >= WeaponPropreties.ReloadTime)
+            if (data.NodesExecutiondata[id].ExecutionTime >= WeaponPropreties.ReloadTime)
             {
                 if(item.hasItemFireWeaponClip)
                     item.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;

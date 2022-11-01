@@ -305,12 +305,12 @@ namespace Agent
 
             int wait0_5Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
-            NodeManager.AddData(new WaitAction.WaitActionData(0.5f));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
             NodeManager.EndNode();
 
             int wait1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
-            NodeManager.AddData(new WaitAction.WaitActionData(1f));
+            NodeManager.SetData(new WaitAction.WaitActionData(1f));
             NodeManager.EndNode();
 
             int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.NodeType.Action);
@@ -323,7 +323,7 @@ namespace Agent
 
             int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("FireWeapon"));
-            NodeManager.AddData(new ShootFireWeaponAction.ShootFireWeaponData());
+            NodeManager.SetData(new ShootFireWeaponAction.ShootFireWeaponData());
             NodeManager.EndNode();
 
             int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);

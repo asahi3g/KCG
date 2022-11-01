@@ -24,22 +24,18 @@ namespace NodeSystem
             switch (type)
             {
                 case NodeType.Decorator:
-                    SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.Decorator.ToString()));
                     SetCondition(GameState.ConditionManager.GetID("Default"));
                     break;
                 case NodeType.Repeater:
-                    SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.Repeater.ToString()));
                     SetCondition(GameState.ConditionManager.GetID("Default"));
                     break;
                 case NodeType.Sequence:
-                    SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.Sequence.ToString()));
                     SetCondition(GameState.ConditionManager.GetID("Default"));
-                    SetData(new CompositeNodeData());
+                    SetData(BTSpecialChild.NotInitialized);
                     break;
                 case NodeType.Selector:
-                    SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.Selector.ToString()));
                     SetCondition(GameState.ConditionManager.GetID("Default"));
-                    SetData(new CompositeNodeData());
+                    SetData(BTSpecialChild.NotInitialized);
                     break;
                 case NodeType.ActionSequence:
                     SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.ActionSequence.ToString()));
@@ -104,17 +100,9 @@ namespace NodeSystem
 
         private void SetExecutionDelegate(int actionID) => Nodes[currentID].ActionID = actionID;
 
-        private void SetData<T>(T data) where T : struct => Nodes[currentID].SetData<T>(ref data);
+        public void SetData<T>(T data) where T : struct => Nodes[currentID].SetData<T>(ref data);
 
-        public void AddData<T>(T data) where T : struct
-        {
-            Assert.IsTrue(Nodes[currentID].Type == NodeType.Action || Nodes[currentID].Type == NodeType.ActionSequence, 
-                "Can only add data to action and action sequence nodes.");
-            if (Nodes[currentID].Type == NodeType.ActionSequence)
-                Nodes[currentID].AddData<T>(ref data);
-            else
-                Nodes[currentID].SetData<T>(ref data);
-        }
+        public void AddData<T>(T data) where T : struct => Nodes[currentID].AddData<T>(ref data);
 
         public void AddChild(int nodeId)
         {
@@ -128,8 +116,7 @@ namespace NodeSystem
             {
                 Nodes[currentID].Children = new int[childrenCount];
                 Array.Copy(Children, Nodes[currentID].Children, childrenCount);
-                // Action sequence sub tree count allow its childs to share data among them.
-                Nodes[currentID].SubTreeNodeCount += (Nodes[currentID].Type != NodeType.ActionSequence) ? childrenCount : 1; 
+                Nodes[currentID].SubTreeNodeCount += (Nodes[currentID].Type != NodeType.ActionSequence) ? childrenCount : 0; 
                 childrenCount = 0;
             }
             currentID = -1;

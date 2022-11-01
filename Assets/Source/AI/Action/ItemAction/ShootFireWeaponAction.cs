@@ -72,7 +72,7 @@ namespace Action
 
                 // Todo: Urgent(Create new cool down system)
                 //GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
-                ref ShootFireWeaponData shootingData = ref data.GetNodeData<ShootFireWeaponData>(id);
+                ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
                 shootingData.Target = target;
                 return NodeSystem.NodeState.Running;
             }
@@ -84,14 +84,13 @@ namespace Action
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.CurrentPlanet;
-            ref ShootFireWeaponData shootingData = ref data.GetNodeData<ShootFireWeaponData>(id);
+            ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
 
             // Todo: Remove magic number.
             const float FIRE_DELAY = 0.25f;
-            float elapsed = Time.realtimeSinceStartup - data.GetTime(id);
             Vec2f target = shootingData.Target;
 
-            if (elapsed >= FIRE_DELAY)
+            if (data.NodesExecutiondata[id].ExecutionTime >= FIRE_DELAY)
             {
                 AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
                 ItemInventoryEntity itemEntity = agentEntity.GetItem(ref planet);

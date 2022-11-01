@@ -7,7 +7,7 @@
             int length = GameState.BehaviorTreeManager.GetLength();
             for (int i = 0; i < length; i++)
             {
-                GameState.BehaviorTreeManager.Get(i).UpdateTree();
+                GameState.BehaviorTreeManager.Get(i).Update();
             }
         }
     }

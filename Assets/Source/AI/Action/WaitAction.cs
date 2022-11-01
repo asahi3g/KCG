@@ -20,8 +20,7 @@ namespace Action
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
             ref WaitActionData waitData = ref data.GetNodeData<WaitActionData>(id);
 
-            float elapsed = Time.realtimeSinceStartup - data.NodesExecutiondata[id].ExecutionTime;
-            if (elapsed > waitData.WaitTime)
+            if (data.NodesExecutiondata[id].ExecutionTime > waitData.WaitTime)
                 return NodeState.Success;
             return NodeState.Running;
         }

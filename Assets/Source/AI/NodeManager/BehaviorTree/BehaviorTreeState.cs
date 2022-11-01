@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows.Forms.DataVisualization.Charting;
 using Unity.Collections.LowLevel.Unsafe;
 
 namespace NodeSystem.BehaviorTree
@@ -10,7 +7,7 @@ namespace NodeSystem.BehaviorTree
     {
         public int Id;              // Id in NodeManager.
         public int MemoryOffset;    // Offset used to access memory.
-        public int ExecutionTime;   // Time in ticks since start running.
+        public float ExecutionTime;   // Time in ticks since start running.
     }
     public struct BehaviorTreeState
     {
@@ -21,6 +18,10 @@ namespace NodeSystem.BehaviorTree
 
         public ref T GetNodeData<T>(int index) where T : struct
             => ref Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset);
+
+        public ref T GetActionSequenceData<T>(int index) where T : struct
+           => ref Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset + 1);
+
         public bool HasBlackboard() => (BlackboardID != -1);
         public void ResetNodeData(int index)
         {
