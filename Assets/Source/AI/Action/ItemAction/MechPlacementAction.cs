@@ -26,7 +26,7 @@ namespace Action
 
             if (itemEntity != null)
             {
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, 
+                GameState.InventoryManager.RemoveItem(agentEntity.agentInventory.InventoryID, 
                     itemEntity.itemInventory.SlotID);
                 itemEntity.Destroy();
             }

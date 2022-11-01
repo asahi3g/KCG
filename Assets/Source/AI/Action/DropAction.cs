@@ -12,7 +12,7 @@ namespace Action
         static public NodeState Action(object objData, int id)
         {
             ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
 
             if (!agentEntity.hasAgentInventory)
@@ -27,16 +27,16 @@ namespace Action
             {
                 int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
 
-                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext,
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(
                     agentEntity.agentInventory.InventoryID, selected);
                 if (itemInventory == null)
                     return NodeState.Failure;
 
-                GameState.InventoryManager.RemoveItem(planet.EntitasContext, inventoryID, selected);
+                GameState.InventoryManager.RemoveItem(inventoryID, selected);
 
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
-                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, itemInventory, pos);
+                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
                 itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
                 itemParticle.isItemUnpickable = true;
 

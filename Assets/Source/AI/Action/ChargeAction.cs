@@ -13,9 +13,9 @@ namespace Action
         static public NodeState OnEnter(object objData, int id)
         {
             ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
 
             if (item == null)
             {
@@ -34,9 +34,9 @@ namespace Action
         static public NodeState OnUpdate(object objData, int id)
         {
             ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
 
             if (item.itemFireWeaponCharge.ChargeRate < item.itemFireWeaponCharge.ChargeMax)
             {
@@ -50,9 +50,9 @@ namespace Action
         static public NodeState OnSucess(object objData, int id)
         {
             ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
 
             Item.FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
             float tempCharge = item.itemFireWeaponCharge.ChargeRate;

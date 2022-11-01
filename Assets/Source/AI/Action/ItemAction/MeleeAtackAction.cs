@@ -131,7 +131,7 @@ namespace Action
 
             nodeEntity.nodeExecution.State = Enums.NodeState.Success;
 
-            GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
         }
     }
 }

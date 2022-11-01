@@ -11,7 +11,7 @@ namespace Action
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(data.BlackboardID);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
 
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             AgentEntity target = null;

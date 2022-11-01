@@ -25,7 +25,7 @@ namespace Action
 
                             for (int i = 0; i < Slots.Length; i++)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, entity.inventoryID.ID, i);
+                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
 
                                 if (item != null)
                                 {
@@ -50,7 +50,7 @@ namespace Action
                                                     item.itemStack.Count--;
                                                     if (item.itemStack.Count < 1)
                                                     {
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
                                                         return;

@@ -1,5 +1,5 @@
 using UnityEngine;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using Planet;
 
 namespace Action
@@ -25,7 +25,7 @@ namespace Action
                             var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
                             for(int i = 0; i < Slots.Length; i++)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(planet.EntitasContext, entity.inventoryID.ID, i);
+                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
 
                                 if (item != null)
                                 {
@@ -57,7 +57,7 @@ namespace Action
                                                     if (item.itemStack.Count < 1)
                                                     {
                                                         CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
@@ -85,7 +85,7 @@ namespace Action
                                                     if (item.itemStack.Count < 1)
                                                     {
                                                         CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
@@ -111,7 +111,7 @@ namespace Action
                                                     if (item.itemStack.Count < 1)
                                                     {
                                                         CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;
@@ -138,7 +138,7 @@ namespace Action
                                                     if (item.itemStack.Count < 1)
                                                     {
                                                         CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(planet.EntitasContext, entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
                                                         item.Destroy();
                                                         itemEntity.itemTile.TileID = TileID.Error;
                                                         nodeEntity.nodeExecution.State = Enums.NodeState.Success;

@@ -11,9 +11,9 @@ namespace Action
         static public NodeState OnEnter(object ptr, int id)
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
 
             if (item != null)
             {
@@ -28,9 +28,9 @@ namespace Action
         static public NodeState OnUpdate(object ptr, int id)
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
             FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
 
             if (data.NodesExecutiondata[id].ExecutionTime >= WeaponPropreties.ReloadTime)
@@ -46,9 +46,9 @@ namespace Action
         static public NodeState OnSuccess(object ptr, int id)
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity item = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity item = agentEntity.GetItem();
 
             if (item.hasItemFireWeaponClip)
                 Debug.Log("Weapon Reloaded." + item.itemFireWeaponClip.NumOfBullets.ToString() + " Ammo in the clip.");

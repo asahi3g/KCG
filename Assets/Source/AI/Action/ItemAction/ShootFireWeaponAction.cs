@@ -18,9 +18,9 @@ namespace Action
         static public NodeSystem.NodeState OnEnter(object ptr, int id)
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity itemEntity = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity itemEntity = agentEntity.GetItem();
 
             if (itemEntity == null)
                 return NodeSystem.NodeState.Failure;
@@ -83,7 +83,7 @@ namespace Action
         static public NodeSystem.NodeState OnUpdate(object ptr, int id)
         {
             ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
 
             // Todo: Remove magic number.
@@ -93,7 +93,7 @@ namespace Action
             if (data.NodesExecutiondata[id].ExecutionTime >= FIRE_DELAY)
             {
                 AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-                ItemInventoryEntity itemEntity = agentEntity.GetItem(ref planet);
+                ItemInventoryEntity itemEntity = agentEntity.GetItem();
                 Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
                 Vec2f startPos = agentEntity.GetGunFiringPosition();

@@ -373,7 +373,7 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
-                        entity.AddAgentController(AISystemState.Behaviors.Get((int)Enums.BehaviorType.Marine).InstatiateBehavior(entity.agentID.ID));
+                        GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
                         entity.HandleItemSelected(item);
                         break;
                     }

@@ -71,11 +71,11 @@ namespace Action
                 {
                     Vec2f spawnPos = new Vec2f(plant.mechPosition2D.Value.X, plant.mechPosition2D.Value.Y + plant.mechSprite2D.Size.Y / 2.0f);
                     if (plant.mechType.mechType == Enums.MechType.MajestyPalm)
-                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.MajestyPalm, spawnPos);
+                        GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.MajestyPalm, spawnPos);
                     else if (plant.mechType.mechType == Enums.MechType.SagoPalm)
-                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.SagoPalm, spawnPos);
+                        GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SagoPalm, spawnPos);
                     else if (plant.mechType.mechType == Enums.MechType.DracaenaTrifasciata)
-                        GameState.ItemSpawnSystem.SpawnItemParticle(planet.EntitasContext, Enums.ItemType.DracaenaTrifasciata, spawnPos);
+                        GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.DracaenaTrifasciata, spawnPos);
                 }
                 planet.RemoveMech(plant.mechID.Index);
                 planter.mechPlanter.GotPlant = false;

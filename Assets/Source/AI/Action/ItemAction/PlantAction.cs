@@ -12,9 +12,9 @@ namespace Action
         static public NodeState Action(object objData, int id)
         {
             ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
-            ref PlanetState planet = ref GameState.CurrentPlanet;
+            ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
-            ItemInventoryEntity itemEntity = agentEntity.GetItem(ref planet);
+            ItemInventoryEntity itemEntity = agentEntity.GetItem();
 
             MechEntity planter = null;
             Vec2f planterPosition = Vec2f.Zero;
@@ -79,7 +79,7 @@ namespace Action
 
             planter.mechPlanter.GotPlant = true;
             planter.mechPlanter.PlantMechID = plant.mechID.ID;
-            GameState.InventoryManager.RemoveItem(planet.EntitasContext, agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
+            GameState.InventoryManager.RemoveItem(agentEntity.agentInventory.InventoryID, itemEntity.itemInventory.SlotID);
             return NodeState.Success;
         }
     }

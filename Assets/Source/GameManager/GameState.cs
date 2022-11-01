@@ -15,12 +15,12 @@ public static class GameState
     #region AI
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
-    public static readonly BlackboardManager    BlackboardManager;
-    public static readonly NodeManager          NodeManager;
-    public static readonly ActionManager        ActionManager;
-    public static readonly ConditionManager     ConditionManager;
-    public static readonly BehaviorTreeManager  BehaviorTreeManager;
-    public static readonly UpdateSystem         BehaviorTreeUpdateSystem;
+    public static readonly AI.BlackboardManager BlackboardManager;
+    public static readonly NodeSystem.NodeManager NodeManager;
+    public static readonly NodeSystem.ActionManager ActionManager;
+    public static readonly NodeSystem.ConditionManager ConditionManager;
+    public static readonly NodeSystem.BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
+    public static readonly NodeSystem.BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -104,6 +104,9 @@ public static class GameState
     public static readonly LootDrop.CreationApi LootTableCreationAPI;
     public static readonly LootDrop.LootDropSystem LootDropSystem;
     #endregion
+
+    public static readonly Utility.FileLoadingManager FileLoadingManager;
+    public static readonly ECSInput.InputProcessSystem InputProcessSystem;
 
     #region Projectile
     public static readonly Projectile.ProjectileCreationApi ProjectileCreationApi;
@@ -190,24 +193,22 @@ public static class GameState
     {
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
-        BlackboardManager = new BlackboardManager();
-        NodeManager =   new NodeManager();
-        ActionManager = new ActionManager();
-        ConditionManager = new ConditionManager();
-        BehaviorTreeManager = new BehaviorTreeManager();
-        BehaviorTreeUpdateSystem = new UpdateSystem();
+        BlackboardManager = new AI.BlackboardManager();
+        NodeManager =   new NodeSystem.NodeManager();
+        ActionManager = new NodeSystem.ActionManager();
+        ConditionManager = new NodeSystem.ConditionManager();
+        BehaviorTreeManager = new NodeSystem.BehaviorTree.BehaviorTreeManager();
+        BehaviorTreeUpdateSystem = new NodeSystem.BehaviorTree.UpdateSystem();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
         SpriteAtlasManager = new Sprites.SpriteAtlasManager();
-        
+
+        FileLoadingManager = new Utility.FileLoadingManager();
+        InputProcessSystem = new ECSInput.InputProcessSystem();
 
         TileCreationApi = new PlanetTileMap.TileCreationApi();
         TileMapRenderer = new PlanetTileMap.TileMapRenderer();
-
-        FileLoadingManager = new Utility.FileLoadingManager();
-
-        InputProcessSystem = new ECSInput.InputProcessSystem();
 
         AgentCreationApi = new Agent.AgentCreationApi();
         AgentSpawnerSystem = new Agent.AgentSpawnerSystem();

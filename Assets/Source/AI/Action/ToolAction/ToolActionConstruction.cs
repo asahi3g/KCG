@@ -1,6 +1,5 @@
 using UnityEngine;
-using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 
 namespace Action
 {

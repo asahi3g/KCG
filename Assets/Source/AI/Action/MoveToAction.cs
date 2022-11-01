@@ -2,6 +2,8 @@
 using KMath;
 using System;
 using UnityEngine;
+using Enums.PlanetTileMap;
+
 
 namespace Action
 {
@@ -20,7 +22,8 @@ namespace Action
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
             var movTo = nodeEntity.nodeMoveTo;
-            movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
+            movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, 
+                movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
             deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
@@ -86,7 +89,8 @@ namespace Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
+                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, 
+                    (int)agentEntity.agentPhysicsState.Position.Y - 1) == TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }
