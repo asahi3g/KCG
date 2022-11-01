@@ -1,19 +1,13 @@
 
-using AI;
-using NodeSystem;
-using NodeSystem.BehaviorTree;
 using Planet;
-
-// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors
+/// <summary>
+/// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
+/// </summary>
 public static class GameState
 {
-    //public static readonly Sprites.UnityImage2DCache UnityImage2DCache;
-
-    public static readonly Utility.FileLoadingManager FileLoadingManager;
-    public static readonly ECSInput.InputProcessSystem InputProcessSystem;
-    public static PlanetState CurrentPlanet;
-
-    #region Atinmation
+    public static Planet.PlanetState Planet;
+    
+    #region Aninmation
     public static readonly Animation.AnimationManager AnimationManager;
     public static readonly Animation.UpdateSystem AnimationUpdateSystem;
     #endregion
@@ -29,7 +23,7 @@ public static class GameState
     public static readonly UpdateSystem         BehaviorTreeUpdateSystem;
     #endregion
 
-    #region Action
+    #region PlayerActions
     public static readonly Node.CreationSystem            ActionCreationSystem;
     public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
     public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
@@ -74,6 +68,7 @@ public static class GameState
     public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
     public static readonly Agent.MovementSystem AgentMovementSystem;
+    public static readonly Agent.AgentIKSystem AgentIKSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
@@ -83,6 +78,10 @@ public static class GameState
 
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
+
+    public static readonly Collisions.LineCreationApi LineCreationApi;
+    public static readonly Collisions.PointCreationApi PointCreationApi;
+    public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
 
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
@@ -158,17 +157,21 @@ public static class GameState
     #region GUI/HUD
 
     public static readonly KGUI.GUIManager GUIManager;
-    public static KGUI.Elements.ElementSpawnerSystem ElementSpawnerSystem;
-    public static KGUI.Elements.ElementDrawSystem ElementDrawSystem;
-    public static KGUI.Elements.ElementUpdateSystem ElementUpdateSystem;
+
     #endregion
 
 
     public static void InitStage1()
     {
+        Planet = new Planet.PlanetState();
+        
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
+        PointCreationApi.InitStage1();
+        LineCreationApi.InitStage1();
+        GeometryCreationApi.InitStage1();
+        GUIManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -176,6 +179,10 @@ public static class GameState
         TileSpriteAtlasManager.InitStage2();
         SpriteAtlasManager.InitStage2();
         AgentMovementAnimationTable.InitStage2();
+        PointCreationApi.InitStage2();
+        LineCreationApi.InitStage2();
+        GeometryCreationApi.InitStage2();
+        GUIManager.InitStage2(Planet);
     }
 
 
@@ -207,12 +214,20 @@ public static class GameState
         AgentProcessCollisionSystem = new Agent.ProcessCollisionSystem();
         AgentProcessPhysicalState = new Agent.ProcessPhysicalState();
         AgentMovementSystem = new Agent.MovementSystem();
+        AgentIKSystem = new Agent.AgentIKSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessStats = new Agent.ProcessStats();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
+
+        LineCreationApi = new Collisions.LineCreationApi();
+        PointCreationApi = new Collisions.PointCreationApi();
+        GeometryCreationApi = new Collisions.GeometryCreationApi();
+
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
 
         InventoryManager = new Inventory.InventoryManager();
         InventoryDrawSystem = new Inventory.DrawSystem();
@@ -265,13 +280,6 @@ public static class GameState
         ProjectileDeleteSystem = new Projectile.DeleteSystem();
         ProjectileDebugSystem = new Projectile.DebugSystem();
 
-        MechCreationApi = new Mech.MechCreationApi();
-        MechSpawnerSystem = new Mech.MechSpawnSystem();
-        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
-        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
-        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
-        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
-
         Renderer = new Utility.Render();
 
         TGenGrid = new TGen.Grid();
@@ -280,9 +288,6 @@ public static class GameState
         TGenRenderMapMesh = new TGen.RenderMapMesh();
 
         GUIManager = new KGUI.GUIManager();
-        ElementSpawnerSystem = new KGUI.Elements.ElementSpawnerSystem();
-        ElementUpdateSystem = new KGUI.Elements.ElementUpdateSystem();
-        ElementDrawSystem = new KGUI.Elements.ElementDrawSystem();
 
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();
@@ -301,5 +306,12 @@ public static class GameState
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
+
+        MechCreationApi = new Mech.MechCreationApi();
+        MechSpawnerSystem = new Mech.MechSpawnSystem();
+        MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
+        MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
+        MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
+        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
     }
 }

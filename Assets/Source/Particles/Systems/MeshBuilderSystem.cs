@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using static UnityEditor.PlayerSettings;
+﻿//import UnityEngine
+
 using KMath;
 
 namespace Particle
@@ -13,15 +8,15 @@ namespace Particle
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("ParticlesGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
         }
 
-        public void UpdateMesh(ParticleContext context)
+        public void UpdateMesh()
         {
-            var entities = context.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleSprite2D));
+            var entities = GameState.Planet.EntitasContext.particle.GetGroup(ParticleMatcher.AllOf(ParticleMatcher.ParticleSprite2D));
             
             Mesh.Clear();
             int index = 0;
@@ -38,7 +33,7 @@ namespace Particle
                 
                 if (spriteId >= 0)
                 {
-                    Vector4 textureCoords = new Vector4();
+                   UnityEngine.Vector4 textureCoords = new UnityEngine.Vector4();
                    textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Particle).TextureCoords;
 
                    var pos = entity.particlePhysicsState.Position;

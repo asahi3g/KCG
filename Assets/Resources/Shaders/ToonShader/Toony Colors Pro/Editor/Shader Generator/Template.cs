@@ -589,7 +589,7 @@ namespace ToonyColorsPro
 					}
 
 					//Apply to textLines
-					this.textLines = newTemplateLines.ToArray();
+					textLines = newTemplateLines.ToArray();
 
 					//Second pass: parse other blocks
 					for (int i = 0; i < textLines.Length; i++)
@@ -803,7 +803,7 @@ namespace ToonyColorsPro
 
 							if (line.Trim().StartsWith("header"))
 							{
-								var data = line.Split(new string[] { "\t" }, System.StringSplitOptions.RemoveEmptyEntries);
+								var data = line.Split(new string[] { "\t" }, StringSplitOptions.RemoveEmptyEntries);
 								var gc = new GUIContent(data[1], data.Length > 2 ? data[2].Trim('\"') : null);
 								if (!headers.ContainsKey(shaderPropertiesList.Count))
 								{

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Source/Collisions/Shapes/GeometryProperties.cs.meta
+guid: 33ea93f1f1fc74649bd1e832faa27110
+========
 guid: 89b099f5fa6cd26439b72b515560c44d
+>>>>>>>> 1932ce55a27842a8d736195a98b50296d77ccb9a:Assets/Source/Mech/Systems/PlantGrowthSystem.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

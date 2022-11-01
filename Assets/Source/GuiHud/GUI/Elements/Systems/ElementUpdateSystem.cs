@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using UnityEngine;
 using KMath;
 
@@ -8,7 +8,7 @@ namespace KGUI.Elements
     {
         List<UIElementEntity> ToRemoveEntities = new List<UIElementEntity>();
 
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(Planet.PlanetState planetState, float deltaTime)
         {
             var entities = planetState.EntitasContext.uIElement.GetGroup(UIElementMatcher.AllOf(UIElementMatcher.KGUIElementsPosition2D));
 
@@ -59,5 +59,5 @@ namespace KGUI.Elements
             BuildCursor_ = GameState.SpriteAtlasManager.CopySpriteToAtlas(BuildCursor_, 1, 1, Enums.AtlasType.Particle);
         }
     }
-}
+}*/
 

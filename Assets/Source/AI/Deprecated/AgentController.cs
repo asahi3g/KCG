@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Planet;
-using AI.Sensor;
+﻿using AI.Sensor;
 using Enums;
 
 namespace AI
@@ -12,11 +10,11 @@ namespace AI
         public BlackBoard BlackBoard;
         public SensorEntity[] Sensors;
 
-        public void Update(AgentEntity agent, ref Planet.PlanetState planet)
+        public void Update(AgentEntity agent)
         {
             for (int i = 0; i < Sensors.Length; i++)
             {
-                AISystemState.Sensors[(int)Sensors[i].Type].Update(agent, in Sensors[i], ref BlackBoard, ref planet);
+                AISystemState.Sensors[(int)Sensors[i].Type].Update(agent, in Sensors[i], ref BlackBoard);
             }
         }
     }

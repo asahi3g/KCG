@@ -1,7 +1,7 @@
-﻿using System;
+﻿//import UntiyEngine
+
 using Physics;
 using KMath;
-using UnityEngine;
 
 namespace Item
 {
@@ -48,11 +48,11 @@ namespace Item
             physicsState.Acceleration = Vec2f.Zero;
         }
 
-        public void Update(ItemParticleContext Context)
+        public void Update()
         {
-            float deltaTime = Time.deltaTime;
-            var EntitiesWithPhysicsState = Context.GetGroup(ItemParticleMatcher.ItemPhysicsState);
-            foreach (var entity in EntitiesWithPhysicsState)
+            float deltaTime = UnityEngine.Time.deltaTime;
+            var entitiesWithPhysicsState = GameState.Planet.EntitasContext.itemParticle.GetGroup(ItemParticleMatcher.ItemPhysicsState);
+            foreach (var entity in entitiesWithPhysicsState)
             {
                 var physicsState = entity.itemPhysicsState;
                 Update(physicsState, deltaTime);

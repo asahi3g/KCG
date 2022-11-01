@@ -25,7 +25,7 @@ public class TCP2_MaterialInspector : ShaderGUI
 	private const string BASE_SHADER_NAME_MOB = "Mobile";
 	
 	//Properties
-	private Material targetMaterial { get { return (mMaterialEditor == null) ? null : mMaterialEditor.target as Material; } }
+	private Material targetMaterial => (mMaterialEditor == null) ? null : mMaterialEditor.target as Material;
 	private MaterialEditor mMaterialEditor;
 	private List<string> mShaderFeatures;
 	private bool isGeneratedShader;
@@ -70,7 +70,7 @@ public class TCP2_MaterialInspector : ShaderGUI
 		//Detect if User Shader (from Shader Generator)
 		isGeneratedShader = false;
 		mShaderFeatures = null;
-		var shaderImporter = ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(newShader)) as ShaderImporter;
+		var shaderImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(newShader)) as ShaderImporter;
 		if(shaderImporter != null)
 		{
 			TCP2_ShaderGeneratorUtils.ParseUserData(shaderImporter, out mShaderFeatures);
@@ -96,7 +96,7 @@ public class TCP2_MaterialInspector : ShaderGUI
 				ShaderVariantsEnabled[i] = nameFeatures.Contains(ShaderVariants[i]);
 			}
 			//Get flags for compiled shader to hide certain parts of the UI
-			var shaderImporter = ShaderImporter.GetAtPath(AssetDatabase.GetAssetPath(targetMaterial.shader)) as ShaderImporter;
+			var shaderImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(targetMaterial.shader)) as ShaderImporter;
 			if(shaderImporter != null)
 			{
 //				mShaderFeatures = new List<string>(shaderImporter.userData.Split(new string[]{","}, System.StringSplitOptions.RemoveEmptyEntries));

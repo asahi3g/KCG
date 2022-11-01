@@ -52,7 +52,7 @@ namespace ToonyColorsPro
 
 			//Fix for retina displays
 #if UNITY_5_4_OR_NEWER
-			public static float ScreenWidthRetina { get { return Screen.width/EditorGUIUtility.pixelsPerPoint; } }
+			public static float ScreenWidthRetina => Screen.width/EditorGUIUtility.pixelsPerPoint;
 #else
 	static public float ScreenWidthRetina { get { return Screen.width; } }
 #endif

@@ -1,5 +1,6 @@
-using UnityEngine;
-using Enums.Tile;
+//import UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using Enums;
 using System.Linq;
@@ -7,11 +8,10 @@ using System.Collections.Generic;
 
 namespace Planet.Unity
 {
-    public class MechTest : MonoBehaviour
+    public class MechTest : UnityEngine.MonoBehaviour
     {
-        [SerializeField] Material Material;
-
-        public Planet.PlanetState Planet;
+        [UnityEngine.SerializeField] UnityEngine.Material Material;
+        
         AgentEntity Player;
 
         static bool Init = false;
@@ -22,9 +22,9 @@ namespace Planet.Unity
 
         private int totalMechs;
 
-        private Color correctHlColor = Color.green;
+        private UnityEngine.Color correctHlColor = UnityEngine.Color.green;
 
-        private Color wrongHlColor = Color.red;
+        private UnityEngine.Color wrongHlColor = UnityEngine.Color.red;
 
         public Utility.FrameMesh HighliterMesh;
         
@@ -44,36 +44,37 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var tileMap = ref Planet.TileMap;
-            Material material = Material;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
+            UnityEngine.Material material = Material;
 
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow))
             {
                 selectedMechIndex++;
-            } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            } else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow))
             {
                 selectedMechIndex--;
             }
 
-            selectedMechIndex = Mathf.Clamp(selectedMechIndex, 0, totalMechs);
+            selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.T))
             {
-                GameState.ActionCreationSystem.CreateAction(Planet.EntitasContext, Enums.NodeType.DropAction, Player.agentID.ID);
+                GameState.ActionCreationSystem.CreateAction(NodeType.DropAction, Player.agentID.ID);
             }
 
-            GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
+            GameState.MechGUIDrawSystem.Draw(Player);
 
-            Planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             
-            MaterialBag.hasInventoryDraw = Planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+            MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }
 
         private void OnGUI()
         {
             if (!Init) return;
 
-            Planet.DrawHUD(Player);
+            GameState.Planet.DrawHUD(Player);
 
             if (showMechInventory)
             {
@@ -83,19 +84,19 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
+            ref var planet = ref GameState.Planet;
 
-            if (x >= 0 && x < Planet.TileMap.MapSize.X &&
-            y >= 0 && y < Planet.TileMap.MapSize.Y)
+            if (x >= 0 && x < planet.TileMap.MapSize.X &&
+            y >= 0 && y < planet.TileMap.MapSize.Y)
             {
-                //TODO: SET TO Get(selectedMechIndex)
                 var mech = GameState.MechCreationApi.Get((MechType)selectedMechIndex);
-                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
+                var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);
+                var yRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.Y);
 
                 var allTilesAir = true;
 
@@ -106,13 +107,13 @@ namespace Planet.Unity
                 {
                     for (int j = 0; j < yRange; j++)
                     {
-                        if (Planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
+                        if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
                             DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
                             break;
                         }
-                        if (Planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
+                        if (planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
                         {
                             allTilesAir = false;
                             DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
@@ -131,26 +132,26 @@ namespace Planet.Unity
             }
         }
 
-        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
+        private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h, UnityEngine.Color color)
         {
-            var mr = gameObject.GetComponent<MeshRenderer>();
+            var mr = gameObject.GetComponent<UnityEngine.MeshRenderer>();
             mr.sharedMaterial.color = color;
 
-            var mf = gameObject.GetComponent<MeshFilter>();
+            var mf = gameObject.GetComponent<UnityEngine.MeshFilter>();
             var mesh = mf.sharedMesh;
 
             List<int> triangles = new List<int>();
-            List<Vector3> vertices = new List<Vector3>();
+            List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 
             Vec2f topLeft = new Vec2f(x, y + h);
             Vec2f BottomLeft = new Vec2f(x, y);
             Vec2f BottomRight = new Vec2f(x + w, y);
             Vec2f TopRight = new Vec2f(x + w, y + h);
 
-            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
-            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
-            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
-            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
+            var p0 = new UnityEngine.Vector3(BottomLeft.X, BottomLeft.Y, 0);
+            var p1 = new UnityEngine.Vector3(TopRight.X, TopRight.Y, 0);
+            var p2 = new UnityEngine.Vector3(topLeft.X, topLeft.Y, 0);
+            var p3 = new UnityEngine.Vector3(BottomRight.X, BottomRight.Y, 0);
 
             vertices.Add(p0);
             vertices.Add(p1);
@@ -176,64 +177,63 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
+            ref var planet = ref GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 16);
-            Planet = new Planet.PlanetState();
-            Planet.Init(mapSize);
+            planet.Init(mapSize);
 
             GenerateMap();
 
-            Player = Planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            Player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int inventoryID = Player.agentInventory.InventoryID;
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Pistol, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Planet.EntitasContext, Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.Pistol, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
+            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.Sword, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
+            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
-            Planet.InitializeSystems(Material, transform);
-            Planet.InitializeHUD();
+            planet.InitializeSystems(Material, transform);
             
-            MaterialBag = Planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
             
             InventoryID = Player.agentInventory.InventoryID;
 
-            GameState.MechGUIDrawSystem.Initialize(ref Planet);
+            GameState.MechGUIDrawSystem.Initialize();
 
-            var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.SpawnEnemySlimeTool);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, SpawnEnemyTool, inventoryID);
-            var RemoveMech = GameState.ItemSpawnSystem.SpawnInventoryItem(Planet.EntitasContext, Enums.ItemType.RemoveMech);
-            GameState.InventoryManager.AddItem(Planet.EntitasContext, RemoveMech, inventoryID);
+            var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(ItemType.SpawnEnemySlimeTool);
+            GameState.InventoryManager.AddItem(SpawnEnemyTool, inventoryID);
+            var RemoveMech = GameState.ItemSpawnSystem.SpawnInventoryItem(ItemType.RemoveMech);
+            GameState.InventoryManager.AddItem(RemoveMech, inventoryID);
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
 
             HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
-                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
+                GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Generic), 30);
             
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.MajestyPalm, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SagoPalm, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.WaterBottle, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.DracaenaTrifasciata, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Chest, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Planter, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Light, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SmashableBox, 1, Planet.EntitasContext);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.SmashableEgg, 1, Planet.EntitasContext);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.MajestyPalm, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SagoPalm, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.WaterBottle, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.DracaenaTrifasciata, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Chest, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Planter, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Light, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableBox, 1);
+            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableEgg, 1);
         }
         
         /*
@@ -250,7 +250,8 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var tileMap = ref Planet.TileMap;
+            ref var planet = ref GameState.Planet;
+            ref var tileMap = ref planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)
             {
@@ -295,15 +296,13 @@ namespace Planet.Unity
 
         private void PlaceMech()
         {
-            Debug.Log("PLACE MECH");
+            UnityEngine.Debug.Log("PLACE MECH");
 
-            var planet = FindObjectOfType<ItemTest>().Planet;
-
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 
-            planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
+            GameState.Planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
         }
     } 
 }

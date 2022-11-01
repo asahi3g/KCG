@@ -20,8 +20,8 @@ namespace ToonyColorsPro
 		{
 			public static string LAST_SAVE_PATH
 			{
-				get { return EditorPrefs.GetString("TCP2_GradientSavePath", Application.dataPath); }
-				set { EditorPrefs.SetString("TCP2_GradientSavePath", value); }
+				get => EditorPrefs.GetString("TCP2_GradientSavePath", Application.dataPath);
+				set => EditorPrefs.SetString("TCP2_GradientSavePath", value);
 			}
 
 			public static bool CreateAndSaveNewGradientTexture(int width, string unityPath)

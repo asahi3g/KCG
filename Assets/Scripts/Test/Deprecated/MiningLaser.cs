@@ -1,8 +1,4 @@
-using UnityEngine;
-using Planet;
-using KMath;
-using Entitas;
-using Enums.Tile;
+
 
 /*
 public class MiningLaser : MonoBehaviour
@@ -218,10 +214,10 @@ public class MiningLaser : MonoBehaviour
                 {
                     Debug.Log($"({cell.x},{cell.y})");
 
-                    ref var tile = ref planet.TileMap.GetFrontTile(cell.x, cell.y);
+                    ref var tile = ref GameState.Planet.TileMap.GetFrontTile(cell.x, cell.y);
                     if (tile.ID != TileID.Error)
                     {
-                        planet.TileMap.RemoveFrontTile(cell.x, cell.y);
+                        GameState.Planet.TileMap.RemoveFrontTile(cell.x, cell.y);
                         //tileMap.BuildLayerTexture(Enums.Tile.MapLayerType.Front);
                     }
 

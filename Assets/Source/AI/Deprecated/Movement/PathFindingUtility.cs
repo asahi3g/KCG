@@ -61,14 +61,14 @@ namespace AI.Movement
         {
             float x = firstPos.X - secondPos.X;
             float y = firstPos.Y - secondPos.Y;
-            return (int)(System.MathF.Sqrt(x * x + y * y) + 0.5f);
+            return (int)(MathF.Sqrt(x * x + y * y) + 0.5f);
         }
 
         static public int manhattan_distance(Vec2i firstPos, Vec2i secondPos)
         {
             int x = firstPos.X - secondPos.X;
             int y = firstPos.Y - secondPos.Y;
-            return System.Math.Abs(x) + System.Math.Abs(y);
+            return Math.Abs(x) + Math.Abs(y);
         }
 
         // https://www.researchgate.net/publication/32117120_Efficient_path_finding_for_2D_games

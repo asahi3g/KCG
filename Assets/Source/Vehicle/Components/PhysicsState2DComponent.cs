@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//imports UnityEngine
+
 using Entitas;
 using KMath;
 
@@ -17,7 +16,7 @@ namespace Vehicle
 
         public float Rotation = 0.0f; 
 
-        [Range(-1.0f, 1.0f)]
+        [UnityEngine.Range(-1.0f, 1.0f)]
         public Vec2f angularVelocity = Vec2f.Zero;
 
         public float angularMass = 1.0f;

@@ -1,12 +1,3 @@
-using BigGustave; //SHOULD NOT IMPORT
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using TiledCS;
-
-
 //Note:
 //TMX files are created by map editor "Tiled"
 //Tiled can be downloaded at mapeditor.org

@@ -78,17 +78,17 @@ namespace AI
 
         public bool Equals(GoapState Other)
         {
-            if (this.states.Count != Other.states.Count)
+            if (states.Count != Other.states.Count)
             {
                 return false;
             }
-            if (this.states.Keys.Except(Other.states.Keys).Any())
+            if (states.Keys.Except(Other.states.Keys).Any())
             {
                 return false;
             }
             foreach (var state in Other.states)
             {
-                if (!Equals(state.Value, this.states[state.Key]))
+                if (!Equals(state.Value, states[state.Key]))
                     return false;
             }
             return true;

@@ -1,7 +1,8 @@
-using Enums.Tile;
+//imports UnityEngine
+
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 
 // Bresenham's line algorithm
 // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
@@ -113,7 +114,7 @@ namespace Collisions
         // Works with front tiles
         public static Vec2i RayTileCollisionCheck(TileMap tileMap, Vec2i start, Vec2i end)
         {
-            var rayCoordinates = RayCastCheck.GetRayCoordinates(start, end);
+            var rayCoordinates = GetRayCoordinates(start, end);
 
             foreach (var coordinate in rayCoordinates)
             {

@@ -1,5 +1,3 @@
-using System;
-
 namespace Collisions
 {
     public static partial class Collisions

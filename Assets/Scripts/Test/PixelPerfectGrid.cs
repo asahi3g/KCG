@@ -1,16 +1,16 @@
-using UnityEngine;
+//imports UnityEngine
 
 /*
 GRID CONTROL SCRIPT TO TEST PIXEL PERFECT CAMERA AND PIXEL SNAP
  */
 
 // NEEDS "PIXEL SNAP" COMPONENT TO WORK
-[ExecuteInEditMode]
-[RequireComponent(typeof(PixelSnap))]
-public class PixelPerfectGrid : MonoBehaviour
+[UnityEngine.ExecuteInEditMode]
+[UnityEngine.RequireComponent(typeof(PixelSnap))]
+public class PixelPerfectGrid : UnityEngine.MonoBehaviour
 {
     //Cursor posisiton
-    private Vector3 mousePosition;
+    private UnityEngine.Vector3 mousePosition;
 
     // Setting cursor move speed to drag grid
     public float CursorMoveSpeed = 0.1f;
@@ -20,15 +20,15 @@ public class PixelPerfectGrid : MonoBehaviour
 
     // Grid's Y Offset
     public float YOffset = 0.0f;
-    
+
     // Sprite Renderer
-    SpriteRenderer spriteRenderer;
+    UnityEngine.SpriteRenderer spriteRenderer;
 
     // Can grid follow mouse condition
     public bool followCursor = false;
     
     // Grid's Alpha Color
-    [Range(0f, 1f)]
+    [UnityEngine.Range(0f, 1f)]
     public float targetAlpha = 1.0f;
 
     // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
@@ -44,15 +44,15 @@ public class PixelPerfectGrid : MonoBehaviour
     {
         // When we off the cursor following, grid go backs to his offset
         if (!followCursor)
-            transform.position = new Vector3(XOffset, YOffset, transform.position.z);
+            transform.position = new UnityEngine.Vector3(XOffset, YOffset, transform.position.z);
 
         // Assign Sprite renderer
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<UnityEngine.SpriteRenderer>();
 
         if(spriteRenderer)
         {
             // Assign grid's alpha
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, targetAlpha);
+            spriteRenderer.color = new UnityEngine.Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, targetAlpha);
         }
     }
 
@@ -61,12 +61,12 @@ public class PixelPerfectGrid : MonoBehaviour
     {
         // When we off the cursor following, grid go backs to his offset
         if (!followCursor)
-            transform.position = new Vector3(XOffset, YOffset, transform.position.z);
+            transform.position = new UnityEngine.Vector3(XOffset, YOffset, transform.position.z);
 
         if(spriteRenderer)
         {
             // Assign grid's alpha everytime on gui event
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, targetAlpha);
+            spriteRenderer.color = new UnityEngine.Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, targetAlpha);
         }
     }
 
@@ -77,11 +77,11 @@ public class PixelPerfectGrid : MonoBehaviour
         if (followCursor)
         {
             // Getting cursor pos
-            mousePosition = Input.mousePosition;
+            mousePosition = UnityEngine.Input.mousePosition;
             // Converting to screen space
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(mousePosition);
             // Then sign grid's transform to cursor
-            transform.position = Vector2.Lerp(transform.position, mousePosition, CursorMoveSpeed);
+            transform.position = UnityEngine.Vector2.Lerp(transform.position, mousePosition, CursorMoveSpeed);
         }
     }
 

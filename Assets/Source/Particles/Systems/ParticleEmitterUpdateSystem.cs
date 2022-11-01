@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 using KMath;
 
 namespace Particle
@@ -19,19 +20,20 @@ namespace Particle
             ParticleCreationApi = particleCreationApi;
         }
 
-        public void Update(ref Planet.PlanetState planetState)
+        public void Update()
         {
             ToDestroy.Clear();
 
-            ParticleContext context = planetState.EntitasContext.particle;
+            ref var planet = ref GameState.Planet;
+            ParticleContext context = planet.EntitasContext.particle;
 
-            float deltaTime = Time.deltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
             IGroup<ParticleEntity> entities = context.GetGroup(ParticleMatcher.ParticleEmitterState);
             foreach (var gameEntity in entities)
             {
                 var state = gameEntity.particleEmitterState;
                 var position = gameEntity.particleEmitter2dPosition;
-                state.Duration -= Time.deltaTime;
+                state.Duration -= UnityEngine.Time.deltaTime;
                 ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)state.ParticleEmitterType);
                 ParticleProperties particleProperties = 
@@ -63,14 +65,14 @@ namespace Particle
                                                    emitterProperties.VelocityIntervalBegin.Y) -
                                                         emitterProperties.VelocityIntervalEnd.Y;
 
-                            planetState.AddParticle(new Vec2f(x, y), Velocity, state.ParticleType);
+                            planet.AddParticle(new Vec2f(x, y), Velocity, state.ParticleType);
                         }
 
                         state.CurrentTime = emitterProperties.TimeBetweenEmissions;
                     }
                     else
                     {
-                        state.CurrentTime -= Time.deltaTime;
+                        state.CurrentTime -= UnityEngine.Time.deltaTime;
                     }
 
                     gameEntity.ReplaceParticleEmitterState(state.ParticleType, state.ParticleEmitterType,
@@ -84,7 +86,7 @@ namespace Particle
 
             foreach(var entity in ToDestroy)
             {
-                planetState.RemoveParticleEmitter(entity.particleEmitterID.Index);
+                planet.RemoveParticleEmitter(entity.particleEmitterID.Index);
             }
         }
     }

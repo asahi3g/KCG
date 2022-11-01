@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿//import UnityEngine
 
 namespace Agent
 {
@@ -11,15 +6,15 @@ namespace Agent
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("AgentsGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent), drawOrder);
         }
 
-        public void UpdateMesh(AgentContext context)
+        public void UpdateMesh()
         {
-            var AgentsWithSprite = context.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentSprite2D));
+            var AgentsWithSprite = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentSprite2D));
 
             int index = 0;
             Mesh.Clear();
@@ -33,7 +28,7 @@ namespace Agent
                     spriteId = animation.State.GetSpriteId();
                 }
 
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Agent).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.Agent).TextureCoords;
 
                 var x = entity.agentPhysicsState.Position.X;
                 var y = entity.agentPhysicsState.Position.Y;

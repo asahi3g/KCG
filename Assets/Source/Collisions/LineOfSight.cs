@@ -1,8 +1,6 @@
-﻿using CollisionsTest;
-using KMath;
+﻿using KMath;
 using System;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace Collisions
 {
@@ -18,10 +16,11 @@ namespace Collisions
         }
 
         // Todo(Joao): Remove magic numbers.
-        public static bool CanSee(ref Planet.PlanetState planet, int agentID, int targetAgentID)
+        public static bool CanSee(int agentID, int targetAgentID)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
-            AgentEntity targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
+            var targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
 
             // This is a temporary solution to get eys position. Todo: Implement a way to get eys pos
             Vec2f agentEyes = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size * 0.9f;
@@ -51,35 +50,35 @@ namespace Collisions
 
             if (visionCone.Intersect(targetDownLeft))
             {
-                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowLeft);
+                RayCastResult result = Collisions.RayCastAgainstTileMap(toLowLeft);
                 if (!toLowLeft.OnLine(result.Point))
                     return true;
             }
 
             if (visionCone.Intersect(targetUpRight))
             {
-                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpRight);
+                RayCastResult result = Collisions.RayCastAgainstTileMap(toUpRight);
                 if (!toUpRight.OnLine(result.Point))
                     return true;
             }
 
             if (visionCone.Intersect(targetMiddle))
             {
-                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toMiddle);
+                RayCastResult result = Collisions.RayCastAgainstTileMap(toMiddle);
                 if (!toMiddle.OnLine(result.Point))
                     return true;
             }
 
             if (visionCone.Intersect(targetDownRight))
             {
-                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toLowRight);
+                RayCastResult result = Collisions.RayCastAgainstTileMap(toLowRight);
                 if (!toLowRight.OnLine(result.Point))
                     return true;
             }
 
             if (visionCone.Intersect(targetUpLeft))
             {
-                RayCastResult result = Collisions.RayCastAgainstTileMap(planet.TileMap, toUpLeft);
+                RayCastResult result = Collisions.RayCastAgainstTileMap(toUpLeft);
                 if (!toUpLeft.OnLine(result.Point))
                     return true;
             }

@@ -1,20 +1,19 @@
-using UnityEngine;
+//import UnityEngine
+
 using System;
 using System.Collections.Generic;
-using Enums.Tile;
-using KMath;
 
 
 namespace Engine3D
 {
     public class ModelLoader
     {
-        public GameObject[] ObjectArray;
+        public UnityEngine.GameObject[] ObjectArray;
         public Dictionary<string, int> ObjectID;
 
         public ModelLoader()
         {
-            ObjectArray = new GameObject[1024];
+            ObjectArray = new UnityEngine.GameObject[1024];
             ObjectID = new Dictionary<string, int>();
         }
 
@@ -31,11 +30,11 @@ namespace Engine3D
             }
 
             ObjectID.Add(filename, index);
-            GameObject prefab = (GameObject)Resources.Load(filename);
+            UnityEngine.GameObject prefab = (UnityEngine.GameObject)UnityEngine.Resources.Load(filename);
             ObjectArray[index] = prefab;
         }
 
-        public ref GameObject GetModel(ModelType modelType)
+        public ref UnityEngine.GameObject GetModel(ModelType modelType)
         {
             return ref ObjectArray[(int)modelType];
         }

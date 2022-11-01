@@ -11,7 +11,7 @@ public partial class ItemInventoryEntity {
     public Item.TileComponent itemTile { get { return (Item.TileComponent)GetComponent(ItemInventoryComponentsLookup.ItemTile); } }
     public bool hasItemTile { get { return HasComponent(ItemInventoryComponentsLookup.ItemTile); } }
 
-    public void AddItemTile(Enums.Tile.TileID newTileID, Enums.Tile.MapLayerType newLayer, bool newInputsActive) {
+    public void AddItemTile(Enums.PlanetTileMap.TileID newTileID, Enums.PlanetTileMap.MapLayerType newLayer, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemTile;
         var component = (Item.TileComponent)CreateComponent(index, typeof(Item.TileComponent));
         component.TileID = newTileID;
@@ -20,7 +20,7 @@ public partial class ItemInventoryEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceItemTile(Enums.Tile.TileID newTileID, Enums.Tile.MapLayerType newLayer, bool newInputsActive) {
+    public void ReplaceItemTile(Enums.PlanetTileMap.TileID newTileID, Enums.PlanetTileMap.MapLayerType newLayer, bool newInputsActive) {
         var index = ItemInventoryComponentsLookup.ItemTile;
         var component = (Item.TileComponent)CreateComponent(index, typeof(Item.TileComponent));
         component.TileID = newTileID;

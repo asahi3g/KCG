@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//imports UnityEngine
 
-public class IKTestSceneScript : MonoBehaviour
+public class IKTestSceneScript : UnityEngine.MonoBehaviour
 {
-    GameObject aim;
+    UnityEngine.GameObject aim;
     // Start is called before the first frame update
     void Start()
     {
-        aim = GameObject.Find("AimTargetTest");
+        aim = UnityEngine.GameObject.Find("AimTargetTest");
     }
 
     // Update is called once per frame

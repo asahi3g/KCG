@@ -2,7 +2,7 @@
 {
     public enum LootTableType
     {
-        None,
+        None = 0 ,
         SlimeEnemyDrop,
         ChestDrop,
         PlanterDrop,

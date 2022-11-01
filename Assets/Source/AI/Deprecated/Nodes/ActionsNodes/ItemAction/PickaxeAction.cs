@@ -1,29 +1,30 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Enums;
 using KMath;
-using Planet;
 
 namespace Node
 {
     public class PickaxeAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.PickaxeAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.PickaxeAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
-            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            ref var planet = ref GameState.Planet;
+            var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
 
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;
-            if(tile == Enums.Tile.TileID.Bedrock)
+            if(tile == Enums.PlanetTileMap.TileID.Bedrock)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                nodeEntity.nodeExecution.State = NodeState.Success;
                 return;
             }
 
@@ -34,7 +35,7 @@ namespace Node
             planet.TileMap.RemoveFrontTile((int)x, (int)y);
             agentEntity.agentPhysicsState.MovementState = AgentMovementState.PickaxeHit;
 
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }
 }

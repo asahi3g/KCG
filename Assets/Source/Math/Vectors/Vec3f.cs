@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -48,12 +46,12 @@ namespace KMath
         /// </summary>
         public float Magnitude
         {
-            [MethodImpl((MethodImplOptions) 256)] get => (float) Math.Sqrt((double) this.X * (double) this.X + (double) this.Y * (double) this.Y + (double) this.Z * (double) this.Z);
+            [MethodImpl((MethodImplOptions) 256)] get => (float) Math.Sqrt((double) X * (double) X + (double) Y * (double) Y + (double) Z * (double) Z);
         }
 
         public Vec3f Normalize()
         {
-            var magnitude = this.Magnitude;
+            var magnitude = Magnitude;
             if (magnitude > 9.99999974737875E-06)
                 this /= magnitude;
             else
@@ -72,10 +70,10 @@ namespace KMath
         }
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(Vec3f other) => this.X * other.X + this.Y * other.Y + this.Z * other.Z; 
+        public float Dot(Vec3f other) => X * other.X + Y * other.Y + Z * other.Z; 
 
         [MethodImpl((MethodImplOptions)256)]
-        public float Dot(float x, float y, float z) => this.X * x + this.Y * y + this.Z * z;
+        public float Dot(float x, float y, float z) => X * x + Y * y + Z * z;
 
 
         [MethodImpl((MethodImplOptions) 256)]

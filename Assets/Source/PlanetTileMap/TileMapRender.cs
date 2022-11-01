@@ -1,4 +1,4 @@
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using System;
 using UnityEngine;
 using Utility;
@@ -23,7 +23,7 @@ namespace PlanetTileMap
             }
         }
 
-        public void UpdateMidLayerMesh(TileMap tileMap)
+        public void UpdateMidLayerMesh()
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -39,18 +39,19 @@ namespace PlanetTileMap
             var topLeft = (Vector2)cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
-
+            
+            ref var planet = ref GameState.Planet;
             int index = 0;
-            for (int y = (int)(bottomLeft.y - 10); y < tileMap.MapSize.Y && y <= (topRight.y + 10); y++)
+            for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
-                for (int x = (int)(bottomLeft.x - 10); x < tileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
+                for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
-                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                        continue;
+                  /*  if (!ObjectMesh.isOnScreen(x, y))
+                        continue;*/
 
                     if (x >= 0 && y >= 0)
                     {
-                        ref var tile = ref tileMap.GetTile(x, y);
+                        ref var tile = ref planet.TileMap.GetTile(x, y);
 
                         if (tile.MidTileSpriteID >= 0)
                         {
@@ -79,8 +80,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                   /* if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Mid].UpdateUV(textureCoords, (index) * 4);
@@ -97,7 +98,7 @@ namespace PlanetTileMap
             }
         }
 
-        public void UpdateFrontLayerMesh(TileMap tileMap)
+        public void UpdateFrontLayerMesh()
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -111,17 +112,18 @@ namespace PlanetTileMap
 
             LayerMeshes[(int)MapLayerType.Front].Clear();
 
+            ref var planet = ref GameState.Planet;
             int index = 0;
-            for (int y = (int)(bottomLeft.y - 10); y < tileMap.MapSize.Y && y <= (topRight.y + 10); y++)
+            for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
-                for (int x = (int)(bottomLeft.x - 10); x < tileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
+                for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!Utility.ObjectMesh.isOnScreen(x, y))
-                            continue;
+                        /*if (!ObjectMesh.isOnScreen(x, y))
+                            continue;*/
 
-                        ref var tile = ref tileMap.GetTile(x, y);
+                        ref var tile = ref planet.TileMap.GetTile(x, y);
 
                         if (tile.FrontTileSpriteID >= 0)
                         {
@@ -160,8 +162,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                    /*if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Front].UpdateUV(textureCoords, (index) * 4);
@@ -176,7 +178,7 @@ namespace PlanetTileMap
             }
         }
 
-        public void UpdateBackLayerMesh(TileMap tileMap)
+        public void UpdateBackLayerMesh()
         {
             if (Camera.main == null) { Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -193,17 +195,18 @@ namespace PlanetTileMap
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
 
+            ref var planet = ref GameState.Planet;
             int index = 0;
-            for (int y = (int)(bottomLeft.y - 10); y < tileMap.MapSize.Y && y <= (topRight.y + 10); y++)
+            for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
-                for (int x = (int)(bottomLeft.x - 10); x < tileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
+                for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        if (!Utility.ObjectMesh.isOnScreen(x, y))
-                            continue;
+                       /* if (!ObjectMesh.isOnScreen(x, y))
+                            continue;*/
 
-                        ref var tile = ref tileMap.GetTile(x, y);
+                        ref var tile = ref planet.TileMap.GetTile(x, y);
 
                         if (tile.BackTileSpriteID >= 0)
                         {
@@ -233,8 +236,8 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                    if (!Utility.ObjectMesh.isOnScreen(x, y))
-                                        continue;
+                                  /*  if (!ObjectMesh.isOnScreen(x, y))
+                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);
@@ -290,8 +293,6 @@ namespace PlanetTileMap
                 default:
                     return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
             }
-
-            return 0;
         }
 
         public void DrawLayer(MapLayerType planetLayer)

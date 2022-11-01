@@ -1,16 +1,15 @@
-﻿using AI;
-using Inventory;
+//imports UnityEngine
+
+using AI;
 using Node;
-using Planet;
 using System.Collections.Generic;
-using UnityEngine;
 
 public partial class NodeEntity
 {
-    public ItemInventoryEntity GetItem(ref PlanetState planet)
+    public ItemInventoryEntity GetItem()
     {
-        AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeOwner.AgentID);
-        return agentEntity.GetItem(ref planet);
+        AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeOwner.AgentID);
+        return agentEntity.GetItem();
     }
 
     public bool AddChild(NodeEntity nodeEntity) => AddChild(nodeEntity.nodeID.ID);
@@ -19,13 +18,13 @@ public partial class NodeEntity
     {
         if (nodeID.ID == ID)
         {
-            Debug.LogError("Can't Add node to itself.");
+            UnityEngine.Debug.LogError("Can't Add node to itself.");
             return false;
         }
 
         if (AISystemState.Nodes[(int)nodeID.TypeID].NodeGroup == Enums.NodeGroup.ActionNode)
         {
-            Debug.LogError("Can't Add child to action node.");
+            UnityEngine.Debug.LogError("Can't Add child to action node.");
             return false;
         }
 
@@ -53,7 +52,7 @@ public partial class NodeEntity
             return true;
         }
 
-        Debug.LogError("Can only remove child from composite nodes.");
+        UnityEngine.Debug.LogError("Can only remove child from composite nodes.");
         return false;
     }
 
@@ -71,7 +70,7 @@ public partial class NodeEntity
             return true;
         }
 
-        Debug.LogError("Action node doesn't have any children.");
+        UnityEngine.Debug.LogError("Action node doesn't have any children.");
         return false;
     }
 

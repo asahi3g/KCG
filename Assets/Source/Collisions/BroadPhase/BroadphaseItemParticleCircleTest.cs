@@ -1,5 +1,3 @@
-
-using Entitas;
 using KMath;
 using System;
 
@@ -10,12 +8,12 @@ namespace Collisions
 
     public static partial class Collisions
     {
-        public static int[] BroadphaseItemCircleTest(Planet.PlanetState planet, Vec2f point, float distance)
+        public static int[] BroadphaseItemCircleTest(Vec2f point, float distance)
         {
             int[] result = new int[128];
             int resultCount = 0;
 
-            Item.ItemParticleList list = planet.ItemParticleList;
+            Item.ItemParticleList list = GameState.Planet.ItemParticleList;
 
 
             for(int i = 0; i < list.Length; i++)

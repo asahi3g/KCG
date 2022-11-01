@@ -1,5 +1,4 @@
-﻿using Entitas;
-using UnityEngine;
+﻿using UnityEngine;
 using KMath;
 using Enums;
 
@@ -7,16 +6,16 @@ namespace Node.Action
 {
     public class ToolActionEnemySpawn : NodeBase
     {
-        public override NodeType Type { get { return NodeType.ToolActionEnemySpawn; } }
+        public override NodeType Type => NodeType.ToolActionEnemySpawn;
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            planet.AddEnemy(new Vec2f(x, y));
+            GameState.Planet.AddEnemy(new Vec2f(x, y));
 
-            nodeEntity.nodeExecution.State =  Enums.NodeState.Success;
+            nodeEntity.nodeExecution.State =  NodeState.Success;
         }
     }
 }

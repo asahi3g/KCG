@@ -1,17 +1,14 @@
-using System;
-using KMath;
-using UnityEngine;
-using Enums;
+//import UnityEngine
 
 namespace Agent
 {
     public class Model3DAnimationSystem
     {
-        public void Update(AgentContext agentContext)
+        public void Update()
         {
             
-            float deltaTime = Time.deltaTime;
-            var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            float deltaTime = UnityEngine.Time.deltaTime;
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
 
             foreach (var entity in entities)
             {
@@ -30,7 +27,7 @@ namespace Agent
                         GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, model3d.AnimationType, model3d.ItemAnimationSet);
 
 
-                    AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
+                    UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
                     currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 
@@ -45,7 +42,7 @@ namespace Agent
                     }
 
 
-                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation != agentAnimation))
+                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation.AnimationsAreEqual(agentAnimation)))
                     {
                         physicsState.SetMovementState = false;
                         currentClip.Time = agentAnimation.StartTime;

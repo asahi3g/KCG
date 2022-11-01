@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//imports UntiyEngine
+
 using Enums;
 using KMath;
 using AI;
@@ -11,13 +12,13 @@ namespace Node
 
         private static int ActionID;
 
-        public int CreateBehaviorTreeNode(Contexts entitasContext, NodeType NodeTypeID, int agentID, int[] entiresID = null)
+        public int CreateBehaviorTreeNode(NodeType NodeTypeID, int agentID, int[] entiresID = null)
         {
-            NodeEntity nodeEntity = entitasContext.node.CreateEntity();
+            NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.CreateEntity();
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
             if (entiresID != null)
                 nodeEntity.AddNodeBlackboardData(entiresID);
 
@@ -39,40 +40,40 @@ namespace Node
         /// Create action and schedule it. Later we will be able to create action without scheduling immediately.
         /// If actions is in cool down returns -1. 
         /// </summary>
-        public int CreateAction(Contexts entitasContext, NodeType NodeTypeID, int agentID)
+        public int CreateAction(NodeType NodeTypeID, int agentID)
         {
-            if (GameState.ActionCoolDownSystem.InCoolDown(entitasContext, NodeTypeID, agentID))
+            if (GameState.ActionCoolDownSystem.InCoolDown(NodeTypeID, agentID))
             {
-                Debug.Log("Action " + NodeTypeID.ToString() + " in CoolDown");
+                UnityEngine.Debug.Log("Action " + NodeTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
-            NodeEntity nodeEntity = entitasContext.node.CreateEntity();
+            NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.CreateEntity();
             nodeEntity.AddNodeID(ActionID, NodeTypeID);
             nodeEntity.AddNodeOwner(agentID);
             nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(Time.realtimeSinceStartup);
+            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
 
             return ActionID++;
         }
 
-        public int CreateAction(Contexts entitasContext, NodeType NodeTypeID, int agentID, int itemID)
+        public int CreateAction(NodeType NodeTypeID, int agentID, int itemID)
         {
-            int nodeID = CreateAction(entitasContext, NodeTypeID, agentID);
+            int nodeID = CreateAction(NodeTypeID, agentID);
             if (nodeID != -1)
             {
-                NodeEntity nodeEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
+                NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
                 nodeEntity.AddNodeTool(itemID);
             }
             return nodeID;
         }
 
-        public int CreateMovementAction(Contexts entitasContext, NodeType NodeTypeID, int agentID, Vec2f goalPosition)
+        public int CreateMovementAction(NodeType NodeTypeID, int agentID, Vec2f goalPosition)
         {
-            int nodeID = CreateAction(entitasContext, NodeTypeID, agentID);
+            int nodeID = CreateAction(NodeTypeID, agentID);
             if (nodeID != -1)
             {
-                NodeEntity nodeEntity = entitasContext.node.GetEntityWithNodeIDID(nodeID);
+                NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
                 nodeEntity.AddNodeMoveTo(goalPosition, new Vec2f[1], 0, false, false);
             }
             return nodeID;

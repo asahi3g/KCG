@@ -1,33 +1,27 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Entitas;
-using KMath;
-using Sprites;
-
-namespace Item
+﻿namespace Item
 {
     public class MeshBuilderSystem
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("ItemsGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Particle), drawOrder);
         }
 
-        public void UpdateMesh(Contexts context)
+        public void UpdateMesh()
         {            
             Mesh.Clear();
             int index = 0;
 
-            ItemParticleEntity[] items = context.itemParticle.GetEntities();
+            ItemParticleEntity[] items = GameState.Planet.EntitasContext.itemParticle.GetEntities();
             foreach (var entity in items)
             {
                 ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
                 int SpriteID = proprieties.SpriteID;
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle).TextureCoords;
 
 
                 float x, y;

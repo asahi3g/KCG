@@ -1,3 +1,4 @@
+//imports UnityEngine
 
 using KMath;
 
@@ -28,6 +29,8 @@ namespace Agent
 
         public MovementProperties MovProperties;
         public Enums.AgentAnimationType AnimationType;
+
+        public UnityEngine.GameObject TrackStub;
     }
 
     public struct MovementProperties

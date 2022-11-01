@@ -1,9 +1,10 @@
-﻿using System;
+﻿//imports UnityEngine
+
+using System;
 using System.Collections.Generic;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using PlanetTileMap;
-using UnityEngine;
 
 namespace AI.Movement
 {
@@ -12,15 +13,16 @@ namespace AI.Movement
         public const int MAX_NUM_NODES = 2048; // Maximum size of open/closed Map.
 
         readonly PathAdjacency[] directions = new PathAdjacency[8]
-            {   new PathAdjacency() { dir = new Vec2i(1, 0),  cost = 100 },   // Right
-                new PathAdjacency() { dir = new Vec2i(-1, 0), cost = 100 },   // Left
-                new PathAdjacency() { dir = new Vec2i(0, 1),  cost = 100 },   // Up
-                new PathAdjacency() { dir = new Vec2i(0, -1), cost = 100 },   // Down
+            {
+                new PathAdjacency { dir = new Vec2i(1, 0),  cost = 100 }, // Right
+                new PathAdjacency { dir = new Vec2i(-1, 0), cost = 100 }, // Left
+                new PathAdjacency { dir = new Vec2i(0, 1),  cost = 100 }, // Up
+                new PathAdjacency { dir = new Vec2i(0, -1), cost = 100 }, // Down
                 // Used for flying paths only
-                new PathAdjacency() { dir = new Vec2i(1, 1), cost = 144 },    // Up - Right
-                new PathAdjacency() { dir = new Vec2i(-1, 1), cost = 144 },   // Up - Left
-                new PathAdjacency() { dir = new Vec2i(1, -1), cost = 144 },   // Down - Right
-                new PathAdjacency() { dir = new Vec2i(-1, -1), cost = 144 }    // Down - Left
+                new PathAdjacency { dir = new Vec2i(1, 1), cost = 144 }, // Up - Right
+                new PathAdjacency { dir = new Vec2i(-1, 1), cost = 144 }, // Up - Left
+                new PathAdjacency { dir = new Vec2i(1, -1), cost = 144 }, // Down - Right
+                new PathAdjacency { dir = new Vec2i(-1, -1), cost = 144 }    // Down - Left
             };
 
         Node[] openList;
@@ -58,7 +60,7 @@ namespace AI.Movement
         {
             if (tileMap.GetFrontTileID((int)end.X, (int)end.Y) != TileID.Air)
             {
-                Debug.Log("Not possible path. Endpoint is solid(unreacheable)");
+                UnityEngine.Debug.Log("Not possible path. Endpoint is solid(unreacheable)");
             }
 
             Passable passable = PassableJump;
@@ -92,14 +94,14 @@ namespace AI.Movement
             {
                 if (openListLenght >= MAX_NUM_NODES || closeListLenght >= MAX_NUM_NODES)
                 {
-                    Debug.Log("The path is taking too long. Giving up.");
+                    UnityEngine.Debug.Log("The path is taking too long. Giving up.");
                     return null;
                 }
 
                 // We failed to find a path if open list is empty.
                 if (openListLenght == 0)
                 {
-                    Debug.Log("Couldn't find a path to the destination.");
+                    UnityEngine.Debug.Log("Couldn't find a path to the destination.");
                     return null;
                 }
 

@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Entitas;
-using KMath;
-using Sprites;
+//import UnityEngine
 
 namespace Vehicle.Pod
 {
@@ -10,21 +6,21 @@ namespace Vehicle.Pod
     {
         public Utility.FrameMesh Mesh;
 
-        public void Initialize(Material material, Transform transform, int drawOrder = 0)
+        public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder = 0)
         {
             Mesh = new Utility.FrameMesh("podsGameObject", material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Vehicle), drawOrder);
         }
 
-        public void UpdateMesh(PodContext contexts)
+        public void UpdateMesh()
         {
-            var PodsWithSprite = contexts.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+            var PodsWithSprite = GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
 
             Mesh.Clear();
             int index = 0;
             foreach (var entity in PodsWithSprite)
             {
-                Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehiclePodSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+                UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehiclePodSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
 
                 var x = entity.vehiclePodPhysicsState2D.Position.X;
                 var y = entity.vehiclePodPhysicsState2D.Position.Y;

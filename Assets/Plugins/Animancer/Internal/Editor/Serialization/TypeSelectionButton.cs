@@ -172,7 +172,8 @@ namespace Animancer.Editor
 
         private static readonly BoolPref
             UseFullNames = new BoolPref(PrefKeyPrefix + nameof(UseFullNames), PrefMenuPrefix + "Show Full Names", false),
-            UseTypeHierarchy = new BoolPref(PrefKeyPrefix + nameof(UseTypeHierarchy), PrefMenuPrefix + "Show Type Hierarchy", false);
+            UseTypeHierarchy = new BoolPref(PrefKeyPrefix + nameof(UseTypeHierarchy),
+                PrefMenuPrefix + "Show Type Hierarchy", false);
 
         private static string GetSelectorLabel(Type fieldType, Type newType)
         {

@@ -1,21 +1,23 @@
-﻿using AI.Movement;
+﻿//import UnityEngine
+
+using AI.Movement;
 using KMath;
 using System;
-using UnityEngine;
 using Enums;
 
 namespace Node.Action
 {
     public class MoveToAction : NodeBase
     {
-        public override NodeType Type { get { return NodeType.MoveToAction; } }
-        public override NodeGroup NodeGroup { get { return NodeGroup.ActionNode; } }
+        public override NodeType Type => NodeType.MoveToAction;
+        public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
-        public override void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnEnter(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
 #if DEBUG
-            float deltaTime = Time.realtimeSinceStartup;
+            float deltaTime = UnityEngine.Time.realtimeSinceStartup;
 #endif
             const int MAX_FALL_HEIGHT = 6;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
@@ -27,23 +29,24 @@ namespace Node.Action
             movTo.path = GameState.PathFinding.getPath(planet.TileMap, agentEntity.agentPhysicsState.Position, movTo.GoalPosition, movProperties.MovType, characterMov);
 
 #if DEBUG
-            deltaTime = (Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
-            Debug.Log("Found time in " + deltaTime.ToString() + "ms");
+            deltaTime = (UnityEngine.Time.realtimeSinceStartup - deltaTime) * 1000f; // get time and transform to ms.
+            UnityEngine.Debug.Log("Found time in " + deltaTime.ToString() + "ms");
 #endif
 
             if (movTo.path == null)
             {
-                nodeEntity.nodeExecution.State = Enums.NodeState.Fail;
+                nodeEntity.nodeExecution.State = NodeState.Fail;
                 return;
             }
 
             movTo.pathLength = movTo.path.Length;
-            nodeEntity.nodeExecution.State = Enums.NodeState.Running;
+            nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
         // Todo: Improve path following algorithm
-        public override void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
+        public override void OnUpdate(NodeEntity nodeEntity)
         {
+            ref var planet = ref GameState.Planet;
             var movTo = nodeEntity.nodeMoveTo;
 
             Vec2f targetPos = movTo.path[movTo.pathLength - 1];
@@ -67,7 +70,7 @@ namespace Node.Action
             {
                 if (--movTo.pathLength == 0)
                 {
-                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                    nodeEntity.nodeExecution.State = NodeState.Success;
                     return;
                 }
                 movTo.reachedX = false;
@@ -76,7 +79,7 @@ namespace Node.Action
 
             Agent.MovementProperties movProperties = GameState.AgentCreationApi.GetMovementProperties((int)agentEntity.agentID.Type);
 
-            if (movProperties.MovType == Enums.AgentMovementType.FlyingMovemnt)
+            if (movProperties.MovType == AgentMovementType.FlyingMovemnt)
             {
                 direction.Normalize();
                 agentEntity.agentPhysicsState.Acceleration = direction * 2 * agentEntity.agentPhysicsState.Speed / Physics.Constants.TimeToMax;
@@ -90,7 +93,7 @@ namespace Node.Action
                     agentEntity.agentPhysicsState.Velocity.Y = agentEntity.agentPhysicsState.InitialJumpVelocity;
                 }
                 if (direction.Y < -THRESHOLD && agentEntity.agentPhysicsState.OnGrounded &&
-                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.Tile.TileID.Platform)
+                    planet.TileMap.GetFrontTileID((int)agentEntity.agentPhysicsState.Position.X, (int)agentEntity.agentPhysicsState.Position.Y - 1) == Enums.PlanetTileMap.TileID.Platform)
                 {
                     agentEntity.agentPhysicsState.Droping = true;
                 }

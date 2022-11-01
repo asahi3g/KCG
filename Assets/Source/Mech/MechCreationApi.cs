@@ -1,10 +1,6 @@
 using Enums;
 using KMath;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using PlanetTileMap;
-using Sprites;
 
 namespace Mech
 {
@@ -60,7 +56,7 @@ namespace Mech
             PropertiesArray[CurrentIndex].Name = name;
         }
 
-        public void SetDropTableID(Enums.LootTableType dropTableID)
+        public void SetDropTableID(LootTableType dropTableID)
         {
             PropertiesArray[CurrentIndex].DropTableID = dropTableID;
         }
@@ -89,7 +85,7 @@ namespace Mech
             PropertiesArray[CurrentIndex].SpriteSize = size;
         }
 
-        public void SetAction(Enums.NodeType NodeType)
+        public void SetAction(NodeType NodeType)
         {
             PropertiesArray[CurrentIndex].Action = NodeType;
         }
@@ -167,105 +163,105 @@ namespace Mech
             Tree = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7_v2.png", 16, 32);
 
 
-            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, Enums.AtlasType.Mech);
-            PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, Enums.AtlasType.Mech);
-            Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, Enums.AtlasType.Mech);
-            MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, Enums.AtlasType.Mech);
-            MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, Enums.AtlasType.Mech);
-            MajestyPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS2, 0, 0, Enums.AtlasType.Mech);
-            SagoPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalm, 0, 0, Enums.AtlasType.Mech);
-            SagoPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS1, 0, 0, Enums.AtlasType.Mech);
-            SagoPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS2, 0, 0, Enums.AtlasType.Mech);
-            DracaenaTrifasciata = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciata, 0, 0, Enums.AtlasType.Mech);
-            DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, Enums.AtlasType.Mech);
-            DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, Enums.AtlasType.Mech);
-            surveillanceCamera = GameState.SpriteAtlasManager.CopySpriteToAtlas(surveillanceCamera, 0, 0, Enums.AtlasType.Mech);
-            roofScreen = GameState.SpriteAtlasManager.CopySpriteToAtlas(roofScreen, 0, 0, Enums.AtlasType.Mech);
-            craftingTable = GameState.SpriteAtlasManager.CopySpriteToAtlas(craftingTable, 0, 0, Enums.AtlasType.Mech);
-            Tree = GameState.SpriteAtlasManager.CopySpriteToAtlas(Tree, 0, 0, Enums.AtlasType.Mech);
+            ChestIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestSpriteSheet, 0, 0, AtlasType.Mech);
+            PotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIcon, 0, 0, AtlasType.Mech);
+            Light2Icon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2Icon, 0, 0, AtlasType.Mech);
+            MajestyPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalm, 0, 0, AtlasType.Mech);
+            MajestyPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS1, 0, 0, AtlasType.Mech);
+            MajestyPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MajestyPalmS2, 0, 0, AtlasType.Mech);
+            SagoPalm = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalm, 0, 0, AtlasType.Mech);
+            SagoPalmS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS1, 0, 0, AtlasType.Mech);
+            SagoPalmS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(SagoPalmS2, 0, 0, AtlasType.Mech);
+            DracaenaTrifasciata = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciata, 0, 0, AtlasType.Mech);
+            DracaenaTrifasciataS1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS1, 0, 0, AtlasType.Mech);
+            DracaenaTrifasciataS2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataS2, 0, 0, AtlasType.Mech);
+            surveillanceCamera = GameState.SpriteAtlasManager.CopySpriteToAtlas(surveillanceCamera, 0, 0, AtlasType.Mech);
+            roofScreen = GameState.SpriteAtlasManager.CopySpriteToAtlas(roofScreen, 0, 0, AtlasType.Mech);
+            craftingTable = GameState.SpriteAtlasManager.CopySpriteToAtlas(craftingTable, 0, 0, AtlasType.Mech);
+            Tree = GameState.SpriteAtlasManager.CopySpriteToAtlas(Tree, 0, 0, AtlasType.Mech);
 
 
-            GameState.MechCreationApi.Create(Enums.MechType.Storage);
+            GameState.MechCreationApi.Create(MechType.Storage);
             GameState.MechCreationApi.SetName("chest");
-            GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.ChestDrop);
+            GameState.MechCreationApi.SetDropTableID(LootTableType.ChestDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.Planter);
+            GameState.MechCreationApi.Create(MechType.Planter);
             GameState.MechCreationApi.SetName("planter");
-            GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.PlanterDrop);
+            GameState.MechCreationApi.SetDropTableID(LootTableType.PlanterDrop);
             GameState.MechCreationApi.SetTexture(PotIcon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.Light);
+            GameState.MechCreationApi.Create(MechType.Light);
             GameState.MechCreationApi.SetName("light");
-            GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.LightDrop);
+            GameState.MechCreationApi.SetDropTableID(LootTableType.LightDrop);
             GameState.MechCreationApi.SetTexture(Light2Icon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.MajestyPalm);
-            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
+            GameState.MechCreationApi.Create(MechType.MajestyPalm);
+            GameState.MechCreationApi.SetGroup(MechGroup.Plant);
             GameState.MechCreationApi.SetName("majesty");
             GameState.MechCreationApi.SetPlantTextures(MajestyPalm, MajestyPalmS1, MajestyPalmS2);
             GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.SagoPalm);
-            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
+            GameState.MechCreationApi.Create(MechType.SagoPalm);
+            GameState.MechCreationApi.SetGroup(MechGroup.Plant);
             GameState.MechCreationApi.SetName("sago");
             GameState.MechCreationApi.SetPlantTextures(SagoPalm, SagoPalmS1, SagoPalmS2);
             GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.DracaenaTrifasciata);
-            GameState.MechCreationApi.SetGroup(Enums.MechGroup.Plant);
+            GameState.MechCreationApi.Create(MechType.DracaenaTrifasciata);
+            GameState.MechCreationApi.SetGroup(MechGroup.Plant);
             GameState.MechCreationApi.SetName("dracaenatrifasciata");
             GameState.MechCreationApi.SetTexture(DracaenaTrifasciata);
             GameState.MechCreationApi.SetPlantTextures(DracaenaTrifasciata, DracaenaTrifasciataS1, DracaenaTrifasciataS2);
             GameState.MechCreationApi.SetPlantSizes(new Vec2f(1.5f, 1.5f), new Vec2f(1.5f, 3.0f), new Vec2f(1.5f, 4.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.SmashableBox);
+            GameState.MechCreationApi.Create(MechType.SmashableBox);
             GameState.MechCreationApi.SetName("smashableBox");
-            GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableBoxDrop);
+            GameState.MechCreationApi.SetDropTableID(LootTableType.SmashableBoxDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
-            GameState.MechCreationApi.SetAction(Enums.NodeType.OpenChestAction);
+            GameState.MechCreationApi.SetAction(NodeType.OpenChestAction);
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.SmashableEgg);
+            GameState.MechCreationApi.Create(MechType.SmashableEgg);
             GameState.MechCreationApi.SetName("smashableEgg");
-            GameState.MechCreationApi.SetDropTableID(Enums.LootTableType.SmashableEggDrop);
+            GameState.MechCreationApi.SetDropTableID(LootTableType.SmashableEggDrop);
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.SurveillanceCamera);
+            GameState.MechCreationApi.Create(MechType.SurveillanceCamera);
             GameState.MechCreationApi.SetName("SurveillanceCamera");
             GameState.MechCreationApi.SetTexture(surveillanceCamera);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.RoofScreen);
+            GameState.MechCreationApi.Create(MechType.RoofScreen);
             GameState.MechCreationApi.SetName("RoofScreen");
             GameState.MechCreationApi.SetTexture(roofScreen);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.CraftingTable);
+            GameState.MechCreationApi.Create(MechType.CraftingTable);
             GameState.MechCreationApi.SetName("CraftingTable");
             GameState.MechCreationApi.SetTexture(craftingTable);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.MechCreationApi.End();
 
-            GameState.MechCreationApi.Create(Enums.MechType.Tree);
+            GameState.MechCreationApi.Create(MechType.Tree);
             GameState.MechCreationApi.SetName("Tree");
             GameState.MechCreationApi.SetTexture(Tree);
             GameState.MechCreationApi.SetHealth(100);

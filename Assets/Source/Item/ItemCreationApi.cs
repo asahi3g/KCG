@@ -1,10 +1,10 @@
-﻿using System;
+﻿//imports UnityEngine
+
+using System;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
-using Mech;
-using UnityEngine;
 using Utility;
 
 /*
@@ -151,10 +151,10 @@ namespace Item
             PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
         }
 
-        public void SetUIPanel(UIPanelID uiPanelID)
+        public void SetUIPanel(PanelEnums panelEnums)
         {
             PropertiesArray[(int) currentIndex].ItemFlags |= ItemProprieties.Flags.UI;
-            PropertiesArray[(int) currentIndex].ItemUIPanelID = uiPanelID;
+            PropertiesArray[(int) currentIndex].ItemPanelEnums = panelEnums;
         }
 
         public void SetPlaceable()
@@ -361,7 +361,7 @@ namespace Item
 #if DEBUG
             if (itemType == ItemType.Error)
             {
-                Debug.Log("Not valid ItemType");
+                UnityEngine.Debug.Log("Not valid ItemType");
                 Utils.Assert(false);
             }
 #endif
@@ -503,7 +503,7 @@ namespace Item
         public int Gold_6;
         public int Gold_7;
 
-        public UIPanel PlacementToolPrefab;
+        public PanelUI PlacementToolPrefab;
 
         public void InitializeResources()
         {
@@ -719,7 +719,7 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(SMGIcon);
             SetInventoryTexture(SMGIcon);
-            SetRangedWeapon(50.0f, 0.1f, 20.0f, 15);
+            SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
             SetRangedWeaponClip(50, 1, 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
@@ -943,7 +943,7 @@ namespace Item
             SetInventoryTexture(BoneIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PotionTool);
+            SetUIPanel(PanelEnums.PotionTool);
             SetAction(NodeType.ToolActionPotion);
             EndItem();
 
@@ -970,7 +970,7 @@ namespace Item
             SetInventoryTexture(PlacementToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PlacementTool);
+            SetUIPanel(PanelEnums.PlacementTool);
             SetAction(NodeType.ToolActionPlaceTile);
             EndItem();
 
@@ -980,7 +980,7 @@ namespace Item
             SetInventoryTexture(PlacementToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetUIPanel(UIPanelID.PlacementMaterialTool);
+            SetUIPanel(PanelEnums.PlacementMaterialTool);
             SetAction(NodeType.MaterialPlacementAction);
             EndItem();
 
@@ -1243,6 +1243,7 @@ namespace Item
             SetInventoryTexture(OreIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(PanelEnums.GeometryTool);
             SetAction(NodeType.ToolActionGeometryPlacement);
             EndItem();
 

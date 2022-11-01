@@ -1,12 +1,12 @@
-﻿using Entitas;
-using UnityEngine;
-using KMath;
+﻿//imports UnityEngine
+
+using Entitas;
 
 namespace FloatingText
 {
     [FloatingText]
     public class GameObjectComponent : IComponent
     {
-        public GameObject GameObject; // used for unity rendering
+        public UnityEngine.GameObject GameObject; // used for unity rendering
     }
 }

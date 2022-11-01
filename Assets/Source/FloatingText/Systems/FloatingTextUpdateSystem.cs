@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 using KMath;
 
 namespace FloatingText
@@ -8,9 +7,10 @@ namespace FloatingText
     {
         List<FloatingTextEntity> ToRemoveEntities = new List<FloatingTextEntity>();
 
-        public void Update(ref Planet.PlanetState planetState, float deltaTime)
+        public void Update(float deltaTime)
         {
-            FloatingTextEntity[] entities = planetState.EntitasContext.floatingText.GetEntities();
+            ref var planet = ref GameState.Planet;
+            FloatingTextEntity[] entities = planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)
             {
@@ -41,7 +41,7 @@ namespace FloatingText
 
             foreach(var entity in ToRemoveEntities)
             {
-                planetState.RemoveFloatingText(entity.floatingTextID.Index);
+                planet.RemoveFloatingText(entity.floatingTextID.Index);
             }
             ToRemoveEntities.Clear();
         }

@@ -1,0 +1,39 @@
+using UnityEngine;
+using Utility;
+using UnityEngine.UI;
+
+namespace KGUI
+{
+    public class #SCRIPTNAME# : ElementUI
+    {
+        public override void Init()
+        {
+			// Do all inititalization after base.Init()
+            base.Init();
+			#NOTRIM#
+            ID = ElementEnums.#SCRIPTNAME#;
+			#NOTRIM#
+			Icon = new ImageWrapper(iconImage, GameState.GUIManager.WhiteSquareBorder);
+        }
+
+        public override void Draw() 
+		{ 
+			Icon.Draw();
+		}
+
+        public override void OnMouseStay()
+        {
+		#NOTRIM#
+        }
+
+        public override void OnMouseExited()
+        {
+		#NOTRIM#
+        }
+
+        public override void OnMouseClick()
+        {
+		#NOTRIM#
+        }
+    }
+}

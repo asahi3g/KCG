@@ -5,7 +5,7 @@ namespace Enums
 
     public enum JetSize
     {
-        None,
+        None = 0,
         Medium,
         High
     }

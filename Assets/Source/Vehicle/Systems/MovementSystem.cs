@@ -1,10 +1,4 @@
-using UnityEngine;
 using Entitas;
-using System.Collections;
-using KMath;
-using Projectile;
-using Enums;
-using UnityEngine.UIElements;
 
 namespace Vehicle
 {
@@ -18,11 +12,11 @@ namespace Vehicle
             VehicleCreationApi = vehicleCreationApi;
         }
 
-        public void UpdateEx(VehicleContext vehicleContexts)
+        public void UpdateEx()
         {
             // Get Vehicle Entites
             IGroup<VehicleEntity> entities =
-            vehicleContexts.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
+                GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.VehiclePhysicsState2D);
             foreach (var vehicle in entities)
             {
                 VehicleProperties vehicleProperties =
@@ -32,16 +26,16 @@ namespace Vehicle
 
                 // Process Gravity
                 if(vehicle.vehiclePhysicsState2D.AffectedByGravity)
-                    velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * Time.deltaTime;
+                    velocity.Y += vehicle.vehiclePhysicsState2D.centerOfGravity * UnityEngine.Time.deltaTime;
 
                 if(vehicle.hasVehicleThruster)
                 {
                     if(vehicle.vehicleThruster.Jet)
-                        vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                        vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
                 }
                 else
                 {
-                    vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * Time.deltaTime;
+                    vehicle.vehiclePhysicsState2D.Position += vehicle.vehiclePhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
                 }
 
             }

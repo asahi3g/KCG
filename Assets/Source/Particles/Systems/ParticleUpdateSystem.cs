@@ -1,6 +1,7 @@
+//imports UnityEngine
+
 using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 using KMath;
 
 namespace Particle
@@ -10,12 +11,13 @@ namespace Particle
         List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
 
-        public void Update(ref Planet.PlanetState planetState, ParticleContext particleContext)
+        public void Update()
         {
             ToDestroy.Clear();
 
-            float deltaTime = Time.deltaTime;
-            IGroup<ParticleEntity> entities = particleContext.GetGroup(ParticleMatcher.ParticleState);
+            ref var planet = ref GameState.Planet;
+            float deltaTime = UnityEngine.Time.deltaTime;
+            IGroup<ParticleEntity> entities = planet.EntitasContext.particle.GetGroup(ParticleMatcher.ParticleState);
             foreach (var gameEntity in entities)
             {
 
@@ -56,7 +58,7 @@ namespace Particle
             {
                 //Object.Destroy(gameEntity.particleState.GameObject);
                 //gameEntity.Destroy();
-                planetState.RemoveParticle(gameEntity.particleID.Index);
+                planet.RemoveParticle(gameEntity.particleID.Index);
             }
         }
     }

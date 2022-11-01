@@ -1,10 +1,11 @@
-﻿using System;
+﻿//imports UnityEngine
+
+using System;
 using System.Linq;
 using System.Reflection;
 using Node;
 using Enums;
 using AI.Sensor;
-using UnityEngine;
 
 namespace AI
 {

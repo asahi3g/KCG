@@ -1,14 +1,15 @@
-﻿namespace Enums.Tile
+﻿namespace Enums.PlanetTileMap
 {
     public enum TileID
     {
         Error = 0,
         Air,
-        Ore1, // 8
+        FirstNonEmptyTile,
+        Ore1, 
         Ore2,
         Ore3,
-        Glass, // 9
-        Moon, // 10
+        Glass, 
+        Moon, 
         Pipe,
         Background,
         Wire,

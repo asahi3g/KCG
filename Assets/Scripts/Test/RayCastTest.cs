@@ -1,22 +1,22 @@
-using System;
+//imports UnityEngine
+
 using Collisions;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KMath;
 using Planet;
-using UnityEngine;
 
-public class SquareWithRenderer : MonoBehaviour
+public class SquareWithRenderer : UnityEngine.MonoBehaviour
 {
     // Renderer
-    public LineRenderer lineRenderer;
-    public Shader       shader;
-    public Material     material;
+    public UnityEngine.LineRenderer lineRenderer;
+    public UnityEngine.Shader       shader;
+    public UnityEngine.Material     material;
     
     // Current color of square
-    public Color color;
+    public UnityEngine.Color color;
     
     // Used by renderer
-    public Vector3[] corners   = new Vector3[4];
+    public UnityEngine.Vector3[] corners   = new UnityEngine.Vector3[4];
     public const float LineThickness = 0.1f;
     
     public AABox2D Box;
@@ -26,12 +26,12 @@ public class SquareWithRenderer : MonoBehaviour
     public void Init()
     {
         // Initialize test shader, material, and renderer
-        shader                 = Shader.Find("Hidden/Internal-Colored");
-        material               = new Material(shader)
+        shader                 = UnityEngine.Shader.Find("Hidden/Internal-Colored");
+        material               = new UnityEngine.Material(shader)
         {
-            hideFlags = HideFlags.HideAndDontSave
+            hideFlags = UnityEngine.HideFlags.HideAndDontSave
         };
-        lineRenderer               = gameObject.AddComponent<LineRenderer>();
+        lineRenderer               = gameObject.AddComponent<UnityEngine.LineRenderer>();
         lineRenderer.material      = material;
         lineRenderer.useWorldSpace = true;
         lineRenderer.loop          = true;
@@ -40,10 +40,10 @@ public class SquareWithRenderer : MonoBehaviour
 
         lineRenderer.sortingOrder = 10;
 
-        corners[0]             = new Vector3();
-        corners[1]             = new Vector3();
-        corners[2]             = new Vector3();
-        corners[3]             = new Vector3();
+        corners[0]             = new UnityEngine.Vector3();
+        corners[1]             = new UnityEngine.Vector3();
+        corners[2]             = new UnityEngine.Vector3();
+        corners[3]             = new UnityEngine.Vector3();
 
         material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -76,33 +76,34 @@ public class SquareWithRenderer : MonoBehaviour
     }
 }
 
-public class RayCastTest : MonoBehaviour
+public class RayCastTest : UnityEngine.MonoBehaviour
 {
-    public GameObject Grid;
+    public UnityEngine.GameObject Grid;
     public SquareWithRenderer squareWithRenderer;
     public RayRendererDebug rayRenderer;
 
-    public PlanetState Planet;
-    public Material Material;
-    public Vec2i mapSize = new(32, 32);
+
+    public UnityEngine.Material Material;
+    public Vec2i mapSize = new Vec2i(32, 32);
     
     // Start is called before the first frame update
 
     void Start()
     {
-        Camera.main.gameObject.transform.position = new Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
+        UnityEngine.Camera.main.gameObject.transform.position = new UnityEngine.Vector3(mapSize.X / 2f, mapSize.Y / 2f, -10);
         
-        squareWithRenderer = CreateSquare(new Vec2f(2f, 2f), new Vec2f(2f, 4f), Color.green, true);
+        squareWithRenderer = CreateSquare(new Vec2f(2f, 2f), new Vec2f(2f, 4f), UnityEngine.Color.green, true);
         squareWithRenderer.lineRenderer.sortingOrder = 12;
         
-        var ray = new GameObject("Ray");
+        var ray = new UnityEngine.GameObject("Ray");
         rayRenderer = ray.AddComponent<RayRendererDebug>();
         rayRenderer.Init(new Line2D(squareWithRenderer.Box.center, new Vec2f(0f, 0f)));
 
         GameResources.Initialize();
-        Planet = new PlanetState();
-        Planet.Init(mapSize);
-        Planet.InitializeSystems(Material, transform);
+
+        ref var planet = ref GameState.Planet;
+        planet.Init(mapSize);
+        planet.InitializeSystems(Material, transform);
         
         GenerateMap();
     }
@@ -111,9 +112,9 @@ public class RayCastTest : MonoBehaviour
     {
         if(squareWithRenderer.isDraggable)
         {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
-            if(Input.GetMouseButton(0) && Collisions.Collisions.PointOverlapRect(mouse.x, mouse.y, squareWithRenderer.Box.xmin, squareWithRenderer.Box.xmax, squareWithRenderer.Box.ymin, squareWithRenderer.Box.ymax)
+            if(UnityEngine.Input.GetMouseButton(0) && Collisions.Collisions.PointOverlapRect(mouse.x, mouse.y, squareWithRenderer.Box.xmin, squareWithRenderer.Box.xmax, squareWithRenderer.Box.ymin, squareWithRenderer.Box.ymax)
                || squareWithRenderer.isDraggableStarted)
             {
                 squareWithRenderer.isDraggableStarted = true;
@@ -121,29 +122,29 @@ public class RayCastTest : MonoBehaviour
                 rayRenderer.Line.A = squareWithRenderer.Box.center;
             }
             
-            if (!Input.GetMouseButton(0))
+            if (!UnityEngine.Input.GetMouseButton(0))
             {
                 squareWithRenderer.isDraggableStarted = false;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
         {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            
-            Debug.Log($"{(int)mouse.x}, {(int)mouse.y}");
+            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+            UnityEngine.Debug.Log($"{(int)mouse.x}, {(int)mouse.y}");
         }
         
-        rayRenderer.RayTileCollisionCheck(Planet.TileMap);
+        rayRenderer.RayTileCollisionCheck();
 
         RegenerateMap();
         
-        Planet.Update(Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
     }
 
-    SquareWithRenderer CreateSquare(Vec2f position, Vec2f size, Color color, bool isDraggable, string name = "Square")
+    SquareWithRenderer CreateSquare(Vec2f position, Vec2f size, UnityEngine.Color color, bool isDraggable, string name = "Square")
     {
-        var square = new GameObject(name);
+        var square = new UnityEngine.GameObject(name);
         var sRenderer = square.AddComponent<SquareWithRenderer>();
         sRenderer.Init();
         sRenderer.Box = new AABox2D(position, size);
@@ -155,18 +156,19 @@ public class RayCastTest : MonoBehaviour
     
     void GenerateMap()
     {
-        CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
-        CreateSquare(new Vec2f(16f, 16f),new Vec2f(16f, 16f), Color.white, false, "Chunk_4").lineRenderer.sortingOrder = 11;
+        ref var planet = ref GameState.Planet;
+        CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
+        CreateSquare(new Vec2f(16f, 16f),new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_4").lineRenderer.sortingOrder = 11;
 
-        Grid = new GameObject("Grid");
+        Grid = new UnityEngine.GameObject("Grid");
 
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                CreateSquare(new Vec2f(x, y), new Vec2f(1f, 1f), Color.gray, false, $"tile_{x}_{y}").gameObject.transform.SetParent(Grid.transform);
+                CreateSquare(new Vec2f(x, y), new Vec2f(1f, 1f), UnityEngine.Color.gray, false, $"tile_{x}_{y}").gameObject.transform.SetParent(Grid.transform);
             }
         }
         
@@ -174,7 +176,7 @@ public class RayCastTest : MonoBehaviour
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -182,7 +184,7 @@ public class RayCastTest : MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -190,17 +192,18 @@ public class RayCastTest : MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }
     void RegenerateMap()
     {
+        ref var planet = ref GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -208,7 +211,7 @@ public class RayCastTest : MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Glass);
+                planet.TileMap.SetFrontTile(x, y, TileID.Glass);
             }
         }
         
@@ -216,7 +219,7 @@ public class RayCastTest : MonoBehaviour
         {
             for (int y = 0; y < mapSize.Y - 2; y++)
             {
-                Planet.TileMap.SetFrontTile(x, y, TileID.Air);
+                planet.TileMap.SetFrontTile(x, y, TileID.Air);
             }
         }
     }

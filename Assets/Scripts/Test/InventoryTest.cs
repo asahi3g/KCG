@@ -1,10 +1,9 @@
+//import UntiyEngine
+
 using System;
-using UnityEngine;
 
-public class InventoryTest : MonoBehaviour
+public class InventoryTest : UnityEngine.MonoBehaviour
 {
-    Contexts context;
-
     Inventory.InventoryManager inventoryManager;
     Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
@@ -22,12 +21,11 @@ public class InventoryTest : MonoBehaviour
 
     Func<int, InventoryEntity> GetInventory = Contexts.sharedInstance.inventory.GetEntityWithInventoryID;
 
-    [SerializeField] Material material;
+    [UnityEngine.SerializeField] UnityEngine.Material material;
 
     public void Start()
     {
         Initialize();
-        context = Contexts.sharedInstance;
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
         inventoryDrawSystem = new Inventory.DrawSystem();
@@ -36,29 +34,29 @@ public class InventoryTest : MonoBehaviour
 
         int inventoryID = 0;
         int equipmentInventoryID = 1;
-        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory(context));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
-        materialBag = inventoryList.Add(GameState.InventoryManager.CreateInventory(context, GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID()));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, terrariaLikeInventoryModelID));
-        inventoryList.Add(GameState.InventoryManager.CreateInventory(context, customRestrictionInventoryModelID));
+        inventoryList.Add(GameState.InventoryManager.CreateDefaultInventory());
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()));
+        materialBag = inventoryList.Add(GameState.InventoryManager.CreateInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID()));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(terrariaLikeInventoryModelID));
+        inventoryList.Add(GameState.InventoryManager.CreateInventory(customRestrictionInventoryModelID));
 
 
-        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Helmet), inventoryID);
-        inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Suit), inventoryID);
+        inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Helmet), inventoryID);
+        inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Suit), inventoryID);
 
 
         // Test not stackable items.
         for (int i = 0; i < 10; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + i), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Pistol + 4 + i), terrariaLikeInventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol + i), inventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol + 4 + i), terrariaLikeInventoryID);
         }
 
         // Testing stackable items.
         for (uint i = 0; i < 256; i++)
         {
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), inventoryID);
-            inventoryManager.AddItem(context, itemSpawnSystem.SpawnInventoryItem(context, Enums.ItemType.Ore), materialBag.inventoryID.ID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Ore), inventoryID);
+            inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Ore), materialBag.inventoryID.ID);
         }
 
         // Set basic inventory draw to on at the beggining:
@@ -88,7 +86,7 @@ public class InventoryTest : MonoBehaviour
         }
 
         //  Open Inventory with Tab.        
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
         {
             GetInventory(defaultInventoryID).hasInventoryToolBarDraw = !GetInventory(defaultInventoryID).hasInventoryToolBarDraw;
             GetInventory(defaultInventoryID).hasInventoryDraw = !GetInventory(defaultInventoryID).hasInventoryDraw;
@@ -108,18 +106,18 @@ public class InventoryTest : MonoBehaviour
         if (!Init)
             return;
 
-        if (Event.current.type == EventType.MouseDown)
-            GameState.InventoryMouseSelectionSystem.OnMouseDown(Contexts.sharedInstance, inventoryList);
+        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseDown)
+            GameState.InventoryMouseSelectionSystem.OnMouseDown(inventoryList);
 
-        if (Event.current.type == EventType.MouseUp)
-            GameState.InventoryMouseSelectionSystem.OnMouseUP(Contexts.sharedInstance, inventoryList);
+        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseUp)
+            GameState.InventoryMouseSelectionSystem.OnMouseUP(inventoryList);
 
-        if (Event.current.type != EventType.Repaint)
+        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
             return;
 
-        GameState.InventoryMouseSelectionSystem.Update(Contexts.sharedInstance);
+        GameState.InventoryMouseSelectionSystem.Update();
 
-        inventoryDrawSystem.Draw(Contexts.sharedInstance, inventoryList);
+        inventoryDrawSystem.Draw();
     }
 
     private void Initialize()
@@ -133,8 +131,8 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetToolBar();
         GameState.InventoryCreationApi.SetSize(10, 5);
         GameState.InventoryCreationApi.SetInventoryPos(50, 680);
-        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.29f, 0.31f, 0.59f, 0.75f));
-        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new UnityEngine.Color(0.29f, 0.31f, 0.59f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new UnityEngine.Color(1f, 0.92f, 0.016f, 0.75f));
         GameState.InventoryCreationApi.SetSlotOffset(5);
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();
@@ -153,8 +151,8 @@ public class InventoryTest : MonoBehaviour
         GameState.InventoryCreationApi.SetRestriction(7, Enums.ItemGroups.Belt);
         GameState.InventoryCreationApi.SetSize(3, 3);
         GameState.InventoryCreationApi.SetInventoryPos(1_650f, 430f);
-        GameState.InventoryCreationApi.SetDefaultSlotColor(new Color(0.0f, 0.70f, 0.55f, 0.75f));
-        GameState.InventoryCreationApi.SetSelectedtSlotColor(new Color(1f, 0.92f, 0.016f, 0.75f));
+        GameState.InventoryCreationApi.SetDefaultSlotColor(new UnityEngine.Color(0.0f, 0.70f, 0.55f, 0.75f));
+        GameState.InventoryCreationApi.SetSelectedtSlotColor(new UnityEngine.Color(1f, 0.92f, 0.016f, 0.75f));
         GameState.InventoryCreationApi.SetSlotOffset(5);
         GameState.InventoryCreationApi.SetTileSize(75);
         GameState.InventoryCreationApi.End();

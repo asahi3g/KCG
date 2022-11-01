@@ -1,10 +1,11 @@
-﻿using System;
+﻿//import UnityEngine
+
+using System;
 using Enums;
-using Enums.Tile;
+using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
-using Mech;
-using UnityEngine;
+
 
 namespace Item
 {
@@ -18,7 +19,7 @@ namespace Item
         public TileID TileType;       // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet; // used to change agent animations (like walking with rifle)
-        public UIPanelID ItemUIPanelID;
+        public PanelEnums ItemPanelEnums;
 
         public ItemKeyUsage KeyUsage;
 
@@ -88,7 +89,7 @@ namespace Item
 
         /// Melee Attack Properties
         public float StaggerTime;
-        [Range(0, 1)]
+        [UnityEngine.Range(0, 1)]
         public float StaggerRate;
         public bool ShieldActive;
 
