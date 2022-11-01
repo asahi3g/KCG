@@ -46,12 +46,13 @@ namespace PlanetTileMap
             {
                 for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
-                  /*  if (!ObjectMesh.isOnScreen(x, y))
-                        continue;*/
-
                     if (x >= 0 && y >= 0)
                     {
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.MidTileID == TileID.Error ||
+                        tile.MidTileID == TileID.Air ||
+                        tile.MidTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.MidTileSpriteID >= 0)
                         {
@@ -120,10 +121,12 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        /*if (!ObjectMesh.isOnScreen(x, y))
-                            continue;*/
 
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.FrontTileID == TileID.Error ||
+                        tile.FrontTileID == TileID.Air ||
+                        tile.FrontTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.FrontTileSpriteID >= 0)
                         {
@@ -203,10 +206,11 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                       /* if (!ObjectMesh.isOnScreen(x, y))
-                            continue;*/
-
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.BackTileID == TileID.Error ||
+                        tile.BackTileID == TileID.Air ||
+                        tile.BackTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.BackTileSpriteID >= 0)
                         {
@@ -235,9 +239,6 @@ namespace PlanetTileMap
 
                                     const float width = 1;
                                     const float height = 1;
-
-                                  /*  if (!ObjectMesh.isOnScreen(x, y))
-                                        continue;*/
 
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);
