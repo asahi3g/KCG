@@ -51,14 +51,7 @@ namespace Node
             physicsState.MovementState != AgentMovementState.SlidingRight)
             {
                 Vec2f target = Vec2f.Zero;
-
-                if (agentEntity.hasAgentController)
-                {
-                    ref AI.BlackBoard blackboard = ref planet.EntitasContext.agent.GetEntityWithAgentID(
-                        nodeEntity.nodeOwner.AgentID).agentController.Controller.BlackBoard;
-                    blackboard.Get(nodeEntity.nodeBlackboardData.entriesIDs[0], out target);
-                }
-                else if (agentEntity.isAgentPlayer)
+                if (agentEntity.isAgentPlayer)
                 {
                     // Todo: Move target selection to an agent system.
                     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

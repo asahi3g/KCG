@@ -9,11 +9,10 @@ namespace Action
     {
         static public NodeState Action(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
-            ref Blackboard blackboard = ref GameState.BlackboardManager.Get(data.BlackboardID);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
-
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
+            ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             AgentEntity target = null;
             float dist = float.MaxValue;
             for (int i = 0; i < planet.AgentList.Length; i++)

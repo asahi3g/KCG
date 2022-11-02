@@ -2,7 +2,7 @@
 using NodeSystem;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace BehaviorTree
+namespace NodeSystem
 {
     public struct NodeExcutionData
     {
@@ -10,12 +10,11 @@ namespace BehaviorTree
         public int MemoryOffset;        // Offset used to access memory.
         public float ExecutionTime;     // Time in ticks since start running.
     }
-    public struct BehaviorTreeState
+    public struct NodesExecutionState
     {
         public int AgentID;
         public byte[] NodeMemory;
         public NodeExcutionData[] NodesExecutiondata;
-        public int BlackboardID; // -1 if there is no blackboard.
 
         public ref T GetNodeData<T>(int index) where T : struct
             => ref NodeSystem.Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset);
@@ -23,7 +22,6 @@ namespace BehaviorTree
         public ref T GetActionSequenceData<T>(int index) where T : struct
            => ref NodeSystem.Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset + 1);
 
-        public bool HasBlackboard() => (BlackboardID != -1);
         public void ResetNodeData(int index)
         {
             int id = NodesExecutiondata[index].Id;
@@ -41,22 +39,22 @@ namespace BehaviorTree
             }
         }
 
-        // Get pointer to BehaviorTreeState.
+        // Get pointer to NodesExecutionState.
         public ulong GetAddress()
         {
             unsafe 
             {
-                return (ulong)UnsafeUtility.AddressOf<BehaviorTreeState>(ref this);
+                return (ulong)UnsafeUtility.AddressOf<NodesExecutionState>(ref this);
             }
         }
 
         // Get ref from address.
-        public static ref BehaviorTreeState GetRef(ulong ptr)
+        public static ref NodesExecutionState GetRef(ulong ptr)
         {
             unsafe
             {
                 void* dataPointer = (void*)ptr;
-                return ref UnsafeUtility.AsRef<BehaviorTreeState>(dataPointer);
+                return ref UnsafeUtility.AsRef<NodesExecutionState>(dataPointer);
             }
         }
     }

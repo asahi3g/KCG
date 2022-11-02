@@ -10,7 +10,7 @@ namespace Action
     {
         static public NodeState OnEnter(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
@@ -27,7 +27,7 @@ namespace Action
 
         static public NodeState OnUpdate(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
@@ -45,7 +45,7 @@ namespace Action
 
         static public NodeState OnSuccess(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
@@ -58,7 +58,7 @@ namespace Action
 
         static public NodeState OnFailure(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             Debug.Log("Fail to reload.");
             return NodeState.Failure;
         }

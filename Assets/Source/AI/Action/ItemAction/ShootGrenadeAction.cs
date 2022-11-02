@@ -1,5 +1,4 @@
-using Enums;
-using BehaviorTree;
+using NodeSystem;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace Action
     {
         static public NodeState Action(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
@@ -29,7 +28,7 @@ namespace Action
                 if (numBullet == 0)
                 {
                     Debug.Log("Clip is empty. Press R to reload.");
-                    return NodeState.Fail;
+                    return NodeState.Failure;
                 }
             }
 
@@ -53,7 +52,7 @@ namespace Action
             }
             else
             {
-                return NodeState.Fail;
+                return NodeState.Failure;
 
             }
 

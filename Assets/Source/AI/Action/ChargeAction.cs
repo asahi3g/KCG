@@ -11,7 +11,7 @@ namespace Action
     {
         static public NodeState OnEnter(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
@@ -32,7 +32,7 @@ namespace Action
 
         static public NodeState OnUpdate(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
@@ -48,7 +48,7 @@ namespace Action
 
         static public NodeState OnSucess(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();

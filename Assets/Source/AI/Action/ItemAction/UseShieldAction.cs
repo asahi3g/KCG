@@ -1,5 +1,4 @@
-using BehaviorTree;
-using Enums;
+using NodeSystem;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
 
@@ -9,7 +8,7 @@ namespace Action
     {
         static public NodeState Action(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID); 
             ItemInventoryEntity itemEntity = agentEntity.GetItem();

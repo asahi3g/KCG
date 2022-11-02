@@ -13,7 +13,7 @@ namespace BehaviorTree
         public int CurrentDepth;
         public int[] StackTree;
         NodeState LastResult;
-        BehaviorTreeState DataState;
+        NodesExecutionState DataState;
 
         public BehaviorTreeExecute(int rootID, int agentID, int treeID)
         {
@@ -21,11 +21,10 @@ namespace BehaviorTree
             RootNodeId = rootID;
             CurrentDepth = 0;
             ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(rootID);
-            DataState = new BehaviorTreeState()
+            DataState = new NodesExecutionState()
             {
                 NodesExecutiondata = new NodeExcutionData[node.SubTreeNodeCount + 1], // Sum + 1 to count root node node.
                 AgentID = agentID,
-                BlackboardID = GameState.BlackboardManager.CreateBlackboard()
             };
             LastResult = NodeState.None;
 

@@ -1,17 +1,17 @@
 using UnityEngine;
-using Enums;
 using KMath;
-using BehaviorTree;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
 using AI;
+using NodeSystem;
+
 namespace Action
 {
     public class PlantAction
     {
         static public NodeState Action(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
@@ -47,16 +47,16 @@ namespace Action
             }
             else
             {
-                if (data.HasBlackboard())
+                if (agentEntity.agentController.BlackboardID != -1)
                 {
-                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(data.BlackboardID);
+                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agentEntity.agentController.BlackboardID);
                     planter = planet.EntitasContext.mech.GetEntityWithMechID(blackboard.MechID);
                 }
             }
 
             if (planter == null)
             {
-                return NodeState.Fail;
+                return NodeState.Failure;
             }
 
             MechEntity plant;

@@ -1,6 +1,6 @@
 ﻿using Enums;
 using Item;
-using BehaviorTree;
+using NodeSystem;
 using Planet;
 
 namespace Condition
@@ -11,7 +11,7 @@ namespace Condition
         static bool HasBulletInClip(object ptr)
         {
             ref PlanetState planet = ref GameState.Planet;
-            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ItemInventoryEntity item = agent.GetItem();
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -33,7 +33,7 @@ namespace Condition
         static bool HasEnemyAlive(object ptr)
         {
             ref PlanetState planet = ref GameState.Planet;
-            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             for (int i = 0; i < planet.AgentList.Length; i++)
             {

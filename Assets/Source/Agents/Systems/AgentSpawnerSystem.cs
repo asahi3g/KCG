@@ -43,6 +43,7 @@ namespace Agent
                  newAcceleration: Vec2f.Zero,
                  newMovingDirection: 1,
                  newFacingDirection: 1,
+                 newGroundNormal: new Vec2f(0, 1.0f),
                  newMovementState: Enums.AgentMovementState.None,
                  newLastAgentAnimation: new AgentAnimation(),
                  newSetMovementState: false,
@@ -94,6 +95,7 @@ namespace Agent
                 newAcceleration: Vec2f.Zero,
                 newMovingDirection: 1,
                 newFacingDirection: 1,
+                newGroundNormal: new Vec2f(0, 1.0f),
                 newMovementState: Enums.AgentMovementState.None,
                 newLastAgentAnimation: new AgentAnimation(),
                 newSetMovementState: false,
@@ -144,6 +146,7 @@ namespace Agent
                 newAcceleration: Vec2f.Zero, 
                 newMovingDirection: 1,
                 newFacingDirection: 1,
+                newGroundNormal: new Vec2f(0, 1.0f),
                 newMovementState: Enums.AgentMovementState.None,
                 newLastAgentAnimation: new AgentAnimation(),
                 newSetMovementState: false,
@@ -373,7 +376,8 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
-                        GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
+                        int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
+                        entity.AddAgentController(behaviorTreeID, GameState.BlackboardManager.CreateBlackboard());
                         entity.HandleItemSelected(item);
                         break;
                     }

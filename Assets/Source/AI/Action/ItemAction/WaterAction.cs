@@ -12,7 +12,7 @@ namespace Action
     {
         static public NodeState Action(object objData, int id)
         {
-            ref BehaviorTreeState data = ref UnsafeUtility.As<object, BehaviorTreeState>(ref objData);
+            ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
 
@@ -58,9 +58,9 @@ namespace Action
             }
             else
             {
-                if (data.HasBlackboard())
+                if (agentEntity.agentController.BlackboardID != -1)
                 {
-                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(data.BlackboardID);
+                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agentEntity.agentController.BlackboardID);
                     plant = planet.EntitasContext.mech.GetEntityWithMechID(blackboard.MechID);
                 }
             }

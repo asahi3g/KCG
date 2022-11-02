@@ -10,7 +10,7 @@ namespace BehaviorTree
         static public int GetNextChildren(object ptr, int nodeIndex, NodeState lastResult)
         {
             // Get state data. 
-            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             ref int currentIndex = ref stateData.GetNodeData<int>(nodeIndex);
             ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
 
@@ -37,7 +37,7 @@ namespace BehaviorTree
         static public int GetNextChildren(object ptr, int nodeIndex, NodeState lastResult)
         {
             // Get state data. 
-            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             ref int currentIndex = ref stateData.GetNodeData<int>(nodeIndex);
             ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
 
@@ -79,7 +79,7 @@ namespace BehaviorTree
             if (childrenID != BTSpecialChild.NotInitialized)
             {
                 // Get State reset data memory.
-                ref BehaviorTreeState btState = ref BehaviorTreeState.GetRef((ulong)ptr);
+                ref NodesExecutionState btState = ref NodesExecutionState.GetRef((ulong)ptr);
                 btState.ResetNodeMemoryData();
             }
             return 0;

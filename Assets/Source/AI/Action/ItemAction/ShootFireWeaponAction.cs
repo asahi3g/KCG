@@ -3,7 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using Enums;
-using BehaviorTree;
+using NodeSystem;
 using AI;
 
 namespace Action
@@ -17,7 +17,7 @@ namespace Action
 
         static public NodeSystem.NodeState OnEnter(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
@@ -37,9 +37,9 @@ namespace Action
             {
                 Vec2f target = Vec2f.Zero;
 
-                if (data.HasBlackboard())
+                if (agentEntity.agentController.BlackboardID != -1)
                 {
-                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(data.BlackboardID);
+                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agentEntity.agentController.BlackboardID);
                     target = blackboard.ShootingTarget;
                 }
                 else if (agentEntity.isAgentPlayer)
@@ -82,7 +82,7 @@ namespace Action
 
         static public NodeSystem.NodeState OnUpdate(object ptr, int id)
         {
-            ref BehaviorTreeState data = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
             ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
 

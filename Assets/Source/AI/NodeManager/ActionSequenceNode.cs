@@ -23,7 +23,7 @@ namespace NodeSystem
         }
         static public NodeState Action(object ptr, int index)
         {
-            ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             ref ActionSequenceData actionSequenceData = ref stateData.GetNodeData<ActionSequenceData>(index);
             ref Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[index].Id);
 
