@@ -18,33 +18,16 @@ namespace Agent
         
         public bool Equals(AgentAnimation other)
         {
-            return Animation == other.Animation && 
-                   FadeTime.Equals(other.FadeTime) && 
-                   Speed.Equals(other.Speed) &&
-                   StartTime.Equals(other.StartTime) && 
-                   Looping == other.Looping &&
-                   MovementSpeedFactor.Equals(other.MovementSpeedFactor) &&
-                   UseActionDurationForSpeed == other.UseActionDurationForSpeed;
+            return Animation != other.Animation ||
+            FadeTime != other.FadeTime ||
+            Speed != other.Speed ||
+            StartTime != other.StartTime ||
+            Looping != other.Looping ||
+            MovementSpeedFactor != other.MovementSpeedFactor ||
+            UseActionDurationForSpeed != other.UseActionDurationForSpeed;
+        
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is AgentAnimation other && Equals(other);
-        }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine((int) Animation, FadeTime, Speed, StartTime, Looping, MovementSpeedFactor, UseActionDurationForSpeed);
-        }
-
-        public bool AnimationsAreEqual(Engine3D.AnimationType animation)
-        {
-            return Animation == animation;
-        }
-
-        public bool AnimationsAreEqual(AgentAnimation other)
-        {
-            return Animation == other.Animation;
-        }
     }
 }

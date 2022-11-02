@@ -52,7 +52,7 @@ namespace Planet.Unity
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map2.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
-            int geometryTilesCount = Enum.GetNames(typeof(Enums.GeometryTileShape)).Length;
+            int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
 
             TileProperty[][] MaterialGeometryMap = new TileProperty[materialCount][];
             for(int i = 0; i < materialCount; i++)

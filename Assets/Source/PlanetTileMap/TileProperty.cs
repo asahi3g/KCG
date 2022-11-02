@@ -28,7 +28,7 @@ namespace PlanetTileMap
 
         public SpriteRuleType SpriteRuleType;
         public CollisionType CollisionIsoType;
-        public Enums.GeometryTileShape BlockShapeType;
+        public Enums.TileGeometryAndRotation BlockShapeType;
 
         public bool IsSolid => CollisionIsoType == CollisionType.Solid;
         public bool IsAPlatform => CollisionIsoType == CollisionType.Platform;

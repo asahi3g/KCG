@@ -46,12 +46,13 @@ namespace PlanetTileMap
             {
                 for (int x = (int)(bottomLeft.x - 10); x < planet.TileMap.MapSize.X && x <= (bottomRight.x + 10); x++)
                 {
-                  /*  if (!ObjectMesh.isOnScreen(x, y))
-                        continue;*/
-
                     if (x >= 0 && y >= 0)
                     {
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.MidTileID == TileID.Error ||
+                        tile.MidTileID == TileID.Air ||
+                        tile.MidTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.MidTileSpriteID >= 0)
                         {
@@ -120,10 +121,12 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                        /*if (!ObjectMesh.isOnScreen(x, y))
-                            continue;*/
 
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.FrontTileID == TileID.Error ||
+                        tile.FrontTileID == TileID.Air ||
+                        tile.FrontTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.FrontTileSpriteID >= 0)
                         {
@@ -134,10 +137,6 @@ namespace PlanetTileMap
                             if (spriteId >= 0)
                             {
                                 {
-#if DEBUG
-                                    if (TileCollisionDebugging)
-                                        spriteId = GetSpriteIDWithCOllisionIsotype(tile.CollisionIsoType2);
-#endif
 
                                     Vector4 textureCoords = GameState.TileSpriteAtlasManager.GetSprite(spriteId).TextureCoords;
 
@@ -203,10 +202,11 @@ namespace PlanetTileMap
                 {
                     if (x >= 0 && y >= 0)
                     {
-                       /* if (!ObjectMesh.isOnScreen(x, y))
-                            continue;*/
-
                         ref var tile = ref planet.TileMap.GetTile(x, y);
+
+                        if (tile.BackTileID == TileID.Error ||
+                        tile.BackTileID == TileID.Air ||
+                        tile.BackTileID == TileID.FirstNonEmptyTile) continue;
 
                         if (tile.BackTileSpriteID >= 0)
                         {
@@ -236,9 +236,6 @@ namespace PlanetTileMap
                                     const float width = 1;
                                     const float height = 1;
 
-                                  /*  if (!ObjectMesh.isOnScreen(x, y))
-                                        continue;*/
-
                                     // Update UVs
                                     LayerMeshes[(int)MapLayerType.Back].UpdateUV(textureCoords, (index) * 4);
                                     // Update Vertices
@@ -254,46 +251,7 @@ namespace PlanetTileMap
             }
         }
 
-        public int GetSpriteIDWithCOllisionIsotype(Collisions.TileAdjacencyType tileIsoType)
-        {
-            switch (tileIsoType)
-            {
-                case Collisions.TileAdjacencyType.FB_R0_A0000:
-                    return GameState.TGenRenderGridOverlay.FB_R0000Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0001:
-                    return GameState.TGenRenderGridOverlay.FB_R0001Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0010:
-                    return GameState.TGenRenderGridOverlay.FB_R0010Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0011:
-                    return GameState.TGenRenderGridOverlay.FB_R0011Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0100:
-                    return GameState.TGenRenderGridOverlay.FB_R0100Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0101:
-                    return GameState.TGenRenderGridOverlay.FB_R0101Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0110:
-                    return GameState.TGenRenderGridOverlay.FB_R0110Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A0111:
-                    return GameState.TGenRenderGridOverlay.FB_R0111Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1000:
-                    return GameState.TGenRenderGridOverlay.FB_R1000Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1001:
-                    return GameState.TGenRenderGridOverlay.FB_R1001Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1010:
-                    return GameState.TGenRenderGridOverlay.FB_R1010Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1011:
-                    return GameState.TGenRenderGridOverlay.FB_R1011Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1100:
-                    return GameState.TGenRenderGridOverlay.FB_R1100Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1101:
-                    return GameState.TGenRenderGridOverlay.FB_R1101Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1110:
-                    return GameState.TGenRenderGridOverlay.FB_R1110Sheet;
-                case Collisions.TileAdjacencyType.FB_R0_A1111:
-                    return GameState.TGenRenderGridOverlay.FB_R1111Sheet;
-                default:
-                    return GameState.TGenRenderGridOverlay.EmptyBlockSheet;
-            }
-        }
+      
 
         public void DrawLayer(MapLayerType planetLayer)
         {
