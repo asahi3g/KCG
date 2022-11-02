@@ -671,6 +671,48 @@ namespace PlanetTileMap
 
 
 
+                         case Enums.GeometryTileShape.QP_R0:
+                        {
+                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R0;
+
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape);
+
+                            break;
+                        }
+
+                        case Enums.GeometryTileShape.QP_R1:
+                        {
+                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R1;
+
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape);
+
+                            break;
+                        }
+
+                        case Enums.GeometryTileShape.QP_R2:
+                        {
+                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R2;
+
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape);
+
+                            break;
+                        }
+
+                        case Enums.GeometryTileShape.QP_R3:
+                        {
+                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R3;
+
+                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape);
+
+                            break;
+                        }
+
+
+
                         
                     }
                 }
