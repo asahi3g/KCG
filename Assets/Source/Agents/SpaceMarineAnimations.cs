@@ -122,8 +122,9 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.Limp, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
-            SetAnimation(Enums.AgentMovementState.FireGun, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=999.075f, Looping = true, Speed = 0.6f, MovementSpeedFactor = 0.1f, UseActionDurationForSpeed = true});
+            SetAnimation(Enums.AgentMovementState.FireGun, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle,
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleFireGun, FadeTime=9999.075f, Looping = true, Speed = 0.1f, 
+                StartTime=0.0f, MovementSpeedFactor = 0.1f, UseActionDurationForSpeed = true});
 
             SetAnimation(Enums.AgentMovementState.JetPackFlying, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJetPack, FadeTime=0.125f, Looping = true, Speed = 3.0f, MovementSpeedFactor = 0.0f});
@@ -202,7 +203,8 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineLimp, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.FireGun, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolFireGun, FadeTime=0.175f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 1.0f, UseActionDurationForSpeed = true});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolFireGun, FadeTime=0.175f, Looping = false, Speed = 1.0f,
+                StartTime = 0.0f, MovementSpeedFactor = 1.0f, UseActionDurationForSpeed = true});
 
             SetAnimation(Enums.AgentMovementState.JetPackFlying, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJetPack, FadeTime=0.125f, Looping = true, Speed = 3.0f, MovementSpeedFactor = 0.0f});

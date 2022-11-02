@@ -4,25 +4,15 @@ namespace TGen
     public enum BlockType
     {
         Error = 0,
-        /// <summary>
-        /// Square block
-        /// </summary>
+        // Square block
         SB,
-        /// <summary>
-        /// Half Block
-        /// </summary>
+        // Half Block
         HB,
-        /// <summary>
-        /// Triangle Block
-        /// </summary>
+        // Triangle Block
         TB,
-        /// <summary>
-        /// Lower part of L triangle block
-        /// </summary>
+        // Lower part of L triangle block
         L1,
-        /// <summary>
-        /// Upper part of L triangle block
-        /// </summary>
+        // Upper part of L triangle block
         L2
     }
 

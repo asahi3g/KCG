@@ -7,10 +7,8 @@ namespace Collisions
 {
     public static partial class Collisions
     {
-        /// <summary>
-        /// DDA Algorithm ==============================================
-		/// https://lodev.org/cgtutor/raycasting.html
-        /// </summary>
+        // DDA Algorithm ==============================================
+		// https://lodev.org/cgtutor/raycasting.html
         public static RayCastResult RayCastAgainstTileMapBox2d(Line2D line, float width, float height)
         {
             if (line.A == line.B)

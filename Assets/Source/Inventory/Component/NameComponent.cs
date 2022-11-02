@@ -5,9 +5,7 @@ namespace Inventory
     // Todo: Improve this and make this more versatile.
 
     [Inventory]
-    /// <summary>
-    /// Add title to inventory.
-    /// </summary>
+    // Add title to inventory.
     public class NameComponent : IComponent
     {
         public string Name;

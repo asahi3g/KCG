@@ -3,7 +3,7 @@ using KMath;
 
 namespace Node
 {
-    /// <summary> This should be used by Goap. To request movement to movimentSystem. </summary>
+    // This should be used by Goap. To request movement to movimentSystem.
     [Node]
     public class MoveToComponent : IComponent
     {

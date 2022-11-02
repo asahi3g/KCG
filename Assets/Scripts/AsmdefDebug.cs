@@ -7,10 +7,7 @@ using UnityEditor;
 using UnityEditor.Compilation;
 
 
-/// <summary>
-/// https://gist.github.com/karljj1/9c6cce803096b5cd4511cf0819ff517b
-/// </summary>
-/// 
+// https://gist.github.com/karljj1/9c6cce803096b5cd4511cf0819ff517b
 // Runs on Load
 [InitializeOnLoad]
 public class AsmdefDebug

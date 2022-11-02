@@ -11,9 +11,7 @@ namespace KMath
      xmin         xmax
      ymin         ymin
     */
-    /// <summary>
-    /// Axis-aligned Bounding Box 2D
-    /// </summary>
+    // Axis-aligned Bounding Box 2D
     public struct AABox2D
     {
         public Vec2f center => new Vec2f(xmin + halfSize.X, ymin + halfSize.Y);

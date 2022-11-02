@@ -3,10 +3,8 @@ using KMath;
 
 namespace Agents
 {
-    /// <summary>
-    /// Have agent line of sight information: Direction, angle, etc.
-    /// Not used yet. It will be used by sensor and DeubgAgentSightCoinVisualizer
-    /// </summary>
+    // Have agent line of sight information: Direction, angle, etc.
+    // Not used yet. It will be used by sensor and DeubgAgentSightCoinVisualizer
     [Agent]
     public class LineOfSightComponent : IComponent
     {

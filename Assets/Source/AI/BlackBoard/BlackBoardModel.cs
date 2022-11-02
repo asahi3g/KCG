@@ -46,9 +46,7 @@ namespace AI
         public Dictionary<string, int> NameToIndex;
         public EntryInfo[] Entries;
         public int Length;
-        /// <summary>
         /// Guarantee that Ids doesn't repeat
-        /// </summary>
         private int LastIDValue;
 
         public BlackBoardModel(BehaviorType type)
@@ -67,13 +65,7 @@ namespace AI
         //      Use a singe value for indexing and id. 64 bits.
         //      Create function to set value.
         
-        /// <summary>
-        /// Register new vairable.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <returns> Returns ID of variable registered.</returns>
+        // Register new vairable and returns ID of variable registered.
         public int Register(Type type, string name = "", string description = "")
         {
             ref EntryInfo entryInfo = ref Entries[Length];
@@ -156,10 +148,8 @@ namespace AI
             return entryInfo.ID;
         }
 
-        /// <summary>
-        /// Get list with index of all entries of a specific type.
-        /// Used by visual tool.
-        /// </summary>
+        // Get list with index of all entries of a specific type.
+        // Used by visual tool.
         public List<int> GetEntriesOfType(Type type)
         {
             List<int> entriesType = new List<int>();

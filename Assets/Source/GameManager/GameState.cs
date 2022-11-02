@@ -1,8 +1,6 @@
 
 using Planet;
-/// <summary>
-/// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
-/// </summary>
+// <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
 {
     public static Planet.PlanetState Planet;

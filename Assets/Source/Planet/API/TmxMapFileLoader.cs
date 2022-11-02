@@ -211,7 +211,7 @@ namespace TmxMapFileLoader
 
 /*
        DELETE
-        /// <summary> Temp struct to collect info about tile </summary>
+        //emp struct to collect info about tile
         
         //TODO: Delete and replace
         private struct PlanetTileInfo
