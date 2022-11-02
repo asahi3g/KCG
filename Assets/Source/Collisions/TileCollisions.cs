@@ -340,7 +340,7 @@ namespace Collisions
         {
             public float MinTime;
             public Vec2f MinNormal;
-            public Enums.GeometryTileShape GeometryTileShape;
+            public Enums.TileGeometryAndRotation GeometryTileShape;
         }
 
 
@@ -393,7 +393,7 @@ namespace Collisions
           
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
-            Enums.GeometryTileShape minShape = 0;
+            Enums.TileGeometryAndRotation minShape = 0;
 
 
             //TODO(Mahdi):
@@ -405,14 +405,14 @@ namespace Collisions
                 
                 Line2D line = planet.TileMap.GeometryArray[i];
                 Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
 
 
 
                 // make sure its not a platform
                 // we cant collide with a platform
-                if (((shape != Enums.GeometryTileShape.QP_R0 && shape != Enums.GeometryTileShape.QP_R1 && 
-                shape != Enums.GeometryTileShape.QP_R2 && shape != Enums.GeometryTileShape.QP_R3)))
+                if (((shape != Enums.TileGeometryAndRotation.QP_R0 && shape != Enums.TileGeometryAndRotation.QP_R1 && 
+                shape != Enums.TileGeometryAndRotation.QP_R2 && shape != Enums.TileGeometryAndRotation.QP_R3)))
                 {
 
 
@@ -458,13 +458,13 @@ namespace Collisions
             Line2D minLine = new Line2D();
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
-            Enums.GeometryTileShape minShape = 0;
+            Enums.TileGeometryAndRotation minShape = 0;
             for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
                 Line2D line = planet.TileMap.GeometryArray[i];
                 Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
 
 
                 Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X, 1.25f);
@@ -516,7 +516,7 @@ namespace Collisions
         {
             public float MinTime;
             public Vec2f MinNormal;
-            public Enums.GeometryTileShape GeometryTileShape;
+            public Enums.TileGeometryAndRotation GeometryTileShape;
 
             public HandleCollisionResult BottomCollision;
         }
@@ -601,7 +601,7 @@ namespace Collisions
     
             float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
-            Enums.GeometryTileShape minShape = 0;
+            Enums.TileGeometryAndRotation minShape = 0;
 
             //TODO(Mahdi):
             // 1- do not iterate over all the lines in the tile map
@@ -612,13 +612,13 @@ namespace Collisions
                 
                 Line2D line = planet.TileMap.GeometryArray[i];
                 Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.GeometryTileShape shape = planet.TileMap.GeometryShapeArray[i];
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
 
 
                 // if its a platform
                 // only collide when going downwards
-                if (!(delta.Y >= 0.0f && (shape == Enums.GeometryTileShape.QP_R0 || shape == Enums.GeometryTileShape.QP_R1 || 
-                shape == Enums.GeometryTileShape.QP_R2 || shape == Enums.GeometryTileShape.QP_R3)))
+                if (!(delta.Y >= 0.0f && (shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
+                shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3)))
                 {
 
                     // circle line sweep test
@@ -704,7 +704,7 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                if (properties.BlockShapeType == Enums.TileGeometryAndRotation.SB_R0)
                                 {
                                     positions[linesCount] = 4;
                                 }
@@ -757,7 +757,7 @@ namespace Collisions
 
                                 lines[linesCount] = line;
                                 normals[linesCount] = normal;
-                                if (properties.BlockShapeType == Enums.GeometryTileShape.SB_R0)
+                                if (properties.BlockShapeType == Enums.TileGeometryAndRotation.SB_R0)
                                 {
                                     positions[linesCount] = 5;
                                 }

@@ -8,7 +8,7 @@ namespace PlanetTileMap
 
 
 
-        public static bool FindLine(Enums.GeometryTileShape shape, Collisions.TileLineSegment line)
+        public static bool FindLine(Enums.TileGeometryAndRotation shape, Collisions.TileLineSegment line)
         {
             var properties = GameState.GeometryCreationApi.GetProperties(shape);
             for(int i = 0; i < properties.Size; i++)
@@ -24,9 +24,9 @@ namespace PlanetTileMap
         }
 
 
-        public static bool FindLine(Enums.GeometryTileShape shape, Collisions.TileLineSegment line1, Collisions.TileLineSegment line2)
+        public static bool FindLine(Enums.TileGeometryAndRotation shape, Collisions.TileLineSegment line1, Collisions.TileLineSegment line2)
         {
-            if (shape != Enums.GeometryTileShape.Error)
+            if (shape != Enums.TileGeometryAndRotation.Error)
             {
                 var properties = GameState.GeometryCreationApi.GetProperties(shape);
                 for(int i = 0; i < properties.Size; i++)
@@ -54,34 +54,34 @@ namespace PlanetTileMap
 
                     switch (properties.BlockShapeType)
                     {
-                        case Enums.GeometryTileShape.SB_R0:
+                        case Enums.TileGeometryAndRotation.SB_R0:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.SB_R0;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.SB_R0;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
                              bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(topGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C1_C0))
                             {
                                 bottomLine = false;
@@ -114,21 +114,21 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.TB_R0:
+                        case Enums.TileGeometryAndRotation.TB_R0:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.TB_R0;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.TB_R0;
                             bool topLine = true;
                             bool rightLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 bottomLine = false;
@@ -157,21 +157,21 @@ namespace PlanetTileMap
                         }
 
 
-                        case Enums.GeometryTileShape.TB_R1:
+                        case Enums.TileGeometryAndRotation.TB_R1:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.TB_R1;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.TB_R1;
                             bool topLine = true;
                             bool leftLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 bottomLine = false;
@@ -201,21 +201,21 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.TB_R2:
+                        case Enums.TileGeometryAndRotation.TB_R2:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.TB_R2;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.TB_R2;
                             bool topLine = true;
                             bool rightLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C3_C0))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
@@ -243,21 +243,21 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.TB_R3:
+                        case Enums.TileGeometryAndRotation.TB_R3:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.TB_R3;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.TB_R3;
                             bool topLine = true;
                             bool leftLine = true;
                             bool rightLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
@@ -291,34 +291,34 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.HB_R0:
+                        case Enums.TileGeometryAndRotation.HB_R0:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.HB_R0;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.HB_R0;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(topGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C1_C0))
                             {
                                 bottomLine = false;
@@ -353,34 +353,34 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.HB_R1:
+                        case Enums.TileGeometryAndRotation.HB_R1:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.HB_R1;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.HB_R1;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(topGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C1_C0))
                             {
                                 bottomLine = false;
@@ -416,34 +416,34 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.HB_R2:
+                        case Enums.TileGeometryAndRotation.HB_R2:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.HB_R2;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.HB_R2;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(topGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C1_C0))
                             {
                                 bottomLine = false;
@@ -477,34 +477,34 @@ namespace PlanetTileMap
                         }
 
 
-                        case Enums.GeometryTileShape.HB_R3:
+                        case Enums.TileGeometryAndRotation.HB_R3:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.HB_R3;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.HB_R3;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
                             bool bottomLine = true;
 
 
-                            Enums.GeometryTileShape topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(topGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C1_C0))
                             {
                                 bottomLine = false;
@@ -540,21 +540,21 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.L1_R0:
+                        case Enums.TileGeometryAndRotation.L1_R0:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.L1_R0;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.L1_R0;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
                                 leftLine = false;
@@ -585,21 +585,21 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.L1_R1:
+                        case Enums.TileGeometryAndRotation.L1_R1:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.L1_R1;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.L1_R1;
                             bool topLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment.L_C0_C1))
                             {
                                 topLine = false;
                             }
 
-                            Enums.GeometryTileShape leftGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment.L_C1_M1))
                             {
                                 rightLine = false;
@@ -628,21 +628,21 @@ namespace PlanetTileMap
 
 
 
-                        case Enums.GeometryTileShape.L1_R2:
+                        case Enums.TileGeometryAndRotation.L1_R2:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.L1_R2;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.L1_R2;
                             bool bottomLine = true;
                             bool rightLine = true;
                             bool leftLine = true;
 
 
-                            Enums.GeometryTileShape rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
                             if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
                             {
                                 rightLine = false;
                             }
 
-                            Enums.GeometryTileShape bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment.L_C1_M1))
                             {
                                 bottomLine = false;
@@ -671,9 +671,9 @@ namespace PlanetTileMap
 
 
 
-                         case Enums.GeometryTileShape.QP_R0:
+                         case Enums.TileGeometryAndRotation.QP_R0:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R0;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R0;
 
                             tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape);
@@ -681,9 +681,9 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.QP_R1:
+                        case Enums.TileGeometryAndRotation.QP_R1:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R1;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R1;
 
                             tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape);
@@ -691,9 +691,9 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.QP_R2:
+                        case Enums.TileGeometryAndRotation.QP_R2:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R2;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R2;
 
                             tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape);
@@ -701,9 +701,9 @@ namespace PlanetTileMap
                             break;
                         }
 
-                        case Enums.GeometryTileShape.QP_R3:
+                        case Enums.TileGeometryAndRotation.QP_R3:
                         {
-                            Enums.GeometryTileShape shape = Enums.GeometryTileShape.QP_R3;
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R3;
 
                             tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape);

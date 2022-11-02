@@ -107,9 +107,9 @@ namespace Agent
                 }
             }
 
-            bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+            bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
-             bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+             bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
 
              var bottomCollision = agentCollision.BottomCollision;
