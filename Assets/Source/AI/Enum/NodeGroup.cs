@@ -2,13 +2,13 @@
 {
     public enum NodeGroup
     {
-        /// <summary> Nodes with multiple children.</summary>
+        // Nodes with multiple children.
         CompositeNode,
-        /// <summary> Nodes with single child.</summary>
+        // Nodes with single child.
         DecoratorNode,
-        /// <summary> Action AI can use.</summary>
+        // Action AI can use.
         ActionNode,
-        /// <summary> Actions available only for the player. Ex: "Creative" mode tool actions</summary>
+        // Actions available only for the player. Ex: "Creative" mode tool actions
         PlayerAction,
     }
 }

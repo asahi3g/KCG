@@ -11,10 +11,7 @@
         Bone,
         HealthPositon,
         
-
-        /// <summary>
-        /// Weapons
-        /// </summary>
+        // Weapons
         SniperRifle,
         LongRifle,
         PulseWeapon,
@@ -33,15 +30,11 @@
         FragGrenade,
         Flare,
 
-        /// <summary>
-        /// Equipment
-        /// </summary>
+        // Equipment
         Helmet,
         Suit,
 
-        /// <summary>
-        /// Mech's As Item
-        /// </summary>
+        // Mech's As Item
         MajestyPalm,
         SagoPalm,
         WaterBottle,
@@ -53,9 +46,7 @@
         SmashableEgg,
         Pickaxe,
 
-        /// <summary>
-        /// Materials
-        /// </summary>
+        // Materials
         Moon,
         Dirt,
         Bedrock,
@@ -127,9 +118,7 @@
         Coal_6,
         Coal_7,
 
-        /// <summary>
-        /// Tools
-        /// </summary>
+        // Tools
         PlacementTool,
         PlacementMaterialTool,
         RemoveTileTool,

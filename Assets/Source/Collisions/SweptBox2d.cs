@@ -27,9 +27,7 @@ namespace Collisions
             return hit;
         }
 
-        /// <summary>
-        /// Swept collision  detection using Minkowski sum
-        /// </summary>
+        // Swept collision  detection using Minkowski sum
         public static bool SweptBox2dCollision(ref Box2D b1, Vec2f delta, Box2D b2, bool slide)
         {
             

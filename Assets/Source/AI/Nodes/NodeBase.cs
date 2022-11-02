@@ -9,33 +9,30 @@ namespace Node
         public virtual NodeType Type => NodeType.None;
         public virtual NodeGroup NodeGroup => NodeGroup.PlayerAction;
 
-        /// <summary>
-        /// List of blackboard entries used in the node.
-        /// This allows states parameters to show in AI visual tool.
-        /// </summary>
+        // List of blackboard entries used in the node.
+        // This allows states parameters to show in AI visual tool.
         public virtual List<Tuple<string, Type>> RegisterEntries() => null;
 
-        // 
         protected Tuple<string, Type> CreateEntry(string name, Type type) => new Tuple<string, Type>(name, type);
 
-        /// <summary> Run once at the beggining of the action. </summary>
+        // Run once at the beggining of the action.
         public virtual void OnEnter(NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
-        /// <summary> Run once per frame until action state is changed to sucess or fail. </summary>
+        // Run once per frame until action state is changed to sucess or fail.
         public virtual void OnUpdate(NodeEntity nodeEntity)
         {
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
 
-        /// <summary> Run once if action succeeded</summary>
+        // Run once if action succeeded.
         public virtual void OnExit(NodeEntity nodeEntity)
         {
         }
 
-        /// <summary> Run once if action failed</summary>
+        // Run once if action failed
         public virtual void OnFail(NodeEntity nodeEntity)
         {
         }

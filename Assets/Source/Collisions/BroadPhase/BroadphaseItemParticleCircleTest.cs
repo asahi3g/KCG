@@ -3,9 +3,6 @@ using System;
 
 namespace Collisions
 {
-
-
-
     public static partial class Collisions
     {
         public static int[] BroadphaseItemCircleTest(Vec2f point, float distance)
@@ -26,8 +23,6 @@ namespace Collisions
                     var collider = entity.physicsBox2DCollider;
 
                     Vec2f position = physicsState.Position + collider.Offset;
-
-
 
                     var closestX = KMath.KMath.Clamp(point.X, position.X, position.X + collider.Size.X);
                     var closestY = KMath.KMath.Clamp(point.Y, position.Y, position.Y + collider.Size.Y);

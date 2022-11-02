@@ -4,9 +4,7 @@ using KMath;
 
 namespace Inventory
 {
-    /// <summary>
-    /// Exemple on how to use the api in default functions and in InventoryTest script.
-    /// </summary>
+    // Exemple on how to use the api in default functions and in InventoryTest script.
     public class CreationApi
     {
         bool Init = false;
@@ -372,9 +370,7 @@ namespace Inventory
         public void SetTextureRestriction(Enums.ItemGroups itemGroup, int textureRestriction)
             => RestrictionSlotsTextures[(int)itemGroup] = textureRestriction;
 
-        /// <summary>
-        /// Distance from start of the background texture to grid.
-        /// </summary>
+        // Distance from start of the background texture to grid.
         public void SetInventoryBoderOffset(float leftBorder, float rightBorder, float upBorder, float downBorder)
         {
             UpBorderOffSet = upBorder;
@@ -402,9 +398,7 @@ namespace Inventory
         }
         public void SetSlotOffset(float slotOffset) => InventoryModels[ID].MainWindow.SlotOffset = slotOffset;
 
-        /// <summary>
-        /// These function set which slots on the grid can hold items and will be draw.
-        /// </summary>
+        // These function set which slots on the grid can hold items and will be draw.
         public void SetActiveSlot(int index)=> ActiveSlots.Set(index);
 
         public void SetActiveSlots(int startPos, int endPos)
@@ -413,9 +407,7 @@ namespace Inventory
                 ActiveSlots.Set(i);
         }
 
-        /// <summary>
-        /// BitSet will define which slots are on and off.
-        /// </summary>
+        // BitSet will define which slots are on and off.
         public void SetActiveSlots(BitSet bitSet) => ActiveSlots = bitSet;
 
         public void SetAllSlotsAsActive()

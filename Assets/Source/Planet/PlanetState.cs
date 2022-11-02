@@ -221,10 +221,8 @@ namespace Planet
             InventoryList.Remove(entity.inventoryEntity.Index);
         }
 
-        /// <summary>
-        /// Remove Items and Spawn itemsParticles.
-        /// InventoryID is not the index.
-        /// </summary>
+        // Remove Items and Spawn itemsParticles.
+        // InventoryID is not the index.
         public void RemoveInventory(int inventoryID, Vec2f pos)
         {
             // Spawn itemsInventory inside as item particles.

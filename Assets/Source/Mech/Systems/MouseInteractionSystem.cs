@@ -8,9 +8,7 @@ namespace Mech
 {
     public class MouseInteractionSystem
     {
-        /// <summary>
-        /// Return list of meches mouse is over.
-        /// </summary>
+        // Return list of meches mouse is over.
         /// <returns>If error return null</returns>
         public List<MechEntity> GetMechFromMousePos()
         {

@@ -3,9 +3,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Node
 {
-    /// <summary>
-    /// This should be used for actions related to tools.
-    /// </summary>
+    // This should be used for actions related to tools.
     [Node]
     public class ToolComponent : IComponent
     {

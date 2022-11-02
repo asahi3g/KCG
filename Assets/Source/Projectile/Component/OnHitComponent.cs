@@ -6,9 +6,7 @@ namespace Projectile
     [Projectile]
     public class OnHitComponent : IComponent
     {
-        /// <summary>
-        /// If tile is hit. AgentID = -1.
-        /// </summary>
+        // If tile is hit. AgentID = -1.
         public int AgentID;
         public float FirstHitTime;
         public Vec2f FistHitPos;

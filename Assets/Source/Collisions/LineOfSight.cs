@@ -87,10 +87,8 @@ namespace Collisions
         }
 
 
-        /// <summary>
-        /// If true it's inside field of view.
-        /// https://legends2k.github.io/2d-circleSector.Fov/design.html#references
-        /// </summary>
+        // If true it's inside field of view.
+        // https://legends2k.github.io/2d-circleSector.Fov/design.html#references
         public static bool AABBIntersectSector(ref AABox2D box, CircleSector circleSector)
         {
             Circle2D circle = new Circle2D()

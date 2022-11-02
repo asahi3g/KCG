@@ -8,14 +8,10 @@ namespace KMath
     [Serializable]
     public struct Vec2f
     {
-        /// <summary>
-        ///   <para>Shorthand for writing Vec2f(0, 0).</para>
-        /// </summary>
+        // Shorthand for writing Vec2f(0, 0).
         public static Vec2f Zero { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(0f, 0f);
 
-        /// <summary>
-        ///   <para>Shorthand for writing Vector2(1, 1).</para>
-        /// </summary>
+        // Shorthand for writing Vector2(1, 1).
         public static Vec2f One { [MethodImpl((MethodImplOptions) 256)] get; } = new Vec2f(1f, 1f);
         
         public float X;
@@ -37,25 +33,19 @@ namespace KMath
 
         #region Properties
 
-        /// <summary>
-        ///   <para>Returns the squared length of this vector (Read Only).</para>
-        /// </summary>
+        // Returns the squared length of this vector (Read Only).
         public float SqrMagnitude
         {
             [MethodImpl((MethodImplOptions) 256)] get => X * X + Y * Y;
         }
         
-        /// <summary>
-        ///   <para>Returns the length of this vector (Read Only).</para>
-        /// </summary>
+        // Returns the length of this vector (Read Only).
         public float Magnitude
         {
             [MethodImpl((MethodImplOptions) 256)] get => MathF.Sqrt(X * X + Y * Y);
         }
         
-        /// <summary>
-        ///   <para>Returns this vector with a magnitude of 1 (Read Only).</para>
-        /// </summary>
+        // Returns this vector with a magnitude of 1 (Read Only).
         public Vec2f Normalized
         {
             [MethodImpl((MethodImplOptions) 256)] get
@@ -76,9 +66,7 @@ namespace KMath
             return lhs.X * rhs.Y - lhs.Y * rhs.X;
         }
 
-        /// <summary>
-        ///   <para>Dot Product of two vectors.</para>
-        /// </summary>
+        // Dot Product of two vectors.
         [MethodImpl((MethodImplOptions) 256)]
         public static float Dot(Vec2f lhs, Vec2f rhs) => lhs.X * rhs.X + lhs.Y * rhs.Y;
 
@@ -93,9 +81,7 @@ namespace KMath
         public static Vec2f Clamp(Vec2f value, Vec2f minValue, Vec2f maxValue) =>
             new Vec2f(Math.Clamp(value.X, minValue.X, maxValue.X), Math.Clamp(value.Y, minValue.Y, maxValue.Y));
 
-        /// <summary>
-        ///   <para>Makes this vector have a magnitude of 1.</para>
-        /// </summary>
+        // Makes this vector have a magnitude of 1
         [MethodImpl((MethodImplOptions) 256)]
         public Vec2f Normalize()
         {
@@ -108,10 +94,7 @@ namespace KMath
             return this;
         }
 
-        /// <summary>
-        ///   <para>Projecting current vector onto other vector</para>
-        /// </summary>
-        /// <param name="other"></param>
+        // Projecting current vector onto other vector.
         [MethodImpl((MethodImplOptions) 256)]
         public Vec2f Project(Vec2f other)
         {
@@ -124,11 +107,7 @@ namespace KMath
             return new Vec2f(projectionX, projectionY);
         }
         
-        /// <summary>
-        ///   <para>Returns the distance between a and b.</para>
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
+        // Returns the distance between a and b.
         [MethodImpl((MethodImplOptions) 256)]
         public static float Distance(Vec2f a, Vec2f b)
         {
@@ -137,20 +116,12 @@ namespace KMath
             return MathF.Sqrt(num1 * num1 + num2 * num2);
         }
         
-        /// <summary>
-        ///   <para>Returns the 2D vector perpendicular to this 2D vector. The result is always rotated 90-degrees in a counter-clockwise direction for a 2D coordinate system where the positive Y axis goes up.</para>
-        /// </summary>
-        /// <param name="inDirection">The input direction.</param>
-        /// <returns>
-        ///   <para>The perpendicular direction.</para>
-        /// </returns>
+        // Returns the 2D vector perpendicular to this 2D vector. The result is always rotated 90-degrees in a counter-clockwise direction for a
+        // 2D coordinate system where the positive Y axis goes up.
         [MethodImpl((MethodImplOptions) 256)]
         public static Vec2f Perpendicular(Vec2f inDirection) => new Vec2f(-inDirection.Y, inDirection.X);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="angle">Angle in rad</param>
-        /// <returns></returns>
+        // Angle in rad
         [MethodImpl((MethodImplOptions)256)]
         public Vec2f Rotate(float angle)
         {
@@ -164,10 +135,7 @@ namespace KMath
             return this;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="angle">Angle in rad</param>
-        /// <returns></returns>
+        // param Angle in rad
         [MethodImpl((MethodImplOptions)256)]
         public static Vec2f Rotate(Vec2f vec, float angle)
         {
@@ -180,8 +148,7 @@ namespace KMath
 
             return vec;
         }
-        ///   <para>Returns a vector off the vector defined by a normal</para>
-        /// </summary>
+        // Returns a vector off the vector defined by a normal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vec2f Reflect(Vec2f inDirection, Vec2f inNormal)
         {

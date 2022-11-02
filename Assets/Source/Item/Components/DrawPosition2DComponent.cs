@@ -3,9 +3,7 @@ using KMath;
 
 namespace Item
 {
-    /// <summary>
-    /// Used by pickup actions.
-    /// </summary>
+    // Used by pickup actions.
     [ItemParticle]
     public class DrawPosition2DComponent : IComponent
     {

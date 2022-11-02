@@ -7,9 +7,9 @@ namespace Projectile
     {
         // Explosive Properties.
         public float BlastRadius;
-        /// <summary> Damage at the origin</summary>
+        // Damage at the origin
         public int MaxDamage;
-        /// <summary> Time in seconds it takes to explode after first hit.</summary>
+        // Time in seconds it takes to explode after first hit.
         public float Elapse;
     }
 }
