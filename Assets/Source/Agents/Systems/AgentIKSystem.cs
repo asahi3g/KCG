@@ -30,22 +30,6 @@ namespace Agent
         UnityEngine.Transform RifleIK;
         UnityEngine.Transform AimTarget;
 
-        public void Initialize(AgentContext agentContext)
-        {
-            var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
-            foreach (var entity in entities)
-            {
-                var physicsState = entity.agentPhysicsState;
-
-                var model3d = entity.agentModel3D;
-                model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
-
-                transform = entity.agentModel3D.GameObject.transform;
-                PistolIK = transform.Find("Pistol");
-                RifleIK = transform.Find("Rifle");
-                AimTarget = transform.Find("AimTargetTest");
-            }
-        }
 
         public void Update(AgentContext agentContext)
         {
