@@ -484,7 +484,7 @@ namespace Planet
             GameState.VehicleAISystem.Update();
 
             // Collision systems.
-            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, this);
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update();
             GameState.ParticleProcessCollisionSystem.Update();
             GameState.ProjectileCollisionSystem.UpdateEx(deltaTime);

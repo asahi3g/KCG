@@ -2,7 +2,7 @@
 using Planet;
 using NodeSystem;
 using UnityEngine;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 
 namespace Action
 {

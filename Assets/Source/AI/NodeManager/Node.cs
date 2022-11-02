@@ -16,6 +16,7 @@ namespace NodeSystem
 
         public byte[] DataInit;
 
+        // Used to set specific data for a node type.
         public void SetData<T>(ref T data) where T : struct
         {
             unsafe

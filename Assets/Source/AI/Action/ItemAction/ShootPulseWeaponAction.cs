@@ -1,5 +1,5 @@
 using Enums;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;

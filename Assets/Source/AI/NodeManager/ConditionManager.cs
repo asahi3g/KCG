@@ -11,7 +11,9 @@ namespace NodeSystem
         private Dictionary<string, int> NameIDPairs = new Dictionary<string, int>();
         private bool DefaultCondition(object ptr) => true;
         private int Length = 1;
-        
+
+        public const int TrueConditionID = 0; // Id of default condition.
+
         public ConditionManager()
         {
             RegisterCondition("Default", DefaultCondition);

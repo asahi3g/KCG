@@ -52,7 +52,6 @@ namespace NodeSystem
             return node.ID;
         }
 
-
         public ref Node GetRef(int id)
         {
             return ref Nodes[id];

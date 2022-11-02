@@ -304,9 +304,9 @@ namespace Agent
             RegisterConditions();
             RegisterBasicActions();
 
-            int wait0_5Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            int wait0_1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
-            NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.1f));
             NodeManager.EndNode();
 
             int wait1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
@@ -331,7 +331,7 @@ namespace Agent
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
             NodeManager.AddChild(fireWeaponId);
-            NodeManager.AddChild(wait0_5Id);
+            NodeManager.AddChild(wait0_1Id);
             NodeManager.EndNode();
 
             int selectorShootId = NodeManager.CreateNode("Selector", NodeSystem.NodeType.Selector);

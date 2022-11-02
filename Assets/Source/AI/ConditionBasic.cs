@@ -1,12 +1,11 @@
 ﻿using Enums;
 using Item;
-using NodeSystem.BehaviorTree;
-using Unity.Collections.LowLevel.Unsafe;
+using BehaviorTree;
 using Planet;
 
 namespace Condition
 {
-    // Basic conditions used by several behaviors
+    // Basic conditions used by several behavior trees.
     public static class ConditionBasic
     {
         static bool HasBulletInClip(object ptr)

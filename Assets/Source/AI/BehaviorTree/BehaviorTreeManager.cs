@@ -1,6 +1,4 @@
-﻿
-
-namespace NodeSystem.BehaviorTree
+﻿namespace BehaviorTree
 {
     public class BehaviorTreeManager
     {

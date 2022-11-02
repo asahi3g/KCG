@@ -1,17 +1,18 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
+﻿using NodeSystem;
+using System.Runtime.CompilerServices;
 
-namespace NodeSystem.BehaviorTree
+namespace BehaviorTree
 {
      // Function controller for sequence nodes.
     public class SequenceNode
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public int GetNextChildren(object ptr, int nodeIndex, NodeState lastResult)
         {
             // Get state data. 
             ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
             ref int currentIndex = ref stateData.GetNodeData<int>(nodeIndex);
-            ref Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
+            ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
 
             // success = quit
             int nextChild = BTSpecialChild.ReturnToParent;
@@ -32,13 +33,13 @@ namespace NodeSystem.BehaviorTree
     // Function controller for Selector nodes.
     public class SelectorNode
     {
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public int GetNextChildren(object ptr, int nodeIndex, NodeState lastResult)
         {
             // Get state data. 
             ref BehaviorTreeState stateData = ref BehaviorTreeState.GetRef((ulong)ptr);
             ref int currentIndex = ref stateData.GetNodeData<int>(nodeIndex);
-            ref Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
+            ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[nodeIndex].Id);
 
             // success = quit
             int nextChild = BTSpecialChild.ReturnToParent;
@@ -59,6 +60,7 @@ namespace NodeSystem.BehaviorTree
     // Route functions for decorator node.
     public class DecoratorNode
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public int NextRoute(int childrenID)
         {
             if (childrenID == BTSpecialChild.NotInitialized)
@@ -67,8 +69,11 @@ namespace NodeSystem.BehaviorTree
                 return BTSpecialChild.ReturnToParent;
         }
     }
+
+    // Route functions for a repeater node.
     public class RepeaterNode
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int NextRoute(object ptr, int nodeIndex, int childrenID)
         {
             if (childrenID != BTSpecialChild.NotInitialized)

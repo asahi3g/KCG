@@ -19,8 +19,8 @@ public static class GameState
     public static readonly NodeSystem.NodeManager NodeManager;
     public static readonly NodeSystem.ActionManager ActionManager;
     public static readonly NodeSystem.ConditionManager ConditionManager;
-    public static readonly NodeSystem.BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
-    public static readonly NodeSystem.BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
+    public static readonly BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
+    public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -197,8 +197,8 @@ public static class GameState
         NodeManager =   new NodeSystem.NodeManager();
         ActionManager = new NodeSystem.ActionManager();
         ConditionManager = new NodeSystem.ConditionManager();
-        BehaviorTreeManager = new NodeSystem.BehaviorTree.BehaviorTreeManager();
-        BehaviorTreeUpdateSystem = new NodeSystem.BehaviorTree.UpdateSystem();
+        BehaviorTreeManager = new BehaviorTree.BehaviorTreeManager();
+        BehaviorTreeUpdateSystem = new BehaviorTree.UpdateSystem();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();

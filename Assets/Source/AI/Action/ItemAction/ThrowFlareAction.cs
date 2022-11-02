@@ -2,7 +2,7 @@ using KMath;
 using UnityEngine;
 using Item;
 using Enums;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
 

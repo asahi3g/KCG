@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using KMath;
 
-namespace Node
+namespace Action
 {
     // Todo (Urgent): Implement pick up system outside actions
 //    public class PickUpAction

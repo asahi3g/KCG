@@ -1,13 +1,14 @@
 ﻿using System;
+using NodeSystem;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace NodeSystem.BehaviorTree
+namespace BehaviorTree
 {
     public struct NodeExcutionData
     {
-        public int Id;              // Id in NodeManager.
-        public int MemoryOffset;    // Offset used to access memory.
-        public float ExecutionTime;   // Time in ticks since start running.
+        public int Id;                  // Id in NodeManager.
+        public int MemoryOffset;        // Offset used to access memory.
+        public float ExecutionTime;     // Time in ticks since start running.
     }
     public struct BehaviorTreeState
     {
@@ -17,16 +18,16 @@ namespace NodeSystem.BehaviorTree
         public int BlackboardID; // -1 if there is no blackboard.
 
         public ref T GetNodeData<T>(int index) where T : struct
-            => ref Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset);
+            => ref NodeSystem.Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset);
 
         public ref T GetActionSequenceData<T>(int index) where T : struct
-           => ref Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset + 1);
+           => ref NodeSystem.Node.CastTo<T>(NodeMemory, NodesExecutiondata[index].MemoryOffset + 1);
 
         public bool HasBlackboard() => (BlackboardID != -1);
         public void ResetNodeData(int index)
         {
             int id = NodesExecutiondata[index].Id;
-            ref Node node = ref GameState.NodeManager.GetRef(id);
+            ref NodeSystem.Node node = ref GameState.NodeManager.GetRef(id);
             if (node.DataInit == null)
                 return;
             Array.Copy(node.DataInit, 0, NodeMemory, NodesExecutiondata[index].MemoryOffset, node.DataInit.Length);

@@ -1,7 +1,7 @@
 ﻿using AI;
 using Planet;
 using NodeSystem;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 
 namespace Action
 {

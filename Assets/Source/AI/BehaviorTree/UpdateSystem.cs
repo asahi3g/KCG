@@ -1,4 +1,4 @@
-﻿namespace NodeSystem.BehaviorTree
+﻿namespace BehaviorTree
 {
     public class UpdateSystem
     {

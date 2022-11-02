@@ -1,6 +1,5 @@
 ﻿using NodeSystem;
-using NodeSystem.BehaviorTree;
-using UnityEngine;
+using BehaviorTree;
 
 namespace Action
 {

@@ -3,7 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using Enums;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using AI;
 
 namespace Action

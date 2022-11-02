@@ -1,7 +1,7 @@
 using NodeSystem;
 using UnityEngine;
 using Unity.Collections.LowLevel.Unsafe;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using Planet;
 using KMath;
 using AI;

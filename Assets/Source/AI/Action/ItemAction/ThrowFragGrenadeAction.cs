@@ -3,7 +3,7 @@ using KMath;
 using Planet;
 using UnityEngine;
 using Item;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using Unity.Collections.LowLevel.Unsafe;
 
 namespace Action

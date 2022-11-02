@@ -1,5 +1,3 @@
-//imports UnityEngine
-
 using AI;
 using Node;
 using System.Collections.Generic;

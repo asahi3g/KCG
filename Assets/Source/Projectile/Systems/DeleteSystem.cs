@@ -2,9 +2,8 @@
 {
     public class DeleteSystem
     {
-        // Remove projectile only at the end of the frame.
-
-        /// <summary> Should be called at the end of the frame.</summary>
+        // Remove projectile at the end of the frame.
+        // Should be called at the end of the frame.
         public void Update()
         {
             ref var planet = ref GameState.Planet;

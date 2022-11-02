@@ -2,6 +2,7 @@
 
 namespace Action
 {
+    // Register Actions that should be used by several behavior trees.
     static public class ActionBasic
     {
         public static void RegisterBasicActions()

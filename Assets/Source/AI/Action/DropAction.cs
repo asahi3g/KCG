@@ -3,7 +3,7 @@ using Planet;
 using NodeSystem;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 
 namespace Action
 {

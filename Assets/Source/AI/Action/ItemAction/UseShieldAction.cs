@@ -1,4 +1,4 @@
-using NodeSystem.BehaviorTree;
+using BehaviorTree;
 using Enums;
 using Planet;
 using Unity.Collections.LowLevel.Unsafe;
