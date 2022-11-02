@@ -60,8 +60,8 @@ namespace Tiled
                 PlanetTileMap.MaterialType material = PlanetTileMap.MaterialType.Metal;
                 Enum.TryParse<PlanetTileMap.MaterialType>(foundTileset.properties[0].value, out material);
 
-                Enums.GeometryTileShape shape = Enums.GeometryTileShape.SB_R0;
-                Enum.TryParse<Enums.GeometryTileShape>(foundTileset.Tiles[tileIndex].properties[0].value, out shape);
+                Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.SB_R0;
+                Enum.TryParse<Enums.TileGeometryAndRotation>(foundTileset.Tiles[tileIndex].properties[0].value, out shape);
 
                 return new TiledMaterialAndShape{Shape=shape, Material=material};
 

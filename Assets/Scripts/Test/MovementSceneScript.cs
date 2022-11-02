@@ -601,37 +601,6 @@ namespace Planet.Unity
         private void OnDrawGizmos()
         {
             ref var planet = ref GameState.Planet;
-            planet.DrawDebug();
-
-            // Set the color of gizmos
-            UnityEngine.Gizmos.color = UnityEngine.Color.green;
-            
-            // Draw a cube around the map
-            if(planet.TileMap != null)
-                UnityEngine.Gizmos.DrawWireCube(UnityEngine.Vector3.zero, new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
-
-            // Draw lines around player if out of bounds
-            if (Player != null)
-                if(Player.agentPhysicsState.Position.X -10.0f >= planet.TileMap.MapSize.X)
-                {
-                    // Out of bounds
-
-                    // X+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
-
-                    // X-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
-
-                    // Y+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
-
-                    // Y-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
-                }
-
-            // Draw Chunk Visualizer
-            ChunkVisualizer.Draw(0.5f, 0.0f);
-
 
             bool drawRayCast = false;
 
@@ -834,13 +803,20 @@ namespace Planet.Unity
                 Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                UnityEngine.Debug.Log(GameState.Planet.DebugLinesCount);
                 for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
                 {
                     Line2D line = GameState.Planet.DebugLines[i];
                     Gizmos.color = Color.blue;
                     Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
                 }
+
+
+                for (int i = 0; i < GameState.Planet.TileMap.GeometryArrayCount; i++)
+            {
+                Line2D line = GameState.Planet.TileMap.GeometryArray[i];
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
+            }
 
         }
 

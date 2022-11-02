@@ -39,7 +39,7 @@ namespace Collisions
             InitializeResources();
         }
 
-        public GeometryProperties GetProperties(Enums.GeometryTileShape shape)
+        public GeometryProperties GetProperties(Enums.TileGeometryAndRotation shape)
         {
             Utility.Utils.Assert((int)shape >= 0 && (int)shape < PropertiesArray.Length);
 
@@ -52,7 +52,7 @@ namespace Collisions
              return SegmentArray[index];
         }
 
-        public void Create(Enums.GeometryTileShape Id)
+        public void Create(Enums.TileGeometryAndRotation Id)
         {
             if ((int)Id + 1 >= PropertiesArray.Length)
             {
@@ -87,7 +87,7 @@ namespace Collisions
 
         public void InitializeResources()
         {
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.SB_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.SB_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
@@ -95,7 +95,7 @@ namespace Collisions
             GameState.GeometryCreationApi.End();
 
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.SA_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.SA_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
@@ -105,28 +105,28 @@ namespace Collisions
 
 
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.HB_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.HB_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.HB_R1);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.HB_R1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_M3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.HB_R2);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.HB_R2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_M0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.HB_R3);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.HB_R3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
@@ -135,104 +135,104 @@ namespace Collisions
 
 
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R1);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R2);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_C1);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R3);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_M3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R4);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R4);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R5);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R5);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_M3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R6);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R6);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_M0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L1_R7);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L1_R7);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_M1);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R1);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R2);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_M0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R3);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_M3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R4);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R4);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_M2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M2_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R5);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R5);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_M1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M1_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R6);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R6);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_M0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M0_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.L2_R7);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.L2_R7);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_M3_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
@@ -243,64 +243,31 @@ namespace Collisions
 
             
 
-
-
-
-
-
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R0);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.End();
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R1);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
 
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R2);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C0);
             GameState.GeometryCreationApi.End();
 
 
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R3);
+            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
-
-
-
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R7);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R6);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R5);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C0);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.GeometryTileShape.TB_R4);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C3);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
-            GameState.GeometryCreationApi.End();
-
-
 
         }
 
