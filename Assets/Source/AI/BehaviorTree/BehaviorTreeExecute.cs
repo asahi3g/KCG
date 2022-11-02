@@ -86,6 +86,7 @@ namespace BehaviorTree
                 }
             }
 
+            // Run action.
             int nextChildIndex = 0;
             switch (currentNode.Type)
             {
