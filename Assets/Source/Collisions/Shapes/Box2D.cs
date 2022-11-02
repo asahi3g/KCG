@@ -1,17 +1,11 @@
 namespace Collisions
 {
-    /// <summary>
-    /// More efficient than AABox2D for some use cases.
-    /// </summary>
+    // More efficient than AABox2D for some use cases.
     public struct Box2D
     {
-        /// <summary>
-        /// Position
-        /// </summary>
+        // Position
         public float x, y;
-        /// <summary>
-        /// Size
-        /// </summary>
+        // Size
         public float w, h;
 
         public Box2D(float x, float y, float w, float h)

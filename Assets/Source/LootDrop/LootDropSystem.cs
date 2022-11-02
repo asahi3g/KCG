@@ -2,10 +2,8 @@
 
 namespace LootDrop
 {
-    /// <summary>
-    /// If there is any entity in the DropEntities list. Create item particles and delete entity.
-    /// Entities have 1 frame of life spam.
-    /// </summary>
+    // If there is any entity in the DropEntities list. Create item particles and delete entity.
+    // Entities have 1 frame of life spam.
     public class LootDropSystem
     {
         public LootDropEntity[] DropEntities = new LootDropEntity[64];

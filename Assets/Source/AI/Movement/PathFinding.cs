@@ -50,12 +50,10 @@ namespace AI.Movement
             closedSet.EnsureCapacity(MAX_NUM_NODES);
         }
 
-        /// <summary>
-        /// Path doesn't guarantee shortest possible path for jump movement Type.
-        /// Todo: Look into Jump point search and Hierarchical Pathfinding A* to optimize path 
-        /// https://www.researchgate.net/publication/315509846_Simulation_and_Comparison_of_Efficency_in_Pathfinding_algorithms_in_Games
-        /// Vec2f[] has closest node at the end of the list.
-        /// </summary>
+        // Path doesn't guarantee shortest possible path for jump movement Type.
+        // Todo: Look into Jump point search and Hierarchical Pathfinding A* to optimize path 
+        // https://www.researchgate.net/publication/315509846_Simulation_and_Comparison_of_Efficency_in_Pathfinding_algorithms_in_Games
+        // Vec2f[] has closest node at the end of the list.
         public Vec2f[] getPath(TileMap tileMap, Vec2f start, Vec2f end, Enums.AgentMovementType movType, CharacterMovement characterMov)
         {
             if (tileMap.GetFrontTileID((int)end.X, (int)end.Y) != TileID.Air)
@@ -336,11 +334,9 @@ namespace AI.Movement
             return true;
         }
 
-        /// <summary>
-        /// Check if player can reach the space. 
-        /// Return false if tile is either too high or two low. 
-        /// Return false if block is solid.
-        /// </summary>
+        // Check if player can reach the space. 
+        // Return false if tile is either too high or two low. 
+        // Return false if block is solid.
         bool PassableJump(TileMap tileMap, ref Node current, int indDir)
         {
             const int HOR_MOV_COST = 100; // How much horizontal movement is necessary to move on tile to the right/left while jumping 
@@ -452,10 +448,8 @@ namespace AI.Movement
             return false;
         }
 
-        /// <summary>
-        /// Uses insertion sort. It's the fastest algorithm for almost sorted data.
-        /// startPos is an optimization. Every element before startPos is sorted.
-        /// </summary>
+        // Uses insertion sort. It's the fastest algorithm for almost sorted data.
+        // startPos is an optimization. Every element before startPos is sorted.
         void SortOpenList(int startPos)
         {
             for (int i = startPos; i < openListLenght; i++)

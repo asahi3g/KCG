@@ -8,9 +8,7 @@ using Enums.PlanetTileMap;
 
 namespace PlanetTileMap
 {
-    /// <summary>
-    /// Integer id for tile type, look up tile properties in TilePropertyManager by ID
-    /// </summary>
+    // Integer id for tile type, look up tile properties in TilePropertyManager by ID
     public struct TileProperty
     {
         
@@ -24,9 +22,7 @@ namespace PlanetTileMap
 
         public byte Durability; //max health of tile
         
-        /// <summary>
-        /// To map neighbour tiles or not
-        /// </summary>
+        // To map neighbour tiles or not
         public bool IsAutoMapping; 
         public bool CannotBeRemoved; // bedrock cannot be removed
 

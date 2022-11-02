@@ -51,7 +51,7 @@ namespace Item
     public struct FireWeaponPropreties
     {
         public float BulletSpeed;
-        /// <summary> How Long it takes to shoot again in seconds.</summary>
+        //How Long it takes to shoot again in seconds.
         public float CoolDown;
         public float Range;
         public int BasicDemage;
@@ -62,59 +62,57 @@ namespace Item
 
         // Charge propreties.
         public bool  CanCharge;
-        /// <summary> Charge Precentage.</summary>
+        // Charge Precentage.
         public float ChargeRate;
-        /// <summary>  Charge Multipiler.</summary>
+        // Charge Multipiler.
         public float ChargeRatio;
         public float ChargePerShot;
         public float ChargeMin;
         public float ChargeMax;
 
         // If gun shoots more than one bullet.
-        /// <summary> Cone angle in which bullets will be spreaded.</summary>
+        // Cone angle in which bullets will be spreaded.
         public float SpreadAngle;
         public int NumOfBullets;
 
         // Define Accuracy of the firegun.
-        /// <summary> Max Cone angle which shooted bullets can go to.</summary>
+        // Max Cone angle which shooted bullets can go to.
         public float MaxRecoilAngle;
-        /// <summary> Cone angle of the first bullet.</summary>
+        // Cone angle of the first bullet.
         public float MinRecoilAngle;
-        /// <summary> How much cone angle is increased after every shoot.</summary>
+        // How much cone angle is increased after every shoot.
         public float RateOfChange;
-        /// <summary> How long it takes for recoil to go back to min from MaxRecoilAngle in seconds.</summary>
+        // How long it takes for recoil to go back to min from MaxRecoilAngle in seconds.
         public float RecoverTime;
-        /// <summary>  How long it takes to recoil startRecovering in seconds.</summary>
+        // How long it takes to recoil startRecovering in seconds.
         public float RecoverDelay;
 
-        /// Melee Attack Properties
+        // Melee Attack Properties
         public float StaggerTime;
         [UnityEngine.Range(0, 1)]
         public float StaggerRate;
         public bool ShieldActive;
 
-        /// Pulse Weapon Properties
+        // Pulse Weapon Properties
         public bool IsLaunchGreanade;
         public int  NumberOfGrenades;
         public int  GrenadeClipSize;
 
         // Explosive Properties.
         public float BlastRadius;
-        /// <summary> Damage at the origin</summary>
+        // Damage at the origin
         public int MaxDamage;
-        /// <summary> Time in seconds it takes to explode after first hit.</summary>
+        // Time in seconds it takes to explode after first hit.
         public float Elapse;
         // Todo: Add function to specify how damage decrease with distance from the explosion.
 
         public Flags WeaponFlags;
-        /// <summary>
-        /// Weapon Flags
-        /// HasClip -> If Weapon Has an Ammo Clip
-        /// ShouldSpread -> Should Weapon Spread the Ammos (ex, pump shotgun)
-        /// HasCharge -> If Weapon Chargable or Not
-        /// PulseWeapon -> If the weapon is a pulse weapon or not
-        /// Explosive -> Ammo explodes.
-        /// </summary>
+        // Weapon Flags
+        // HasClip -> If Weapon Has an Ammo Clip
+        // ShouldSpread -> Should Weapon Spread the Ammos (ex, pump shotgun)
+        // HasCharge -> If Weapon Chargable or Not
+        // PulseWeapon -> If the weapon is a pulse weapon or not
+        // Explosive -> Ammo explodes.
         [Flags]
         public enum Flags : byte
         {
@@ -124,12 +122,10 @@ namespace Item
             PulseWeapon = 4 << 3,
         }
 
-        /// <summary>
-        /// Grenades Flags
-        /// Cocussions -> Cocussions Bombs
-        /// Flame -> Flame Bombs
-        /// Fragmentation -> Fragmentation Bombs
-        /// </summary>
+        // Grenades Flags
+        // Cocussions -> Cocussions Bombs
+        // Flame -> Flame Bombs
+        // Fragmentation -> Fragmentation Bombs
         public GrenadesFlags GrenadeFlags;
         [Flags]
         public enum GrenadesFlags : byte
@@ -139,11 +135,9 @@ namespace Item
             Fragmentation = 3 << 2
         }
 
-        /// <summary>
-        /// Melee Flags
-        /// Stab -> If Melee Weapon Stabs
-        /// Slash -> If Melee Weapon Slashes
-        /// </summary>
+        // Melee Flags
+        // Stab -> If Melee Weapon Stabs
+        // Slash -> If Melee Weapon Slashes
         public MeleeFlags MeleeAttackFlags;
         [Flags]
         public enum MeleeFlags : byte

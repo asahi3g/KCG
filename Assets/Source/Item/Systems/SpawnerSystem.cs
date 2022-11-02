@@ -32,10 +32,8 @@ namespace Item
             return entity;
         }
 
-        /// <summary>
-        /// Spawn Item particle from item inventory. Used in dropItem action or after enemy dies.
-        /// Destroy itemParticle.
-        /// </summary>
+        // Spawn Item particle from item inventory. Used in dropItem action or after enemy dies.
+        // Destroy itemParticle.
         public ItemParticleEntity SpawnItemParticle(ItemInventoryEntity itemInventoryEntity, Vec2f pos)
         {
             var entity = SpawnItemParticle(itemInventoryEntity.itemType.Type, pos);

@@ -23,7 +23,7 @@
         MoveToAction,
         DrinkPotionAction,
 
-        /// Mech Actions
+        // Mech Actions
         OpenChestAction,
 
         // Items
@@ -44,7 +44,7 @@
         AxeAction,
 
 
-        /// Ttools actions
+        // Ttools actions
         ToolActionPlaceParticleEmitter,
         ToolActionPlaceTile,
         ToolActionSpawnExplosion,

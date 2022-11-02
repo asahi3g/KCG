@@ -116,10 +116,8 @@ namespace PlanetTileMap
             };
         }
         
-        /// <summary>
-        /// Takes in TilePoint enum
-        /// </summary>
-        /// <returns>VeC1f for point values</returns>
+        // Takes in TilePoint enum
+        // returns Vec2f for point values
         [MethodImpl((MethodImplOptions) 256)] // Inline
         public static Vec2f GetTilePointPosition(TilePoint point)
         {
@@ -138,10 +136,8 @@ namespace PlanetTileMap
             };
         }
         
-        /// <summary>
-        /// Takes in TileLineSegment
-        /// </summary>
-        /// <returns>The start and finish line</returns>
+        // Takes in TileLineSegment
+        // returns The start and finish line
         [MethodImpl((MethodImplOptions) 256)] // Inline
         public static Line2D GetTileLineSegmentPosition(TileLineSegment lineSegment)
         {
@@ -208,10 +204,7 @@ namespace PlanetTileMap
             };
         }
 
-        /// <summary>
-        /// Takes in TileShape
-        /// </summary>
-        /// <returns>TileShape collision lines count</returns>
+        // Takes in TileShape
         [MethodImpl((MethodImplOptions) 256)] // Inline
         public static int GetLinesCount(TileShape shape)
         {
@@ -231,10 +224,8 @@ namespace PlanetTileMap
             };
         }
         
-        /// <summary>
-        /// Takes in current shape from Property
-        /// </summary>
-        /// <returns>All lines for each TileShape+Rotation</returns>
+        // Takes in current shape from Property
+        // All lines for each TileShape+Rotation
         public static Line2D[] GetShapeLines(TileShapeAndRotation shape)
         {
             switch (shape)
@@ -521,10 +512,8 @@ namespace PlanetTileMap
             }
         }
 
-        /// <summary>
-        /// Takes in current shape from Property
-        /// </summary>
-        /// <returns>Rotates shape 90 degree clockwise and outputs the new shape enum</returns>
+        // Takes in current shape from Property
+        // returns Rotates shape 90 degree clockwise and outputs the new shape enum
         public static TileShapeAndRotation RotateShape(TileShapeAndRotation shape)
         {
             switch (shape)
@@ -648,10 +637,8 @@ namespace PlanetTileMap
             }
         }
         
-        /// <summary>
-        /// Takes in current shape from Property
-        /// </summary>
-        /// <returns>flips/mirrors the shape over the x axis and return the new shape enum</returns>
+        // Takes in current shape from Property
+        // flips/mirrors the shape over the x axis and return the new shape enum
         public static TileShapeAndRotation MirrorShape(TileShapeAndRotation shape)
         {
             switch (shape)
