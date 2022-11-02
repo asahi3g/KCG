@@ -37,7 +37,6 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             Vec2i mapSize = new Vec2i(32, 16);
-
             ref var planet = ref GameState.Planet;
 
             planet.Init(mapSize);
@@ -66,7 +65,7 @@ namespace Planet.Unity
         private void SpawnTarget()
         {
             float x = UnityEngine.Random.Range(1.0f, 31.0f);
-            GameState.Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime);
+            GameState.Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime, 1);
         }
     }
 }

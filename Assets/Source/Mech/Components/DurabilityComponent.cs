@@ -2,9 +2,7 @@ using Entitas;
 
 namespace Mech
 {
-    /// <summary>
-    /// Makes item destructable.
-    /// </summary>
+    // Makes item destructable.
     [Mech]
     public class DurabilityComponent : IComponent
     {

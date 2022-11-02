@@ -221,10 +221,8 @@ namespace Planet
             InventoryList.Remove(entity.inventoryEntity.Index);
         }
 
-        /// <summary>
-        /// Remove Items and Spawn itemsParticles.
-        /// InventoryID is not the index.
-        /// </summary>
+        // Remove Items and Spawn itemsParticles.
+        // InventoryID is not the index.
         public void RemoveInventory(int inventoryID, Vec2f pos)
         {
             // Spawn itemsInventory inside as item particles.
@@ -484,7 +482,7 @@ namespace Planet
             GameState.VehicleAISystem.Update();
 
             // Collision systems.
-            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent, this);
+            GameState.AgentProcessCollisionSystem.Update(EntitasContext.agent);
             GameState.ItemProcessCollisionSystem.Update();
             GameState.ParticleProcessCollisionSystem.Update();
             GameState.ProjectileCollisionSystem.UpdateEx(deltaTime);
@@ -493,6 +491,7 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessStats.Update();
+            GameState.BehaviorTreeUpdateSystem.Update();
 
             CameraFollow.Update();
 

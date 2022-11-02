@@ -2,10 +2,7 @@
 
 namespace Inventory
 {
-    /// <summary>
-    ///  Allow dynamically changing default Position and size of inventory.
-    /// </summary>
- 
+    //  Allow dynamically changing default Position and size of inventory.
     [Inventory]
     public class WindowAdjustmentComponent : IComponent
     {

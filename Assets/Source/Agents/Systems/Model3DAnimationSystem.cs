@@ -42,7 +42,7 @@ namespace Agent
                     }
 
 
-                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation.AnimationsAreEqual(agentAnimation)))
+                    if (currentClip != null && (physicsState.SetMovementState || physicsState.LastAgentAnimation.Equals(agentAnimation)))
                     {
                         physicsState.SetMovementState = false;
                         currentClip.Time = agentAnimation.StartTime;

@@ -58,7 +58,7 @@ namespace Projectile
             if (projectileEntity.hasProjectileDamage)
             {
                 int damage = projectileEntity.projectileDamage.Damage;
-
+                stats.Health -= damage;
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
             }
         }

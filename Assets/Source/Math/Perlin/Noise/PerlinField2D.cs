@@ -7,9 +7,7 @@ namespace KMath.Noise
 {
     public class PerlinField2D 
     {
-        /// <summary>
-        /// Unit vector with angle from 0 to 360.
-        /// </summary>
+        // Unit vector with angle from 0 to 360.
         public static readonly Vec2f[] GradientArray = new Vec2f[8] {
             new Vec2f(1f, 0f),                     // 0
                 new Vec2f( 1f, 1f).Normalize(), // 45

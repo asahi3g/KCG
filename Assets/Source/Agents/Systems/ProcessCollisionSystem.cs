@@ -107,9 +107,9 @@ namespace Agent
                 }
             }
 
-            bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+            bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
-             bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.GeometryTileShape.SB_R0);
+             bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
 
              var bottomCollision = agentCollision.BottomCollision;
@@ -259,7 +259,7 @@ namespace Agent
             //entityBoxBorders.DrawBox();
         }
 
-        public void Update(AgentContext agentContext, Planet.PlanetState planet)
+        public void Update(AgentContext agentContext)
         {
             float deltaTime = UnityEngine.Time.deltaTime;
             var agentEntitiesWithBox = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));

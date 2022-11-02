@@ -5,10 +5,8 @@ namespace Collisions
 {
     public static partial class Collisions
     {
-        /// <summary>
-        /// DDA Algorithm ==============================================
+        // DDA Algorithm ==============================================
 		//  https://lodev.org/cgtutor/raycasting.html
-        /// </summary>
         public static RayCastResult RayCastAgainstTileMap(Line2D line)
         {
             // Form ray cast from A into B

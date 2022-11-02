@@ -2,7 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using Action;
 using KMath;
+using static GameState;
+using static Action.ActionBasic;
+using static Condition.ConditionBasic;
+
 
 namespace Agent
 {
@@ -137,6 +142,14 @@ namespace Agent
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
                 PropertiesArray[CurrentIndex].EnemyBehaviour = enemyBehaviour;
+            }
+        }
+
+        public void SetBehaviorTree(int rootId)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].BehaviorTreeRootID = rootId;
             }
         }
 
@@ -281,8 +294,66 @@ namespace Agent
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
+            GameState.AgentCreationApi.SetBehaviorTree(CreateMarineBehavior());
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
+        }
+
+        int CreateMarineBehavior()
+        {
+            RegisterConditions();
+            RegisterBasicActions();
+
+            int wait0_1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Wait"));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.1f));
+            NodeManager.EndNode();
+
+            int wait1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Wait"));
+            NodeManager.SetData(new WaitAction.WaitActionData(1f));
+            NodeManager.EndNode();
+
+            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("SelectClosestTarget"));
+            NodeManager.EndNode();
+
+            int reloadWeaponId = NodeManager.CreateNode("ReloadWeapon", NodeSystem.NodeType.ActionSequence);
+            NodeManager.SetAction(ActionManager.GetID("ReloadWeapon"));
+            NodeManager.EndNode();
+
+            int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.NodeType.ActionSequence);
+            NodeManager.SetAction(ActionManager.GetID("FireWeapon"));
+            NodeManager.SetData(new ShootFireWeaponAction.ShootFireWeaponData());
+            NodeManager.EndNode();
+
+            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
+            NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
+            NodeManager.AddChild(selectTargetId);
+            NodeManager.AddChild(fireWeaponId);
+            NodeManager.AddChild(wait0_1Id);
+            NodeManager.EndNode();
+
+            int selectorShootId = NodeManager.CreateNode("Selector", NodeSystem.NodeType.Selector);
+            NodeManager.SetCondition(ConditionManager.GetID("HasEnemyAlive"));
+            NodeManager.AddChild(sequenceId);
+            NodeManager.AddChild(reloadWeaponId);
+            NodeManager.EndNode();
+
+            int selectorStateId = NodeManager.CreateNode("Selector", NodeSystem.NodeType.Selector);
+            NodeManager.AddChild(selectorShootId);
+            NodeManager.AddChild(wait1Id);
+            NodeManager.EndNode();
+
+            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
+            NodeManager.AddChild(selectorStateId);
+            NodeManager.EndNode();
+
+            int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.NodeType.Decorator);
+            NodeManager.AddChild(repeaterId);
+            NodeManager.EndNode();
+
+            return rootId;
         }
     }
 

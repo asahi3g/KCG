@@ -1,7 +1,5 @@
 namespace KMath.Random {
-    /// <summary>
-    /// Passes all but the MatrixRank test in BigCrush
-    /// </summary>
+    // Passes all but the MatrixRank test in BigCrush
     public struct XorShift64Star {
         private ulong a;
 

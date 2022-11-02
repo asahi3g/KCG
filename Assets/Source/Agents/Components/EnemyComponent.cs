@@ -2,10 +2,8 @@ using Entitas;
 
 namespace Agent
 {
-    /// <summary>
-    /// Mahdi's Temporary solution for simple AI.
-    /// It will be removed soon.
-    /// </summary>
+    // Mahdi's Temporary solution for simple AI.
+    // It will be removed soon.
     [Agent]
     public class EnemyComponent : IComponent
     {

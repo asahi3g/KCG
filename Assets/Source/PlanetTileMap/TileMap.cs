@@ -24,7 +24,7 @@ namespace PlanetTileMap
 
         public Line2D[] GeometryArray;
         public Vec2f[] GeometryNormalArray;
-        public Enums.GeometryTileShape[] GeometryShapeArray;
+        public Enums.TileGeometryAndRotation[] GeometryShapeArray;
         public int GeometryArrayCount = 0;
 
         public TileMap(Vec2i mapSize)
@@ -75,13 +75,13 @@ namespace PlanetTileMap
 
             GeometryArray = new Line2D[1024];
             GeometryNormalArray = new Vec2f[1024];
-            GeometryShapeArray = new Enums.GeometryTileShape[1024];
+            GeometryShapeArray = new Enums.TileGeometryAndRotation[1024];
             GeometryArrayCount = 0;
         }
 
 
         
-        public void AddGeometryLine(Line2D line, Vec2f normal, Enums.GeometryTileShape shape)
+        public void AddGeometryLine(Line2D line, Vec2f normal, Enums.TileGeometryAndRotation shape)
         {
             if (GeometryArrayCount + 1 >= GeometryArray.Length)
             {
@@ -95,7 +95,7 @@ namespace PlanetTileMap
             GeometryArray[GeometryArrayCount++] = line;
         }
 
-        public Enums.GeometryTileShape GetFrontTileGeometry(int x, int y)
+        public Enums.TileGeometryAndRotation GetFrontTileGeometry(int x, int y)
         {
             if (x >= 0 && x < MapSize.X && y >= 0 && y < MapSize.Y)
             {
@@ -105,15 +105,11 @@ namespace PlanetTileMap
             }
             else
             {
-                return Enums.GeometryTileShape.Error;
+                return Enums.TileGeometryAndRotation.Error;
             }
         }
         
-        /// <summary>
-        /// Checks if position is inside Map Size
-        /// </summary>
-        /// <param name="x">TileMap coordinates</param>
-        /// <param name="y">TileMap coordinates</param>
+        // Checks if position is inside Map Size
         public bool IsValid(int x, int y)
         {
             return x >= 0 && x < MapSize.X &&
@@ -249,9 +245,6 @@ namespace PlanetTileMap
 
             chunk.TileArray[tileIndex].FrontTileID = TileID.Air;
             chunk.TileArray[tileIndex].FrontTileSpriteID = -1;
-
-            chunk.TileArray[tileIndex].CollisionIsoType1 = TileShapeAndRotation.EmptyBlock;
-            chunk.TileArray[tileIndex].CollisionIsoType2 = TileAdjacencyType.EmptyBlock;
 
             TileSpriteUpdateQueue.Add(x, y, MapLayerType.Front);
         }

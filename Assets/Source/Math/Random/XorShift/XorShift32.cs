@@ -2,9 +2,7 @@
 
 namespace KMath.Random
 {
-    /// <summary>
-    /// Very fast but fails Big Crush test.
-    /// </summary>
+    // Very fast but fails Big Crush test.
     public class XorShift32
     {
         private UInt32 Seed;
