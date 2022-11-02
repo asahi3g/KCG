@@ -246,8 +246,6 @@ namespace PlanetTileMap
             chunk.TileArray[tileIndex].FrontTileID = TileID.Air;
             chunk.TileArray[tileIndex].FrontTileSpriteID = -1;
 
-            chunk.TileArray[tileIndex].CollisionIsoType2 = TileAdjacencyType.EmptyBlock;
-
             TileSpriteUpdateQueue.Add(x, y, MapLayerType.Front);
         }
 
