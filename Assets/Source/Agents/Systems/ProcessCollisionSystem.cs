@@ -259,7 +259,7 @@ namespace Agent
             //entityBoxBorders.DrawBox();
         }
 
-        public void Update(AgentContext agentContext, Planet.PlanetState planet)
+        public void Update(AgentContext agentContext)
         {
             float deltaTime = UnityEngine.Time.deltaTime;
             var agentEntitiesWithBox = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.PhysicsBox2DCollider, AgentMatcher.AgentPhysicsState));

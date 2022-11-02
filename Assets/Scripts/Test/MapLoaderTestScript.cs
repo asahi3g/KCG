@@ -112,10 +112,10 @@ namespace Planet.Unity
 
             //InputProcessSystems.Update(Contexts.sharedInstance);
            // PhysicsMovableSystem.Update(Contexts.sharedInstance.agent, PlanetState);
-            AgentProcessCollisionSystem.Update(Contexts.sharedInstance.agent, PlanetState);
+            AgentProcessCollisionSystem.Update(Contexts.sharedInstance.agent);
 
            // AgentMeshBuilderSystem.UpdateMesh(Contexts.sharedInstance.agent);
-          //  GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
+           // GameState.TileMapRenderer.UpdateFrontLayerMesh(PlanetState.TileMap);
 
             //GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
             GameState.Renderer.DrawFrame(ref AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Agent));

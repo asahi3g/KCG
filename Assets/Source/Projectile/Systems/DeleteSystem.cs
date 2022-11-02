@@ -2,8 +2,7 @@
 {
     public class DeleteSystem
     {
-        // Remove projectile only at the end of the frame.
-
+        // Remove projectile at the end of the frame.
         // Should be called at the end of the frame.
         public void Update()
         {
