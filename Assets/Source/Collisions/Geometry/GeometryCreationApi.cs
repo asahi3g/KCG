@@ -243,11 +243,6 @@ namespace Collisions
 
             
 
-
-
-
-
-
             GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R0);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C1);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
@@ -273,34 +268,6 @@ namespace Collisions
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C3);
             GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
             GameState.GeometryCreationApi.End();
-
-
-
-            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R7);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R6);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R5);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C0);
-            GameState.GeometryCreationApi.End();
-
-            GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.TB_R4);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C3);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
-            GameState.GeometryCreationApi.End();
-
-
 
         }
 

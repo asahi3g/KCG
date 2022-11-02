@@ -803,7 +803,6 @@ namespace Planet.Unity
                 Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                UnityEngine.Debug.Log(GameState.Planet.DebugLinesCount);
                 for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
                 {
                     Line2D line = GameState.Planet.DebugLines[i];

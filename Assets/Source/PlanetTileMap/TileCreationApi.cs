@@ -463,34 +463,6 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 3, 7);
             GameState.TileCreationApi.EndTileProperty();
 
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R4_Metal);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R4);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 1, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R5_Metal);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R5);
-            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 7, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R6_Metal);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R6);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 5, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R7_Metal);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R7);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 7, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
             GameState.TileCreationApi.CreateTileProperty(TileID.L1_R0_Metal);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.L1_R0);
@@ -756,33 +728,6 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 3, 7);
             GameState.TileCreationApi.EndTileProperty();
 
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R4_Rock);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Rock);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R4);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 1, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R5_Rock);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Rock);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R5);
-            GameState.TileCreationApi.SetSpriteRuleType(PlanetTileMap.SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 7, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R6_Rock);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Rock);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R6);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 5, 7);
-            GameState.TileCreationApi.EndTileProperty();
-
-            GameState.TileCreationApi.CreateTileProperty(TileID.TB_R7_Rock);
-            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Rock);
-            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.TB_R7);
-            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
-            GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 7, 7);
-            GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.L1_R0_Rock);
             GameState.TileCreationApi.SetTileMaterialType(MaterialType.Rock);
