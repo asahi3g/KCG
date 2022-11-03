@@ -30,6 +30,7 @@ namespace Agent
         UnityEngine.Transform RifleIK;
         UnityEngine.Transform AimTarget;
 
+
         public void Update(AgentContext agentContext)
         {
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
