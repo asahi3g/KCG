@@ -183,7 +183,7 @@ public static class GameState
         PointCreationApi.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
-        GUIManager.InitStage2(Planet);
+        GUIManager.InitStage2();
     }
 
 
