@@ -34,8 +34,11 @@ namespace KGUI
             canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
         }
 
-        public void InitStage2()
+        public void InitStage2(PlanetState planet)
         {
+            if (planet.TileMap == null)
+                return;
+
             ProgressBar = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
