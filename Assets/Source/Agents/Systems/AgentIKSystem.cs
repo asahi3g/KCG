@@ -1,5 +1,6 @@
 //imports UnityEngine
 
+using System.Diagnostics;
 using UnityEngine.Animations.Rigging;
 
 namespace Agent
@@ -50,15 +51,15 @@ namespace Agent
                 //PistolIK = transform.Find("Pistol");
                 RigLayerRifle_BodyAim = transform.Find("RigLayerRifle_BodyAim");
                 RigLayerRifle_WeaponPose = transform.Find("RigLayerRifle_WeaponPose");
-                RigLayer_WeaponAiming = transform.Find("RigLayer_WeaponAiming");
+                RigLayer_WeaponAiming = transform.Find("RigLayerRifle_WeaponAiming");
                 RigLayerRifle_HandIK = transform.Find("RigLayerRifle_HandIK");
-                AimTarget = transform.Find("AimTargetTest");
+                AimTarget = transform.Find("AimTarget");
 
                 if (entity.hasAgentModel3D)
                 {
                     if (transform != null)
                     {
-                        if (/*PistolIK != null &&*/ RigLayerRifle_BodyAim != null && RigLayerRifle_WeaponPose != null &&
+                        if (RigLayerRifle_BodyAim != null && RigLayerRifle_WeaponPose != null &&
                              RigLayer_WeaponAiming != null && RigLayerRifle_HandIK != null && AimTarget != null)
                         {
                             if (AimTarget != null)
@@ -78,6 +79,9 @@ namespace Agent
                             {
                                 //PistolIK.GetComponent<Rig>().weight = 0.0f;
 
+                                if (entity.agentModel3D.Weapon != null)
+                                    entity.agentModel3D.Weapon.gameObject.SetActive(true);
+
                                 RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 1.0f;
                                 RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 1.0f;
                                 RigLayer_WeaponAiming.GetComponent<Rig>().weight = 1.0f;
@@ -91,6 +95,9 @@ namespace Agent
                                 RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
                                 RigLayer_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
                                 RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
+
+                                if(entity.agentModel3D.Weapon != null)
+                                    entity.agentModel3D.Weapon.gameObject.SetActive(false);
 
                                 entity.agentAction.Action = AgentAlertState.UnAlert;
                             }
