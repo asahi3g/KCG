@@ -164,7 +164,7 @@ public static class GameState
 
     public static void InitStage1()
     {
-        Planet = new Planet.PlanetState();
+        Planet = new PlanetState();
         
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
@@ -183,7 +183,7 @@ public static class GameState
         PointCreationApi.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
-        GUIManager.InitStage2(Planet);
+        GUIManager.InitStage2();
     }
 
 
