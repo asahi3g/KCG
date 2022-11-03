@@ -2,7 +2,6 @@
 
 using KMath;
 using System.Collections.Generic;
-using System.Web.WebPages;
 
 namespace Mech
 {
@@ -72,7 +71,7 @@ namespace Mech
                 if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.NodeType.None)
                 {
                     string nodeDescription = "";
-                    str = "Press E to " + (!nodeDescription.IsEmpty() ?
+                    str = "Press E to " + (!(nodeDescription.Length == 0) ?
                         nodeDescription : "interact");
                 }
                 else
