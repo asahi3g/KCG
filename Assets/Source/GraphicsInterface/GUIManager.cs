@@ -77,8 +77,6 @@ namespace KGUI
             {
                 if (active)
                 {
-                    UnityEngine.Object.Instantiate(panelPrefab, canvas.transform);
-
                     var newPanel = UnityEngine.Object.Instantiate(panelPrefab, canvas.transform);
                     newPanel.gameObject.SetActive(true);
                 }
