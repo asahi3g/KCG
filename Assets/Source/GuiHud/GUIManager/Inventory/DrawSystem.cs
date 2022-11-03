@@ -13,19 +13,11 @@ namespace Inventory
         {
             ref var planet = ref GameState.Planet;
             var inventoryList = planet.InventoryList;
-            
-            // Draw tool bar.
-            for (int i = 0; i < inventoryList.Length; i++)
-            {
-                InventoryEntity inventoryEntity = inventoryList.Get(i);
-                if (!inventoryEntity.hasInventoryToolBarDraw)
-                    continue;
 
-                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
-                    inventoryEntity.inventoryEntity.InventoryModelID);
-                
-                DrawInventory(inventoryEntity, ref inventoryModel, true);
-            }
+            // Draw tool bar.
+            int id = planet.Player.agentInventory.InventoryID;
+            InventoryEntity playerInventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(id);
+            DrawInventory(playerInventory, ref GameState.InventoryCreationApi.Get(playerInventory.inventoryEntity.InventoryModelID), true);
 
             for (int i = 0; i < inventoryList.Length; i++)
             {

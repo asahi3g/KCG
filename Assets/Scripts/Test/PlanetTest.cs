@@ -32,9 +32,6 @@ namespace Planet.Unity
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            planet.Update(UnityEngine.Time.deltaTime, material, transform);
-            planet.DrawHUD(Player);
-
             if (!init) return;
             
             planet.Update(UnityEngine.Time.deltaTime, material, transform);
@@ -347,9 +344,8 @@ namespace Planet.Unity
             ref var planet = ref GameState.Planet;
             ref var tileMap = ref planet.TileMap;
 
-            float spawnHeight = tileMap.MapSize.Y - 2;
+            float spawnHeight = tileMap.MapSize.Y - 4;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
             Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));

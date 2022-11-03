@@ -43,14 +43,14 @@ namespace Agent
 
 
         public AgentAnimation GetAnimation(Enums.AgentMovementState movementState, Enums.AgentAnimationType animationType,
-        Enums.ItemAnimationSet animationSet)
+            Enums.ItemAnimationSet animationSet)
         {
             return AnimationTable[(int)movementState][(int)animationType][(int)animationSet];
         }
 
 
         public void SetAnimation(Enums.AgentMovementState movementState, Enums.AgentAnimationType animationType,
-        Enums.ItemAnimationSet  animationSet, AgentAnimation animation)
+            Enums.ItemAnimationSet  animationSet, AgentAnimation animation)
         {
             AnimationTable[(int)movementState][(int)animationType][(int)animationSet] = animation;
         }
