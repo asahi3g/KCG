@@ -1,10 +1,9 @@
-//import UnityEngine
-
 using System;
 using KMath;
 
 namespace Agent
 {
+    // Deprecated, it's going to be removed soon.
     public class EnemyAiSystem
     {
         public void Update(float deltaTime)

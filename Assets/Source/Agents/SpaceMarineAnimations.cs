@@ -9,7 +9,7 @@ namespace Agent
 
         public void InitSpaceMarineAnimations()
         {
-            SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
+            SetAnimation(Enums.AgentMovementState.Move, Enums. AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJog, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.MoveBackward, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
@@ -165,7 +165,7 @@ namespace Agent
 
 
             // pistol
-              SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
+            SetAnimation(Enums.AgentMovementState.Move, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolJog, FadeTime=0.125f, Looping = true, Speed = 0.5f, MovementSpeedFactor = 1.0f});
 
             SetAnimation(Enums.AgentMovementState.MoveBackward, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 

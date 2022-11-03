@@ -138,8 +138,8 @@ namespace Agent
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, properties.AttackCooldown, false);
 
             entity.AddAgentPhysicsState(
-                newPosition: position, 
-                newPreviousPosition: default, 
+                newPosition: position,
+                newPreviousPosition: position, 
                 newSpeed: properties.MovProperties.DefaultSpeed,
                 newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
                 newVelocity: Vec2f.Zero, 
