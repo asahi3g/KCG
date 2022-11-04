@@ -637,14 +637,14 @@ public partial class AgentEntity
                         // if we are sticking to a wall 
                         // throw the agent in the opphysicsStateite direction
                         // Inpulse so use immediate speed intead of acceleration.
-                        if (physicsState.MovementState == AgentMovementState.SlidingLeft)
-                        {
-                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
-                        }
-                        else if (physicsState.MovementState == AgentMovementState.SlidingRight)
-                        {
-                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
-                        }
+                        //if (physicsState.MovementState == AgentMovementState.SlidingLeft)
+                        //{
+                        //    physicsState.Velocity.X = physicsState.Speed * 1.0f;
+                        //}
+                        //else if (physicsState.MovementState == AgentMovementState.SlidingRight)
+                        //{
+                        //    physicsState.Velocity.X = - physicsState.Speed * 1.0f;
+                        //}
 
                         // jumping
                         physicsState.Velocity.Y = physicsState.InitialJumpVelocity;

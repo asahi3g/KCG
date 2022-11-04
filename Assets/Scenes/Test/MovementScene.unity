@@ -360,9 +360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca75a0c067caaa478fd745d58bd3914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 4
-  DisableDragging: 0
-  background: {fileID: 0}
 --- !u!1 &872716214
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

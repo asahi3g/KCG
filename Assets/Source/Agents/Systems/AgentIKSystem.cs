@@ -98,7 +98,7 @@ namespace Agent
                                     }
                                     else if (entity.agentPhysicsState.FacingDirection == -1)
                                     {
-                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 10f, worldPosition.y, worldPosition.z + 15f);
+                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 1f, worldPosition.y, worldPosition.z + 10f);
                                     }
 
                                 }
