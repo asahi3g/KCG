@@ -14,6 +14,7 @@ namespace Action
 
             public readonly float WaitTime;
         }
+
         static public NodeState Action(object ptr, int id)
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);

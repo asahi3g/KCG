@@ -12,7 +12,7 @@ namespace AI
         {
             Blackboards[count] = new Blackboard()
             {
-                ShootingTarget = Vec2f.Zero,
+                AttackTarget = Vec2f.Zero,
                 MoveToTarget = Vec2f.Zero,
                 ItemID = -1,
                 MechID = -1

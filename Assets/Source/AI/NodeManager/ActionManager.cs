@@ -8,13 +8,15 @@ namespace NodeSystem
         public Action[] Actions = new Action[1024];
         public string[] Names = new string[1024];
         private Dictionary<string, int> NameIDPairs = new Dictionary<string, int>();
-        private NodeState DefaultAction(object data, int id) => NodeState.Success;
-        private int Length = 1;
+
+        public const int SuccessActionID = 0; // Id of default condition.
+        private NodeState SuccessAction(object data, int id) => NodeState.Success;
+        private int Length = 0;
         
         public ActionManager()
         {
-            RegisterAction(NodeType.ActionSequence.ToString(), ActionSequenceNode.Action);
-            RegisterAction("Default", DefaultAction);
+            RegisterAction("Success", SuccessAction);
+            RegisterAction("ActionSequence", ActionSequenceNode.Action);
         }
 
         public Action Get(int id)
@@ -41,13 +43,13 @@ namespace NodeSystem
         public int RegisterActionSequence(string name, Action onEnter = null, Action onUpdate = null, Action onSuccess = null, Action onFailure = null)
         {
             if (onEnter == null)
-                onEnter = DefaultAction;
+                onEnter = SuccessAction;
             if (onUpdate == null)
-                onUpdate = DefaultAction;
+                onUpdate = SuccessAction;
             if (onSuccess == null)
-                onSuccess = DefaultAction;
+                onSuccess = SuccessAction;
             if (onFailure == null)
-                onFailure = DefaultAction;
+                onFailure = SuccessAction;
 
             NameIDPairs.Add(name, Length);
             Names[Length] = name + "Enter";

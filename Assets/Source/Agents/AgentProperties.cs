@@ -19,7 +19,6 @@ namespace Agent
         // (Note: Should we use items inside agent inventory while alive)
 
         // Enemy agent
-        public EnemyBehaviour EnemyBehaviour;
         public int BehaviorTreeRootID;
         public float DetectionRadius;
 

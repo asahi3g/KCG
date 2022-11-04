@@ -40,7 +40,7 @@ namespace Action
                 if (agentEntity.agentController.BlackboardID != -1)
                 {
                     ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agentEntity.agentController.BlackboardID);
-                    target = blackboard.ShootingTarget;
+                    target = blackboard.AttackTarget;
                 }
                 else if (agentEntity.isAgentPlayer)
                 {

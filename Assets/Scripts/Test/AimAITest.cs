@@ -25,7 +25,7 @@ namespace Planet.Unity
             GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
             const float SPAWN_DELAY = 2.0f;
-            if ((UnityEngine.Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY)
+            if ((UnityEngine.Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY && GameState.Planet.AgentList.Length < 2)
             {
                 SpawnTarget();
                 LastSpawn = UnityEngine.Time.realtimeSinceStartup;
@@ -36,12 +36,12 @@ namespace Planet.Unity
         {
             GameResources.Initialize();
 
-            Vec2i mapSize = new Vec2i(32, 16);
+            Vec2i mapSize = new Vec2i(128, 16);
             ref var planet = ref GameState.Planet;
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            planet.AddAgent(new Vec2f(16.0f, 2.0f), Enums.AgentType.EnemyMarine);
+            planet.AddAgent(new Vec2f(64.0f, 2.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
             LastSpawn = UnityEngine.Time.realtimeSinceStartup;

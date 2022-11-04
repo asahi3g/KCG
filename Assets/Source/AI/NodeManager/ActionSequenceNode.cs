@@ -24,11 +24,11 @@ namespace NodeSystem
         static public NodeState Action(object ptr, int index)
         {
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
-            ref ActionSequenceData actionSequenceData = ref stateData.GetNodeData<ActionSequenceData>(index);
+            ref SequenceState state = ref stateData.GetNodeData<SequenceState>(index);
             ref Node node = ref GameState.NodeManager.GetRef(stateData.NodesExecutiondata[index].Id);
 
             NodeState childState = new NodeState();
-            switch (actionSequenceData.NodeState)
+            switch (state)
             {
                 case SequenceState.Entry:
                     ref Node entry = ref GameState.NodeManager.GetRef(node.Children[(int)SequenceState.Entry]);
@@ -45,7 +45,7 @@ namespace NodeSystem
             switch (childState)
             {
                 case NodeState.Running:
-                    actionSequenceData.NodeState = SequenceState.Running;
+                    state = SequenceState.Running;
                     break;
                 case NodeState.Success:
                     ref Node sucess = ref GameState.NodeManager.GetRef(node.Children[(int)SequenceState.Running]);

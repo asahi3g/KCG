@@ -9,14 +9,14 @@ namespace NodeSystem
         public string[] Names = new string[1024];
 
         private Dictionary<string, int> NameIDPairs = new Dictionary<string, int>();
-        private bool DefaultCondition(object ptr) => true;
-        private int Length = 1;
-
         public const int TrueConditionID = 0; // Id of default condition.
+        private bool TrueCondtion(object ptr) => true;
+
+        private int Length = 1;
 
         public ConditionManager()
         {
-            RegisterCondition("Default", DefaultCondition);
+            RegisterCondition("TrueCondition", TrueCondtion);
         }
 
         public Condition Get(int id)

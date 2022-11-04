@@ -9,8 +9,8 @@ namespace Action
     {
         static public NodeState Action(object ptr, int id)
         {
-            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             AgentEntity target = null;
@@ -35,7 +35,7 @@ namespace Action
             }
             else
             {
-                blackboard.ShootingTarget = target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f;
+                blackboard.AttackTarget = target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f;
                 return NodeState.Success;
             }
         }

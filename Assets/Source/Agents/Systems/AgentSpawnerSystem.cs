@@ -223,13 +223,13 @@ namespace Agent
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Slime, properties.DetectionRadius, 0.0f);
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Slime, properties.DetectionRadius, 0.0f);
                         break;
                     }
                 case Enums.AgentType.EnemyGunner:
@@ -256,7 +256,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Gunner, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
@@ -288,7 +288,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Swordman, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
                         break;
@@ -313,7 +313,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
                             Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
                             new Vec3f(0.6f, 0.6f, 0.6f));
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
@@ -339,7 +339,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.GroundInsectHeavyAnimation,
                             Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 4.0f;
 
@@ -364,8 +364,6 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
-
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 10.0f;
 
