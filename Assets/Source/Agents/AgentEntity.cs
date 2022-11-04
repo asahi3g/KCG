@@ -255,18 +255,27 @@ public partial class AgentEntity
                     UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
+                        //UnityEngine.Transform ref_right_hand_grip = model3d.GameObject.transform.Find("ref_right_hand_grip");
+                        //UnityEngine.Transform ref_left_hand_grip = model3d.GameObject.transform.Find("ref_left_hand_grip");
+                        if(model3d.Weapon == null)
+                        {
+                            UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
+                            model3d.Weapon = RiflePivot.GetChild(0).gameObject;
+                        }
 
-                        UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
-                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
+                            //    UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
+                            //UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
-                        var gunRotation = gun.transform.rotation;
-                        gun.transform.parent = hand.transform;
-                        gun.transform.position = hand.transform.position;
-                        gun.transform.localRotation = gunRotation;
-                        gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
-                        model3d.Weapon = gun;
-                    }
+                            //var gunRotation = gun.transform.rotation;
+                            //gun.transform.parent = RiflePivot.transform;
+                            //gun.transform.position = UnityEngine.Vector3.zero;
+                            //gun.transform.localRotation = UnityEngine.Quaternion.identity;
+                            //gun.transform.localScale = new UnityEngine.Vector3(100.0f, 100.0f, 100.0f);
+
+                            //ref_right_hand_grip.transform.parent = gun.transform;
+                            //ref_left_hand_grip.transform.parent = gun.transform;
+                        }
                     break;
                 }
             }
