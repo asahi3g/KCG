@@ -116,10 +116,9 @@ namespace Projectile
 
 
                         // early escape
-                        if (minTime == 0.0f)
+                        if (minTime > 0.0f)
                         {
-                            continue;
-                        }
+                        
 
 
                         // agent hit box is just 4 lines (bottom, right top, left)
@@ -180,6 +179,7 @@ namespace Projectile
                             minShape = Enums.TileGeometryAndRotation.Error;
                             collided = true;
                         }
+                        }
 
 
                         if (collided)
@@ -209,7 +209,7 @@ namespace Projectile
                     // bouncing does not work at the moment
                     // fix later
                     // not priority right now
-                    
+
                    /* if (bounce)
                     {
                         float r = (physicsState.Position.X - physicsState.Position.X) / (physicsState.Position.X - physicsState.PreviousPosition.X);

@@ -49,7 +49,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map2.tmj", "generated-maps/");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;

@@ -272,22 +272,22 @@ namespace Agent
 
                             if (Len <= swordRange && enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
                             {
-                                entity.MonsterAttack(2.0f);
+                                entity.MonsterAttack(4.0f, 6.0f);
                             }
 
 
                             if (physicsState.ActionJustEnded)
                             {
-                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + physicsState.MovingDirection * box2DComponent.Size.X,
+                                Vec2f swordPosition = new Vec2f(physicsState.Position.X + box2DComponent.Offset.X + box2DComponent.Size.X * 0.5f + physicsState.MovingDirection * box2DComponent.Size.X * 0.5f,
                                 physicsState.Position.Y + box2DComponent.Offset.Y);
 
                                 
-                                int [] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(swordPosition, 1.0f);
+                                int [] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(swordPosition, 1.25f);
                                 for(int agentIndex = 0; agentIndex < agentIds.Length; agentIndex++)
                                 {
                                     int agentID = agentIds[agentIndex];
                                     AgentEntity thisAgent = planet.AgentList.Get(agentID);
-                                    if (thisAgent != entity)
+                                    if (thisAgent != entity && thisAgent.agentID.Faction != entity.agentID.Faction)
                                     {
                                         var thisAgentPhysicsState = thisAgent.agentPhysicsState;
 
@@ -313,7 +313,7 @@ namespace Agent
                                 }
                                 
                                 physicsState.ActionJustEnded = false;
-                                enemyComponent.EnemyCooldown = 1.0f;
+                                enemyComponent.EnemyCooldown = 2.0f;
                             }
                         }
                     }
