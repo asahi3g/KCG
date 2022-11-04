@@ -377,6 +377,9 @@ namespace Planet.Unity
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
+
+
+            GameState.Planet.DrawDebugEx();
         }
 
 

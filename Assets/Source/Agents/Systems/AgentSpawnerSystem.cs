@@ -315,8 +315,6 @@ namespace Agent
                             new Vec3f(0.6f, 0.6f, 0.6f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
-                        entity.agentPhysicsState.Speed = 6.0f;
-
                         break;
                     }
                 case Enums.AgentType.EnemyHeavy:
@@ -340,8 +338,6 @@ namespace Agent
                             Enums.AgentAnimationType.GroundInsectHeavyAnimation,
                             Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-
-                        entity.agentPhysicsState.Speed = 4.0f;
 
                         break;
                     }
