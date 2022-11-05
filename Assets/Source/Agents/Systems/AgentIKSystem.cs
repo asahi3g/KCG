@@ -1,5 +1,8 @@
 //imports UnityEngine
 
+using Animancer;
+using Enums;
+using KMath;
 using System.Diagnostics;
 using UnityEngine.Animations.Rigging;
 
@@ -34,6 +37,8 @@ namespace Agent
         UnityEngine.Transform RigLayerRifle_HandIK;
         UnityEngine.Transform AimTarget;
 
+        float elapsed = 0.0f;
+
         //UnityEngine.Transform RigLayerPistol_BodyAim;
         //UnityEngine.Transform RigLayerPistol_WeaponPose;
         //UnityEngine.Transform RigLayerPistol_WeaponAiming;
@@ -42,6 +47,8 @@ namespace Agent
 
         public void Update(AgentContext agentContext)
         {
+            elapsed += UnityEngine.Time.deltaTime;
+
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
             foreach (var entity in entities)
             {
@@ -50,10 +57,12 @@ namespace Agent
                 var model3d = entity.agentModel3D;
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
 
+                model3d.AnimancerComponent.Playable.Evaluate();
+
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                 
                 transform = entity.agentModel3D.GameObject.transform;
-                //PistolIK = transform.Find("Pistol");
+
                 RigLayerRifle_BodyAim = transform.Find("RigLayerRifle_BodyAim");
                 RigLayerRifle_WeaponPose = transform.Find("RigLayerRifle_WeaponPose");
                 RigLayerRifle_WeaponAiming = transform.Find("RigLayerRifle_WeaponAiming");

@@ -31,6 +31,7 @@ namespace Agent
                     currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 
+
                     if (currentClip.RemainingDuration <= 0.0f && agentAnimation.Looping)
                     {
                         currentClip.Time = agentAnimation.StartTime;
