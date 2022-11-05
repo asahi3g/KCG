@@ -42,7 +42,7 @@ namespace Agent
             new AgentAnimation { Animation = Engine3D.AnimationType.InsectHeavyJump, FadeTime = 0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f });
 
             SetAnimation(Enums.AgentMovementState.MonsterAttack, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default,
-            new AgentAnimation { Animation = Engine3D.AnimationType.InsectHeavyAttack, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });
+            new AgentAnimation { Animation = Engine3D.AnimationType.InsectHeavyAttack, FadeTime = 0.125f, Looping = false, Speed = 1.5f, MovementSpeedFactor = 0.0f });
 
             SetAnimation(Enums.AgentMovementState.LyingFront, Enums.AgentAnimationType.GroundInsectHeavyAnimation, Enums.ItemAnimationSet.Default,
             new AgentAnimation { Animation = Engine3D.AnimationType.InsectHeavyDie, FadeTime = 0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f });

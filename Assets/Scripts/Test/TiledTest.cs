@@ -49,7 +49,7 @@ namespace Planet.Unity
         public void Initialize()
         {
 
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map2.tmj", "generated-maps/");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
@@ -377,6 +377,9 @@ namespace Planet.Unity
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
+
+
+            GameState.Planet.DrawDebugEx();
         }
 
 

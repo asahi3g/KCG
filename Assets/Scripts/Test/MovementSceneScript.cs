@@ -173,6 +173,10 @@ namespace Planet.Unity
             //CharacterDisplay.setPlayer(Player);
 
             UpdateMode(Player);
+
+
+
+            planet.AddAgent(new Vec2f(12, 25), Enums.AgentType.EnemyHeavy, 1);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
@@ -602,6 +606,9 @@ namespace Planet.Unity
         {
             ref var planet = ref GameState.Planet;
 
+
+           // UnityEngine.Gizmos.DrawCube(new UnityEngine.Vector3(planet.TileMap.MapSize.X / 2.0f, planet.TileMap.MapSize.Y / 2.0f, 0.0f), new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 1));
+
             bool drawRayCast = false;
 
 
@@ -732,6 +739,9 @@ namespace Planet.Unity
                     }
                     UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Shape2[i].X, Shape2[i].Y, 1), new UnityEngine.Vector3(Shape2[nextPosition].X, Shape2[nextPosition].Y, 1));
                 }
+
+
+
                 
                 
             }
@@ -818,6 +828,11 @@ namespace Planet.Unity
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
 
+
+
+
+                GameState.Planet.DrawDebugEx();
+                
         }
 
 

@@ -44,7 +44,7 @@ public partial class AgentEntity
         return isAgentAlive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SwordSlash && 
-        //physicsState.MovementState != AgentMovementState.MonsterAttack &&
+        physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.PickaxeHit &&
         physicsState.MovementState != AgentMovementState.ChoppingTree &&
@@ -97,6 +97,7 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.SlidingLeft &&
         physicsState.MovementState != AgentMovementState.SlidingRight && 
         physicsState.MovementState != AgentMovementState.Rolling &&
+        physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
     }
 
@@ -378,19 +379,19 @@ public partial class AgentEntity
     }
 
 
-    public void MonsterAttack(float cooldown)
+    public void MonsterAttack(float duration, float cooldown)
     {
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D; 
 
         if (IsStateFree())
         {
-            //physicsState.MovementState = AgentMovementState.MonsterAttack;
+            physicsState.MovementState = AgentMovementState.MonsterAttack;
             physicsState.SetMovementState = true;
             
 
             physicsState.ActionInProgress = true;
-            physicsState.ActionDuration = cooldown;
+            physicsState.ActionDuration = duration;
             physicsState.ActionCooldown = cooldown;      
         }
     }
