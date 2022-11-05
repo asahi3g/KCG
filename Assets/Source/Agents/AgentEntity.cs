@@ -268,7 +268,7 @@ public partial class AgentEntity
                         //UnityEngine.Transform ref_left_hand_grip = model3d.GameObject.transform.Find("ref_left_hand_grip");
                         if(model3d.Weapon == null)
                         {
-                            UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
+                                UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
                             model3d.Weapon = RiflePivot.GetChild(0).gameObject;
                         }
 

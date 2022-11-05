@@ -30,25 +30,24 @@ namespace Agent
     public class AgentIKSystem
     {
         UnityEngine.Transform transform;
-        //UnityEngine.Transform PistolIK;
+
+        UnityEngine.Transform Pistol;
+        UnityEngine.Transform Rifle;
+
         UnityEngine.Transform RigLayerRifle_BodyAim;
         UnityEngine.Transform RigLayerRifle_WeaponPose;
         UnityEngine.Transform RigLayerRifle_WeaponAiming;
         UnityEngine.Transform RigLayerRifle_HandIK;
         UnityEngine.Transform AimTarget;
 
-        float elapsed = 0.0f;
-
-        //UnityEngine.Transform RigLayerPistol_BodyAim;
-        //UnityEngine.Transform RigLayerPistol_WeaponPose;
-        //UnityEngine.Transform RigLayerPistol_WeaponAiming;
-        //UnityEngine.Transform RigLayerPistol_HandIK;
+        UnityEngine.Transform RigLayerPistol_BodyAim;
+        UnityEngine.Transform RigLayerPistol_WeaponPose;
+        UnityEngine.Transform RigLayerPistol_WeaponAiming;
+        UnityEngine.Transform RigLayerPistol_HandIK;
 
 
         public void Update(AgentContext agentContext)
         {
-            elapsed += UnityEngine.Time.deltaTime;
-
             var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
             foreach (var entity in entities)
             {
@@ -63,15 +62,18 @@ namespace Agent
                 
                 transform = entity.agentModel3D.GameObject.transform;
 
+                Pistol = transform.Find("PistolPivot").GetChild(0);
+                Rifle = transform.Find("RiflePivot").GetChild(0);
+
                 RigLayerRifle_BodyAim = transform.Find("RigLayerRifle_BodyAim");
                 RigLayerRifle_WeaponPose = transform.Find("RigLayerRifle_WeaponPose");
                 RigLayerRifle_WeaponAiming = transform.Find("RigLayerRifle_WeaponAiming");
                 RigLayerRifle_HandIK = transform.Find("RigLayerRifle_HandIK");
 
-                //RigLayerPistol_BodyAim = transform.Find("RigLayerPistol_BodyAim");
-                //RigLayerPistol_WeaponPose = transform.Find("RigLayerPistol_WeaponPose");
-                //RigLayerPistol_WeaponAiming = transform.Find("RigLayerPistol_WeaponAiming");
-                //RigLayerPistol_HandIK = transform.Find("RigLayerPistol_HandIK");
+                RigLayerPistol_BodyAim = transform.Find("RigLayerPistol_BodyAim");
+                RigLayerPistol_WeaponPose = transform.Find("RigLayerPistol_WeaponPose");
+                RigLayerPistol_WeaponAiming = transform.Find("RigLayerPistol_WeaponAiming");
+                RigLayerPistol_HandIK = transform.Find("RigLayerPistol_HandIK");
 
                 AimTarget = transform.Find("AimTarget");
 
@@ -115,8 +117,8 @@ namespace Agent
 
                             if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
                             {
-                                if (entity.agentModel3D.Weapon != null)
-                                    entity.agentModel3D.Weapon.gameObject.SetActive(true);
+                                Pistol.gameObject.SetActive(false);
+                                Rifle.gameObject.SetActive(true);
 
                                 RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 1.0f;
                                 RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 1.0f;
@@ -127,21 +129,18 @@ namespace Agent
                             }
                             else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
                             {
-                                //if (entity.agentModel3D.Weapon != null)
-                                //    entity.agentModel3D.Weapon.gameObject.SetActive(false);
+                                Pistol.gameObject.SetActive(true);
+                                Rifle.gameObject.SetActive(false);
 
-                                //RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
 
-                                //if (entity.agentModel3D.Weapon != null)
-                                //    entity.agentModel3D.Weapon.gameObject.SetActive(true);
-
-                                //RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 1.0f;
-                                //RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 1.0f;
-                                //RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 1.0f;
-                                //RigLayerPistol_HandIK.GetComponent<Rig>().weight = 1.0f;
+                                RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 1.0f;
+                                RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 1.0f;
+                                RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 1.0f;
+                                RigLayerPistol_HandIK.GetComponent<Rig>().weight = 1.0f;
                             }
                             else
                             {
@@ -150,13 +149,13 @@ namespace Agent
                                 RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
                                 RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
 
-                                //RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                                //RigLayerPistol_HandIK.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
+                                RigLayerPistol_HandIK.GetComponent<Rig>().weight = 0.0f;
 
-                                if (entity.agentModel3D.Weapon != null)
-                                    entity.agentModel3D.Weapon.gameObject.SetActive(false);
+                                Pistol.gameObject.SetActive(false);
+                                Rifle.gameObject.SetActive(false);
 
                                 entity.agentAction.Action = AgentAlertState.UnAlert;
                             }

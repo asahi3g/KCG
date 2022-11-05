@@ -26,7 +26,7 @@ namespace Agent
                     }
                     else
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 140, 0);
+                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 0);
                     }
                     model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
                 }
@@ -38,7 +38,7 @@ namespace Agent
                     }
                     else
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -140, 0);
+                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 0);
                     }
 
                     model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y,model3d.ModelScale.Z);
