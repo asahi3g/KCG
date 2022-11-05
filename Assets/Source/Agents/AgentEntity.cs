@@ -24,10 +24,11 @@ public partial class AgentEntity
         if (hasAgentModel3D)
         {
             var model3D = agentModel3D;
-            if (model3D.GameObject != null)
-            {
-                UnityEngine.Object.Destroy(model3D.GameObject);
-            }
+            //if (model3D.GameObject != null)
+            //{
+            //    if (model3D.Weapon.name != "SpaceGun" || model3D.Weapon.name != "Pistol")
+            //        UnityEngine.Object.Destroy(model3D.GameObject);
+            //}
         }
     }
 
@@ -155,10 +156,11 @@ public partial class AgentEntity
 
             model3d.ItemAnimationSet = itemProperty.AnimationSet;
 
-            if (model3d.Weapon != null)
-            {
-                UnityEngine.Object.Destroy(model3d.Weapon);
-            }
+            //if (model3d.Weapon != null)
+            //{
+            //    if(model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
+            //        UnityEngine.Object.Destroy(model3d.Weapon);
+            //}
 
             switch(itemProperty.ToolType)
             {
@@ -207,10 +209,11 @@ public partial class AgentEntity
             Model3DComponent model3d = agentModel3D;
             model3d.CurrentWeapon = weapon;
 
-            if (model3d.Weapon != null)
-            {
-                UnityEngine.Object.Destroy(model3d.Weapon);
-            }
+            //if (model3d.Weapon != null)
+            //{
+            //    if (model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
+            //        UnityEngine.Object.Destroy(model3d.Weapon);
+            //}
 
             switch(weapon)
             {
@@ -236,16 +239,22 @@ public partial class AgentEntity
                     UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
                     {
-                        UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
-                            UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
+                        //UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
+                        //    UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
 
-                        var gunRotation = gun.transform.rotation;
-                        gun.transform.parent = hand.transform;
-                        gun.transform.position = hand.transform.position;
-                        gun.transform.localRotation = gunRotation;
-                        gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
+                        if (model3d.Weapon == null)
+                        {
+                            UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
+                            model3d.Weapon = PistolPivot.GetChild(0).gameObject;
+                        }
 
-                        model3d.Weapon = gun;
+                        //    var gunRotation = gun.transform.rotation;
+                        //gun.transform.parent = hand.transform;
+                        //gun.transform.position = hand.transform.position;
+                        //gun.transform.localRotation = gunRotation;
+                        //gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
+
+                        //model3d.Weapon = gun;
 
                     }
                     break;
@@ -260,7 +269,7 @@ public partial class AgentEntity
                         //UnityEngine.Transform ref_left_hand_grip = model3d.GameObject.transform.Find("ref_left_hand_grip");
                         if(model3d.Weapon == null)
                         {
-                            UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
+                                UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
                             model3d.Weapon = RiflePivot.GetChild(0).gameObject;
                         }
 
