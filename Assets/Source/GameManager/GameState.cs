@@ -19,6 +19,8 @@ public static class GameState
     public static readonly NodeSystem.ConditionManager ConditionManager;
     public static readonly BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
     public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
+    public static readonly Sensor.SensorManager SensorManager;
+    public static readonly Sensor.UpdateSystem SensorUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -197,6 +199,8 @@ public static class GameState
         ConditionManager = new NodeSystem.ConditionManager();
         BehaviorTreeManager = new BehaviorTree.BehaviorTreeManager();
         BehaviorTreeUpdateSystem = new BehaviorTree.UpdateSystem();
+        SensorManager = new Sensor.SensorManager();
+        SensorUpdateSystem = new Sensor.UpdateSystem();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();

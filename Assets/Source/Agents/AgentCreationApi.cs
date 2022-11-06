@@ -14,7 +14,6 @@ namespace Agent
     public class AgentCreationApi
     {
         // Start is called before the first frame update
-
         private int CurrentIndex;
         private AgentProperties[] PropertiesArray;
 

@@ -1,6 +1,7 @@
 ﻿//imports UnityEngine
 
 using KMath;
+using System;
 
 namespace Planet.Unity
 {
@@ -24,8 +25,7 @@ namespace Planet.Unity
         {
             GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
 
-            const float SPAWN_DELAY = 2.0f;
-            if ((UnityEngine.Time.realtimeSinceStartup - LastSpawn) > SPAWN_DELAY && GameState.Planet.AgentList.Length < 2)
+            if (GetNumOfEnemiesAlive() < 2)
             {
                 SpawnTarget();
                 LastSpawn = UnityEngine.Time.realtimeSinceStartup;
@@ -41,7 +41,7 @@ namespace Planet.Unity
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            planet.AddAgent(new Vec2f(64.0f, 2.0f), Enums.AgentType.EnemyMarine);
+            planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
             LastSpawn = UnityEngine.Time.realtimeSinceStartup;
@@ -57,15 +57,47 @@ namespace Planet.Unity
                 for (int i = 0; i < tileMap.MapSize.X; i++)
                 {
                     if (j == 0)
+                    {
                         tileMap.SetFrontTile(i, j, Enums.PlanetTileMap.TileID.Moon);
+                        continue;
+                    }
+                    if (i - tileMap.MapSize.X / 2f == 0)
+                    {
+                        if (j == 1 || j == 2 || j== 3)
+                            tileMap.SetFrontTile(i, j, Enums.PlanetTileMap.TileID.Moon);
+                        continue;
+                    }
+                    if (Math.Abs(i - tileMap.MapSize.X / 2f) <= 1)
+                    {
+                        if (j == 1)
+                            tileMap.SetFrontTile(i, j, Enums.PlanetTileMap.TileID.Moon);
+                    }
                 }
             }
         }
 
         private void SpawnTarget()
         {
-            float x = UnityEngine.Random.Range(1.0f, 31.0f);
-            GameState.Planet.AddAgent(new Vec2f(x, 2.0f), Enums.AgentType.Slime, 1);
+            float x = UnityEngine.Random.Range(1.0f, 127.0f);
+            GameState.Planet.AddAgent(new Vec2f(x, 5.0f), Enums.AgentType.Slime, 1);
+        }
+
+        public int GetNumOfEnemiesAlive()
+        {
+            ref var planet = ref GameState.Planet;
+            int numOfEnemies = 0;
+            for (int i = 0; i < planet.AgentList.Length; i++)
+            {
+                AgentEntity agent = planet.AgentList.Get(i);
+                if (!agent.isAgentAlive)
+                    continue;
+
+                if (agent.isAgentPlayer)
+                    continue;
+
+                numOfEnemies++;
+            }
+            return numOfEnemies;
         }
     }
 }

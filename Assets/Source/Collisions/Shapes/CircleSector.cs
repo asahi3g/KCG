@@ -1,10 +1,12 @@
 ﻿using System;
+using UnityEngine;
 
 namespace KMath
 {
     public struct CircleSector
     {
         public float Radius;
+        [Range(0 ,180)]
         public float Fov;
         public Vec2f StartPos;
         public Vec2f Dir;
