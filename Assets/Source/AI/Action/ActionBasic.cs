@@ -9,6 +9,7 @@ namespace Action
         {
             ActionManager.RegisterAction("Wait", WaitAction.Action);
             ActionManager.RegisterAction("SelectClosestTarget", SelectClosestTarget.Action);
+            ActionManager.RegisterAction("AimAt", AimAt.Action);
             ActionManager.RegisterAction("MoveDirectlyToward", MoveDirectlyToward.Action);
             ActionManager.RegisterActionSequence("ReloadWeapon", 
                 onEnter: ReloadAction.OnEnter, 

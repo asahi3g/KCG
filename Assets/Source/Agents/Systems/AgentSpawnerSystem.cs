@@ -265,7 +265,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Gunner, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -297,7 +297,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Swordman, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
@@ -322,7 +322,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
                             Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
-                            new Vec3f(0.6f, 0.6f, 0.6f));
+                            new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;
@@ -346,7 +346,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
+                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f), Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;
@@ -385,8 +385,9 @@ namespace Agent
                             newBehaviorTreeId: behaviorTreeID,
                             newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
                             newSensorsID: new List<int>() 
-                            { GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
-                            , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
+                            { 
+                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
+                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
                             },
                             newSquadID: -1);
                         entity.HandleItemSelected(item);

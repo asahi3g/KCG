@@ -319,6 +319,10 @@ namespace Agent
             NodeManager.AddChild(successNodeID);
             NodeManager.EndNode();
 
+            int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("AimAt"));
+            NodeManager.EndNode();
+
             int reloadWeaponId = NodeManager.CreateNode("ReloadWeapon", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("ReloadWeapon"));
             NodeManager.EndNode();
@@ -332,6 +336,7 @@ namespace Agent
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
             NodeManager.AddChild(selectMovement);
+            NodeManager.AddChild(aimAtId);
             NodeManager.AddChild(fireWeaponId);
             NodeManager.AddChild(wait0_1sId);
             NodeManager.EndNode();
