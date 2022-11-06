@@ -191,6 +191,11 @@ public partial class AgentEntity
             GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
         }
     }
+
+    public void SetAimTarget(Vec2f AimTarget)
+    {
+        agentModel3D.AimTarget = AimTarget;
+    }
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
