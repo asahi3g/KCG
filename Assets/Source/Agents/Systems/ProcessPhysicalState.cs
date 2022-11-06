@@ -100,7 +100,13 @@ namespace Agent
                 {
                     switch(physicsState.MovementState)
                     {
-                        //case AgentMovementState.MonsterAttack:
+                        case AgentMovementState.MonsterAttack:
+                        {
+                            physicsState.MovementState = AgentMovementState.None;
+                            physicsState.ActionInProgress = false;
+                            physicsState.ActionJustEnded = true;
+                            break;
+                        }
                         case AgentMovementState.FireGun:
                         {
                             physicsState.MovementState = AgentMovementState.IdleAfterShooting;

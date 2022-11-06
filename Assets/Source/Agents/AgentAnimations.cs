@@ -52,14 +52,14 @@ namespace Agent
             // Heavy Insect
             AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyIdle", AnimationType.InsectHeavyIdle);
             AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyRun", AnimationType.InsectHeavyRun);
-            AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyAttack", AnimationType.InsectHeavyAttack);
+            AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyAttackAttack", AnimationType.InsectHeavyAttack);
             AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyJump", AnimationType.InsectHeavyJump);
             AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyFall", AnimationType.InsectHeavyFall);
             AnimationLoader.Load("ArtistAnimations/InsectHeavy/InsectHeavyDead", AnimationType.InsectHeavyDie);
 
 
             // Medium Marine
-               AnimationLoader.Load("ArtistAnimations/SpaceMarine/Idle", AnimationType.SpaceMarineIdle);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarine/Idle", AnimationType.SpaceMarineIdle);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/GunIdle", AnimationType.SpaceMarineRifleIdle);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/SpaceMarinePistolIdle2", AnimationType.SpaceMarinePistolIdle);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/GunAlerted", AnimationType.SpaceMarineRifleIdleAlerted);

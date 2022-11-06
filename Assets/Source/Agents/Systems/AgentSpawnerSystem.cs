@@ -210,7 +210,8 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f),
+                            Vec2f.Zero);
 
 
                        // entity.agentPhysicsState.Speed = 10.0f;
@@ -324,8 +325,6 @@ namespace Agent
                             new Vec3f(0.6f, 0.6f, 0.6f));
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
-                        entity.agentPhysicsState.Speed = 6.0f;
-
                         break;
                     }
                 case Enums.AgentType.EnemyHeavy:
@@ -350,8 +349,6 @@ namespace Agent
                             Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
-                        entity.agentPhysicsState.Speed = 4.0f;
-
                         break;
                     }
                 case Enums.AgentType.EnemyMarine:
@@ -372,7 +369,7 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
                         entity.agentPhysicsState.Speed = 10.0f;
 

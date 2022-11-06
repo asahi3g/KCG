@@ -254,7 +254,7 @@ namespace Agent
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
             GameState.AgentCreationApi.SetName("enemy-insect");
-            GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+            GameState.AgentCreationApi.SetMovement(6f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(1.25f, 1.0f));
@@ -265,7 +265,7 @@ namespace Agent
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
             GameState.AgentCreationApi.SetName("enemy-insect-heavy");
-            GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+            GameState.AgentCreationApi.SetMovement(4.0f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
