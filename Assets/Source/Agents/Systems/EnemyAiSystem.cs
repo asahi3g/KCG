@@ -60,10 +60,10 @@ namespace Agent
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(physicsState.Position.X, physicsState.Position.Y + 0.35f));
 
-                                
+
                                 // knockback test
-                                GameState.AgentProcessPhysicalState.Knockback(entity, 10.0f, -KnockbackDir);
-                                GameState.AgentProcessPhysicalState.Knockback(closestPlayer, 10.0f, KnockbackDir);
+                                entity.Knockback(10.0f, -KnockbackDir);
+                                closestPlayer.Knockback(10.0f, KnockbackDir);
                             }
 
 
@@ -118,8 +118,8 @@ namespace Agent
 
                                 // knockback test
                                 float sumOfVelocity = Math.Abs(physicsState.Velocity.X) + Math.Abs(targetPhysicsState.Velocity.X);
-                                GameState.AgentProcessPhysicalState.Knockback(entity, sumOfVelocity * 1.2f, -KnockbackDir);
-                                GameState.AgentProcessPhysicalState.Knockback(closestPlayer, sumOfVelocity * 1.2f, KnockbackDir);
+                                entity.Knockback(sumOfVelocity * 1.2f, -KnockbackDir);
+                                closestPlayer.Knockback(sumOfVelocity * 1.2f, KnockbackDir);
                             }
 
                             
@@ -219,8 +219,8 @@ namespace Agent
 
                             if (Len <= swordRange && enemyComponent.EnemyCooldown <= 0 && entity.IsStateFree())
                             {
-                                GameState.AgentProcessPhysicalState.SwordSlash(entity);
-                                GameState.AgentProcessPhysicalState.Knockback(closestPlayer, 7.0f, KnockbackDir);
+                                entity.SwordSlash();
+                                closestPlayer.Knockback(7.0f, KnockbackDir);
 
                                 float damage = 25.0f;
                                 // spawns a debug floating text for damage 
@@ -302,7 +302,7 @@ namespace Agent
                                             thisKnockbackDir = -1;
                                         }
 
-                                        GameState.AgentProcessPhysicalState.Knockback(thisAgent, 7.0f, thisKnockbackDir);
+                                        thisAgent.Knockback(7.0f, thisKnockbackDir);
 
                                         float damage = 25.0f;
                                         // spawns a debug floating text for damage 

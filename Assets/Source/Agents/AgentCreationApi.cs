@@ -7,6 +7,7 @@ using KMath;
 using static GameState;
 using static Action.ActionBasic;
 using static Condition.ConditionBasic;
+using UnityEditor.Tilemaps;
 
 
 namespace Agent
@@ -348,6 +349,40 @@ namespace Agent
 
             int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
             NodeManager.AddChild(selectorStateId);
+            NodeManager.EndNode();
+
+            int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.NodeType.Decorator);
+            NodeManager.AddChild(repeaterId);
+            NodeManager.EndNode();
+
+            return rootId;
+        }
+
+        int CreateInsectBehavior()
+        {
+            int waitId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Wait"));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
+            NodeManager.EndNode();
+
+            int moveTo = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
+            NodeManager.SetData(-1);
+            NodeManager.EndNode();
+
+            int melee = NodeManager.CreateNode("Melee", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Melee"));
+            NodeManager.SetData(-1);
+            NodeManager.EndNode();
+
+            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
+            NodeManager.AddChild(waitId);
+            NodeManager.AddChild(moveTo);
+            NodeManager.AddChild(melee);
+            NodeManager.EndNode();
+
+            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
+            NodeManager.AddChild(sequenceId);
             NodeManager.EndNode();
 
             int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.NodeType.Decorator);

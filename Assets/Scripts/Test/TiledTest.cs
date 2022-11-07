@@ -351,12 +351,12 @@ namespace Planet.Unity
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
-                    Gizmos.color = Color.red;
-                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y + 2.0f, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(new Vector3(pos.X, pos.Y + 2.0f, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
           
             for (int i = 0; i < Planet.DebugLinesCount; i++)
             {
