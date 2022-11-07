@@ -100,7 +100,6 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
-
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
