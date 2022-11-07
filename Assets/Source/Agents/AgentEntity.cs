@@ -6,6 +6,7 @@ using Inventory;
 using Item;
 using KMath;
 using Physics;
+using UnityEngine;
 
 public partial class AgentEntity 
 {
@@ -128,19 +129,47 @@ public partial class AgentEntity
         var model3d = agentModel3D;
 
         Vec2f position = physicsState.Position;
-        switch(model3d.ItemAnimationSet)
+
+        if(agentID.Type == AgentType.Player || agentID.Type == AgentType.EnemyMarine)
         {
-            case ItemAnimationSet.HoldingRifle:
+            UnityEngine.Transform FirePosition = model3d.GameObject.transform.Find("RigLayerRifle_WeaponAiming").Find("WeaponPose")
+                .Find("FirePosition");
+
+            FirePosition.position = model3d.GameObject.transform.Find("RigLayerRifle_WeaponAiming").Find("WeaponPose").transform.position;
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+            switch (model3d.ItemAnimationSet)
             {
-                position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
-                break;
+                case ItemAnimationSet.HoldingRifle:
+                {
+                    position = new Vec2f(FirePosition.transform.position.x + 0.3f, (FirePosition.position.y - 0.4f) + worldPosition.y / 20);
+                    break;
+                }
+                case ItemAnimationSet.HoldingPistol:
+                {
+                    position = new Vec2f(FirePosition.transform.position.x + 0.3f, (FirePosition.position.y - 0.8f) + worldPosition.y / 20);
+                        break;
+                }
             }
-            case ItemAnimationSet.HoldingPistol:
+
+        }
+        else
+        {
+            switch (model3d.ItemAnimationSet)
             {
-                position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
-                break;
+                case ItemAnimationSet.HoldingRifle:
+                {
+                    position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
+                    break;
+                }
+                case ItemAnimationSet.HoldingPistol:
+                {
+                    position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
+                    break;
+                }
             }
         }
+
 
         return position;
     }
@@ -190,6 +219,11 @@ public partial class AgentEntity
         {
             GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
         }
+    }
+
+    public void SetAimTarget(Vec2f AimTarget)
+    {
+        agentModel3D.AimTarget = AimTarget;
     }
     
     public void HandleItemDeselected(ItemInventoryEntity item)

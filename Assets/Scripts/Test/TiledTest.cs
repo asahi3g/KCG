@@ -98,7 +98,9 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            //planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
+            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, PlayerFaction);
+
+            GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;

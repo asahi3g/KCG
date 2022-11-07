@@ -18,6 +18,9 @@ namespace Agent
                 var model3d = entity.agentModel3D;
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -2.0f);
 
+                entity.SetAimTarget(new KMath.Vec2f(GameState.Planet.Player.agentPhysicsState.Position.X,
+                    GameState.Planet.Player.agentPhysicsState.Position.Y));
+
                 if (physicsState.FacingDirection == 1)
                 {
                     if(model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
@@ -34,14 +37,14 @@ namespace Agent
                 {
                     if (model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -200, 0);
+                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -120, 0);
                     }
                     else
                     {
                         model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 0);
                     }
 
-                    model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y,model3d.ModelScale.Z);
+                    model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
                 }
             }
         }
