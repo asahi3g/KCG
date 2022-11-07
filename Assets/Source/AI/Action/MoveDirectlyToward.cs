@@ -39,7 +39,7 @@ namespace Action
             }
 
             physicsState.FacingDirection = direction;
-            agent.SetAimTarget(new KMath.Vec2f(direction, agent.physicsBox2DCollider.Size.Y / 2.0f));
+            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
             agent.Run(direction);
 
             // if next tile is solid jump.
