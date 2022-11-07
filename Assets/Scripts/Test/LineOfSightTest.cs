@@ -7,15 +7,15 @@ using KMath.Random;
 using System;
 using UnityEngine;
 
-public class LineOfSightTest : UnityEngine.MonoBehaviour
+public class LineOfSightTest : MonoBehaviour
 {
-    [UnityEngine.SerializeField] UnityEngine.Material Material;
+    [SerializeField] Material Material;
 
     public CircleSectorRenderDebug CircleSector;
     public AgentEntity Player;
     
-    UnityEngine.Color standard = new Color(1.0f, 1.0f, 1.0f, 0.6f);
-    UnityEngine.Color hitColor = new Color(1.0f, 0.0f, 0.0f, 0.6f);
+    UnityEngine.Color standard = new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.6f);
+    UnityEngine.Color hitColor = new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.6f);
     Vec2i mapSize = new Vec2i(64, 32);
     float theta = 0;
     bool mousePressed = false;
@@ -26,14 +26,14 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
 
     void Start()
     {
-        UnityEngine.Debug.Log("Click to change position and direction of segment");
-        UnityEngine.Debug.Log("If segment intersect with agent it turns red.");
+        Debug.Log("Click to change position and direction of segment");
+        Debug.Log("If segment intersect with agent it turns red.");
 
-        UnityEngine.GameObject circleSegment = new UnityEngine.GameObject("CircleSegment");
+        GameObject circleSegment = new GameObject("CircleSegment");
 
         CircleSector = circleSegment.AddComponent<CircleSectorRenderDebug>();
 
-        CircleSector.angle = 40.0f;
+        CircleSector.angle = 180f;
         CircleSector.radius = 6.0f;
         CircleSector.color = standard;
         GameResources.Initialize();
@@ -42,7 +42,7 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
         planet.Init(mapSize);
         planet.InitializeSystems(Material, transform);
         Player = planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime, 0);
-        Player.AddAgentsLineOfSight(new CircleSector());
+        Player.ReplaceAgentsLineOfSight(new CircleSector());
 
         GenerateMap();
     }
@@ -53,29 +53,29 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
         pos += Player.agentSprite2D.Size / 2.0f;
         CircleSector.SetPos(pos);
 
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
             mousePressed = true;
-        if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
             mousePressed = false;
         
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
             PressedW = true;
-        if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W))
             PressedW = false;
 
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
             PressedS = true;
-        if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
             PressedS = false;
 
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
             PressedD = true;
-        if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D))
             PressedD = false;
 
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
             PressedA = true;
-        if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A))
             PressedA = false;
 
         Vec2f direction = Vec2f.Zero;
@@ -93,23 +93,23 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
 
         if (mousePressed)
         {
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vec2f end = new Vec2f(worldPosition.x, worldPosition.y);
             Vec2f dir = end - pos;
-            float newTheta = UnityEngine.Mathf.Atan2(dir.Y, dir.X) * UnityEngine.Mathf.Rad2Deg;
+            float newTheta = Mathf.Atan2(dir.Y, dir.X) * Mathf.Rad2Deg;
             CircleSector.Rotate(newTheta - theta);
             theta = newTheta;
             CircleSector.radius = dir.Magnitude;
         }
         
         ref var planet = ref GameState.Planet;
-        planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        planet.Update(Time.deltaTime, Material, transform);
 
-        Vec2f sectorDir = new Vec2f(MathF.Cos(theta * UnityEngine.Mathf.Deg2Rad), MathF.Sin(theta * UnityEngine.Mathf.Deg2Rad));
+        Vec2f sectorDir = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
 
         ref CircleSector circleSector = ref Player.agentsLineOfSight.ConeSight;
         circleSector.Radius = CircleSector.radius;
-        circleSector.Fov = CircleSector.angle * UnityEngine.Mathf.Deg2Rad;
+        circleSector.Fov = CircleSector.angle * Mathf.Deg2Rad;
         circleSector.StartPos = pos;
         circleSector.Dir = sectorDir.Normalized;
 
@@ -120,7 +120,7 @@ public class LineOfSightTest : UnityEngine.MonoBehaviour
             AgentEntity entity = agentList.Get(i);
             if (entity.agentID.ID == Player.agentID.ID) continue;
 
-            bool intersect = LineOfSight.CanSee(Player.agentID.ID, entity.agentID.ID);
+            bool intersect = LineOfSight.CanSeeUnalert(Player.agentID.ID, entity.agentID.ID);
             if (intersect)
             {
                 CircleSector.color = hitColor;

@@ -347,9 +347,8 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-
-
-
+            if (!Init)
+                return;
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
@@ -367,8 +366,6 @@ namespace Planet.Unity
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
 
-
-            UnityEngine.Debug.Log(Planet.TileMap.GeometryArrayCount);
             for (int i = 0; i < Planet.TileMap.GeometryArrayCount; i++)
             {
                 Line2D line = Planet.TileMap.GeometryArray[i];

@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using System.Collections.Generic;
 
 namespace Agent
 {
@@ -7,5 +8,7 @@ namespace Agent
     {
         public int BehaviorTreeId;
         public int BlackboardID;
+        public List<int> SensorsID;
+        public int SquadID;
     }
 }

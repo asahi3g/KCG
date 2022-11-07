@@ -3,6 +3,7 @@
 using KMath;
 using Animancer;
 using AI;
+using System.Collections.Generic;
 
 namespace Agent
 {
@@ -172,11 +173,19 @@ namespace Agent
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
+            if (agentType != Enums.AgentType.Player)
+                entity.AddAgentsLineOfSight(new CircleSector() 
+                    {
+                        Radius = 50,
+                        Fov = 60,
+                        StartPos = position,
+                        Dir = new Vec2f(entity.agentPhysicsState.FacingDirection, 0.0f)
+                    });
+
             switch (agentType)
             {
                 case Enums.AgentType.Player:
                     {
-
                         UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
 
                         UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
@@ -224,13 +233,13 @@ namespace Agent
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Slime, properties.DetectionRadius, 0.0f);
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
                     {
                         entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Slime, properties.DetectionRadius, 0.0f);
                         break;
                     }
                 case Enums.AgentType.EnemyGunner:
@@ -257,7 +266,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Gunner, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
@@ -289,7 +298,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Swordman, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
                         break;
@@ -314,7 +323,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
                             Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
                             new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;
                     }
@@ -338,7 +347,7 @@ namespace Agent
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.GroundInsectHeavyAnimation,
                             Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f), Vec2f.Zero);
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
+                        entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;
                     }
@@ -362,8 +371,6 @@ namespace Agent
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
-                        entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
-
                         entity.agentPhysicsState.Speed = 10.0f;
 
                         if (!entity.hasAgentAction)
@@ -374,7 +381,15 @@ namespace Agent
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
                         int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
-                        entity.AddAgentController(behaviorTreeID, GameState.BlackboardManager.CreateBlackboard());
+                        entity.AddAgentController(
+                            newBehaviorTreeId: behaviorTreeID,
+                            newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
+                            newSensorsID: new List<int>() 
+                            { 
+                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
+                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
+                            },
+                            newSquadID: -1);
                         entity.HandleItemSelected(item);
                         break;
                     }

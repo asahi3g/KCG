@@ -491,7 +491,9 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessStats.Update();
+            GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
+            GameState.BlackboardUpdatePosition.Update();
 
             CameraFollow.Update();
 

@@ -31,6 +31,7 @@ namespace NodeSystem
             Array.Copy(node.DataInit, 0, NodeMemory, NodesExecutiondata[index].MemoryOffset, node.DataInit.Length);
         }
 
+        // reset NodeMemory data.
         public void ResetNodeMemoryData()
         {
             for (int i = 0; i < NodesExecutiondata.Length; i++)

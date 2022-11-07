@@ -14,7 +14,6 @@ namespace Agent
     public class AgentCreationApi
     {
         // Start is called before the first frame update
-
         private int CurrentIndex;
         private AgentProperties[] PropertiesArray;
 
@@ -137,14 +136,6 @@ namespace Agent
             }
         }
 
-        public void SetEnemyBehaviour(EnemyBehaviour enemyBehaviour)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].EnemyBehaviour = enemyBehaviour;
-            }
-        }
-
         public void SetBehaviorTree(int rootId)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
@@ -224,7 +215,6 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Slime);
             GameState.AgentCreationApi.SetDetectionRadius(4.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.SetAttackCooldown(0.8f);
@@ -237,7 +227,6 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Slime);
             GameState.AgentCreationApi.SetDetectionRadius(4.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.SetAttackCooldown(0.8f);
@@ -249,7 +238,6 @@ namespace Agent
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Swordman);
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -260,7 +248,6 @@ namespace Agent
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.5f, 2.5f));
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Gunner);
             GameState.AgentCreationApi.SetDetectionRadius(24.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -270,8 +257,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(6f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 1.0f));
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Insect);
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(1.25f, 1.0f));
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -282,8 +268,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(4.0f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-1.0f, 0.0f), new Vec2f(2.25f, 1.5f));
-            GameState.AgentCreationApi.SetEnemyBehaviour(EnemyBehaviour.Insect);
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -293,7 +278,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.1f));
             GameState.AgentCreationApi.SetBehaviorTree(CreateMarineBehavior());
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -304,12 +289,17 @@ namespace Agent
             RegisterConditions();
             RegisterBasicActions();
 
-            int wait0_1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            // Node always returns success.
+            int successNodeID = NodeManager.CreateNode("SuccessNode", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(NodeSystem.ActionManager.SuccessActionID);
+            NodeManager.EndNode();
+
+            int wait0_1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
             NodeManager.SetData(new WaitAction.WaitActionData(0.1f));
             NodeManager.EndNode();
 
-            int wait1Id = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            int wait1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
             NodeManager.SetData(new WaitAction.WaitActionData(1f));
             NodeManager.EndNode();
@@ -318,31 +308,42 @@ namespace Agent
             NodeManager.SetAction(ActionManager.GetID("SelectClosestTarget"));
             NodeManager.EndNode();
 
+            int moveTo = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
+            NodeManager.SetData(-1);
+            NodeManager.EndNode();
+
+            int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("AimAt"));
+            NodeManager.EndNode();
+
             int reloadWeaponId = NodeManager.CreateNode("ReloadWeapon", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("ReloadWeapon"));
             NodeManager.EndNode();
 
             int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("FireWeapon"));
-            NodeManager.SetData(new ShootFireWeaponAction.ShootFireWeaponData());
+            NodeManager.AddData(new ShootFireWeaponAction.ShootFireWeaponData());
             NodeManager.EndNode();
 
             int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
+            NodeManager.AddChild(moveTo);
+            NodeManager.AddChild(aimAtId);
             NodeManager.AddChild(fireWeaponId);
-            NodeManager.AddChild(wait0_1Id);
+            NodeManager.AddChild(wait0_1sId);
             NodeManager.EndNode();
 
-            int selectorShootId = NodeManager.CreateNode("Selector", NodeSystem.NodeType.Selector);
+            int selectorShootId = NodeManager.CreateNode("SelectorShoot", NodeSystem.NodeType.Selector);
             NodeManager.SetCondition(ConditionManager.GetID("HasEnemyAlive"));
             NodeManager.AddChild(sequenceId);
             NodeManager.AddChild(reloadWeaponId);
             NodeManager.EndNode();
 
-            int selectorStateId = NodeManager.CreateNode("Selector", NodeSystem.NodeType.Selector);
+            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.NodeType.Selector);
             NodeManager.AddChild(selectorShootId);
-            NodeManager.AddChild(wait1Id);
+            NodeManager.AddChild(wait1sId);
             NodeManager.EndNode();
 
             int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);

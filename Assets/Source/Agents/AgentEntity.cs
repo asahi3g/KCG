@@ -1,5 +1,6 @@
 using System;
 using Agent;
+using Collisions;
 using Engine3D;
 using Enums;
 using Inventory;
@@ -7,7 +8,7 @@ using Item;
 using KMath;
 using Physics;
 
-public partial class AgentEntity 
+public partial class AgentEntity
 {
     public ItemInventoryEntity GetItem()
     {
@@ -44,7 +45,7 @@ public partial class AgentEntity
 
         return isAgentAlive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
-        physicsState.MovementState != AgentMovementState.SwordSlash && 
+        physicsState.MovementState != AgentMovementState.SwordSlash &&
         physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.FireGun &&
         physicsState.MovementState != AgentMovementState.PickaxeHit &&
@@ -93,10 +94,10 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        return isAgentAlive && 
+        return isAgentAlive &&
         physicsState.MovementState != AgentMovementState.Dashing &&
         physicsState.MovementState != AgentMovementState.SlidingLeft &&
-        physicsState.MovementState != AgentMovementState.SlidingRight && 
+        physicsState.MovementState != AgentMovementState.SlidingRight &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.MonsterAttack &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
@@ -105,7 +106,7 @@ public partial class AgentEntity
     public void DieInPlace()
     {
         isAgentAlive = false;
-        
+
         var physicsState = agentPhysicsState;
         physicsState.MovementState = AgentMovementState.KnockedDownFront;
 
@@ -115,7 +116,7 @@ public partial class AgentEntity
     public void DieKnockBack()
     {
         isAgentAlive = false;
-        
+
         var physicsState = agentPhysicsState;
         physicsState.MovementState = AgentMovementState.KnockedDownBack;
 
@@ -172,7 +173,7 @@ public partial class AgentEntity
         return position;
     }
 
-    
+
     public void HandleItemSelected(ItemInventoryEntity item)
     {
         var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
@@ -189,24 +190,24 @@ public partial class AgentEntity
             //        UnityEngine.Object.Destroy(model3d.Weapon);
             //}
 
-            switch(itemProperty.ToolType)
+            switch (itemProperty.ToolType)
             {
                 case ItemToolType.Pistol:
-                {
-                    SetAgentWeapon(Model3DWeapon.Pistol);
+                    {
+                        SetAgentWeapon(Model3DWeapon.Pistol);
 
-                    break;
-                }
+                        break;
+                    }
                 case ItemToolType.Rifle:
-                {
-                    SetAgentWeapon(Model3DWeapon.Rifle);
-                    break;
-                }
+                    {
+                        SetAgentWeapon(Model3DWeapon.Rifle);
+                        break;
+                    }
                 case ItemToolType.Sword:
-                {
-                    SetAgentWeapon(Model3DWeapon.Sword);
-                    break;
-                }
+                    {
+                        SetAgentWeapon(Model3DWeapon.Sword);
+                        break;
+                    }
                 default:
                     SetAgentWeapon(Model3DWeapon.None);
                     break;
@@ -218,6 +219,11 @@ public partial class AgentEntity
             GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
         }
     }
+
+    public bool CanSee(int targetId)
+    {
+        return LineOfSight.CanSeeAlert(agentID.ID, targetId);
+     }
 
     public void SetAimTarget(Vec2f AimTarget)
     {

@@ -35,20 +35,7 @@ namespace Action
             physicsState.MovementState != AgentMovementState.SlidingLeft &&
             physicsState.MovementState != AgentMovementState.SlidingRight)
             {
-                Vec2f target = Vec2f.Zero;
-
-                if (agentEntity.agentController.BlackboardID != -1)
-                {
-                    ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agentEntity.agentController.BlackboardID);
-                    target = blackboard.ShootingTarget;
-                }
-                else if (agentEntity.isAgentPlayer)
-                {
-                    // Todo: Move target selection to an agent system.
-                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    target.X = worldPosition.x;
-                    target.Y = worldPosition.y;
-                }
+                Vec2f target = agentEntity.agentModel3D.AimTarget;
 
                 int bulletsPerShot = WeaponProperty.BulletsPerShot;
 
