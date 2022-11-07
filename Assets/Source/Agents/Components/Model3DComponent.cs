@@ -17,6 +17,7 @@ namespace Agent
         public Enums.AgentAnimationType AnimationType;
         public Enums.ItemAnimationSet ItemAnimationSet;
         public KMath.Vec3f ModelScale;
+        public KMath.Vec2f AimTarget;
     }
 
         

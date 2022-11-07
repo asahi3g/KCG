@@ -88,22 +88,13 @@ namespace Agent
                             {
                                 if (entity.hasAgentController || entity.hasAgentEnemy)
                                 {
-                                    if (entity.agentPhysicsState.FacingDirection == 1)
-                                    {
-                                        AimTarget.position = new UnityEngine.Vector3(model3d.GameObject.transform.position.x - 1f, model3d.GameObject.transform.position.y, model3d.GameObject.transform.position.z -
-                                              1f);
-
-                                    }
-                                    else if (entity.agentPhysicsState.FacingDirection == -1)
-                                    {
-                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 10f, worldPosition.y, worldPosition.z + 15f);
-                                    }
+                                    AimTarget.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, 0.0f);
                                 }
                                 else
                                 {
                                     if(entity.agentPhysicsState.FacingDirection == 1)
                                     {
-                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 1f, worldPosition.y, worldPosition.z - 
+                                        AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 1f, worldPosition.y, worldPosition.z -
                                               1f);
 
                                     }

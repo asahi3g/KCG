@@ -201,7 +201,8 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f),
+                            Vec2f.Zero);
 
 
                        // entity.agentPhysicsState.Speed = 10.0f;
@@ -255,7 +256,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.agentPhysicsState.Speed = 6.0f;
@@ -287,7 +288,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         entity.SetAgentWeapon(Model3DWeapon.Sword);
@@ -312,7 +313,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
                             Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
-                            new Vec3f(0.6f, 0.6f, 0.6f));
+                            new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         break;
@@ -336,7 +337,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
                             Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f));
+                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f), Vec2f.Zero);
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
                         break;
@@ -359,7 +360,7 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f));
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
                         entity.AddAgentEnemy(properties.EnemyBehaviour, properties.DetectionRadius, 0.0f);
 
