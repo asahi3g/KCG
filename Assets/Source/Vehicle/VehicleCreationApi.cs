@@ -250,7 +250,7 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
-            GameState.VehicleCreationApi.SetDefaultAgentCount(5);
+            GameState.VehicleCreationApi.SetDefaultAgentCount(2);
             GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
             GameState.VehicleCreationApi.SetThrusterSprite(WhiteSquare, new Vec2f(0.5f, 1.0f), 
                 new Vec2f(-0.4f, -0.8f), new Vec2f(1.9f, -0.8f));
