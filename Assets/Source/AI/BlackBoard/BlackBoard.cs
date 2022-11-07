@@ -4,6 +4,8 @@ namespace AI
 {
     public struct Blackboard
     {
+        public bool UpdateTarget; // If true update target value.
+        public int AgentTargetID;
         public Vec2f AttackTarget;
         public Vec2f MoveToTarget;
         public int ItemID; // ItemId to interact.

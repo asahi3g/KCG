@@ -10,7 +10,6 @@ namespace Planet.Unity
         [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         bool Init = false;
-        float LastSpawn = 0;
 
         public void Start()
         {
@@ -28,7 +27,6 @@ namespace Planet.Unity
             if (GetNumOfEnemiesAlive() < 2)
             {
                 SpawnTarget();
-                LastSpawn = UnityEngine.Time.realtimeSinceStartup;
             }
         }
 
@@ -44,7 +42,6 @@ namespace Planet.Unity
             planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.EnemyMarine);
             
             GenerateMap();
-            LastSpawn = UnityEngine.Time.realtimeSinceStartup;
         }
 
         private void GenerateMap()

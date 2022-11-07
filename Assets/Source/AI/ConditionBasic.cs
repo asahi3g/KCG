@@ -64,12 +64,31 @@ namespace Condition
             return !IsInAttackRange(ptr);
         }
 
+        static bool InLineOfSight(object ptr)
+        {
+            ref PlanetState planet = ref GameState.Planet;
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
+
+            return agent.CanSee(blackboard.AgentTargetID);
+        }
+
+        public static bool CanSeeAndInRange(object ptr)
+        {
+            if (InLineOfSight(ptr) && IsInAttackRange(ptr))
+                return true;
+            return false;
+        }
+
         public static void RegisterConditions()
         {
             GameState.ConditionManager.RegisterCondition("HasBulletInClip", HasBulletInClip);
             GameState.ConditionManager.RegisterCondition("HasEnemyAlive", HasEnemyAlive);
             GameState.ConditionManager.RegisterCondition("IsInAttackRange", IsInAttackRange);
             GameState.ConditionManager.RegisterCondition("NotInAttackRange", NotInAttackRange);
+            GameState.ConditionManager.RegisterCondition("InLineOfSight", InLineOfSight);
+            GameState.ConditionManager.RegisterCondition("CanSeeAndInRange", CanSeeAndInRange);
         }
     }
 }

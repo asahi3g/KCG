@@ -171,6 +171,8 @@ namespace KMath
             return HashCode.Combine(X, Y);
         }
 
+        public float GetAngle(Vec2f other) => MathF.Atan2(other.Y, other.X) - MathF.Atan2(Y, X);
+
         #endregion
 
         #region Operators

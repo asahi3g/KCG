@@ -14,6 +14,7 @@ public static class GameState
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
     public static readonly AI.BlackboardManager BlackboardManager;
+    public static readonly AI.UpdatePosition BlackboardUpdatePosition;
     public static readonly NodeSystem.NodeManager NodeManager;
     public static readonly NodeSystem.ActionManager ActionManager;
     public static readonly NodeSystem.ConditionManager ConditionManager;
@@ -194,6 +195,7 @@ public static class GameState
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         BlackboardManager = new AI.BlackboardManager();
+        BlackboardUpdatePosition = new AI.UpdatePosition();
         NodeManager =   new NodeSystem.NodeManager();
         ActionManager = new NodeSystem.ActionManager();
         ConditionManager = new NodeSystem.ConditionManager();

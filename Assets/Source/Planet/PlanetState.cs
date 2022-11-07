@@ -493,6 +493,7 @@ namespace Planet
             GameState.AgentProcessStats.Update();
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
+            GameState.BlackboardUpdatePosition.Update();
 
             CameraFollow.Update();
 

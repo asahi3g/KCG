@@ -1,4 +1,5 @@
 ﻿using AI;
+using Condition;
 using Enums.PlanetTileMap;
 using NodeSystem;
 using Planet;
@@ -11,7 +12,7 @@ namespace Action
     {
         struct Data
         {
-            public float AcceptableRadius;
+            public int EndConditionId; // Condition ID to end movement scene.
         }
 
         static public NodeState Action(object ptr, int index)
@@ -19,6 +20,7 @@ namespace Action
             // Get Data
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
+            //int endConditionId = data.GetNodeData<int>(index);
             ref float acceptableRadius = ref data.GetNodeData<float>(index);
 
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
@@ -27,13 +29,17 @@ namespace Action
             int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
 
             // Walk diagonal if there is an obstacle jump.
-            float range = 10.0f; // Todo: get correct weapong range.
-            if ((blackboard.AttackTarget - physicsState.Position).Magnitude < range)
-                return NodeState.Success;
-            if (direction == 0)
-                return NodeState.Failure;
+            //ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
+            //if (condition(ptr))
+            TileID belowTile = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X), (int)physicsState.Position.Y - 1);
+            if (belowTile != TileID.Air)
+            {
+                if (ConditionBasic.CanSeeAndInRange(ptr))
+                    return NodeState.Success;
+            }
 
             physicsState.FacingDirection = direction;
+            agent.SetAimTarget(new KMath.Vec2f(direction, agent.physicsBox2DCollider.Size.Y / 2.0f));
             agent.Run(direction);
 
             // if next tile is solid jump.

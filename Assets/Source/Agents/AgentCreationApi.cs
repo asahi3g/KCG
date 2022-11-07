@@ -278,7 +278,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.1f));
             GameState.AgentCreationApi.SetBehaviorTree(CreateMarineBehavior());
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -309,14 +309,8 @@ namespace Agent
             NodeManager.EndNode();
 
             int moveTo = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
-            NodeManager.SetCondition(ConditionManager.GetID("NotInAttackRange"));
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
-            NodeManager.SetData(2.0f);
-            NodeManager.EndNode();
-
-            int selectMovement = NodeManager.CreateNode("SelectorMovement", NodeSystem.NodeType.Selector);
-            NodeManager.AddChild(moveTo);
-            NodeManager.AddChild(successNodeID);
+            NodeManager.SetData(-1);
             NodeManager.EndNode();
 
             int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.NodeType.Action);
@@ -335,7 +329,7 @@ namespace Agent
             int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
-            NodeManager.AddChild(selectMovement);
+            NodeManager.AddChild(moveTo);
             NodeManager.AddChild(aimAtId);
             NodeManager.AddChild(fireWeaponId);
             NodeManager.AddChild(wait0_1sId);

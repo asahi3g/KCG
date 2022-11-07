@@ -18,7 +18,7 @@ namespace Action
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity entity = planet.AgentList.Get(i);
-                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
+                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive || agent.agentID.Faction == entity.agentID.Faction)
                     continue;
 
                 float newDist = (agent.agentPhysicsState.Position - entity.agentPhysicsState.Position).Magnitude;
@@ -36,6 +36,8 @@ namespace Action
             else
             {
                 blackboard.AttackTarget = target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f;
+                blackboard.AgentTargetID = target.agentID.ID;
+                blackboard.UpdateTarget = true;
                 return NodeState.Success;
             }
         }
