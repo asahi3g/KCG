@@ -24,27 +24,26 @@ namespace NodeSystem
             switch (type)
             {
                 case NodeType.Decorator:
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    SetCondition(ConditionManager.TrueConditionID);
                     break;
                 case NodeType.Repeater:
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    SetCondition(ConditionManager.TrueConditionID);
                     break;
                 case NodeType.Sequence:
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    SetCondition(ConditionManager.TrueConditionID);
                     SetData(BTSpecialChild.NotInitialized);
                     break;
                 case NodeType.Selector:
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    SetCondition(ConditionManager.TrueConditionID);
                     SetData(BTSpecialChild.NotInitialized);
                     break;
                 case NodeType.ActionSequence:
-                    SetExecutionDelegate(GameState.ActionManager.GetID(NodeType.ActionSequence.ToString()));
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    Nodes[currentID].ActionID = GameState.ActionManager.GetID("ActionSequence");
+                    SetCondition(ConditionManager.TrueConditionID);
                     SetData(new ActionSequenceNode.ActionSequenceData());
                     break;
                 case NodeType.Action:
-                    SetExecutionDelegate(GameState.ActionManager.GetID("Default"));
-                    SetCondition(GameState.ConditionManager.GetID("Default"));
+                    SetCondition(ConditionManager.TrueConditionID);
                     node.DataInit = new byte[0];
                     break;
             }
@@ -96,8 +95,6 @@ namespace NodeSystem
                 Assert.IsTrue(false, "You can't set action in node of type: " + Nodes[currentID].Type.ToString());
             }
         }
-
-        private void SetExecutionDelegate(int actionID) => Nodes[currentID].ActionID = actionID;
 
         public void SetData<T>(T data) where T : struct => Nodes[currentID].SetData<T>(ref data);
 

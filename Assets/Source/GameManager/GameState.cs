@@ -14,11 +14,14 @@ public static class GameState
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
     public static readonly AI.BlackboardManager BlackboardManager;
+    public static readonly AI.UpdatePosition BlackboardUpdatePosition;
     public static readonly NodeSystem.NodeManager NodeManager;
     public static readonly NodeSystem.ActionManager ActionManager;
     public static readonly NodeSystem.ConditionManager ConditionManager;
     public static readonly BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
     public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
+    public static readonly Sensor.SensorManager SensorManager;
+    public static readonly Sensor.UpdateSystem SensorUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -192,11 +195,14 @@ public static class GameState
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         BlackboardManager = new AI.BlackboardManager();
+        BlackboardUpdatePosition = new AI.UpdatePosition();
         NodeManager =   new NodeSystem.NodeManager();
         ActionManager = new NodeSystem.ActionManager();
         ConditionManager = new NodeSystem.ConditionManager();
         BehaviorTreeManager = new BehaviorTree.BehaviorTreeManager();
         BehaviorTreeUpdateSystem = new BehaviorTree.UpdateSystem();
+        SensorManager = new Sensor.SensorManager();
+        SensorUpdateSystem = new Sensor.UpdateSystem();
 
         SpriteLoader = new Sprites.SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();

@@ -9,8 +9,8 @@ namespace Action
     {
         static public NodeState Action(object ptr, int id)
         {
-            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
+            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             AgentEntity target = null;
@@ -18,7 +18,7 @@ namespace Action
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity entity = planet.AgentList.Get(i);
-                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
+                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive || agent.agentID.Faction == entity.agentID.Faction)
                     continue;
 
                 float newDist = (agent.agentPhysicsState.Position - entity.agentPhysicsState.Position).Magnitude;
@@ -35,7 +35,9 @@ namespace Action
             }
             else
             {
-                blackboard.ShootingTarget = target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f;
+                blackboard.AttackTarget = target.agentPhysicsState.Position + target.physicsBox2DCollider.Size * 1f / 2f;
+                blackboard.AgentTargetID = target.agentID.ID;
+                blackboard.UpdateTarget = true;
                 return NodeState.Success;
             }
         }

@@ -11,19 +11,23 @@ public partial class AgentEntity {
     public Agent.ControllerComponent agentController { get { return (Agent.ControllerComponent)GetComponent(AgentComponentsLookup.AgentController); } }
     public bool hasAgentController { get { return HasComponent(AgentComponentsLookup.AgentController); } }
 
-    public void AddAgentController(int newBehaviorTreeId, int newBlackboardID) {
+    public void AddAgentController(int newBehaviorTreeId, int newBlackboardID, System.Collections.Generic.List<int> newSensorsID, int newSquadID) {
         var index = AgentComponentsLookup.AgentController;
         var component = (Agent.ControllerComponent)CreateComponent(index, typeof(Agent.ControllerComponent));
         component.BehaviorTreeId = newBehaviorTreeId;
         component.BlackboardID = newBlackboardID;
+        component.SensorsID = newSensorsID;
+        component.SquadID = newSquadID;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentController(int newBehaviorTreeId, int newBlackboardID) {
+    public void ReplaceAgentController(int newBehaviorTreeId, int newBlackboardID, System.Collections.Generic.List<int> newSensorsID, int newSquadID) {
         var index = AgentComponentsLookup.AgentController;
         var component = (Agent.ControllerComponent)CreateComponent(index, typeof(Agent.ControllerComponent));
         component.BehaviorTreeId = newBehaviorTreeId;
         component.BlackboardID = newBlackboardID;
+        component.SensorsID = newSensorsID;
+        component.SquadID = newSquadID;
         ReplaceComponent(index, component);
     }
 

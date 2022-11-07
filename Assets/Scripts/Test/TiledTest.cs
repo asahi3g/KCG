@@ -94,12 +94,12 @@ namespace Planet.Unity
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
+            int enemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, PlayerFaction);
-
+            GameState.Planet.AddAgent(new Vec2f(14.0f, 10), Enums.AgentType.EnemyMarine, enemyFaction);
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
@@ -240,19 +240,14 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            /*if (!Init)
+            if (!Init)
                 return;
 
             GameState.Planet.DrawHUD(Player); 
-            GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
 
-            if (showMechInventory)
-            {
-                DrawCurrentMechHighlighter();
-            }
 
             
-            CharacterDisplay.Draw();*/
+           /* CharacterDisplay.Draw();*/
 
                  
         }
@@ -351,9 +346,8 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-
-
-
+            if (!Init)
+                return;
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
@@ -371,8 +365,6 @@ namespace Planet.Unity
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
 
-
-            UnityEngine.Debug.Log(Planet.TileMap.GeometryArrayCount);
             for (int i = 0; i < Planet.TileMap.GeometryArrayCount; i++)
             {
                 Line2D line = Planet.TileMap.GeometryArray[i];

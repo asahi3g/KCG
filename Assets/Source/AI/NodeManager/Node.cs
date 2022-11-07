@@ -29,7 +29,7 @@ namespace NodeSystem
                 }
             }
         }
-
+        // Add more data after SetData.
         public void AddData<T>(ref T data) where T : struct
         {
             int offset = DataInit.Length;
@@ -48,6 +48,7 @@ namespace NodeSystem
             }
         }
 
+        // Cast byte[] to type T.
         static public ref T CastTo<T>(byte[] data, int offset) where T : struct
         {
             unsafe
