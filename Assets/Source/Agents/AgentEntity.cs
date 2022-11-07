@@ -7,6 +7,7 @@ using Inventory;
 using Item;
 using KMath;
 using Physics;
+using UnityEngine;
 
 public partial class AgentEntity
 {
@@ -136,18 +137,19 @@ public partial class AgentEntity
                 .Find("FirePosition");
 
             FirePosition.position = model3d.GameObject.transform.Find("RigLayerRifle_WeaponAiming").Find("WeaponPose").transform.position;
+            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
             switch (model3d.ItemAnimationSet)
             {
                 case ItemAnimationSet.HoldingRifle:
                 {
-                    position = new Vec2f(FirePosition.transform.position.x, FirePosition.position.y);
+                    position = new Vec2f(FirePosition.transform.position.x + 0.3f, (FirePosition.position.y - 0.4f) + worldPosition.y / 20);
                     break;
                 }
                 case ItemAnimationSet.HoldingPistol:
                 {
-                    position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
-                    break;
+                    position = new Vec2f(FirePosition.transform.position.x + 0.3f, (FirePosition.position.y - 0.8f) + worldPosition.y / 20);
+                        break;
                 }
             }
 
