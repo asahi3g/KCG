@@ -94,11 +94,12 @@ namespace Planet.Unity
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
+            int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine);
+            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
 
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 

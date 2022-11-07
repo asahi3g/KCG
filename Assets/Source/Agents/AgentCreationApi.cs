@@ -204,7 +204,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
-            GameState.AgentCreationApi.SetHealth(300.0f);
+            GameState.AgentCreationApi.SetHealth(30000.0f);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.End();
