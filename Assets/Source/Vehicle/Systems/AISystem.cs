@@ -103,7 +103,7 @@ namespace Vehicle
                             {
                                 agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
                                 agentsInside[j].isAgentAlive = true;
-                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X + UnityEngine.Random.Range(-3, -1   ),
+                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X + UnityEngine.Random.Range(-12, -1),
                                               vehicle.vehiclePhysicsState2D.Position.Y);
                                 vehicle.vehicleThruster.Jet = false;
                             }
