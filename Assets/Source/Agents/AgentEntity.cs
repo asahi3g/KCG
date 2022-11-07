@@ -128,19 +128,46 @@ public partial class AgentEntity
         var model3d = agentModel3D;
 
         Vec2f position = physicsState.Position;
-        switch(model3d.ItemAnimationSet)
+
+        if(agentID.Type == AgentType.Player || agentID.Type == AgentType.EnemyMarine)
         {
-            case ItemAnimationSet.HoldingRifle:
+            UnityEngine.Transform FirePosition = model3d.GameObject.transform.Find("RigLayerRifle_WeaponAiming").Find("WeaponPose")
+                .Find("FirePosition");
+
+            FirePosition.position = model3d.GameObject.transform.Find("RigLayerRifle_WeaponAiming").Find("WeaponPose").transform.position;
+
+            switch (model3d.ItemAnimationSet)
             {
-                position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
-                break;
+                case ItemAnimationSet.HoldingRifle:
+                {
+                    position = new Vec2f(FirePosition.transform.position.x, FirePosition.position.y);
+                    break;
+                }
+                case ItemAnimationSet.HoldingPistol:
+                {
+                    position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
+                    break;
+                }
             }
-            case ItemAnimationSet.HoldingPistol:
+
+        }
+        else
+        {
+            switch (model3d.ItemAnimationSet)
             {
-                position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
-                break;
+                case ItemAnimationSet.HoldingRifle:
+                {
+                    position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
+                    break;
+                }
+                case ItemAnimationSet.HoldingPistol:
+                {
+                    position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
+                    break;
+                }
             }
         }
+
 
         return position;
     }
