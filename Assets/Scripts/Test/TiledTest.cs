@@ -95,7 +95,7 @@ namespace Planet.Unity
 
             int PlayerFaction = 0;
 
-            Player = Planet.AddPlayer(new Vec2f(22.0f, 8), PlayerFaction);
+            Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             //planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -238,19 +238,14 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            /*if (!Init)
+            if (!Init)
                 return;
 
             GameState.Planet.DrawHUD(Player); 
-            GameState.MechGUIDrawSystem.Draw(ref Planet, Player);
 
-            if (showMechInventory)
-            {
-                DrawCurrentMechHighlighter();
-            }
 
             
-            CharacterDisplay.Draw();*/
+           /* CharacterDisplay.Draw();*/
 
                  
         }
