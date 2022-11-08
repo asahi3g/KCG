@@ -16,7 +16,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = ElementEnums.Bedrock;
+            ID = ElementEnums.BedrockPT;
 
             Icon = new ImageWrapper(iconImage, 16, 16,
                 "Assets\\StreamingAssets\\Tiles\\Blocks\\Bedrock\\bedrock.png", Enums.AtlasType.Gui);

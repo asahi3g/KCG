@@ -4,8 +4,12 @@ using Utility;
 
 namespace KGUI
 {
-    public class #SCRIPTNAME# : ElementUI
+    public class #SCRIPTNAME# : ElementUI, IToggleElement
     {
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
+
+        private ImageWrapper border;
+	
         public override void Init()
         {
 			// Do all inititalization after base.Init()
@@ -14,11 +18,13 @@ namespace KGUI
             ID = ElementEnums.#SCRIPTNAME#;
 			#NOTRIM#
 			Icon = new ImageWrapper(iconImage, GameState.GUIManager.WhiteSquareBorder);
+			border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw() 
 		{ 
 			Icon.Draw();
+			border.Draw();
 		}
 
         public override void OnMouseStay()
@@ -33,7 +39,12 @@ namespace KGUI
 
         public override void OnMouseClick()
         {
-		#NOTRIM#
+			Toggle(true);
+        }
+		
+		public void Toggle(bool value)
+        {
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
     }
 }

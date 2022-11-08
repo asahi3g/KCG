@@ -58,7 +58,6 @@ public static class GameState
     public static readonly Mech.MechCreationApi MechCreationApi;
     public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
     public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
-    public static readonly Mech.MechGUIDrawSystem MechGUIDrawSystem;
     public static readonly Mech.MouseInteractionSystem MechMouseInteractionSystem;
     public static readonly Mech.PlantGrowthSystem MechPlantGrowthSystem;
     #endregion
@@ -317,6 +316,5 @@ public static class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
-        MechGUIDrawSystem = new Mech.MechGUIDrawSystem();
     }
 }

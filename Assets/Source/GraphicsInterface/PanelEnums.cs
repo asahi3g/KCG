@@ -9,7 +9,8 @@ namespace KGUI
         PlacementMaterialTool,
         PotionTool,
         GameMenu,
-        GeometryTool
+        GeometryTool,
+        MechTool
     }
 }
 

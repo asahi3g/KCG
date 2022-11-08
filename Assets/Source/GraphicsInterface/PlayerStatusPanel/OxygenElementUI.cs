@@ -20,7 +20,7 @@ namespace KGUI
             base.Init();
             
             ref var planet = ref GameState.Planet;
-            ID = ElementEnums.OxygenIndicator;
+            ID = ElementEnums.OxygenIndicatorPS;
             
             oxygenAmount = planet.Player != null ? planet.Player.agentStats.Oxygen : 0.0f;
 

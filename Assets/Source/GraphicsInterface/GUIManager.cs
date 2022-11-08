@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using KMath;
 using Utility;
-using Planet;
-
 
 namespace KGUI
 {
@@ -46,6 +44,7 @@ namespace KGUI
             PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
             PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
             PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
+            PanelPrefabList.Add(PanelEnums.MechTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/MechToolPanel"));
 
 
             SetPanelActive(PanelEnums.PlayerStatus);
@@ -96,11 +95,6 @@ namespace KGUI
             
             text.Update();
 
-            var inventoryID = agentEntity.agentInventory.InventoryID;
-            var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
-
             HandleMouseEvents();
         }
 
@@ -117,12 +111,9 @@ namespace KGUI
 
         public void HandleMouseEvents()
         {
-            if (ElementUnderCursor != null 
-                && Collisions.Collisions.PointOverlapRect
-                (
+            if (ElementUnderCursor != null && Collisions.Collisions.PointOverlapRect(
                     CursorPosition.X, CursorPosition.Y,
-                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax)
-               )
+                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax))
             {
                 ElementUnderCursor.OnMouseStay();
             }
