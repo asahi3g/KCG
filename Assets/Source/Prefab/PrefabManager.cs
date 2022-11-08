@@ -17,6 +17,7 @@ namespace Prefab
             panelPrefabList.Add(PanelEnums.MechTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/MechToolPanel"));
         }
 
+        // Returns Panel or Null
         public PanelUI GetPanelPrefab(PanelEnums panel)
         {
             return panelPrefabList.GetValueOrDefault(panel);
