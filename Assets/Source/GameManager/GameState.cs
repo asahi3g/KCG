@@ -163,6 +163,7 @@ public static class GameState
 
     #endregion
 
+    public static readonly Prefab.PrefabManager PrefabManager;
 
     public static void InitStage1()
     {
@@ -191,6 +192,8 @@ public static class GameState
 
     static GameState()
     {
+        PrefabManager = new Prefab.PrefabManager();
+        
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         BlackboardManager = new AI.BlackboardManager();

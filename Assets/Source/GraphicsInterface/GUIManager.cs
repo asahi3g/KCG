@@ -4,6 +4,20 @@ using System.Collections.Generic;
 using KMath;
 using Utility;
 
+/*
+
+Fields:
+    ShowGUI
+    
+    SelectedInventoryItem - our current selected item on inventory slot
+    
+    ProgressBar - generic sprite that needed to create a border/imageWrapper for ProgressBar class
+    WhiteSquareBorder - generic border sprite that added to atlas, represents white square
+
+    
+
+*/
+
 namespace KGUI
 {
     public class GUIManager
@@ -15,7 +29,7 @@ namespace KGUI
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
 
-        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new Dictionary<PanelEnums, PanelUI>();
+        
         public Dictionary<PanelEnums, PanelUI> PanelList = new Dictionary<PanelEnums, PanelUI>();
 
         public Vec2f CursorPosition;
@@ -38,14 +52,8 @@ namespace KGUI
                 "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
-
-            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
-            PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
-            PanelPrefabList.Add(PanelEnums.MechTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/MechToolPanel"));
-
+            
+            GameState.PrefabManager.InitializeResources();
 
             SetPanelActive(PanelEnums.PlayerStatus);
         }
@@ -56,9 +64,9 @@ namespace KGUI
         // If panel not Initialized, we are checking it in Prefab List(UIPanelPrefabList) with TryGetValue
         // If it's in Prefab List then instantiate it and enable. If we trying to actually disable it(active == false) then don't even instantiate
         // If we not have in UIPanelList or UIPanelPrefabList then error
-        public void SetPanelActive(PanelEnums panelEnums, bool active = true)
+        public void SetPanelActive(PanelEnums panelID, bool active = true)
         {
-            if (PanelList.TryGetValue(panelEnums, out var panel))
+            if (PanelList.TryGetValue(panelID, out var panel))
             {
                 if (!active)
                 {
@@ -71,8 +79,12 @@ namespace KGUI
                 {
                     panel.OnActivate();
                 }
+                return;
             }
-            else if(PanelPrefabList.TryGetValue(panelEnums, out var panelPrefab))
+            
+            var panelPrefab = GameState.PrefabManager.GetPanelPrefab(panelID);
+            
+            if(panelPrefab != default)
             {
                 if (active)
                 {
