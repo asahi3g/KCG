@@ -4,6 +4,7 @@ using KMath;
 using Enums;
 using Particle;
 using Collisions;
+using System;
 
 namespace Vehicle
 {
@@ -102,9 +103,12 @@ namespace Vehicle
                             if(!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
                             {
                                 agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+
+                                agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
+                                agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+
                                 agentsInside[j].isAgentAlive = true;
-                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X + UnityEngine.Random.Range(-12, -1),
-                                              vehicle.vehiclePhysicsState2D.Position.Y);
+                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y);
                                 vehicle.vehicleThruster.Jet = false;
                             }
                         }

@@ -12,7 +12,10 @@
                 AgentEntity agentEntity = agentList.Get(i);
                 
                 if (agentEntity.agentStats.Health <= 0 && agentEntity.isAgentAlive)
+                {
                     planet.KillAgent(i);
+                    UnityEngine.GameObject.Destroy(agentEntity.agentModel3D.Weapon);
+                }
             }
         }
     }
