@@ -29,6 +29,8 @@ namespace KGUI
             {
                 element.gameObject.SetActive(true);
             }
+            
+            ToggleFirstElement();
         }
         public override void OnDeactivate()
         {
@@ -41,6 +43,18 @@ namespace KGUI
             foreach (var element in ElementList.Values)
             {
                 ((IToggleElement)element).Toggle(false);
+            }
+        }
+        
+        private void ToggleFirstElement()
+        {
+            var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
+            if (selectedInventoryItem == null) return;
+            
+            if (ElementList.First().Value is IToggleElement firstElement)
+            {
+                firstElement.Toggle(true);
+                selectedInventoryItem.itemTile.TileID = TileID.SB_R0_Metal;
             }
         }
     }

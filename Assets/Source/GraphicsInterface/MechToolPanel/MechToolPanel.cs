@@ -1,12 +1,12 @@
 using System.Linq;
 
-namespace KGUI
+namespace KGUI.MechTool
 {
-    public class PlacementToolPanel : PanelUI
+    public class MechToolPanel : PanelUI
     {
         public override void Init()
         {
-            ID = PanelEnums.PlacementTool;
+            ID = PanelEnums.MechTool;
 
             base.Init();
         }
@@ -36,7 +36,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Error;
+                item.itemMech.MechID = Enums.MechType.Error;
             }
             
             foreach (var element in ElementList.Values)
@@ -53,7 +53,7 @@ namespace KGUI
             if (ElementList.First().Value is IToggleElement firstElement)
             {
                 firstElement.Toggle(true);
-                selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Bedrock;
+                selectedInventoryItem.itemMech.MechID = Enums.MechType.Storage;
             }
         }
     }

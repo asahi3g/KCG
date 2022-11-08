@@ -604,7 +604,7 @@ namespace Planet
 
             if (agentEntity != null && GameState.GUIManager.ShowGUI)
             {
-                GameState.GUIManager.Update(agentEntity);
+                GameState.GUIManager.Update();
                 GameState.GUIManager.Draw();
             }
         }

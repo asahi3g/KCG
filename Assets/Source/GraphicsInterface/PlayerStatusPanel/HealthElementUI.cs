@@ -27,7 +27,7 @@ namespace KGUI
             base.Init();
 
             ref var planet = ref GameState.Planet;
-            ID = ElementEnums.HealthIndicator;
+            ID = ElementEnums.HealthIndicatorPS;
             healthAmount = planet.Player != null ? planet.Player.agentStats.Health : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,

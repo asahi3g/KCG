@@ -3,8 +3,24 @@
 using System.Collections.Generic;
 using KMath;
 using Utility;
-using Planet;
 
+/*
+
+Fields:
+    ShowGUI
+    
+    SelectedInventoryItem   - our current selected item on inventory slot
+    
+    ProgressBar             - generic sprite that needed to create a border/imageWrapper for ProgressBar class
+    WhiteSquareBorder       - generic border sprite that added to atlas, represents white square
+
+    PanelList               - list of initialized panels
+
+    ElementUnderCursor      - current hovered element under cursor
+    PanelUnderCursor        - current hovered element under cursor
+    
+    Canvas                  - unity gameObject that corresponded for the User Interface. Every User Interface GameObjects should be child of that canvas
+*/
 
 namespace KGUI
 {
@@ -16,18 +32,17 @@ namespace KGUI
 
         public UnityEngine.Sprite ProgressBar;
         public UnityEngine.Sprite WhiteSquareBorder;
-
-        public Dictionary<PanelEnums, PanelUI> PanelPrefabList = new Dictionary<PanelEnums, PanelUI>();
+        
         public Dictionary<PanelEnums, PanelUI> PanelList = new Dictionary<PanelEnums, PanelUI>();
 
+        // TODO: move out CursorPosition to InputProcess, i guess
         public Vec2f CursorPosition;
+        
         public ElementUI ElementUnderCursor;
         public PanelUI PanelUnderCursor;
         
         private UnityEngine.Canvas canvas;
 
-        private TextWrapper text = new TextWrapper();
-        
         public void InitStage1()
         {
             UnityEngine.Cursor.visible = true;
@@ -40,26 +55,31 @@ namespace KGUI
                 "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
             WhiteSquareBorder = GameState.Renderer.CreateSprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
-
-            PanelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
-            PanelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
-            PanelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
-
+            
+            GameState.PrefabManager.InitializeResources();
 
             SetPanelActive(PanelEnums.PlayerStatus);
         }
+        
+        /*
 
-        // Inputs panel's ID that we wanna enable or disable
-        // UIPanelList.TryGetValue - checks if we have initialized our panel
-        // Then if that panel initialized we are disable or enable(bool active)
-        // If panel not Initialized, we are checking it in Prefab List(UIPanelPrefabList) with TryGetValue
-        // If it's in Prefab List then instantiate it and enable. If we trying to actually disable it(active == false) then don't even instantiate
-        // If we not have in UIPanelList or UIPanelPrefabList then error
-        public void SetPanelActive(PanelEnums panelEnums, bool active = true)
+            Initialize and Activate Panel
+            
+            If panel already initialized
+            Then Activate or Deactivate panel with corresponding events
+            
+            If panel not initialized
+            Instantiate panel from PrefabManager
+            Do not instantiate panel if we trying to Deactivate it
+            After Instantiation OnActivate Event will be called automatically
+            
+            If panel not initialized and not in PrefabManager
+            Then Error
+
+         */
+        public void SetPanelActive(PanelEnums panelID, bool active = true)
         {
-            if (PanelList.TryGetValue(panelEnums, out var panel))
+            if (PanelList.TryGetValue(panelID, out var panel))
             {
                 if (!active)
                 {
@@ -72,8 +92,12 @@ namespace KGUI
                 {
                     panel.OnActivate();
                 }
+                return;
             }
-            else if(PanelPrefabList.TryGetValue(panelEnums, out var panelPrefab))
+            
+            var panelPrefab = GameState.PrefabManager.GetPanelPrefab(panelID);
+            
+            if(panelPrefab != default)
             {
                 if (active)
                 {
@@ -87,23 +111,18 @@ namespace KGUI
             }
         }
 
-        public void Update(AgentEntity agentEntity)
+        public void Update()
         {
             canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
-            
-            text.Update();
-
-            var inventoryID = agentEntity.agentInventory.InventoryID;
-            var inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            var selectedSlot = inventory.inventoryEntity.SelectedSlotID;
-            SelectedInventoryItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
 
             HandleMouseEvents();
         }
 
+        // Activate all elements in all panels
+        // Will no be drawn if Panel not active
         public void Draw()
         {
             foreach (var panel in PanelList.Values)
@@ -115,14 +134,21 @@ namespace KGUI
             }
         }
 
+        /*
+            Initializing ElementUnderCursor and PanelUnderCursor
+            Call OnMouseStay     event when cursor position still hovering last element
+            Call OnMouseExited   event when cursor position not hovering last element anymore
+            Call OnMouseEntered  event when cursor position entered element on some panel
+            
+            Check if we clicked on ElementUnderCursor
+            Send click event to Panel with Element ID
+            Call OnMouseClicked event on ElementUnderCursor
+        */
         public void HandleMouseEvents()
         {
-            if (ElementUnderCursor != null 
-                && Collisions.Collisions.PointOverlapRect
-                (
+            if (ElementUnderCursor != null && Collisions.Collisions.PointOverlapRect(
                     CursorPosition.X, CursorPosition.Y,
-                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax)
-               )
+                    ElementUnderCursor.HitBox.xmin, ElementUnderCursor.HitBox.xmax, ElementUnderCursor.HitBox.ymin, ElementUnderCursor.HitBox.ymax))
             {
                 ElementUnderCursor.OnMouseStay();
             }

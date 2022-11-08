@@ -4,16 +4,14 @@ using System;
 
 public class GameResources
 {
-    private static bool IsInitialized = false; 
+    private static bool isInitialized; 
 
     public static void Initialize()
     {
-        if (!IsInitialized)
+        if (!isInitialized)
         {
             long beginTime = DateTime.Now.Ticks;
-
-            IsInitialized = true;
-
+            
             CreateDropTables();
             InitializeTGenTiles();
 
@@ -28,6 +26,8 @@ public class GameResources
             CreateVehicles();
 
             UnityEngine.Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+
+            isInitialized = true;
         }
     }
 
@@ -85,5 +85,10 @@ public class GameResources
     {
         GameState.VehicleCreationApi.InitializeResources();
         GameState.PodCreationApi.InitializeResources();
+    }
+
+    private static void CreatePrefabs()
+    {
+        GameState.PrefabManager.InitializeResources();
     }
 }

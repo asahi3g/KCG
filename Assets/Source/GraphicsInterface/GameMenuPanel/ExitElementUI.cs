@@ -14,7 +14,7 @@ namespace KGUI
 
             HitBoxObject = Icon.GameObject;
             
-            ID = ElementEnums.ExitButton;
+            ID = ElementEnums.ExitButtonGM;
 
             Icon = null;
         }

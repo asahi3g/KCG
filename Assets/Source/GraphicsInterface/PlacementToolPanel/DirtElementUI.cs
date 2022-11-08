@@ -16,7 +16,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = ElementEnums.Dirt;
+            ID = ElementEnums.DirtPT;
 
             Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Tiles\\Blocks\\Dirt\\dirt.png", Enums.AtlasType.Gui);
             border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);

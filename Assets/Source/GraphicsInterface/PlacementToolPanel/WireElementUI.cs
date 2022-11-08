@@ -18,7 +18,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = ElementEnums.Wire;
+            ID = ElementEnums.WirePT;
 
             Icon = new ImageWrapper(iconImage, 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", AtlasType.Gui);
 
