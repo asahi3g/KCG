@@ -15,7 +15,7 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
-            agentEntity.MonsterAttack(4.0f, 6.0f);
+            agentEntity.MonsterAttack(4.0f);
 
             return NodeState.Running;
         }
@@ -78,4 +78,6 @@ namespace Action
             return NodeState.Success;
         }
     }
+
+    // Todo: Add weapon melee atack action.
 }

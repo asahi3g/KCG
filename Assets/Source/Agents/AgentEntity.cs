@@ -423,7 +423,7 @@ public partial class AgentEntity
     }
 
 
-    public void MonsterAttack(float duration, float cooldown)
+    public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D; 

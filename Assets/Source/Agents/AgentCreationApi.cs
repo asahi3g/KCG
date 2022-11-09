@@ -7,8 +7,6 @@ using KMath;
 using static GameState;
 using static Action.ActionBasic;
 using static Condition.ConditionBasic;
-using UnityEditor.Tilemaps;
-
 
 namespace Agent
 {

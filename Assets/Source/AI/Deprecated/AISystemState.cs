@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using Node;
 using Enums;
-using AI.Sensor;
 
 namespace AI
 {
@@ -14,7 +13,6 @@ namespace AI
         static AISystemState()
         {
             CreateNodes();
-            CreateSensors();
         }
         public static NodeGroup GetNodeGroup(NodeType type)
         {
@@ -33,21 +31,6 @@ namespace AI
                 Nodes[(int)node.Type] = node;
             }
         }
-
-        static void CreateSensors()
-        {
-            int length = Enum.GetNames(typeof(SensorType)).Length - 1;
-            Sensors = new SensorBase[length];
-
-            foreach (Type type in Assembly.GetAssembly(typeof(SensorBase)).GetTypes()
-                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(SensorBase))))
-            {
-                SensorBase sensor = (SensorBase)Activator.CreateInstance(type);
-                Sensors[(int)sensor.Type] = sensor;
-            }
-        }
-
         public static NodeBase[] Nodes;
-        public static SensorBase[] Sensors;
     }
 }
