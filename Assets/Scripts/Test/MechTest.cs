@@ -63,8 +63,6 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateAction(NodeType.DropAction, Player.agentID.ID);
             }
 
-            GameState.MechGUIDrawSystem.Draw(Player);
-
             planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
@@ -212,8 +210,6 @@ namespace Planet.Unity
             MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
             
             InventoryID = Player.agentInventory.InventoryID;
-
-            GameState.MechGUIDrawSystem.Initialize();
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(ItemType.SpawnEnemySlimeTool);
             GameState.InventoryManager.AddItem(SpawnEnemyTool, inventoryID);

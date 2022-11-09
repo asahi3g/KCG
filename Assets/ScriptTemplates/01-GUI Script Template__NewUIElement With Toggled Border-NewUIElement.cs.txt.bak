@@ -1,12 +1,12 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Utility;
-using UnityEngine.UI;
 
 namespace KGUI
 {
     public class #SCRIPTNAME# : ElementUI, IToggleElement
     {
-        [SerializeField] private Image borderImage;
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
 
         private ImageWrapper border;
 	
@@ -14,7 +14,6 @@ namespace KGUI
         {
 			// Do all inititalization after base.Init()
             base.Init();
-			#NOTRIM#
 			#NOTRIM#
             ID = ElementEnums.#SCRIPTNAME#;
 			#NOTRIM#
@@ -43,9 +42,14 @@ namespace KGUI
 			Toggle(true);
         }
 		
-		public void ToggleActive(bool value)
+		public void Toggle(bool value)
         {
-            border.SetImageColor(value ? Color.red : Color.yellow);
+            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
         }
+		
+		public void ToggleFirst()
+		{
+		#NOTRIM#
+		}
     }
 }

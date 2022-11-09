@@ -1,5 +1,4 @@
 using System.Linq;
-using Enums.PlanetTileMap;
 
 namespace KGUI
 {
@@ -29,18 +28,32 @@ namespace KGUI
             {
                 element.gameObject.SetActive(true);
             }
+            
+            ToggleFirstElement();
         }
         public override void OnDeactivate()
         {
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemTile.TileID = TileID.Error;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Error;
             }
             
             foreach (var element in ElementList.Values)
             {
                 ((IToggleElement)element).Toggle(false);
+            }
+        }
+        
+        private void ToggleFirstElement()
+        {
+            var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
+            if (selectedInventoryItem == null) return;
+            
+            if (ElementList.First().Value is IToggleElement firstElement)
+            {
+                firstElement.Toggle(true);
+                selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Bedrock;
             }
         }
     }

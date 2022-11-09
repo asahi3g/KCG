@@ -1,6 +1,6 @@
-using UnityEngine;
+//imports UnityEngine
+
 using Utility;
-using UnityEngine.UI;
 
 namespace KGUI
 {

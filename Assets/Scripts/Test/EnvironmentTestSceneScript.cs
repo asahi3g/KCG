@@ -69,7 +69,6 @@ namespace Planet.Foreground
             inventoryID = Player.agentInventory.InventoryID;
 
             planet.InitializeSystems(Material, transform);
-            GameState.MechGUIDrawSystem.Initialize();
             //GenerateMap();
             var camera = UnityEngine.Camera.main;
             UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(
@@ -160,7 +159,6 @@ namespace Planet.Foreground
 
 
                 planet.InitializeSystems(Material, transform);
-                GameState.MechGUIDrawSystem.Initialize();
 
                 Player = planet.AddPlayer(new Vec2f(3.0f, 20));
                 PlayerID = Player.agentID.ID;
@@ -186,7 +184,6 @@ namespace Planet.Foreground
                 return;
 
             GameState.Planet.DrawHUD(Player);
-            GameState.MechGUIDrawSystem.Draw(Player);
 
             if (showMechInventory)
             {

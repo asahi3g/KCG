@@ -1,5 +1,6 @@
 //imports UnityEngine
 
+using System;
 using System.Linq;
 using Enums;
 using Enums.PlanetTileMap;
@@ -8,11 +9,6 @@ namespace KGUI
 {
     public class PlacementMaterialTool : PanelUI
     {
-        [UnityEngine.SerializeField] private BedrockElementUI bedrockElementUI;
-        [UnityEngine.SerializeField] private DirtElementUI dirtElementUI;
-        [UnityEngine.SerializeField] private PipeElementUI pipeElementUI;
-        [UnityEngine.SerializeField] private WireElementUI wireElementUI;
-
         public override void Init()
         {
             ID = PanelEnums.PlacementMaterialTool;
@@ -52,51 +48,35 @@ namespace KGUI
 
                     switch (materialBagSlot.itemType.Type)
                     {
-                        case ItemType.Dirt:
-                            if (ElementList.TryGetValue(ElementEnums.Dirt, out var dirtElementUI))
-                            {
-                                dirtElementUI.gameObject.SetActive(true);
-                            }
-                            break;
                         case ItemType.Bedrock:
-                            if (ElementList.TryGetValue(ElementEnums.Bedrock, out var bedrockElementUI))
+                            if (ElementList.TryGetValue(ElementEnums.BedrockPT, out var bedrockElementUI))
                             {
                                 bedrockElementUI.gameObject.SetActive(true);
                             }
                             break;
+                        case ItemType.Dirt:
+                            if (ElementList.TryGetValue(ElementEnums.DirtPT, out var dirtElementUI))
+                            {
+                                dirtElementUI.gameObject.SetActive(true);
+                            }
+                            break;
                         case ItemType.Pipe:
-                            if (ElementList.TryGetValue(ElementEnums.Pipe, out var pipeElementUI))
+                            if (ElementList.TryGetValue(ElementEnums.PipePT, out var pipeElementUI))
                             {
                                 pipeElementUI.gameObject.SetActive(true);
                             }
                             break;
                         case ItemType.Wire:
-                            if (ElementList.TryGetValue(ElementEnums.Wire, out var wireElementUI))
+                            if (ElementList.TryGetValue(ElementEnums.WirePT, out var wireElementUI))
                             {
                                 wireElementUI.gameObject.SetActive(true);
                             }
                             break;
                     }
-
-                    //if (materialBagSlot.hasItemStack)
-                    //{
-                    //    bedrockElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Bedrock
-                    //        ? UnityEngine.Color.red
-                    //        : UnityEngine.Color.yellow);
-                    //    dirtElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Moon
-                    //        ? UnityEngine.Color.red
-                    //        : UnityEngine.Color.yellow);
-
-                    //    pipeElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Pipe
-                    //        ? UnityEngine.Color.red
-                    //        : UnityEngine.Color.yellow);
-
-                    //    wireElementUI.Border.SetImageColor(selectedInventoryItem.itemTile.TileID == TileID.Wire
-                    //        ? UnityEngine.Color.red
-                    //        : UnityEngine.Color.yellow);
-                    //}
                 }
             }
+            
+            ToggleFirstElement();
         }
 
         public override void OnDeactivate()
@@ -110,6 +90,39 @@ namespace KGUI
             foreach (var element in ElementList.Values)
             {
                 ((IToggleElement)element).Toggle(false);
+            }
+        }
+        
+        private void ToggleFirstElement()
+        {
+            var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
+            if (selectedInventoryItem == null) return;
+
+            foreach (var element in ElementList.Values.Where(element => element.gameObject.activeSelf))
+            {
+                switch (element.ID)
+                {
+                    case ElementEnums.Error:
+                        selectedInventoryItem.itemTile.TileID = TileID.Error;
+                        break;
+                    case ElementEnums.BedrockPT:
+                        ((IToggleElement)element).Toggle(true);
+                        selectedInventoryItem.itemTile.TileID = TileID.Bedrock;
+                        break;
+                    case ElementEnums.DirtPT:
+                        ((IToggleElement)element).Toggle(true);
+                        selectedInventoryItem.itemTile.TileID = TileID.Moon;
+                        break;
+                    case ElementEnums.PipePT:
+                        ((IToggleElement)element).Toggle(true);
+                        selectedInventoryItem.itemTile.TileID = TileID.Pipe;
+                        break;
+                    case ElementEnums.WirePT:
+                        ((IToggleElement)element).Toggle(true);
+                        selectedInventoryItem.itemTile.TileID = TileID.Wire;
+                        break;
+                }
+                break;
             }
         }
     }

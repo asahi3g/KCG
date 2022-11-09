@@ -15,7 +15,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
 
-            ID = ElementEnums.HealthPotion;
+            ID = ElementEnums.HealthPotionPT;
 
             Icon = new ImageWrapper(iconImage, 19, 19,
                 "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
