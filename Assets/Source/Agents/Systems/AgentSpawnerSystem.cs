@@ -188,7 +188,7 @@ namespace Agent
                     {
                         UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
 
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
+                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
                         UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         //GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
@@ -210,7 +210,7 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f),
+                            properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
                             Vec2f.Zero);
 
 
@@ -305,7 +305,7 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemyInsect:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SmallInsect);
+                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
                         UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
@@ -321,15 +321,15 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
-                            Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
-                            new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);
+                            properties.AnimationType, Enums.ItemAnimationSet.Default,
+                            properties.ModelScale, Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;
                     }
                 case Enums.AgentType.EnemyHeavy:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.HeavyInsect);
+                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
                         UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
 
                         model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
@@ -345,8 +345,8 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f), Vec2f.Zero);
+                            properties.AnimationType,
+                            Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero);
                         entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
 
                         break;

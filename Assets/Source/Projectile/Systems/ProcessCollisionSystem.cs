@@ -196,7 +196,26 @@ namespace Projectile
                 }
 
 
+                 AgentEntity closestAgent = null;
+                float closestDistance = 999999.0f;
 
+                if (CollidedWithArrayCount > 0)
+                {
+                    closestAgent = CollidedWithArray[0];
+                    closestDistance = (CollidedWithArray[0].agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                }
+
+
+                for(int i = 0; i < CollidedWithArrayCount; i++)
+                {
+                    AgentEntity agentEntity = CollidedWithArray[i];
+                    float testDistance = (agentEntity.agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                    if (testDistance < closestDistance)
+                    {
+                        closestAgent = agentEntity;
+                        closestDistance = testDistance;
+                    }
+                }
 
 
 
@@ -241,66 +260,45 @@ namespace Projectile
                         physicsState.Velocity = Vec2f.Zero;
                     }*/
 
-                    if (!entity.hasProjectileOnHit)
+
+                    if (closestAgent == null)
                     {
-                        entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
-                    }
-                    else 
-                    {
-                        entity.projectileOnHit.LastHitPos = physicsState.Position;
-                        entity.projectileOnHit.LastHitTime = Time.time;
-                    }
+                        // we collided with terrain
+                          if (!entity.hasProjectileOnHit)
+                        {
+                            entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                        }
+                        else 
+                        {
+                            entity.projectileOnHit.LastHitPos = physicsState.Position;
+                            entity.projectileOnHit.LastHitTime = Time.time;
+                        }
 
-                    if (entity.isProjectileFirstHIt)
-                    {
-                        physicsState.Velocity = new Vec2f();
-                    }
-                }
-
-
-                AgentEntity closestAgent = null;
-                float closestDistance = 999999.0f;
-
-                if (CollidedWithArrayCount > 0)
-                {
-                    closestAgent = CollidedWithArray[0];
-                    closestDistance = (CollidedWithArray[0].agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
-                }
-
-
-                for(int i = 0; i < CollidedWithArrayCount; i++)
-                {
-                    AgentEntity agentEntity = CollidedWithArray[i];
-                    float testDistance = (agentEntity.agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
-                    if (testDistance < closestDistance)
-                    {
-                        closestAgent = agentEntity;
-                        closestDistance = testDistance;
-                    }
-                }
-
-
-                if (closestAgent != null)
-                {
-                   /* physicsState.Position = new Vec2f(collisionPosition.X, collisionPosition.Y) - box2DCollider.Offset;
-                    physicsState.Velocity = Vec2f.Zero;*/
-
-                    // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                    if (!entity.hasProjectileOnHit)
-                    {
-                        entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                        if (entity.isProjectileFirstHIt)
+                        {
+                            physicsState.Velocity = new Vec2f();
+                        }
                     }
                     else
                     {
-                        entity.projectileOnHit.AgentID = closestAgent.agentID.ID;
-                        entity.projectileOnHit.LastHitPos = physicsState.Position;
-                        entity.projectileOnHit.LastHitTime = Time.time;
+                        // we collided with an agent
+                        // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                        if (!entity.hasProjectileOnHit)
+                        {
+                            entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                        }
+                        else
+                        {
+                            entity.projectileOnHit.AgentID = closestAgent.agentID.ID;
+                            entity.projectileOnHit.LastHitPos = physicsState.Position;
+                            entity.projectileOnHit.LastHitTime = Time.time;
+                        }
                     }
+
+                  
                 }
 
                 CollidedWithArrayCount = 0;
-
-
                 entityBoxBorders.DrawBox();
             }
 

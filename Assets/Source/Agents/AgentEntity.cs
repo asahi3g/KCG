@@ -37,7 +37,7 @@ public partial class AgentEntity
     public bool CanMove()
     {
         var physicsState = agentPhysicsState;
-        return physicsState.MovementState != AgentMovementState.IdleAfterShooting;
+        return isAgentAlive && physicsState.MovementState != AgentMovementState.IdleAfterShooting;
     }
 
     public bool IsStateFree()
@@ -62,7 +62,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        return physicsState.MovementState == AgentMovementState.Crouch ||
+        return isAgentAlive && physicsState.MovementState == AgentMovementState.Crouch ||
                 physicsState.MovementState == AgentMovementState.Crouch_Move ||
                 physicsState.MovementState == AgentMovementState.Crouch_MoveBackward;
     }
@@ -116,12 +116,15 @@ public partial class AgentEntity
 
     public void DieKnockBack()
     {
-        isAgentAlive = false;
+        if (isAgentAlive)
+        {
+            isAgentAlive = false;
 
-        var physicsState = agentPhysicsState;
-        physicsState.MovementState = AgentMovementState.KnockedDownBack;
+            var physicsState = agentPhysicsState;
+            physicsState.MovementState = AgentMovementState.KnockedDownBack;
 
-        physicsState.DyingDuration = 1.5f;
+            physicsState.DyingDuration = 1.5f;
+        }
     }
 
     public Vec2f GetGunFiringPosition()
@@ -337,7 +340,7 @@ public partial class AgentEntity
     {
          var physicsState = agentPhysicsState;
 
-        if (IsStateFree() && isAgentPlayer)
+        if (isAgentAlive && IsStateFree() && isAgentPlayer)
         {
             physicsState.MovementState = AgentMovementState.SlidingRight;
             physicsState.JumpCounter = 0;
@@ -348,7 +351,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree() && isAgentPlayer)
+        if (isAgentAlive && IsStateFree() && isAgentPlayer)
         {
             physicsState.MovementState = AgentMovementState.SlidingLeft;
             physicsState.JumpCounter = 0;
@@ -360,7 +363,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.FireGun;
             
@@ -375,7 +378,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.PickaxeHit;
 
@@ -389,7 +392,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.ChoppingTree;
 
@@ -403,7 +406,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.UseTool;
 
@@ -417,7 +420,7 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.Drink;
 
@@ -433,7 +436,7 @@ public partial class AgentEntity
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D; 
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
             physicsState.MovementState = AgentMovementState.MonsterAttack;
             physicsState.SetMovementState = true;
@@ -449,7 +452,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (PhysicsState.DashCooldown <= 0.0f &&
+        if (isAgentAlive && PhysicsState.DashCooldown <= 0.0f &&
         IsStateFree() && CanMove())
         {
             PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
@@ -467,7 +470,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (IsStateFree() && PhysicsState.OnGrounded && CanMove())
+        if (isAgentAlive && IsStateFree() && PhysicsState.OnGrounded && CanMove())
         {
             PhysicsState.Velocity.X = 1.75f * PhysicsState.Speed * horizontalDir;
             PhysicsState.Velocity.Y = 0.0f;
@@ -487,7 +490,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (IsStateFree() && PhysicsState.OnGrounded && 
+        if (isAgentAlive && IsStateFree() && PhysicsState.OnGrounded && 
         PhysicsState.MovementState != AgentMovementState.Crouch &&
         PhysicsState.MovementState != AgentMovementState.Crouch_Move &&
         CanMove())
@@ -518,7 +521,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (PhysicsState.MovementState == AgentMovementState.Crouch ||
+        if (isAgentAlive && PhysicsState.MovementState == AgentMovementState.Crouch ||
         PhysicsState.MovementState == AgentMovementState.Crouch_Move)
         {
             if (horizontalDir == 0)
@@ -547,7 +550,7 @@ public partial class AgentEntity
         var PhysicsState = agentPhysicsState;
         var stats = agentStats;
 
-        if (IsStateFree() && !stats.IsLimping && CanMove())
+        if (isAgentAlive && IsStateFree() && !stats.IsLimping && CanMove())
         {
             // handling horizontal movement (left/right)
             if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
@@ -576,7 +579,7 @@ public partial class AgentEntity
         var PhysicsState = agentPhysicsState;
         var stats = agentStats;
         
-        if (IsStateFree() && CanMove())
+        if (isAgentAlive && IsStateFree() && CanMove())
         {
             if (IsCrouched())
             {
@@ -667,7 +670,7 @@ public partial class AgentEntity
     public void Jump()
         {
             var physicsState = agentPhysicsState;
-            if (IsStateFree() && CanMove())
+            if (isAgentAlive && IsStateFree() && CanMove())
             {
                 // we can start jumping only if the jump counter is 0
                 if (physicsState.JumpCounter == 0)
