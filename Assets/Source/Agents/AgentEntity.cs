@@ -136,20 +136,38 @@ public partial class AgentEntity
         {
             if(isAgentAlive)
             {
-                UnityEngine.Transform FirePosition = model3d.RightHand.transform;
+                UnityEngine.Transform FirePosition = model3d.RightHand.transform.parent;
 
                 switch (model3d.ItemAnimationSet)
                 {
                     case ItemAnimationSet.HoldingRifle:
                     {
-                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                            if(agentPhysicsState.FacingDirection == 1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x + 0.2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
+                            else if (agentPhysicsState.FacingDirection == -1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x - 0.2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
                             break;
                     }
                     case ItemAnimationSet.HoldingPistol:
                     {
-                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                            if (agentPhysicsState.FacingDirection == 1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x + .2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
+                            else if (agentPhysicsState.FacingDirection == -1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x - .2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
                             break;
-                    }
+                        }
                 }
             }
 
