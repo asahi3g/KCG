@@ -1,7 +1,6 @@
 //imports UnityEngine
 
 using KMath;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
@@ -9,12 +8,9 @@ namespace KGUI
     [UnityEngine.DefaultExecutionOrder (100)]
     public class ElementUI : UnityEngine.MonoBehaviour
     {
-        [UnityEngine.SerializeField] protected Image iconImage;
-
-        protected ImageWrapper Icon;
-        // Set this to any initialized image
+        [UnityEngine.SerializeField] protected ImageWrapper icon;
+        
         protected UnityEngine.GameObject HitBoxObject;
-
         public ElementEnums ID { get; protected set; }
         public UnityEngine.Vector3 HitBoxPosition { get; private set; }
         public UnityEngine.Vector2 HitBoxSize { get; private set; }
