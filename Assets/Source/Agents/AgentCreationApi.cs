@@ -193,6 +193,9 @@ namespace Agent
 
         public void InitializeResources()
         {
+            RegisterConditions();
+            RegisterBasicActions();
+
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
@@ -249,6 +252,7 @@ namespace Agent
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.5f, 2.5f));
+            GameState.AgentCreationApi.SetBehaviorTree(CreateMarineBehavior());
             GameState.AgentCreationApi.SetDetectionRadius(24.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
@@ -260,6 +264,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(1.25f, 1.0f));
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
+            GameState.AgentCreationApi.SetBehaviorTree(CreateInsectBehavior());
             GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
 
@@ -272,6 +277,7 @@ namespace Agent
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
             GameState.AgentCreationApi.SetDetectionRadius(16.0f);
             GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetBehaviorTree(CreateInsectBehavior());
             GameState.AgentCreationApi.End();
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyMarine);
@@ -287,9 +293,6 @@ namespace Agent
 
         int CreateMarineBehavior()
         {
-            RegisterConditions();
-            RegisterBasicActions();
-
             // Node always returns success.
             int successNodeID = NodeManager.CreateNode("SuccessNode", NodeSystem.NodeType.Action);
             NodeManager.SetAction(NodeSystem.ActionManager.SuccessActionID);
@@ -311,7 +314,7 @@ namespace Agent
 
             int moveTo = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
-            NodeManager.SetData(-1);
+            NodeManager.SetData(ConditionManager.GetID("CanSeeAndInRange"));
             NodeManager.EndNode();
 
             int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.NodeType.Action);
@@ -367,11 +370,11 @@ namespace Agent
 
             int moveTo = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
-            NodeManager.SetData(-1);
+            NodeManager.SetData(ConditionManager.GetID("ItIsOnTheNextTile"));
             NodeManager.EndNode();
 
-            int melee = NodeManager.CreateNode("Melee", NodeSystem.NodeType.Action);
-            NodeManager.SetAction(ActionManager.GetID("Melee"));
+            int melee = NodeManager.CreateNode("MeleeAtack", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("MeleeAtack"));
             NodeManager.SetData(-1);
             NodeManager.EndNode();
 

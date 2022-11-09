@@ -174,13 +174,26 @@ namespace Agent
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
             if (agentType != Enums.AgentType.Player)
-                entity.AddAgentsLineOfSight(new CircleSector() 
+            {
+                entity.AddAgentsLineOfSight(new CircleSector()
+                {
+                    Radius = 50,
+                    Fov = 60,
+                    StartPos = position,
+                    Dir = new Vec2f(entity.agentPhysicsState.FacingDirection, 0.0f)
+                });
+
+                int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
+                entity.AddAgentController(
+                    newBehaviorTreeId: behaviorTreeID,
+                    newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
+                    newSensorsID: new List<int>()
                     {
-                        Radius = 50,
-                        Fov = 60,
-                        StartPos = position,
-                        Dir = new Vec2f(entity.agentPhysicsState.FacingDirection, 0.0f)
-                    });
+                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
+                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
+                    },
+                    newSquadID: -1);
+            }
 
             switch (agentType)
             {
@@ -380,16 +393,6 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
-                        int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
-                        entity.AddAgentController(
-                            newBehaviorTreeId: behaviorTreeID,
-                            newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
-                            newSensorsID: new List<int>() 
-                            { 
-                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
-                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
-                            },
-                            newSquadID: -1);
                         entity.HandleItemSelected(item);
                         break;
                     }

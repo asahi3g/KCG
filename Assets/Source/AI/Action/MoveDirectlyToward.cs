@@ -20,7 +20,7 @@ namespace Action
             // Get Data
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
-            //int endConditionId = data.GetNodeData<int>(index);
+            int endConditionId = data.GetNodeData<int>(index);
             ref float acceptableRadius = ref data.GetNodeData<float>(index);
 
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
@@ -29,12 +29,11 @@ namespace Action
             int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
 
             // Walk diagonal if there is an obstacle jump.
-            //ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
-            //if (condition(ptr))
             TileID belowTile = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X), (int)physicsState.Position.Y - 1);
             if (belowTile != TileID.Air)
             {
-                if (ConditionBasic.CanSeeAndInRange(ptr))
+                ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
+                if (condition(ptr))
                     return NodeState.Success;
             }
 

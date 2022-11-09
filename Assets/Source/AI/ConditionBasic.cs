@@ -3,6 +3,7 @@ using Item;
 using NodeSystem;
 using Planet;
 using AI;
+using UnityEngine;
 
 namespace Condition
 {
@@ -81,6 +82,20 @@ namespace Condition
             return false;
         }
 
+        public static bool ItIsOnTheNextTile(object ptr)
+        {
+            ref PlanetState planet = ref GameState.Planet;
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
+            AgentEntity target = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+
+            if (Mathf.Abs(agent.agentPhysicsState.Position.X - target.agentPhysicsState.Position.X) <= 1.0f)
+                return true;
+
+            return false;
+        }
+
         public static void RegisterConditions()
         {
             GameState.ConditionManager.RegisterCondition("HasBulletInClip", HasBulletInClip);
@@ -89,6 +104,7 @@ namespace Condition
             GameState.ConditionManager.RegisterCondition("NotInAttackRange", NotInAttackRange);
             GameState.ConditionManager.RegisterCondition("InLineOfSight", InLineOfSight);
             GameState.ConditionManager.RegisterCondition("CanSeeAndInRange", CanSeeAndInRange);
+            GameState.ConditionManager.RegisterCondition("ItIsOnTheNextTile", ItIsOnTheNextTile);
         }
     }
 }

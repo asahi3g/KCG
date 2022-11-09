@@ -2,12 +2,13 @@ using KMath;
 using Item;
 using NodeSystem;
 using Planet;
+using Entitas;
 
 namespace Action
 {
     public class MeleeAtackAction
     {
-        public NodeState Action(object ptr, int index)
+        public static NodeState Action(object ptr, int index)
         {
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
@@ -24,7 +25,7 @@ namespace Action
             }
             else 
             {
-                agentEntity.MonsterAttack(1.0f, 2.0f);
+                agentEntity.MonsterAttack(4.0f, 6.0f);
             }
 
             // Check if attack has hit an enemy.
