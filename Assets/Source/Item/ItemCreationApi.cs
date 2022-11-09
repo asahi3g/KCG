@@ -1080,6 +1080,7 @@ namespace Item
             SetInventoryTexture(ConstructionToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetUIPanel(PanelEnums.MechTool);
             SetAction(NodeType.ToolActionConstruction);
             EndItem();
 

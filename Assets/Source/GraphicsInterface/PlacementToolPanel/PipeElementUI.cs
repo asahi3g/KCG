@@ -16,7 +16,7 @@ namespace KGUI
 
             HitBoxObject = borderImage.gameObject;
             
-            ID = ElementEnums.Pipe;
+            ID = ElementEnums.PipePT;
 
             Icon = new ImageWrapper(iconImage, 16, 16, "Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", Enums.AtlasType.Gui);
 

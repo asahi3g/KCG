@@ -511,6 +511,7 @@ namespace ECSInput
                         }
                         inventory.inventoryEntity.SelectedSlotID = i;
                         item = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
+                        GameState.GUIManager.SelectedInventoryItem = item;
                         if (item == null) return;
 
                         entity.HandleItemSelected(item);

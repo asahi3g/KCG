@@ -14,7 +14,7 @@ namespace KGUI
 
             HitBoxObject = Icon.GameObject;
             
-            ID = ElementEnums.ControlsButton;
+            ID = ElementEnums.ControlsButtonGM;
 
             Icon = null;
         }

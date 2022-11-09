@@ -94,19 +94,18 @@ namespace Planet.Unity
             Planet.Init(mapSize);
 
             int PlayerFaction = 0;
-            int enemyFaction = 1;
+            int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            GameState.Planet.AddAgent(new Vec2f(14.0f, 10), Enums.AgentType.EnemyMarine, enemyFaction);
+            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
-            GameState.MechGUIDrawSystem.Initialize();
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -220,7 +219,6 @@ namespace Planet.Unity
 
 
                planet.InitializeSystems(Material, transform);
-               GameState.MechGUIDrawSystem.Initialize();
 
                Player = planet.AddPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;

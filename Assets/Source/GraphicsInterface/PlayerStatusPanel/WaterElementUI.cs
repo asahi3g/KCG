@@ -18,7 +18,7 @@ namespace KGUI
         {
             base.Init();
             
-            ID = ElementEnums.WaterIndicator;
+            ID = ElementEnums.WaterIndicatorPS;
             
             ref var planet = ref GameState.Planet;
             waterAmount = planet.Player != null ? planet.Player.agentStats.Water : 0.0f;

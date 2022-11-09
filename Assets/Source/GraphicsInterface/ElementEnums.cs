@@ -7,24 +7,34 @@ namespace KGUI
         Test,
 
         // Player Status HUD Indicators
-        FoodIndicator,
-        FuelIndicator,
-        HealthIndicator,
-        WaterIndicator,
-        OxygenIndicator,
+        FoodIndicatorPS,
+        FuelIndicatorPS,
+        HealthIndicatorPS,
+        WaterIndicatorPS,
+        OxygenIndicatorPS,
 
         // Placement Tool
-        Bedrock,
-        Dirt,
-        Pipe,
-        Wire,
-        HealthPotion, // This we actually drink, not placing
+        BedrockPT,
+        DirtPT,
+        PipePT,
+        WirePT,
+        HealthPotionPT, // This we actually drink, not placing
 
         // Game Menu Buttons
-        StartButton,
-        ResumeButton,
-        ControlsButton,
-        ExitButton,
+        StartButtonGM,
+        ResumeButtonGM,
+        ControlsButtonGM,
+        ExitButtonGM,
+        
+        // Mech Tool
+        ChestMT,
+        PlanterMT,
+        LightMT,
+        MajestyPalmMT,
+        SagoPalmMT,
+        DracaenaTrifasciataMT,
+        SmashableBoxMT,
+        SmashableEggMT,
 
         // Geometry Tool
         SQNoSpecular_0,

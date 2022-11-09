@@ -20,7 +20,7 @@ namespace KGUI
             ref var planet = ref GameState.Planet;
             base.Init();
             
-            ID = ElementEnums.FoodIndicator;
+            ID = ElementEnums.FoodIndicatorPS;
             
             foodAmount = planet.Player != null ? planet.Player.agentStats.Food : 0.0f;
 

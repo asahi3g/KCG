@@ -20,7 +20,7 @@ namespace KGUI
             base.Init();
 
             ref var planet = ref GameState.Planet;
-            ID = ElementEnums.FuelIndicator;
+            ID = ElementEnums.FuelIndicatorPS;
             fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
             
             Icon = new ImageWrapper(iconImage, 19, 19,
