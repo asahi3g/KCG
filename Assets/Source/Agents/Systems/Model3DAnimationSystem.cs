@@ -39,7 +39,7 @@ namespace Agent
 
                     if (agentAnimation.UseActionDurationForSpeed)
                     {
-                        currentClip.Speed = currentClip.Speed / physicsState.ActionCooldown;
+                        currentClip.Speed = currentClip.Speed / physicsState.ActionDuration;
                     }
 
 

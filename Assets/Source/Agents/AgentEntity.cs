@@ -367,7 +367,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -381,7 +380,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -395,7 +393,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -409,11 +406,10 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
-    public void UsePotion(float cooldown)
+    public void UsePotion(float duration)
     {
         var physicsState = agentPhysicsState;
 
@@ -422,8 +418,7 @@ public partial class AgentEntity
             physicsState.MovementState = AgentMovementState.Drink;
 
             physicsState.ActionInProgress = true;
-            physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
+            physicsState.ActionDuration = duration;
         }
     }
 
@@ -441,7 +436,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = duration;
-            physicsState.ActionCooldown = cooldown;      
         }
     }
 
@@ -449,7 +443,7 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (PhysicsState.SlashCooldown <= 0.0f && IsStateFree())
+        if (IsStateFree())
         {
             //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
             //PhysicsState.Velocity.Y = 0.0f;
@@ -457,7 +451,6 @@ public partial class AgentEntity
             //PhysicsState.Invulnerable = false;
             //PhysicsState.AffectedByGravity = true;
             PhysicsState.MovementState = AgentMovementState.SwordSlash;
-            PhysicsState.SlashCooldown = 0.6f;
         }
     }
 
@@ -516,7 +509,7 @@ public partial class AgentEntity
             PhysicsState.ActionInProgress = true;
             PhysicsState.ActionJustEnded = false;
             PhysicsState.ActionDuration = 0.5f;
-            PhysicsState.ActionCooldown = 1.75f;
+            PhysicsState.RollCooldown = 1.75f;
         }
     }
 

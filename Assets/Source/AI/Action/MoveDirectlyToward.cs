@@ -15,6 +15,7 @@ namespace Action
             public int EndConditionId; // Condition ID to end movement scene.
         }
 
+        // Todo: Add non reachable check.
         static public NodeState Action(object ptr, int index)
         {
             // Get Data
@@ -35,16 +36,16 @@ namespace Action
                 ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
                 if (condition(ptr))
                     return NodeState.Success;
+
+                physicsState.FacingDirection = direction;
+                agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
+                agent.Run(direction);
+
+                // if next tile is solid jump.
+                TileID frontTileIDX = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X + direction), (int)physicsState.Position.Y);
+                if (frontTileIDX != TileID.Air && agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump)
+                    agent.Jump();
             }
-
-            physicsState.FacingDirection = direction;
-            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
-            agent.Run(direction);
-
-            // if next tile is solid jump.
-            TileID frontTileIDX = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X + direction), (int)physicsState.Position.Y);
-            if (frontTileIDX != TileID.Air && agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump)
-                agent.Jump();
 
             return NodeState.Running;
         }

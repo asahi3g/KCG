@@ -79,11 +79,6 @@ namespace Agent
                 {
                     physicsState.RollCooldown -= deltaTime;
                 }
-
-                if (physicsState.SlashCooldown > 0)
-                {
-                    physicsState.SlashCooldown -= deltaTime;
-                }
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.SwordSlash)

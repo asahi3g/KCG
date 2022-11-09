@@ -40,9 +40,8 @@ namespace Condition
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity entity = planet.AgentList.Get(i);
-                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive)
+                if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive || agent.agentID.Faction == entity.agentID.Faction)
                     continue;
-
                 return true;
             }
             return false;
@@ -88,7 +87,7 @@ namespace Condition
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
-            AgentEntity target = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            AgentEntity target = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.AgentTargetID);
 
             if (Mathf.Abs(agent.agentPhysicsState.Position.X - target.agentPhysicsState.Position.X) <= 1.0f)
                 return true;

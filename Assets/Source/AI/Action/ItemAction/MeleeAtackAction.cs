@@ -3,38 +3,40 @@ using Item;
 using NodeSystem;
 using Planet;
 using Entitas;
+using Agent;
 
 namespace Action
 {
-    public class MeleeAtackAction
+    // Melee Attack with no weapon equipped.
+    public class BasicMeleeAtackAction
     {
-        public static NodeState Action(object ptr, int index)
+        public static NodeState OnEnter(object ptr, int index)
         {
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
-            ItemInventoryEntity itemEntity = agentEntity.GetItem();
-            int damage = 0;
-            float range = 0;
-            if (itemEntity == null)
-            {
-                FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
-                damage = WeaponProperty.BasicDemage;
-                range = WeaponProperty.Range;
-                agentEntity.SwordSlash();
-            }
-            else 
-            {
-                agentEntity.MonsterAttack(4.0f, 6.0f);
-            }
+            agentEntity.MonsterAttack(4.0f, 6.0f);
 
-            // Check if attack has hit an enemy.
-            var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            return NodeState.Running;
+        }
 
+        public static NodeState OnUpdate(object ptr, int index)
+        {
+            ref PlanetState planet = ref GameState.Planet;
+            ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
+            AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
+            ref AgentProperties agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
+
+            if (stateData.NodesExecutiondata[index].ExecutionTime <= agentProperties.Attack.Windup)
+                return NodeState.Running;
+
+            float range = agentProperties.Attack.Range;
+            int damage = agentProperties.Attack.Demage;
             var physicsState = agentEntity.agentPhysicsState;
-            foreach (var agent in agents)
+            for (int i = 0; i < planet.AgentList.Length; i++)
             {
-                if (agent.agentID.ID != agentEntity.agentID.ID || agent.isAgentAlive || agent.agentID.Faction != agentEntity.agentID.Faction)
+                AgentEntity agent = planet.AgentList.Get(i);
+                if (agent.agentID.ID == agentEntity.agentID.ID || !agent.isAgentAlive || agent.agentID.Faction == agentEntity.agentID.Faction)
                     continue;
                 var agentPhysicsState = agent.agentPhysicsState;
 
@@ -57,7 +59,7 @@ namespace Action
                     agent.Knockback(7.0f, -KnockbackDir);
 
                     // spawns a debug floating text for damage 
-                    planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
+                    planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f),
                     new Vec2f(agentPhysicsState.Position.X, agentPhysicsState.Position.Y + 0.35f));
 
                     agent.agentStats.Health -= damage;

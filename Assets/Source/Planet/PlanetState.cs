@@ -469,7 +469,6 @@ namespace Planet
 
             GameState.AgentModel3DAnimationSystem.Update();
             GameState.LootDropSystem.Update();
-            GameState.EnemyAiSystem.Update(frameTime);
             GameState.FloatingTextUpdateSystem.Update(frameTime);
             GameState.AnimationUpdateSystem.Update(frameTime);
             GameState.ItemPickUpSystem.Update();
