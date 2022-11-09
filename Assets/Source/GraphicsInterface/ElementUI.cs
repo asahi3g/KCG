@@ -33,7 +33,7 @@ namespace KGUI
                 var corners = new UnityEngine.Vector3[4];
                 rect.GetWorldCorners(corners);
                 HitBoxPosition = corners[0]; // 0 - bottom left, 1 - top left, 2 - top right, 3 - bottom right
-                HitBoxSize = rect.sizeDelta * rect.localScale;
+                HitBoxSize = rect.sizeDelta * rect.localScale * rect.lossyScale;
                 HitBox = new AABox2D(new Vec2f(HitBoxPosition.x, HitBoxPosition.y), new Vec2f(HitBoxSize.x, HitBoxSize.y));
                 transform.hasChanged = false;
             }
