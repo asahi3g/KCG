@@ -64,6 +64,19 @@ namespace PlanetTileMap
             CurrentTileIndex = TileID.Error;
         }
 
+        public ref TileProperty GetTileProperty(MaterialType materialType, Enums.TileGeometryAndRotation shapeType)
+        {
+            for (int i = 0; i < TilePropertyArray.Length; i++)
+            {
+                if (TilePropertyArray[i].MaterialType == materialType && TilePropertyArray[i].BlockShapeType == shapeType)
+                {
+                    return ref TilePropertyArray[i];
+                }
+            }
+            
+            return ref TilePropertyArray[0];
+        }
+        
         public ref TileProperty GetTileProperty(TileID tileID)
         {
             return ref TilePropertyArray[(int)tileID];
@@ -317,8 +330,7 @@ namespace PlanetTileMap
         public void CreateMetalGeometryTiles()
         {
             GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Metal);
-            GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Metal);
-                     GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 19, 21);
