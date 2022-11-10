@@ -56,7 +56,8 @@ namespace BehaviorTree
             {
                 if (!StackTree.Contains(i))
                     DataState.NodesExecutiondata[i].ExecutionTime = 0;
-                DataState.NodesExecutiondata[i].ExecutionTime += Time.deltaTime;
+                else
+                    DataState.NodesExecutiondata[i].ExecutionTime += Time.deltaTime;
             }
 
             ExecuteTree();

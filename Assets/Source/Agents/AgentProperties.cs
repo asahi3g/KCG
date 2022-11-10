@@ -20,12 +20,11 @@ namespace Agent
 
         // Enemy agent
         public int BehaviorTreeRootID;
-        public float DetectionRadius;
 
         // Stats
         public float Health;
-        public float AttackCooldown;
 
+        public BasicAttack Attack;
         public MovementProperties MovProperties;
         public Enums.AgentAnimationType AnimationType;
 
@@ -41,5 +40,14 @@ namespace Agent
         public float MaxNumOfJumps;
         public float JumpHeight;
         public float DefaultSpeed;
+    }
+
+    // Properties of unarmerd melee attack.
+    public struct BasicAttack
+    {
+        public float Range;
+        public int Demage;
+        public float Windup;        // Time to damage.
+        public float CoolDown;
     }
 }

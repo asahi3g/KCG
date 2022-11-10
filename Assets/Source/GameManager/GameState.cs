@@ -65,7 +65,6 @@ public static class GameState
     #region Agent
     public static readonly Agent.AgentCreationApi AgentCreationApi;
     public static readonly Agent.AgentSpawnerSystem AgentSpawnerSystem;
-    public static readonly Agent.EnemyAiSystem EnemyAiSystem;
     public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
     public static readonly Agent.MovementSystem AgentMovementSystem;
     public static readonly Agent.AgentIKSystem AgentIKSystem;
@@ -241,8 +240,6 @@ public static class GameState
         InventoryCreationApi = new Inventory.CreationApi();
         InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
         InventoryWindowScaleSystem = new Inventory.WindowScaleSystem();
-
-        EnemyAiSystem = new Agent.EnemyAiSystem();
 
         AnimationManager = new Animation.AnimationManager();
 

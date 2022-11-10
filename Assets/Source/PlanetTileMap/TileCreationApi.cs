@@ -319,6 +319,7 @@ namespace PlanetTileMap
             GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Metal);
             GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Metal);
                      GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertyTexture(MetalTileSheet, 19, 21);
             GameState.TileCreationApi.EndTileProperty();
@@ -579,11 +580,13 @@ namespace PlanetTileMap
 
 
 
-         public void CreateRockGeometryTiles()
+        public void CreateRockGeometryTiles()
         {
            GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Rock);
             GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Rock);
                      GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
+            GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Rock);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertyTexture(RockTileSheet, 19, 21);
             GameState.TileCreationApi.EndTileProperty();

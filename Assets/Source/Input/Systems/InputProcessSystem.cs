@@ -111,7 +111,7 @@ namespace ECSInput
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel > 0)
                 {
-                    GameState.AgentProcessPhysicalState.JetPackFlying(player);
+                    player.JetPackFlying();
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace ECSInput
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))
                 {
-                    GameState.AgentProcessPhysicalState.JetPackFlying(player);
+                    player.JetPackFlying();
                 }
 
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow))

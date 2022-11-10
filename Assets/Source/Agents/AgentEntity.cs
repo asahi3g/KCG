@@ -139,20 +139,38 @@ public partial class AgentEntity
         {
             if(isAgentAlive)
             {
-                UnityEngine.Transform FirePosition = model3d.RightHand.transform;
+                UnityEngine.Transform FirePosition = model3d.RightHand.transform.parent;
 
                 switch (model3d.ItemAnimationSet)
                 {
                     case ItemAnimationSet.HoldingRifle:
                     {
-                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                            if(agentPhysicsState.FacingDirection == 1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x + 0.2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
+                            else if (agentPhysicsState.FacingDirection == -1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x - 0.2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
                             break;
                     }
                     case ItemAnimationSet.HoldingPistol:
                     {
-                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                            if (agentPhysicsState.FacingDirection == 1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x + .2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
+                            else if (agentPhysicsState.FacingDirection == -1)
+                            {
+                                position = new Vec2f(FirePosition.transform.position.x - .2f, FirePosition.transform.position.y + 0.5f);
+                                break;
+                            }
                             break;
-                    }
+                        }
                 }
             }
 
@@ -370,7 +388,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -384,7 +401,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -398,7 +414,6 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
@@ -412,11 +427,10 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
         }
     }
 
-    public void UsePotion(float cooldown)
+    public void UsePotion(float duration)
     {
         var physicsState = agentPhysicsState;
 
@@ -425,13 +439,12 @@ public partial class AgentEntity
             physicsState.MovementState = AgentMovementState.Drink;
 
             physicsState.ActionInProgress = true;
-            physicsState.ActionDuration = cooldown;
-            physicsState.ActionCooldown = cooldown;
+            physicsState.ActionDuration = duration;
         }
     }
 
 
-    public void MonsterAttack(float duration, float cooldown)
+    public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D; 
@@ -444,8 +457,43 @@ public partial class AgentEntity
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = duration;
-            physicsState.ActionCooldown = cooldown;      
         }
+    }
+
+    public void SwordSlash()
+    {
+        var PhysicsState = agentPhysicsState;
+
+        if (IsStateFree())
+        {
+            //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
+            //PhysicsState.Velocity.Y = 0.0f;
+
+            //PhysicsState.Invulnerable = false;
+            //PhysicsState.AffectedByGravity = true;
+            PhysicsState.MovementState = AgentMovementState.SwordSlash;
+        }
+    }
+
+    public void JetPackFlying()
+    {
+        var stats = agentStats;
+        var PhysicsState = agentPhysicsState;
+
+        // if the fly button is pressed
+        if (stats.Fuel > 0.0f && IsStateFree())
+        {
+            PhysicsState.MovementState = AgentMovementState.JetPackFlying;
+        }
+    }
+
+    public void Knockback(float velocity, int horizontalDir)
+    {
+        var physicsState = agentPhysicsState;
+
+        physicsState.Velocity.X = velocity * horizontalDir;
+        physicsState.MovementState = AgentMovementState.Stagger;
+        physicsState.StaggerDuration = 1.0f;
     }
 
     public void Dash(int horizontalDir)
@@ -482,7 +530,7 @@ public partial class AgentEntity
             PhysicsState.ActionInProgress = true;
             PhysicsState.ActionJustEnded = false;
             PhysicsState.ActionDuration = 0.5f;
-            PhysicsState.ActionCooldown = 1.75f;
+            PhysicsState.RollCooldown = 1.75f;
         }
     }
 

@@ -99,7 +99,7 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            GameState.Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
+            GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
@@ -349,12 +349,12 @@ namespace Planet.Unity
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
-                    Gizmos.color = Color.red;
-                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y + 2.0f, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(new Vector3(pos.X, pos.Y + 2.0f, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
           
             for (int i = 0; i < Planet.DebugLinesCount; i++)
             {

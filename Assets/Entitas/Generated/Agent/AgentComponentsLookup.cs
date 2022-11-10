@@ -12,29 +12,27 @@ public static class AgentComponentsLookup {
     public const int AgentAlive = 1;
     public const int AgentController = 2;
     public const int AgentCorpse = 3;
-    public const int AgentEnemy = 4;
-    public const int AgentID = 5;
-    public const int AgentInventory = 6;
-    public const int AgentModel3D = 7;
-    public const int AgentPhysicsState = 8;
-    public const int AgentPlayer = 9;
-    public const int AgentSprite2D = 10;
-    public const int AgentStats = 11;
-    public const int AgentsLineOfSight = 12;
-    public const int AnimationState = 13;
-    public const int ECSInput = 14;
-    public const int ECSInputXY = 15;
-    public const int PhysicsBox2DCollider = 16;
-    public const int PhysicsSphere2DCollider = 17;
+    public const int AgentID = 4;
+    public const int AgentInventory = 5;
+    public const int AgentModel3D = 6;
+    public const int AgentPhysicsState = 7;
+    public const int AgentPlayer = 8;
+    public const int AgentSprite2D = 9;
+    public const int AgentStats = 10;
+    public const int AgentsLineOfSight = 11;
+    public const int AnimationState = 12;
+    public const int ECSInput = 13;
+    public const int ECSInputXY = 14;
+    public const int PhysicsBox2DCollider = 15;
+    public const int PhysicsSphere2DCollider = 16;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "AgentAction",
         "AgentAlive",
         "AgentController",
         "AgentCorpse",
-        "AgentEnemy",
         "AgentID",
         "AgentInventory",
         "AgentModel3D",
@@ -55,7 +53,6 @@ public static class AgentComponentsLookup {
         typeof(Agent.AliveComponent),
         typeof(Agent.ControllerComponent),
         typeof(Agent.CorpseComponent),
-        typeof(Agent.EnemyComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
         typeof(Agent.Model3DComponent),

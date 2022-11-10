@@ -90,7 +90,7 @@ namespace Agent
                                 {
                                     if (AimTarget != null)
                                     {
-                                        if (entity.hasAgentController || entity.hasAgentEnemy)
+                                        if (entity.hasAgentController)
                                         {
                                             if (entity.agentPhysicsState.FacingDirection == 1)
                                             {
