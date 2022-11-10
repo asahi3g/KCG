@@ -93,7 +93,7 @@ namespace Projectile
 
                         // static check first
 
-                        // first check if the rectangles overlap at the target position
+                      /*  // first check if the rectangles overlap at the target position
                         if (Collisions.Collisions.RectOverlapRect(agentPosition.X, agentPosition.X + agentBox2dCollider.Size.X,
                          agentPosition.Y, agentPosition.Y + agentBox2dCollider.Size.Y, 
                          physicsState.Position.X, physicsState.Position.X + box2DCollider.Size.X,
@@ -103,7 +103,7 @@ namespace Projectile
                             minNormal = new Vec2f();
                             minShape = Enums.TileGeometryAndRotation.Error;
                             collided = true;
-                        }
+                        }*/
 
 
                         // check if the rectangles overlap at the starting position

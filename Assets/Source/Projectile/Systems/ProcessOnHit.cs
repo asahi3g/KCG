@@ -68,6 +68,8 @@ namespace Projectile
             ParticleEmitterType particleEmitterType = GetParticleEmitterFromMaterial(pEntity.projectileOnHit.MaterialType);
             GameState.Planet.AddParticleEmitter(
                 pEntity.projectilePhysicsState.Position, particleEmitterType);
+                GameState.Planet.AddParticleEmitter(
+                pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
                 
             pEntity.isProjectileDelete = true;
         }
