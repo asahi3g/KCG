@@ -15,7 +15,7 @@ public static class VehicleComponentsLookup {
     public const int VehicleHeightMap = 4;
     public const int VehicleID = 5;
     public const int VehiclePhysicsState2D = 6;
-    public const int VehicleRadar = 7;
+    public const int VehiclePod = 7;
     public const int VehicleSprite2D = 8;
     public const int VehicleThruster = 9;
     public const int VehicleThrusterSprite2D = 10;
@@ -31,7 +31,7 @@ public static class VehicleComponentsLookup {
         "VehicleHeightMap",
         "VehicleID",
         "VehiclePhysicsState2D",
-        "VehicleRadar",
+        "VehiclePod",
         "VehicleSprite2D",
         "VehicleThruster",
         "VehicleThrusterSprite2D",
@@ -46,7 +46,7 @@ public static class VehicleComponentsLookup {
         typeof(Vehicle.HeightMapComponent),
         typeof(Vehicle.IDComponent),
         typeof(Vehicle.PhysicsState2DComponent),
-        typeof(Vehicle.RadarComponent),
+        typeof(Vehicle.PodComponent),
         typeof(Vehicle.Sprite2DComponent),
         typeof(Vehicle.ThrusterComponent),
         typeof(Vehicle.ThrusterSprite2DComponent),

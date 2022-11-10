@@ -40,15 +40,15 @@ namespace Vehicle
 
             entity.AddVehicleType(vehicleType, false);
 
-            List<PodEntity> pods = new List<PodEntity>();
-            entity.AddVehicleRadar(pods);
-
             entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None, true);
 
             entity.AddVehicleThrusterSprite2D(vehicleProperties.ThrusterSpriteId, vehicleProperties.ThrusterSpriteSize, 
                 vehicleProperties.Thruster1Position, vehicleProperties.Thruster2Position);
 
             entity.AddVehicleHeightMap(false, Vec2f.Zero);
+
+            List<PodEntity> Pods = new List<PodEntity>();
+            entity.AddVehiclePod(true, Pods);
 
             if (vehicleType == VehicleType.DropShip)
             {
