@@ -9,5 +9,8 @@ namespace Vehicle
     {
         public bool connectedToVehicle;
         public List<PodEntity> Pods;
+
+        public KMath.Vec2f OffsetRight;
+        public KMath.Vec2f OffsetLeft;
     }
 }

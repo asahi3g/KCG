@@ -174,15 +174,7 @@ namespace Vehicle
             }
         }
 
-        public void SetDefaultAgentCount(int defaultAgentCount)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].DefaultAgentCount = defaultAgentCount;
-            }
-        }
-
-        public void SetThruster(bool Jet, float angle, JetSize jetSize)
+        public void SetThruster(bool Jet, Vec2f angle, JetSize jetSize)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -201,6 +193,15 @@ namespace Vehicle
                 PropertiesArray[CurrentIndex].ThrusterSpriteSize = SpriteSize;
                 PropertiesArray[CurrentIndex].Thruster1Position = Position1;
                 PropertiesArray[CurrentIndex].Thruster2Position = Position2;
+            }
+        }
+
+        public void SetPodOffset(Vec2f OffsetRight, Vec2f OffsetLeft)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].PodOffsetRight = OffsetRight;
+                PropertiesArray[CurrentIndex].PodOffsetLeft = OffsetLeft;
             }
         }
 
@@ -243,17 +244,17 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
             GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -1.0f));
             GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
-            GameState.VehicleCreationApi.SetRotation(0.0f);
-            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.5f));
+            GameState.VehicleCreationApi.SetRotation(-25.0f);
+            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(-0.5f, -3.0f));
             GameState.VehicleCreationApi.SetAngularMass(14f);
             GameState.VehicleCreationApi.SetAngularAcceleration(4f);
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
             GameState.VehicleCreationApi.SetCenterOfRotation(Vec2f.Zero);
             GameState.VehicleCreationApi.SetAffectedByGravity(false);
-            GameState.VehicleCreationApi.SetDefaultAgentCount(2);
-            GameState.VehicleCreationApi.SetThruster(true, 90, JetSize.Medium);
+            GameState.VehicleCreationApi.SetThruster(true, new Vec2f(-3.98f, -6.0f), JetSize.Medium);
             GameState.VehicleCreationApi.SetThrusterSprite(WhiteSquare, new Vec2f(0.5f, 1.0f), 
-                new Vec2f(-0.4f, -0.8f), new Vec2f(1.9f, -0.8f));
+                new Vec2f(-0.42f, -0.9f), new Vec2f(0.95f, -1.5f));
+            GameState.VehicleCreationApi.SetPodOffset(new Vec2f(-3.0f, 0.0f), new Vec2f(3.0f, 0.0f));
             GameState.VehicleCreationApi.End();
         }
     }

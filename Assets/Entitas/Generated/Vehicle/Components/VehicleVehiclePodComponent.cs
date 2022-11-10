@@ -11,19 +11,23 @@ public partial class VehicleEntity {
     public Vehicle.PodComponent vehiclePod { get { return (Vehicle.PodComponent)GetComponent(VehicleComponentsLookup.VehiclePod); } }
     public bool hasVehiclePod { get { return HasComponent(VehicleComponentsLookup.VehiclePod); } }
 
-    public void AddVehiclePod(bool newConnectedToVehicle, System.Collections.Generic.List<PodEntity> newPods) {
+    public void AddVehiclePod(bool newConnectedToVehicle, System.Collections.Generic.List<PodEntity> newPods, KMath.Vec2f newOffsetRight, KMath.Vec2f newOffsetLeft) {
         var index = VehicleComponentsLookup.VehiclePod;
         var component = (Vehicle.PodComponent)CreateComponent(index, typeof(Vehicle.PodComponent));
         component.connectedToVehicle = newConnectedToVehicle;
         component.Pods = newPods;
+        component.OffsetRight = newOffsetRight;
+        component.OffsetLeft = newOffsetLeft;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePod(bool newConnectedToVehicle, System.Collections.Generic.List<PodEntity> newPods) {
+    public void ReplaceVehiclePod(bool newConnectedToVehicle, System.Collections.Generic.List<PodEntity> newPods, KMath.Vec2f newOffsetRight, KMath.Vec2f newOffsetLeft) {
         var index = VehicleComponentsLookup.VehiclePod;
         var component = (Vehicle.PodComponent)CreateComponent(index, typeof(Vehicle.PodComponent));
         component.connectedToVehicle = newConnectedToVehicle;
         component.Pods = newPods;
+        component.OffsetRight = newOffsetRight;
+        component.OffsetLeft = newOffsetLeft;
         ReplaceComponent(index, component);
     }
 
