@@ -6,9 +6,7 @@ namespace KGUI.MechTool
 {
     public class DracaenaTrifasciataElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
-
-        private ImageWrapper border;
+        [UnityEngine.SerializeField] private ImageWrapper border;
 	
         public override void Init()
         {
@@ -16,15 +14,14 @@ namespace KGUI.MechTool
             base.Init();
 			
             ID = ElementEnums.DracaenaTrifasciataMT;
-			
-            Icon = new ImageWrapper(iconImage, 16, 16,
-	            "Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", Enums.AtlasType.Gui);
-			border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+
+            icon.Init(16, 16,"Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", Enums.AtlasType.Gui);
+			border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw() 
 		{ 
-			Icon.Draw();
+			icon.Draw();
 			border.Draw();
 		}
 

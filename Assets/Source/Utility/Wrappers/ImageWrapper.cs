@@ -1,32 +1,36 @@
 //imports UnityEngine
 
+using System;
 using Enums;
 using KMath;
-using UnityEngine.UI;
 
 namespace Utility
 {
+    [Serializable]
     public class ImageWrapper
     {
-        public Image UnityImage { get; private set; }
+        [UnityEngine.SerializeField] private UnityEngine.UI.Image unityImage;
         
+        public UnityEngine.UI.Image UnityImage
+        {
+            get => unityImage;
+            private set => unityImage = value;
+        }
         public UnityEngine.Transform Transform => GameObject.transform;
-        public UnityEngine.GameObject GameObject { get; private set; }
+        public UnityEngine.GameObject GameObject => unityImage.gameObject;
         public UnityEngine.RectTransform RectTransform { get; private set; }
 
-        public ImageWrapper(Image image, UnityEngine.Sprite sprite)
+        public ImageWrapper(UnityEngine.UI.Image image, UnityEngine.Sprite sprite)
         {
-            GameObject = image.gameObject;
-            
             RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
-            UnityImage = image;
+            unityImage = image;
             
-            UnityImage.sprite = sprite;
-            UnityImage.enabled = false;
+            unityImage.sprite = sprite;
+            unityImage.enabled = false;
         }
         public ImageWrapper(string imageName, UnityEngine.Transform parent, UnityEngine.Sprite sprite)
         {
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -34,8 +38,8 @@ namespace Utility
                 }
             };
             
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             UnityImage.sprite = sprite;
             
             RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
@@ -48,7 +52,7 @@ namespace Utility
         {
             var sprite = GameState.Renderer.CreateSprite(path, width, height, AtlasType.Gui);
             
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -57,8 +61,8 @@ namespace Utility
                 }
             };
             
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             
             UnityImage.sprite = sprite;
             RectTransform.anchorMin = new UnityEngine.Vector2(0f, 0f);
@@ -71,7 +75,7 @@ namespace Utility
         {
             var sprite = GameState.Renderer.CreateSprite(tileSpriteID, width, height, AtlasType.TGen);
             
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -80,8 +84,8 @@ namespace Utility
                 }
             };
             
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             UnityImage.sprite = sprite;
             
             RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
@@ -95,7 +99,7 @@ namespace Utility
         {
             var sprite = GameState.Renderer.CreateSprite(tileSpriteID, width, height, atlasType);
             
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -103,8 +107,8 @@ namespace Utility
                 }
             };
             
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             UnityImage.sprite = sprite;
             
             RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
@@ -113,10 +117,8 @@ namespace Utility
 
             UnityImage.enabled = false;
         }
-        public ImageWrapper(Image image, int width, int height, string path, AtlasType atlasType)
+        public ImageWrapper(UnityEngine.UI.Image image, int width, int height, string path, AtlasType atlasType)
         {
-            GameObject = image.gameObject;
-            
             var sprite = GameState.Renderer.CreateSprite(path, width, height, atlasType);
 
             RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
@@ -132,7 +134,7 @@ namespace Utility
         {
             var sprite = GameState.Renderer.CreateSprite(path, width, height, atlasType);
             
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -141,8 +143,8 @@ namespace Utility
                 }
             };
 
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             
             UnityImage.sprite = sprite;
             RectTransform.anchorMin = new UnityEngine.Vector2(0f, 0f);
@@ -152,9 +154,30 @@ namespace Utility
             UnityImage.enabled = false;
         }
         
+        public void Init(UnityEngine.Sprite sprite)
+        {
+            RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
+
+            unityImage.sprite = sprite;
+            unityImage.enabled = false;
+        }
+        
+        public void Init(int width, int height, string path, AtlasType atlasType)
+        {
+            var sprite = GameState.Renderer.CreateSprite(path, width, height, atlasType);
+
+            RectTransform = GameObject.GetComponent<UnityEngine.RectTransform>();
+
+            UnityImage.sprite = sprite;
+            RectTransform.anchorMin = new UnityEngine.Vector2(0.5f, 0.5f);
+            RectTransform.anchorMax = new UnityEngine.Vector2(0.5f, 0.5f);
+            RectTransform.pivot = new UnityEngine.Vector2(0.5f, 0.5f);
+            UnityImage.enabled = false;
+        }
+
         public void Init(string imageName, UnityEngine.Transform parent, UnityEngine.Sprite sprite)
         {
-            GameObject = new UnityEngine.GameObject(imageName)
+            var gameObject = new UnityEngine.GameObject(imageName)
             {
                 transform =
                 {
@@ -163,8 +186,8 @@ namespace Utility
                 }
             };
             
-            RectTransform = GameObject.AddComponent<UnityEngine.RectTransform>();
-            UnityImage = GameObject.AddComponent<Image>();
+            RectTransform = gameObject.AddComponent<UnityEngine.RectTransform>();
+            UnityImage = gameObject.AddComponent<UnityEngine.UI.Image>();
             UnityImage.sprite = sprite;
             
             RectTransform.anchorMin = new UnityEngine.Vector2(0, 0);
@@ -214,7 +237,7 @@ namespace Utility
             RectTransform.sizeDelta = newSize;
         }
 
-        public void SetImageType(Image.Type newType)
+        public void SetImageType(UnityEngine.UI.Image.Type newType)
         {
             UnityImage.type = newType;
         }

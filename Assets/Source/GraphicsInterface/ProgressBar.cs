@@ -1,4 +1,6 @@
-using UnityEngine;
+// imports UnityEngine
+
+using System;
 using Utility;
 
 namespace KGUI.Elements
@@ -6,95 +8,63 @@ namespace KGUI.Elements
     // Progress bar
     // Fill amount from 0 to 1
     // means if 0.5 then it will be half of an image rendered
+    [Serializable]
     public class ProgressBar
     {
-        private UnityEngine.UI.Image UnityImage;
+        [UnityEngine.SerializeField] private ImageWrapper icon;
+
+        public ProgressBar(ImageWrapper imageWrapper, float fillValue, UnityEngine.UI.Image.FillMethod fillMethod)
+        {
+            icon = imageWrapper;
+
+            icon.UnityImage.raycastTarget = true;
+            icon.UnityImage.maskable = true;
+            icon.UnityImage.type = UnityEngine.UI.Image.Type.Filled;
+            icon.UnityImage.fillMethod = fillMethod;
+            icon.UnityImage.fillOrigin = 0;
+            icon.UnityImage.fillAmount = fillValue;
+            icon.UnityImage.fillClockwise = true;
+            icon.UnityImage.enabled = false;
+        }
         
-        private float fillValue;
+        public void Init(UnityEngine.Sprite sprite, float fillValue, UnityEngine.UI.Image.FillMethod fillMethod)
+        {
+            icon.Init(sprite);
+
+            icon.UnityImage.raycastTarget = true;
+            icon.UnityImage.maskable = true;
+            icon.UnityImage.type = UnityEngine.UI.Image.Type.Filled;
+            icon.UnityImage.fillMethod = fillMethod;
+            icon.UnityImage.fillOrigin = 0;
+            icon.UnityImage.fillAmount = fillValue / 100f;
+            icon.UnityImage.fillClockwise = true;
+            icon.UnityImage.enabled = false;
+        }
         
-        private readonly GameObject progressBar;
-        private readonly RectTransform rectTransform;
-
-        
-        public ProgressBar(string barName, Transform parent, Sprite barTexture, float fillValue, UnityEngine.UI.Image.FillMethod fillMethod)
+        public void Init(int width, int height, string path, Enums.AtlasType atlasType, float fillValue, UnityEngine.UI.Image.FillMethod fillMethod)
         {
-            this.fillValue = fillValue;
-            progressBar = new GameObject(barName)
-            {
-                transform =
-                {
-                    // Set Parent
-                    parent = parent
-                }
-            };
-            
-            rectTransform = progressBar.AddComponent<RectTransform>();
-            UnityImage = progressBar.AddComponent<UnityEngine.UI.Image>();
-            
-            rectTransform.anchorMin = new Vector2(0, 0);
-            rectTransform.anchorMax = new Vector2(0, 0);
-            rectTransform.pivot = new Vector2(0, 0);
-            rectTransform.localPosition = Vector3.zero;
-            
-            UnityImage.sprite = barTexture;
-            UnityImage.raycastTarget = true;
-            UnityImage.maskable = true;
-            UnityImage.type = UnityEngine.UI.Image.Type.Filled;
-            UnityImage.fillMethod = fillMethod;
-            UnityImage.fillOrigin = 0;
-            UnityImage.fillAmount = fillValue;
-            UnityImage.fillClockwise = true;
-            UnityImage.enabled = false;
-        }
+            icon.Init(width, height, path, atlasType);
 
-        public ProgressBar(ImageWrapper progressBarImageWrapper, float fillValue, UnityEngine.UI.Image.FillMethod fillMethod)
-        {
-            this.fillValue = fillValue;
-            progressBar = progressBarImageWrapper.GameObject;
-            rectTransform = progressBarImageWrapper.RectTransform;
-            UnityImage = progressBarImageWrapper.UnityImage;
-
-            UnityImage.raycastTarget = true;
-            UnityImage.maskable = true;
-            UnityImage.type = UnityEngine.UI.Image.Type.Filled;
-            UnityImage.fillMethod = fillMethod;
-            UnityImage.fillOrigin = 0;
-            UnityImage.fillAmount = fillValue;
-            UnityImage.fillClockwise = true;
-            UnityImage.enabled = false;
-        }
-
-        public void SetPosition(Vector3 newPos)
-        {
-            rectTransform.localPosition = newPos;
-        }
-
-        public void SetRotation(Quaternion newRot)
-        {
-            rectTransform.localRotation = newRot;
-        }
-
-        public void SetScale(Vector3 newScale)
-        {
-            rectTransform.localScale = newScale;
-        }
-
-        public void SetSize(Vector2 newSize)
-        {
-            rectTransform.sizeDelta = newSize;
+            icon.UnityImage.raycastTarget = true;
+            icon.UnityImage.maskable = true;
+            icon.UnityImage.type = UnityEngine.UI.Image.Type.Filled;
+            icon.UnityImage.fillMethod = fillMethod;
+            icon.UnityImage.fillOrigin = 0;
+            icon.UnityImage.fillAmount = fillValue / 100f;
+            icon.UnityImage.fillClockwise = true;
+            icon.UnityImage.enabled = false;
         }
 
         public void Update(float fillValue)
         {
-            this.fillValue = fillValue / 100;
-            UnityImage.fillAmount = this.fillValue;
+            icon.UnityImage.fillAmount = fillValue / 100f;
         }
 
         public void Draw()
         {
-            if (!UnityImage.enabled)
+            if (!icon.UnityImage.enabled)
             {
-                UnityImage.enabled = true;
+                icon.UnityImage.enabled = true;
             }
         }
     }

@@ -6,9 +6,7 @@ namespace KGUI.MechTool
 {
     public class ChestElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
-
-        private ImageWrapper border;
+        [UnityEngine.SerializeField] private ImageWrapper border;
 	
         public override void Init()
         {
@@ -16,15 +14,14 @@ namespace KGUI.MechTool
             base.Init();
             
             ID = ElementEnums.ChestMT;
-			
-            Icon = new ImageWrapper(iconImage, 32, 32,
-	            "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", Enums.AtlasType.Gui);
-			border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+
+            icon.Init(32, 32, "Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", Enums.AtlasType.Gui);
+			border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw() 
 		{ 
-			Icon.Draw();
+			icon.Draw();
 			border.Draw();
 		}
 

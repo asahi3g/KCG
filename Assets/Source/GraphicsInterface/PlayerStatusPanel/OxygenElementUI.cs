@@ -1,17 +1,14 @@
 //imports UnityEngine
 
-using Enums;
 using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class OxygenElementUI : ElementUI
     {
-        [UnityEngine.SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField]private ProgressBar progressBar;
         
-        private ProgressBar progressBar;
         private float oxygenAmount;
         private readonly TextWrapper infoTextWrapper = new TextWrapper();
         
@@ -19,17 +16,12 @@ namespace KGUI
         {
             base.Init();
             
-            ref var planet = ref GameState.Planet;
             ID = ElementEnums.OxygenIndicatorPS;
             
-            oxygenAmount = planet.Player != null ? planet.Player.agentStats.Oxygen : 0.0f;
+            oxygenAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Oxygen : 0.0f;
 
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", AtlasType.Gui);
-
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
-            
-            progressBar = new ProgressBar(progressBarImageWrapper, oxygenAmount, Image.FillMethod.Radial360);
+            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", Enums.AtlasType.Gui);
+            progressBar.Init(GameState.GUIManager.ProgressBar, oxygenAmount, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
         public override void Update()
@@ -43,7 +35,7 @@ namespace KGUI
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             progressBar.Draw();
         }
         

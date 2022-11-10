@@ -8,9 +8,7 @@ namespace KGUI
 	// row 3, column 3
 	public class HSQNoSpecular_1Element : ElementUI, IToggleElement
 	{
-		[UnityEngine.SerializeField] private Image borderImage;
-
-		private ImageWrapper border;
+        [UnityEngine.SerializeField] private ImageWrapper border;
 	    
 		public override void Init()
 		{
@@ -18,13 +16,13 @@ namespace KGUI
 	        
 			ID = ElementEnums.HSQNoSpecular_1;
             
-			Icon = new ImageWrapper(iconImage, GameState.GUIManager.WhiteSquareBorder);
-			border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+			icon.Init(GameState.GUIManager.WhiteSquareBorder);
+			border.Init(GameState.GUIManager.WhiteSquareBorder);
 		}
 
 		public override void Draw() 
 		{ 
-			Icon.Draw();
+			icon.Draw();
 			border.Draw();
 		}
 
