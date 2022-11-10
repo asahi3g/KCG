@@ -88,7 +88,7 @@ namespace Projectile
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
-                        Vec2f agentPosition = agentPhysicsState.PreviousPosition + agentBox2dCollider.Offset;
+                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
                         bool collided = false;
 
                         // static check first
@@ -132,13 +132,18 @@ namespace Projectile
                         Line2D topLine = new Line2D(agentPosition + agentBox2dCollider.Size, agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y));
                         Line2D leftLine = new Line2D(agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y), agentPosition);
 
+                        planet.AddDebugLine(bottomLine, Color.red);
+                        planet.AddDebugLine(rightLine, Color.red);
+                        planet.AddDebugLine(topLine, Color.red);
+                        planet.AddDebugLine(leftLine, Color.red);
+
 
                         // sweep test against 4 lines
                         // and only save the smallest
 
                         // bottom line
                         var collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, bottomLine.A, bottomLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, bottomLine.A, bottomLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -150,7 +155,7 @@ namespace Projectile
 
                         // top line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, topLine.A, topLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, topLine.A, topLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -162,7 +167,7 @@ namespace Projectile
 
                         // right line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, rightLine.A, rightLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, rightLine.A, rightLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -174,7 +179,7 @@ namespace Projectile
 
                         //left line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, leftLine.A, leftLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, leftLine.A, leftLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -225,7 +230,7 @@ namespace Projectile
 
                 if (minTime < 1.0f)
                 {
-                    float epsilon = 0.1f;
+                    float epsilon = 0.001f;
 
                     physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
 

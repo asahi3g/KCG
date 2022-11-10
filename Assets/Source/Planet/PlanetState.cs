@@ -558,18 +558,6 @@ namespace Planet
 
                 Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
 
-                    Line2D bottomLine = new Line2D(agentPosition, agentPosition + new Vec2f(agentBox2dCollider.Size.X, 0.0f));
-                    Line2D rightLine = new Line2D(agentPosition + new Vec2f(agentBox2dCollider.Size.X, 0.0f), agentPosition + agentBox2dCollider.Size);
-                    Line2D topLine = new Line2D(agentPosition + agentBox2dCollider.Size, agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y));
-                    Line2D leftLine = new Line2D(agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y), agentPosition);
-
-                
-                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(bottomLine.A.X, bottomLine.A.Y, 0), new UnityEngine.Vector3(bottomLine.B.X, bottomLine.B.Y, 0));
-                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(rightLine.A.X, rightLine.A.Y, 0), new UnityEngine.Vector3(rightLine.B.X, rightLine.B.Y, 0));
-                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(topLine.A.X, topLine.A.Y, 0), new UnityEngine.Vector3(topLine.B.X, topLine.B.Y, 0));
-                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(leftLine.A.X, leftLine.A.Y, 0), new UnityEngine.Vector3(leftLine.B.X, leftLine.B.Y, 0));
-
-
                 Vec2f topPos = agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y - agentBox2dCollider.Size.X / 2.0f) +  agentBox2dCollider.Size.X * 0.5f;
                 Vec2f bottomPos = agentPosition + agentBox2dCollider.Size.X * 0.5f;
 

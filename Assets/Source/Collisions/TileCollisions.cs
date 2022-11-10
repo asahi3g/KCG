@@ -479,7 +479,6 @@ namespace Collisions
                 Vec2f end = start + new Vec2f(0.0f, -1.5f);
                 var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
-                planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 if (rs < minTime)
                 {
                     minTime = rs;
@@ -797,8 +796,6 @@ namespace Collisions
             Line2D rightLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.X * 0.5f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y - box2dCollider.Size.X * 0.5f));
 
 
-            planet.AddDebugLine(leftLine, UnityEngine.Color.red);
-            planet.AddDebugLine(rightLine, UnityEngine.Color.red);
 
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
@@ -809,9 +806,6 @@ namespace Collisions
                 Line2D line = lines[i];
                 Vec2f normal = normals[i];
                 int collisionPosition = positions[i];
-
-  
-                planet.AddDebugLine(line, UnityEngine.Color.blue);
 
         
                 float collisionResult = 

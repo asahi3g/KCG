@@ -141,8 +141,6 @@ namespace Agent
                 physicsState.Velocity.X -= speed;
             }*/
 
-            planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + physicsState.Velocity), UnityEngine.Color.red);
-
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 

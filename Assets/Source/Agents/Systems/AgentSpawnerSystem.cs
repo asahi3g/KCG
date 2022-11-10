@@ -350,8 +350,8 @@ namespace Agent
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.GroundInsectHeavyAnimation,
-                            Enums.ItemAnimationSet.Default, new Vec3f(0.8f, 0.8f, 0.8f), Vec2f.Zero);
+                            properties.AnimationType,
+                            Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero);
 
                         break;
                     }

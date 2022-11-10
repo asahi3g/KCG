@@ -120,8 +120,6 @@ namespace Agent
             Vec2f bottomCollisionPoint = bottomCircleCenter + delta * bottomCollision.MinTime;
 
 
-            planet.AddDebugLine(new Line2D(bottomCollisionPoint, bottomCollisionPoint + bottomCollision.MinNormal), UnityEngine.Color.red);
-
             float angle = System.MathF.Atan2(-bottomCollision.MinNormal.X, bottomCollision.MinNormal.Y);
 
  
@@ -175,8 +173,6 @@ namespace Agent
 
 
              //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
-
-             planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + physicsState.GroundNormal), UnityEngine.Color.red);
 
 
             if (collidingBottom)
