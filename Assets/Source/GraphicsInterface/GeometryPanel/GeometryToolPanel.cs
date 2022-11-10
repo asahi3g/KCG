@@ -5,10 +5,12 @@ namespace KGUI
 {
     public class GeometryToolPanel : PanelUI
     {
+        [UnityEngine.SerializeField] private PlanetTileMap.MaterialType geometryTileMaterial;
+        
         public override void Init()
         {
             ID = PanelEnums.GeometryTool;
-
+            
             base.Init();
         }
 
@@ -28,6 +30,7 @@ namespace KGUI
             foreach (var element in ElementList.Values)
             {
                 element.gameObject.SetActive(true);
+                ((GeometryTileElement)element).ChangeMaterial(geometryTileMaterial);
             }
             
             ToggleFirstElement();
