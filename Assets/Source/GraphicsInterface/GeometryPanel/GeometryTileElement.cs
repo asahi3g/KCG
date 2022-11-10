@@ -9,7 +9,7 @@ namespace KGUI
     {
         [UnityEngine.SerializeField] private ImageWrapper border;
         [UnityEngine.SerializeField] private Enums.TileGeometryAndRotation geometryTileShape;
-        [UnityEngine.SerializeField] private PlanetTileMap.MaterialType geometryTileMaterial;
+        [UnityEngine.SerializeField] private Enums.MaterialType geometryTileMaterial;
 
         private Enums.PlanetTileMap.TileID geometryTileID;
         private bool toggled;
@@ -19,7 +19,7 @@ namespace KGUI
 			// Do all inititalization after base.Init()
             base.Init();
             
-            ChangeMaterial(PlanetTileMap.MaterialType.Metal);
+            ChangeMaterial(Enums.MaterialType.Metal);
             
 			border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
@@ -59,7 +59,7 @@ namespace KGUI
             border.UnityImage.color = toggled ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
 		
-		public void ChangeMaterial(PlanetTileMap.MaterialType materialType)
+		public void ChangeMaterial(Enums.MaterialType materialType)
 		{
 			geometryTileMaterial = materialType;
 	        

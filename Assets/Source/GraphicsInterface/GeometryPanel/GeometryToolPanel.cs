@@ -11,8 +11,8 @@ namespace KGUI
 
         enum AvailableMaterialType
         {
-            Rock = PlanetTileMap.MaterialType.Rock,
-            Metal = PlanetTileMap.MaterialType.Metal,
+            Rock = Enums.MaterialType.Rock,
+            Metal = Enums.MaterialType.Metal,
         }
         
         public override void Init()
@@ -40,7 +40,7 @@ namespace KGUI
             foreach (var element in ElementList.Values)
             {
                 element.gameObject.SetActive(true);
-                ((GeometryTileElement)element).ChangeMaterial((PlanetTileMap.MaterialType)geometryTileMaterial);
+                ((GeometryTileElement)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
             }
             
             changeMaterialButtonText.text = "Material: " + geometryTileMaterial;
@@ -83,7 +83,7 @@ namespace KGUI
             
             foreach (var element in ElementList.Values)
             {
-                ((GeometryTileElement)element).ChangeMaterial((PlanetTileMap.MaterialType)geometryTileMaterial);
+                ((GeometryTileElement)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
             }
         }
 
