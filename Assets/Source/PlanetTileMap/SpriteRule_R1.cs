@@ -10,7 +10,7 @@ namespace PlanetTileMap
     {
 
          // TODO: Refactor
-         public static TilePosition GetTilePosition(MaterialType[] neighbors, MaterialType materialType)
+         public static TilePosition GetTilePosition(Enums.MaterialType[] neighbors, Enums.MaterialType materialType)
          {
              int biggestMatch = 0;
              TilePosition tilePosition = 0;
@@ -34,7 +34,7 @@ namespace PlanetTileMap
  
  
          // TODO: Refactor
-         public static int CheckTile(MaterialType[] neighbors, TilePosition rules, MaterialType materialType)
+         public static int CheckTile(Enums.MaterialType[] neighbors, TilePosition rules, Enums.MaterialType materialType)
          {
              // 16 different values can be stored
              // using only 4 bits for the
@@ -79,38 +79,38 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new MaterialType[4];
+             var neighbors = new Enums.MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = MaterialType.Air;
+                 neighbors[i] = Enums.MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
                  neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
                  neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
                  neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.BackTileID).MaterialType;
                  neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  
@@ -142,38 +142,38 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new MaterialType[4];
+             var neighbors = new Enums.MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = MaterialType.Air;
+                 neighbors[i] = Enums.MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
                  neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
                  neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
                  neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.MidTileID).MaterialType;
                  neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  
@@ -204,38 +204,38 @@ namespace PlanetTileMap
              // we have 4 neighbors per tile
              // could be more but its 4 for now
              // right/left/down/up
-             var neighbors = new MaterialType[4];
+             var neighbors = new Enums.MaterialType[4];
  
              for (int i = 0; i < neighbors.Length; i++)
              {
-                 neighbors[i] = MaterialType.Air;
+                 neighbors[i] = Enums.MaterialType.Air;
              }
  
              if (x + 1 < tileMap.MapSize.X)
              {
                  ref var neighborTile = ref tileMap.GetTile(x + 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
                  neighbors[(int) Neighbor.Right] = neighborMaterialType;
              }
  
              if (x - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x - 1, y);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
                  neighbors[(int) Neighbor.Left] = neighborMaterialType;
              }
  
              if (y + 1 < tileMap.MapSize.Y)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y + 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
                  neighbors[(int) Neighbor.Up] = neighborMaterialType;
              }
  
              if (y - 1 >= 0)
              {
                  ref var neighborTile = ref tileMap.GetTile(x, y - 1);
-                 MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
+                 Enums.MaterialType neighborMaterialType = GameState.TileCreationApi.GetTileProperty(neighborTile.FrontTileID).MaterialType;
                  neighbors[(int) Neighbor.Down] = neighborMaterialType;
              }
  

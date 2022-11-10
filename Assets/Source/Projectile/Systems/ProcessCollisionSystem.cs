@@ -42,10 +42,12 @@ namespace Projectile
 
 
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+                
 
                 float minTime = 1.0f;
                 Vec2f minNormal = new Vec2f();
                 Enums.TileGeometryAndRotation minShape = 0;
+                Enums.MaterialType minMaterial = Enums.MaterialType.Error;
 
                 //TODO(Mahdi):
                 // 1- do not iterate over all the lines in the tile map
@@ -54,9 +56,10 @@ namespace Projectile
                 for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
                 {
                     
-                    Line2D line = planet.TileMap.GeometryArray[i];
-                    Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                    Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
+                    Line2D line = planet.TileMap.GeometryArray[i].Line;
+                    Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
+                    Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
+                    Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
 
                     if (!(shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
                     shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3))
@@ -64,13 +67,14 @@ namespace Projectile
 
                         // circle line sweep test
                         var collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, line.A, line.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, line.A, line.B);
 
                         if (collisionResult.Time < minTime)
                         {
                             minTime = collisionResult.Time;
                             minNormal = collisionResult.Normal;
                             minShape = shape;
+                            minMaterial = material;
                         }
                     }
                 }
@@ -84,7 +88,7 @@ namespace Projectile
                         var agentPhysicsState = agentEntity.agentPhysicsState;
                         var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
-                        Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+                        Vec2f agentPosition = agentPhysicsState.PreviousPosition + agentBox2dCollider.Offset;
                         bool collided = false;
 
                         // static check first
@@ -221,7 +225,7 @@ namespace Projectile
 
                 if (minTime < 1.0f)
                 {
-                    float epsilon = 0.01f;
+                    float epsilon = 0.1f;
 
                     physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
 
@@ -266,7 +270,7 @@ namespace Projectile
                         // we collided with terrain
                           if (!entity.hasProjectileOnHit)
                         {
-                            entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                            entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false, minMaterial);
                         }
                         else 
                         {
@@ -285,7 +289,7 @@ namespace Projectile
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
                         if (!entity.hasProjectileOnHit)
                         {
-                            entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                            entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false, Enums.MaterialType.Flesh);
                         }
                         else
                         {

@@ -1,4 +1,5 @@
 using Entitas;
+using KMath;
 
 namespace Particle
 {
@@ -10,5 +11,7 @@ namespace Particle
 
         public float DeltaRotation;
         public float DeltaScale;
+
+        public Vec4f Color;
     }
 }

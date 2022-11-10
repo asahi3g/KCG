@@ -65,8 +65,10 @@ namespace Projectile
 
         public void Default(ProjectileEntity pEntity)
         {
+            ParticleEmitterType particleEmitterType = GetParticleEmitterFromMaterial(pEntity.projectileOnHit.MaterialType);
             GameState.Planet.AddParticleEmitter(
-                pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
+                pEntity.projectilePhysicsState.Position, particleEmitterType);
+                
             pEntity.isProjectileDelete = true;
         }
 
@@ -188,6 +190,23 @@ namespace Projectile
 
             if (elapse >= 7.0f)
                 pEntity.isProjectileDelete = true;
+        }
+
+
+        public ParticleEmitterType GetParticleEmitterFromMaterial(Enums.MaterialType material)
+        {
+            ParticleEmitterType result = ParticleEmitterType.DustEmitter;
+            switch(material)
+            {
+                case Enums.MaterialType.Metal:
+                {
+                    result = ParticleEmitterType.MetalBulletImpact;
+                    break;
+                }
+            }
+
+
+            return result;
         }
     }
 }

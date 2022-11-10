@@ -26,11 +26,11 @@ namespace Particle
             CurrentIndex = -1;
         }
 
-        public ParticleProperties Get(int Id)
+        public ParticleProperties Get(ParticleType Id)
         {
-            if (Id >= 0 && Id < PropertiesArray.Length)
+            if (Id >= 0 && (int)Id < PropertiesArray.Length)
             {
-                return PropertiesArray[Id];
+                return PropertiesArray[(int)Id];
             }
 
             return new ParticleProperties();
@@ -47,7 +47,7 @@ namespace Particle
             bool exists = NameToID.TryGetValue(name, out value);
             if (exists)
             {
-                return Get(value);
+                return Get((ParticleType)value);
             }
 
             return new ParticleProperties();
@@ -167,6 +167,14 @@ namespace Particle
             }
         }
 
+        public void SetEndColor(UnityEngine.Color endColor)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].EndColor = endColor;
+            }
+        }
+
         public void SetAnimationSpeed(float animationSpeed)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
@@ -208,7 +216,7 @@ namespace Particle
 
         public int OreIcon;
         public int OreSpriteSheet;
-        public int BloodSprite;
+        public int WhitePixel;
         public int BloodSpriteSheet;
         public int WoodSprite;
         public int WoodSpriteSheet;
@@ -217,12 +225,14 @@ namespace Particle
         public void InitializeResources()
         {
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
-            BloodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\red_32x32.png", 32, 32);
+            int WhitePixelSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\white_32x32.png", 32, 32);
+            int ParticleSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\particle2.png", 51, 50);
             WoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\brown_32x32.png", 32, 32);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
-            BloodSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(BloodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            WhitePixel = GameState.SpriteAtlasManager.CopySpriteToAtlas(WhitePixelSheet, 0, 0, Enums.AtlasType.Particle);
             WoodSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            int ParticleSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(ParticleSpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Ore);
             GameState.ParticleCreationApi.SetName("Ore");
@@ -299,14 +309,16 @@ namespace Particle
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
             GameState.ParticleCreationApi.SetDeltaScale(0.0f);
-            GameState.ParticleCreationApi.SetSpriteId(BloodSprite);
+            GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
             GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255.0f, 255.0f, 255.0f, 255.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
+            
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Wood);
             GameState.ParticleCreationApi.SetName("Wood");
@@ -352,6 +364,24 @@ namespace Particle
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.SetBounce(true);
             GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
+            GameState.ParticleCreationApi.End();
+
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.MetalBulletImpact);
+            GameState.ParticleCreationApi.SetDecayRate(6.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.375f, 0.375f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1.0f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
+            GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
         }
 
@@ -433,6 +463,15 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
             GameState.ParticleEmitterCreationApi.SetParticleCount(30);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MetalBulletImpact);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MetalBulletImpact);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(3);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
             GameState.ParticleEmitterCreationApi.End();
         }

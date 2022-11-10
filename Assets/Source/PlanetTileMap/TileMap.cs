@@ -22,9 +22,7 @@ namespace PlanetTileMap
         public int ChunkArrayLength;
         public int ChunkArrayCapacity;
 
-        public Line2D[] GeometryArray;
-        public Vec2f[] GeometryNormalArray;
-        public Enums.TileGeometryAndRotation[] GeometryShapeArray;
+        public TileMapGeometryProperty[] GeometryArray;
         public int GeometryArrayCount = 0;
 
         public TileMap(Vec2i mapSize)
@@ -73,26 +71,23 @@ namespace PlanetTileMap
 
             MapSize = mapSize;
 
-            GeometryArray = new Line2D[1024];
-            GeometryNormalArray = new Vec2f[1024];
-            GeometryShapeArray = new Enums.TileGeometryAndRotation[1024];
+            GeometryArray = new TileMapGeometryProperty[1024];
             GeometryArrayCount = 0;
         }
 
 
         
-        public void AddGeometryLine(Line2D line, Vec2f normal, Enums.TileGeometryAndRotation shape)
+        public void AddGeometryLine(Line2D line, Vec2f normal, Enums.TileGeometryAndRotation shape, Enums.MaterialType material)
         {
             if (GeometryArrayCount + 1 >= GeometryArray.Length)
             {
                 System.Array.Resize(ref GeometryArray, GeometryArray.Length + 1024);
-                System.Array.Resize(ref GeometryNormalArray, GeometryArray.Length + 1024);
-                System.Array.Resize(ref GeometryShapeArray, GeometryArray.Length + 1024);
             }
 
-            GeometryShapeArray[GeometryArrayCount] = shape;
-            GeometryNormalArray[GeometryArrayCount] = normal;
-            GeometryArray[GeometryArrayCount++] = line;
+            GeometryArray[GeometryArrayCount].Material = material;
+            GeometryArray[GeometryArrayCount].Shape = shape;
+            GeometryArray[GeometryArrayCount].Normal = normal;
+            GeometryArray[GeometryArrayCount++].Line = line;
         }
 
         public Enums.TileGeometryAndRotation GetFrontTileGeometry(int x, int y)
