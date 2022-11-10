@@ -33,7 +33,7 @@ namespace Node
             if (player != null)
             {
                 var physicsState = player.agentPhysicsState;
-                GameState.AgentProcessPhysicalState.SwordSlash(player);
+                player.SwordSlash();
                 foreach (var agent in agents)
                 {
                     if (agent != player && agent.isAgentAlive)
@@ -56,7 +56,7 @@ namespace Node
                             direction.Y = 0;
                             direction.Normalize();
 
-                            GameState.AgentProcessPhysicalState.Knockback(agent, 7.0f, -KnockbackDir);
+                            agent.Knockback(7.0f, -KnockbackDir);
 
                             // spawns a debug floating text for damage 
                             planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 

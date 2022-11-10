@@ -120,7 +120,7 @@ namespace Node
                         projectileEntity.isProjectileFirstHIt = false;
                     }
 
-                    projectileEntity.AddProjectileRange(WeaponProperty.Range);
+                    //projectileEntity.AddProjectileRange(WeaponProperty.Range);
                 }
 
                 nodeEntity.nodeExecution.State = NodeState.Success;

@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 public static class AIComponentsLookup {
 
-    public const int AIGoal = 0;
 
-    public const int TotalComponents = 1;
+
+    public const int TotalComponents = 0;
 
     public static readonly string[] componentNames = {
-        "AIGoal"
+
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(AI.GoalComponent)
+
     };
 }

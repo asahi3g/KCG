@@ -12,8 +12,8 @@ namespace Agent
         public float Speed;                     // Runing speed in tiles/seconds.
         public float InitialJumpVelocity;       // Velocity at the beginning of the first jump
         public Vec2f Velocity;
-        public Vec2f Acceleration;      // Instantaneous, reset to zero at the end of the frame.
-        public int MovingDirection;           // 1 or -1 last direction the player was looking at
+        public Vec2f Acceleration;              // Instantaneous, reset to zero at the end of the frame.
+        public int MovingDirection;             // 1 or -1 last direction the player was looking at
         public int FacingDirection;
         public Vec2f GroundNormal;
 
@@ -36,10 +36,8 @@ namespace Agent
         public bool ActionInProgress;
         public bool ActionJustEnded;
         public float ActionDuration;
-        public float ActionCooldown;
         public float DashCooldown;
-        public float SlashCooldown;
-        public float StaggerDuration;         
+        public float StaggerDuration;
         public float RollCooldown;            // cooldown for rolling
         public float RollImpactDuration;      // after the roll you take time to get up again
     }

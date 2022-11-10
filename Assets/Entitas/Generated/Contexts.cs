@@ -87,7 +87,6 @@ public partial class Contexts {
     public const string ActionCoolDownTypeID = "ActionCoolDownTypeID";
     public const string ActionCoolDownAgentID = "ActionCoolDownAgentID";
     public const string AgentID = "AgentID";
-    public const string AIGoal = "AIGoal";
     public const string FloatingTextID = "FloatingTextID";
     public const string InventoryID = "InventoryID";
     public const string ItemID = "ItemID";
@@ -120,11 +119,6 @@ public partial class Contexts {
             AgentID,
             agent.GetGroup(AgentMatcher.AgentID),
             (e, c) => ((Agent.IDComponent)c).ID));
-
-        aI.AddEntityIndex(new Entitas.PrimaryEntityIndex<AIEntity, int>(
-            AIGoal,
-            aI.GetGroup(AIMatcher.AIGoal),
-            (e, c) => ((AI.GoalComponent)c).GoalID));
 
         floatingText.AddEntityIndex(new Entitas.PrimaryEntityIndex<FloatingTextEntity, int>(
             FloatingTextID,
@@ -223,10 +217,6 @@ public static class ContextsExtensions {
 
     public static AgentEntity GetEntityWithAgentID(this AgentContext context, int ID) {
         return ((Entitas.PrimaryEntityIndex<AgentEntity, int>)context.GetEntityIndex(Contexts.AgentID)).GetEntity(ID);
-    }
-
-    public static AIEntity GetEntityWithAIGoal(this AIContext context, int GoalID) {
-        return ((Entitas.PrimaryEntityIndex<AIEntity, int>)context.GetEntityIndex(Contexts.AIGoal)).GetEntity(GoalID);
     }
 
     public static FloatingTextEntity GetEntityWithFloatingTextID(this FloatingTextContext context, int ID) {

@@ -97,7 +97,7 @@ namespace Action
                         projectileEntity.isProjectileFirstHIt = false;
                     }
 
-                    projectileEntity.AddProjectileRange(WeaponProperty.Range);
+                    //projectileEntity.AddProjectileRange(WeaponProperty.Range);
                 }
 
                 return NodeSystem.NodeState.Success;

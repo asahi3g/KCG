@@ -15,10 +15,10 @@ namespace Item
         public ItemType ItemType;
         public ItemGroups Group;
         public NodeType ToolActionType;
-        public MechType MechType;          // Used only when item is a mech type.
-        public TileID TileType;       // Used only when item is a material type.
+        public MechType MechType;               // Used only when item is a mech type.
+        public TileID TileType;                 // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
-        public ItemAnimationSet AnimationSet; // used to change agent animations (like walking with rifle)
+        public ItemAnimationSet AnimationSet;   // used to change agent animations (like walking with rifle)
         public PanelEnums ItemPanelEnums;
 
         public ItemKeyUsage KeyUsage;
@@ -51,14 +51,34 @@ namespace Item
     public struct FireWeaponPropreties
     {
         public float BulletSpeed;
-        //How Long it takes to shoot again in seconds.
+        //How Long it takes to use again in seconds.
         public float CoolDown;
         public float Range;
         public int BasicDemage;
+
+        //
+        // Fire Weapon Properties
+        //
         public int BulletsPerShot;
         public int ClipSize;
         public float ReloadTime;
         public ProjectileType ProjectileType;
+
+        //
+        // Melee Attack Properties
+        //
+        public float StaggerTime;
+        [UnityEngine.Range(0, 1)]
+        public float StaggerRate;
+        public bool ShieldActive;
+
+        //
+        // Pulse Weapon Properties
+        //
+        public bool IsLaunchGreanade;
+        public int NumberOfGrenades;
+        public int GrenadeClipSize;
+
 
         // Charge propreties.
         public bool  CanCharge;
@@ -87,18 +107,9 @@ namespace Item
         // How long it takes to recoil startRecovering in seconds.
         public float RecoverDelay;
 
-        // Melee Attack Properties
-        public float StaggerTime;
-        [UnityEngine.Range(0, 1)]
-        public float StaggerRate;
-        public bool ShieldActive;
-
-        // Pulse Weapon Properties
-        public bool IsLaunchGreanade;
-        public int  NumberOfGrenades;
-        public int  GrenadeClipSize;
-
+        //
         // Explosive Properties.
+        //
         public float BlastRadius;
         // Damage at the origin
         public int MaxDamage;

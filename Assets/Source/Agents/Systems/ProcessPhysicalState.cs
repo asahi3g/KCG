@@ -79,11 +79,6 @@ namespace Agent
                 {
                     physicsState.RollCooldown -= deltaTime;
                 }
-
-                if (physicsState.SlashCooldown > 0)
-                {
-                    physicsState.SlashCooldown -= deltaTime;
-                }
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.SwordSlash)
@@ -389,53 +384,6 @@ namespace Agent
                     box2DComponent.Size.Y = properties.CollisionDimensions.Y * 1.0f;
                 }
             }
-        }
-
-        public void Knockback(AgentEntity agentEntity, float velocity, int horizontalDir)
-        {
-            var physicsState = agentEntity.agentPhysicsState;
-
-            physicsState.Velocity.X = velocity * horizontalDir;
-            physicsState.MovementState = AgentMovementState.Stagger;
-            physicsState.StaggerDuration = 1.0f;
-        }
-
-    
-        public void SwordSlash(AgentEntity agentEntity)
-        {
-            var PhysicsState = agentEntity.agentPhysicsState;
-
-            if (PhysicsState.SlashCooldown <= 0.0f && 
-            agentEntity.IsStateFree())
-            {
-                //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
-                //PhysicsState.Velocity.Y = 0.0f;
-
-                //PhysicsState.Invulnerable = false;
-                //PhysicsState.AffectedByGravity = true;
-                PhysicsState.MovementState = AgentMovementState.SwordSlash;
-                PhysicsState.SlashCooldown = 0.6f;
-            }
-        }
-
-        public void JetPackFlying(AgentEntity agentEntity)
-        {
-            var stats = agentEntity.agentStats;
-            var PhysicsState = agentEntity.agentPhysicsState;
-
-            // if the fly button is pressed
-            if (stats.Fuel > 0.0f && 
-            agentEntity.IsStateFree())
-            {
-                PhysicsState.MovementState = AgentMovementState.JetPackFlying;
-            }
-        }
-
-        
-
-        public void DieInPlace(AgentEntity agentEntity)
-        {
-
         }
     }
 }
