@@ -40,7 +40,7 @@ namespace KGUI
             foreach (var element in ElementList.Values)
             {
                 element.gameObject.SetActive(true);
-                ((GeometryTileElement)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
+                ((GeometryTileElementUI)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
             }
             
             changeMaterialButtonText.text = "Material: " + geometryTileMaterial;
@@ -83,7 +83,7 @@ namespace KGUI
             
             foreach (var element in ElementList.Values)
             {
-                ((GeometryTileElement)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
+                ((GeometryTileElementUI)element).ChangeMaterial((Enums.MaterialType)geometryTileMaterial);
             }
         }
 

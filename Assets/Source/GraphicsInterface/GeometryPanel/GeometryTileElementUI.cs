@@ -5,7 +5,7 @@ using Utility;
 
 namespace KGUI
 {
-    public class GeometryTileElement : ElementUI, IToggleElement
+    public class GeometryTileElementUI : ElementUI, IToggleElement
     {
         [UnityEngine.SerializeField] private ImageWrapper border;
         [UnityEngine.SerializeField] private Enums.TileGeometryAndRotation geometryTileShape;

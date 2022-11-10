@@ -8347,9 +8347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b346dd489527d458902d4af1aaa001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  geometryTileMaterial: 13
   changeMaterialButton: {fileID: 3990006484087466696}
   changeMaterialButtonText: {fileID: 6194309298150229938}
-  geometryTileMaterial: 13
 --- !u!1 &8519022518081668400
 GameObject:
   m_ObjectHideFlags: 0
