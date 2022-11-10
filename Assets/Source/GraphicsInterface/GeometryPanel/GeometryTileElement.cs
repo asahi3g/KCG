@@ -12,6 +12,7 @@ namespace KGUI
         [UnityEngine.SerializeField] private PlanetTileMap.MaterialType geometryTileMaterial;
 
         private Enums.PlanetTileMap.TileID geometryTileID;
+        private bool toggled;
 	
         public override void Init()
         {
@@ -29,35 +30,17 @@ namespace KGUI
 	        Enum.TryParse(geometryTileShape + "_GT", out ID);
         }
 
-        public void ChangeMaterial(PlanetTileMap.MaterialType materialType)
-        {
-	        geometryTileMaterial = materialType;
-	        
-	        var tileProperty = GameState.TileCreationApi.GetTileProperty(geometryTileMaterial, geometryTileShape);
-
-	        if (tileProperty.TileID != Enums.PlanetTileMap.TileID.Error)
-	        {
-		        icon.Init(32, 32, tileProperty.BaseSpriteId);
-	        }
-	        else
-	        {
-		        icon.Init(GameState.GUIManager.WhiteSquareBorder);
-	        }
-
-	        geometryTileID = tileProperty.TileID;
-        }
-
         public override void Draw() 
 		{ 
 			icon.Draw();
 			border.Draw();
 		}
 
-        public override void OnMouseStay()
+        public override void OnMouseEntered()
         {
 	        GameState.GUIManager.SelectedInventoryItem.itemTile.InputsActive = false;
         }
-        
+
         public override void OnMouseExited()
         {
 	        GameState.GUIManager.SelectedInventoryItem.itemTile.InputsActive = true;
@@ -71,8 +54,33 @@ namespace KGUI
         }
 		
 		public void Toggle(bool value)
-        {
-            border.UnityImage.color = value ? UnityEngine.Color.red : UnityEngine.Color.yellow;
+		{
+			toggled = value;
+            border.UnityImage.color = toggled ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
+		
+		public void ChangeMaterial(PlanetTileMap.MaterialType materialType)
+		{
+			geometryTileMaterial = materialType;
+	        
+			var tileProperty = GameState.TileCreationApi.GetTileProperty(geometryTileMaterial, geometryTileShape);
+
+			if (tileProperty.TileID != Enums.PlanetTileMap.TileID.Error)
+			{
+				icon.Init(32, 32, tileProperty.BaseSpriteId);
+			}
+			else
+			{
+				icon.Init(GameState.GUIManager.WhiteSquareBorder);
+			}
+
+			geometryTileID = tileProperty.TileID;
+
+			if (toggled)
+			{
+				var item = GameState.GUIManager.SelectedInventoryItem;
+				item.itemTile.TileID = geometryTileID;
+			}
+		}
     }
 }
