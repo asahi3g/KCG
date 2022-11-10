@@ -16,11 +16,11 @@ namespace Particle
         public ParticleEntity Spawn(ParticleType particleType, Vec2f position, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get((int)particleType);
+                        ParticleCreationApi.Get(particleType);
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
-            entity.AddParticleID(UniqueID++, -1);
-            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
+            entity.AddParticleID(UniqueID++, -1, particleType);
+            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
@@ -43,11 +43,11 @@ namespace Particle
         public ParticleEntity SpawnDebrisParticle(Vec2f position, Vec2f[] triangles, Vec2f[] textureCoords, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get((int)ParticleType.Debris);
+                        ParticleCreationApi.Get(ParticleType.Debris);
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
-            entity.AddParticleID(UniqueID++, -1);
-            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale);
+            entity.AddParticleID(UniqueID++, -1, ParticleType.Debris);
+            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             

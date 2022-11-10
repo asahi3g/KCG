@@ -13,7 +13,7 @@ namespace PlanetTileMap
     {
         
         public TileID TileID;
-        public MaterialType MaterialType;
+        public Enums.MaterialType MaterialType;
         public int BaseSpriteId;
         public TileDrawType DrawType;
 

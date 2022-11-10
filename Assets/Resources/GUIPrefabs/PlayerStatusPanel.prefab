@@ -355,11 +355,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524981b4c02fa764ca80bf8bcc841a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 7916101209867722546}
-  progressBarImage: {fileID: 8107399939343900709}
-  progressBarBorderImage: {fileID: 8107399940033957951}
-  progressBarDiv1Image: {fileID: 8107399940223621249}
-  progressBarDiv2Image: {fileID: 8107399939184192170}
+  icon:
+    unityImage: {fileID: 7916101209867722546}
+  progressBar:
+    icon:
+      unityImage: {fileID: 8107399939343900709}
+  progressBarBorder:
+    unityImage: {fileID: 8107399940033957951}
+  progressBarDiv1:
+    unityImage: {fileID: 8107399940223621249}
+  progressBarDiv2:
+    unityImage: {fileID: 8107399939184192170}
 --- !u!1 &8107399939184192168
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,8 +645,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35afa3ac0d88169408c0d149301c4348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 6817736362379320857}
-  progressBarImage: {fileID: 8107399940268253963}
+  icon:
+    unityImage: {fileID: 6817736362379320857}
+  progressBar:
+    icon:
+      unityImage: {fileID: 8107399940268253963}
 --- !u!1 &8107399939958513907
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,8 +701,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4f5b71cc9d2ea4ea29d9e51e85e8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 7152300706938087765}
-  progressBarImage: {fileID: 8107399940099149179}
+  icon:
+    unityImage: {fileID: 7152300706938087765}
+  progressBar:
+    icon:
+      unityImage: {fileID: 8107399940099149179}
 --- !u!1 &8107399940033957949
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,8 +953,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02b44b478afe5c45a2389f4bb356c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 918698820553017074}
-  progressBarImage: {fileID: 8107399938397073974}
+  icon:
+    unityImage: {fileID: 918698820553017074}
+  progressBar:
+    icon:
+      unityImage: {fileID: 8107399938397073974}
 --- !u!1 &8107399940223621263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8107399940240423281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1196,8 +1211,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bd10eaa2b9cf14c89e2747d0bd6ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 1290625736970862891}
-  progressBarImage: {fileID: 8107399939518065838}
+  icon:
+    unityImage: {fileID: 8107399939518065838}
+  progressBar:
+    icon:
+      unityImage: {fileID: 1290625736970862891}
 --- !u!1 &8871560704012788087
 GameObject:
   m_ObjectHideFlags: 0

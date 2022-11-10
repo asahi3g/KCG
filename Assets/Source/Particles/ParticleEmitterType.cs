@@ -11,5 +11,6 @@ namespace Particle
         ExplosionEmitter,
         ShrapnelEmitter,
         WoodEmitter,
+        MetalBulletImpact
     }
 }

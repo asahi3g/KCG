@@ -42,10 +42,12 @@ namespace Projectile
 
 
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+                
 
                 float minTime = 1.0f;
                 Vec2f minNormal = new Vec2f();
                 Enums.TileGeometryAndRotation minShape = 0;
+                Enums.MaterialType minMaterial = Enums.MaterialType.Error;
 
                 //TODO(Mahdi):
                 // 1- do not iterate over all the lines in the tile map
@@ -54,9 +56,10 @@ namespace Projectile
                 for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
                 {
                     
-                    Line2D line = planet.TileMap.GeometryArray[i];
-                    Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                    Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
+                    Line2D line = planet.TileMap.GeometryArray[i].Line;
+                    Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
+                    Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
+                    Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
 
                     if (!(shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
                     shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3))
@@ -64,13 +67,14 @@ namespace Projectile
 
                         // circle line sweep test
                         var collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, line.A, line.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, line.A, line.B);
 
                         if (collisionResult.Time < minTime)
                         {
                             minTime = collisionResult.Time;
                             minNormal = collisionResult.Normal;
                             minShape = shape;
+                            minMaterial = material;
                         }
                     }
                 }
@@ -89,7 +93,7 @@ namespace Projectile
 
                         // static check first
 
-                        // first check if the rectangles overlap at the target position
+                      /*  // first check if the rectangles overlap at the target position
                         if (Collisions.Collisions.RectOverlapRect(agentPosition.X, agentPosition.X + agentBox2dCollider.Size.X,
                          agentPosition.Y, agentPosition.Y + agentBox2dCollider.Size.Y, 
                          physicsState.Position.X, physicsState.Position.X + box2DCollider.Size.X,
@@ -99,7 +103,7 @@ namespace Projectile
                             minNormal = new Vec2f();
                             minShape = Enums.TileGeometryAndRotation.Error;
                             collided = true;
-                        }
+                        }*/
 
 
                         // check if the rectangles overlap at the starting position
@@ -128,13 +132,18 @@ namespace Projectile
                         Line2D topLine = new Line2D(agentPosition + agentBox2dCollider.Size, agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y));
                         Line2D leftLine = new Line2D(agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y), agentPosition);
 
+                        planet.AddDebugLine(bottomLine, Color.red);
+                        planet.AddDebugLine(rightLine, Color.red);
+                        planet.AddDebugLine(topLine, Color.red);
+                        planet.AddDebugLine(leftLine, Color.red);
+
 
                         // sweep test against 4 lines
                         // and only save the smallest
 
                         // bottom line
                         var collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, bottomLine.A, bottomLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, bottomLine.A, bottomLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -146,7 +155,7 @@ namespace Projectile
 
                         // top line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, topLine.A, topLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, topLine.A, topLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -158,7 +167,7 @@ namespace Projectile
 
                         // right line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, rightLine.A, rightLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, rightLine.A, rightLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -170,7 +179,7 @@ namespace Projectile
 
                         //left line
                         collisionResult = 
-                        Collisions.CircleLineCollision.TestCollision(physicsState.Position + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, leftLine.A, leftLine.B);
+                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, leftLine.A, leftLine.B);
 
                         if (collisionResult.Time < minTime)
                         {
@@ -196,13 +205,32 @@ namespace Projectile
                 }
 
 
+                 AgentEntity closestAgent = null;
+                float closestDistance = 999999.0f;
 
+                if (CollidedWithArrayCount > 0)
+                {
+                    closestAgent = CollidedWithArray[0];
+                    closestDistance = (CollidedWithArray[0].agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                }
+
+
+                for(int i = 0; i < CollidedWithArrayCount; i++)
+                {
+                    AgentEntity agentEntity = CollidedWithArray[i];
+                    float testDistance = (agentEntity.agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
+                    if (testDistance < closestDistance)
+                    {
+                        closestAgent = agentEntity;
+                        closestDistance = testDistance;
+                    }
+                }
 
 
 
                 if (minTime < 1.0f)
                 {
-                    float epsilon = 0.01f;
+                    float epsilon = 0.001f;
 
                     physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
 
@@ -241,66 +269,45 @@ namespace Projectile
                         physicsState.Velocity = Vec2f.Zero;
                     }*/
 
-                    if (!entity.hasProjectileOnHit)
+
+                    if (closestAgent == null)
                     {
-                        entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
-                    }
-                    else 
-                    {
-                        entity.projectileOnHit.LastHitPos = physicsState.Position;
-                        entity.projectileOnHit.LastHitTime = Time.time;
-                    }
+                        // we collided with terrain
+                          if (!entity.hasProjectileOnHit)
+                        {
+                            entity.AddProjectileOnHit(-1, Time.time, physicsState.Position, Time.time, physicsState.Position, false, minMaterial);
+                        }
+                        else 
+                        {
+                            entity.projectileOnHit.LastHitPos = physicsState.Position;
+                            entity.projectileOnHit.LastHitTime = Time.time;
+                        }
 
-                    if (entity.isProjectileFirstHIt)
-                    {
-                        physicsState.Velocity = new Vec2f();
-                    }
-                }
-
-
-                AgentEntity closestAgent = null;
-                float closestDistance = 999999.0f;
-
-                if (CollidedWithArrayCount > 0)
-                {
-                    closestAgent = CollidedWithArray[0];
-                    closestDistance = (CollidedWithArray[0].agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
-                }
-
-
-                for(int i = 0; i < CollidedWithArrayCount; i++)
-                {
-                    AgentEntity agentEntity = CollidedWithArray[i];
-                    float testDistance = (agentEntity.agentPhysicsState.PreviousPosition - entity.projectilePhysicsState.Position).SqrMagnitude;
-                    if (testDistance < closestDistance)
-                    {
-                        closestAgent = agentEntity;
-                        closestDistance = testDistance;
-                    }
-                }
-
-
-                if (closestAgent != null)
-                {
-                   /* physicsState.Position = new Vec2f(collisionPosition.X, collisionPosition.Y) - box2DCollider.Offset;
-                    physicsState.Velocity = Vec2f.Zero;*/
-
-                    // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                    if (!entity.hasProjectileOnHit)
-                    {
-                        entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false);
+                        if (entity.isProjectileFirstHIt)
+                        {
+                            physicsState.Velocity = new Vec2f();
+                        }
                     }
                     else
                     {
-                        entity.projectileOnHit.AgentID = closestAgent.agentID.ID;
-                        entity.projectileOnHit.LastHitPos = physicsState.Position;
-                        entity.projectileOnHit.LastHitTime = Time.time;
+                        // we collided with an agent
+                        // Todo: Deals with case: colliding with an object and an agent at the same frame.
+                        if (!entity.hasProjectileOnHit)
+                        {
+                            entity.AddProjectileOnHit(closestAgent.agentID.ID, Time.time, physicsState.Position, Time.time, physicsState.Position, false, Enums.MaterialType.Flesh);
+                        }
+                        else
+                        {
+                            entity.projectileOnHit.AgentID = closestAgent.agentID.ID;
+                            entity.projectileOnHit.LastHitPos = physicsState.Position;
+                            entity.projectileOnHit.LastHitTime = Time.time;
+                        }
                     }
+
+                  
                 }
 
                 CollidedWithArrayCount = 0;
-
-
                 entityBoxBorders.DrawBox();
             }
 

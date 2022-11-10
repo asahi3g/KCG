@@ -1,16 +1,14 @@
-using UnityEngine;
-using Enums;
+// Imports UnityEngine
+
 using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class WaterElementUI : ElementUI
     {
-        [SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private ProgressBar progressBar;
         
-        private ProgressBar progressBar;
         private float waterAmount;
         private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
@@ -20,15 +18,10 @@ namespace KGUI
             
             ID = ElementEnums.WaterIndicatorPS;
             
-            ref var planet = ref GameState.Planet;
-            waterAmount = planet.Player != null ? planet.Player.agentStats.Water : 0.0f;
+            waterAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Water : 0.0f;
 
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Water\\hud_status_water.png", AtlasType.Gui);
-
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
-            
-            progressBar = new ProgressBar(progressBarImageWrapper, waterAmount, Image.FillMethod.Radial360);
+            icon.Init(9, 19, "Assets\\StreamingAssets\\UserInterface\\Icons\\Water\\hud_status_water.png", Enums.AtlasType.Gui);
+            progressBar.Init(GameState.GUIManager.ProgressBar, waterAmount, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
         public override void Update()
@@ -42,18 +35,18 @@ namespace KGUI
         }
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             progressBar.Draw();
         }
         
         public override void OnMouseClick()
         {
-            Debug.LogWarning("Water Bar Clicked");
+            UnityEngine.Debug.LogWarning("Water Bar Clicked");
         }
         
         public override void OnMouseEntered()
         {
-            Debug.LogWarning("Water Bar Mouse Enter");
+            UnityEngine.Debug.LogWarning("Water Bar Mouse Enter");
 
             // If Water level less than 50
             if (waterAmount < 50)
@@ -62,10 +55,10 @@ namespace KGUI
                 infoTextWrapper.Create("Water Indicator", "Water Bar\nStatus: Low", transform, 2.0f);
 
                 // Set Size Delta
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
 
                 // Set Position
-                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
             else
             {
@@ -73,23 +66,23 @@ namespace KGUI
                 infoTextWrapper.Create("Water DeIndicator", "Water Bar\nStatus: Normal", transform, 2.0f);
 
                 // Set Size Delta
-                infoTextWrapper.SetSizeDelta(new Vector2(250, 50));
+                infoTextWrapper.SetSizeDelta(new UnityEngine.Vector2(250, 50));
 
                 // Set Position
-                infoTextWrapper.SetPosition(new Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
+                infoTextWrapper.SetPosition(new UnityEngine.Vector3(HitBoxPosition.x + HitBoxSize.x + 20f, 0, 0));
             }
         }
 
 
         public override void OnMouseStay()
         {
-            Debug.LogWarning("Water Bar Mouse Stay");
+            UnityEngine.Debug.LogWarning("Water Bar Mouse Stay");
         }
 
 
         public override void OnMouseExited()
         {
-            Debug.LogWarning("Water Bar Mouse Exit");
+            UnityEngine.Debug.LogWarning("Water Bar Mouse Exit");
 
             infoTextWrapper.StartLifeTime = true;
         }

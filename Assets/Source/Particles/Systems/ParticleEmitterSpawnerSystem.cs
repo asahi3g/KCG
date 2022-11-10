@@ -41,7 +41,7 @@ namespace Particle
             ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)type);
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get((int)emitterProperties.ParticleType);
+                        ParticleCreationApi.Get(emitterProperties.ParticleType);
             var e = GameState.Planet.EntitasContext.particle.CreateEntity();
             e.AddParticleEmitterID(uniqueID++, -1);
             e.AddParticleEmitter2dPosition(new UnityEngine.Vector2(position.X, position.Y), new UnityEngine.Vector2(), new UnityEngine.Vector2());

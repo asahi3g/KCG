@@ -191,8 +191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a865d21616e3ed34689cddf87929ca5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 5177124125761218657}
-  borderImage: {fileID: 7579976704253416013}
+  icon:
+    unityImage: {fileID: 5177124125761218657}
+  border:
+    unityImage: {fileID: 7579976704253416013}
 --- !u!1 &1773994750445322535
 GameObject:
   m_ObjectHideFlags: 0

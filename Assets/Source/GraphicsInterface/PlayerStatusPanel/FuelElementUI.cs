@@ -1,42 +1,33 @@
 //imports UnityEngine
 
-using Enums;
 using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class FuelElementUI : ElementUI
     {
-        [UnityEngine.SerializeField] private Image progressBarImage;
+        [UnityEngine.SerializeField] private ProgressBar progressBar;
         
-        private ProgressBar progressBar;
         private float fuelLevel;
         private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {
             base.Init();
-
-            ref var planet = ref GameState.Planet;
+            
             ID = ElementEnums.FuelIndicatorPS;
-            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
-            
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", AtlasType.Gui);
-            
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
-            
-            progressBar = new ProgressBar(progressBarImageWrapper, fuelLevel, Image.FillMethod.Radial360);
+            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
+
+            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", Enums.AtlasType.Gui);
+            progressBar.Init(GameState.GUIManager.ProgressBar, fuelLevel, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
         public override void Update()
         {
             base.Update();
             
-            ref var planet = ref GameState.Planet;
-            fuelLevel = planet.Player != null ? planet.Player.agentStats.Fuel : 0.0f;
+            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
             
             if (fuelLevel <= 0)
             {
@@ -49,7 +40,7 @@ namespace KGUI
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             progressBar.Draw();
         }
         

@@ -30,9 +30,21 @@ namespace Particle
                 }
 
                 var state = gameEntity.particleState;
+                ParticleProperties properties = GameState.ParticleCreationApi.Get(gameEntity.particleID.ParticleType);
+
+
+                float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
+                if (properties.ColorUpdateMethod == Enums.ParticleColorUpdateMethod.Linear)
+                {
+                    r = properties.StartingColor.r - (properties.EndColor.r - properties.StartingColor.r) * (1.0f - state.Health);
+                    g = properties.StartingColor.g - (properties.EndColor.g - properties.StartingColor.g) * (1.0f - state.Health);
+                    b = properties.StartingColor.b - (properties.EndColor.b - properties.StartingColor.b) * (1.0f - state.Health);
+                    a = properties.StartingColor.a - (properties.EndColor.a - properties.StartingColor.a) * (1.0f - state.Health);
+                }
+                state.Color = new Vec4f(r, g, b, a); 
 
                 float newHealth = state.Health - state.DecayRate * deltaTime;
-                gameEntity.ReplaceParticleState(newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale);
+                gameEntity.ReplaceParticleState(newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale, state.Color);
 
                 var physicsState = gameEntity.particlePhysicsState;
                 Vec2f displacement = 

@@ -820,7 +820,7 @@ namespace Planet.Unity
 
                 for (int i = 0; i < GameState.Planet.TileMap.GeometryArrayCount; i++)
             {
-                Line2D line = GameState.Planet.TileMap.GeometryArray[i];
+                Line2D line = GameState.Planet.TileMap.GeometryArray[i].Line;
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }

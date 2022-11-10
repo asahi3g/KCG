@@ -13,7 +13,7 @@ namespace KGUI
 			#NOTRIM#
             ID = ElementEnums.#SCRIPTNAME#;
 			#NOTRIM#
-			Icon = new ImageWrapper(iconImage, GameState.GUIManager.WhiteSquareBorder);
+			icon.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw() 

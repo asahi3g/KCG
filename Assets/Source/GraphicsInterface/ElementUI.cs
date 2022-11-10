@@ -1,7 +1,6 @@
 //imports UnityEngine
 
 using KMath;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
@@ -9,12 +8,9 @@ namespace KGUI
     [UnityEngine.DefaultExecutionOrder (100)]
     public class ElementUI : UnityEngine.MonoBehaviour
     {
-        [UnityEngine.SerializeField] protected Image iconImage;
-
-        protected ImageWrapper Icon;
-        // Set this to any initialized image
+        [UnityEngine.SerializeField] protected ImageWrapper icon;
+        
         protected UnityEngine.GameObject HitBoxObject;
-
         public ElementEnums ID { get; protected set; }
         public UnityEngine.Vector3 HitBoxPosition { get; private set; }
         public UnityEngine.Vector2 HitBoxSize { get; private set; }
@@ -33,7 +29,7 @@ namespace KGUI
                 var corners = new UnityEngine.Vector3[4];
                 rect.GetWorldCorners(corners);
                 HitBoxPosition = corners[0]; // 0 - bottom left, 1 - top left, 2 - top right, 3 - bottom right
-                HitBoxSize = rect.sizeDelta * rect.localScale;
+                HitBoxSize = rect.sizeDelta * rect.localScale * rect.lossyScale;
                 HitBox = new AABox2D(new Vec2f(HitBoxPosition.x, HitBoxPosition.y), new Vec2f(HitBoxSize.x, HitBoxSize.y));
                 transform.hasChanged = false;
             }
