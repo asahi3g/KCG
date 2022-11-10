@@ -1,6 +1,5 @@
-using UnityEngine;
+
 using Utility;
-using UnityEngine.UI;
 
 namespace KGUI
 {
@@ -15,7 +14,9 @@ namespace KGUI
 	        
 			ID = ElementEnums.SQ_2;
             
-			icon.Init(GameState.GUIManager.WhiteSquareBorder);
+            var tileProperty = GameState.TileCreationApi.GetTileProperty(Enums.PlanetTileMap.TileID.FP_R2_Metal);
+            
+            icon.Init(32, 32, tileProperty.BaseSpriteId);
 			border.Init(GameState.GUIManager.WhiteSquareBorder);
 		}
 
@@ -44,7 +45,7 @@ namespace KGUI
         
 		public void Toggle(bool value)
 		{
-			border.SetImageColor(value ? Color.red : Color.yellow);
+			border.UnityImage.color = value ? UnityEngine.Color.red : UnityEngine.Color.yellow;
 		}
     }
 }

@@ -7927,9 +7927,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon:
-    unityImage: {fileID: 9200651174410149758}
+    unityImage: {fileID: 1115425746682937113}
   border:
-    unityImage: {fileID: 2347165499175335910}
+    unityImage: {fileID: 2919863127410681188}
 --- !u!1 &8007910807183640236
 GameObject:
   m_ObjectHideFlags: 0
