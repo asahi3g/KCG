@@ -18,6 +18,10 @@ namespace Agent
                 var model3d = entity.agentModel3D;
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -2.0f);
 
+                var renderer = model3d.GameObject.transform.GetChild(0).GetComponent<UnityEngine.Renderer>();
+                renderer.sortingOrder = 1;
+
+
                 if (physicsState.FacingDirection == 1)
                 {
                     if(model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)

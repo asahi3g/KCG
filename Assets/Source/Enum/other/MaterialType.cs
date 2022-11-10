@@ -1,4 +1,4 @@
-namespace PlanetTileMap
+namespace Enums
 {
 
 
@@ -19,6 +19,7 @@ namespace PlanetTileMap
         Rock,
         Metal,
         OreStone,
+        Flesh
 
     }
 }

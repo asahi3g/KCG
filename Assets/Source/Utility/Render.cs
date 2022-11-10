@@ -49,6 +49,7 @@ namespace Utility
             mesh.SetVertices(frameMesh.vertices);
             mesh.SetUVs(0, frameMesh.uvs);
             mesh.SetTriangles(frameMesh.triangles, 0);
+            mesh.SetColors(frameMesh.colors);
         }
 
         public void DrawSprite(GameObject gameObject, float x, float y, float w, float h,

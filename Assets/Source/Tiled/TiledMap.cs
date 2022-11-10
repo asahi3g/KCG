@@ -57,8 +57,8 @@ namespace Tiled
                     tilesetCache.AddTileset(tilesetName, foundTileset);
                 }
 
-                PlanetTileMap.MaterialType material = PlanetTileMap.MaterialType.Metal;
-                Enum.TryParse<PlanetTileMap.MaterialType>(foundTileset.properties[0].value, out material);
+                Enums.MaterialType material = Enums.MaterialType.Metal;
+                Enum.TryParse<Enums.MaterialType>(foundTileset.properties[0].value, out material);
 
                 Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.SB_R0;
                 Enum.TryParse<Enums.TileGeometryAndRotation>(foundTileset.Tiles[tileIndex].properties[0].value, out shape);

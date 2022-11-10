@@ -43,7 +43,7 @@ namespace Planet.Unity
         {
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
-            int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
+            int materialCount = Enum.GetNames(typeof(Enums.MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
 
             TileProperty[][] MaterialGeometryMap = new TileProperty[materialCount][];
@@ -65,12 +65,12 @@ namespace Planet.Unity
 
                 MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
 
-            //    Debug.Log("loaded : " + property.MaterialType + " " + property.BlockShapeType + " = " +  property.TileID);
+            //    Debug.Log("loaded : " + property.Enums.MaterialType + " " + property.BlockShapeType + " = " +  property.TileID);
             }
 
-         //   Debug.Log("test : " + MaterialGeometryMap[(int)PlanetTileMap.MaterialType.Metal][(int)Enums.GeometryTileShape.SB_R0].TileID);
+         //   Debug.Log("test : " + MaterialGeometryMap[(int)PlanetTileMap.Enums.MaterialType.Metal][(int)Enums.GeometryTileShape.SB_R0].TileID);
 //
-        //    Debug.Log(GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).MaterialType + " " + GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).BlockShapeType);
+        //    Debug.Log(GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).Enums.MaterialType + " " + GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).BlockShapeType);
 
             // Generating the map
             int mapWidth = tileMap.width;
@@ -348,7 +348,7 @@ namespace Planet.Unity
 
             for (int i = 0; i < Planet.TileMap.GeometryArrayCount; i++)
             {
-                Line2D line = Planet.TileMap.GeometryArray[i];
+                Line2D line = Planet.TileMap.GeometryArray[i].Line;
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }

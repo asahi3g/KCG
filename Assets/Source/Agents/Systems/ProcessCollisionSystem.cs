@@ -120,8 +120,6 @@ namespace Agent
             Vec2f bottomCollisionPoint = bottomCircleCenter + delta * bottomCollision.MinTime;
 
 
-            planet.AddDebugLine(new Line2D(bottomCollisionPoint, bottomCollisionPoint + bottomCollision.MinNormal), UnityEngine.Color.red);
-
             float angle = System.MathF.Atan2(-bottomCollision.MinNormal.X, bottomCollision.MinNormal.Y);
 
  
@@ -143,20 +141,38 @@ namespace Agent
              }
              else
              {
+                if (physicsState.Velocity.Y <= 0.0f)
+                {
+                    physicsState.PreviousPosition = physicsState.Position;
+                    physicsState.Position.Y -= 0.25f;
+                    
+                    delta = physicsState.Position - physicsState.PreviousPosition;           
+    
+                    agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
                 
-
-                var rs = TileCollisions.RaycastGround(entity, planet);
-                
-                physicsState.OnGrounded = rs.MinTime < 1.0f && physicsState.Velocity.Y <= 0.0f;
-                physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+                    if (agentCollision.MinTime < 1.0f)
+                    {
+                        physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
+                        physicsState.OnGrounded = true;
+                    }
+                    else
+                    {
+                        physicsState.Position = physicsState.PreviousPosition;
+                        physicsState.OnGrounded = false;
+                    }
+                    physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+                }
+                else
+                {
+                    physicsState.OnGrounded = false;
+                    physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+                }
              }
 
              //physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
 
 
              //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
-
-             planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + physicsState.GroundNormal), UnityEngine.Color.red);
 
 
             if (collidingBottom)

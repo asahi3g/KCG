@@ -7,6 +7,6 @@ namespace Tiled
     {
 
         public Enums.TileGeometryAndRotation Shape;
-        public PlanetTileMap.MaterialType Material;
+        public Enums.MaterialType Material;
     }
 }
