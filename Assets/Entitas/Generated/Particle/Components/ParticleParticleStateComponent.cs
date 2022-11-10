@@ -11,7 +11,7 @@ public partial class ParticleEntity {
     public Particle.StateComponent particleState { get { return (Particle.StateComponent)GetComponent(ParticleComponentsLookup.ParticleState); } }
     public bool hasParticleState { get { return HasComponent(ParticleComponentsLookup.ParticleState); } }
 
-    public void AddParticleState(float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor) {
+    public void AddParticleState(float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleState;
         var component = (Particle.StateComponent)CreateComponent(index, typeof(Particle.StateComponent));
         component.Health = newHealth;
@@ -19,10 +19,11 @@ public partial class ParticleEntity {
         component.DeltaRotation = newDeltaRotation;
         component.DeltaScale = newDeltaScale;
         component.Color = newColor;
+        component.Size = newSize;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticleState(float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor) {
+    public void ReplaceParticleState(float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleState;
         var component = (Particle.StateComponent)CreateComponent(index, typeof(Particle.StateComponent));
         component.Health = newHealth;
@@ -30,6 +31,7 @@ public partial class ParticleEntity {
         component.DeltaRotation = newDeltaRotation;
         component.DeltaScale = newDeltaScale;
         component.Color = newColor;
+        component.Size = newSize;
         ReplaceComponent(index, component);
     }
 

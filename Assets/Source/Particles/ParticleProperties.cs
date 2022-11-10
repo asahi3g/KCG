@@ -22,10 +22,12 @@ namespace Particle
         public Animation.AnimationType AnimationType;
 
         // the starting properties of the particles
-        public Vec2f Size;
+        public Vec2f MinSize;
+        public Vec2f MaxSize;
         public Vec2f StartingVelocity;
         public float StartingRotation;
         public float StartingScale;
+        public float EndScale;
         public UnityEngine.Color StartingColor;
         public UnityEngine.Color EndColor;
 

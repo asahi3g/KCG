@@ -13,5 +13,7 @@ namespace Particle
         public float DeltaScale;
 
         public Vec4f Color;
+
+        public Vec2f Size;
     }
 }

@@ -24,7 +24,8 @@ namespace Particle
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
-            entity.AddParticleSprite2D(particleProperties.SpriteId, null, null, particleProperties.Size);
+            Vec2f size = particleProperties.MinSize + (particleProperties.MaxSize - particleProperties.MinSize)  *  KMath.Random.Mt19937.genrand_realf();
+            entity.AddParticleSprite2D(particleProperties.SpriteId, null, null, size);
 
             if (particleProperties.HasAnimation)
             {
@@ -33,7 +34,7 @@ namespace Particle
 
             if (particleProperties.IsCollidable)
             {
-                entity.AddParticleBox2DCollider(particleProperties.Size, new Vec2f());
+                entity.AddParticleBox2DCollider(size, new Vec2f());
             }
 
             return entity;
@@ -51,7 +52,7 @@ namespace Particle
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
-            entity.AddParticleSprite2D(-1, triangles, textureCoords, particleProperties.Size);
+            entity.AddParticleSprite2D(-1, triangles, textureCoords, particleProperties.MinSize);
 
             if (particleProperties.HasAnimation)
             {
@@ -60,7 +61,7 @@ namespace Particle
 
             if (particleProperties.IsCollidable)
             {
-                entity.AddParticleBox2DCollider(particleProperties.Size, new Vec2f());
+                entity.AddParticleBox2DCollider(particleProperties.MinSize, new Vec2f());
             }
 
             return entity;
