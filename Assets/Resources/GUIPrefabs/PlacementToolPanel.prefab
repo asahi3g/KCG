@@ -195,8 +195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a865d21616e3ed34689cddf87929ca5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 5177124125761218657}
-  borderImage: {fileID: 7579976704253416013}
+  icon:
+    unityImage: {fileID: 5177124125761218657}
+  border:
+    unityImage: {fileID: 7579976704253416013}
 --- !u!1 &1529711588247119933
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3ffca80f050a448a4164a7bd905e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 7294893987851338285}
-  borderImage: {fileID: 1944920253022636536}
+  icon:
+    unityImage: {fileID: 7294893987851338285}
+  border:
+    unityImage: {fileID: 1944920253022636536}
 --- !u!1 &3059216297334570909
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,8 +609,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819fac4c594fa544c999cc07f9b47cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 7728162626871764406}
-  borderImage: {fileID: 4204803731075313572}
+  icon:
+    unityImage: {fileID: 7728162626871764406}
+  border:
+    unityImage: {fileID: 4204803731075313572}
 --- !u!1 &3198739890896596560
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,8 +740,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05f60858329f99448cb1165ab8bfd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 2869514141491472000}
-  borderImage: {fileID: 2280426930063570831}
+  icon:
+    unityImage: {fileID: 2869514141491472000}
+  border:
+    unityImage: {fileID: 2280426930063570831}
 --- !u!1 &5168327922850385145
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,8 +795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4b04462e35bdd47ad0eba7874b866d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 6169212481430507330}
-  borderImage: {fileID: 8207351503441601372}
+  icon:
+    unityImage: {fileID: 6169212481430507330}
+  border:
+    unityImage: {fileID: 8207351503441601372}
 --- !u!1 &5388079716621560574
 GameObject:
   m_ObjectHideFlags: 0

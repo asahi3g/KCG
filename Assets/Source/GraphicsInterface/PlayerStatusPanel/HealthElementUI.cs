@@ -1,66 +1,46 @@
 //imports UnityEngine
 
-using Enums;
 using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class HealthElementUI : ElementUI
     {
-        [UnityEngine.SerializeField] private Image progressBarImage;
-        [UnityEngine.SerializeField] private Image progressBarBorderImage;
-        [UnityEngine.SerializeField] private Image progressBarDiv1Image;
-        [UnityEngine.SerializeField] private Image progressBarDiv2Image;
-        
-        private ProgressBar progressBar;
-        private ImageWrapper progressBarBorder;
-        private ImageWrapper progressBarDiv1;
-        private ImageWrapper progressBarDiv2;
+        [UnityEngine.SerializeField] private ProgressBar progressBar;
+        [UnityEngine.SerializeField] private ImageWrapper progressBarBorder;
+        [UnityEngine.SerializeField] private ImageWrapper progressBarDiv1;
+        [UnityEngine.SerializeField] private ImageWrapper progressBarDiv2;
 
-        float healthAmount;
+        private float healthAmount;
         private readonly TextWrapper infoTextWrapper = new TextWrapper();
 
         public override void Init()
         {
             base.Init();
-
-            ref var planet = ref GameState.Planet;
+            
             ID = ElementEnums.HealthIndicatorPS;
-            healthAmount = planet.Player != null ? planet.Player.agentStats.Health : 0.0f;
+            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
             
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", AtlasType.Gui);
+            icon.Init(19, 19, "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
             
-            progressBarBorder = new ImageWrapper(progressBarBorderImage, 6, 8,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_border.png", AtlasType.Gui);
-
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, 5, 5,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_fill.png", AtlasType.Gui);
-
-            progressBarDiv1 = new ImageWrapper(progressBarDiv1Image, 1, 6,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_div1.png", AtlasType.Gui);
-
-            progressBarDiv2 = new ImageWrapper(progressBarDiv2Image, 1, 6,
-                "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_div2.png", AtlasType.Gui);
-
-
-            progressBar = new ProgressBar(progressBarImageWrapper, healthAmount, Image.FillMethod.Horizontal);
+            progressBarBorder.Init(6, 8, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_border.png", Enums.AtlasType.Gui);
+            progressBarDiv1.Init(1, 6, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_div1.png", Enums.AtlasType.Gui);
+            progressBarDiv2.Init(1, 6, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_div2.png", Enums.AtlasType.Gui);
+            progressBar.Init(5, 5, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_fill.png", Enums.AtlasType.Gui, healthAmount, UnityEngine.UI.Image.FillMethod.Horizontal);
         }
 
         public override void Update()
         {
             base.Update();
-            ref var planet = ref GameState.Planet;
-            healthAmount = planet.Player != null ? planet.Player.agentStats.Health : 0.0f;
+            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
             progressBar.Update(healthAmount);
             infoTextWrapper.Update();
         }
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             progressBarDiv1.Draw();
             progressBarDiv2.Draw();
             progressBarBorder.Draw();

@@ -33,22 +33,14 @@ namespace Planet.Unity
 
         KGui.CharacterDisplay CharacterDisplay;
 
-        static bool Init = false;
-
         public void Start()
         {
-            if (!Init)
-            {
-
-                Initialize();
-                Init = true;
-            }
+            Initialize();
         }
 
-                // create the sprite atlas for testing purposes
+        // create the sprite atlas for testing purposes
         public void Initialize()
         {
-
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(Enums.MaterialType)).Length;
@@ -238,16 +230,8 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            if (!Init)
-                return;
-
-            GameState.Planet.DrawHUD(Player); 
-
-
-            
-           /* CharacterDisplay.Draw();*/
-
-                 
+            GameState.Planet.DrawHUD(Player);
+            /* CharacterDisplay.Draw();*/
         }
 
         private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
@@ -344,8 +328,7 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            if (!Init)
-                return;
+            if (!Application.isPlaying) return;
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
@@ -386,6 +369,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
         }

@@ -83,6 +83,8 @@ namespace KGUI
             {
                 if (!active)
                 {
+                    ElementUnderCursor = null;
+                    PanelUnderCursor = null;
                     panel.OnDeactivate();
                 }
 

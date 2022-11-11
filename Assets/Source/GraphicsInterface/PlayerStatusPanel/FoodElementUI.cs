@@ -1,35 +1,26 @@
 //imports UnityEngine
 
-using Enums;
 using KGUI.Elements;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class FoodElementUI : ElementUI
     {
-        [UnityEngine.SerializeField] private Image progressBarImage;
-        
-        private ProgressBar progressBar;
+        [UnityEngine.SerializeField] private ProgressBar progressBar;
         private float foodAmount;
         private readonly TextWrapper infoText = new TextWrapper();
 
         public override void Init()
         {
-            ref var planet = ref GameState.Planet;
             base.Init();
             
             ID = ElementEnums.FoodIndicatorPS;
             
-            foodAmount = planet.Player != null ? planet.Player.agentStats.Food : 0.0f;
+            foodAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Food : 0.0f;
 
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", AtlasType.Gui);
-
-            var progressBarImageWrapper = new ImageWrapper(progressBarImage, GameState.GUIManager.ProgressBar);
-            
-            progressBar = new ProgressBar(progressBarImageWrapper, foodAmount, Image.FillMethod.Radial360);
+            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Food\\hud_status_food.png", Enums.AtlasType.Gui);
+            progressBar.Init(GameState.GUIManager.ProgressBar, foodAmount, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
         public override void Update()
@@ -43,7 +34,7 @@ namespace KGUI
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             progressBar.Draw();
         }
 
