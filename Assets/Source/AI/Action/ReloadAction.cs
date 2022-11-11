@@ -8,6 +8,7 @@ namespace Action
 {
     public class ReloadAction
     {
+        // Action used by either player and AI.
         static public NodeState OnEnter(object ptr, int id)
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);

@@ -10,6 +10,7 @@ namespace Action
     public class MoveToAction
     {
         // Todo(Urgent): this should start movement system.
+        // Action used only by AI.
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
 #if DEBUG

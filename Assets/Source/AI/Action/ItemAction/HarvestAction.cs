@@ -6,6 +6,7 @@ namespace Action
 {
     public class HarvestAction
     {
+        // Action used by either player and AI.
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);

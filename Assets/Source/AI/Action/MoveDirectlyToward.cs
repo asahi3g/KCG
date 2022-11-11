@@ -8,6 +8,7 @@ using System;
 namespace Action
 {
     // Movement action with no pathing.
+    // Action used only by AI.
     public class MoveDirectlyToward
     {
         struct Data

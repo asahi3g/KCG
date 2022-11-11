@@ -8,6 +8,8 @@ namespace Action
 {
     public class ShootGrenadeAction
     {
+        // Action used by either player and AI.
+        // Todo: Remove all other throw granades actions. Keep onlu this one for all types of granades.
         static public NodeState Action(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);

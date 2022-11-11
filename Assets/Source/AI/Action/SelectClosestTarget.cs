@@ -7,6 +7,7 @@ namespace Action
 {
     public class SelectClosestTarget
     {
+        // Action used only by AI.
         static public NodeState Action(object ptr, int id)
         {
             ref PlanetState planet = ref GameState.Planet;

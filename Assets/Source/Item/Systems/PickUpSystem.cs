@@ -1,4 +1,8 @@
 ﻿using KMath;
+using System.Diagnostics.Tracing;
+using System.Drawing;
+using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace Item
 {
@@ -7,26 +11,38 @@ namespace Item
         // Todo:
         //  Hash entities by their position.
         //  Only call this after an item or an agent has changed position. 
+        // Todo: Maybe the system should not schedule action. 
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentInventory));
-            var pickableItems = planet.EntitasContext.itemParticle.GetGroup(
-                ItemParticleMatcher.AllOf(ItemParticleMatcher.ItemID, ItemParticleMatcher.ItemPhysicsState).NoneOf(ItemParticleMatcher.ItemUnpickable));
-
-            foreach (var item in pickableItems)
+            for (int i = 0; i < planet.ItemParticleList.Length; i++)
             {
-                // Get item ceter position.
-                var itemPropreties = GameState.ItemCreationApi.Get(item.itemType.Type);
-                Vec2f centerPos = item.itemPhysicsState.Position + itemPropreties.SpriteSize / 2.0f;
-                foreach (var agent in agents)
+                ItemParticleEntity itemParticle = planet.ItemParticleList.Get(i);
+
+                // Update unpickable items.
+                if (itemParticle.hasItemUnpickable)
                 {
+                    itemParticle.itemUnpickable.Duration += Time.deltaTime;
+                    const float Unpickable_State_Duration = 2.0f; // How long item stays unpickable after dropped.
+                    if (itemParticle.itemUnpickable.Duration >= Unpickable_State_Duration)
+                        itemParticle.RemoveItemUnpickable();
+                    continue;
+                }
+
+                // Get item ceter position.
+                var itemProprieties = GameState.ItemCreationApi.Get(itemParticle.itemType.Type);
+                Vec2f centerPos = itemParticle.itemPhysicsState.Position + itemProprieties.SpriteSize / 2.0f;
+                const float PickingRadius = 2.0f; // Minimum distance to pick item.
+                int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(centerPos, PickingRadius);
+
+                foreach (int id in agentIds)
+                {
+                    AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(id);
                     if (!agent.agentInventory.AutoPick)
                         continue;
-                    // Todo: Use action center Position.
-                    if ((agent.agentPhysicsState.Position - centerPos).Magnitude <= 1.25f)
-                        GameState.ActionCreationSystem.CreateAction(Enums.NodeType.PickUpAction, agent.agentID.ID, item.itemID.ID);
-                }    
+
+                    GameState.ActionCreationSystem.CreateAction(Enums.NodeType.PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
+                }
             }
         }
     }

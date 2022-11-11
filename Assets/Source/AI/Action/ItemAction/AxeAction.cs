@@ -6,6 +6,10 @@ namespace Action
 {
     public class AxeAction
     {
+        // Action used by either player and AI
+        // Todo refactor this. Mert code is hard to understand.
+        // Todo: Why does tree have Health? we are have durability....
+        // Todo: Use drop api to drop wood instead.
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
