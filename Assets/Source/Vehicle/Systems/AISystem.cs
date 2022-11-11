@@ -114,6 +114,15 @@ namespace Vehicle
                         }
                     }
                 }
+
+                var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+                foreach (var pod in pods)
+                {
+                    if(Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
+                    {
+                        vehicle.vehicleRadar.podEntities.Add(pod);
+                    }
+                }
             }
             else if(vehicle.vehicleType.Type == VehicleType.Jet)
             {
