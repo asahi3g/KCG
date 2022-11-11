@@ -285,7 +285,8 @@ namespace Utility
             GL.End();
         }
 
-        public Sprite CreateSprite(string path, int width, int height, Enums.AtlasType atlasType)
+        // Create Unity Sprite from PNG and add it to Sprite Atlas Manager
+        public Sprite CreateUnitySprite(string path, int width, int height, Enums.AtlasType atlasType)
         {
             var iconSheet = GameState.SpriteLoader.GetSpriteSheetID(path, width, height);
             int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, atlasType);
@@ -295,10 +296,21 @@ namespace Utility
             return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
         }
         
-        public Sprite CreateSprite(int iconID, int width, int height, Enums.AtlasType atlasType)
+        // Get sprite from SpriteAtlasManager and create Unity Sprite from it
+        public Sprite CreateUnitySprite(int iconID, int width, int height, Enums.AtlasType atlasType)
         {
             var iconSpriteData = new byte[width * height * 4];
             GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, atlasType);
+            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+        }
+        
+        // Get sprite from TileSpriteAtlasManager and create Unity Sprite from it
+        public Sprite CreateUnitySprite(int iconID, int width, int height)
+        {
+            var iconSpriteData = new byte[width * height * 4];
+            
+            GameState.TileSpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData);
             var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
             return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
         }

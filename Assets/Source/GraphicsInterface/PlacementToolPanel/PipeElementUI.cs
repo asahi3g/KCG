@@ -49,7 +49,7 @@ namespace KGUI
         
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+            border.UnityImage.color = value ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
     }
 }

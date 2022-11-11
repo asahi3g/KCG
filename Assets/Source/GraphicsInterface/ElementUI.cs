@@ -10,8 +10,9 @@ namespace KGUI
     {
         [UnityEngine.SerializeField] protected ImageWrapper icon;
         
+        public ElementEnums ID;
+        
         protected UnityEngine.GameObject HitBoxObject;
-        public ElementEnums ID { get; protected set; }
         public UnityEngine.Vector3 HitBoxPosition { get; private set; }
         public UnityEngine.Vector2 HitBoxSize { get; private set; }
         public AABox2D HitBox { get; private set; }
