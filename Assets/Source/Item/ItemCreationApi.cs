@@ -719,7 +719,7 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(SMGIcon);
             SetInventoryTexture(SMGIcon);
-            SetRangedWeapon(50.0f, 0.2f, 99999, 15);
+            SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
             SetRangedWeaponClip(50, 1, 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
@@ -760,7 +760,7 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(PistolIcon);
             SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(50.0f, 0.4f, 99999, 25);
+            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
             SetRangedWeaponClip(8, 1, 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);

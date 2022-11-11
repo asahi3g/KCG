@@ -139,38 +139,20 @@ public partial class AgentEntity
         {
             if(isAgentAlive)
             {
-                UnityEngine.Transform FirePosition = model3d.RightHand.transform.parent;
+                UnityEngine.Transform FirePosition = model3d.RightHand.transform;
 
                 switch (model3d.ItemAnimationSet)
                 {
                     case ItemAnimationSet.HoldingRifle:
                     {
-                            if(agentPhysicsState.FacingDirection == 1)
-                            {
-                                position = new Vec2f(FirePosition.transform.position.x + 0.2f, FirePosition.transform.position.y + 0.5f);
-                                break;
-                            }
-                            else if (agentPhysicsState.FacingDirection == -1)
-                            {
-                                position = new Vec2f(FirePosition.transform.position.x - 0.2f, FirePosition.transform.position.y + 0.5f);
-                                break;
-                            }
+                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
                             break;
                     }
                     case ItemAnimationSet.HoldingPistol:
                     {
-                            if (agentPhysicsState.FacingDirection == 1)
-                            {
-                                position = new Vec2f(FirePosition.transform.position.x + .2f, FirePosition.transform.position.y + 0.5f);
-                                break;
-                            }
-                            else if (agentPhysicsState.FacingDirection == -1)
-                            {
-                                position = new Vec2f(FirePosition.transform.position.x - .2f, FirePosition.transform.position.y + 0.5f);
-                                break;
-                            }
+                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
                             break;
-                        }
+                    }
                 }
             }
 
