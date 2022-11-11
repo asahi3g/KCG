@@ -308,6 +308,37 @@ namespace Projectile
                 }
 
                 CollidedWithArrayCount = 0;
+
+
+                // used for bullet trail
+                // move it into its own system
+                // EFfect System or smth
+                
+                if (entity.projectileType.Type == Enums.ProjectileType.Bullet)
+                {
+                    Vec2f diff = physicsState.Position - physicsState.PreviousPosition;
+                    Vec2f tmp = physicsState.PreviousPosition;
+                    float distance = diff.Magnitude;
+
+                    float stepSize = 0.02f;
+                    diff.Normalize();
+                    float acc = 0.0f;
+                    acc += stepSize;
+                    while(acc <= distance)
+                    {
+                        tmp += diff * stepSize;
+                        acc += stepSize;
+
+                        planet.AddParticle(tmp, new Vec2f(), ParticleType.BulletTrail);
+                    }
+                }
+
+
+
+
+
+                
+
                 entityBoxBorders.DrawBox();
             }
 

@@ -59,7 +59,9 @@ namespace Projectile
             {
                 int damage = projectileEntity.projectileDamage.Damage;
                 stats.Health -= damage;
-                //GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
+                GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
+              //  GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood2);
+                GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.BloodSmoke);
             }
         }
 
@@ -205,9 +207,14 @@ namespace Projectile
                     result = ParticleEmitterType.MetalBulletImpact;
                     break;
                 }
+                case Enums.MaterialType.Rock:
+                {
+                    result = ParticleEmitterType.RockBulletImpact;
+                    break;
+                }
                 case Enums.MaterialType.Flesh:
                 {
-                    result = ParticleEmitterType.Blood;
+                    result = ParticleEmitterType.BloodImpact;
                     break;
                 }
             }

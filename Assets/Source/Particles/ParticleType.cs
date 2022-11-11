@@ -10,9 +10,14 @@ namespace Particle
         Debris,
         GasParticle,
         Blood,
+        Blood2,
+        BloodSmoke,
         Explosion,
         Shrapnel,
         Wood,
         MetalBulletImpact,
+        RockBulletImpact,
+        BloodImpact,
+        BulletTrail,
     }
 }

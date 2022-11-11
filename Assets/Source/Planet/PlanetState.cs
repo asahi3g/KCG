@@ -349,11 +349,11 @@ namespace Planet
         }
 
 
-        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type)
+        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type, float health = 1.0f)
         {
             Utils.Assert(ParticleList.Length < PlanetEntityLimits.ParticleLimit);
 
-            ParticleEntity newEntity = ParticleList.Add(GameState.ParticleSpawnerSystem.Spawn(type, position, velocity));
+            ParticleEntity newEntity = ParticleList.Add(GameState.ParticleSpawnerSystem.Spawn(type, position, velocity, health));
             return newEntity;
         }
 

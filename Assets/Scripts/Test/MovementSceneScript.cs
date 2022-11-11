@@ -844,6 +844,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.HealthPositon);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.Pistol);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.GeometryPlacementTool);
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
 

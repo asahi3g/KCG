@@ -30,28 +30,38 @@ namespace Particle
                 }
 
                 var state = gameEntity.particleState;
-                var box2d = gameEntity.particleBox2DCollider;
+                var sprite = gameEntity.particleSprite2D;
                 ParticleProperties properties = GameState.ParticleCreationApi.Get(gameEntity.particleID.ParticleType);
+
+                float healthNormalized = (state.Health / state.StartingHealth);
 
 
                 float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
                 if (properties.ColorUpdateMethod == Enums.ParticleColorUpdateMethod.Linear)
                 {
-                    r = properties.StartingColor.r * state.Health +  properties.EndColor.r * (1.0f - state.Health);
-                    g = properties.StartingColor.g * state.Health +  properties.EndColor.g * (1.0f - state.Health);
-                    b = properties.StartingColor.b * state.Health +  properties.EndColor.b * (1.0f - state.Health);
-                    a = properties.StartingColor.a * state.Health +  properties.EndColor.a * (1.0f - state.Health);
+                    r = properties.StartingColor.r * healthNormalized +  properties.EndColor.r * (1.0f - healthNormalized);
+                    g = properties.StartingColor.g * healthNormalized +  properties.EndColor.g * (1.0f - healthNormalized);
+                    b = properties.StartingColor.b * healthNormalized +  properties.EndColor.b * (1.0f - healthNormalized);
+                    a = properties.StartingColor.a * healthNormalized +  properties.EndColor.a * (1.0f - healthNormalized);
                 }
                 
                 state.Color = new Vec4f(r, g, b, a); 
-                
 
-                
 
+                Vec2f size = state.Size * (properties.StartingScale * healthNormalized + properties.EndScale * (1.0f - healthNormalized));
+
+                                
+                sprite.Size = size;
+
+                if (gameEntity.hasParticleBox2DCollider)
+                {
+                    var box2d = gameEntity.particleBox2DCollider;
+                    box2d.Size = size;
+                }
 
 
                 float newHealth = state.Health - state.DecayRate * deltaTime;
-                gameEntity.ReplaceParticleState(newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale, state.Color);
+                gameEntity.ReplaceParticleState(state.StartingHealth, newHealth, state.DecayRate, state.DeltaRotation, state.DeltaScale, state.Color, state.Size);
 
                 var physicsState = gameEntity.particlePhysicsState;
                 Vec2f displacement = 

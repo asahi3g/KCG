@@ -6,6 +6,7 @@ namespace Particle
     [Particle]
     public class StateComponent : IComponent
     {
+        public float StartingHealth;
         public float Health;
         public float DecayRate;
 
@@ -14,6 +15,6 @@ namespace Particle
 
         public Vec4f Color;
 
-        public Vec2f Size;
+        public  Vec2f Size;
     }
 }

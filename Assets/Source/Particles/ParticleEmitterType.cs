@@ -8,9 +8,13 @@ namespace Particle
         DustEmitter,
         GasEmitter,
         Blood,
+        Blood2,
+        BloodSmoke,
         ExplosionEmitter,
         ShrapnelEmitter,
         WoodEmitter,
-        MetalBulletImpact
+        MetalBulletImpact,
+        RockBulletImpact,
+        BloodImpact
     }
 }
