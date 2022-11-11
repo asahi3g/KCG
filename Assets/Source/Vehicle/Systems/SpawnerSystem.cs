@@ -40,15 +40,15 @@ namespace Vehicle
 
             entity.AddVehicleType(vehicleType, false);
 
+            List<PodEntity> pods = new List<PodEntity>();
+            entity.AddVehicleRadar(pods);
+
             entity.AddVehicleThruster(vehicleProperties.Jet, vehicleProperties.JetAngle, JetSize.None, true);
 
             entity.AddVehicleThrusterSprite2D(vehicleProperties.ThrusterSpriteId, vehicleProperties.ThrusterSpriteSize, 
                 vehicleProperties.Thruster1Position, vehicleProperties.Thruster2Position);
 
             entity.AddVehicleHeightMap(false, Vec2f.Zero);
-
-            List<PodEntity> Pods = new List<PodEntity>();
-            entity.AddVehiclePod(true, Pods, Vec2f.Zero, Vec2f.Zero);
 
             if (vehicleType == VehicleType.DropShip)
             {
@@ -58,15 +58,14 @@ namespace Vehicle
                 GameState.VehicleAISystem.Initialize(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
                 GameState.VehicleAISystem.RunAI(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
 
+                for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
+                {
+                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyMarine, 1);
+                    enemy.agentModel3D.GameObject.gameObject.SetActive(false);
+                    enemy.isAgentAlive = false;
 
-               var podLeft = planet.AddPod(entity.vehiclePhysicsState2D.Position, PodType.Default);
-
-               var podRight = planet.AddPod(entity.vehiclePhysicsState2D.Position, PodType.Default);
-
-               entity.vehiclePod.Pods.Add(podLeft);
-
-               entity.vehiclePod.Pods.Add(podRight);
-                
+                    entity.vehicleCapacity.agentsInside.Add(enemy);
+                }
             }
 
             // Increase ID per object statically

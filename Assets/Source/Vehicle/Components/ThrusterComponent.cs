@@ -7,7 +7,7 @@ namespace Vehicle
     public class ThrusterComponent : IComponent
     {
         public bool Jet;
-        public KMath.Vec2f Angle;
+        public float Angle;
         public JetSize JetSize;
         public bool isLaunched;
     }

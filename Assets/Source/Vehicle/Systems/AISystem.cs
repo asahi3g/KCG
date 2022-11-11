@@ -58,13 +58,7 @@ namespace Vehicle
             ref var planet = ref GameState.Planet;
             if(vehicle.vehicleType.Type == VehicleType.DropShip)
             {
-                vehicle.vehiclePod.Pods[0].vehiclePodPhysicsState2D.Position = vehicle.vehiclePhysicsState2D.Position + 
-                    vehicle.vehiclePod.OffsetLeft;
-
-                vehicle.vehiclePod.Pods[1].vehiclePodPhysicsState2D.Position = vehicle.vehiclePhysicsState2D.Position +
-                    vehicle.vehiclePod.OffsetLeft;
-
-                if (!vehicle.vehicleHeightMap.OpenSky)
+                if(!vehicle.vehicleHeightMap.OpenSky)
                 {
                     for(int i = 0; i < planet.TileMap.MapSize.X; i++)
                     {
@@ -85,7 +79,7 @@ namespace Vehicle
                 {
                     if(vehicle.vehicleThruster.Jet)
                     {
-                        CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, vehicle.vehicleThruster.Angle, new Vec2f(0.1f, 0.3f));
+                        CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
                     }
                 }
 
@@ -106,8 +100,6 @@ namespace Vehicle
                     {
                         for (int j = 0; j < agentsInside.Count; j++)
                         {
-                            //TODO: Get out player from pod
-
                             if(!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
                             {
                                 agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
@@ -122,12 +114,21 @@ namespace Vehicle
                         }
                     }
                 }
+
+                var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+                foreach (var pod in pods)
+                {
+                    if(Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
+                    {
+                        vehicle.vehicleRadar.podEntities.Add(pod);
+                    }
+                }
             }
             else if(vehicle.vehicleType.Type == VehicleType.Jet)
             {
                 vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * UnityEngine.Time.deltaTime;
 
-                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, vehicle.vehicleThruster.Angle, new Vec2f(0.1f, 0.3f));
+                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
 
                 entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
                     new Vec2f(1.0f, 5));

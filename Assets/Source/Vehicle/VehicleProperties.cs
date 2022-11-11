@@ -28,8 +28,10 @@ namespace Vehicle
 
         public bool AffectedByGravity;
 
+        public int DefaultAgentCount;
+
         public bool Jet;
-        public Vec2f JetAngle;
+        public float JetAngle;
         public JetSize JetSize;
 
         public int ThrusterSpriteId;
@@ -37,9 +39,6 @@ namespace Vehicle
 
         public Vec2f Thruster1Position;
         public Vec2f Thruster2Position;
-
-        public Vec2f PodOffsetRight;
-        public Vec2f PodOffsetLeft;
     }
 }
 
