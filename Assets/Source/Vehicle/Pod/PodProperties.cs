@@ -31,6 +31,21 @@ namespace Vehicle.Pod
 
         public int PodValue;
         public int Score;
+
+        public Vec2f RightPanel;
+        public Vec2f LeftPanel;
+        public Vec2f TopPanel;
+        public Vec2f BottomPanel;
+
+        public Vec2f RightPanelWidth;
+        public Vec2f LeftPanelWidth;
+        public Vec2f TopPanelWidth;
+        public Vec2f BottomPanelWidth;
+
+        public Vec2f RightPanelHeight;
+        public Vec2f LeftPanelHeight;
+        public Vec2f TopPanelHeight;
+        public Vec2f BottomPanelHeight;
     }
 }
 

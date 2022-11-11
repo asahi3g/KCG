@@ -35,6 +35,21 @@ namespace Vehicle.Pod
 
                 // Update Vertices
                 Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.vehiclePodPhysicsState2D.Rotation);
+
+                UnityEngine.Vector4 RightPanelCoords = GameState.SpriteAtlasManager.GetSprite(entity.vehiclePodSprite2D.SpriteId, Enums.AtlasType.Vehicle).TextureCoords;
+
+                var panelX = 0;
+                var panelY = 0;
+
+                var podWidth = entity.vehiclePodPhysicsState2D.Scale.X;
+                var podHeight = entity.vehiclePodPhysicsState2D.Scale.Y;
+
+                // Update UVs
+                Mesh.UpdateUV(RightPanelCoords, (index) * 4);
+
+                // Update Vertices
+                Mesh.UpdateVertex((index++ * 4), x + panelX, y + panelY, podWidth, podHeight,
+                    entity.vehiclePodPhysicsState2D.Rotation);
             }
         }
     }

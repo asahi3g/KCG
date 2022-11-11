@@ -16,6 +16,9 @@ namespace Vehicle
         private Vec2f movementSpeed;
         private AABox2D entityBoxBorders;
 
+        bool reLaunchStart = false;
+        float remaningReLaunch = 0.0f;
+
         // Constructor
         public AISystem(VehicleCreationApi vehicleCreationApi)
         {
@@ -56,97 +59,129 @@ namespace Vehicle
             // Spawn vehicle to open sky area found.
 
             ref var planet = ref GameState.Planet;
-            if(vehicle.vehicleType.Type == VehicleType.DropShip)
+            if(vehicle != null)
             {
-                if(!vehicle.vehicleHeightMap.OpenSky)
+                if(vehicle.hasVehicleType)
                 {
-                    for(int i = 0; i < planet.TileMap.MapSize.X; i++)
+                    if (vehicle.vehicleType.Type == VehicleType.DropShip)
                     {
-                        var tile = planet.TileMap.GetTile(i, 30);
-                        if(tile.FrontTileID == Enums.PlanetTileMap.TileID.Air)
+                        if (reLaunchStart)
                         {
-                            vehicle.vehicleHeightMap.OpenSky = true;
-                            vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);
+                            remaningReLaunch += UnityEngine.Time.deltaTime;
 
-                            vehicle.vehiclePhysicsState2D.Position = vehicle.vehicleHeightMap.SpawnPosition;
-                        }
-                    }
-                }
-
-                // Spew out smoke if jet/ignition is on.
-
-                if(vehicle.hasVehicleThruster)
-                {
-                    if(vehicle.vehicleThruster.Jet)
-                    {
-                        CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
-                    }
-                }
-
-                // Sky and Land check for scan path.
-                // Check if path is clear.
-                // Pop out all passengers in the vehicle after landed.
-                // Scan all pods near by and add to the array.
-
-                entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
-                    new Vec2f(1.0f, -1));
-
-                if (!GameState.VehicleAISystem.IsPathEmpty())
-                {
-                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
-
-                    var agentsInside = vehicle.vehicleCapacity.agentsInside;
-                    if (vehicle.hasVehicleCapacity)
-                    {
-                        for (int j = 0; j < agentsInside.Count; j++)
-                        {
-                            if(!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
+                            if (remaningReLaunch > 8.0f)
                             {
-                                agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+                                vehicle.vehiclePhysicsState2D.angularVelocity.Y += 0.01f;
 
-                                agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
-                                agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+                                if (remaningReLaunch > 30.0f)
+                                {
+                                    planet.RemoveVehicle(vehicle.vehicleID.Index);
+                                    return;
+                                }
+                            }
+                            else if (remaningReLaunch > 5.0f)
+                            {
+                                vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0f, 4.0f);
+                                vehicle.vehicleThruster.Jet = true;
+                            }
+                        }
 
-                                agentsInside[j].isAgentAlive = true;
-                                agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y);
-                                vehicle.vehicleThruster.Jet = false;
+                        if (!vehicle.vehicleHeightMap.OpenSky)
+                        {
+                            for (int i = 0; i < planet.TileMap.MapSize.X; i++)
+                            {
+                                var tile = planet.TileMap.GetTile(i, 30);
+                                if (tile.FrontTileID == Enums.PlanetTileMap.TileID.Air)
+                                {
+                                    vehicle.vehicleHeightMap.OpenSky = true;
+                                    vehicle.vehicleHeightMap.SpawnPosition = new Vec2f(i - 4, planet.TileMap.MapSize.Y - 3);
+
+                                    vehicle.vehiclePhysicsState2D.Position = vehicle.vehicleHeightMap.SpawnPosition;
+                                }
+                            }
+                        }
+
+                        // Spew out smoke if jet/ignition is on.
+
+                        if (vehicle.hasVehicleThruster)
+                        {
+                            if (vehicle.vehicleThruster.Jet)
+                            {
+                                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -8.0f), new Vec2f(0.1f, 0.3f));
+                            }
+                        }
+
+                        // Sky and Land check for scan path.
+                        // Check if path is clear.
+                        // Pop out all passengers in the vehicle after landed.
+                        // Scan all pods near by and add to the array.
+
+                        entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
+                            new Vec2f(1.0f, -1));
+
+                        if (!GameState.VehicleAISystem.IsPathEmpty())
+                        {
+                            vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
+
+                            var agentsInside = vehicle.vehicleCapacity.agentsInside;
+                            if (vehicle.hasVehicleCapacity)
+                            {
+
+                                for (int j = 0; j < agentsInside.Count; j++)
+                                {
+                                    if (!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
+                                    {
+                                        agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+
+                                        agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
+                                        agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+
+                                        agentsInside[j].isAgentAlive = true;
+                                        agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y);
+                                        vehicle.vehicleThruster.Jet = false;
+                                    }
+                                    else
+                                    {
+                                        reLaunchStart = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
+                        foreach (var pod in pods)
+                        {
+                            if (Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
+                            {
+                                vehicle.vehicleRadar.podEntities.Add(pod);
                             }
                         }
                     }
-                }
-
-                var pods = planet.EntitasContext.pod.GetGroup(PodMatcher.AllOf(PodMatcher.VehiclePodID));
-                foreach (var pod in pods)
-                {
-                    if(Vec2f.Distance(vehicle.vehiclePhysicsState2D.Position, pod.vehiclePodPhysicsState2D.Position) < 2.0f)
+                    else if (vehicle.vehicleType.Type == VehicleType.Jet)
                     {
-                        vehicle.vehicleRadar.podEntities.Add(pod);
-                    }
-                }
-            }
-            else if(vehicle.vehicleType.Type == VehicleType.Jet)
-            {
-                vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * UnityEngine.Time.deltaTime;
+                        vehicle.vehiclePhysicsState2D.angularVelocity += movementSpeed * UnityEngine.Time.deltaTime;
 
-                CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
+                        CircleSmoke.Spawn(vehicle, 1, vehicle.vehiclePhysicsState2D.Position + particlePosition, new Vec2f(UnityEngine.Random.Range(-2f, 2f), -4.0f), new Vec2f(0.1f, 0.3f));
 
-                entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
-                    new Vec2f(1.0f, 5));
+                        entityBoxBorders = new AABox2D(new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y) + vehicle.physicsBox2DCollider.Offset,
+                            new Vec2f(1.0f, 5));
 
-                if (GameState.VehicleAISystem.IsPathEmpty())
-                {
-                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
-                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
-                }
-                else
-                {
-                    UnityEngine.Debug.Log("LANDING");
-                    movementSpeed = new Vec2f(movementSpeed.X, -25f);
+                        if (GameState.VehicleAISystem.IsPathEmpty())
+                        {
+                            vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
+                            GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.Log("LANDING");
+                            movementSpeed = new Vec2f(movementSpeed.X, -25f);
 
-                    if(entityBoxBorders.IsCollidingBottom(vehicle.vehiclePhysicsState2D.angularVelocity))
-                    {
-                        vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
-                        GameState.VehicleAISystem.StopAI();
+                            if (entityBoxBorders.IsCollidingBottom(vehicle.vehiclePhysicsState2D.angularVelocity))
+                            {
+                                vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                                GameState.VehicleAISystem.StopAI();
+                            }
+                        }
                     }
                 }
             }

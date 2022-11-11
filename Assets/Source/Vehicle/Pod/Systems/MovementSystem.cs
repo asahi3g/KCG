@@ -21,17 +21,15 @@ namespace Vehicle.Pod
                 GameState.Planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var vehicle in entities)
             {
-                if(!vehicle.vehiclePodStatus.Freeze)
-                {
-                    PodProperties podProperties =
-                            PodCreationApi.GetRef((int)vehicle.vehiclePodType.Type);
 
-                    // Process Gravity
-                    if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
-                        vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity * UnityEngine.Time.deltaTime;
+                PodProperties podProperties =
+                        PodCreationApi.GetRef((int)vehicle.vehiclePodType.Type);
 
-                    vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
-                }
+                // Process Gravity
+                if (vehicle.vehiclePodPhysicsState2D.AffectedByGravity)
+                    vehicle.vehiclePodPhysicsState2D.angularVelocity.Y += vehicle.vehiclePodPhysicsState2D.centerOfGravity *UnityEngine.Time.deltaTime;
+
+                vehicle.vehiclePodPhysicsState2D.Position += vehicle.vehiclePodPhysicsState2D.angularVelocity * UnityEngine.Time.deltaTime;
             }
         }
     }
