@@ -409,7 +409,6 @@ namespace Item
         public int ChestIconItem;
         public int PotIconItem;
         public int Light2IconItem;
-        public int OreSprite;
         public int HemeltSprite;
         public int HelmetsSpriteSheet;
         public int SuitSprite;
@@ -424,6 +423,7 @@ namespace Item
         public int GlovesSlotIcon;
         public int RingSlotIcon;
         public int BeltSlotIcon;
+        public int OreSprite;
         public int Ore2Sprite;
         public int Ore3Sprite;
         public int ChestIconParticle;
@@ -575,7 +575,6 @@ namespace Item
             ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconItem, 0, 0, AtlasType.Particle);
             PotIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIconItem, 0, 0, AtlasType.Particle);
             Light2IconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2IconItem, 0, 0, AtlasType.Particle);
-            OreSprite = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas16To32(OreSpriteSheet, 0, 0, 0);
             HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, AtlasType.Particle);
             SuitSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SuitsSpriteSheet, 0, 0, AtlasType.Particle);
             BedrockIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BedrockIcon, 0, 0, AtlasType.Particle);
@@ -1138,8 +1137,8 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.ScannerTool, "ScannerTool");
-            SetTexture(OreSprite);
-            SetInventoryTexture(OreSprite);
+            SetTexture(ConstructionToolIcon);
+            SetInventoryTexture(ConstructionToolIcon);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetAction(NodeType.ToolActionScanner);
             EndItem();

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Mech
 {
+    // Todo: Move file to new Gui system.
     public class MouseInteractionSystem
     {
         // Return list of meches mouse is over.
