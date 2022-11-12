@@ -4,7 +4,6 @@ namespace Agent
 {
     public class MouseInteractionSystem
     {
-        // Todo: Move file to new Gui system.
         public void Update()
         {
             ref var planet = ref GameState.Planet;

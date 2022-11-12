@@ -17,12 +17,10 @@ namespace Planet.Unity
         private Inventory.InventoryManager inventoryManager;
         private GeometryBlockPlacementTool geometryPlacementTool;
 
-        private AgentEntity Player;
         private int inventoryID;
         private InventoryEntity materialBag;
 
         private bool init;
-        private bool isStarted;
 
         public void Start()
         {
@@ -35,8 +33,6 @@ namespace Planet.Unity
             if (!init) return;
             
             planet.Update(UnityEngine.Time.deltaTime, material, transform);
-            planet.DrawHUD(Player);
-
 
             if (enableGeometryPlacementTool)
             {
@@ -48,8 +44,8 @@ namespace Planet.Unity
         private void OnGUI()
         {
             if (!init) return;
-
-            GameState.Planet.DrawHUD(Player);
+            ref var planet = ref GameState.Planet;
+            planet.DrawHUD(planet.Player);
 
             if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
@@ -78,34 +74,34 @@ namespace Planet.Unity
             CircleSmoke.DrawGizmos();
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
 
-            // Draw lines around player if out of bounds
-            if (Player != null)
-                if(Player.agentPhysicsState.Position.X -10.0f >= planet.TileMap.MapSize.X)
+            // Draw lines around planet.Player if out of bounds
+            if (planet.Player != null)
+                if(planet.Player.agentPhysicsState.Position.X -10.0f >= planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
 
                     // X+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X + 10.0f, planet.Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X - 10.0f, planet.Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y - 10.0f));
 
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X + 10.0f, planet.Player.agentPhysicsState.Position.Y));
 
                     // X-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f, Player.agentPhysicsState.Position.Y));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X - 10.0f, planet.Player.agentPhysicsState.Position.Y));
 
                     // Y+
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y + 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
-                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(Player.agentPhysicsState.Position.X, Player.agentPhysicsState.Position.Y - 10.0f));
+                    UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y, 0.0f), new UnityEngine.Vector3(planet.Player.agentPhysicsState.Position.X, planet.Player.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -141,7 +137,7 @@ namespace Planet.Unity
 
             materialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
 
-            inventoryID = Player.agentInventory.InventoryID;
+            inventoryID = planet.Player.agentInventory.InventoryID;
 
             // Admin API Spawn Items
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol);
@@ -346,7 +342,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 4;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            planet.Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
 
             GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
