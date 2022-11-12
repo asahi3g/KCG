@@ -59,14 +59,18 @@ namespace Projectile
             {
                 int damage = projectileEntity.projectileDamage.Damage;
                 stats.Health -= damage;
-                GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
+                //GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
             }
         }
 
         public void Default(ProjectileEntity pEntity)
         {
+            ParticleEmitterType particleEmitterType = GetParticleEmitterFromMaterial(pEntity.projectileOnHit.MaterialType);
             GameState.Planet.AddParticleEmitter(
+                pEntity.projectilePhysicsState.Position, particleEmitterType);
+                GameState.Planet.AddParticleEmitter(
                 pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
+                
             pEntity.isProjectileDelete = true;
         }
 
@@ -188,6 +192,28 @@ namespace Projectile
 
             if (elapse >= 7.0f)
                 pEntity.isProjectileDelete = true;
+        }
+
+
+        public ParticleEmitterType GetParticleEmitterFromMaterial(Enums.MaterialType material)
+        {
+            ParticleEmitterType result = ParticleEmitterType.DustEmitter;
+            switch(material)
+            {
+                case Enums.MaterialType.Metal:
+                {
+                    result = ParticleEmitterType.MetalBulletImpact;
+                    break;
+                }
+                case Enums.MaterialType.Flesh:
+                {
+                    result = ParticleEmitterType.Blood;
+                    break;
+                }
+            }
+
+
+            return result;
         }
     }
 }

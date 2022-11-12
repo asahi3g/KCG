@@ -12,16 +12,16 @@ namespace KGUI
         {
             base.Init();
 
-            HitBoxObject = Icon.GameObject;
+            HitBoxObject = icon.GameObject;
             
             ID = ElementEnums.ExitButtonGM;
 
-            Icon = null;
+            icon = null;
         }
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
         }
 
         public override void OnMouseStay()

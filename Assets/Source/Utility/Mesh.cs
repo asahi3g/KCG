@@ -11,6 +11,7 @@ namespace Utility
         public List<UnityEngine.Vector3> vertices;
         public List<UnityEngine.Vector2> uvs;
         public List<int> triangles;
+        public List<UnityEngine.Color> colors;
 
         public FrameMesh(string name, UnityEngine.Material material, UnityEngine.Transform transform, Sprites.SpriteAtlas Atlassprite, int drawOrder = 0)
         {
@@ -35,6 +36,7 @@ namespace Utility
             vertices = new List<UnityEngine.Vector3>();
             triangles = new List<int>();
             uvs = new List<UnityEngine.Vector2>();
+            colors = new List<UnityEngine.Color>();
         }
 
         public void Clear()
@@ -42,6 +44,7 @@ namespace Utility
             vertices.Clear();
             uvs.Clear();
             triangles.Clear();
+            colors.Clear();
         }
 
 
@@ -55,7 +58,7 @@ namespace Utility
             return new Vec2f(tmpX * c - pos.Y * s, tmpX * s + pos.Y * c);
         }
 
-        public void UpdateVertex(int index, float x, float y, float w, float h, float angle = 0)
+        public void UpdateVertex(int index, float x, float y, float w, float h, float r = 1.0f, float g = 1.0f, float b = 1.0f, float a = 1.0f, float angle = 0)
         {
             angle = angle * 3.14f / 180.0f;
             Vec2f topLeft = new Vec2f(0, h);
@@ -89,6 +92,11 @@ namespace Utility
             triangles.Add(triangleIndex);
             triangles.Add(triangleIndex + 1);
             triangles.Add(triangleIndex + 3);
+
+            colors.Add(new UnityEngine.Color(r, g, b, a));
+            colors.Add(new UnityEngine.Color(r, g, b, a));
+            colors.Add(new UnityEngine.Color(r, g, b, a));
+            colors.Add(new UnityEngine.Color(r, g, b, a));
         }
 
 
@@ -110,6 +118,7 @@ namespace Utility
             {
                 vertices.Add(new UnityEngine.Vector3(verts[i].X + x, verts[i].Y + y, 0));
                 triangles.Add(triangleIndex + i);
+                colors.Add(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
             }
         }
 

@@ -505,9 +505,6 @@ namespace Planet
                 GameState.TGenRenderMapMesh.Draw();
             }
 
-            GameState.AgentModel3DMovementSystem.Update();
-            GameState.AgentModel3DAnimationSystem.Update();
-
             // Update Meshes.
             GameState.TileMapRenderer.UpdateBackLayerMesh();
             GameState.TileMapRenderer.UpdateMidLayerMesh();
@@ -524,13 +521,17 @@ namespace Planet
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Back);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Mid);
             GameState.TileMapRenderer.DrawLayer(MapLayerType.Front);
-            GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.AgentMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Agent));
+            GameState.Renderer.DrawFrame(ref GameState.ItemMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.VehicleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Vehicle));
             GameState.Renderer.DrawFrame(ref GameState.PodMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Vehicle));
             GameState.Renderer.DrawFrame(ref GameState.ProjectileMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.ParticleMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Particle));
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
+
+            
+            GameState.AgentModel3DMovementSystem.Update();
+            GameState.AgentModel3DAnimationSystem.Update();
 
             GameState.FloatingTextDrawSystem.Draw(transform, 10000);
 
@@ -569,12 +570,12 @@ namespace Planet
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(topLine.A.X, topLine.A.Y, 0), new UnityEngine.Vector3(topLine.B.X, topLine.B.Y, 0));
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(leftLine.A.X, leftLine.A.Y, 0), new UnityEngine.Vector3(leftLine.B.X, leftLine.B.Y, 0));
 
-
+/*
                 Vec2f topPos = agentPosition + new Vec2f(0.0f, agentBox2dCollider.Size.Y - agentBox2dCollider.Size.X / 2.0f) +  agentBox2dCollider.Size.X * 0.5f;
                 Vec2f bottomPos = agentPosition + agentBox2dCollider.Size.X * 0.5f;
 
                 UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(topPos.X, topPos.Y, 20.0f), agentBox2dCollider.Size.X * 0.5f);
-                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(bottomPos.X, bottomPos.Y, 20.0f), agentBox2dCollider.Size.X * 0.5f);
+                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(bottomPos.X, bottomPos.Y, 20.0f), agentBox2dCollider.Size.X * 0.5f);*/
 
             }
         }

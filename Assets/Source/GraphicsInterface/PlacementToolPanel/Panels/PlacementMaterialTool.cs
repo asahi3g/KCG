@@ -1,9 +1,6 @@
 //imports UnityEngine
 
-using System;
 using System.Linq;
-using Enums;
-using Enums.PlanetTileMap;
 
 namespace KGUI
 {
@@ -48,25 +45,25 @@ namespace KGUI
 
                     switch (materialBagSlot.itemType.Type)
                     {
-                        case ItemType.Bedrock:
+                        case Enums.ItemType.Bedrock:
                             if (ElementList.TryGetValue(ElementEnums.BedrockPT, out var bedrockElementUI))
                             {
                                 bedrockElementUI.gameObject.SetActive(true);
                             }
                             break;
-                        case ItemType.Dirt:
+                        case Enums.ItemType.Dirt:
                             if (ElementList.TryGetValue(ElementEnums.DirtPT, out var dirtElementUI))
                             {
                                 dirtElementUI.gameObject.SetActive(true);
                             }
                             break;
-                        case ItemType.Pipe:
+                        case Enums.ItemType.Pipe:
                             if (ElementList.TryGetValue(ElementEnums.PipePT, out var pipeElementUI))
                             {
                                 pipeElementUI.gameObject.SetActive(true);
                             }
                             break;
-                        case ItemType.Wire:
+                        case Enums.ItemType.Wire:
                             if (ElementList.TryGetValue(ElementEnums.WirePT, out var wireElementUI))
                             {
                                 wireElementUI.gameObject.SetActive(true);
@@ -84,7 +81,7 @@ namespace KGUI
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemTile.TileID = TileID.Error;
+                item.itemTile.TileID = Enums.PlanetTileMap.TileID.Error;
             }
 
             foreach (var element in ElementList.Values)
@@ -103,23 +100,23 @@ namespace KGUI
                 switch (element.ID)
                 {
                     case ElementEnums.Error:
-                        selectedInventoryItem.itemTile.TileID = TileID.Error;
+                        selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Error;
                         break;
                     case ElementEnums.BedrockPT:
                         ((IToggleElement)element).Toggle(true);
-                        selectedInventoryItem.itemTile.TileID = TileID.Bedrock;
+                        selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Bedrock;
                         break;
                     case ElementEnums.DirtPT:
                         ((IToggleElement)element).Toggle(true);
-                        selectedInventoryItem.itemTile.TileID = TileID.Moon;
+                        selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Moon;
                         break;
                     case ElementEnums.PipePT:
                         ((IToggleElement)element).Toggle(true);
-                        selectedInventoryItem.itemTile.TileID = TileID.Pipe;
+                        selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Pipe;
                         break;
                     case ElementEnums.WirePT:
                         ((IToggleElement)element).Toggle(true);
-                        selectedInventoryItem.itemTile.TileID = TileID.Wire;
+                        selectedInventoryItem.itemTile.TileID = Enums.PlanetTileMap.TileID.Wire;
                         break;
                 }
                 break;

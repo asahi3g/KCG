@@ -12,6 +12,7 @@ namespace Particle
         Blood,
         Explosion,
         Shrapnel,
-        Wood
+        Wood,
+        MetalBulletImpact,
     }
 }

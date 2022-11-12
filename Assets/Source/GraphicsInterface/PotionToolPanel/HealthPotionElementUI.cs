@@ -5,27 +5,23 @@ namespace KGUI
 {
     public class HealthPotionElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private UnityEngine.UI.Image borderImage;
-
-        private ImageWrapper border;
+        [UnityEngine.SerializeField] private ImageWrapper border;
 
         public override void Init()
         {
             base.Init();
 
-            HitBoxObject = borderImage.gameObject;
+            HitBoxObject = border.UnityImage.gameObject;
 
             ID = ElementEnums.HealthPotionPT;
-
-            Icon = new ImageWrapper(iconImage, 19, 19,
-                "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
-
-            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            
+            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
+            border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             border.Draw();
         }
 
@@ -42,7 +38,7 @@ namespace KGUI
         
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+            border.UnityImage.color = value ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
     }
 }

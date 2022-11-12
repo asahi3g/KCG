@@ -341,6 +341,7 @@ namespace Collisions
             public float MinTime;
             public Vec2f MinNormal;
             public Enums.TileGeometryAndRotation GeometryTileShape;
+            public Enums.MaterialType Material;
         }
 
 
@@ -394,6 +395,7 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.TileGeometryAndRotation minShape = 0;
+            Enums.MaterialType minMaterial = 0;
 
 
             //TODO(Mahdi):
@@ -403,9 +405,10 @@ namespace Collisions
             for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = planet.TileMap.GeometryArray[i];
-                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i].Line;
+                Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
+                Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
 
 
 
@@ -426,6 +429,7 @@ namespace Collisions
                         minTime = collisionResult.Time;
                         minNormal = collisionResult.Normal;
                         minShape = shape;
+                        minMaterial = material;
                     }
                 }
 
@@ -435,6 +439,7 @@ namespace Collisions
             result.MinTime = minTime;
             result.MinNormal = minNormal;
             result.GeometryTileShape = minShape;
+            result.Material = minMaterial;
 
 
             return result;
@@ -459,25 +464,28 @@ namespace Collisions
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.TileGeometryAndRotation minShape = 0;
+            Enums.MaterialType minMaterial = 0;
+
             for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = planet.TileMap.GeometryArray[i];
-                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i].Line;
+                Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
+                Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
 
 
                 Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X, 1.25f);
                 Vec2f end = start + new Vec2f(0.0f, -1.5f);
                 var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
 
-                planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
                 if (rs < minTime)
                 {
                     minTime = rs;
                     minNormal = normal;
                     minShape = shape;
                     minLine = line;
+                    minMaterial = material;
                     pointOfCollision = start;
                 }
 
@@ -506,6 +514,7 @@ namespace Collisions
             result.MinTime = minTime;
             result.MinNormal = minNormal;
             result.GeometryTileShape = minShape;
+            result.Material = minMaterial;
 
 
             return result;
@@ -517,6 +526,7 @@ namespace Collisions
             public float MinTime;
             public Vec2f MinNormal;
             public Enums.TileGeometryAndRotation GeometryTileShape;
+            public Enums.MaterialType Material;
 
             public HandleCollisionResult BottomCollision;
         }
@@ -540,12 +550,14 @@ namespace Collisions
                 result.MinTime = bottomCollision.MinTime;
                 result.MinNormal = bottomCollision.MinNormal;
                 result.GeometryTileShape = bottomCollision.GeometryTileShape;
+                result.Material = bottomCollision.Material;
             }
             else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
             {
                 result.MinTime = topCollision.MinTime;
                 result.MinNormal = topCollision.MinNormal;
                 result.GeometryTileShape = topCollision.GeometryTileShape;
+                result.Material = topCollision.Material;
             }
 
 
@@ -602,6 +614,7 @@ namespace Collisions
             float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.TileGeometryAndRotation minShape = 0;
+            Enums.MaterialType minMaterial = 0;
 
             //TODO(Mahdi):
             // 1- do not iterate over all the lines in the tile map
@@ -610,9 +623,10 @@ namespace Collisions
             for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
             {
                 
-                Line2D line = planet.TileMap.GeometryArray[i];
-                Vec2f normal = planet.TileMap.GeometryNormalArray[i];
-                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryShapeArray[i];
+                Line2D line = planet.TileMap.GeometryArray[i].Line;
+                Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
+                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
+                Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
 
 
                 // if its a platform
@@ -630,6 +644,7 @@ namespace Collisions
                         minTime = collisionResult.Time;
                         minNormal = collisionResult.Normal;
                         minShape = shape;
+                        minMaterial = material;
                     }
                 }
 
@@ -639,6 +654,7 @@ namespace Collisions
             result.MinTime = minTime;
             result.MinNormal = minNormal;
             result.GeometryTileShape = minShape;
+            result.Material = minMaterial;
 
 
             return result;
@@ -780,8 +796,6 @@ namespace Collisions
             Line2D rightLine = new Line2D(colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.X * 0.5f), colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y - box2dCollider.Size.X * 0.5f));
 
 
-            planet.AddDebugLine(leftLine, UnityEngine.Color.red);
-            planet.AddDebugLine(rightLine, UnityEngine.Color.red);
 
            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
@@ -792,9 +806,6 @@ namespace Collisions
                 Line2D line = lines[i];
                 Vec2f normal = normals[i];
                 int collisionPosition = positions[i];
-
-  
-                planet.AddDebugLine(line, UnityEngine.Color.blue);
 
         
                 float collisionResult = 

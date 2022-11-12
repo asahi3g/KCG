@@ -37,7 +37,7 @@ namespace Particle
                 ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)state.ParticleEmitterType);
                 ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get((int)state.ParticleType);
+                        ParticleCreationApi.Get(state.ParticleType);
                 if (state.Duration >= 0)
                 {
                     if (state.CurrentTime <= 0.0f)

@@ -33,25 +33,17 @@ namespace Planet.Unity
 
         KGui.CharacterDisplay CharacterDisplay;
 
-        static bool Init = false;
-
         public void Start()
         {
-            if (!Init)
-            {
-
-                Initialize();
-                Init = true;
-            }
+            Initialize();
         }
 
-                // create the sprite atlas for testing purposes
+        // create the sprite atlas for testing purposes
         public void Initialize()
         {
-
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
-            int materialCount = Enum.GetNames(typeof(MaterialType)).Length;
+            int materialCount = Enum.GetNames(typeof(Enums.MaterialType)).Length;
             int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
 
             TileProperty[][] MaterialGeometryMap = new TileProperty[materialCount][];
@@ -73,12 +65,12 @@ namespace Planet.Unity
 
                 MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
 
-            //    Debug.Log("loaded : " + property.MaterialType + " " + property.BlockShapeType + " = " +  property.TileID);
+            //    Debug.Log("loaded : " + property.Enums.MaterialType + " " + property.BlockShapeType + " = " +  property.TileID);
             }
 
-         //   Debug.Log("test : " + MaterialGeometryMap[(int)PlanetTileMap.MaterialType.Metal][(int)Enums.GeometryTileShape.SB_R0].TileID);
+         //   Debug.Log("test : " + MaterialGeometryMap[(int)PlanetTileMap.Enums.MaterialType.Metal][(int)Enums.GeometryTileShape.SB_R0].TileID);
 //
-        //    Debug.Log(GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).MaterialType + " " + GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).BlockShapeType);
+        //    Debug.Log(GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).Enums.MaterialType + " " + GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).BlockShapeType);
 
             // Generating the map
             int mapWidth = tileMap.width;
@@ -238,16 +230,8 @@ namespace Planet.Unity
 
         private void OnGUI()
         {
-            if (!Init)
-                return;
-
-            GameState.Planet.DrawHUD(Player); 
-
-
-            
-           /* CharacterDisplay.Draw();*/
-
-                 
+            GameState.Planet.DrawHUD(Player);
+            /* CharacterDisplay.Draw();*/
         }
 
         private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
@@ -344,8 +328,7 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            if (!Init)
-                return;
+            if (!Application.isPlaying) return;
 
             var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
@@ -365,7 +348,7 @@ namespace Planet.Unity
 
             for (int i = 0; i < Planet.TileMap.GeometryArrayCount; i++)
             {
-                Line2D line = Planet.TileMap.GeometryArray[i];
+                Line2D line = Planet.TileMap.GeometryArray[i].Line;
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
@@ -386,6 +369,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPositon);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
             //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
         }

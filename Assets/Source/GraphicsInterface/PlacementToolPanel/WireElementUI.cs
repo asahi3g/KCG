@@ -1,33 +1,28 @@
 //imports UnityEngine
 
-using Enums;
-using UnityEngine.UI;
 using Utility;
 
 namespace KGUI
 {
     public class WireElementUI : ElementUI, IToggleElement
     {
-        [UnityEngine.SerializeField] private Image borderImage;
-
-        private ImageWrapper border;
+        [UnityEngine.SerializeField] private ImageWrapper border;
 
         public override void Init()
         {
             base.Init();
 
-            HitBoxObject = borderImage.gameObject;
+            HitBoxObject = border.UnityImage.gameObject;
             
             ID = ElementEnums.WirePT;
 
-            Icon = new ImageWrapper(iconImage, 128, 128, "Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", AtlasType.Gui);
-
-            border = new ImageWrapper(borderImage, GameState.GUIManager.WhiteSquareBorder);
+            icon.Init(128, 128,"Assets\\StreamingAssets\\Furnitures\\Pipesim\\Wires\\wires.png", Enums.AtlasType.Gui);
+            border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 
         public override void Draw()
         {
-            Icon.Draw();
+            icon.Draw();
             border.Draw();
         }
 
@@ -53,7 +48,7 @@ namespace KGUI
         
         public void Toggle(bool value)
         {
-            border.SetImageColor(value ? UnityEngine.Color.red : UnityEngine.Color.yellow);
+            border.UnityImage.color = value ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
     }
 }

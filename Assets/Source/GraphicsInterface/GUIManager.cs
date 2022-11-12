@@ -51,9 +51,9 @@ namespace KGUI
 
         public void InitStage2()
         {
-            ProgressBar = GameState.Renderer.CreateSprite(
+            ProgressBar = GameState.Renderer.CreateUnitySprite(
                 "Assets\\StreamingAssets\\UserInterface\\Bars\\CircleBar\\hud_status_fill.png", 19, 19, Enums.AtlasType.Gui);
-            WhiteSquareBorder = GameState.Renderer.CreateSprite(
+            WhiteSquareBorder = GameState.Renderer.CreateUnitySprite(
                 "Assets\\StreamingAssets\\Items\\AdminIcon\\Tools\\white_square.png", 225, 225, Enums.AtlasType.Gui);
             
             GameState.PrefabManager.InitializeResources();
@@ -83,6 +83,8 @@ namespace KGUI
             {
                 if (!active)
                 {
+                    ElementUnderCursor = null;
+                    PanelUnderCursor = null;
                     panel.OnDeactivate();
                 }
 

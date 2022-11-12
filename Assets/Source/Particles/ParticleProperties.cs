@@ -27,6 +27,9 @@ namespace Particle
         public float StartingRotation;
         public float StartingScale;
         public UnityEngine.Color StartingColor;
+        public UnityEngine.Color EndColor;
+
+        public Enums.ParticleColorUpdateMethod ColorUpdateMethod;
         public float AnimationSpeed;
 
 

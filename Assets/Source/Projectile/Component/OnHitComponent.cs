@@ -15,5 +15,6 @@ namespace Projectile
         public Vec2f LastHitPos;
 
         public bool ParticleSpawned;
+        public Enums.MaterialType MaterialType;
     }
 }

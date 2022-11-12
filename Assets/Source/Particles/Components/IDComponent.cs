@@ -11,5 +11,6 @@ namespace Particle
         // This is not the index of ParticleList. It should never reuse values.
         public Int64 ID;
         public int Index;
+        public ParticleType ParticleType;
     }
 }
