@@ -16,7 +16,7 @@ namespace Mech
         public NodeType Action;
         public Flags MechFlags;
 
-        public LootTableType DropTableID;
+        public int DropTableID;
         public int InventoryModelID; // Only used if has inventory.
         public int Durability;       // Mech "health" Use only if Mech is breakable.
 

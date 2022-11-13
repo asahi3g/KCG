@@ -11,14 +11,14 @@ namespace LootDrop
 
     public struct LootDropEntry
     {
-        public Enums.LootTableType ID;
+        public int ID;
         public LootDrop[] ItemDrops;
     }
 
     // Used by loot drop system to specify where to drop and which table entry to use.
     public struct LootDropEntity
     {
-        public Enums.LootTableType TableID;
+        public int TableID;
         public Vec2f DropPos;       // Position to Drop items. 
         // If -1 create items in specified position if != -1 create items inside inventory.
         public int InventoryID;

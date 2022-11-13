@@ -9,14 +9,14 @@ namespace LootDrop
         public LootDropEntity[] DropEntities = new LootDropEntity[64];
         public int length = 0;
 
-        public void Add(Enums.LootTableType tableEntryID, Vec2f pos)
+        public void Add(int tableEntryID, Vec2f pos)
         {
             DropEntities[length].TableID = tableEntryID;
             DropEntities[length].DropPos = pos;
             DropEntities[length++].InventoryID = -1;
         }
 
-        public void Add(Enums.LootTableType tableEntryID, int inventoryID)
+        public void Add(int tableEntryID, int inventoryID)
         {
             DropEntities[length].TableID = tableEntryID;
             DropEntities[length++].InventoryID = inventoryID;
@@ -50,7 +50,7 @@ namespace LootDrop
                     if (entity.InventoryID < 0)
                     {
                         for(int j = 0; j < itemCountList[i]; j++)
-                            GameState.ItemSpawnSystem.SpawnItemParticle(tableEntry.ItemDrops[i].Type, entity.DropPos);
+                            GameState.Planet.AddItemParticle(tableEntry.ItemDrops[i].Type, entity.DropPos);
                     }
                     else
                     {
