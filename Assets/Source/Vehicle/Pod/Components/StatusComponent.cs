@@ -1,4 +1,5 @@
 using Entitas;
+using KMath;
 using System.Collections.Generic;
 
 namespace Vehicle.Pod
@@ -8,19 +9,19 @@ namespace Vehicle.Pod
     {
         public List<AgentEntity> AgentsInside;
 
-        public KMath.Vec2f RightPanel;
-        public KMath.Vec2f LeftPanel;
-        public KMath.Vec2f TopPanel;
-        public KMath.Vec2f BottomPanel;
+        public Vec2f RightPanel;
+        public Vec2f LeftPanel;
+        public Vec2f TopPanel;
+        public Vec2f BottomPanel;
 
-        public KMath.Vec2f RightPanelWidth;
-        public KMath.Vec2f LeftPanelWidth;
-        public KMath.Vec2f TopPanelWidth;
-        public KMath.Vec2f BottomPanelWidth;
+        public float RightPanelWidth;
+        public float LeftPanelWidth;
+        public float TopPanelWidth;
+        public float BottomPanelWidth;
 
-        public KMath.Vec2f RightPanelHeight;
-        public KMath.Vec2f LeftPanelHeight;
-        public KMath.Vec2f TopPanelHeight;
-        public KMath.Vec2f BottomPanelHeight;
+        public float RightPanelHeight;
+        public float LeftPanelHeight;
+        public float TopPanelHeight;
+        public float BottomPanelHeight;
     }
 }

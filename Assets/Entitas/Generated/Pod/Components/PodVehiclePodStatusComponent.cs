@@ -11,7 +11,7 @@ public partial class PodEntity {
     public Vehicle.Pod.StatusComponent vehiclePodStatus { get { return (Vehicle.Pod.StatusComponent)GetComponent(PodComponentsLookup.VehiclePodStatus); } }
     public bool hasVehiclePodStatus { get { return HasComponent(PodComponentsLookup.VehiclePodStatus); } }
 
-    public void AddVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, KMath.Vec2f newRightPanelWidth, KMath.Vec2f newLeftPanelWidth, KMath.Vec2f newTopPanelWidth, KMath.Vec2f newBottomPanelWidth, KMath.Vec2f newRightPanelHeight, KMath.Vec2f newLeftPanelHeight, KMath.Vec2f newTopPanelHeight, KMath.Vec2f newBottomPanelHeight) {
+    public void AddVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.AgentsInside = newAgentsInside;
@@ -30,7 +30,7 @@ public partial class PodEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, KMath.Vec2f newRightPanelWidth, KMath.Vec2f newLeftPanelWidth, KMath.Vec2f newTopPanelWidth, KMath.Vec2f newBottomPanelWidth, KMath.Vec2f newRightPanelHeight, KMath.Vec2f newLeftPanelHeight, KMath.Vec2f newTopPanelHeight, KMath.Vec2f newBottomPanelHeight) {
+    public void ReplaceVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.AgentsInside = newAgentsInside;
