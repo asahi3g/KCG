@@ -191,6 +191,29 @@ namespace Vehicle.Pod
             }
         }
 
+        public void SetPanels(Vec2f RightPanel, Vec2f LeftPanel, Vec2f TopPanel, Vec2f BottomPanel,
+            float RightPanelWidth, float LeftPanelWidth, float TopPanelWidth, float BottomPanelWidth,
+            float RightPanelHeight, float LeftPanelHeight, float TopPanelHeight, float BottomPanelHeight)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].RightPanel = RightPanel;
+                PropertiesArray[CurrentIndex].LeftPanel = LeftPanel;
+                PropertiesArray[CurrentIndex].TopPanel = TopPanel;
+                PropertiesArray[CurrentIndex].BottomPanel = BottomPanel;
+
+                PropertiesArray[CurrentIndex].RightPanelWidth = RightPanelWidth;
+                PropertiesArray[CurrentIndex].LeftPanelWidth = LeftPanelWidth;
+                PropertiesArray[CurrentIndex].TopPanelWidth = TopPanelWidth;
+                PropertiesArray[CurrentIndex].BottomPanelWidth = BottomPanelWidth;
+
+                PropertiesArray[CurrentIndex].RightPanelHeight = RightPanelHeight;
+                PropertiesArray[CurrentIndex].LeftPanelHeight = LeftPanelHeight;
+                PropertiesArray[CurrentIndex].TopPanelHeight = TopPanelHeight;
+                PropertiesArray[CurrentIndex].BottomPanelHeight = BottomPanelHeight;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -211,7 +234,7 @@ namespace Vehicle.Pod
             GameState.PodCreationApi.SetCollisionOffset(new Vec2f(0.0f, 0.0f));
             GameState.PodCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
             GameState.PodCreationApi.SetRotation(0.0f);
-            GameState.PodCreationApi.SetAngularVelocity(new Vec2f(0.15f, 0.0f));
+            GameState.PodCreationApi.SetAngularVelocity(new Vec2f(-0.5f, -3.0f));
             GameState.PodCreationApi.SetAngularMass(14f);
             GameState.PodCreationApi.SetAngularAcceleration(4f);
             GameState.PodCreationApi.SetCenterOfGravity(-6f);
@@ -219,6 +242,8 @@ namespace Vehicle.Pod
             GameState.PodCreationApi.SetAffectedByGravity(false);
             GameState.PodCreationApi.SetRadarSize(new Vec2f(10f, 10f));
             GameState.PodCreationApi.SetStatus(2, 4);
+            GameState.PodCreationApi.SetPanels(new Vec2f(0.5f, 0.0f), new Vec2f(-0.5f, 0.0f), new Vec2f(0.0f, 0.5f), new Vec2f(0.0f, -0.5f),
+                0.4f, 0.4f, 0.4f, 0.4f, 1.3f, 1.3f, 1.0f, 1.0f);
             GameState.PodCreationApi.End();
         }
     }

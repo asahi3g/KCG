@@ -42,10 +42,8 @@ namespace Vehicle.Pod
             entity.AddVehiclePodState(podState);
 
             List<AgentEntity> Members = new List<AgentEntity>();
-            List<AgentEntity> DeadMembers = new List<AgentEntity>();
-            entity.AddVehiclePodRadar(podProperties.RadarSize, Members, DeadMembers, Members.Count);
-
-            entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score, false);
+            entity.AddVehiclePodStatus(Members, podProperties.RightPanel, podProperties.LeftPanel, podProperties.TopPanel, podProperties.BottomPanel, podProperties.RightPanelWidth, podProperties.LeftPanelWidth,
+                podProperties.TopPanelWidth, podProperties.BottomPanelWidth, podProperties.RightPanelHeight, podProperties.LeftPanelHeight, podProperties.TopPanelHeight, podProperties.BottomPanelHeight);
 
             List<Vec2f> CoversPositions = new List<Vec2f>();
             List<Vec2f> FiringPositions = new List<Vec2f>();

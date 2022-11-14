@@ -11,21 +11,41 @@ public partial class PodEntity {
     public Vehicle.Pod.StatusComponent vehiclePodStatus { get { return (Vehicle.Pod.StatusComponent)GetComponent(PodComponentsLookup.VehiclePodStatus); } }
     public bool hasVehiclePodStatus { get { return HasComponent(PodComponentsLookup.VehiclePodStatus); } }
 
-    public void AddVehiclePodStatus(int newPodValue, int newScore, bool newFreeze) {
+    public void AddVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
-        component.PodValue = newPodValue;
-        component.Score = newScore;
-        component.Freeze = newFreeze;
+        component.AgentsInside = newAgentsInside;
+        component.RightPanel = newRightPanel;
+        component.LeftPanel = newLeftPanel;
+        component.TopPanel = newTopPanel;
+        component.BottomPanel = newBottomPanel;
+        component.RightPanelWidth = newRightPanelWidth;
+        component.LeftPanelWidth = newLeftPanelWidth;
+        component.TopPanelWidth = newTopPanelWidth;
+        component.BottomPanelWidth = newBottomPanelWidth;
+        component.RightPanelHeight = newRightPanelHeight;
+        component.LeftPanelHeight = newLeftPanelHeight;
+        component.TopPanelHeight = newTopPanelHeight;
+        component.BottomPanelHeight = newBottomPanelHeight;
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePodStatus(int newPodValue, int newScore, bool newFreeze) {
+    public void ReplaceVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, KMath.Vec2f newRightPanel, KMath.Vec2f newLeftPanel, KMath.Vec2f newTopPanel, KMath.Vec2f newBottomPanel, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
-        component.PodValue = newPodValue;
-        component.Score = newScore;
-        component.Freeze = newFreeze;
+        component.AgentsInside = newAgentsInside;
+        component.RightPanel = newRightPanel;
+        component.LeftPanel = newLeftPanel;
+        component.TopPanel = newTopPanel;
+        component.BottomPanel = newBottomPanel;
+        component.RightPanelWidth = newRightPanelWidth;
+        component.LeftPanelWidth = newLeftPanelWidth;
+        component.TopPanelWidth = newTopPanelWidth;
+        component.BottomPanelWidth = newBottomPanelWidth;
+        component.RightPanelHeight = newRightPanelHeight;
+        component.LeftPanelHeight = newLeftPanelHeight;
+        component.TopPanelHeight = newTopPanelHeight;
+        component.BottomPanelHeight = newBottomPanelHeight;
         ReplaceComponent(index, component);
     }
 

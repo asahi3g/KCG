@@ -419,6 +419,12 @@ namespace Planet
 
         }
 
+        public void RemovePod(int index)
+        {
+            PodList.Remove(index);
+
+        }
+
         // updates the entities, must call the systems and so on ..
         public void Update(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform)
         {
