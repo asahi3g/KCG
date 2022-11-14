@@ -130,6 +130,44 @@ namespace Particle
             }
         }
 
+        public static void SpawnExplosion(PodEntity podEntity, int count, Vec2f position, Vec2f velocity, Vec2f scaleVelocity)
+        {
+            // Spawn "count" Particle at "position"
+            // Veloctity to give wind effect (veloicty over time or default velocity?)
+            // Scale to give physics effects (scale over time)
+            // Apply Toon Smoke Material
+
+            for (int i = 0; i < count; i++)
+            {
+                UnityEngine.GameObject CircleSmoke = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
+                CircleSmoke.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
+                UnityEngine.Object.Destroy(CircleSmoke.GetComponent<UnityEngine.SphereCollider>());
+                UnityEngine.MeshRenderer meshRenderer = CircleSmoke.GetComponent<UnityEngine.MeshRenderer>();
+                CircleSmoke.name = "CircleSmoke";
+
+                UnityEngine.Material SmokeMaterial = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load("Materials\\ToonShader\\Smoke", typeof(UnityEngine.Material)) as UnityEngine.Material);
+
+                meshRenderer.material = SmokeMaterial;
+
+                AABox2D collision = new AABox2D(new Vec2f(CircleSmoke.transform.position.x, CircleSmoke.transform.position.y),
+                    new Vec2f(CircleSmoke.transform.localScale.x, CircleSmoke.transform.localScale.y));
+
+                CircleSmoke.transform.localScale = new UnityEngine.Vector3(0.5f, 1.0f, 1.0f);
+                CircleSmoke.transform.position = new UnityEngine.Vector3(position.X, position.Y, 1.0f);
+
+                var colorR = UnityEngine.Random.Range(0.7f, 0.8f);
+                var colorG = UnityEngine.Random.Range(0.35f, 0.45f);
+                SmokeMaterial.color = new UnityEngine.Color(colorR, colorG, 0.0f, 1.0f);
+
+                Smokes.Add(meshRenderer);
+                Positions.Add(position);
+                Velocities.Add(velocity);
+                Scales.Add(scaleVelocity);
+                Collisions.Add(collision);
+                Materials.Add(SmokeMaterial);
+            }
+        }
+
         public static void Update()
         {
             // Decrease Alpha Blending over time
