@@ -46,6 +46,8 @@ namespace Vehicle.Pod
         public float LeftPanelHeight;
         public float TopPanelHeight;
         public float BottomPanelHeight;
+
+        public int DefaultAgentCount;
     }
 }
 

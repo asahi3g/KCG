@@ -214,6 +214,14 @@ namespace Vehicle.Pod
             }
         }
 
+        public void SetDefaultAgentCount(int count)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].DefaultAgentCount = count;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -244,6 +252,7 @@ namespace Vehicle.Pod
             GameState.PodCreationApi.SetStatus(2, 4);
             GameState.PodCreationApi.SetPanels(new Vec2f(1.0f, -0.2f), new Vec2f(-0.3f, -0.2f), new Vec2f(-0.1f, 1.0f), new Vec2f(-0.1f, 
                 -0.4f), 0.4f, 0.4f, 1.4f, 1.4f, 1.3f, 1.3f, 0.4f, 0.4f);
+            GameState.PodCreationApi.SetDefaultAgentCount(2);
             GameState.PodCreationApi.End();
         }
     }

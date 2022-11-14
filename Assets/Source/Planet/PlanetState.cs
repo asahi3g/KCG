@@ -281,7 +281,7 @@ namespace Planet
         {
             Utils.Assert(PodList.Length < PlanetEntityLimits.VehicleLimit);
 
-            PodEntity newEntity = PodList.Add(GameState.PodSpawnerSystem.Spawn(podType, position));
+            PodEntity newEntity = PodList.Add(GameState.PodSpawnerSystem.Spawn(this, podType, position));
             return newEntity;
         }
 

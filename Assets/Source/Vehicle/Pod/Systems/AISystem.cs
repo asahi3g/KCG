@@ -12,6 +12,7 @@ namespace Vehicle.Pod
     {
         private AABox2D entityBoxBorders;
         private bool landed = false;
+        private float elapsed = 0.0f;
 
         public void Update()
         {
@@ -22,14 +23,7 @@ namespace Vehicle.Pod
             {
                 if(pod.hasVehiclePodStatus)
                 {
-                    var agentsInside = pod.vehiclePodStatus.AgentsInside;
-
-                    for (int i = 0; i < agentsInside.Count; i++)
-                    {
-                        
-                    }
-                    
-                    if(pod.hasVehiclePodPhysicsState2D)
+                    if (pod.hasVehiclePodPhysicsState2D)
                     {
                         entityBoxBorders = new AABox2D(pod.vehiclePodPhysicsState2D.Position + new Vec2f(0, -10f), new Vec2f(0.5f, 50.0f));
                     
@@ -46,6 +40,7 @@ namespace Vehicle.Pod
                                     CircleSmoke.SpawnExplosion(pod, 500, pod.vehiclePodPhysicsState2D.Position + Vec2f.Zero, new Vec2f(0, 0), new Vec2f(2.5f, 2.5f));
 
                                 landed = true;
+                                elapsed += Time.deltaTime;
 
                                 pod.vehiclePodStatus.RightPanel.X += 0.5f;
                                 pod.vehiclePodStatus.RightPanel.Y += 0.1f;
@@ -59,6 +54,31 @@ namespace Vehicle.Pod
                                 pod.vehiclePodStatus.TopPanel.X += 0.1f;
                                 pod.vehiclePodStatus.TopPanel.Y += 0.5f;
 
+                                if(elapsed > 2.0f)
+                                {
+                                    pod.vehiclePodPhysicsState2D.AffectedByGravity = true;
+                                    if(elapsed > 7.0f)
+                                    {
+                                        var agentsInside = pod.vehiclePodStatus.AgentsInside;
+                                        if (pod.hasVehiclePodStatus)
+                                        {
+                                            for (int j = 0; j < agentsInside.Count; j++)
+                                            {
+                                                if (!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
+                                                {
+                                                    agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+
+                                                    agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
+                                                    agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+
+                                                    agentsInside[j].isAgentAlive = true;
+                                                    agentsInside[j].agentPhysicsState.Position = new Vec2f
+                                                        (pod.vehiclePodPhysicsState2D.Position.X, pod.vehiclePodPhysicsState2D.Position.Y);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                             }
 
