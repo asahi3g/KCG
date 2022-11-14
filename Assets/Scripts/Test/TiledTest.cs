@@ -93,7 +93,7 @@ namespace Planet.Unity
 
             GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
             GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
-            GameState.Planet.AddPod(new Vec2f(16.0f, 20), Enums.PodType.Default);
+            GameState.Planet.AddPod(new Vec2f(15.0f, 40), Enums.PodType.Default);
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
