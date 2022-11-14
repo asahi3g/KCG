@@ -64,6 +64,8 @@ namespace Particle
             if (CurrentIndex != -1)
             {
                 PropertiesArray[CurrentIndex].PropertiesId = CurrentIndex;
+                PropertiesArray[CurrentIndex].StartingScale = 1.0f;
+                PropertiesArray[CurrentIndex].EndScale = 1.0f;
             }
         }
 
@@ -91,7 +93,17 @@ namespace Particle
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].DecayRate = decayRate;
+                PropertiesArray[CurrentIndex].MinDecayRate = decayRate;
+                PropertiesArray[CurrentIndex].MaxDecayRate = decayRate;
+            }
+        }
+
+        public void SetDecayRate(float minDecayRate, float maxDecayRate)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].MinDecayRate = minDecayRate;
+                PropertiesArray[CurrentIndex].MaxDecayRate = maxDecayRate;
             }
         }
 
@@ -131,7 +143,17 @@ namespace Particle
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].Size = size;
+                PropertiesArray[CurrentIndex].MinSize = size;
+                PropertiesArray[CurrentIndex].MaxSize = size;
+            }
+        }
+
+        public void SetSize(Vec2f minSize, Vec2f maxSize)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].MinSize = minSize;
+                PropertiesArray[CurrentIndex].MaxSize = maxSize;
             }
         }
 
@@ -156,6 +178,14 @@ namespace Particle
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
                 PropertiesArray[CurrentIndex].StartingScale = startingScale;
+            }
+        }
+
+        public void SetEndScale(float endScale)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].EndScale = endScale;
             }
         }
 
@@ -226,7 +256,7 @@ namespace Particle
         {
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
             int WhitePixelSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\white_32x32.png", 32, 32);
-            int ParticleSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\particle2.png", 51, 50);
+            int ParticleSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\particle.png", 128, 128);
             WoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\brown_32x32.png", 32, 32);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
@@ -235,7 +265,6 @@ namespace Particle
             int ParticleSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(ParticleSpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Ore);
-            GameState.ParticleCreationApi.SetName("Ore");
             GameState.ParticleCreationApi.SetDecayRate(1.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -20.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
@@ -249,7 +278,6 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.OreExplosionParticle);
-            GameState.ParticleCreationApi.SetName("ore-explosion-particle");
             GameState.ParticleCreationApi.SetDecayRate(1.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
@@ -263,7 +291,6 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.DustParticle);
-            GameState.ParticleCreationApi.SetName("dust-particle");
             GameState.ParticleCreationApi.SetDecayRate(4.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(0);
@@ -278,7 +305,6 @@ namespace Particle
 
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Debris);
-            GameState.ParticleCreationApi.SetName("debris");
             GameState.ParticleCreationApi.SetDecayRate(0.5f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -15.0f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -289,7 +315,6 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.GasParticle);
-            GameState.ParticleCreationApi.SetName("gas-particle");
             GameState.ParticleCreationApi.SetDecayRate(0.17f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(0);
@@ -298,30 +323,79 @@ namespace Particle
             GameState.ParticleCreationApi.SetSize(new Vec2f(4.5f, 4.5f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(10.3f);
-            GameState.ParticleCreationApi.SetStartingScale(20.0f);
             GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(255f, 72f, 0f, 255.0f));
             GameState.ParticleCreationApi.End();
 
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Blood);
-            GameState.ParticleCreationApi.SetName("Blood");
-            GameState.ParticleCreationApi.SetDecayRate(0.5f);
+            GameState.ParticleCreationApi.SetDecayRate(1.5f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
             GameState.ParticleCreationApi.SetDeltaScale(0.0f);
-            GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
-            GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f));
-            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f), new Vec2f(0.575f, 0.575f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 2.5f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
-            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f));
-            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f));
+            GameState.ParticleCreationApi.SetEndScale(0.7f);
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.6f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.1f));
             GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.End();
+
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.Blood2);
+            GameState.ParticleCreationApi.SetName("Blood");
+            GameState.ParticleCreationApi.SetDecayRate(0.3f, 1.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -15.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(0.0f);
+            GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.15f, 0.15f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetEndScale(0.7f);
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.7f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.2f));
+            GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(0.3f, 0.3f));
+            GameState.ParticleCreationApi.End();
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.BloodSmoke);
+            GameState.ParticleCreationApi.SetDecayRate(4.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(0.0f);
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.7f, 0.70f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.5f);
+            GameState.ParticleCreationApi.SetEndScale(0.5f);
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.3f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.1f));
+            GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.End();
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.BloodFog);
+            GameState.ParticleCreationApi.SetDecayRate(2.6f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(0.0f);
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.9f, 0.9f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.5f);
+            GameState.ParticleCreationApi.SetEndScale(0.5f);
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.1f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.1f));
             GameState.ParticleCreationApi.End();
             
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Wood);
-            GameState.ParticleCreationApi.SetName("Wood");
             GameState.ParticleCreationApi.SetDecayRate(0.5f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
@@ -336,7 +410,6 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Explosion);
-            GameState.ParticleCreationApi.SetName("explosion");
             GameState.ParticleCreationApi.SetDecayRate(2.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(0);
@@ -350,7 +423,6 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Shrapnel);
-            GameState.ParticleCreationApi.SetName("Shrapnel");
             GameState.ParticleCreationApi.SetDecayRate(2.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
@@ -379,16 +451,58 @@ namespace Particle
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
             GameState.ParticleCreationApi.SetBounce(true);
             GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
-            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(0.4f, 0.4f, 0.4f, 1.0f));
             GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(0.8f, 0.8f, 0.8f, 0.0f));
-            //GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.End();
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.RockBulletImpact);
+            GameState.ParticleCreationApi.SetDecayRate(6.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+            GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.64f, 0.0f, 1.0f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.64f, 0.0f, 0.0f));
+            GameState.ParticleCreationApi.End();
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.BloodImpact);
+            GameState.ParticleCreationApi.SetDecayRate(6.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
+            GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetBounce(true);
+            GameState.ParticleCreationApi.SetBounceFactor(new Vec2f(1.0f, 0.25f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.0f));
+            GameState.ParticleCreationApi.End();
+
+
+            GameState.ParticleCreationApi.Create((int)ParticleType.BulletTrail);
+            GameState.ParticleCreationApi.SetDecayRate(4.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(0.0f);
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.05f, 0.05f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.5f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
             GameState.ParticleCreationApi.End();
         }
 
         public void InitializeEmitterResources()
         {
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.OreFountain);
-            GameState.ParticleEmitterCreationApi.SetName("ore-fountain");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Ore);
             GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
             GameState.ParticleEmitterCreationApi.SetParticleCount(1);
@@ -397,7 +511,6 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.OreExplosion);
-            GameState.ParticleEmitterCreationApi.SetName("ore-explosion");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.OreExplosionParticle);
             GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
@@ -407,7 +520,6 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.DustEmitter);
-            GameState.ParticleEmitterCreationApi.SetName("dust-emitter");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.DustParticle);
             GameState.ParticleEmitterCreationApi.SetDuration(0.1f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
@@ -417,7 +529,6 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.GasEmitter);
-            GameState.ParticleEmitterCreationApi.SetName("gas-emitter");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.GasParticle);
             GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.25f);
@@ -427,17 +538,44 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Blood);
-            GameState.ParticleEmitterCreationApi.SetName("blood");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Blood);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.4f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.6f, -0.5f), new Vec2f(0.6f, 0.5f));
+            GameState.ParticleEmitterCreationApi.End();
+
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Blood2);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Blood2);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
             GameState.ParticleEmitterCreationApi.SetParticleCount(10);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-4.0f, -10.0f), new Vec2f(4.0f, 2.0f));
             GameState.ParticleEmitterCreationApi.End();
 
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodSmoke);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodSmoke);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.3f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodFog);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodFog);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(15);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.1f, -0.1f), new Vec2f(0.1f, 0.1f));
+            GameState.ParticleEmitterCreationApi.End();
+
+
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.WoodEmitter);
-            GameState.ParticleEmitterCreationApi.SetName("wood");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Wood);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
@@ -447,7 +585,6 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.ExplosionEmitter);
-            GameState.ParticleEmitterCreationApi.SetName("blood");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion);
             GameState.ParticleEmitterCreationApi.SetDuration(4.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
@@ -457,7 +594,6 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.End();
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.ShrapnelEmitter);
-            GameState.ParticleEmitterCreationApi.SetName("shrapnel-emitter");
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Shrapnel);
             GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
@@ -468,6 +604,24 @@ namespace Particle
 
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MetalBulletImpact);
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MetalBulletImpact);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.RockBulletImpact);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.RockBulletImpact);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodImpact);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodImpact);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
             GameState.ParticleEmitterCreationApi.SetParticleCount(6);
