@@ -14,6 +14,10 @@
                 if (agentEntity.agentStats.Health <= 0 && agentEntity.isAgentAlive)
                 {
                     planet.KillAgent(i);
+                    if (!agentEntity.hasAgentModel3D)
+                        continue;
+                    if (agentEntity.agentModel3D.Weapon == null)
+                        continue;
                     UnityEngine.GameObject.Destroy(agentEntity.agentModel3D.Weapon);
                 }
             }

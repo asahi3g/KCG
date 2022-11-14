@@ -4,6 +4,7 @@ using KMath;
 
 namespace Action
 {
+    // Action used by either player and AI.
     public class MechPlacementAction
     {
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)

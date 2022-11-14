@@ -9,6 +9,7 @@ namespace Action
 {
     public class AimAt
     {
+        // Action used only by AI.
         static public NodeState Action(object ptr, int id)
         {
             ref PlanetState planet = ref GameState.Planet;

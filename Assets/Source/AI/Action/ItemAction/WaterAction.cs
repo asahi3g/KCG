@@ -10,6 +10,7 @@ namespace Action
 {
     public class WaterAction
     {
+        // Action used by either player and AI.
         static public NodeState Action(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);

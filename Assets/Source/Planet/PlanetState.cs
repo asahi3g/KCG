@@ -237,7 +237,7 @@ namespace Planet
                 int rand = UnityEngine.Random.Range(0, 100);
                 GameState.InventoryManager.RemoveItem(inventoryID, i);
                 pos.X += rand / 100f;
-                GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
+                AddItemParticle(itemInventory, pos);
             }
 
             Utils.Assert(entity.isEnabled);
@@ -405,11 +405,19 @@ namespace Planet
             VehicleList.Remove(index);
         }
 
-        public ItemParticleEntity AddItemParticle(Vec2f position, ItemType itemType)
+        public ItemParticleEntity AddItemParticle(ItemType itemType, Vec2f position)
         {
             Utils.Assert(ItemParticleList.Length < PlanetEntityLimits.ItemParticlesLimit);
 
             ItemParticleEntity newEntity = ItemParticleList.Add(GameState.ItemSpawnSystem.SpawnItemParticle(itemType, position));
+            return newEntity;
+        }
+
+        public ItemParticleEntity AddItemParticle(ItemInventoryEntity item, Vec2f position)
+        {
+            Utils.Assert(ItemParticleList.Length < PlanetEntityLimits.ItemParticlesLimit);
+
+            ItemParticleEntity newEntity = ItemParticleList.Add(GameState.ItemSpawnSystem.SpawnItemParticle(item, position));
             return newEntity;
         }
 

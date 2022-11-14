@@ -341,8 +341,8 @@ namespace Planet.Unity
 
             planet.AddVehicle(Enums.VehicleType.Jet, new Vec2f(5.0f, 25.0f));
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            planet.AddItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            planet.AddItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
         }
     }
 }

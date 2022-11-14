@@ -184,26 +184,26 @@ namespace Planet.Unity
             Player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int inventoryID = Player.agentInventory.InventoryID;
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.Pistol, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(ItemType.Sword, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
-            //GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
+            planet.AddItemParticle(ItemType.Pistol, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(ItemType.PumpShotgun, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(ItemType.WaterBottle, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.PlanterTool, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(ItemType.HarvestTool, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(ItemType.ConstructionTool, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.SMG, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(ItemType.Sword, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
+            //planet.AddItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
+            //planet.AddItemParticle(Enums.ItemType.Ore, new Vec2f(6.0f, 3.0f));
 
             planet.InitializeSystems(Material, transform);
             

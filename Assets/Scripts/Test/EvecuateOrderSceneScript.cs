@@ -243,8 +243,8 @@ namespace Planet.Unity
 
             Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
+            planet.AddItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
+            planet.AddItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
             planet.AddAgent(new Vec2f(6.0f, spawnHeight), Enums.AgentType.EnemyMarine);
 

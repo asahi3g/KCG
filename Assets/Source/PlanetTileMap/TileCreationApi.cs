@@ -1,3 +1,4 @@
+using Enums;
 using Enums.PlanetTileMap;
 using Utility;
 //MOST IMPORTANT TILE
@@ -290,7 +291,7 @@ namespace PlanetTileMap
             TilePropertyArray[(int)CurrentTileIndex].CannotBeRemoved = flag;
         }
 
-        public void SetDropTableID(Enums.LootTableType dropTableID)
+        public void SetDropTableID(int dropTableID)
         {
             if (CurrentTileIndex == TileID.Error) return;
 
@@ -899,7 +900,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.R3);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.MoonTileDrop);
+            int dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Moon, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_0);
@@ -907,7 +912,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_1);
@@ -915,7 +924,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_2);
@@ -923,7 +936,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_3);
@@ -931,7 +948,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_4);
@@ -939,7 +960,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_5);
@@ -947,7 +972,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_6);
@@ -955,7 +984,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.GoldBlock_7);
@@ -963,7 +996,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 6);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.GoldBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Gold_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_0);
@@ -971,7 +1008,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_1);
@@ -979,7 +1020,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_2);
@@ -987,7 +1032,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId); 
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_3);
@@ -995,7 +1044,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_4);
@@ -1003,7 +1056,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_5);
@@ -1011,7 +1068,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_6);
@@ -1019,7 +1080,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.DiamondBlock_7);
@@ -1027,7 +1092,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 7);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.DiamondBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Diamond_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_0);
@@ -1035,7 +1104,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_1);
@@ -1043,7 +1116,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_2);
@@ -1051,7 +1128,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_3);
@@ -1059,7 +1140,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_4);
@@ -1067,7 +1152,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_5);
@@ -1075,7 +1164,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_6);
@@ -1083,7 +1176,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.LapisBlock_7);
@@ -1091,7 +1188,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.LapisBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Lapis_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_0);
@@ -1099,7 +1200,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_1);
@@ -1107,7 +1212,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_2);
@@ -1115,7 +1224,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_3);
@@ -1123,7 +1236,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_4);
@@ -1131,7 +1248,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_5);
@@ -1139,7 +1260,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID. EmeraldBlock_6);
@@ -1147,7 +1272,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.EmeraldBlock_7);
@@ -1155,7 +1284,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 4);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.EmeraldBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Emerald_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_0);
@@ -1163,7 +1296,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_1);
@@ -1171,7 +1308,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_2);
@@ -1179,7 +1320,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_3);
@@ -1187,7 +1332,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_4);
@@ -1195,7 +1344,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_5);
@@ -1203,7 +1356,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_6);
@@ -1211,7 +1368,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.RedStoneBlock_7);
@@ -1219,7 +1380,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 5);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.RedStoneBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.RedStone_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_0);
@@ -1227,7 +1392,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_1);
@@ -1235,7 +1404,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_2);
@@ -1243,7 +1416,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_3);
@@ -1251,7 +1428,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_4);
@@ -1259,7 +1440,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_5);
@@ -1267,7 +1452,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_6);
@@ -1275,7 +1464,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.IronBlock_7);
@@ -1283,7 +1476,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 3);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.IronBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Iron_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_0);
@@ -1291,7 +1488,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_1);
@@ -1299,7 +1500,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_2);
@@ -1307,7 +1512,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_3);
@@ -1315,7 +1524,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_4);
@@ -1323,7 +1536,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_5);
@@ -1331,7 +1548,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_6);
@@ -1339,7 +1560,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.CoalBlock_7);
@@ -1347,7 +1572,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 1);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.CoalBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Coal_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_0);
@@ -1355,7 +1584,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 0, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_0Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_0, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_1);
@@ -1363,7 +1596,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 1, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_1Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_1, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_2);
@@ -1371,7 +1608,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 2, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_2Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_2, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_3);
@@ -1379,7 +1620,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 3, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_3Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_3, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_4);
@@ -1387,7 +1632,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 4, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_4Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_4, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_5);
@@ -1395,7 +1644,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 5, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_5Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_5, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_6);
@@ -1403,7 +1656,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 6, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_6Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_6, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.PinkDiaBlock_7);
@@ -1411,7 +1668,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(OreStoneSheet, 7, 2);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PinkDiaBlock_7Drop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.PinkDia_7, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Background);
@@ -1439,14 +1700,22 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.R2);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 0, 0);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.PipeTileDrop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Pipe, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Wire);
             GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Wire);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.R2);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(PipeSpriteSheet, 4, 12);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.WireTileDrop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Wire, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Bedrock);
@@ -1455,7 +1724,11 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.R3);
             GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 0, 10);
-            GameState.TileCreationApi.SetDropTableID(Enums.LootTableType.BedrockTileDrop);
+            dropTableId = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Bedrock, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.TileCreationApi.SetDropTableID(dropTableId);
             GameState.TileCreationApi.EndTileProperty();
 
             GameState.TileCreationApi.CreateTileProperty(TileID.Platform);

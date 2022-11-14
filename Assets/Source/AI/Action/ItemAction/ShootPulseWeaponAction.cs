@@ -8,6 +8,9 @@ namespace Action
 {
     public class ShootPulseWeaponAction
     {
+        // Action used by either player and AI.
+        // Todo make it usable by AI.
+        // Todo add this to marine behavior tree. (Add diferent types of weapons to marine behavior tree)
         static public NodeState Action(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);

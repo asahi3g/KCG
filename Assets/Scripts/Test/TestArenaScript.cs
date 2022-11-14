@@ -190,10 +190,10 @@ namespace Planet.Unity
             planet.AddFixedFloatingText("Use 'K' To Roll", new Vec2f(75, 5), Color.white, 20);
 
             planet.AddFixedFloatingText("TILE PLACEMENT TOOL\n1>Select tile placement tool from inventory.\n2>Select a tile from the menu.\n3>Place it anywhere with pressing 'LMB'.", new Vec2f(85, 5), Color.white, 20);
-            planet.AddItemParticle(new Vec2f(85, 7), Enums.ItemType.PlacementTool);
+            planet.AddItemParticle(Enums.ItemType.PlacementTool, new Vec2f(85, 7));
 
             planet.AddFixedFloatingText("REMOVE TILE TOOL\n1>Select remove tile tool from inventory.\n2>Click a tile to remove.\n3>Tile will drop as item when destroyed.", new Vec2f(125, 5), Color.white, 20);
-            planet.AddItemParticle(new Vec2f(125, 7), Enums.ItemType.RemoveTileTool);
+            planet.AddItemParticle(Enums.ItemType.RemoveTileTool, new Vec2f(125, 7));
 
             planet.AddFixedFloatingText("Climb To Platforms Using Up Arrow", new Vec2f(140, 5), Color.white, 20);
             tileMap.SetFrontTile(140, 2, TileID.Platform);
@@ -215,7 +215,7 @@ namespace Planet.Unity
             tileMap.SetFrontTile(144, 7, TileID.Platform);
 
             planet.AddFixedFloatingText("PISTOL\n1>Take the gun.\n2>Shoot it using 'LMB'.\nPress 'R' to reload the clip.", new Vec2f(155, 5), Color.white, 20);
-            planet.AddItemParticle(new Vec2f(155, 7), Enums.ItemType.Pistol);
+            planet.AddItemParticle(Enums.ItemType.Pistol, new Vec2f(155, 7));
 
 
             planet.AddFixedFloatingText("Eliminate the enemies.", new Vec2f(180, 5), Color.white, 20);
@@ -241,7 +241,7 @@ namespace Planet.Unity
             tileMap.SetFrontTile(184, 7, TileID.Platform);
 
             planet.AddFixedFloatingText("ENEMY PLACEMENT TOOL.", new Vec2f(200, 5), Color.white, 20);
-            planet.AddItemParticle(new Vec2f(200, 5), Enums.ItemType.SpawnEnemySwordmanTool);
+            planet.AddItemParticle(Enums.ItemType.SpawnEnemySwordmanTool, new Vec2f(200, 5));
         }
     }
 }

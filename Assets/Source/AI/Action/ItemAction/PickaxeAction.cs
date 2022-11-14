@@ -6,6 +6,7 @@ namespace Action
 {
     public class PickaxeAction
     {
+        // Action used by either player and AI.
         // Todo: Implement this.
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {

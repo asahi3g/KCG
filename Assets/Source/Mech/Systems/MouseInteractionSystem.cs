@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace Mech
 {
+    // Todo: Move file to new Gui system.
     public class MouseInteractionSystem
     {
         // Return list of meches mouse is over.
-        /// <returns>If error return null</returns>
+        // If error return null
         public List<MechEntity> GetMechFromMousePos()
         {
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);

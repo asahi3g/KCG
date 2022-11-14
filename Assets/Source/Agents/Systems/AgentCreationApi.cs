@@ -7,6 +7,7 @@ using KMath;
 using static GameState;
 using static Action.ActionBasic;
 using static Condition.ConditionBasic;
+using Enums;
 
 namespace Agent
 {
@@ -110,7 +111,7 @@ namespace Agent
             }
         }
 
-        public void SetDropTableID(Enums.LootTableType dropTableID, Enums.LootTableType inventoryDropTableID)
+        public void SetDropTableID(int dropTableID, int inventoryDropTableID)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -212,6 +213,22 @@ namespace Agent
             int marineBehavior = CreateMarineBehavior();
             int insectBehavior = CreateInsectBehavior();
 
+            int dropID = LootTableCreationAPI.Create();
+            LootTableCreationAPI.AddItem(ItemType.Slime, 1);
+            LootTableCreationAPI.AddItem(ItemType.Slime, 1);
+            LootTableCreationAPI.SetEntry(1, 30);
+            LootTableCreationAPI.AddItem(ItemType.Food, 4);
+            LootTableCreationAPI.SetEntry(1, 25);
+            LootTableCreationAPI.SetEntry(2, 40);
+            LootTableCreationAPI.SetEntry(3, 25);
+            LootTableCreationAPI.SetEntry(4, 5);
+            LootTableCreationAPI.AddItem(ItemType.Bone, 4);
+            LootTableCreationAPI.SetEntry(3, 50);
+            LootTableCreationAPI.SetEntry(4, 25);
+            LootTableCreationAPI.SetEntry(5, 15);
+            LootTableCreationAPI.SetEntry(6, 10);
+            LootTableCreationAPI.End();
+
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
@@ -237,7 +254,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Slime);
             GameState.AgentCreationApi.SetName("Slime");
             GameState.AgentCreationApi.SetMovement(5f, 3.5f, 1);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
@@ -249,7 +266,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.FlyingSlime);
             GameState.AgentCreationApi.SetName("Flying Slime");
             GameState.AgentCreationApi.SetFlyingMovement(3.0f);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
@@ -260,7 +277,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemySwordman);
             GameState.AgentCreationApi.SetName("enemy-swordman");
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 0.0f });
@@ -270,7 +287,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyGunner);
             GameState.AgentCreationApi.SetName("enemy-gunner");
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.5f, 2.5f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
@@ -280,7 +297,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
             GameState.AgentCreationApi.SetName("enemy-insect");
             GameState.AgentCreationApi.SetMovement(6f, 3.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(1.25f, 1.0f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 1.0f });
@@ -295,7 +312,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
             GameState.AgentCreationApi.SetName("enemy-insect-heavy");
             GameState.AgentCreationApi.SetMovement(4.0f, 3.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 1.0f });
@@ -309,7 +326,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyMarine);
             GameState.AgentCreationApi.SetName("Marine");
             GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
+            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.1f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
@@ -431,6 +448,5 @@ namespace Agent
 
             return rootId;
         }
-    }
-
+    } 
 }

@@ -56,7 +56,7 @@ namespace Mech
             PropertiesArray[CurrentIndex].Name = name;
         }
 
-        public void SetDropTableID(LootTableType dropTableID)
+        public void SetDropTableID(int dropTableID)
         {
             PropertiesArray[CurrentIndex].DropTableID = dropTableID;
         }
@@ -183,7 +183,11 @@ namespace Mech
 
             GameState.MechCreationApi.Create(MechType.Storage);
             GameState.MechCreationApi.SetName("chest");
-            GameState.MechCreationApi.SetDropTableID(LootTableType.ChestDrop);
+            int lootDropID = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Chest, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.MechCreationApi.SetDropTableID(lootDropID);
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1f, 1.0f));
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
@@ -191,15 +195,21 @@ namespace Mech
 
             GameState.MechCreationApi.Create(MechType.Planter);
             GameState.MechCreationApi.SetName("planter");
-            GameState.MechCreationApi.SetDropTableID(LootTableType.PlanterDrop);
+            lootDropID = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Planter, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End();
+            GameState.MechCreationApi.SetDropTableID(lootDropID);
             GameState.MechCreationApi.SetTexture(PotIcon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
             GameState.MechCreationApi.Create(MechType.Light);
             GameState.MechCreationApi.SetName("light");
-            GameState.MechCreationApi.SetDropTableID(LootTableType.LightDrop);
-            GameState.MechCreationApi.SetTexture(Light2Icon);
+            lootDropID = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.Light, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End(); GameState.MechCreationApi.SetTexture(Light2Icon);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.0f));
             GameState.MechCreationApi.End();
 
@@ -227,7 +237,10 @@ namespace Mech
 
             GameState.MechCreationApi.Create(MechType.SmashableBox);
             GameState.MechCreationApi.SetName("smashableBox");
-            GameState.MechCreationApi.SetDropTableID(LootTableType.SmashableBoxDrop);
+            lootDropID = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.SmashableBox, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End(); GameState.MechCreationApi.SetTexture(Light2Icon); 
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetAction(NodeType.OpenChestAction);
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
@@ -237,7 +250,10 @@ namespace Mech
 
             GameState.MechCreationApi.Create(MechType.SmashableEgg);
             GameState.MechCreationApi.SetName("smashableEgg");
-            GameState.MechCreationApi.SetDropTableID(LootTableType.SmashableEggDrop);
+            lootDropID = GameState.LootTableCreationAPI.Create();
+            GameState.LootTableCreationAPI.AddItem(ItemType.SmashableEgg, 1);
+            GameState.LootTableCreationAPI.SetEntry(1, 100);
+            GameState.LootTableCreationAPI.End(); 
             GameState.MechCreationApi.SetTexture(ChestIcon);
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));

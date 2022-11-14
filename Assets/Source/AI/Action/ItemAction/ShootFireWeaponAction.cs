@@ -15,6 +15,7 @@ namespace Action
             public Vec2f Target;
         }
 
+        // Action used by either player and AI.
         static public NodeSystem.NodeState OnEnter(object ptr, int id)
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);

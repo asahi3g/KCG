@@ -42,9 +42,9 @@ namespace Node.Action
 
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
-                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
+                ItemParticleEntity itemParticle = GameState.Planet.AddItemParticle(itemInventory, pos);
                 itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
-                itemParticle.isItemUnpickable = true;
+                itemParticle.AddItemUnpickable(0);
                 nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);
 
                 nodeEntity.nodeExecution.State = NodeState.Running;
@@ -53,27 +53,6 @@ namespace Node.Action
 
             // ToolBar is non existent. 
             nodeEntity.nodeExecution.State = NodeState.Fail;
-        }
-
-        // Action is active untill itemParticle becomes pickable again.
-        public override void OnUpdate(NodeEntity nodeEntity)
-        {
-            const float DURATION = 2.0f;
-
-            float deltaTime = UnityEngine.Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
-            if (deltaTime < DURATION)
-                return;
-
-            nodeEntity.nodeExecution.State = NodeState.Success;
-        }
-
-        public override void OnExit(NodeEntity nodeEntity)
-        {
-            ItemParticleEntity itemParticle = GameState.Planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            if (nodeEntity.nodeExecution.State == NodeState.Success)
-                itemParticle.isItemUnpickable = false;
-
-            base.OnExit(nodeEntity);
         }
     }
 }

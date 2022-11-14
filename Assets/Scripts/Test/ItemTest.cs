@@ -57,20 +57,20 @@ namespace Planet.Unity
 
             GenerateMap();
 
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
-            GameState.ItemSpawnSystem.SpawnItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.PulseWeapon, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(Enums.ItemType.SniperRifle, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(Enums.ItemType.Shotgun, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.LongRifle, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.RPG, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.SMG, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.GrenadeLauncher, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.GasBomb, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.Sword, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(Enums.ItemType.RiotShield, new Vec2f(2.0f, 4.0f));
+            planet.AddItemParticle(Enums.ItemType.StunBaton, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.AutoCannon, new Vec2f(3.0f, 3.0f));
+            planet.AddItemParticle(Enums.ItemType.Bow, new Vec2f(3.0f, 3.0f));
 
             var SpawnEnemyTool = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SpawnEnemySlimeTool);
             var SpawnPistol = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Pistol);

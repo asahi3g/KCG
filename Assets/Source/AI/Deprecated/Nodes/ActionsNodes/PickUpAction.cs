@@ -36,7 +36,7 @@ namespace Node.Action
             {
                 itemEntity.AddItemDrawPosition2D(Vec2f.Zero, drawPos);
             }
-            itemEntity.isItemUnpickable = true;
+            itemEntity.AddItemUnpickable(0);
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 
