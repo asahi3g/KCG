@@ -21,7 +21,8 @@ namespace Particle
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
             Vec2f size = particleProperties.MinSize + (particleProperties.MaxSize - particleProperties.MinSize)  *  KMath.Random.Mt19937.genrand_realf();
             entity.AddParticleID(UniqueID++, -1, particleType);
-            entity.AddParticleState(health, health, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, size);
+            float random = KMath.Random.Mt19937.genrand_realf();
+            entity.AddParticleState(health, health, particleProperties.MinDecayRate * random + particleProperties.MaxDecayRate * (1.0f - random), particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, size);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
@@ -48,7 +49,8 @@ namespace Particle
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
             entity.AddParticleID(UniqueID++, -1, ParticleType.Debris);
-            entity.AddParticleState(1.0f, 1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, particleProperties.MinSize);
+            float random = KMath.Random.Mt19937.genrand_realf();
+            entity.AddParticleState(1.0f, 1.0f, particleProperties.MinDecayRate * random + particleProperties.MaxDecayRate * (1.0f - random), particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, particleProperties.MinSize);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             

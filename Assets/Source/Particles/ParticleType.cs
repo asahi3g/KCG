@@ -12,6 +12,7 @@ namespace Particle
         Blood,
         Blood2,
         BloodSmoke,
+        BloodFog,
         Explosion,
         Shrapnel,
         Wood,

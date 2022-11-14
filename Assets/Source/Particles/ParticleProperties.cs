@@ -10,7 +10,8 @@ namespace Particle
         public int PropertiesId;
         public string Name;
         
-        public float DecayRate;
+        public float MinDecayRate;
+        public float MaxDecayRate;
         public Vec2f Acceleration;
         public float DeltaRotation;
         public float DeltaScale;

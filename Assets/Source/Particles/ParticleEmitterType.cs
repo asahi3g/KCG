@@ -10,6 +10,7 @@ namespace Particle
         Blood,
         Blood2,
         BloodSmoke,
+        BloodFog,
         ExplosionEmitter,
         ShrapnelEmitter,
         WoodEmitter,
