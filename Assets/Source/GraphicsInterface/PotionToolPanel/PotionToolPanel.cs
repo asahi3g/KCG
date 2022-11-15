@@ -46,7 +46,7 @@ namespace KGUI
                     {
                         //healthPotionElementUI.Border.SetImageColor(selectedInventoryItem.itemPotion.potionType == PotionType.HealthPotion ? UnityEngine.Color.red : UnityEngine.Color.yellow);
 
-                        healthPotionElementUI.gameObject.SetActive(materialBagSlot.itemType.Type == ItemType.HealthPositon);
+                        healthPotionElementUI.gameObject.SetActive(materialBagSlot.itemType.Type == ItemType.HealthPotion);
                     }
                 }
             }
