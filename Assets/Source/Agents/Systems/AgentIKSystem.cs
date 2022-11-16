@@ -57,6 +57,12 @@ namespace Agent
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
 
                 UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+                if (worldPosition.x < physicsState.Position.X)
+                {
+                    float diff = physicsState.Position.X - worldPosition.x;
+                    worldPosition.x = physicsState.Position.X + diff;
+                }
                 
                 transform = entity.agentModel3D.GameObject.transform;
 

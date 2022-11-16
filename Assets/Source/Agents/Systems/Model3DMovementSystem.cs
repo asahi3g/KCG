@@ -37,7 +37,7 @@ namespace Agent
                 {
                     if (model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -120, 0);
+                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
                     }
                     else
                     {

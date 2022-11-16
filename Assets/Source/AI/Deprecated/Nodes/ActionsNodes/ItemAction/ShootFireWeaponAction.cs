@@ -116,8 +116,7 @@ namespace Node
                     ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
                         target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
 
-                    GameState.Planet.AddParticleEmitter(new Vec2f(agentEntity.agentModel3D.RightHand.transform.position.x,
-                        agentEntity.agentModel3D.RightHand.transform.position.y + 0.5f), ParticleEmitterType.MuzzleFlash);
+                    GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition() + new Vec2f(-0.33f, -0.33f), ParticleEmitterType.MuzzleFlash);
 
                     if (WeaponProperty.ProjectileType == ProjectileType.Arrow)
                     {

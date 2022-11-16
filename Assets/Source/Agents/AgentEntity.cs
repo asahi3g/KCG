@@ -133,48 +133,15 @@ public partial class AgentEntity
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D;
 
-        Vec2f position = physicsState.Position;
+        UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+        Vec2f targetPosition = new Vec2f(worldPosition.x, worldPosition.y);
 
-        if(agentID.Type == AgentType.Player || agentID.Type == AgentType.EnemyMarine)
-        {
-            if(isAgentAlive)
-            {
-                UnityEngine.Transform FirePosition = model3d.RightHand.transform;
-
-                switch (model3d.ItemAnimationSet)
-                {
-                    case ItemAnimationSet.HoldingRifle:
-                    {
-                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y);
-                            break;
-                    }
-                    case ItemAnimationSet.HoldingPistol:
-                    {
-                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y);
-                            break;
-                    }
-                }
-            }
-
-        }
-        else
-        {
-            switch (model3d.ItemAnimationSet)
-            {
-                case ItemAnimationSet.HoldingRifle:
-                {
-                    position += new Vec2f(0.6f * physicsState.FacingDirection, 1.0f);
-                    break;
-                }
-                case ItemAnimationSet.HoldingPistol:
-                {
-                    position += new Vec2f(0.35f * physicsState.FacingDirection, 1.0f);
-                    break;
-                }
-            }
-        }
-
-
+        Vec2f position = physicsState.Position + new Vec2f(-0.25f, 1.75f);
+        Vec2f dir = (targetPosition - position);
+        UnityEngine.Debug.Log(targetPosition);
+        dir.Normalize();
+        Vec2f newPosition = position + dir * 1.3f;
+        position = newPosition;
         return position;
     }
 
