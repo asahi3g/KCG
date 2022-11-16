@@ -105,13 +105,13 @@ namespace Agent
                                         {
                                             if (entity.agentPhysicsState.FacingDirection == 1)
                                             {
-                                                AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 1f, worldPosition.y, worldPosition.z -
-                                                      1f);
+                                                AimTarget.position = new UnityEngine.Vector3(AimTarget.position.x, worldPosition.y,
+                                                    AimTarget.position.z);
 
                                             }
                                             else if (entity.agentPhysicsState.FacingDirection == -1)
                                             {
-                                                AimTarget.position = new UnityEngine.Vector3(worldPosition.x - 1f, worldPosition.y, worldPosition.z + 10f);
+                                                AimTarget.position = new UnityEngine.Vector3(AimTarget.position.x, worldPosition.y, AimTarget.position.z);
                                             }
                                         }
                                     }

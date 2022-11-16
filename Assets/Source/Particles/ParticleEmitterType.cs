@@ -16,6 +16,7 @@ namespace Particle
         WoodEmitter,
         MetalBulletImpact,
         RockBulletImpact,
-        BloodImpact
+        BloodImpact,
+        MuzzleFlash,
     }
 }

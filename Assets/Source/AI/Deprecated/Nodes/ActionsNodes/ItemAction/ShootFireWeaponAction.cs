@@ -3,6 +3,7 @@ using KMath;
 using UnityEngine;
 using Enums;
 using System.Collections.Generic;
+using Particle;
 
 namespace Node
 {
@@ -114,6 +115,9 @@ namespace Node
                     float randomSpread = UnityEngine.Random.Range(-spread, spread);
                     ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
                         target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
+
+                    GameState.Planet.AddParticleEmitter(new Vec2f(agentEntity.agentModel3D.RightHand.transform.position.x,
+                        agentEntity.agentModel3D.RightHand.transform.position.y + 0.5f), ParticleEmitterType.MuzzleFlash);
 
                     if (WeaponProperty.ProjectileType == ProjectileType.Arrow)
                     {

@@ -145,12 +145,12 @@ public partial class AgentEntity
                 {
                     case ItemAnimationSet.HoldingRifle:
                     {
-                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                        position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y);
                             break;
                     }
                     case ItemAnimationSet.HoldingPistol:
                     {
-                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y + 0.5f);
+                            position = new Vec2f(FirePosition.transform.position.x, FirePosition.transform.position.y);
                             break;
                     }
                 }
