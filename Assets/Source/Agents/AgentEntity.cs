@@ -136,7 +136,7 @@ public partial class AgentEntity
         UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
         Vec2f targetPosition = new Vec2f(worldPosition.x, worldPosition.y);
 
-        Vec2f position = physicsState.Position + new Vec2f(-0.25f, 1.75f);
+        Vec2f position = physicsState.Position + new Vec2f(-0.05f, 1.75f);
         Vec2f dir = (targetPosition - position);
         UnityEngine.Debug.Log(targetPosition);
         dir.Normalize();
