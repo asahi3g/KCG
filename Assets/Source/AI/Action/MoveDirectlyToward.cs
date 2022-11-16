@@ -29,6 +29,10 @@ namespace Action
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
 
+            physicsState.FacingDirection = direction;
+            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
+            agent.Run(direction);
+
             // Walk diagonal if there is an obstacle jump.
             TileID belowTile = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X), (int)physicsState.Position.Y - 1);
             if (belowTile != TileID.Air)
@@ -37,14 +41,16 @@ namespace Action
                 if (condition(ptr))
                     return NodeState.Success;
 
-                physicsState.FacingDirection = direction;
-                agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
-                agent.Run(direction);
-
                 // if next tile is solid jump.
                 TileID frontTileIDX = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X + direction), (int)physicsState.Position.Y);
-                if (frontTileIDX != TileID.Air && agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump)
+
+                if (frontTileIDX != TileID.Air &&
+                    agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump &&
+                    agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Falling)
+                {
                     agent.Jump();
+                }
+                    
             }
 
             return NodeState.Running;

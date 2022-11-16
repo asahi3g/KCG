@@ -380,7 +380,7 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.BloodFog);
-            GameState.ParticleCreationApi.SetDecayRate(2.6f);
+            GameState.ParticleCreationApi.SetDecayRate(1.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
             GameState.ParticleCreationApi.SetDeltaScale(0.0f);
@@ -493,7 +493,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(0.0f);
             GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
-            GameState.ParticleCreationApi.SetSize(new Vec2f(0.05f, 0.05f));
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.5f));
             GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));

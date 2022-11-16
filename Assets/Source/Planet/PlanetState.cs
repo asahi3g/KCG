@@ -425,6 +425,10 @@ namespace Planet
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
 
+
+
+            DebugLinesCount = 1;
+
             /*TimeState.Deficit += deltaTime;
 
             while (TimeState.Deficit >= frameTime)
@@ -439,7 +443,7 @@ namespace Planet
 
             }*/
 
-              PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
+            PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
 
             // check if the sprite atlas teSetTilextures needs to be updated
             for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
@@ -537,9 +541,6 @@ namespace Planet
 
             // Delete Entities.
             GameState.ProjectileDeleteSystem.Update();
-
-
-            DebugLinesCount = 0;
         }
 
         public void DrawDebug()
@@ -578,6 +579,17 @@ namespace Planet
                 UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(bottomPos.X, bottomPos.Y, 20.0f), agentBox2dCollider.Size.X * 0.5f);*/
 
             }
+
+
+            for(int i = 0; i < DebugLinesCount; i++)
+            {
+                Line2D line = DebugLines[i];
+                UnityEngine.Color color = DebugLinesColors[i];
+                UnityEngine.Gizmos.color = color;
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(line.A.X, line.A.Y, 0.0f), new UnityEngine.Vector3(line.B.X, line.B.Y));
+
+            }
+
         }
 
         public void DrawHUD(AgentEntity agentEntity)

@@ -308,10 +308,10 @@ namespace Agent
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyMarine);
             GameState.AgentCreationApi.SetName("Marine");
-            GameState.AgentCreationApi.SetMovement(3f, 3.5f, 2);
+            GameState.AgentCreationApi.SetMovement(3f, 4.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(Enums.LootTableType.SlimeEnemyDrop, Enums.LootTableType.SlimeEnemyDrop);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
-            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.1f));
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
             GameState.AgentCreationApi.SetHealth(100.0f);

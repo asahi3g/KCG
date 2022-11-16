@@ -28,12 +28,12 @@ namespace Action
 
             var physicsState = agentEntity.agentPhysicsState;
 
-            if (physicsState.MovementState != AgentMovementState.Falling &&
+            if (/*physicsState.MovementState != AgentMovementState.Falling &&
             physicsState.MovementState != AgentMovementState.Jump &&
             physicsState.MovementState != AgentMovementState.Flip &&
             physicsState.MovementState != AgentMovementState.JetPackFlying &&
             physicsState.MovementState != AgentMovementState.SlidingLeft &&
-            physicsState.MovementState != AgentMovementState.SlidingRight)
+            physicsState.MovementState != AgentMovementState.SlidingRight*/true)
             {
                 Vec2f target = agentEntity.agentModel3D.AimTarget;
 
