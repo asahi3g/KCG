@@ -1,6 +1,7 @@
 ﻿//imports UnityEngine
 
 using Physics;
+using UnityEngine;
 
 namespace Projectile
 {
@@ -43,6 +44,12 @@ namespace Projectile
             KMath.Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
             physicsState.Position = newPosition;
+
+            if(entityP.projectileType.Type == Enums.ProjectileType.Bullet)
+            {
+                //Bulllet Slows down overtime
+                newVelocity.X = Mathf.Lerp(newVelocity.X, 0, 0.01f * Time.deltaTime);
+            }
 
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = KMath.Vec2f.Zero;
