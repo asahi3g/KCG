@@ -157,7 +157,8 @@ public static class GameState
     #endregion
 
     #region GUI/HUD
-
+    public static readonly Gui.GuiResourceManager GuiResourceManager;
+    // outdated
     public static readonly KGUI.GUIManager GUIManager;
 
     #endregion
@@ -166,8 +167,8 @@ public static class GameState
 
     public static void InitStage1()
     {
-        Planet = new PlanetState();
-        
+
+    
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
@@ -175,6 +176,7 @@ public static class GameState
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
         GUIManager.InitStage1();
+        GuiResourceManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -186,13 +188,18 @@ public static class GameState
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
         GUIManager.InitStage2();
+        GuiResourceManager.InitStage2();
     }
 
 
     static GameState()
     {
+        Planet = new PlanetState();
+
         PrefabManager = new Prefab.PrefabManager();
         
+        GuiResourceManager = new Gui.GuiResourceManager();
+
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         BlackboardManager = new AI.BlackboardManager();

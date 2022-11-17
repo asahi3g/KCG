@@ -31,6 +31,7 @@ public class GameResources
         }
     }
 
+
     private static void CreateDropTables()
     {
         GameState.LootTableCreationAPI.InitializeResources();
