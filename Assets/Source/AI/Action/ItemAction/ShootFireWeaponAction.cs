@@ -94,8 +94,7 @@ namespace Action
                     ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
                         target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
 
-                    GameState.Planet.AddParticleEmitter(new Vec2f(agentEntity.agentModel3D.RightHand.transform.position.x,
-                        agentEntity.agentModel3D.RightHand.transform.position.y + 0.5f), ParticleEmitterType.MuzzleFlash);
+                    GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition(), ParticleEmitterType.MuzzleFlash);
 
                     if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
                     {

@@ -344,7 +344,7 @@ namespace Particle
             GameState.ParticleCreationApi.End();
 
             GameState.ParticleCreationApi.Create((int)ParticleType.MuzzleFlash);
-            GameState.ParticleCreationApi.SetDecayRate(1.5f);
+            GameState.ParticleCreationApi.SetDecayRate(6.0f);
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
             GameState.ParticleCreationApi.SetDeltaScale(0.0f);
@@ -648,10 +648,10 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MuzzleFlash);
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MuzzleFlash);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.4f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.2f);
             GameState.ParticleEmitterCreationApi.SetParticleCount(10);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.6f, -0.5f), new Vec2f(0.6f, 0.5f));
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.3f, -0.3f), new Vec2f(0.3f, 0.3f));
             GameState.ParticleEmitterCreationApi.End();
         }
     }
