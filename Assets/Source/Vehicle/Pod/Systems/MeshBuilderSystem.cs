@@ -48,14 +48,14 @@ namespace Vehicle.Pod
 
                     if(!entity.vehiclePodStatus.LeftPanelCollided)
                     {
-                        entity.vehiclePodStatus.LeftPanelPos.X -= 1.0f;
-                        entity.vehiclePodStatus.LeftPanelPos.Y -= 0.5f;
+                        entity.vehiclePodStatus.LeftPanelPos.X += 1.0f;
+                        entity.vehiclePodStatus.LeftPanelPos.Y += 0.5f;
                     }
 
                     if (!entity.vehiclePodStatus.BottomPanelCollided)
                     {
-                        entity.vehiclePodStatus.BottomPanelPos.X -= 0.5f;
-                        entity.vehiclePodStatus.BottomPanelPos.Y -= 1.0f;
+                        entity.vehiclePodStatus.BottomPanelPos.X += 0.5f;
+                        entity.vehiclePodStatus.BottomPanelPos.Y += 1.0f;
                     }
 
                     if(!entity.vehiclePodStatus.TopPanelCollided)

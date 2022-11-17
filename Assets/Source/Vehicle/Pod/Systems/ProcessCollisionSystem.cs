@@ -27,11 +27,11 @@ namespace Vehicle.Pod
                 // If is colliding bottom-top stop y movement
                 if (entityBoxBorders.IsCollidingTop(GameState.Planet.TileMap, pos.angularVelocity))
                 {
-                    pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
+                    pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0f);
                 }
                 else if (entityBoxBorders.IsCollidingBottom(pos.angularVelocity))
                 {
-                    pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0.15f);
+                    pos.angularVelocity = new Vec2f(pos.angularVelocity.X, 0f);
                 }
 
                 pos = entity.vehiclePodPhysicsState2D;
@@ -43,11 +43,11 @@ namespace Vehicle.Pod
                 // If is colliding left-right stop x movement
                 if (entityBoxBorders.IsCollidingLeft(pos.angularVelocity))
                 {
-                    pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
+                    pos.angularVelocity = new Vec2f(0.000000000001f, pos.angularVelocity.Y);
                 }
                 else if (entityBoxBorders.IsCollidingRight(GameState.Planet.TileMap, pos.angularVelocity))
                 {
-                    pos.angularVelocity = new Vec2f(0.15f, pos.angularVelocity.Y);
+                    pos.angularVelocity = new Vec2f(0.000000000001f, pos.angularVelocity.Y);
                 }
 
                 var RightPanelCollision = new AABox2D(new Vec2f(entity.vehiclePodStatus.RightPanelPos.X, entity.vehiclePodStatus.RightPanelPos.Y), new Vec2f(0.01f, 0.01f));
