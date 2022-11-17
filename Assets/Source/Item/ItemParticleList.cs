@@ -30,6 +30,7 @@ namespace Item
 
             int LastIndex = Length;
             List[LastIndex] = entity;
+            entity.itemID.Index = Length;
             Length++;
 
              return List[LastIndex];
@@ -44,18 +45,19 @@ namespace Item
 
         // to remove an entity we just 
         // set the IsInitialized field to false
-        public void Remove(int id)
+        public void Remove(int index)
         {
-            Utils.Assert(id >= 0 && id < Length);
+            Utils.Assert(index >= 0 && index < Length);
 
-            ref ItemParticleEntity entity = ref List[id];
+            ref ItemParticleEntity entity = ref List[index];
             entity.Destroy();
-
-            if (id != Length - 1)
-            {
-                entity = List[Length - 1];
-            }
             Length--;
+
+            if (index != Length)
+            {
+                entity = List[Length];
+                entity.itemID.Index = index;
+            }
         }
 
 

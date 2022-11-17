@@ -58,11 +58,6 @@ namespace Planet.Unity
 
             selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.T))
-            {
-                GameState.ActionCreationSystem.CreateAction(NodeType.DropAction, Player.agentID.ID);
-            }
-
             planet.Update(UnityEngine.Time.deltaTime, Material, transform);
             
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;

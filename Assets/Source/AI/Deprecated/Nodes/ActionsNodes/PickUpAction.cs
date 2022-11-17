@@ -2,6 +2,7 @@
 
 using Enums;
 using KMath;
+using UnityEngine;
 
 namespace Node.Action
 {
@@ -45,6 +46,11 @@ namespace Node.Action
             ref var planet = ref GameState.Planet;
             var itemEntity = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+
+            if (itemEntity == null)
+            {
+                Debug.Log("item entity is null");
+            }
             
             if (itemEntity.hasItemType && itemEntity.hasItemDrawPosition2D)
             {
