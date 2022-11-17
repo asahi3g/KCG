@@ -26,16 +26,11 @@ namespace Vehicle.Pod
                 {
                     if (pod.hasVehiclePodPhysicsState2D)
                     {
-                        entityBoxBorders = new AABox2D(pod.vehiclePodPhysicsState2D.Position + new Vec2f(0, -10f), new Vec2f(0.5f, 50.0f));
+                        entityBoxBorders = new AABox2D(pod.vehiclePodPhysicsState2D.Position + new Vec2f(0, -1f), new Vec2f(0.5f, 50.0f));
                     
                         if (!IsPathEmpty(pod))
                         {
-                            pod.vehiclePodPhysicsState2D.angularVelocity.X = Mathf.Lerp(pod.vehiclePodPhysicsState2D.angularVelocity.X, 0,
-                                1.5f * Time.deltaTime);
-                            pod.vehiclePodPhysicsState2D.angularVelocity.Y = Mathf.Lerp(pod.vehiclePodPhysicsState2D.angularVelocity.Y, 0,
-                              1.5f * Time.deltaTime);
-
-                            if(pod.vehiclePodPhysicsState2D.angularVelocity.Y > - 0.1f)
+                            if(pod.vehiclePodPhysicsState2D.angularVelocity.Y == 0.0f)
                             {
                                 if (!landed)
                                     CircleSmoke.SpawnExplosion(pod, 500, pod.vehiclePodPhysicsState2D.Position + Vec2f.Zero, new Vec2f(0, 0), new Vec2f(2.5f, 2.5f));
@@ -47,8 +42,6 @@ namespace Vehicle.Pod
 
                                 if(elapsed > 0.5f)
                                 {
-                                    pod.vehiclePodPhysicsState2D.AffectedByGravity = true;
-
                                     if (elapsed > 2.0f)
                                     {
                                         var agentsInside = pod.vehiclePodStatus.AgentsInside;
@@ -63,8 +56,8 @@ namespace Vehicle.Pod
 
                                                     agentsInside[j].agentPhysicsState.Position = pod.vehiclePodPhysicsState2D.Position;
 
-                                                    agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
-                                                    agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+                                                    agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(5, 40);
+                                                    agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(10, 50);
 
                                                     pod.vehiclePodStatus.DefaultAgentCount--;
                                                 }
