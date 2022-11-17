@@ -15,12 +15,13 @@ namespace Node
             ref var planet = ref GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            if (itemEntity.itemPotion.potionType == PotionType.Error)
-                itemEntity.itemPotion.potionType = PotionType.HealthPotion;
-
             var player = planet.Player;
             if (itemEntity.hasItemPotion)
             {
+                
+            if (itemEntity.itemPotion.potionType == PotionType.Error)
+                itemEntity.itemPotion.potionType = PotionType.HealthPotion;
+                
                 var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
                 {
@@ -47,7 +48,7 @@ namespace Node
                                         switch (itemEntity.itemPotion.potionType)
                                         {
                                             case PotionType.HealthPotion:
-                                                if (item.itemType.Type == ItemType.HealthPositon)
+                                                if (item.itemType.Type == ItemType.HealthPotion)
                                                 {
                                                     UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;

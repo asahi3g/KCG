@@ -66,7 +66,10 @@ namespace Node.Action
             ItemInventoryEntity itemEntity = GetItem(nodeEntity);
             Item.FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
-            float tempCharge = itemEntity.itemFireWeaponCharge.ChargeRate;
+            float tempCharge = 0.0f;
+
+            if(itemEntity.hasItemFireWeaponCharge)
+                tempCharge = itemEntity.itemFireWeaponCharge.ChargeRate;
 
             float difference = itemEntity.itemFireWeaponCharge.ChargeRate - tempCharge;
             if (nodeEntity.nodeExecution.State == NodeState.Fail)

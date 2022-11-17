@@ -1,6 +1,7 @@
 ﻿//imports UnityEngine
 
 using Physics;
+using UnityEngine;
 
 namespace Projectile
 {
@@ -19,7 +20,7 @@ namespace Projectile
 
             PhysicsStateComponent physicsState = entityP.projectilePhysicsState;
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.AffectedByGravity))
-                physicsState.Acceleration.Y -= Constants.Gravity;
+                physicsState.Acceleration.Y -= Constants.BulletGravity;
 
             KMath.Vec2f dir = physicsState.Velocity.Normalized;
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.CanRamp) && physicsState.Velocity.Magnitude < projectileProperties.MaxVelocity)
@@ -43,6 +44,12 @@ namespace Projectile
             KMath.Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
             physicsState.Position = newPosition;
+
+            if(entityP.projectileType.Type == Enums.ProjectileType.Bullet)
+            {
+                //Bulllet Slows down overtime
+                newVelocity.X = Mathf.Lerp(newVelocity.X, 0, 0.01f * Time.deltaTime);
+            }
 
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = KMath.Vec2f.Zero;

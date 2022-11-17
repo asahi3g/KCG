@@ -55,8 +55,8 @@ namespace Vehicle
                 List<AgentEntity> agentsInside = new List<AgentEntity>();
                 entity.AddVehicleCapacity(agentsInside);
 
-                GameState.VehicleAISystem.Initialize(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
-                GameState.VehicleAISystem.RunAI(entity, new Vec2f(1.1f, 0.0f), new Vec2f(0f, 3.0f));
+                GameState.VehicleAISystem.Initialize(entity, new Vec2f(1.1f, -0.5f), new Vec2f(0f, 3.0f));
+                GameState.VehicleAISystem.RunAI(entity, new Vec2f(1.1f, -0.5f), new Vec2f(0f, 3.0f));
 
                 for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
                 {

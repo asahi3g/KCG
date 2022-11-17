@@ -10,7 +10,8 @@ namespace Particle
         public int PropertiesId;
         public string Name;
         
-        public float DecayRate;
+        public float MinDecayRate;
+        public float MaxDecayRate;
         public Vec2f Acceleration;
         public float DeltaRotation;
         public float DeltaScale;
@@ -22,10 +23,12 @@ namespace Particle
         public Animation.AnimationType AnimationType;
 
         // the starting properties of the particles
-        public Vec2f Size;
+        public Vec2f MinSize;
+        public Vec2f MaxSize;
         public Vec2f StartingVelocity;
         public float StartingRotation;
         public float StartingScale;
+        public float EndScale;
         public UnityEngine.Color StartingColor;
         public UnityEngine.Color EndColor;
 

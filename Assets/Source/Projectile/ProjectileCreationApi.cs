@@ -216,8 +216,9 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetName("bullet");
             GameState.ProjectileCreationApi.SetSpriteId(OreIcon);
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
-            GameState.ProjectileCreationApi.SetStartVelocity(50.0f);
+            GameState.ProjectileCreationApi.SetStartVelocity(25.0f);
             GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
             GameState.ProjectileCreationApi.End();
 
             GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.FragGrenade);

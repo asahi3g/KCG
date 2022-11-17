@@ -331,7 +331,7 @@ namespace Agent
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.1f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
-            GameState.AgentCreationApi.SetHealth(10000.0f);
+            GameState.AgentCreationApi.SetHealth(100.0f);
             GameState.AgentCreationApi.End();
         }
 

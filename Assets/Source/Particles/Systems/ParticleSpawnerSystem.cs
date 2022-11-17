@@ -13,18 +13,20 @@ namespace Particle
             ParticleCreationApi = particleCreationApi;
         }
 
-        public ParticleEntity Spawn(ParticleType particleType, Vec2f position, Vec2f velocity)
+        public ParticleEntity Spawn(ParticleType particleType, Vec2f position, Vec2f velocity, float health = 1.0f)
         {
             ParticleProperties particleProperties = 
                         ParticleCreationApi.Get(particleType);
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
+            Vec2f size = particleProperties.MinSize + (particleProperties.MaxSize - particleProperties.MinSize)  *  KMath.Random.Mt19937.genrand_realf();
             entity.AddParticleID(UniqueID++, -1, particleType);
-            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One);
+            float random = KMath.Random.Mt19937.genrand_realf();
+            entity.AddParticleState(health, health, particleProperties.MinDecayRate * random + particleProperties.MaxDecayRate * (1.0f - random), particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, size);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
-            entity.AddParticleSprite2D(particleProperties.SpriteId, null, null, particleProperties.Size);
+            entity.AddParticleSprite2D(particleProperties.SpriteId, null, null, size);
 
             if (particleProperties.HasAnimation)
             {
@@ -33,7 +35,7 @@ namespace Particle
 
             if (particleProperties.IsCollidable)
             {
-                entity.AddParticleBox2DCollider(particleProperties.Size, new Vec2f());
+                entity.AddParticleBox2DCollider(size, new Vec2f());
             }
 
             return entity;
@@ -47,11 +49,12 @@ namespace Particle
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
             entity.AddParticleID(UniqueID++, -1, ParticleType.Debris);
-            entity.AddParticleState(1.0f, particleProperties.DecayRate, particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One);
+            float random = KMath.Random.Mt19937.genrand_realf();
+            entity.AddParticleState(1.0f, 1.0f, particleProperties.MinDecayRate * random + particleProperties.MaxDecayRate * (1.0f - random), particleProperties.DeltaRotation, particleProperties.DeltaScale, Vec4f.One, particleProperties.MinSize);
             entity.AddParticlePhysicsState(new Vec2f(position.X, position.Y), new Vec2f(position.X, position.Y), particleProperties.Acceleration,
                              new Vec2f(velocity.X, velocity.Y), 0, particleProperties.Bounce, particleProperties.BounceFactor);
             
-            entity.AddParticleSprite2D(-1, triangles, textureCoords, particleProperties.Size);
+            entity.AddParticleSprite2D(-1, triangles, textureCoords, particleProperties.MinSize);
 
             if (particleProperties.HasAnimation)
             {
@@ -60,7 +63,7 @@ namespace Particle
 
             if (particleProperties.IsCollidable)
             {
-                entity.AddParticleBox2DCollider(particleProperties.Size, new Vec2f());
+                entity.AddParticleBox2DCollider(particleProperties.MinSize, new Vec2f());
             }
 
             return entity;

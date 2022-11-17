@@ -243,8 +243,8 @@ namespace Vehicle
             GameState.VehicleCreationApi.SetCollisionSize(new Vec2f(2.0f, 2.0f));
             GameState.VehicleCreationApi.SetCollisionOffset(new Vec2f(0, -1.0f));
             GameState.VehicleCreationApi.SetScale(new Vec2f(1.0f, 1.0f));
-            GameState.VehicleCreationApi.SetRotation(0.0f);
-            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -0.5f));
+            GameState.VehicleCreationApi.SetRotation(1.0f);
+            GameState.VehicleCreationApi.SetAngularVelocity(new Vec2f(0, -3.0f));
             GameState.VehicleCreationApi.SetAngularMass(14f);
             GameState.VehicleCreationApi.SetAngularAcceleration(4f);
             GameState.VehicleCreationApi.SetCenterOfGravity(-6f);
