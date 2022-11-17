@@ -48,7 +48,7 @@ namespace Node
                                         switch (itemEntity.itemPotion.potionType)
                                         {
                                             case PotionType.HealthPotion:
-                                                if (item.itemType.Type == ItemType.HealthPositon)
+                                                if (item.itemType.Type == ItemType.HealthPotion)
                                                 {
                                                     UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
                                                     int x = (int)worldPosition.x;

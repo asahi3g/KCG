@@ -19,7 +19,7 @@ namespace Projectile
 
             PhysicsStateComponent physicsState = entityP.projectilePhysicsState;
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.AffectedByGravity))
-                physicsState.Acceleration.Y -= Constants.Gravity;
+                physicsState.Acceleration.Y -= Constants.BulletGravity;
 
             KMath.Vec2f dir = physicsState.Velocity.Normalized;
             if (projectileProperties.Flags.HasFlag(ProjectileProperties.ProjFlags.CanRamp) && physicsState.Velocity.Magnitude < projectileProperties.MaxVelocity)

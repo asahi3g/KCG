@@ -126,7 +126,6 @@ namespace Vehicle
                             var agentsInside = vehicle.vehicleCapacity.agentsInside;
                             if (vehicle.hasVehicleCapacity)
                             {
-
                                 for (int j = 0; j < agentsInside.Count; j++)
                                 {
                                     if (!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)

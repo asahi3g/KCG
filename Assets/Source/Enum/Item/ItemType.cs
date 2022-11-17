@@ -9,7 +9,7 @@
         Slime,
         Food,
         Bone,
-        HealthPositon,
+        HealthPotion,
         
         // Weapons
         SniperRifle,

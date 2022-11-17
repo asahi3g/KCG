@@ -1,5 +1,3 @@
-//imports UnityEngine
-
 using Enums;
 
 namespace Agent

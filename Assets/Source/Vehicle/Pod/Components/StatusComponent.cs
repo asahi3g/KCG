@@ -7,12 +7,25 @@ namespace Vehicle.Pod
     [Pod]
     public class StatusComponent : IComponent
     {
-        public List<AgentEntity> AgentsInside;
+        public List<AgentEntity> AgentsInside
+            ;
+        public int DefaultAgentCount;
 
-        public Vec2f RightPanel;
-        public Vec2f LeftPanel;
-        public Vec2f TopPanel;
-        public Vec2f BottomPanel;
+        public bool Exploded;
+        public bool RightPanelCollided;
+        public bool LeftPanelCollided;
+        public bool TopPanelCollided;
+        public bool BottomPanelCollided;
+
+        public Vec2f RightPanelPos;
+        public Vec2f LeftPanelPos;
+        public Vec2f TopPanelPos;
+        public Vec2f BottomPanelPos;
+
+        public Vec2f RightPanelOffset;
+        public Vec2f LeftPanelOffset;
+        public Vec2f TopPanelOffset;
+        public Vec2f BottomPanelOffset;
 
         public float RightPanelWidth;
         public float LeftPanelWidth;
