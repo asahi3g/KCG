@@ -11,10 +11,13 @@
             {
                 MechEntity mech = mechList.Get(i);
 
-                if (mech.mechDurability.Durability <= 0)
+                if (mech.hasMechDurability)
                 {
-                    // Todo: Trigger animation of mech destruction
-                    planet.RemoveMech(mech.mechID.Index);
+                    if (mech.mechDurability.Durability <= 0)
+                    {
+                        // Todo: Trigger animation of mech destruction
+                        planet.RemoveMech(mech.mechID.Index);
+                    }
                 }
             }
         }
