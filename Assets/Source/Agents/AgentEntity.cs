@@ -694,7 +694,6 @@ public partial class AgentEntity
         }
     }
 
-
     public void Jump()
         {
             var physicsState = agentPhysicsState;
