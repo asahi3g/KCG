@@ -128,17 +128,43 @@ public partial class AgentEntity
         }
     }
 
+    public Vec2f GetGunFiringTarget()
+    {
+        var physicsState = agentPhysicsState;
+
+         UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+        float rightGunXPosition = physicsState.Position.X + 3.0f;
+        float leftGunXPosition = physicsState.Position.X - 3.0f;
+
+        if (worldPosition.x < rightGunXPosition && worldPosition.x > physicsState.Position.X)
+        {
+            worldPosition.x = physicsState.Position.X + 3.0f;
+        }
+
+
+        if (worldPosition.x > leftGunXPosition && worldPosition.x < physicsState.Position.X)
+        {
+            worldPosition.x = physicsState.Position.X - 3.0f;
+        }
+
+        return new Vec2f(worldPosition.x, worldPosition.y);
+    }
+
+    public Vec2f GetGunOrigin()
+    {
+        return agentPhysicsState.Position + new Vec2f(-0.25f, 1.75f);
+    }
+
     public Vec2f GetGunFiringPosition()
     {
         var physicsState = agentPhysicsState;
         var model3d = agentModel3D;
 
-        UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-        Vec2f targetPosition = new Vec2f(worldPosition.x, worldPosition.y);
+        Vec2f targetPosition = GetGunFiringTarget();
 
-        Vec2f position = physicsState.Position + new Vec2f(-0.05f, 1.75f);
+        Vec2f position = GetGunOrigin();
         Vec2f dir = (targetPosition - position);
-
         dir.Normalize();
         Vec2f newPosition = position + dir * 1.3f;
         position = newPosition;
@@ -330,13 +356,13 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-        if (isAgentAlive/* && IsStateFree()*/)
+        if (isAgentAlive && IsStateFree())
         {
-           // physicsState.MovementState = AgentMovementState.FireGun;
+            physicsState.MovementState = AgentMovementState.FireGun;
             
 
-          //  physicsState.ActionInProgress = true;
-          //  physicsState.ActionDuration = cooldown;
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = cooldown;
         }
     }
 
@@ -449,13 +475,16 @@ public partial class AgentEntity
     {
         var PhysicsState = agentPhysicsState;
 
-        if (isAgentAlive && PhysicsState.DashCooldown <= 0.0f && IsStateFree() && CanMove())
+        if (isAgentAlive && PhysicsState.DashCooldown <= 0.0f &&
+        IsStateFree() && CanMove())
         {
+            PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
+            PhysicsState.Velocity.Y = 0.0f;
+
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
-            PhysicsState.DashDuration = Physics.Constants.DashTime;
-            PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
+            PhysicsState.DashCooldown = 1.0f;
         }
     }
 
@@ -570,11 +599,6 @@ public partial class AgentEntity
 
     public void Walk(int horizontalDir)
     {
-        Walk(horizontalDir, agentPhysicsState.Speed);
-    }
-
-    public void Walk(int horizontalDir, float speed)
-    {
         var PhysicsState = agentPhysicsState;
         var stats = agentStats;
         
@@ -582,58 +606,69 @@ public partial class AgentEntity
         {
             if (IsCrouched())
             {
-                if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
+                if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
                 {
-                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                 }
-                else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
+                else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
                 {
-                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                 }
             }
             else
             {
                 if (stats.IsLimping)
                 {
-                    if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/3) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
-                    else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/3) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                     }
                 }
                 else
                 {
-                    if (Math.Abs(PhysicsState.Velocity.X) < speed / 2) 
+                    if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed/2) 
                     {
+                       // PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                        if (PhysicsState.OnGrounded)
                        {
                         if (horizontalDir != 0)
                         {
-                        PhysicsState.Velocity = speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+                        PhysicsState.Velocity = PhysicsState.Speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
                         PhysicsState.Velocity *= horizontalDir;
                         }
                        }
                        else 
                        {
-                        PhysicsState.Velocity.X = 1 * horizontalDir * speed;
+                        PhysicsState.Velocity.X = 1 * horizontalDir * PhysicsState.Speed;
+                        //PhysicsState.Acceleration.X = 2 * horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                        }
                     }
-                    else if (Math.Abs(PhysicsState.Velocity.X) == speed / 2) // Velocity equal drag.
+                    else if (Math.Abs(PhysicsState.Velocity.X) == PhysicsState.Speed/2) // Velocity equal drag.
                     {
+                     //   PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                       if (PhysicsState.OnGrounded)
                        {
                         if (horizontalDir != 0)
                         {
-                            PhysicsState.Velocity = speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
-                            PhysicsState.Velocity *= horizontalDir;
+                        //PhysicsState.Acceleration = 500.0f * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        //PhysicsState.Acceleration.X *= horizontalDir;
+
+
+                        PhysicsState.Velocity = PhysicsState.Speed * new Vec2f(PhysicsState.GroundNormal.Y, -PhysicsState.GroundNormal.X);
+                        PhysicsState.Velocity *= horizontalDir;
                         }
                        }
                        else 
                        {
-                        PhysicsState.Velocity.X = horizontalDir * speed;
+                        PhysicsState.Velocity.X = horizontalDir * PhysicsState.Speed;
+                        //PhysicsState.Acceleration.X = horizontalDir * PhysicsState.Speed / Constants.TimeToMax;
                        }
                     }
                 }

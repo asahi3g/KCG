@@ -55,9 +55,7 @@ namespace Node
                 if (agentEntity.isAgentPlayer)
                 {
                     // Todo: Move target selection to an agent system.
-                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    target.X = worldPosition.x;
-                    target.Y = worldPosition.y;
+                    target = agentEntity.GetGunFiringTarget();
                 }
                 nodeEntity.ReplaceNodeTarget(target);
 
@@ -83,7 +81,24 @@ namespace Node
                     agentEntity.agentPhysicsState.FacingDirection *= -1;
 
                 GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
-                nodeEntity.nodeExecution.State = NodeState.Running;
+                GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition() + new Vec2f(-0.33f, -0.33f), ParticleEmitterType.MuzzleFlash);
+                var spread = WeaponProperty.SpreadAngle;
+                for (int i = 0; i < bulletsPerShot; i++)
+                {
+                    float randomSpread = UnityEngine.Random.Range(-spread, spread);
+                    ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - agentEntity.GetGunOrigin().X) - randomSpread,
+                        target.Y - agentEntity.GetGunOrigin().Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
+
+                    
+                    if (WeaponProperty.ProjectileType == ProjectileType.Arrow)
+                    {
+                        projectileEntity.isProjectileFirstHIt = false;
+                    }
+
+                    //projectileEntity.AddProjectileRange(WeaponProperty.Range);
+                }
+
+                nodeEntity.nodeExecution.State = NodeState.Success;
             }
             else
             {
@@ -100,33 +115,7 @@ namespace Node
 
             if (elapsed >= FIRE_DELAY)
             {
-                AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
-                int inventoryID = agentEntity.agentInventory.InventoryID;
-                InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
-                ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
-                Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
-
-                Vec2f startPos = agentEntity.GetGunFiringPosition();
-                int bulletsPerShot = WeaponProperty.BulletsPerShot;
-                var spread = WeaponProperty.SpreadAngle;
-                for (int i = 0; i < bulletsPerShot; i++)
-                {
-                    float randomSpread = UnityEngine.Random.Range(-spread, spread);
-                    ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
-                        target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
-
-                    GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition() + new Vec2f(-0.33f, -0.33f), ParticleEmitterType.MuzzleFlash);
-
-                    if (WeaponProperty.ProjectileType == ProjectileType.Arrow)
-                    {
-                        projectileEntity.isProjectileFirstHIt = false;
-                    }
-
-                    //projectileEntity.AddProjectileRange(WeaponProperty.Range);
-                }
-
-                nodeEntity.nodeExecution.State = NodeState.Success;
+                
             }
 
         }

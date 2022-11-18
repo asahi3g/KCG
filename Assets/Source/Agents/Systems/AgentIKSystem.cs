@@ -56,13 +56,7 @@ namespace Agent
                 var model3d = entity.agentModel3D;
                 model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
 
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-
-                if (worldPosition.x < physicsState.Position.X)
-                {
-                    float diff = physicsState.Position.X - worldPosition.x;
-                    worldPosition.x = physicsState.Position.X + diff;
-                }
+                Vec2f targetPosition = entity.GetGunFiringTarget();
                 
                 transform = entity.agentModel3D.GameObject.transform;
 
@@ -111,14 +105,13 @@ namespace Agent
                                         {
                                             if (entity.agentPhysicsState.FacingDirection == 1)
                                             {
-                                                AimTarget.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
-                                                    entity.GetGunFiringPosition().Y, AimTarget.position.z);
+                                                AimTarget.position = new UnityEngine.Vector3(AimTarget.position.x, targetPosition.Y,
+                                                    AimTarget.position.z);
 
                                             }
                                             else if (entity.agentPhysicsState.FacingDirection == -1)
                                             {
-                                                AimTarget.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
-                                                    entity.GetGunFiringPosition().Y, AimTarget.position.z);
+                                                AimTarget.position = new UnityEngine.Vector3(AimTarget.position.x, targetPosition.Y,                            AimTarget.position.z);
                                             }
                                         }
                                     }
