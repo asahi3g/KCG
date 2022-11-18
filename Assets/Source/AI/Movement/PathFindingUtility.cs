@@ -56,25 +56,39 @@ namespace AI.Movement
     internal static class Heuristics
     {
         public delegate int distance(Vec2i firstPos, Vec2i secondPos);
+        public delegate float distanceF(Vec2f firstPos, Vec2f secondPos);
 
-        static public int euclidean_distance(Vec2i firstPos, Vec2i secondPos)
+        static public int EuclideanDistance(Vec2i firstPos, Vec2i secondPos)
         {
             float x = firstPos.X - secondPos.X;
             float y = firstPos.Y - secondPos.Y;
             return (int)(MathF.Sqrt(x * x + y * y) + 0.5f);
         }
+        static public float EuclideanDistance(Vec2f firstPos, Vec2f secondPos)
+        {
+            float x = firstPos.X - secondPos.X;
+            float y = firstPos.Y - secondPos.Y;
+            return MathF.Sqrt(x * x + y * y);
+        }
 
-        static public int manhattan_distance(Vec2i firstPos, Vec2i secondPos)
+        static public int ManhattanDistance(Vec2i firstPos, Vec2i secondPos)
         {
             int x = firstPos.X - secondPos.X;
             int y = firstPos.Y - secondPos.Y;
             return Math.Abs(x) + Math.Abs(y);
         }
 
-        // https://www.researchgate.net/publication/32117120_Efficient_path_finding_for_2D_games
-        static public int overestimeted_distance(Vec2i firstPos, Vec2i secondPos)
+        static public float ManhattanDistance(Vec2f firstPos, Vec2f secondPos)
         {
-            return manhattan_distance(firstPos, secondPos) * 4;
+            float x = firstPos.X - secondPos.X;
+            float y = firstPos.Y - secondPos.Y;
+            return MathF.Abs(x) + MathF.Abs(y);
+        }
+
+        // https://www.researchgate.net/publication/32117120_Efficient_path_finding_for_2D_games
+        static public int OverstimatedDistance(Vec2i firstPos, Vec2i secondPos)
+        {
+            return ManhattanDistance(firstPos, secondPos) * 4;
         }
     }
 }

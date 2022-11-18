@@ -141,6 +141,7 @@ namespace Planet.Unity
             int playerFaction = 0;
 
             Player = planet.AddPlayer(new Vec2f(3.0f, 24), playerFaction);
+            planet.AddMech(new Vec2f(3.0f, 20), MechType.SmashableBox);
             PlayerID = Player.agentID.ID;
 
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -470,13 +471,13 @@ namespace Planet.Unity
                 planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
 
-               planet.InitializeSystems(Material, transform);
+                planet.InitializeSystems(Material, transform);
 
-               Player = planet.AddPlayer(new Vec2f(3.0f, 20));
-               PlayerID = Player.agentID.ID;
-               inventoryID = Player.agentInventory.InventoryID;
+                Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+                PlayerID = Player.agentID.ID;
+                inventoryID = Player.agentInventory.InventoryID;
 
-               AddItemsToPlayer();
+                AddItemsToPlayer();
 
                 UnityEngine.Debug.Log("loaded!");
             }
@@ -805,30 +806,27 @@ namespace Planet.Unity
 
             }
 
-                var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
+            var pos = Player.agentPhysicsState.Position + Player.physicsBox2DCollider.Offset + Player.physicsBox2DCollider.Size.X / 2.0f;
 
-                Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
-
-
-                for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
-                {
-                    Line2D line = GameState.Planet.DebugLines[i];
-                    Gizmos.color = Color.blue;
-                    Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
-                }
+            Gizmos.DrawSphere(new Vector3(pos.X, pos.Y, 20.0f), Player.physicsBox2DCollider.Size.X * 0.5f);
 
 
-                for (int i = 0; i < GameState.Planet.TileMap.GeometryArrayCount; i++)
+            for (int i = 0; i < GameState.Planet.DebugLinesCount; i++)
+            {
+                Line2D line = GameState.Planet.DebugLines[i];
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
+            }
+
+
+            for (int i = 0; i < GameState.Planet.TileMap.GeometryArrayCount; i++)
             {
                 Line2D line = GameState.Planet.TileMap.GeometryArray[i].Line;
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(new Vector3(line.A.X, line.A.Y, 1.0f), new Vector3(line.B.X, line.B.Y, 1.0f));
             }
 
-
-
-
-                GameState.Planet.DrawDebugEx();
+            GameState.Planet.DrawDebugEx();
                 
         }
 
@@ -845,9 +843,6 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.Pistol);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.GeometryPlacementTool);
-            //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
-           // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
-
         }
 
 

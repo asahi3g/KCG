@@ -62,12 +62,12 @@ namespace AI.Movement
             }
 
             Passable passable = PassableJump;
-            Heuristics.distance heuristics = Heuristics.manhattan_distance;
+            Heuristics.distance heuristics = Heuristics.ManhattanDistance;
             int numDirection = 4;
             if (movType == Enums.AgentMovementType.FlyingMovemnt)
             {
                 passable = PassableFly;
-                heuristics = Heuristics.manhattan_distance;
+                heuristics = Heuristics.ManhattanDistance;
                 numDirection = 8;
             }
 
