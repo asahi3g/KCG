@@ -25,7 +25,7 @@ namespace Agent
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
                 {
-                    if (physicsState.Velocity.Y <= -epsilon && entity.IsStateFree())
+                    if (physicsState.Velocity.Y <= -epsilon && entity.IsStateFree() && !physicsState.OnGrounded)
                     {
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
@@ -82,6 +82,18 @@ namespace Agent
                 else
                 {
                     if (physicsState.MovementState == AgentMovementState.SwordSlash)
+                    {
+                        physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
+                if (physicsState.DashDuration > 0)
+                {
+                    physicsState.DashDuration -= deltaTime;
+                }
+                else
+                {
+                    if (physicsState.MovementState == AgentMovementState.Dashing)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -215,11 +227,33 @@ namespace Agent
 
                 // the end of dashing
                 // we can do this using a fixed amount of time.
-                if (System.Math.Abs(physicsState.Velocity.X) <= 6.0f && physicsState.MovementState == AgentMovementState.Dashing)
+                /*if (System.Math.Abs(physicsState.Velocity.X) <= 6.0f && physicsState.MovementState == AgentMovementState.Dashing)
                 {
                     physicsState.MovementState = AgentMovementState.None;
                     physicsState.Invulnerable = false;
                     physicsState.AffectedByGravity = true;
+                }*/
+
+                if (physicsState.MovementState == AgentMovementState.Dashing)
+                {
+                    if (physicsState.OnGrounded)
+                    {
+                        if (physicsState.MovingDirection != 0)
+                        {
+                            physicsState.Velocity = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime - physicsState.DashDuration))) * physicsState.Speed * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
+                            physicsState.Velocity *= physicsState.MovingDirection;
+                        }
+                        else
+                        {
+                            physicsState.Velocity = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime  - physicsState.DashDuration))) * physicsState.Speed * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
+                            physicsState.Velocity *= 1;
+                        }
+                    }
+                    else
+                    {
+                        physicsState.Velocity.X = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime  - physicsState.DashDuration))) * physicsState.Speed * physicsState.MovingDirection;
+                        physicsState.Velocity.Y = 0.0f;
+                    }        
                 }
 
                 // if we are dashing we add some particles
