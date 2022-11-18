@@ -79,7 +79,7 @@ namespace Item
                 }
             }
 
-            if (entity.itemType.Type == ItemType.PotionTool || entity.itemType.Type == ItemType.HealthPositon)
+            if (entity.itemType.Type == ItemType.PotionTool || entity.itemType.Type == ItemType.HealthPotion)
             {
                 PotionType potionType = PotionType.Error;
                 entity.AddItemPotion(potionType);

@@ -138,7 +138,6 @@ public partial class AgentEntity
 
         Vec2f position = physicsState.Position + new Vec2f(-0.05f, 1.75f);
         Vec2f dir = (targetPosition - position);
-        UnityEngine.Debug.Log(targetPosition);
         dir.Normalize();
         Vec2f newPosition = position + dir * 1.3f;
         position = newPosition;
