@@ -723,17 +723,23 @@ namespace PlanetTileMap
                             bool leftLine = true;
 
 
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
+                            Enums.TileGeometryAndRotation leftGeometry = tileMap.GetFrontTileGeometry(i - 1, j);
+                            if (FindLine(leftGeometry, Collisions.TileLineSegment.L_C1_C2, Collisions.TileLineSegment.L_C2_C1))
                             {
-                                rightLine = false;
+                                leftLine = false;
                             }
 
                             Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment. L_C1_M1))
+
+                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_C1, Collisions.TileLineSegment. L_C1_C0))
                             {
                                 bottomLine = false;
-                            }*/
+                            }
+
+                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C0_M0, Collisions.TileLineSegment. L_M0_C0))
+                            {
+                                bottomLine = false;
+                            }
 
                             if (bottomLine)
                             {
@@ -907,11 +913,11 @@ namespace PlanetTileMap
                             }
 
                             Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_M2_C2, Collisions.TileLineSegment.L_C2_M2))
+                            if (FindLine(topGeometry, Collisions.TileLineSegment.L_M2_C2, Collisions.TileLineSegment.L_C2_M2))
                             {
                                 topLine = false;
                             }
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C3_C2, Collisions.TileLineSegment.L_C2_C3))
+                            if (FindLine(topGeometry, Collisions.TileLineSegment.L_C3_C2, Collisions.TileLineSegment.L_C2_C3))
                             {
                                 topLine = false;
                             }
@@ -939,6 +945,66 @@ namespace PlanetTileMap
                             {
                                 tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
                                  GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
+                            }
+
+                            break;
+                        }
+
+
+                        case Enums.TileGeometryAndRotation.L2_R6:
+                        {
+                            Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.L2_R6;
+                            bool bottomLine = true;
+                            bool rightLine = true;
+                            bool leftLine = true;
+                            bool topLine = true;
+
+
+                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
+                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
+                            {
+                                rightLine = false;
+                            }*/
+
+                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
+                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
+                            {
+                                bottomLine = false;
+                            }
+
+                            Enums.TileGeometryAndRotation topGeometry = tileMap.GetFrontTileGeometry(i, j + 1);
+                            if (FindLine(topGeometry, Collisions.TileLineSegment.L_M2_C2, Collisions.TileLineSegment.L_C2_M2))
+                            {
+                                topLine = false;
+                            }
+                            if (FindLine(topGeometry, Collisions.TileLineSegment.L_C3_C2, Collisions.TileLineSegment.L_C2_C3))
+                            {
+                                topLine = false;
+                            }
+
+
+                            if (bottomLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                            }
+
+                            if (rightLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C2, i, j),
+                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C2), shape, properties.MaterialType);
+                            }
+
+                            if (leftLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                            }
+
+                            if (topLine)
+                            {
+                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
+                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
                             }
 
                             break;

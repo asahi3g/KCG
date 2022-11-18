@@ -131,6 +131,7 @@ namespace Collisions
             GameState.LineCreationApi.Create(TileLineSegment.L_M1_C3, M1, C3, new Vec2f(0.5f, -1.0f).Normalize());
             GameState.LineCreationApi.Create(TileLineSegment.L_M0_C2, M0, C2, new Vec2f(1.0f, 0.5f).Normalize());
             GameState.LineCreationApi.Create(TileLineSegment.L_M3_C1, M3, C1, new Vec2f(0.5f, 1.0f).Normalize());
+            
 
 
 
