@@ -4,6 +4,7 @@ using KMath;
 using Animancer;
 using AI;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Agent
 {
@@ -216,6 +217,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
+
+                        //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                             properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
                             Vec2f.Zero);

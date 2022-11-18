@@ -134,18 +134,18 @@ public partial class AgentEntity
 
          UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
-        float rightGunXPosition = physicsState.Position.X + 3.0f;
-        float leftGunXPosition = physicsState.Position.X - 3.0f;
+        float rightGunXPosition = physicsState.Position.X + 10.0f;
+        float leftGunXPosition = physicsState.Position.X - 10.0f;
 
         if (worldPosition.x < rightGunXPosition && worldPosition.x > physicsState.Position.X)
         {
-            worldPosition.x = physicsState.Position.X + 3.0f;
+            worldPosition.x = physicsState.Position.X + 10.0f;
         }
 
 
         if (worldPosition.x > leftGunXPosition && worldPosition.x < physicsState.Position.X)
         {
-            worldPosition.x = physicsState.Position.X - 3.0f;
+            worldPosition.x = physicsState.Position.X - 10.0f;
         }
 
         return new Vec2f(worldPosition.x, worldPosition.y);
@@ -153,7 +153,12 @@ public partial class AgentEntity
 
     public Vec2f GetGunOrigin()
     {
-        return agentPhysicsState.Position + new Vec2f(-0.25f, 1.75f);
+        if(agentPhysicsState.FacingDirection == 1)
+            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
+        else if (agentPhysicsState.FacingDirection == -1)
+            return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
+        else
+            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
     }
 
     public Vec2f GetGunFiringPosition()

@@ -52,8 +52,6 @@ namespace Projectile
             }
 
 
-
-
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = KMath.Vec2f.Zero;
         }
