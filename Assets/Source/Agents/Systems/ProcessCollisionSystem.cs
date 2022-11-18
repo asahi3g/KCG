@@ -27,8 +27,10 @@ namespace Agent
             PlanetTileMap.TileMap tileMap = planet.TileMap;
 
 
-            Vec2f delta = physicsState.Position - physicsState.PreviousPosition;           
- 
+            Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+
+            //planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + delta * 20.0f), UnityEngine.Color.red);
+
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
         
@@ -61,9 +63,9 @@ namespace Agent
                 var bs = TileCollisions.CapsuleCollision(entity,  delta, planet);
 
                 physicsState.Position = physicsState.PreviousPosition + delta * (bs.MinTime - epsilon);
-
             }
-            
+
+
 
             bool collidingBottom = false;
             bool collidingLeft = false;
@@ -141,10 +143,12 @@ namespace Agent
              }
              else
              {
-                if (physicsState.Velocity.Y <= 0.0f)
+                if (physicsState.MovementState != Enums.AgentMovementState.Jump && 
+                physicsState.MovementState != Enums.AgentMovementState.Flip && 
+                physicsState.MovementState != Enums.AgentMovementState.Falling)
                 {
                     physicsState.PreviousPosition = physicsState.Position;
-                    physicsState.Position.Y -= 0.25f;
+                    physicsState.Position.Y -= 1.25f;
                     
                     delta = physicsState.Position - physicsState.PreviousPosition;           
     
@@ -152,15 +156,16 @@ namespace Agent
                 
                     if (agentCollision.MinTime < 1.0f)
                     {
+                        physicsState.GroundNormal = agentCollision.BottomCollision.MinNormal;
                         physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
                         physicsState.OnGrounded = true;
                     }
                     else
                     {
+                        physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
                         physicsState.Position = physicsState.PreviousPosition;
                         physicsState.OnGrounded = false;
                     }
-                    physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
                 }
                 else
                 {
@@ -169,10 +174,17 @@ namespace Agent
                 }
              }
 
-             //physicsState.GroundNormal = new Vec2f(0.0f, 1.0f);
+             /*physicsState.PreviousPosition = physicsState.Position;
+             physicsState.Position = physicsState.Position + deltaLeft * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
 
+             delta = physicsState.Position - physicsState.PreviousPosition;
+             agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
+                
+            if (agentCollision.MinTime < 1.0f)
+            {
+                physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
+            }*/
 
-             //physicsState.GroundNormal = new Vec2f(-1.0f, 1.0f).Normalized;
 
 
             if (collidingBottom)
@@ -245,12 +257,10 @@ namespace Agent
                 }
             }
 
-           // if (physicsState.Position.Y <= 16.0f)physicsState.Position.Y = 16.0f;
 
 
             Vec2f position = physicsState.Position;
             position.X += box2DCollider.Size.X / 2.0f;
-            //position.Y -= box2DCollider.Size.Y / 2.0f;
 
             if ((int)position.X > 0 && (int)position.X + 1 < planet.TileMap.MapSize.X &&
             (int)position.Y > 0 && (int)position.Y < planet.TileMap.MapSize.Y)
@@ -271,6 +281,9 @@ namespace Agent
                         physicsState.MovementState = Enums.AgentMovementState.None;
                 }
             }
+
+
+            GameState.Planet.AddDebugLine(new Line2D(entity.agentPhysicsState.Position, entity.agentPhysicsState.Position + new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X)), UnityEngine.Color.red);
 
             //entityBoxBorders.DrawBox();
         }

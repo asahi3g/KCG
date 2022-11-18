@@ -36,6 +36,7 @@ namespace Agent
         public bool ActionInProgress;
         public bool ActionJustEnded;
         public float ActionDuration;
+        public float DashDuration;
         public float DashCooldown;
         public float StaggerDuration;
         public float RollCooldown;            // cooldown for rolling

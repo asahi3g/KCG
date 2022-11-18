@@ -61,6 +61,8 @@ namespace Agent
 
         private void UpdateLand(AgentEntity entity, float deltaTime, Planet.PlanetState planet)
         {
+
+            
             // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
             var physicsState = entity.agentPhysicsState;
 
@@ -68,6 +70,8 @@ namespace Agent
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
+
+            
 
             // maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)
