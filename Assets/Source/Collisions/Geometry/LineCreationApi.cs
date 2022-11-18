@@ -114,23 +114,23 @@ namespace Collisions
             GameState.LineCreationApi.Create(TileLineSegment.L_C0_C2, C0, C2, new Vec2f(1.0f, 1.0f).Normalize());
             GameState.LineCreationApi.Create(TileLineSegment.L_C2_C0, C0, C2, new Vec2f(-1.0f, 1.0f).Normalize());
 
-            GameState.LineCreationApi.Create(TileLineSegment.L_M0_C3, M0, C3, new Vec2f(-0.5f, -1.0f).Normalize()); 
-            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C0, M1, C0, new Vec2f(-1.0f, -0.5f).Normalize()); 
-            GameState.LineCreationApi.Create(TileLineSegment.L_M2_C1, M2, C1, new Vec2f(-0.5f, 1.0f).Normalize()); 
-            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M1, C0, M1, new Vec2f(1.0f, 0.5f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M2, C0, M2, new Vec2f(0.5f, 1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C1_M3, C1, M3, new Vec2f(1.0f, -0.5f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C2_M0, C2, M0, new Vec2f(-0.5f, -1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C0, M1, C0, new Vec2f(-1.0f, 0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M0_C3, M0, C3, new Vec2f(-1.0f, -0.5f).Normalize()); 
+            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C0, M1, C0, new Vec2f(-0.5f, -1.0f).Normalize()); 
+            GameState.LineCreationApi.Create(TileLineSegment.L_M2_C1, M2, C1, new Vec2f(-1.0f, 0.5f).Normalize()); 
+            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M1, C0, M1, new Vec2f(0.5f, 1.0f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M2, C0, M2, new Vec2f(1.0f, 0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C1_M3, C1, M3, new Vec2f(0.5f, -1.0f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C2_M0, C2, M0, new Vec2f(-1.0f, -0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C0, M1, C0, new Vec2f(-0.5f, 1.0f).Normalize());
 
-            GameState.LineCreationApi.Create(TileLineSegment.L_C1_M2, C1, M2, new Vec2f(0.5f, -1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M1, C0, M1, new Vec2f(1.0f, 0.5f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C3_M0, C3, M0, new Vec2f(-0.5f, 1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_C2_M3, C2, M3, new Vec2f(-1.0f, -0.5f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_M2_C0, M2, C0, new Vec2f(-0.5f, -1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C3, M1, C3, new Vec2f(1.0f, -0.5f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_M0_C2, M0, C2, new Vec2f(0.5f, 1.0f).Normalize());
-            GameState.LineCreationApi.Create(TileLineSegment.L_M3_C1, M3, C1, new Vec2f(1.0f, 0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C1_M2, C1, M2, new Vec2f(1.0f, -0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C0_M1, C0, M1, new Vec2f(0.5f, 1.0f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C3_M0, C3, M0, new Vec2f(-1.0f, 0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_C2_M3, C2, M3, new Vec2f(-0.5f, -1.0f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M2_C0, M2, C0, new Vec2f(-1.0f, -0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M1_C3, M1, C3, new Vec2f(0.5f, -1.0f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M0_C2, M0, C2, new Vec2f(1.0f, 0.5f).Normalize());
+            GameState.LineCreationApi.Create(TileLineSegment.L_M3_C1, M3, C1, new Vec2f(0.5f, 1.0f).Normalize());
 
 
 
