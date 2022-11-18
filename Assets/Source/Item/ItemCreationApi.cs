@@ -946,7 +946,7 @@ namespace Item
             SetAction(NodeType.ToolActionPotion);
             EndItem();
 
-            CreateItem(ItemType.HealthPositon, "HealthPosition");
+            CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
             SetTexture(BoneIcon);
             SetInventoryTexture(BoneIcon);

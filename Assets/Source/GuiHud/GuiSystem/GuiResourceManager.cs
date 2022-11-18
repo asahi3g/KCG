@@ -11,6 +11,8 @@ namespace Gui
         public int HoverButtonSprite;
         public int PressedButtonSprite;
 
+        public int ButtonHighlightSprite;
+
 
         public void InitStage1()
         {
@@ -33,6 +35,9 @@ namespace Gui
 
             int pressedButtonSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\gui\\Button_Pressed.png", 245, 140);
             PressedButtonSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(pressedButtonSheet, 0, 0, Enums.AtlasType.Gui);
+
+            int buttonHighlighSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\gui\\Button_Highlight.png", 350, 100);
+            ButtonHighlightSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(buttonHighlighSheet, 0, 0, Enums.AtlasType.Gui);
 
             RodinFont = (UnityEngine.Font)UnityEngine.Resources.Load("Font\\FOTRodin Pro DB");
             BigSpace = (UnityEngine.Font)UnityEngine.Resources.Load("Font\\BigSpace-rPKx");

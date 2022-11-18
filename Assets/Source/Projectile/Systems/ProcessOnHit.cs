@@ -58,7 +58,14 @@ namespace Projectile
             if (projectileEntity.hasProjectileDamage)
             {
                 int damage = projectileEntity.projectileDamage.Damage;
-                stats.Health -= damage;
+
+                // Change damage depends on velocity (more velo = more damage)
+                // In another term: close shot = more damage
+                var additionalHealth = (Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.X) +
+                    Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.Y)) / 4;
+                Debug.Log(additionalHealth);
+
+                stats.Health -= damage + (int)additionalHealth;
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood2);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.BloodSmoke);

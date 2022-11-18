@@ -841,7 +841,7 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.SpawnEnemySwordmanTool);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.ConstructionTool);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.RemoveMech);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.HealthPositon);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.HealthPotion);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.Pistol);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, ItemType.GeometryPlacementTool);

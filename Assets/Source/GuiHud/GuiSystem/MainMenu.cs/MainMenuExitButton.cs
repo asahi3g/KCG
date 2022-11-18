@@ -5,7 +5,7 @@ namespace Gui
 
 
 
-    public class MainMenuExitButton : GuiButton
+    public class MainMenuExitButton : MenuButton
     {
 
 

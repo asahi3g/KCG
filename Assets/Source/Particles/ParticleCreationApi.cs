@@ -343,6 +343,22 @@ namespace Particle
             GameState.ParticleCreationApi.SetIsCollidable(true);
             GameState.ParticleCreationApi.End();
 
+            GameState.ParticleCreationApi.Create((int)ParticleType.MuzzleFlash);
+            GameState.ParticleCreationApi.SetDecayRate(6.0f);
+            GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, -10.0f));
+            GameState.ParticleCreationApi.SetDeltaRotation(90.0f);
+            GameState.ParticleCreationApi.SetDeltaScale(0.0f);
+            GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f), new Vec2f(0.575f, 0.575f));
+            GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 2.5f));
+            GameState.ParticleCreationApi.SetStartingRotation(0.0f);
+            GameState.ParticleCreationApi.SetStartingScale(1.0f);
+            GameState.ParticleCreationApi.SetEndScale(0.7f);
+            GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(0.990f, 0.660f, 0.228f, 0.6f));
+            GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(0.740f, 0.448f, 0.0666f, 0.1f));
+            GameState.ParticleCreationApi.SetIsCollidable(true);
+            GameState.ParticleCreationApi.End();
+
 
             GameState.ParticleCreationApi.Create((int)ParticleType.Blood2);
             GameState.ParticleCreationApi.SetName("Blood");
@@ -627,6 +643,15 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.SetParticleCount(6);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterCreationApi.End();
+
+            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MuzzleFlash);
+            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MuzzleFlash);
+            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.2f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
+            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.3f, -0.3f), new Vec2f(0.3f, 0.3f));
             GameState.ParticleEmitterCreationApi.End();
         }
     }

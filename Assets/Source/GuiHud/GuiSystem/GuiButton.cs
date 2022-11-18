@@ -6,7 +6,7 @@ namespace Gui
     public class GuiButton : GuiElement
     {
         
-        string Text;
+        public string Text;
 
         public bool IsActive;
         public Enums.ButtonState State;
@@ -104,7 +104,7 @@ namespace Gui
                      GameState.GuiResourceManager.RodinFont, 36, UnityEngine.TextAnchor.MiddleCenter, textColor);
 
 
-            base.Draw(parent);
+            base.DrawChildren();
         }
     }
 }

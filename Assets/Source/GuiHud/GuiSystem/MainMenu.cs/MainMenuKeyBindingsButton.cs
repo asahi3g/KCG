@@ -5,7 +5,7 @@ namespace Gui
 
 
 
-    public class MainMenuKeyBindingsButton : GuiButton
+    public class MainMenuKeyBindingsButton : MenuButton
     {
 
 

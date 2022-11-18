@@ -20,5 +20,6 @@ namespace Particle
         RockBulletImpact,
         BloodImpact,
         BulletTrail,
+        MuzzleFlash,
     }
 }

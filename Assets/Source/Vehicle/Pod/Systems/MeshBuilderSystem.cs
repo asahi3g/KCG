@@ -1,5 +1,7 @@
 //import UnityEngine
 
+using UnityEngine;
+
 namespace Vehicle.Pod
 {
     public class MeshBuilderSystem
@@ -36,32 +38,73 @@ namespace Vehicle.Pod
                 // Update Vertices
                 Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.vehiclePodPhysicsState2D.Rotation);
 
+                if (entity.vehiclePodStatus.Exploded)
+                {
+                    if(!entity.vehiclePodStatus.RightPanelCollided)
+                    {
+                        entity.vehiclePodStatus.RightPanelPos.X += 1.0f;
+                        entity.vehiclePodStatus.RightPanelPos.Y += 0.5f;
+                    }
+
+                    if(!entity.vehiclePodStatus.LeftPanelCollided)
+                    {
+                        entity.vehiclePodStatus.LeftPanelPos.X += 1.0f;
+                        entity.vehiclePodStatus.LeftPanelPos.Y += 0.5f;
+                    }
+
+                    if (!entity.vehiclePodStatus.BottomPanelCollided)
+                    {
+                        entity.vehiclePodStatus.BottomPanelPos.X += 0.5f;
+                        entity.vehiclePodStatus.BottomPanelPos.Y += 1.0f;
+                    }
+
+                    if(!entity.vehiclePodStatus.TopPanelCollided)
+                    {
+                        entity.vehiclePodStatus.TopPanelPos.X += 0.5f;
+                        entity.vehiclePodStatus.TopPanelPos.Y += 1.0f;
+                    }
+                }
+                else
+                {
+                    entity.vehiclePodStatus.RightPanelPos.X = entity.vehiclePodPhysicsState2D.Position.X + entity.vehiclePodStatus.RightPanelOffset.X;
+                    entity.vehiclePodStatus.RightPanelPos.Y = entity.vehiclePodPhysicsState2D.Position.Y + entity.vehiclePodStatus.RightPanelOffset.Y;
+
+                    entity.vehiclePodStatus.LeftPanelPos.X = entity.vehiclePodPhysicsState2D.Position.X + entity.vehiclePodStatus.LeftPanelOffset.X;
+                    entity.vehiclePodStatus.LeftPanelPos.Y = entity.vehiclePodPhysicsState2D.Position.Y + entity.vehiclePodStatus.LeftPanelOffset.Y;
+
+                    entity.vehiclePodStatus.TopPanelPos.X = entity.vehiclePodPhysicsState2D.Position.X + entity.vehiclePodStatus.TopPanelOffset.X;
+                    entity.vehiclePodStatus.TopPanelPos.Y = entity.vehiclePodPhysicsState2D.Position.Y + entity.vehiclePodStatus.TopPanelOffset.Y;
+
+                    entity.vehiclePodStatus.BottomPanelPos.X = entity.vehiclePodPhysicsState2D.Position.X + entity.vehiclePodStatus.BottomPanelOffset.X;
+                    entity.vehiclePodStatus.BottomPanelPos.Y = entity.vehiclePodPhysicsState2D.Position.Y + entity.vehiclePodStatus.BottomPanelOffset.Y;
+                }
+
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
 
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x + entity.vehiclePodStatus.RightPanel.X, y + entity.vehiclePodStatus.RightPanel.Y, entity.vehiclePodStatus.RightPanelWidth, entity.vehiclePodStatus.RightPanelHeight,
+                Mesh.UpdateVertex((index++ * 4), entity.vehiclePodStatus.RightPanelPos.X, entity.vehiclePodStatus.RightPanelPos.Y, entity.vehiclePodStatus.RightPanelWidth, entity.vehiclePodStatus.RightPanelHeight,
                     entity.vehiclePodPhysicsState2D.Rotation);
 
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
 
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x + entity.vehiclePodStatus.LeftPanel.X, y + entity.vehiclePodStatus.LeftPanel.Y, entity.vehiclePodStatus.LeftPanelWidth, entity.vehiclePodStatus.LeftPanelHeight,
+                Mesh.UpdateVertex((index++ * 4), entity.vehiclePodStatus.LeftPanelPos.X, entity.vehiclePodStatus.LeftPanelPos.Y, entity.vehiclePodStatus.LeftPanelWidth, entity.vehiclePodStatus.LeftPanelHeight,
                     entity.vehiclePodPhysicsState2D.Rotation);
 
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
 
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x + entity.vehiclePodStatus.TopPanel.X, y + entity.vehiclePodStatus.TopPanel.Y, entity.vehiclePodStatus.TopPanelWidth, entity.vehiclePodStatus.TopPanelHeight,
+                Mesh.UpdateVertex((index++ * 4), entity.vehiclePodStatus.TopPanelPos.X, entity.vehiclePodStatus.TopPanelPos.Y, entity.vehiclePodStatus.TopPanelWidth, entity.vehiclePodStatus.TopPanelHeight,
                     entity.vehiclePodPhysicsState2D.Rotation);
 
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
 
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x + entity.vehiclePodStatus.BottomPanel.X, y + entity.vehiclePodStatus.BottomPanel.Y, entity.vehiclePodStatus.BottomPanelWidth, entity.vehiclePodStatus.BottomPanelHeight,
+                Mesh.UpdateVertex((index++ * 4), entity.vehiclePodStatus.BottomPanelPos.X, entity.vehiclePodStatus.BottomPanelPos.Y, entity.vehiclePodStatus.BottomPanelWidth, entity.vehiclePodStatus.BottomPanelHeight,
                     entity.vehiclePodPhysicsState2D.Rotation);
 
             }

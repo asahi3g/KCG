@@ -41,7 +41,7 @@ namespace Action
                                         switch (ItemEntity.itemPotion.potionType)
                                         {
                                             case Enums.PotionType.HealthPotion:
-                                                if (item.itemType.Type == Enums.ItemType.HealthPositon)
+                                                if (item.itemType.Type == Enums.ItemType.HealthPotion)
                                                 {
                                                     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                                                     int x = (int)worldPosition.x;

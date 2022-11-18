@@ -103,6 +103,11 @@ namespace Gui
 
         public virtual void Draw(GuiElement parent) 
         {
+            DrawChildren();
+        }
+
+        public virtual void DrawChildren()
+        {
             for(int i = 0; i < ChildrenCount; i++)
             {
                 Children[i].Draw(this);
