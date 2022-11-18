@@ -6,6 +6,7 @@ namespace Action
 {
     public class MaterialPlacementAction
     {
+        // Action used by either player and AI.
         public void OnEnter(ref PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

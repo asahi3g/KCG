@@ -8,6 +8,7 @@ using Agent;
 namespace Action
 {
     // Melee Attack with no weapon equipped.
+    // Action used by either player and AI.
     public class BasicMeleeAtackAction
     {
         public static NodeState OnEnter(object ptr, int index)
@@ -80,4 +81,5 @@ namespace Action
     }
 
     // Todo: Add weapon melee atack action.
+    // Todo: Move damage out of here. (Create damage event? event input: Damage, knockback?, stunt?)
 }

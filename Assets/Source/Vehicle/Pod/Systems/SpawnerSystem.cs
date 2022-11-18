@@ -15,7 +15,7 @@ namespace Vehicle.Pod
             PodCreationApi = podCreationApi;
         }
 
-        public PodEntity Spawn(PodType podType, Vec2f position)
+        public PodEntity Spawn(Planet.PlanetState planet, PodType podType, Vec2f position)
         {
             PodProperties podProperties =
                                     PodCreationApi.GetRef((int)podType);
@@ -42,14 +42,23 @@ namespace Vehicle.Pod
             entity.AddVehiclePodState(podState);
 
             List<AgentEntity> Members = new List<AgentEntity>();
-            List<AgentEntity> DeadMembers = new List<AgentEntity>();
-            entity.AddVehiclePodRadar(podProperties.RadarSize, Members, DeadMembers, Members.Count);
+            entity.AddVehiclePodStatus(Members, podProperties.RightPanel, podProperties.LeftPanel, podProperties.TopPanel, podProperties.BottomPanel, podProperties.RightPanelWidth, podProperties.LeftPanelWidth,
+                podProperties.TopPanelWidth, podProperties.BottomPanelWidth, podProperties.RightPanelHeight, podProperties.LeftPanelHeight, podProperties.TopPanelHeight, podProperties.BottomPanelHeight);
 
-            entity.AddVehiclePodStatus(podProperties.PodValue, podProperties.Score, false);
+            for (int i = 0; i <= podProperties.DefaultAgentCount; i++)
+            {
+                var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyMarine, 1);
+                enemy.agentModel3D.GameObject.gameObject.SetActive(false);
+                enemy.isAgentAlive = false;
+
+                entity.vehiclePodStatus.AgentsInside.Add(enemy);
+            }
 
             List<Vec2f> CoversPositions = new List<Vec2f>();
             List<Vec2f> FiringPositions = new List<Vec2f>();
             entity.AddVehiclePodCover(CoversPositions, FiringPositions);
+
+            
 
             // Increase ID per object statically
             UniqueID++;

@@ -8,6 +8,7 @@ namespace Action
 {
     public class ThrowFlareAction
     {
+        // Action used by either player and AI.
         // Todo: Make this usable by AI.
         static public NodeState Action(object objData, int id)
         {

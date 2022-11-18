@@ -14,8 +14,8 @@ namespace Agent
         public Vec2f CollisionOffset;
         public Vec2f CollisionDimensions;
 
-        public Enums.LootTableType DropTableID;
-        public Enums.LootTableType InventoryDropTableID;    // Item spawned inside corpse inventory.
+        public int DropTableID;
+        public int InventoryDropTableID;    // Item spawned inside corpse inventory.
         // (Note: Should we use items inside agent inventory while alive)
 
         // Enemy agent

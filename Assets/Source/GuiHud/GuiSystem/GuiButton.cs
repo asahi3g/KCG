@@ -61,7 +61,7 @@ namespace Gui
 
         public override void Draw(GuiElement parent) 
         {
-
+            UnityEngine.Color textColor = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1.0f);
             switch(State)
             {
                 case Enums.ButtonState.Active:
@@ -83,6 +83,8 @@ namespace Gui
                     //GameState.Renderer.DrawSpriteGui(DrawPosition.X, DrawPosition.Y, DrawDimensions.X, DrawDimensions.Y, sprite);
                 //    GameState.Renderer.DrawQuadColorGui(DrawPosition.X, DrawPosition.Y, DrawDimensions.X, DrawDimensions.Y,
                  //    UnityEngine.Color.white);
+
+                    textColor = UnityEngine.Color.white;
                     break;
                 }
                 case Enums.ButtonState.Hover:
@@ -92,12 +94,14 @@ namespace Gui
 
                     //Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(GameState.GuiResourceManager.HoverButtonSprite, Enums.AtlasType.Gui);
                     //GameState.Renderer.DrawSpriteGui(DrawPosition.X, DrawPosition.Y, DrawDimensions.X, DrawDimensions.Y, sprite);
+
+                    textColor = UnityEngine.Color.white;
                     break;
                 }
             }
             
             GameState.Renderer.DrawStringGui(DrawPosition.X, DrawPosition.Y, DrawDimensions.X, DrawDimensions.Y, Text,
-                     GameState.GuiResourceManager.RodinFont, 36, UnityEngine.TextAnchor.MiddleCenter, new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1.0f));
+                     GameState.GuiResourceManager.RodinFont, 36, UnityEngine.TextAnchor.MiddleCenter, textColor);
 
 
             base.Draw(parent);

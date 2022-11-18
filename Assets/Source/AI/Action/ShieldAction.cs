@@ -9,6 +9,8 @@ namespace Action
 {
     public class ShieldAction
     {
+        // Ability doesn't need an item.
+        // Action used by either player and AI.
         static public NodeState Action(object objData, int index)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);

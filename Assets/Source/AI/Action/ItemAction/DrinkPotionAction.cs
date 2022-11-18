@@ -4,6 +4,7 @@ namespace Action
 {
     public class DrinkPotionAction
     {
+        // Action used by either player and AI
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             ItemInventoryEntity ItemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);

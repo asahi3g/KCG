@@ -46,7 +46,7 @@ namespace Gui
                      new UnityEngine.Color(0.1f, 0.1f, 0.1f, 0.8f));
 
             GameState.Renderer.DrawStringGui(DrawPosition.X + 10.0f, DrawPosition.Y + DrawDimensions.Y - 200.0f, DrawDimensions.X - 20.0f, 150.0f, 
-            "KCG", 100, UnityEngine.TextAnchor.MiddleCenter, UnityEngine.Color.white);
+            "KCG", GameState.GuiResourceManager.RodinFont, 100, UnityEngine.TextAnchor.MiddleCenter, UnityEngine.Color.white);
 
             base.Draw(parent);
         }

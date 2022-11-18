@@ -1,4 +1,5 @@
 ﻿using AI;
+using AI.Movement;
 using Condition;
 using Enums.PlanetTileMap;
 using NodeSystem;
@@ -8,6 +9,7 @@ using System;
 namespace Action
 {
     // Movement action with no pathing.
+    // Action used only by AI.
     public class MoveDirectlyToward
     {
         struct Data
@@ -34,12 +36,20 @@ namespace Action
             agent.Run(direction);
 
             // Walk diagonal if there is an obstacle jump.
-            TileID belowTile = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X), (int)physicsState.Position.Y - 1);
-            if (belowTile != TileID.Air)
+            ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
+            if (condition(ptr))
+                return NodeState.Success;
+            
+            physicsState.FacingDirection = direction;
+            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
+            agent.Walk(direction);
+            // Todo: Fix bug character get stuck in diagonals when running.(Bug is ralated to speed.)
+            //agent.Run(direction);
+            
+            // If we can't walk to next tile jump.
+            if (!PathFollowing.IsPathFree(new KMath.Vec2i((int)(physicsState.Position.X), (int)physicsState.Position.Y), direction)
+                && agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump)
             {
-                ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
-                if (condition(ptr))
-                    return NodeState.Success;
 
                 // if next tile is solid jump.
                 TileID frontTileIDX = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X + direction), (int)physicsState.Position.Y);
@@ -50,7 +60,6 @@ namespace Action
                 {
                     agent.Jump();
                 }
-                    
             }
 
             return NodeState.Running;

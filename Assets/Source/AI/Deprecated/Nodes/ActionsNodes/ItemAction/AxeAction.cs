@@ -46,7 +46,7 @@ namespace Node
 
                                 if (mech.mechStatus.TreeSize > 0)
                                 {
-                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + UnityEngine.Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
+                                    planet.AddItemParticle(ItemType.Wood, new Vec2f(mech.mechPosition2D.Value.X + UnityEngine.Random.Range(-2, 2), mech.mechPosition2D.Value.Y));
                                 }
 
                             }

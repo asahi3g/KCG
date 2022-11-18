@@ -237,7 +237,7 @@ namespace Planet
                 int rand = UnityEngine.Random.Range(0, 100);
                 GameState.InventoryManager.RemoveItem(inventoryID, i);
                 pos.X += rand / 100f;
-                GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
+                AddItemParticle(itemInventory, pos);
             }
 
             Utils.Assert(entity.isEnabled);
@@ -281,7 +281,7 @@ namespace Planet
         {
             Utils.Assert(PodList.Length < PlanetEntityLimits.VehicleLimit);
 
-            PodEntity newEntity = PodList.Add(GameState.PodSpawnerSystem.Spawn(podType, position));
+            PodEntity newEntity = PodList.Add(GameState.PodSpawnerSystem.Spawn(this, podType, position));
             return newEntity;
         }
 
@@ -405,7 +405,7 @@ namespace Planet
             VehicleList.Remove(index);
         }
 
-        public ItemParticleEntity AddItemParticle(Vec2f position, ItemType itemType)
+        public ItemParticleEntity AddItemParticle(ItemType itemType, Vec2f position)
         {
             Utils.Assert(ItemParticleList.Length < PlanetEntityLimits.ItemParticlesLimit);
 
@@ -413,9 +413,23 @@ namespace Planet
             return newEntity;
         }
 
+        public ItemParticleEntity AddItemParticle(ItemInventoryEntity item, Vec2f position)
+        {
+            Utils.Assert(ItemParticleList.Length < PlanetEntityLimits.ItemParticlesLimit);
+
+            ItemParticleEntity newEntity = ItemParticleList.Add(GameState.ItemSpawnSystem.SpawnItemParticle(item, position));
+            return newEntity;
+        }
+
         public void RemoveItemParticle(int index)
         {
             ItemParticleList.Remove(index);
+
+        }
+
+        public void RemovePod(int index)
+        {
+            PodList.Remove(index);
 
         }
 

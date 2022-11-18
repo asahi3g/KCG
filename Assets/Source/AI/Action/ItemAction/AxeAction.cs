@@ -6,6 +6,10 @@ namespace Action
 {
     public class AxeAction
     {
+        // Action used by either player and AI
+        // Todo refactor this. Mert code is hard to understand.
+        // Todo: Why does tree have Health? we are have durability....
+        // Todo: Use drop api to drop wood instead.
         public void OnEnter(ref Planet.PlanetState planet, NodeEntity nodeEntity)
         {
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
@@ -42,7 +46,7 @@ namespace Action
 
                                 if (mech.mechStatus.TreeSize > 0)
                                 {
-                                    planet.AddItemParticle(new Vec2f(mech.mechPosition2D.Value.X + Random.Range(-2, 2), mech.mechPosition2D.Value.Y), ItemType.Wood);
+                                    planet.AddItemParticle(ItemType.Wood, new Vec2f(mech.mechPosition2D.Value.X + Random.Range(-2, 2), mech.mechPosition2D.Value.Y));
                                 }
 
                             }

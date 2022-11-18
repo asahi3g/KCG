@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class ItemParticleEntity {
 
-    static readonly Item.Unpickable itemUnpickableComponent = new Item.Unpickable();
+    public Item.Unpickable itemUnpickable { get { return (Item.Unpickable)GetComponent(ItemParticleComponentsLookup.ItemUnpickable); } }
+    public bool hasItemUnpickable { get { return HasComponent(ItemParticleComponentsLookup.ItemUnpickable); } }
 
-    public bool isItemUnpickable {
-        get { return HasComponent(ItemParticleComponentsLookup.ItemUnpickable); }
-        set {
-            if (value != isItemUnpickable) {
-                var index = ItemParticleComponentsLookup.ItemUnpickable;
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : itemUnpickableComponent;
+    public void AddItemUnpickable(float newDuration) {
+        var index = ItemParticleComponentsLookup.ItemUnpickable;
+        var component = (Item.Unpickable)CreateComponent(index, typeof(Item.Unpickable));
+        component.Duration = newDuration;
+        AddComponent(index, component);
+    }
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
-            }
-        }
+    public void ReplaceItemUnpickable(float newDuration) {
+        var index = ItemParticleComponentsLookup.ItemUnpickable;
+        var component = (Item.Unpickable)CreateComponent(index, typeof(Item.Unpickable));
+        component.Duration = newDuration;
+        ReplaceComponent(index, component);
+    }
+
+    public void RemoveItemUnpickable() {
+        RemoveComponent(ItemParticleComponentsLookup.ItemUnpickable);
     }
 }
 

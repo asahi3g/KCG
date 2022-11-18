@@ -7,6 +7,7 @@ using BehaviorTree;
 
 namespace Action
 {
+    // Action can be used by both AI and player.
     public class DropAction
     {
         static public NodeState Action(object objData, int id)
@@ -36,34 +37,15 @@ namespace Action
 
                 // Create item particle from item inventory.
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
-                ItemParticleEntity itemParticle = GameState.ItemSpawnSystem.SpawnItemParticle(itemInventory, pos);
+                ItemParticleEntity itemParticle = planet.AddItemParticle(itemInventory, pos);
                 itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
-                itemParticle.isItemUnpickable = true;
+                itemParticle.AddItemUnpickable(0);
 
                 return NodeState.Success;
             }
 
             // ToolBar is non existent. 
             return NodeState.Failure;
-        }
-
-        // Todo: Create system that remove unpickable after two seconds?
-        public void OnUpdate(ref Planet.PlanetState planet, NodeEntity nodeEntity)
-        {
-            const float DURATION = 2.0f;
-
-            float deltaTime = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
-            if (deltaTime < DURATION)
-                return;
-
-            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-        }
-
-        public void OnExit(ref Planet.PlanetState planet, NodeEntity nodeEntity)
-        {
-            ItemParticleEntity itemParticle = planet.EntitasContext.itemParticle.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            if (nodeEntity.nodeExecution.State == Enums.NodeState.Success)
-                itemParticle.isItemUnpickable = false;
         }
     }
 }
