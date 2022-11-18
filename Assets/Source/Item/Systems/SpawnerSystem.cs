@@ -16,7 +16,7 @@ namespace Item
             Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
 
             var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
-            entity.AddItemID(ItemID);
+            entity.AddItemID(ItemID, -1);
             entity.AddItemType(itemType);
             entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
@@ -60,7 +60,7 @@ namespace Item
             FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = GameState.Planet.EntitasContext.itemInventory.CreateEntity();
-            entity.AddItemID(ItemID);
+            entity.AddItemID(ItemID, -1);
             entity.AddItemType(itemType);
 
             if (itemProperty.IsPlacementTool())
@@ -77,12 +77,12 @@ namespace Item
                 {
                     entity.AddItemMech(itemProperty.MechType, true);
                 }
+            }
 
-                if(entity.itemType.Type == ItemType.PotionTool)
-                {
-                    PotionType potionType = PotionType.Error;
-                    entity.AddItemPotion(potionType);
-                }
+            if (entity.itemType.Type == ItemType.PotionTool || entity.itemType.Type == ItemType.HealthPositon)
+            {
+                PotionType potionType = PotionType.Error;
+                entity.AddItemPotion(potionType);
             }
 
             if (weaponProperty.HasClip())
@@ -102,7 +102,7 @@ namespace Item
             if (itemParticleEntity.hasItemStack)
                 entity.AddItemStack(itemParticleEntity.itemStack.Count);
 
-            itemParticleEntity.Destroy();
+            GameState.Planet.RemoveItemParticle(itemParticleEntity.itemID.Index);
 
             return entity;
         }

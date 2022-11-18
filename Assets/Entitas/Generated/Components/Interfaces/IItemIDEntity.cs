@@ -11,7 +11,7 @@ public partial interface IItemIDEntity {
     Item.IDComponent itemID { get; }
     bool hasItemID { get; }
 
-    void AddItemID(int newID);
-    void ReplaceItemID(int newID);
+    void AddItemID(int newID, int newIndex);
+    void ReplaceItemID(int newID, int newIndex);
     void RemoveItemID();
 }
