@@ -27,12 +27,12 @@ namespace KGUI.MechTool
 
         public override void OnMouseStay()
         {
-	        GameState.GUIManager.SelectedInventoryItem.itemMech.InputsActive = !gameObject.activeSelf;
+	        GameState.GUIManager.SelectedInventoryItem.itemMechPlacement.InputsActive = !gameObject.activeSelf;
         }
 
         public override void OnMouseExited()
         {
-	        GameState.GUIManager.SelectedInventoryItem.itemMech.InputsActive = true;
+	        GameState.GUIManager.SelectedInventoryItem.itemMechPlacement.InputsActive = true;
         }
 
         public override void OnMouseClick()
@@ -40,7 +40,7 @@ namespace KGUI.MechTool
 	        var item = GameState.GUIManager.SelectedInventoryItem;
 	        if(item != null)
 	        {
-		        item.itemMech.MechID = Enums.MechType.SmashableEgg;
+		        item.itemMechPlacement.MechID = Enums.MechType.SmashableEgg;
 		        Toggle(true);
 	        }
         }

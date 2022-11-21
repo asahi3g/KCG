@@ -36,7 +36,7 @@ namespace KGUI.MechTool
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
-                item.itemMech.MechID = Enums.MechType.Error;
+                item.itemMechPlacement.MechID = Enums.MechType.Error;
             }
             
             foreach (var element in ElementList.Values)
@@ -53,7 +53,7 @@ namespace KGUI.MechTool
             if (ElementList.First().Value is IToggleElement firstElement)
             {
                 firstElement.Toggle(true);
-                selectedInventoryItem.itemMech.MechID = Enums.MechType.Storage;
+                selectedInventoryItem.itemMechPlacement.MechID = Enums.MechType.Storage;
             }
         }
     }

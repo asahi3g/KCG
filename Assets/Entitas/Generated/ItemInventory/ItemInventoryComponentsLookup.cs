@@ -13,7 +13,7 @@ public static class ItemInventoryComponentsLookup {
     public const int ItemID = 2;
     public const int ItemInventory = 3;
     public const int ItemLabel = 4;
-    public const int ItemMech = 5;
+    public const int ItemMechPlacement = 5;
     public const int ItemPotion = 6;
     public const int ItemPulseWeaponPulse = 7;
     public const int ItemStack = 8;
@@ -28,7 +28,7 @@ public static class ItemInventoryComponentsLookup {
         "ItemID",
         "ItemInventory",
         "ItemLabel",
-        "ItemMech",
+        "ItemMechPlacement",
         "ItemPotion",
         "ItemPulseWeaponPulse",
         "ItemStack",
@@ -42,7 +42,7 @@ public static class ItemInventoryComponentsLookup {
         typeof(Item.IDComponent),
         typeof(Item.InventoryComponent),
         typeof(Item.LabelComponent),
-        typeof(Item.MechComponent),
+        typeof(Item.MechPlacementComponent),
         typeof(Item.PotionComponent),
         typeof(Item.PulseWeapon.PulseComponent),
         typeof(Item.StackComponent),
