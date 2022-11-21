@@ -52,9 +52,6 @@ namespace Planet.Unity
                 MaterialGeometryMap[i] = new TileProperty[geometryTilesCount];
             }
 
-
-           
-
             Application.targetFrameRate = 60;
 
             GameResources.Initialize();
@@ -91,8 +88,8 @@ namespace Planet.Unity
             Player = Planet.AddPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-           // GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
-          //  GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
+            GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
+            //GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;

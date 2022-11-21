@@ -51,6 +51,7 @@ namespace Projectile
                 newVelocity.X = Mathf.Lerp(newVelocity.X, 0, 0.01f * Time.deltaTime);
             }
 
+
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = KMath.Vec2f.Zero;
         }

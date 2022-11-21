@@ -23,7 +23,8 @@ namespace Projectile
                 newPosition: position,
                 newPreviousPosition: position,
                 newRotation: 0.0f,
-                newVelocity: direction.Normalized * projectileProperties.StartVelocity,
+                newVelocity: (direction.Normalized + Random.Range(-0.05f
+                , 0.05f)) * projectileProperties.StartVelocity,
                 newAcceleration: Vec2f.Zero,
                 newOnGrounded: false);
             

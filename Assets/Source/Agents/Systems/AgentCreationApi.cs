@@ -201,6 +201,14 @@ namespace Agent
             }
         }
 
+        public void SetStaggerAffectTime(float time)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].StaggerAffectTime = time;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -332,6 +340,7 @@ namespace Agent
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
             GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
             GameState.AgentCreationApi.End();
         }
 
