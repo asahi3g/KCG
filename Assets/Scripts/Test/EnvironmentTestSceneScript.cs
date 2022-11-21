@@ -62,7 +62,7 @@ namespace Planet.Foreground
             Vec2i mapSize = new Vec2i(128, 96);
             planet.Init(mapSize);
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
 
             PlayerID = Player.agentID.ID;
@@ -160,7 +160,7 @@ namespace Planet.Foreground
 
                 planet.InitializeSystems(Material, transform);
 
-                Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+                Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
                 PlayerID = Player.agentID.ID;
 
                 inventoryID = Player.agentInventory.InventoryID;

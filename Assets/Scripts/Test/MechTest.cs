@@ -176,7 +176,7 @@ namespace Planet.Unity
 
             GenerateMap();
 
-            Player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            Player = planet.AddAgentAsPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int inventoryID = Player.agentInventory.InventoryID;
 
             planet.AddItemParticle(ItemType.Pistol, new Vec2f(2.0f, 4.0f));

@@ -11,7 +11,7 @@
             {
                 AgentEntity agentEntity = agentList.Get(i);
                 
-                if (agentEntity.agentStats.Health <= 0 && agentEntity.isAgentAlive)
+                if (agentEntity.agentStats.Health.GetValue() <= 0 && agentEntity.isAgentAlive)
                 {
                     planet.KillAgent(i);
                     if (!agentEntity.hasAgentModel3D)

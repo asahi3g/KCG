@@ -15,7 +15,7 @@ namespace KGUI
 
             ID = ElementEnums.HealthPotionPT;
             
-            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
+            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\hud_hp_icon.png", Enums.AtlasType.Gui);
             border.Init(GameState.GUIManager.WhiteSquareBorder);
         }
 

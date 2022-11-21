@@ -20,9 +20,9 @@ namespace KGUI
             base.Init();
             
             ID = ElementEnums.HealthIndicatorPS;
-            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
+            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health.GetValue() : 0.0f;
             
-            icon.Init(19, 19, "Assets\\StreamingAssets\\UserInterface\\Icons\\Health\\hud_hp_icon.png", Enums.AtlasType.Gui);
+            icon.Init(13, 13, "Assets\\StreamingAssets\\UserInterface\\Icons\\hud_hp_icon.png", Enums.AtlasType.Gui);
             
             progressBarBorder.Init(6, 8, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_border.png", Enums.AtlasType.Gui);
             progressBarDiv1.Init(1, 6, "Assets\\StreamingAssets\\UserInterface\\Bars\\HealthBar\\hud_hp_bar_div1.png", Enums.AtlasType.Gui);
@@ -33,7 +33,7 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health : 0.0f;
+            healthAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Health.GetValue() : 0.0f;
             progressBar.Update(healthAmount);
             infoTextWrapper.Update();
         }

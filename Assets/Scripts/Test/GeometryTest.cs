@@ -76,7 +76,7 @@ namespace Planet.Unity
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = Planet.AddPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
+            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -195,7 +195,7 @@ namespace Planet.Unity
 
                planet.InitializeSystems(Material, transform);
 
-               Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+               Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;
                inventoryID = Player.agentInventory.InventoryID;
 

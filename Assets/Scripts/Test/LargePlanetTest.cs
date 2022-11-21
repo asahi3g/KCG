@@ -1,5 +1,6 @@
 //import UnityEngine
 
+using Enums;
 using Enums.PlanetTileMap;
 using KMath;
 using Item;
@@ -78,7 +79,7 @@ namespace Planet.Unity
             planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-            Player = planet.AddPlayer(new Vec2f(3.0f, 1600));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 1600));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
 
@@ -222,14 +223,14 @@ namespace Planet.Unity
             float spawnHeight = tileMap.MapSize.Y - 2;
 
 
-            planet.AddAgent(new Vec2f(6.0f, spawnHeight));
-            planet.AddAgent(new Vec2f(1.0f, spawnHeight));
+            planet.AddAgent(new Vec2f(6.0f, spawnHeight), AgentType.Agent);
+            planet.AddAgent(new Vec2f(1.0f, spawnHeight), AgentType.Agent);
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
                 if (random.Next() % 5 == 0)
                 {
-                    planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
+                    planet.AddAgentAsEnemy(new Vec2f((float)i, spawnHeight));    
                 }
             }
             

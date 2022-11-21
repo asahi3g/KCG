@@ -78,7 +78,7 @@ namespace Item
                     entity.AddItemMech(itemProperty.MechType, true);
                 }
             }
-
+            
             if (entity.itemType.Type == ItemType.PotionTool || entity.itemType.Type == ItemType.HealthPotion)
             {
                 PotionType potionType = PotionType.Error;

@@ -51,7 +51,7 @@ namespace Planet.Unity
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            Player = planet.AddPlayer(new Vec2f(6.0f, 4.0f));
+            Player = planet.AddAgentAsPlayer(new Vec2f(6.0f, 4.0f));
 
             int inventoryID = Player.agentInventory.InventoryID;
 
