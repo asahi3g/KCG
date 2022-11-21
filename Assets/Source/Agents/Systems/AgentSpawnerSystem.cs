@@ -4,6 +4,7 @@ using KMath;
 using Animancer;
 using AI;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Agent
 {
@@ -34,6 +35,8 @@ namespace Agent
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
+
+            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 
             entity.AddAgentPhysicsState(
                  newPosition: position,
@@ -84,6 +87,8 @@ namespace Agent
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, -1, false);
 
+            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
+
             // used for physics simulation
             entity.AddAgentPhysicsState(
                 newPosition: position,
@@ -133,6 +138,8 @@ namespace Agent
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
             entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, false);
+
+            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 
             entity.AddAgentPhysicsState(
                 newPosition: position,
@@ -216,6 +223,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
+
+                        //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                             properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
                             Vec2f.Zero);
