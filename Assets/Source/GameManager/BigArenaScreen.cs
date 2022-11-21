@@ -34,7 +34,44 @@ namespace GameScreen
             p.z = 20;
             UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
 
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, Transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
+
+
+
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
+            {
+                Planet.PlanetManager.Save(GameState.Planet, "generated-maps/big-arena-map.kmap");
+                UnityEngine.Debug.Log("saved!");
+            }
+
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
+            {
+                GameState.Planet.AddDebris(new Vec2f(120.0f, 15.0f), GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
+                UnityEngine.Debug.Log("spawned ! ");
+            }
+
+            /*if (Input.GetKeyDown(KeyCode.F2))
+            {
+                var camera = Camera.main;
+                Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+
+                planet.Destroy();
+                planet = PlanetManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+
+
+               planet.InitializeSystems(Material, transform);
+
+               Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+               PlayerID = Player.agentID.ID;
+               inventoryID = Player.agentInventory.InventoryID;
+
+               AddItemsToPlayer();
+
+                Debug.Log("loaded!");
+            }*/
         }
 
         public override void OnGui()
@@ -63,7 +100,7 @@ namespace GameScreen
         {
             Transform = transform;
             Material = UnityEngine.Resources.Load("Materials/TextureMaterial") as UnityEngine.Material;
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
+            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/big-arena.tmj", "generated-maps/");
 
             int materialCount = System.Enum.GetNames(typeof(Enums.MaterialType)).Length;
             int geometryTilesCount = System.Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
@@ -102,11 +139,8 @@ namespace GameScreen
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = GameState.Planet.AddPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
+            Player = GameState.Planet.AddPlayer(new Vec2f(120.0f, 15.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
-
-           // GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
-          //  GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
@@ -151,7 +185,8 @@ namespace GameScreen
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
-            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+            //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ParticleEmitterPlacementTool);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);

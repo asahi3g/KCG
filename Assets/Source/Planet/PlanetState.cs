@@ -434,7 +434,7 @@ namespace Planet
         }
 
         // updates the entities, must call the systems and so on ..
-        public void Update(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform)
+        public void Update(float deltaTime)
         {
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
@@ -551,7 +551,7 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update();
             GameState.AgentModel3DAnimationSystem.Update();
 
-            GameState.FloatingTextDrawSystem.Draw(transform, 10000);
+            GameState.FloatingTextDrawSystem.Draw(10000);
 
             // Delete Entities.
             GameState.ProjectileDeleteSystem.Update();

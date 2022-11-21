@@ -34,7 +34,7 @@ namespace GameScreen
             p.z = 20;
             UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
 
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, Transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
         }
 
         public override void OnGui()

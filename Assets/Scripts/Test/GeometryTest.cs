@@ -206,7 +206,7 @@ namespace Planet.Unity
             }
 
 
-            planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(Time.deltaTime);
 
         }
         Texture2D texture;

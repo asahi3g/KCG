@@ -35,7 +35,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(Time.deltaTime, Material, transform);
+            GameState.Planet.Update(Time.deltaTime);
         }
 
         private void OnGUI()
