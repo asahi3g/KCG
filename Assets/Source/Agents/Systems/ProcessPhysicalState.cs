@@ -308,10 +308,12 @@ namespace Agent
                     physicsState.Velocity.Y = 3.5f;
 
                     // Reduce the fuel and spawn particles
-                    stats.Fuel -= 30.0f * deltaTime;
-                    if (stats.Fuel <= 1.0f)
+                    var fuelToFloat = (float)stats.Fuel;
+                    fuelToFloat -= 30.0f * deltaTime;
+                    stats.Fuel = (int)fuelToFloat;
+                    if (stats.Fuel <= 1)
                     {
-                        stats.Fuel -= 10.0f;
+                        stats.Fuel -= 10;
                     }
                     planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
 
@@ -319,11 +321,14 @@ namespace Agent
                 }
                 else
                 {
+                    var fuelToFloat = (float)stats.Fuel;
                     // make sure the fuel never goes up more than it should
                     if (stats.Fuel <= 100)
                     {
                         // if we are not JetPackFlying, add fuel to the tank
-                        stats.Fuel += 30.0f * deltaTime;
+
+                        fuelToFloat += 30.0f * deltaTime;
+                        stats.Fuel = (int)fuelToFloat;
                     }
                     else
                     {
