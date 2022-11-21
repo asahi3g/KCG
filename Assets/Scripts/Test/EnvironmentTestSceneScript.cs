@@ -172,7 +172,7 @@ namespace Planet.Foreground
 
 
             CharacterDisplay.Update();
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
 
         }
 

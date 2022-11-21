@@ -483,7 +483,7 @@ namespace Planet.Unity
 
 
            // CharacterDisplay.Update();
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
                       
 
         }

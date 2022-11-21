@@ -139,7 +139,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
 
         RegenerateMap();
         
-        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 
     SquareWithRenderer CreateSquare(Vec2f position, Vec2f size, UnityEngine.Color color, bool isDraggable, string name = "Square")

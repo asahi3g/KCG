@@ -32,7 +32,7 @@ namespace Planet.Unity
             ref var planet = ref GameState.Planet;
             if (!init) return;
             
-            planet.Update(UnityEngine.Time.deltaTime, material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
 
             if (enableGeometryPlacementTool)
             {

@@ -58,7 +58,7 @@ namespace Planet.Unity
 
             selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
             
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
         }

@@ -103,7 +103,7 @@ public class LineOfSightTest : MonoBehaviour
         }
         
         ref var planet = ref GameState.Planet;
-        planet.Update(Time.deltaTime, Material, transform);
+        planet.Update(Time.deltaTime); 
 
         Vec2f sectorDir = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
 

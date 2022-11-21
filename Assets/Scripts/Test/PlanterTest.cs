@@ -24,7 +24,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     public void Update()
     {
-        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 
     private void OnGUI()
