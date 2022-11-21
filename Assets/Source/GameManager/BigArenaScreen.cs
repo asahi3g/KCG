@@ -58,7 +58,7 @@ namespace GameScreen
                 GameState.Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
 
-                Player = GameState.Planet.AddPlayer(oldPosition);
+                Player = GameState.Planet.AddAgentAsPlayer(oldPosition);
                 PlayerID = Player.agentID.ID;
                 inventoryID = Player.agentInventory.InventoryID;
 

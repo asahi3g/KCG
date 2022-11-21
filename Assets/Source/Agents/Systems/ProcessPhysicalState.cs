@@ -319,7 +319,6 @@ namespace Agent
                 }
                 else
                 {
-                    var fuelToFloat = (float)stats.Fuel;
                     // make sure the fuel never goes up more than it should
                     if (stats.Fuel.GetValue() <= 100f)
                     {
