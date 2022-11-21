@@ -176,7 +176,7 @@ namespace Agent
             }
         }*/
 
-        public void SetHealth(float health)
+        public void SetHealth(int health)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -240,7 +240,7 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
-            GameState.AgentCreationApi.SetHealth(30000.0f);
+            GameState.AgentCreationApi.SetHealth(30000);
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.SpaceMarine);
@@ -267,7 +267,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             // Windup is zero because attack is not a melee.
             GameState.AgentCreationApi.SetBasicAttack( new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 0.0f });
             GameState.AgentCreationApi.End();
@@ -279,7 +279,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.0f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.125f, 0.0f), new Vec2f(0.75f, 0.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.SlimeMoveLeft);
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 0.0f });
             GameState.AgentCreationApi.End();
 
@@ -290,7 +290,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.75f, 2.5f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 0.0f });
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.End();
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyGunner);
@@ -300,7 +300,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(0.5f, 2.5f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.End();
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
@@ -311,7 +311,7 @@ namespace Agent
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.25f, 0.0f), new Vec2f(1.25f, 1.0f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 1.0f });
             GameState.AgentCreationApi.SetBehaviorTree(insectBehavior);
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.SmallInsect);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.0f, 1.0f, 1.0f));
@@ -325,7 +325,7 @@ namespace Agent
             GameState.AgentCreationApi.SetSpriteSize(new Vec2f(1.0f, 1.5f));
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 1.0f });
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.HeavyInsect);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectHeavyAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.6f, 1.6f, 1.6f));
@@ -340,7 +340,7 @@ namespace Agent
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
-            GameState.AgentCreationApi.SetHealth(100.0f);
+            GameState.AgentCreationApi.SetHealth(100);
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
             GameState.AgentCreationApi.End();
         }

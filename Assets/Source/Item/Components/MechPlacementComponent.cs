@@ -4,7 +4,7 @@ using Enums;
 namespace Item
 {
     [ItemInventory]
-    public class MechComponent : IComponent
+    public class MechPlacementComponent : IComponent
     {
         public MechType MechID;
         public bool InputsActive;

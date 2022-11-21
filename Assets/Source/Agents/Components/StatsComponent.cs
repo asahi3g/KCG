@@ -6,23 +6,7 @@ namespace Agent
     [Agent]
     public class StatsComponent : IComponent
     {
-        /*
-        [Range(0, 100)]
-        public int Health;
 
-        [Range(0, 100)]
-        public float Food;
-
-        [Range(0, 100)]
-        public float Water;
-
-        [Range(0, 100)]
-        public float Oxygen;
-
-        [Range(-100, 100)]
-        public float Fuel;
-        */
-        
         public readonly ContainerInt Health = new ContainerInt(100, 0, 100);
         public readonly ContainerFloat Food = new ContainerFloat(100f, 0f, 100f);
         public readonly ContainerFloat Water = new ContainerFloat(100f, 0f, 100f);

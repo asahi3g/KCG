@@ -356,7 +356,7 @@ namespace Planet
         }
 
 
-        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type, float health = 1.0f)
+        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type, int health = 1)
         {
             Utils.Assert(ParticleList.Length < PlanetEntityLimits.ParticleLimit);
 
@@ -514,7 +514,7 @@ namespace Planet
             GameState.PodCollisionSystem.Update();
             GameState.MechPlantGrowthSystem.Update();
 
-            GameState.AgentProcessStats.Update();
+            GameState.AgentProcessState.Update();
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();

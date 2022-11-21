@@ -11,6 +11,11 @@ namespace Vehicle.Pod
             ;
         public int DefaultAgentCount;
 
+        public bool RenderRightPanel;
+        public bool RenderLeftPanel;
+        public bool RenderTopPanel;
+        public bool RenderBottomPanel;
+
         public bool Exploded;
         public bool RightPanelCollided;
         public bool LeftPanelCollided;

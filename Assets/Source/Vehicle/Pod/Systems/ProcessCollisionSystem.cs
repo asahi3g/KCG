@@ -64,84 +64,100 @@ namespace Vehicle.Pod
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.RightPanelCollided = true;
+                        entity.vehiclePodStatus.RenderRightPanel = false;
                     }
                     else if (RightPanelCollision.IsCollidingRight(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.RightPanelCollided = true;
+                        entity.vehiclePodStatus.RenderRightPanel = false;
                     }
                     else if (RightPanelCollision.IsCollidingTop(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.RightPanelCollided = true;
+                        entity.vehiclePodStatus.RenderRightPanel = false;
                     }
                     else if (RightPanelCollision.IsCollidingBottom(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.RightPanelCollided = true;
+                        entity.vehiclePodStatus.RenderRightPanel = false;
                     }
 
                     if (LeftPanelCollision.IsCollidingLeft(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.LeftPanelCollided = true;
+                        entity.vehiclePodStatus.RenderLeftPanel = false;
                     }
                     else if (LeftPanelCollision.IsCollidingRight(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.LeftPanelCollided = true;
+                        entity.vehiclePodStatus.RenderLeftPanel = false;
                     }
                     else if (LeftPanelCollision.IsCollidingTop(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.LeftPanelCollided = true;
+                        entity.vehiclePodStatus.RenderLeftPanel = false;
                     }
                     else if (LeftPanelCollision.IsCollidingBottom(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.LeftPanelCollided = true;
+                        entity.vehiclePodStatus.RenderLeftPanel = false;
                     }
 
                     if (TopPanelCollision.IsCollidingLeft(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.TopPanelCollided = true;
+                        entity.vehiclePodStatus.RenderTopPanel = false;
                     }
                     else if (TopPanelCollision.IsCollidingRight(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.TopPanelCollided = true;
+                        entity.vehiclePodStatus.RenderTopPanel = false;
                     }
                     else if (TopPanelCollision.IsCollidingTop(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.TopPanelCollided = true;
+                        entity.vehiclePodStatus.RenderTopPanel = false;
                     }
                     else if (TopPanelCollision.IsCollidingBottom(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.TopPanelCollided = true;
+                        entity.vehiclePodStatus.RenderTopPanel = false;
                     }
 
                     if (BottomPanelCollision.IsCollidingLeft(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.BottomPanelCollided = true;
+                        entity.vehiclePodStatus.RenderBottomPanel = false;
                     }
                     else if (BottomPanelCollision.IsCollidingRight(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.BottomPanelCollided = true;
+                        entity.vehiclePodStatus.RenderBottomPanel = false;
                     }
                     else if (BottomPanelCollision.IsCollidingTop(GameState.Planet.TileMap, new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.BottomPanelCollided = true;
+                        entity.vehiclePodStatus.RenderBottomPanel = false;
                     }
                     else if (BottomPanelCollision.IsCollidingBottom(new Vec2f(entity.vehiclePodPhysicsState2D.angularVelocity.X,
                         entity.vehiclePodPhysicsState2D.angularVelocity.Y)))
                     {
                         entity.vehiclePodStatus.BottomPanelCollided = true;
+                        entity.vehiclePodStatus.RenderBottomPanel = false;
                     }
                 }
             }

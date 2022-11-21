@@ -11,11 +11,15 @@ public partial class PodEntity {
     public Vehicle.Pod.StatusComponent vehiclePodStatus { get { return (Vehicle.Pod.StatusComponent)GetComponent(PodComponentsLookup.VehiclePodStatus); } }
     public bool hasVehiclePodStatus { get { return HasComponent(PodComponentsLookup.VehiclePodStatus); } }
 
-    public void AddVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, int newDefaultAgentCount, bool newExploded, bool newRightPanelCollided, bool newLeftPanelCollided, bool newTopPanelCollided, bool newBottomPanelCollided, KMath.Vec2f newRightPanelPos, KMath.Vec2f newLeftPanelPos, KMath.Vec2f newTopPanelPos, KMath.Vec2f newBottomPanelPos, KMath.Vec2f newRightPanelOffset, KMath.Vec2f newLeftPanelOffset, KMath.Vec2f newTopPanelOffset, KMath.Vec2f newBottomPanelOffset, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
+    public void AddVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, int newDefaultAgentCount, bool newRenderRightPanel, bool newRenderLeftPanel, bool newRenderTopPanel, bool newRenderBottomPanel, bool newExploded, bool newRightPanelCollided, bool newLeftPanelCollided, bool newTopPanelCollided, bool newBottomPanelCollided, KMath.Vec2f newRightPanelPos, KMath.Vec2f newLeftPanelPos, KMath.Vec2f newTopPanelPos, KMath.Vec2f newBottomPanelPos, KMath.Vec2f newRightPanelOffset, KMath.Vec2f newLeftPanelOffset, KMath.Vec2f newTopPanelOffset, KMath.Vec2f newBottomPanelOffset, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.AgentsInside = newAgentsInside;
         component.DefaultAgentCount = newDefaultAgentCount;
+        component.RenderRightPanel = newRenderRightPanel;
+        component.RenderLeftPanel = newRenderLeftPanel;
+        component.RenderTopPanel = newRenderTopPanel;
+        component.RenderBottomPanel = newRenderBottomPanel;
         component.Exploded = newExploded;
         component.RightPanelCollided = newRightPanelCollided;
         component.LeftPanelCollided = newLeftPanelCollided;
@@ -40,11 +44,15 @@ public partial class PodEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, int newDefaultAgentCount, bool newExploded, bool newRightPanelCollided, bool newLeftPanelCollided, bool newTopPanelCollided, bool newBottomPanelCollided, KMath.Vec2f newRightPanelPos, KMath.Vec2f newLeftPanelPos, KMath.Vec2f newTopPanelPos, KMath.Vec2f newBottomPanelPos, KMath.Vec2f newRightPanelOffset, KMath.Vec2f newLeftPanelOffset, KMath.Vec2f newTopPanelOffset, KMath.Vec2f newBottomPanelOffset, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
+    public void ReplaceVehiclePodStatus(System.Collections.Generic.List<AgentEntity> newAgentsInside, int newDefaultAgentCount, bool newRenderRightPanel, bool newRenderLeftPanel, bool newRenderTopPanel, bool newRenderBottomPanel, bool newExploded, bool newRightPanelCollided, bool newLeftPanelCollided, bool newTopPanelCollided, bool newBottomPanelCollided, KMath.Vec2f newRightPanelPos, KMath.Vec2f newLeftPanelPos, KMath.Vec2f newTopPanelPos, KMath.Vec2f newBottomPanelPos, KMath.Vec2f newRightPanelOffset, KMath.Vec2f newLeftPanelOffset, KMath.Vec2f newTopPanelOffset, KMath.Vec2f newBottomPanelOffset, float newRightPanelWidth, float newLeftPanelWidth, float newTopPanelWidth, float newBottomPanelWidth, float newRightPanelHeight, float newLeftPanelHeight, float newTopPanelHeight, float newBottomPanelHeight) {
         var index = PodComponentsLookup.VehiclePodStatus;
         var component = (Vehicle.Pod.StatusComponent)CreateComponent(index, typeof(Vehicle.Pod.StatusComponent));
         component.AgentsInside = newAgentsInside;
         component.DefaultAgentCount = newDefaultAgentCount;
+        component.RenderRightPanel = newRenderRightPanel;
+        component.RenderLeftPanel = newRenderLeftPanel;
+        component.RenderTopPanel = newRenderTopPanel;
+        component.RenderBottomPanel = newRenderBottomPanel;
         component.Exploded = newExploded;
         component.RightPanelCollided = newRightPanelCollided;
         component.LeftPanelCollided = newLeftPanelCollided;

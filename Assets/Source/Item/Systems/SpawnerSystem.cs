@@ -75,7 +75,7 @@ namespace Item
                     entity.itemType.Type == ItemType.RemoveMech ||
                     itemProperty.Group == ItemGroups.Mech)
                 {
-                    entity.AddItemMech(itemProperty.MechType, true);
+                    entity.AddItemMechPlacement(itemProperty.MechType, true);
                 }
             }
             

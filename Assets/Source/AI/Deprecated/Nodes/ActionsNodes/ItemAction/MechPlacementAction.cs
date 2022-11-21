@@ -20,7 +20,7 @@ namespace Node.Action
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.y;
 
-            planet.AddMech(new Vec2f(x, y), itemEntity.itemMech.MechID);
+            planet.AddMech(new Vec2f(x, y), itemEntity.itemMechPlacement.MechID);
 
             nodeEntity.nodeExecution.State = NodeState.Success;
         }

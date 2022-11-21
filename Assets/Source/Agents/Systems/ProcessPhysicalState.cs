@@ -18,7 +18,6 @@ namespace Agent
 
                 float epsilon = 4.0f;
 
-
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
                 {
@@ -307,6 +306,7 @@ namespace Agent
                     physicsState.Velocity.Y = 3.5f;
 
                     // Reduce the fuel and spawn particles
+
                     stats.Fuel.Remove(30f * deltaTime);
                     
                     if (stats.Fuel.GetValue() <= 1f)
@@ -319,6 +319,7 @@ namespace Agent
                 }
                 else
                 {
+                    var fuelToFloat = (float)stats.Fuel;
                     // make sure the fuel never goes up more than it should
                     if (stats.Fuel.GetValue() <= 100f)
                     {
