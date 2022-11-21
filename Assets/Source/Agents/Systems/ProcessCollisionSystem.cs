@@ -174,19 +174,6 @@ namespace Agent
                 }
              }
 
-             /*physicsState.PreviousPosition = physicsState.Position;
-             physicsState.Position = physicsState.Position + deltaLeft * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
-
-             delta = physicsState.Position - physicsState.PreviousPosition;
-             agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
-                
-            if (agentCollision.MinTime < 1.0f)
-            {
-                physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
-            }*/
-
-
-
             if (collidingBottom)
             {
                 physicsState.OnGrounded = true;
@@ -288,8 +275,6 @@ namespace Agent
 
 
             GameState.Planet.AddDebugLine(new Line2D(entity.agentPhysicsState.Position, entity.agentPhysicsState.Position + new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X)), UnityEngine.Color.red);
-
-            //entityBoxBorders.DrawBox();
         }
 
         public void Update(AgentContext agentContext)

@@ -45,6 +45,13 @@ namespace PlanetTileMap
         public static void BuildGeometry(TileMap tileMap)
         {
             tileMap.GeometryArrayCount = 0;
+
+            // map boundaries
+            tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(0.0f, 0.0f), new KMath.Vec2f(tileMap.MapSize.X, 0.0f)), new KMath.Vec2f(0.0f, 1.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
+            tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(tileMap.MapSize.X, 0.0f), new KMath.Vec2f(tileMap.MapSize.X, tileMap.MapSize.Y)), new KMath.Vec2f(-1.0f, 0.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
+            tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(tileMap.MapSize.X, tileMap.MapSize.Y), new KMath.Vec2f(0.0f, tileMap.MapSize.Y)), new KMath.Vec2f(0.0f, -1.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
+            tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(0.0f, tileMap.MapSize.Y), new KMath.Vec2f(0.0f, 0.0f)), new KMath.Vec2f(1.0f, 0.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
+
             for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
                 for(int i = 0; i < tileMap.MapSize.X; i++)
