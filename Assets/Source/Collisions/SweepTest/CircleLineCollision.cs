@@ -85,19 +85,23 @@ namespace Collisions
             // step 5: compute the time of collision
             float k = p1.X;
             float timeX = 1.0f;
-            if (k >= 0)
+            if (k >= circleRadius)
             {
                 // if the line is on the right 
                 // the time is (k-circleRadius) / velocity.X
 
                 timeX = (k-circleRadius) / velocity.X;
             }
-            else
+            else if (k <= -circleRadius)
             {
                 // if the line is on the left 
                 // the time is (k+circleRadius) / velocity.X
 
                 timeX = (k+circleRadius) / velocity.X;
+            }
+            else
+            {
+                timeX = 1.0f;
             }
 
                 
