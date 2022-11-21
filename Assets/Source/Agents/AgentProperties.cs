@@ -31,7 +31,7 @@ namespace Agent
         public Engine3D.ModelType ModelType;
         public Vec3f ModelScale;
 
-        public UnityEngine.GameObject TrackStub;
+        public float StaggerAffectTime;
     }
 
     public struct MovementProperties

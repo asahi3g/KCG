@@ -4,6 +4,7 @@ using Physics;
 using System;
 using KMath;
 using Enums;
+using Unity.VisualScripting;
 
 namespace Agent
 {
@@ -179,6 +180,28 @@ namespace Agent
 
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
+        }
+
+        public void UpdateStagger(AgentEntity entity)
+        {
+            if(entity.agentStagger.Stagger)
+            {
+                entity.agentStagger.elapsed += UnityEngine.Time.deltaTime;
+
+                if(entity.agentStagger.elapsed > entity.agentStagger.StaggerAffectTime)
+                {
+                    entity.isAgentAlive = true;
+                    entity.agentStagger.Stagger = false;
+                }
+                else
+                {
+                    entity.isAgentAlive = false;
+                }
+            }
+            else
+            {
+                entity.agentStagger.elapsed = 0.0f;
+            }
         }
 
         public void Update()
