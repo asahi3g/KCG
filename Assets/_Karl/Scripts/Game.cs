@@ -131,7 +131,7 @@ public class Game : Singleton<Game>
         GameState.PodCollisionSystem.Update();
         GameState.MechPlantGrowthSystem.Update();
 
-        GameState.AgentProcessStats.Update();
+        GameState.AgentProcessState.Update();
         GameState.SensorUpdateSystem.Update();
         GameState.BehaviorTreeUpdateSystem.Update();
         GameState.BlackboardUpdatePosition.Update();
