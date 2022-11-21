@@ -36,4 +36,9 @@ public static class UnityExtensions
         color.a = alpha;
         return color;
     }
+
+    public static string Color(this string value, Color color)
+    {
+        return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{value}</color>";
+    }
 }
