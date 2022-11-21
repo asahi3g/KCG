@@ -11,7 +11,7 @@ namespace Planet.Unity
 {
     class GeometryTest : MonoBehaviour
     {
-        [SerializeField] Material Material;
+        Material Material;
 
 
 
@@ -24,14 +24,9 @@ namespace Planet.Unity
 
         private int totalMechs;
         private int selectedMechIndex;
-        public Utility.FrameMesh HighliterMesh;
-        private Color wrongHlColor = Color.red;
-        private Color correctHlColor = Color.green;
 
         Planet.PlanetState Planet;
 
-
-        KGui.CharacterDisplay CharacterDisplay;
 
         public void Start()
         {
@@ -41,6 +36,7 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
+            Material = Resources.Load("Materials/TextureMaterial") as Material;
             Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
 
             int materialCount = Enum.GetNames(typeof(Enums.MaterialType)).Length;
@@ -62,12 +58,7 @@ namespace Planet.Unity
 
                 MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
 
-            //    Debug.Log("loaded : " + property.Enums.MaterialType + " " + property.BlockShapeType + " = " +  property.TileID);
             }
-
-         //   Debug.Log("test : " + MaterialGeometryMap[(int)PlanetTileMap.Enums.MaterialType.Metal][(int)Enums.GeometryTileShape.SB_R0].TileID);
-//
-        //    Debug.Log(GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).Enums.MaterialType + " " + GameState.TileCreationApi.GetTileProperty(TileID.SB_R0_Metal).BlockShapeType);
 
             // Generating the map
             int mapWidth = tileMap.width;
@@ -89,7 +80,9 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
 
             GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
+
             //GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
+
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
@@ -140,13 +133,6 @@ namespace Planet.Unity
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
 
-            HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
-                GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
-
-
-
-            CharacterDisplay = new KGui.CharacterDisplay();
-            CharacterDisplay.setPlayer(Player);
 
 
             PlanetTileMap.TileMapGeometry.BuildGeometry(Planet.TileMap);
@@ -219,7 +205,6 @@ namespace Planet.Unity
             }
 
 
-            CharacterDisplay.Update();
             planet.Update(Time.deltaTime, Material, transform);
 
         }
@@ -230,97 +215,6 @@ namespace Planet.Unity
             GameState.Planet.DrawHUD(Player);
             /* CharacterDisplay.Draw();*/
         }
-
-        private void DrawQuad(GameObject gameObject, float x, float y, float w, float h, Color color)
-        {
-            var mr = gameObject.GetComponent<MeshRenderer>();
-            mr.sharedMaterial.color = color;
-
-            var mf = gameObject.GetComponent<MeshFilter>();
-            var mesh = mf.sharedMesh;
-
-            List<int> triangles = new List<int>();
-            List<Vector3> vertices = new List<Vector3>();
-
-            Vec2f topLeft = new Vec2f(x, y + h);
-            Vec2f BottomLeft = new Vec2f(x, y);
-            Vec2f BottomRight = new Vec2f(x + w, y);
-            Vec2f TopRight = new Vec2f(x + w, y + h);
-
-            var p0 = new Vector3(BottomLeft.X, BottomLeft.Y, 0);
-            var p1 = new Vector3(TopRight.X, TopRight.Y, 0);
-            var p2 = new Vector3(topLeft.X, topLeft.Y, 0);
-            var p3 = new Vector3(BottomRight.X, BottomRight.Y, 0);
-
-            vertices.Add(p0);
-            vertices.Add(p1);
-            vertices.Add(p2);
-            vertices.Add(p3);
-
-            triangles.Add(vertices.Count - 4);
-            triangles.Add(vertices.Count - 2);
-            triangles.Add(vertices.Count - 3);
-            triangles.Add(vertices.Count - 4);
-            triangles.Add(vertices.Count - 3);
-            triangles.Add(vertices.Count - 1);
-
-            mesh.SetVertices(vertices);
-            mesh.SetTriangles(triangles.ToArray(), 0);
-        }
-
-        private void DrawCurrentMechHighlighter()
-        {
-            ref var planet = ref GameState.Planet;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
-
-            //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
-
-            if (x >= 0 && x < planet.TileMap.MapSize.X &&
-            y >= 0 && y < planet.TileMap.MapSize.Y)
-            {
-                //TODO: SET TO Get(selectedMechIndex)
-                var mech = GameState.MechCreationApi.Get((Enums.MechType)selectedMechIndex);
-                var xRange = Mathf.CeilToInt(mech.SpriteSize.X);
-                var yRange = Mathf.CeilToInt(mech.SpriteSize.Y);
-
-                var allTilesAir = true;
-
-                var w = mech.SpriteSize.X;
-                var h = mech.SpriteSize.Y;
-
-                for (int i = 0; i < xRange; i++)
-                {
-                    for (int j = 0; j < yRange; j++)
-                    {
-                        if (planet.TileMap.GetMidTileID(x + i, y + j) != TileID.Air)
-                        {
-                            allTilesAir = false;
-                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
-                            break;
-                        }
-                        if (planet.TileMap.GetFrontTileID(x + i, y + j) != TileID.Air)
-                        {
-                            allTilesAir = false;
-                            DrawQuad(HighliterMesh.obj, x, y, w, h, wrongHlColor);
-                            break;
-                        }
-                    }
-
-                    if (!allTilesAir)
-                        break;
-                }
-
-                if (allTilesAir)
-                {
-                    DrawQuad(HighliterMesh.obj, x, y, w, h, correctHlColor);
-                }
-
-            }
-        }
-
-    
 
 
         private void OnDrawGizmos()
@@ -380,21 +274,6 @@ namespace Planet.Unity
 
             Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planet.CameraFollow.canFollow = true;
-        }
-
-
-        
-        public TileID GetTileId(string geometry)
-        {
-            TileID result = TileID.Air;
-            if (!Enum.TryParse<TileID>(geometry, out result))
-            {
-                result = TileID.Air;
-            }
-
-
-
-            return result;
         }
 
     }

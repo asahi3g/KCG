@@ -165,6 +165,9 @@ public static class GameState
 
     public static readonly Prefab.PrefabManager PrefabManager;
 
+
+    public static readonly GameScreen.ScreenManager ScreenManager;
+
     public static void InitStage1()
     {
 
@@ -313,7 +316,6 @@ public static class GameState
         PodSpawnerSystem = new Vehicle.Pod.SpawnerSystem(PodCreationApi);
         PodMeshBuilderSystem = new Vehicle.Pod.MeshBuilderSystem();
         PodAISystem = new Vehicle.Pod.AISystem();
-
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
@@ -323,5 +325,6 @@ public static class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
+        ScreenManager = new GameScreen.ScreenManager();
     }
 }

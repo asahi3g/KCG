@@ -193,12 +193,16 @@ namespace Agent
                 bool isPlatform = true; // if all colliding blocks are plataforms.
                 for(int i = (int)entityBoxBorders.xmin; i <= (int)entityBoxBorders.xmax; i++)
                 {
-                    var tile = planet.TileMap.GetTile(i, (int)entityBoxBorders.ymin);
-                    var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
-
-                    if (!property.IsAPlatform)
+                    if (i >= 0 && i < planet.TileMap.MapSize.X && (int)entityBoxBorders.ymin >= 0 && 
+                    (int)entityBoxBorders.ymin < planet.TileMap.MapSize.Y)
                     {
-                        isPlatform = false;
+                        var tile = planet.TileMap.GetTile(i, (int)entityBoxBorders.ymin);
+                        var property = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+
+                        if (!property.IsAPlatform)
+                        {
+                            isPlatform = false;
+                        }
                     }
                 }
 

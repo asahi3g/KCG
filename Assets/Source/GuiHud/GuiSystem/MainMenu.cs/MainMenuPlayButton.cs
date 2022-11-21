@@ -15,7 +15,7 @@ namespace Gui
 
         public override void OnClicked()
         {
-            UnityEngine.Debug.Log("play");
+            GameState.ScreenManager.ChangeScreen(Enums.GameScreenEnum.GameScreen_Game);
         }
     }
 }
