@@ -30,7 +30,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);

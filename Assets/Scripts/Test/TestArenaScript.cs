@@ -40,7 +40,7 @@ namespace Planet.Unity
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(Time.deltaTime);
             planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)

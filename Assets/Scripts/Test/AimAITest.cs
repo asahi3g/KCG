@@ -22,7 +22,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
 
             if (GetNumOfEnemiesAlive() < 2)
             {

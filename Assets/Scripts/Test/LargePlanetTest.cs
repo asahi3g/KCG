@@ -45,7 +45,7 @@ namespace Planet.Unity
                 }
             }
 
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
             //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
