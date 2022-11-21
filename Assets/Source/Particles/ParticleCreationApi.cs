@@ -461,7 +461,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
             GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
             GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
-            GameState.ParticleCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.2f, 0.2f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
@@ -477,7 +477,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetDeltaRotation(130.0f);
             GameState.ParticleCreationApi.SetDeltaScale(-1.0f);
             GameState.ParticleCreationApi.SetSpriteId(WhitePixel);
-            GameState.ParticleCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.2f, 0.2f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingRotation(0.0f);
             GameState.ParticleCreationApi.SetStartingScale(1.0f);
@@ -509,7 +509,7 @@ namespace Particle
             GameState.ParticleCreationApi.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetDeltaRotation(0.0f);
             GameState.ParticleCreationApi.SetSpriteId(ParticleSprite);
-            GameState.ParticleCreationApi.SetSize(new Vec2f(0.075f, 0.075f));
+            GameState.ParticleCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticleCreationApi.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
             GameState.ParticleCreationApi.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.5f));
             GameState.ParticleCreationApi.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));

@@ -320,7 +320,7 @@ namespace Projectile
                     Vec2f tmp = physicsState.PreviousPosition;
                     float distance = diff.Magnitude;
 
-                    float stepSize = 0.1f;
+                    float stepSize = 0.02f;
                     diff.Normalize();
                     float acc = 0.0f;
                     acc += stepSize;
