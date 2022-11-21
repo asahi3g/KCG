@@ -6,6 +6,7 @@ namespace Projectile
 {
     public class ProcessOnHit
     {
+        float elapsed;
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -57,6 +58,11 @@ namespace Projectile
             var stats = agentEntity.agentStats;
             if (projectileEntity.hasProjectileDamage)
             {
+                if(agentEntity.hasAgentStagger)
+                {
+                    agentEntity.Stagger();
+                }
+
                 int damage = projectileEntity.projectileDamage.Damage;
 
                 // Change damage depends on velocity (more velo = more damage)

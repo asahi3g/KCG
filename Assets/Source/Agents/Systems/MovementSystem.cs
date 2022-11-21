@@ -190,12 +190,7 @@ namespace Agent
 
                 if(entity.agentStagger.elapsed > entity.agentStagger.StaggerAffectTime)
                 {
-                    entity.isAgentAlive = true;
-                    entity.agentStagger.Stagger = false;
-                }
-                else
-                {
-                    entity.isAgentAlive = false;
+                    entity.UnStagger();
                 }
             }
             else
@@ -215,6 +210,8 @@ namespace Agent
                     UpdateLand(entity, deltaTime, GameState.Planet);
                 else
                     UpdateFlying(entity, deltaTime);
+
+                UpdateStagger(entity);
             }
         }
     }

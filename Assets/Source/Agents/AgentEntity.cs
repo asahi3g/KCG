@@ -128,6 +128,27 @@ public partial class AgentEntity
         }
     }
 
+    public void Stagger()
+    {
+        if (isAgentAlive)
+        {
+            agentStagger.Stagger = true;
+            isAgentAlive = false;
+            Debug.Log("Freezed");
+        }
+    }
+
+    public void UnStagger()
+    {
+        if (!isAgentAlive)
+        {
+            agentStagger.Stagger = false;
+            isAgentAlive = true;
+            Debug.Log("UnFreezed");
+
+        }
+    }
+
     public Vec2f GetGunFiringTarget()
     {
         var physicsState = agentPhysicsState;
