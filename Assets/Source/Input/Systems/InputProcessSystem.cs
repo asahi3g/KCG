@@ -9,7 +9,6 @@ using Mech;
 using PlanetTileMap;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 namespace ECSInput
 {
@@ -39,6 +38,12 @@ namespace ECSInput
 
         public float scale = 1.0f;
 
+        private void UpdateMainCameraZoom()
+        {
+            scale += UnityEngine.Input.GetAxis("Mouse ScrollWheel") * 0.5f * scale;
+            Camera.main.orthographicSize = 20.0f / scale;
+        }
+
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -47,8 +52,7 @@ namespace ECSInput
             var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
 
-            scale += UnityEngine.Input.GetAxis("Mouse ScrollWheel") * 0.5f * scale;
-            Camera.main.orthographicSize = 20.0f / scale;
+            //UpdateMainCameraZoom();
 
             int x = 0;
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) && mode == Mode.Agent)
@@ -100,25 +104,22 @@ namespace ECSInput
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) && mode == Mode.Agent)
                 {
                     if(mode == Mode.Agent)
-                    player.Crouch(x);
+                    player.CrouchBegin(x);
                 }
                 else
                 {
                     if(mode == Mode.Agent)
-                    player.UnCrouch(x);
+                    player.CrouchEnd(x);
                 }
 
                 // JetPack
-                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel > 0)
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel.GetValue() > 0)
                 {
-                    player.JetPackFlying();
+                    player.JetPackFlyingBegin();
                 }
                 else
                 {
-                    if (player.agentPhysicsState.MovementState == AgentMovementState.JetPackFlying)
-                    {
-                        player.agentPhysicsState.MovementState = AgentMovementState.None;
-                    }
+                    player.JetPackFlyingEnd();
                 }
 
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S))
@@ -126,7 +127,6 @@ namespace ECSInput
                     if(mode == Mode.Agent)
                     player.Walk(x);
                 }
-
 
                 var mouseWorldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
 
@@ -149,7 +149,7 @@ namespace ECSInput
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))
                 {
-                    player.JetPackFlying();
+                    player.JetPackFlyingBegin();
                 }
 
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow))

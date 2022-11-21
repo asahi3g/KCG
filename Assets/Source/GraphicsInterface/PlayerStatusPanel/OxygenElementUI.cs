@@ -18,9 +18,9 @@ namespace KGUI
             
             ID = ElementEnums.OxygenIndicatorPS;
             
-            oxygenAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Oxygen : 0.0f;
+            oxygenAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Oxygen.GetValue() : 0.0f;
 
-            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Oxygen\\hud_status_oxygen.png", Enums.AtlasType.Gui);
+            icon.Init(13, 13,"Assets\\StreamingAssets\\UserInterface\\Icons\\hud_status_oxygen.png", Enums.AtlasType.Gui);
             progressBar.Init(GameState.GUIManager.ProgressBar, oxygenAmount, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
@@ -28,7 +28,7 @@ namespace KGUI
         {
             base.Update();
             ref var planet = ref GameState.Planet;
-            oxygenAmount = planet.Player != null ? planet.Player.agentStats.Oxygen : 0.0f;
+            oxygenAmount = planet.Player != null ? planet.Player.agentStats.Oxygen.GetValue() : 0.0f;
             progressBar.Update(oxygenAmount);
             infoTextWrapper.Update();
         }

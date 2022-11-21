@@ -114,6 +114,11 @@ namespace KMath
 
         #endregion
 
+
+        public override string ToString()
+        {
+            return $"x[{X}] y[{Y}]";
+        }
     }
 }
 

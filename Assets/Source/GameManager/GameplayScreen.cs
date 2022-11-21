@@ -102,7 +102,7 @@ namespace GameScreen
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = GameState.Planet.AddPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
+            Player = GameState.Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
            // GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);

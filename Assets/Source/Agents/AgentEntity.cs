@@ -191,6 +191,7 @@ public partial class AgentEntity
 
         Vec2f position = GetGunOrigin();
         Vec2f dir = (targetPosition - position);
+        //UnityEngine.Debug.Log(targetPosition);
         dir.Normalize();
         Vec2f newPosition = position + dir * 1.3f;
         position = newPosition;
@@ -476,16 +477,19 @@ public partial class AgentEntity
         }
     }
 
-    public void JetPackFlying()
+    public void JetPackFlyingBegin()
     {
-        var stats = agentStats;
-        var PhysicsState = agentPhysicsState;
+        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetMin()) return;
+        if (!IsStateFree()) return;
+        
+        agentPhysicsState.MovementState = AgentMovementState.JetPackFlying;
+    }
 
-        // if the fly button is pressed
-        if (stats.Fuel > 0.0f && IsStateFree())
-        {
-            PhysicsState.MovementState = AgentMovementState.JetPackFlying;
-        }
+    public void JetPackFlyingEnd()
+    {
+        if (agentPhysicsState.MovementState != AgentMovementState.JetPackFlying) return;
+        
+        agentPhysicsState.MovementState = AgentMovementState.None;
     }
 
     public void Knockback(float velocity, int horizontalDir)
@@ -532,7 +536,7 @@ public partial class AgentEntity
         }
     }
 
-    public void Crouch(int horizontalDir)
+    public void CrouchBegin(int horizontalDir)
     {
         var PhysicsState = agentPhysicsState;
 
@@ -563,27 +567,26 @@ public partial class AgentEntity
         }
     }
 
-    public void UnCrouch(int horizontalDir)
+    public void CrouchEnd(int horizontalDir)
     {
-        var PhysicsState = agentPhysicsState;
+        var s = agentPhysicsState;
 
-        if (isAgentAlive && PhysicsState.MovementState == AgentMovementState.Crouch ||
-        PhysicsState.MovementState == AgentMovementState.Crouch_Move)
+        if (isAgentAlive && (s.MovementState == AgentMovementState.Crouch || s.MovementState == AgentMovementState.Crouch_Move))
         {
             if (horizontalDir == 0)
             {
-                PhysicsState.MovementState = AgentMovementState.Idle;
+                s.MovementState = AgentMovementState.Idle;
             }
             else
             {
 
-                if (PhysicsState.MovingDirection != PhysicsState.FacingDirection)
+                if (s.MovingDirection != s.FacingDirection)
                 {
-                    PhysicsState.MovementState = AgentMovementState.MoveBackward;
+                    s.MovementState = AgentMovementState.MoveBackward;
                 }
                 else
                 {
-                    PhysicsState.MovementState = AgentMovementState.Move;
+                    s.MovementState = AgentMovementState.Move;
                 }
             }
         }

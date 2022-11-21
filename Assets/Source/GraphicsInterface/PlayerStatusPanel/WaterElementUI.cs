@@ -18,9 +18,9 @@ namespace KGUI
             
             ID = ElementEnums.WaterIndicatorPS;
             
-            waterAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Water : 0.0f;
+            waterAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Water.GetValue() : 0.0f;
 
-            icon.Init(9, 19, "Assets\\StreamingAssets\\UserInterface\\Icons\\Water\\hud_status_water.png", Enums.AtlasType.Gui);
+            icon.Init(13, 13, "Assets\\StreamingAssets\\UserInterface\\Icons\\hud_status_water.png", Enums.AtlasType.Gui);
             progressBar.Init(GameState.GUIManager.ProgressBar, waterAmount, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
@@ -28,7 +28,7 @@ namespace KGUI
         {
             base.Update();
             ref var planet = ref GameState.Planet;
-            waterAmount = planet.Player != null ? planet.Player.agentStats.Water : 0.0f;
+            waterAmount = planet.Player != null ? planet.Player.agentStats.Water.GetValue() : 0.0f;
             progressBar.Update(waterAmount);
             infoTextWrapper.Update();
 

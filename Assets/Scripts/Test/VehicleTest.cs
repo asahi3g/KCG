@@ -336,7 +336,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
 
             planet.AddVehicle(Enums.VehicleType.Jet, new Vec2f(5.0f, 25.0f));
