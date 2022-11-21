@@ -16,11 +16,9 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
-                stats.IsLimping = stats.Health <= 50.0f;
+                stats.IsLimping = stats.Health <= 50;
 
                 float epsilon = 4.0f;
-
-
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
