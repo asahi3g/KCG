@@ -137,7 +137,7 @@ namespace Agent
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, false);
+            entity.AddAgentStats(properties.Health, 100, 100, 100, 100, false);
 
             entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 

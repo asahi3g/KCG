@@ -5,6 +5,7 @@ using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
+using Unity.VisualScripting;
 using Utility;
 
 /*
@@ -675,8 +676,8 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(SniperRifleIcon);
             SetInventoryTexture(SniperRifleIcon);
-            SetRangedWeapon(200.0f, 1f, 350.0f, 60);
-            SetRangedWeaponClip(6, 1, 1.3f);
+            SetRangedWeapon(bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
+            SetRangedWeaponClip(clipSize: 6, bulletsPerShot: 1, reloadTime: 1.3f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -686,8 +687,8 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(LongRifleIcon);
             SetInventoryTexture(LongRifleIcon);
-            SetRangedWeapon(50.0f, 1f, 20.0f, 40);
-            SetRangedWeaponClip(25, 1, 2f);
+            SetRangedWeapon(bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
+            SetRangedWeaponClip(clipSize: 25, bulletsPerShot: 1, reloadTime: 2f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -697,7 +698,7 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(PulseIcon);
             SetInventoryTexture(PulseIcon);
-            SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25);
+            SetRangedWeapon(bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
             SetRangedWeaponClip(25, 4, 1, 1);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
@@ -708,8 +709,8 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(LongRifleIcon);
             SetInventoryTexture(LongRifleIcon);
-            SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
-            SetRangedWeaponClip(40, 3, 4f);
+            SetRangedWeapon(bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
+            SetRangedWeaponClip(clipSize: 40, bulletsPerShot: 3, reloadTime: 4f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -719,8 +720,8 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(SMGIcon);
             SetInventoryTexture(SMGIcon);
-            SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
-            SetRangedWeaponClip(50, 1, 1f);
+            SetRangedWeapon(bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
+            SetRangedWeaponClip(clipSize: 50,  bulletsPerShot: 1, reloadTime:1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -734,9 +735,9 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(ShotgunIcon);
             SetInventoryTexture(ShotgunIcon);
-            SetRangedWeapon(30.0f, 1f, 10.0f, 35);
+            SetRangedWeapon(bulletSpeed: 30.0f, coolDown: 1f, range: 10.0f, basicDamage: 35);
             SetSpreadAngle(1.0f);
-            SetRangedWeaponClip(6, 2, 2.5f);
+            SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
@@ -747,9 +748,9 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(ShotgunIcon);
             SetInventoryTexture(ShotgunIcon);
-            SetRangedWeapon(20.0f, 2f, 5.0f, 30);
+            SetRangedWeapon(bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
             SetSpreadAngle(1.0f);
-            SetRangedWeaponClip(8, 4, 2.5f);
+            SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
             SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
@@ -760,8 +761,8 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(PistolIcon);
             SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
-            SetRangedWeaponClip(8, 1, 1f);
+            SetRangedWeapon(bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
+            SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 1, reloadTime: 1f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
             SetAction(NodeType.ShootFireWeaponAction);
@@ -773,12 +774,36 @@ namespace Item
             SetGroup(ItemGroups.Gun);
             SetTexture(RPGIcon);
             SetInventoryTexture(RPGIcon);
-            SetRangedWeapon(50.0f, 3f, 50.0f, 100);
-            SetRangedWeaponClip(2, 1, 3);
+            SetRangedWeapon(bulletSpeed: 50.0f, coolDown: 3f, range: 50.0f, basicDamage: 100);
+            SetRangedWeaponClip(clipSize: 2, bulletsPerShot: 1, reloadTime: 3);
             SetExplosion(3.0f, 15, 0f);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Rocket);
             SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
+
+            CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
+            SetTexture(GrenadeSpriteId);
+            SetInventoryTexture(GrenadeSpriteId);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetGroup(ItemGroups.Gun);
+            SetRangedWeapon(bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
+            SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
+            SetExplosion(4.0f, 15, 0f);
+            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
+            SetProjectileType(ProjectileType.Grenade);
+            SetAction(NodeType.ThrowFragGrenadeAction);
+            EndItem();
+
+            CreateItem(ItemType.Bow, "Bow");
+            SetGroup(ItemGroups.None);
+            SetTexture(PistolIcon);
+            SetInventoryTexture(PistolIcon);
+            SetRangedWeapon(bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
+            SetRangedWeaponClip(clipSize: 1, bulletsPerShot: 1, reloadTime: 2f);
+            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetProjectileType(ProjectileType.Arrow);
+            SetAction(NodeType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Moon, "Moon");
@@ -850,30 +875,6 @@ namespace Item
             SetInventoryTexture(GrenadeSpriteId);
             SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetAction(NodeType.ThrowFragGrenadeAction);
-            EndItem();
-
-            CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
-            SetTexture(GrenadeSpriteId);
-            SetInventoryTexture(GrenadeSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetGroup(ItemGroups.Gun);
-            SetRangedWeapon(20.0f, 1f, 20.0f, 25);
-            SetRangedWeaponClip(4, 1, 2);
-            SetExplosion(4.0f, 15, 0f);
-            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
-            SetProjectileType(ProjectileType.Grenade);
-            SetAction(NodeType.ThrowFragGrenadeAction);
-            EndItem();
-
-            CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.None);
-            SetTexture(PistolIcon);
-            SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(70.0f, 3f, 100.0f, 30);
-            SetRangedWeaponClip(1, 1, 2f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetProjectileType(ProjectileType.Arrow);
-            SetAction(NodeType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Sword, "Sword");

@@ -10,16 +10,16 @@ namespace Agent
         public int Health;
 
         [Range(0, 100)]
-        public float Food;
+        public int Food;
 
         [Range(0, 100)]
-        public float Water;
+        public int Water;
 
         [Range(0, 100)]
-        public float Oxygen;
+        public int Oxygen;
 
         [Range(-100, 100)]
-        public float Fuel;
+        public int Fuel;
 
         public bool IsLimping; // damaged and his movements are slowed
     }

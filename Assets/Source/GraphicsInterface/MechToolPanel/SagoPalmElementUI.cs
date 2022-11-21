@@ -27,12 +27,12 @@ namespace KGUI
 
         public override void OnMouseStay()
         {
-	        GameState.GUIManager.SelectedInventoryItem.itemMech.InputsActive = !gameObject.activeSelf;
+	        GameState.GUIManager.SelectedInventoryItem.itemMechPlacement.InputsActive = !gameObject.activeSelf;
         }
 
         public override void OnMouseExited()
         {
-	        GameState.GUIManager.SelectedInventoryItem.itemMech.InputsActive = true;
+	        GameState.GUIManager.SelectedInventoryItem.itemMechPlacement.InputsActive = true;
         }
 
         public override void OnMouseClick()
@@ -40,7 +40,7 @@ namespace KGUI
 	        var item = GameState.GUIManager.SelectedInventoryItem;
 	        if(item != null)
 	        {
-		        item.itemMech.MechID = Enums.MechType.SagoPalm;
+		        item.itemMechPlacement.MechID = Enums.MechType.SagoPalm;
 		        Toggle(true);
 	        }
         }

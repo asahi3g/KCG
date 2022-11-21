@@ -22,7 +22,7 @@ namespace Agent
         public int BehaviorTreeRootID;
 
         // Stats
-        public float Health;
+        public int Health;
 
         public BasicAttack Attack;
         public MovementProperties MovProperties;
