@@ -18,15 +18,16 @@ public static class AgentComponentsLookup {
     public const int AgentPhysicsState = 7;
     public const int AgentPlayer = 8;
     public const int AgentSprite2D = 9;
-    public const int AgentStats = 10;
-    public const int AgentsLineOfSight = 11;
-    public const int AnimationState = 12;
-    public const int ECSInput = 13;
-    public const int ECSInputXY = 14;
-    public const int PhysicsBox2DCollider = 15;
-    public const int PhysicsSphere2DCollider = 16;
+    public const int AgentStagger = 10;
+    public const int AgentStats = 11;
+    public const int AgentsLineOfSight = 12;
+    public const int AnimationState = 13;
+    public const int ECSInput = 14;
+    public const int ECSInputXY = 15;
+    public const int PhysicsBox2DCollider = 16;
+    public const int PhysicsSphere2DCollider = 17;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "AgentAction",
@@ -39,6 +40,7 @@ public static class AgentComponentsLookup {
         "AgentPhysicsState",
         "AgentPlayer",
         "AgentSprite2D",
+        "AgentStagger",
         "AgentStats",
         "AgentsLineOfSight",
         "AnimationState",
@@ -59,6 +61,7 @@ public static class AgentComponentsLookup {
         typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
         typeof(Agent.Sprite2DComponent),
+        typeof(Agent.StaggerComponent),
         typeof(Agent.StatsComponent),
         typeof(Agents.LineOfSightComponent),
         typeof(Animation.StateComponent),
