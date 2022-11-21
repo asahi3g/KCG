@@ -31,6 +31,7 @@ namespace Agent
         public Engine3D.ModelType ModelType;
         public Vec3f ModelScale;
 
+        public bool Stagger;
         public float StaggerAffectTime;
     }
 
