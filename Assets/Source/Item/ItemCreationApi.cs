@@ -26,7 +26,6 @@ namespace Item
         // Note[Joao] this arrays are very memory expensive: use array of pointers instead?
         private ItemProprieties[] PropertiesArray;
         private FireWeaponPropreties[] WeaponList;
-        private string[] ItemTypeLabels;
 
         private ItemType currentIndex;
         private int weaponListSize;
@@ -35,7 +34,6 @@ namespace Item
         {
             int length = Enum.GetValues(typeof(ItemType)).Length - 1; // -1 beacause of error item type.
             PropertiesArray = new ItemProprieties[length];
-            ItemTypeLabels = new string[length];
             WeaponList = new FireWeaponPropreties[16];
             currentIndex = ItemType.Error;
             weaponListSize = 0;
@@ -48,10 +46,9 @@ namespace Item
 
         public string GetLabel(ItemType type)
         {
-            ItemType itemType = PropertiesArray[(int)type].ItemType;
-            IsItemTypeValid(itemType);
+            string itemLabel = PropertiesArray[(int)type].ItemLabel;
 
-            return ItemTypeLabels[(int)type];
+            return itemLabel;
         }
 
 
@@ -77,14 +74,14 @@ namespace Item
 
             PropertiesArray[(int)itemType].ItemType = itemType;
             PropertiesArray[(int)itemType].MechType = MechType.Error;
-            ItemTypeLabels[(int)itemType] = name;
+            PropertiesArray[(int)itemType].ItemLabel = name;
         }
 
         public void SetName(string name)
         {
             IsItemTypeValid();
 
-            ItemTypeLabels[(int)currentIndex] = name;
+            PropertiesArray[(int)currentIndex].ItemLabel = name;
         }
 
         public void SetGroup(ItemGroups group)

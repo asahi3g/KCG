@@ -12,6 +12,7 @@ namespace Item
 
     public struct ItemProprieties
     {
+        public string ItemLabel;                 // Item Label
         public ItemType ItemType;
         public ItemGroups Group;
         public NodeType ToolActionType;
