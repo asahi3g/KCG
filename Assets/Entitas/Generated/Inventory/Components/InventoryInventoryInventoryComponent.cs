@@ -11,11 +11,11 @@ public partial class InventoryEntity {
     public Inventory.InventoryComponent inventoryInventory { get { return (Inventory.InventoryComponent)GetComponent(InventoryComponentsLookup.InventoryInventory); } }
     public bool hasInventoryInventory { get { return HasComponent(InventoryComponentsLookup.InventoryInventory); } }
 
-    public void AddInventoryInventory(int newIndex, int newInventoryModelID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
+    public void AddInventoryInventory(int newIndex, int newInventoryEntityTemplateID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
         var index = InventoryComponentsLookup.InventoryInventory;
         var component = (Inventory.InventoryComponent)CreateComponent(index, typeof(Inventory.InventoryComponent));
         component.Index = newIndex;
-        component.InventoryModelID = newInventoryModelID;
+        component.InventoryEntityTemplateID = newInventoryEntityTemplateID;
         component.Slots = newSlots;
         component.SelectedSlotID = newSelectedSlotID;
         component.Size = newSize;
@@ -23,11 +23,11 @@ public partial class InventoryEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceInventoryInventory(int newIndex, int newInventoryModelID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
+    public void ReplaceInventoryInventory(int newIndex, int newInventoryEntityTemplateID, Inventory.Slot[] newSlots, int newSelectedSlotID, int newSize, Utility.BitSet newSlotsMask) {
         var index = InventoryComponentsLookup.InventoryInventory;
         var component = (Inventory.InventoryComponent)CreateComponent(index, typeof(Inventory.InventoryComponent));
         component.Index = newIndex;
-        component.InventoryModelID = newInventoryModelID;
+        component.InventoryEntityTemplateID = newInventoryEntityTemplateID;
         component.Slots = newSlots;
         component.SelectedSlotID = newSelectedSlotID;
         component.Size = newSize;

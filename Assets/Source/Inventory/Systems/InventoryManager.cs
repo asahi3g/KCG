@@ -6,20 +6,20 @@ namespace Inventory
     public class InventoryManager
     {
         static int uniqueID = 0;
-        public InventoryEntity CreateInventory(int inventoryModelID, string name = "")
+        public InventoryEntity CreateInventory(int InventoryEntityTemplateID, string name = "")
         {
-            var inventoryModel = GameState.InventoryCreationApi.Get(inventoryModelID);
+            var InventoryEntityTemplate = GameState.InventoryCreationApi.Get(InventoryEntityTemplateID);
             var inventoryEntity = GameState.Planet.EntitasContext.inventory.CreateEntity();
             inventoryEntity.AddInventoryID(uniqueID++);
-            if (inventoryModel.HasToolBar)
+            if (InventoryEntityTemplate.HasToolBar)
                 inventoryEntity.hasInventoryToolBarDraw = true;
             
-            int size = inventoryModel.SlotCount;
-            inventoryEntity.AddInventoryInventory(-1, inventoryModelID, new Slot[size], 0, size, new BitSet((uint)size));
+            int size = InventoryEntityTemplate.SlotCount;
+            inventoryEntity.AddInventoryInventory(-1, InventoryEntityTemplateID, new Slot[size], 0, size, new BitSet((uint)size));
 
-            for (int i = 0; i < inventoryModel.Slots.Length; i++)
+            for (int i = 0; i < InventoryEntityTemplate.Slots.Length; i++)
             {
-                int slotID = inventoryModel.Slots[i].SlotID;
+                int slotID = InventoryEntityTemplate.Slots[i].SlotID;
                 if (slotID == -1)
                     continue;
 
@@ -27,7 +27,7 @@ namespace Inventory
                 {
                     ItemID = -1,
                     GridSlotID = i,
-                    Restriction = inventoryModel.Slots[i].Restriction
+                    Restriction = InventoryEntityTemplate.Slots[i].Restriction
                 };
             }
 

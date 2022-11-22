@@ -90,9 +90,9 @@ namespace Mech
             PropertiesArray[CurrentIndex].Action = ItemUsageActionType ;
         }
 
-        public void SetInventory(int inventoryModelID)
+        public void SetInventory(int InventoryEntityTemplateID)
         {
-            PropertiesArray[CurrentIndex].InventoryModelID = inventoryModelID;
+            PropertiesArray[CurrentIndex].InventoryEntityTemplateID = InventoryEntityTemplateID;
             PropertiesArray[CurrentIndex].MechFlags |= MechProperties.Flags.HasInventory;
         }
 

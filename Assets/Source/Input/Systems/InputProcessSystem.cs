@@ -445,8 +445,8 @@ namespace ECSInput
                 {
                     int inventoryID = entity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryInventory.InventoryModelID);
-                    if (!inventoryModel.HasToolBar)
+                    ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(inventory.inventoryInventory.InventoryEntityTemplateID);
+                    if (!InventoryEntityTemplate.HasToolBar)
                         return;
 
                     var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventory.SelectedSlotID);
@@ -473,9 +473,9 @@ namespace ECSInput
             {
                 int inventoryID = entity.agentInventory.InventoryID;
                 InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
-                    inventory.inventoryInventory.InventoryModelID);
-                if (!inventoryModel.HasToolBar)
+                ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
+                    inventory.inventoryInventory.InventoryEntityTemplateID);
+                if (!InventoryEntityTemplate.HasToolBar)
                     return;
 
                 // Get Inventory
@@ -500,7 +500,7 @@ namespace ECSInput
                 }
                 
 
-                for (int i = 0; i < inventoryModel.Width; i++)
+                for (int i = 0; i < InventoryEntityTemplate.Width; i++)
                 {
                     var keyCode = UnityEngine.KeyCode.Alpha1 + i;
                     if (UnityEngine.Input.GetKeyDown(keyCode))

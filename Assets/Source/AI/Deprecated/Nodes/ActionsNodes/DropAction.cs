@@ -22,11 +22,11 @@ namespace Node.Action
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            ref Inventory.InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
-                inventoryEntity.inventoryInventory.InventoryModelID);
+            ref Inventory.InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
+                inventoryEntity.inventoryInventory.InventoryEntityTemplateID);
 
             // Todo: start playing some animation
-            if (inventoryModel.HasToolBar)
+            if (InventoryEntityTemplate.HasToolBar)
             {
                 int selected = inventoryEntity.inventoryInventory.SelectedSlotID;
 

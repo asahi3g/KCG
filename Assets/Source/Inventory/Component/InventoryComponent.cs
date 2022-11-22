@@ -7,7 +7,7 @@ namespace Inventory
     public class InventoryComponent : IComponent
     {
         public int Index;               // Index in inventory list.
-        public int InventoryModelID;
+        public int InventoryEntityTemplateID;
         public Slot[] Slots;
         public int SelectedSlotID;
         public int Size;                // Total number of slots in the inventory.

@@ -21,10 +21,10 @@ namespace Action
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            ref Inventory.InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
-                inventoryEntity.inventoryInventory.InventoryModelID);
+            ref Inventory.InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
+                inventoryEntity.inventoryInventory.InventoryEntityTemplateID);
 
-            if (inventoryModel.HasToolBar)
+            if (InventoryEntityTemplate.HasToolBar)
             {
                 int selected = inventoryEntity.inventoryInventory.SelectedSlotID;
 

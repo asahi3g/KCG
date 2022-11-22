@@ -17,16 +17,16 @@ namespace Inventory
             // Draw tool bar.
             int id = planet.Player.agentInventory.InventoryID;
             InventoryEntity playerInventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(id);
-            DrawInventory(playerInventory, ref GameState.InventoryCreationApi.Get(playerInventory.inventoryInventory.InventoryModelID), true);
+            DrawInventory(playerInventory, ref GameState.InventoryCreationApi.Get(playerInventory.inventoryInventory.InventoryEntityTemplateID), true);
 
             for (int i = 0; i < inventoryList.Length; i++)
             {
                 InventoryEntity inventoryEntity = inventoryList.Get(i);
                 if (!inventoryEntity.hasInventoryDraw)
                     continue;
-                ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
-                    inventoryEntity.inventoryInventory.InventoryModelID);
-                DrawInventory(inventoryEntity, ref inventoryModel, false);
+                ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
+                    inventoryEntity.inventoryInventory.InventoryEntityTemplateID);
+                DrawInventory(inventoryEntity, ref InventoryEntityTemplate, false);
             }
 
             if (InventorySystemsState.MouseHold)
@@ -44,32 +44,32 @@ namespace Inventory
             }
         }
 
-        private void DrawInventory(InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, bool isDrawingToolBar)
+        private void DrawInventory(InventoryEntity inventoryEntity, ref InventoryTemplateData InventoryEntityTemplate, bool isDrawingToolBar)
         {
             // Get Inventory Info.
-            int width = inventoryModel.Width;
-            int height = isDrawingToolBar ? 1 : inventoryModel.Height;
-            Window window = isDrawingToolBar ? inventoryModel.ToolBarWindow : 
-                (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
+            int width = InventoryEntityTemplate.Width;
+            int height = isDrawingToolBar ? 1 : InventoryEntityTemplate.Height;
+            Window window = isDrawingToolBar ? InventoryEntityTemplate.ToolBarWindow : 
+                (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : InventoryEntityTemplate.MainWindow;
                    
             float scaleFactor = (float)UnityEngine.Screen.height / DEFAULT_SCREEN_HIGHT;
             window.Scale(scaleFactor);
 
             // Draw Background.
-            if (inventoryModel.RenderProprieties.HasBackground())
+            if (InventoryEntityTemplate.RenderProprieties.HasBackground())
                 GameState.Renderer.DrawQuadColorGui(window.Position.X, window.Position.Y, window.Size.X, window.Size.Y,
-                    inventoryModel.RenderProprieties.BackgroundColor);
-            if (inventoryModel.RenderProprieties.HasBackgroundTexture())
+                    InventoryEntityTemplate.RenderProprieties.BackgroundColor);
+            if (InventoryEntityTemplate.RenderProprieties.HasBackgroundTexture())
             {
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(
-                    inventoryModel.RenderProprieties.BackGroundSpriteID, Enums.AtlasType.Particle);
+                    InventoryEntityTemplate.RenderProprieties.BackGroundSpriteID, Enums.AtlasType.Particle);
                 GameState.Renderer.DrawSpriteGui(window.Position.X, window.Position.Y, window.Size.X, window.Size.Y, sprite);
             }
 
-            // Draw inventoryModel slots.
+            // Draw InventoryEntityTemplate slots.
             for (int i = 0, length = width * height; i < length; i++)
             {
-                GridSlot gridSlot = inventoryModel.Slots[i];
+                GridSlot gridSlot = InventoryEntityTemplate.Slots[i];
                 
                 if (gridSlot.SlotID == -1)
                     continue;
@@ -77,13 +77,13 @@ namespace Inventory
                 float tilePosX = window.GridPosition.X + (i % width) * window.TileSize;
                 float tilePosY = window.GridPosition.Y + ((length - 1 - i)  / width) * window.TileSize;
             
-                DrawBorder(tilePosX, tilePosY, window.TileSize, window.SlotBorderOffset, i, inventoryEntity, ref inventoryModel, isDrawingToolBar);
+                DrawBorder(tilePosX, tilePosY, window.TileSize, window.SlotBorderOffset, i, inventoryEntity, ref InventoryEntityTemplate, isDrawingToolBar);
            
                 DrawSlot(tilePosX, tilePosY, window.TileSize, window.SlotOffset, scaleFactor, inventoryEntity,
-                    ref inventoryModel, inventoryModel.Slots[i], isDrawingToolBar);
+                    ref InventoryEntityTemplate, InventoryEntityTemplate.Slots[i], isDrawingToolBar);
 
                 // Draw tool bar numbers.
-                if (i < width && inventoryModel.HasToolBar)
+                if (i < width && InventoryEntityTemplate.HasToolBar)
                 {
                     int font = (int)(25f * scaleFactor);
                     float offset = 20f * scaleFactor;
@@ -117,51 +117,51 @@ namespace Inventory
         }
 
         void DrawBorder(float tilePosX, float tilePosY, float tileSize, float borderOffset, 
-            int i, InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, bool isDrawingToolBar)
+            int i, InventoryEntity inventoryEntity, ref InventoryTemplateData InventoryEntityTemplate, bool isDrawingToolBar)
         {
             float sizeX = tileSize - 2 * borderOffset;
             float sizeY = tileSize - 2 * borderOffset;
             float posX = tilePosX + borderOffset;
             float posY = tilePosY + borderOffset;
 
-            if (inventoryModel.RenderProprieties.HasBorder())
+            if (InventoryEntityTemplate.RenderProprieties.HasBorder())
             {
                 if (inventoryEntity.inventoryInventory.SelectedSlotID == i
-                    && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If inventoryModel is open doesn't draw selected border in tool bar.
-                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one inventoryModel at time.
+                    && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw selected border in tool bar.
+                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
                 {
-                    GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, inventoryModel.RenderProprieties.SelectedColor);
+                    GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, InventoryEntityTemplate.RenderProprieties.SelectedColor);
                 }
                 else
-                    GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, inventoryModel.RenderProprieties.SlotColor);
+                    GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, InventoryEntityTemplate.RenderProprieties.SlotColor);
             }
         }
 
         void DrawSlot(float tilePosX, float tilePosY, float tileSize, float slotOffset,
-            float scaleFactor, InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, GridSlot gridSlot, bool isDrawingToolBar)
+            float scaleFactor, InventoryEntity inventoryEntity, ref InventoryTemplateData InventoryEntityTemplate, GridSlot gridSlot, bool isDrawingToolBar)
         {
             float sizeX = tileSize - 2 * slotOffset;
             float sizeY = tileSize - 2 * slotOffset;
             float posX = tilePosX + slotOffset;
             float posY = tilePosY + slotOffset;
 
-            UnityEngine.Color slotColor = inventoryModel.RenderProprieties.SlotColor;
+            UnityEngine.Color slotColor = InventoryEntityTemplate.RenderProprieties.SlotColor;
 
-            if (inventoryModel.RenderProprieties.HasDefaultSlotTexture())
+            if (InventoryEntityTemplate.RenderProprieties.HasDefaultSlotTexture())
             {
-                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(inventoryModel.RenderProprieties.BackGroundSpriteID, Enums.AtlasType.Gui);
+                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(InventoryEntityTemplate.RenderProprieties.BackGroundSpriteID, Enums.AtlasType.Gui);
                 GameState.Renderer.DrawSpriteGui(posX, posY, sizeX, sizeY, sprite);
             }
             else
             {
                 if (gridSlot.SlotID == inventoryEntity.inventoryInventory.SelectedSlotID
-                    && !inventoryModel.RenderProprieties.HasBorder() // If there is no border slot will have selected slot color.
-                    && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If inventoryModel is open doesn't draw slot with selected color in tool bar.
-                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one inventoryModel at time.
+                    && !InventoryEntityTemplate.RenderProprieties.HasBorder() // If there is no border slot will have selected slot color.
+                    && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw slot with selected color in tool bar.
+                    && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
                 {
-                    slotColor = inventoryModel.RenderProprieties.SelectedColor;
+                    slotColor = InventoryEntityTemplate.RenderProprieties.SelectedColor;
                 }
                 GameState.Renderer.DrawQuadColorGui(posX, posY, sizeX, sizeY, slotColor);
             }

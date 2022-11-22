@@ -21,9 +21,9 @@ namespace Node.Action
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryComponent inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
-            ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
+            ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(inventory.InventoryEntityTemplateID);
 
-            if (inventoryModel.HasToolBar)
+            if (InventoryEntityTemplate.HasToolBar)
             {
                 int selectedSlot = inventory.SelectedSlotID;
                 return GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);

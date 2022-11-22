@@ -17,7 +17,7 @@ namespace Mech
         public Flags MechFlags;
 
         public int DropTableID;
-        public int InventoryModelID; // Only used if has inventory.
+        public int InventoryEntityTemplateID; // Only used if has inventory.
         public int Durability;       // Mech "health" Use only if Mech is breakable.
 
         public int TreeHealth;      // Mech "health" Use only if Mech is breakable.
