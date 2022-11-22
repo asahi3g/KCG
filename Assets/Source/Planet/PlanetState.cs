@@ -198,7 +198,7 @@ namespace Planet
 
         public InventoryEntity AddInventory(int inventoryModelID, string name = "")
         {
-            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, name);
+            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, InventoryEntityType.Default, name);
             AddInventory(inventoryEntity);
             return inventoryEntity;
         }

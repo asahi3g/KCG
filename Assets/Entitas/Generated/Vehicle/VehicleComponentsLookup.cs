@@ -8,23 +8,21 @@
 //------------------------------------------------------------------------------
 public static class VehicleComponentsLookup {
 
-    public const int ECSInput = 0;
-    public const int PhysicsBox2DCollider = 1;
-    public const int PhysicsSphere2DCollider = 2;
-    public const int VehicleCapacity = 3;
-    public const int VehicleHeightMap = 4;
-    public const int VehicleID = 5;
-    public const int VehiclePhysicsState2D = 6;
-    public const int VehicleRadar = 7;
-    public const int VehicleSprite2D = 8;
-    public const int VehicleThruster = 9;
-    public const int VehicleThrusterSprite2D = 10;
-    public const int VehicleType = 11;
+    public const int PhysicsBox2DCollider = 0;
+    public const int PhysicsSphere2DCollider = 1;
+    public const int VehicleCapacity = 2;
+    public const int VehicleHeightMap = 3;
+    public const int VehicleID = 4;
+    public const int VehiclePhysicsState2D = 5;
+    public const int VehicleRadar = 6;
+    public const int VehicleSprite2D = 7;
+    public const int VehicleThruster = 8;
+    public const int VehicleThrusterSprite2D = 9;
+    public const int VehicleType = 10;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
-        "ECSInput",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
         "VehicleCapacity",
@@ -39,7 +37,6 @@ public static class VehicleComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(ECSInput.Component),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
         typeof(Vehicle.CapacityComponent),

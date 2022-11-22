@@ -25,7 +25,7 @@ namespace Inventory
                 if (!inventoryEntity.hasInventoryDraw)
                     continue;
                 ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
-                    inventoryEntity.inventoryInventoryEntity.InventoryEntityTemplateID);
+                    inventoryEntity.inventoryInventoryEntity    .InventoryEntityTemplateID);
                 DrawInventory(inventoryEntity, ref InventoryEntityTemplate, false);
             }
 
