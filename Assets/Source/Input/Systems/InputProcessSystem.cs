@@ -478,7 +478,7 @@ namespace ECSInput
                 if (!InventoryEntityTemplate.HasToolBar)
                     return;
 
-                // Get Inventory
+                /// Get Inventory
                 var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventory.SelectedSlotID);
                 if (item == null) return;
                 var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
