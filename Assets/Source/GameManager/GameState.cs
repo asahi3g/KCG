@@ -73,7 +73,7 @@ public static class GameState
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
     public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
-    public static readonly Agent.ProcessStats AgentProcessStats;
+    public static readonly Agent.ProcessState AgentProcessState;
 
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
@@ -235,7 +235,7 @@ public static class GameState
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
-        AgentProcessStats = new Agent.ProcessStats();
+        AgentProcessState = new Agent.ProcessState();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         LineCreationApi = new Collisions.LineCreationApi();

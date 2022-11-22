@@ -38,45 +38,48 @@ namespace GameScreen
 
 
 
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
             {
                 Planet.PlanetManager.Save(GameState.Planet, "generated-maps/big-arena-map.kmap");
                 UnityEngine.Debug.Log("saved!");
             }
 
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F4))
             {
-                GameState.Planet.AddDebris(new Vec2f(120.0f, 15.0f), GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
-                UnityEngine.Debug.Log("spawned ! ");
-            }
+                Vec2f oldPosition = Player.agentPhysicsState.Position;
 
-            /*if (Input.GetKeyDown(KeyCode.F2))
-            {
-                var camera = Camera.main;
-                Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+                var camera = UnityEngine.Camera.main;
+                UnityEngine.Vector3 lookAtPosition = camera.ScreenToWorldPoint(new UnityEngine.Vector3(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2, camera.nearClipPlane));
 
-                planet.Destroy();
-                planet = PlanetManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-                planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                GameState.Planet.Destroy();
+                GameState.Planet = Planet.PlanetManager.Load("generated-maps/big-arena-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
+                GameState.Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                GameState.Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
+                GameState.Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
 
-               planet.InitializeSystems(Material, transform);
+                Player = GameState.Planet.AddAgentAsPlayer(oldPosition);
+                PlayerID = Player.agentID.ID;
+                inventoryID = Player.agentInventory.InventoryID;
 
-               Player = planet.AddPlayer(new Vec2f(3.0f, 20));
-               PlayerID = Player.agentID.ID;
-               inventoryID = Player.agentInventory.InventoryID;
+
+                GameState.Planet.InitializeSystems(Material, Transform);
+
+              
 
                AddItemsToPlayer();
 
-                Debug.Log("loaded!");
-            }*/
+               PlanetTileMap.TileMapGeometry.BuildGeometry(GameState.Planet.TileMap);
+
+                UpdateMode(Player);
+
+                UnityEngine.Debug.Log("loaded!");
+            }
         }
 
         public override void OnGui()
         {
-            GameState.Planet.DrawHUD(Player);
+            //GameState.Planet.DrawHUD(Player);
         }
 
         public override void Init(UnityEngine.Transform sceneTransform)
@@ -135,11 +138,11 @@ namespace GameScreen
             
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
             GameState.Planet.Init(mapSize);
-
+            
             int PlayerFaction = 0;
             int EnemyFaction = 1;
 
-            Player = GameState.Planet.AddPlayer(new Vec2f(120.0f, 15.0f), PlayerFaction);
+            Player = GameState.Planet.AddAgentAsPlayer(new Vec2f(120.0f, 15.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
             PlayerID = Player.agentID.ID;

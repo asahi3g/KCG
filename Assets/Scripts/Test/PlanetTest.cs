@@ -342,7 +342,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 4;
 
-            planet.Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            planet.Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, spawnHeight));
 
             //planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
 

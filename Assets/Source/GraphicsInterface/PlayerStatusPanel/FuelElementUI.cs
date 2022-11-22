@@ -17,9 +17,9 @@ namespace KGUI
             base.Init();
             
             ID = ElementEnums.FuelIndicatorPS;
-            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
+            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel.GetValue() : 0.0f;
 
-            icon.Init(19, 19,"Assets\\StreamingAssets\\UserInterface\\Icons\\Fuel\\hud_status_fuel.png", Enums.AtlasType.Gui);
+            icon.Init(13, 13,"Assets\\StreamingAssets\\UserInterface\\Icons\\hud_status_fuel.png", Enums.AtlasType.Gui);
             progressBar.Init(GameState.GUIManager.ProgressBar, fuelLevel, UnityEngine.UI.Image.FillMethod.Radial360);
         }
 
@@ -27,7 +27,7 @@ namespace KGUI
         {
             base.Update();
             
-            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel : 0.0f;
+            fuelLevel = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Fuel.GetValue() : 0.0f;
             
             if (fuelLevel <= 0)
             {

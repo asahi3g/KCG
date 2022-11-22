@@ -16,8 +16,6 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
-                stats.IsLimping = stats.Health <= 50;
-
                 float epsilon = 4.0f;
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
@@ -308,12 +306,12 @@ namespace Agent
                     physicsState.Velocity.Y = 3.5f;
 
                     // Reduce the fuel and spawn particles
-                    var fuelToFloat = (float)stats.Fuel;
-                    fuelToFloat -= 30.0f * deltaTime;
-                    stats.Fuel = (int)fuelToFloat;
-                    if (stats.Fuel <= 1)
+
+                    stats.Fuel.Remove(30f * deltaTime);
+                    
+                    if (stats.Fuel.GetValue() <= 1f)
                     {
-                        stats.Fuel -= 10;
+                        stats.Fuel.Remove(10f);
                     }
                     planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
 
@@ -321,18 +319,15 @@ namespace Agent
                 }
                 else
                 {
-                    var fuelToFloat = (float)stats.Fuel;
                     // make sure the fuel never goes up more than it should
-                    if (stats.Fuel <= 100)
+                    if (stats.Fuel.GetValue() <= 100f)
                     {
                         // if we are not JetPackFlying, add fuel to the tank
-
-                        fuelToFloat += 30.0f * deltaTime;
-                        stats.Fuel = (int)fuelToFloat;
+                        stats.Fuel.Add(30f * deltaTime);
                     }
                     else
                     {
-                        stats.Fuel = 100;
+                        stats.Fuel.SetAsMax();
                     }
                 }
                 
