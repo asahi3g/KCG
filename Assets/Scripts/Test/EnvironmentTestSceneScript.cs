@@ -170,6 +170,8 @@ namespace Planet.Foreground
                 UnityEngine.Debug.Log("loaded!");
             }
 
+            Draw();
+
 
             CharacterDisplay.Update();
             planet.Update(UnityEngine.Time.deltaTime);
@@ -178,7 +180,7 @@ namespace Planet.Foreground
 
         UnityEngine.Texture2D texture;
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;

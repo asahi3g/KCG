@@ -35,9 +35,11 @@ namespace Planet.Unity
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
+
+            Draw();
         }
         
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;

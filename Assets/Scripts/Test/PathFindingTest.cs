@@ -60,10 +60,12 @@ namespace Planet.Unity
                    SelectedAgent.agentID.ID, goalPos);
             }
 
+            Draw();
+
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
