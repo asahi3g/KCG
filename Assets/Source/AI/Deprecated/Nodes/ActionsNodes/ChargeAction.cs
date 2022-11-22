@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class ChargeAction : NodeBase
     {
-        public override NodeType Type => NodeType.ChargeAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ChargeAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

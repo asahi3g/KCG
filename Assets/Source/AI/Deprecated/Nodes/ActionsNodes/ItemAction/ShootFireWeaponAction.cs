@@ -9,7 +9,7 @@ namespace Node
 {
     public class ShootFireWeaponAction : NodeBase
     {
-        public override NodeType Type => NodeType.ShootFireWeaponAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ShootFireWeaponAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override List<Tuple<string, Type>> RegisterEntries()

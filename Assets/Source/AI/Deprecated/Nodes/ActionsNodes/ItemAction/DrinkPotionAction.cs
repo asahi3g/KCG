@@ -6,7 +6,7 @@ namespace Node
 {
     public class DrinkPotionAction : NodeBase
     {
-        public override NodeType Type => NodeType.DrinkPotionAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.DrinkPotionAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

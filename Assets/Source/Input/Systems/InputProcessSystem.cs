@@ -313,7 +313,7 @@ namespace ECSInput
 
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
-                        if (mechProperties.Action != NodeType.None)
+                        if (mechProperties.Action != ItemUsageActionType .None)
                             GameState.ActionCreationSystem.CreateAction(mechProperties.Action, player.agentID.ID);
                     }
 
@@ -346,7 +346,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(NodeType.ChargeAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, player.agentID.ID);
             }
 
             // Drop Action. 
@@ -354,7 +354,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(NodeType.DropAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, player.agentID.ID);
             }
 
             // Reload Weapon.
@@ -362,7 +362,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(NodeType.ReloadAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
             }
 
             // Shield Action.
@@ -370,7 +370,7 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(NodeType.ShieldAction, player.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, player.agentID.ID);
 
             }
 

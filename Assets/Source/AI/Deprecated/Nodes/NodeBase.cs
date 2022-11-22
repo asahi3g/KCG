@@ -6,7 +6,7 @@ namespace Node
 { 
     public class NodeBase
     {
-        public virtual NodeType Type => NodeType.None;
+        public virtual ItemUsageActionType Type => ItemUsageActionType.None;
         public virtual NodeGroup NodeGroup => NodeGroup.PlayerAction;
 
         // List of blackboard entries used in the node.

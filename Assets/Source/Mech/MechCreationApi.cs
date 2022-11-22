@@ -39,7 +39,7 @@ namespace Mech
             if (CurrentIndex != -1)
             {
                 PropertiesArray[CurrentIndex].Type = type;
-                PropertiesArray[CurrentIndex].Action = NodeType.None;
+                PropertiesArray[CurrentIndex].Action = ItemUsageActionType .None;
                 PropertiesArray[CurrentIndex].Group = MechGroup.None;
             }
         }
@@ -85,9 +85,9 @@ namespace Mech
             PropertiesArray[CurrentIndex].SpriteSize = size;
         }
 
-        public void SetAction(NodeType NodeType)
+        public void SetAction(ItemUsageActionType  ItemUsageActionType )
         {
-            PropertiesArray[CurrentIndex].Action = NodeType;
+            PropertiesArray[CurrentIndex].Action = ItemUsageActionType ;
         }
 
         public void SetInventory(int inventoryModelID)
@@ -242,7 +242,7 @@ namespace Mech
             GameState.LootTableCreationAPI.SetEntry(1, 100);
             GameState.LootTableCreationAPI.End(); GameState.MechCreationApi.SetTexture(Light2Icon); 
             GameState.MechCreationApi.SetTexture(ChestIcon);
-            GameState.MechCreationApi.SetAction(NodeType.OpenChestAction);
+            GameState.MechCreationApi.SetAction(ItemUsageActionType .OpenChestAction);
             GameState.MechCreationApi.SetInventory(GameState.InventoryCreationApi.GetDefaultChestInventoryModelID());
             GameState.MechCreationApi.SetDurability(100);
             GameState.MechCreationApi.SetSpriteSize(new Vec2f(1.5f, 1.5f));

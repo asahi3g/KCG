@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class MaterialPlacementAction : NodeBase
     {
-        public override NodeType Type => NodeType.MaterialPlacementAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.MaterialPlacementAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

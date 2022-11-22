@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class DropAction : NodeBase
     {
-        public override NodeType Type => NodeType.DropAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .DropAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

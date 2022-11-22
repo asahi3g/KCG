@@ -4,7 +4,7 @@ namespace Node
 {
     public class UseShieldAction : NodeBase
     {
-        public override NodeType Type => NodeType.UseShieldAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.UseShieldAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

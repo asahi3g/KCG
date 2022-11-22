@@ -8,7 +8,7 @@ namespace Node
 {
     public class WaterAction : NodeBase
     {
-        public override NodeType Type => NodeType.WaterAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .WaterAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override List<Tuple<string, Type>> RegisterEntries()

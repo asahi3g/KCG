@@ -5,7 +5,7 @@ namespace Node.Action
 {
     public class ShieldAction : NodeBase
     {
-        public override NodeType Type => NodeType.ShieldAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ShieldAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

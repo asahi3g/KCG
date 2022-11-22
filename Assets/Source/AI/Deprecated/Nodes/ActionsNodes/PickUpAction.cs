@@ -8,7 +8,7 @@ namespace Node.Action
 {
     public class PickUpAction : NodeBase
     {
-        public override NodeType Type => NodeType.PickUpAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .PickUpAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
