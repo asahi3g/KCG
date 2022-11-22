@@ -445,7 +445,7 @@ namespace ECSInput
                 {
                     int inventoryID = entity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryInventory.InventoryModelID);
+                    ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryInventory.InventoryModelID);
                     if (!inventoryModel.HasToolBar)
                         return;
 
@@ -473,7 +473,7 @@ namespace ECSInput
             {
                 int inventoryID = entity.agentInventory.InventoryID;
                 InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
                     inventory.inventoryInventory.InventoryModelID);
                 if (!inventoryModel.HasToolBar)
                     return;

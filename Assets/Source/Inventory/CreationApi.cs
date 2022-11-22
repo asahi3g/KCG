@@ -8,7 +8,7 @@ namespace Inventory
     public class CreationApi
     {
         bool Init = false;
-        InventoryModel[] InventoryModels;
+        InventoryTemplateData[] InventoryModels;
         int ArrayLenth = 0;
 
         // Current Inventory info.
@@ -21,7 +21,7 @@ namespace Inventory
         float LeftBorderOffSet;
         float RightBorderOffSet;
 
-        private void InitializeInventory(ref InventoryModel inventory)
+        private void InitializeInventory(ref InventoryTemplateData inventory)
         {
             inventory.RenderProprieties = new RenderProprieties();
             inventory.MainWindow = new Window();
@@ -47,10 +47,10 @@ namespace Inventory
 
         public CreationApi()
         {
-            InventoryModels = new InventoryModel[16];
+            InventoryModels = new InventoryTemplateData[16];
             for (int i = 0; i < InventoryModels.Length; i++)
             {
-                InventoryModels[i] = new InventoryModel();
+                InventoryModels[i] = new InventoryTemplateData();
                 InitializeInventory(ref InventoryModels[i]);
             }
             const int MAX_SIZE_INVENTORY = 256;
@@ -64,10 +64,10 @@ namespace Inventory
 
         public void Expand()
         {
-            Array.Resize<InventoryModel>(ref InventoryModels, InventoryModels.Length * 2);
+            Array.Resize<InventoryTemplateData>(ref InventoryModels, InventoryModels.Length * 2);
             for (int i = ArrayLenth; i < InventoryModels.Length; i++)
             {
-                InventoryModels[i] = new InventoryModel();
+                InventoryModels[i] = new InventoryTemplateData();
                 InitializeInventory(ref InventoryModels[i]);
             }
         }
@@ -89,7 +89,7 @@ namespace Inventory
             CreateDefaultCraftingBenchOutputInventoryTemplate();
         }
 
-        public ref InventoryModel Get(int id)
+        public ref InventoryTemplateData Get(int id)
         {
             if (id < 0 || id >= InventoryModels.Length)
             {

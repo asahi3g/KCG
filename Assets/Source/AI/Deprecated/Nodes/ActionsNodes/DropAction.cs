@@ -22,7 +22,7 @@ namespace Node.Action
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+            ref Inventory.InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
                 inventoryEntity.inventoryInventory.InventoryModelID);
 
             // Todo: start playing some animation

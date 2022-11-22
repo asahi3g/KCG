@@ -42,7 +42,7 @@ namespace Inventory
             for (int i = 0; i < inventoryList.Length; i++)
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
-                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData openInventory = ref GameState.InventoryCreationApi.Get(
                     openInventoryEntity.inventoryInventory.InventoryModelID);
 
                 if (!openInventoryEntity.hasInventoryDraw)
@@ -55,7 +55,7 @@ namespace Inventory
             for (int i = 0; i < inventoryList.Length; i++)
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
-                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData openInventory = ref GameState.InventoryCreationApi.Get(
                     openInventoryEntity.inventoryInventory.InventoryModelID); 
                 
                 if (!openInventory.HasToolBar || !inventoryEntity.hasInventoryToolBarDraw)
@@ -81,7 +81,7 @@ namespace Inventory
             for (int i = 0; i < inventoryList.Length; i++)
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
-                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData openInventory = ref GameState.InventoryCreationApi.Get(
                     openInventoryEntity.inventoryInventory.InventoryModelID);
                 
                 if (!openInventoryEntity.hasInventoryDraw)
@@ -94,7 +94,7 @@ namespace Inventory
             for (int i = 0; i < inventoryList.Length; i++)
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
-                ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData openInventory = ref GameState.InventoryCreationApi.Get(
                     openInventoryEntity.inventoryInventory.InventoryModelID);
 
                 if (!openInventory.HasToolBar || !openInventoryEntity.hasInventoryToolBarDraw)
@@ -121,7 +121,7 @@ namespace Inventory
         }
 
         // Add Item To inventory if mouse is over it.
-        private bool TryAddItemToInv(ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
+        private bool TryAddItemToInv(ref InventoryTemplateData inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
             Window window = isToolBar ? inventoryModel.ToolBarWindow :
                 (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;
@@ -154,7 +154,7 @@ namespace Inventory
             }
         }
 
-        public bool TryPickingUpItemFromInv(ref InventoryModel inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
+        public bool TryPickingUpItemFromInv(ref InventoryTemplateData inventoryModel, InventoryEntity inventoryEntity, Vec2f mousePos, bool isToolBar)
         {
             Window window = isToolBar ? inventoryModel.ToolBarWindow :
                 (inventoryEntity.hasInventoryWindowAdjustment) ? inventoryEntity.inventoryWindowAdjustment.window : inventoryModel.MainWindow;

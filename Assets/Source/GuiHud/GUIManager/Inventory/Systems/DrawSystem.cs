@@ -24,7 +24,7 @@ namespace Inventory
                 InventoryEntity inventoryEntity = inventoryList.Get(i);
                 if (!inventoryEntity.hasInventoryDraw)
                     continue;
-                ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
+                ref InventoryTemplateData inventoryModel = ref GameState.InventoryCreationApi.Get(
                     inventoryEntity.inventoryInventory.InventoryModelID);
                 DrawInventory(inventoryEntity, ref inventoryModel, false);
             }
@@ -44,7 +44,7 @@ namespace Inventory
             }
         }
 
-        private void DrawInventory(InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, bool isDrawingToolBar)
+        private void DrawInventory(InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, bool isDrawingToolBar)
         {
             // Get Inventory Info.
             int width = inventoryModel.Width;
@@ -117,7 +117,7 @@ namespace Inventory
         }
 
         void DrawBorder(float tilePosX, float tilePosY, float tileSize, float borderOffset, 
-            int i, InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, bool isDrawingToolBar)
+            int i, InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, bool isDrawingToolBar)
         {
             float sizeX = tileSize - 2 * borderOffset;
             float sizeY = tileSize - 2 * borderOffset;
@@ -139,7 +139,7 @@ namespace Inventory
         }
 
         void DrawSlot(float tilePosX, float tilePosY, float tileSize, float slotOffset,
-            float scaleFactor, InventoryEntity inventoryEntity, ref InventoryModel inventoryModel, GridSlot gridSlot, bool isDrawingToolBar)
+            float scaleFactor, InventoryEntity inventoryEntity, ref InventoryTemplateData inventoryModel, GridSlot gridSlot, bool isDrawingToolBar)
         {
             float sizeX = tileSize - 2 * slotOffset;
             float sizeY = tileSize - 2 * slotOffset;
