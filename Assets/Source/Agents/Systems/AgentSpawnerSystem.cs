@@ -22,8 +22,6 @@ namespace Agent
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
             entity.isAgentPlayer = true;
-            entity.isECSInput = true;
-            entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
             entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
@@ -235,8 +233,6 @@ namespace Agent
 
                        // entity.agentPhysicsState.Speed = 10.0f;
                         entity.isAgentPlayer = true;
-                        entity.isECSInput = true;
-                        entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
                         if(!entity.hasAgentAction)
                             entity.AddAgentAction(AgentAlertState.UnAlert);

@@ -49,8 +49,7 @@ namespace ECSInput
             ref var planet = ref GameState.Planet;
             Contexts contexts = planet.EntitasContext;
 
-            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
-                AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
+            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             UpdateMainCameraZoom();
 
@@ -68,8 +67,6 @@ namespace ECSInput
             {
 
                 var physicsState = player.agentPhysicsState;
-
-                
 
                 // Jump
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W) && mode == Mode.Agent)
