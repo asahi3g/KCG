@@ -222,6 +222,7 @@ namespace PlanetTileMap
         }
         public void RemoveFrontTile(int x, int y)
         {
+            UnityEngine.Debug.Log("RemoveFrontTile");
             Utils.Assert(IsValid(x, y));
             
             var xChunkIndex = x >> 4;

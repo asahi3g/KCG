@@ -108,6 +108,31 @@ namespace Collisions
             };
         }
 
+        public struct TilesInProximityResult
+        {
+            public int MinX;
+            public int MaxX;
+            public int MinY;
+            public int MaxY;
+        }
+
+        // getting closest tiles for moving box 2d
+        public static TilesInProximityResult GetTilesInProximity(Vec2f position, Vec2f dimensions, Vec2f delta)
+        {
+            Vec2f min = new Vec2f(MathF.Min(position.X, position.X + delta.Y), MathF.Min(position.Y, position.Y + delta.Y));
+            Vec2f max = new Vec2f(MathF.Max(position.X, position.X + delta.Y), MathF.Max(position.Y, position.Y + delta.Y)) + dimensions;
+
+
+            TilesInProximityResult result = new TilesInProximityResult();
+            result.MinX = (int)min.X;
+            result.MaxX = (int)(max.X + 1.0f);
+            result.MinY = (int)min.Y;
+            result.MaxY = (int)(max.Y + 1.0f);
+
+            return result;
+        }
+
+
         public static float CalculateDistanceAABB_AABB(float box1_xmin, float box1_xmax, float box1_ymin, float box1_ymax,
             float box2_xmin, float box2_xmax, float box2_ymin, float box2_ymax, Vec2f velocity)
         {
@@ -345,6 +370,52 @@ namespace Collisions
         }
 
 
+        
+
+    
+        public struct CapsuleCollisionResult
+        {
+            public float MinTime;
+            public Vec2f MinNormal;
+            public Enums.TileGeometryAndRotation GeometryTileShape;
+            public Enums.MaterialType Material;
+
+            public HandleCollisionResult BottomCollision;
+        }
+
+        public static CapsuleCollisionResult CapsuleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
+        {
+            CapsuleCollisionResult result = new CapsuleCollisionResult();
+
+            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
+
+            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
+
+            result.BottomCollision = bottomCollision;
+
+            //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
+
+
+
+            if (bottomCollision.MinTime <= topCollision.MinTime)
+            {
+                result.MinTime = bottomCollision.MinTime;
+                result.MinNormal = bottomCollision.MinNormal;
+                result.GeometryTileShape = bottomCollision.GeometryTileShape;
+                result.Material = bottomCollision.Material;
+            }
+            else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
+            {
+                result.MinTime = topCollision.MinTime;
+                result.MinNormal = topCollision.MinNormal;
+                result.GeometryTileShape = topCollision.GeometryTileShape;
+                result.Material = topCollision.Material;
+            }
+
+
+            return result;
+        }
+
         public static HandleCollisionResult HandleCollisionCircleTop(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
@@ -358,45 +429,61 @@ namespace Collisions
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset + new Vec2f(0.0f, box2dCollider.Size.Y - box2dCollider.Size.X / 2.0f);
            
-           /* int y1 = (int)(colliderPosition.Y + delta.Y);
-            int y2 = (int)(colliderPosition.Y + box2dCollider.Size.Y + delta.Y);
+           var tilesInProximity = GetTilesInProximity(physicsState.PreviousPosition + box2dCollider.Offset, box2dCollider.Size, delta);
 
-            int ymin;
-            int ymax;
-            if (y1 >= y2)
-            {
-                ymin = y2;
-                ymax = y1;
-            }
-            else
-            {
-                ymin = y1;
-                ymax = y2;
-            }
-
-
-            int x1 = (int)(colliderPosition.X + delta.X);
-            int x2 = (int)(colliderPosition.X + box2dCollider.Size.X + delta.X);
-
-            int xmin;
-            int xmax;
-            if (x1 >= x2)
-            {
-                xmin = x2;
-                xmax = x1;
-            }
-            else
-            {
-                xmin = x1;
-                xmax = x2;
-            }*/
-
-          
-           float minTime = 1.0f;
+            float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.TileGeometryAndRotation minShape = 0;
             Enums.MaterialType minMaterial = 0;
 
+
+            for(int y = tilesInProximity.MinY; y <= tilesInProximity.MaxY; y++)
+            {
+                for(int x = tilesInProximity.MinX; x <= tilesInProximity.MaxX; x++)
+                {
+                    if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
+                    {
+                        PlanetTileMap.Tile tile = planet.TileMap.GetTile(x, y);
+                        var tileProperties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                        Enums.TileGeometryAndRotation shape = tileProperties.BlockShapeType;
+                        Enums.MaterialType material = tileProperties.MaterialType;
+
+
+                        if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
+                        {
+                        var adjacencyProperties = GameState.AdjacencyCreationApi.GetProperties(tile.Adjacency);
+                        for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
+                        {
+                            var lineEnum = GameState.AdjacencyCreationApi.GetLine(i);
+
+                            Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);
+                            Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);
+
+                            planet.AddDebugLine(line, UnityEngine.Color.red);
+
+                            // make sure its not a platform
+                            // we cant collide with a platform
+                            if (((shape != Enums.TileGeometryAndRotation.QP_R0 && shape != Enums.TileGeometryAndRotation.QP_R1 && 
+                            shape != Enums.TileGeometryAndRotation.QP_R2 && shape != Enums.TileGeometryAndRotation.QP_R3)))
+                            {
+                                // sweep test for circle line collision
+                                var collisionResult = 
+                                CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
+
+                                // keep the minimum collision
+                                if (collisionResult.Time < minTime)
+                                {
+                                    minTime = collisionResult.Time;
+                                    minNormal = collisionResult.Normal;
+                                    minShape = shape;
+                                    minMaterial = material;
+                                }
+                            }
+                        }
+                        }
+                    }
+                }
+            }
 
             //TODO(Mahdi):
             // 1- do not iterate over all the lines in the tile map
@@ -446,124 +533,6 @@ namespace Collisions
 
         }
 
-        public static HandleCollisionResult RaycastGround(AgentEntity entity, Planet.PlanetState planet)
-        {
-            HandleCollisionResult result = new HandleCollisionResult();
-
-           PlanetTileMap.TileMap tileMap = planet.TileMap;
-
-            var physicsState = entity.agentPhysicsState;
-            var box2dCollider = entity.physicsBox2DCollider;
-           // if (delta.X <= 0) return false;
-
-           Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
-            
-
-            Vec2f pointOfCollision = new Vec2f();
-            Line2D minLine = new Line2D();
-           float minTime = 1.0f;
-            Vec2f minNormal = new Vec2f();
-            Enums.TileGeometryAndRotation minShape = 0;
-            Enums.MaterialType minMaterial = 0;
-
-            for(int i = 0; i < planet.TileMap.GeometryArrayCount; i++)
-            {
-                
-                Line2D line = planet.TileMap.GeometryArray[i].Line;
-                Vec2f normal = planet.TileMap.GeometryArray[i].Normal;
-                Enums.TileGeometryAndRotation shape = planet.TileMap.GeometryArray[i].Shape;
-                Enums.MaterialType material = planet.TileMap.GeometryArray[i].Material;
-
-
-                Vec2f start = colliderPosition + new Vec2f(box2dCollider.Size.X, 1.25f);
-                Vec2f end = start + new Vec2f(0.0f, -1.5f);
-                var rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
-
-                if (rs < minTime)
-                {
-                    minTime = rs;
-                    minNormal = normal;
-                    minShape = shape;
-                    minLine = line;
-                    minMaterial = material;
-                    pointOfCollision = start;
-                }
-
-                /*start = colliderPosition + new Vec2f(box2dCollider.Size.X, box2dCollider.Size.Y * 0.5f);
-                end = start + new Vec2f(0.0f, -1.5f);
-                
-                rs = PointLineCollision.TestCollision(start, new Vec2f(0.0f, -1.5f), line.A, line.B);
-
-                planet.AddDebugLine(new Line2D(start, end), UnityEngine.Color.red);
-                
-                if (rs < minTime)
-                {
-                    minTime = rs;
-                    minNormal = normal;
-                    minShape = shape;
-                    minLine = line;
-                    pointOfCollision = start;
-                }*/
-
-            }
-
-           
-            //planet.AddDebugLine(minLine, UnityEngine.Color.red);
-
-
-            result.MinTime = minTime;
-            result.MinNormal = minNormal;
-            result.GeometryTileShape = minShape;
-            result.Material = minMaterial;
-
-
-            return result;
-
-        }
-
-        public struct CapsuleCollisionResult
-        {
-            public float MinTime;
-            public Vec2f MinNormal;
-            public Enums.TileGeometryAndRotation GeometryTileShape;
-            public Enums.MaterialType Material;
-
-            public HandleCollisionResult BottomCollision;
-        }
-
-        public static CapsuleCollisionResult CapsuleCollision(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
-        {
-            CapsuleCollisionResult result = new CapsuleCollisionResult();
-
-            var bottomCollision = TileCollisions.HandleCollisionCircleBottom(entity,  delta, planet);
-
-            var topCollision = TileCollisions.HandleCollisionCircleTop(entity, delta, planet);
-
-            result.BottomCollision = bottomCollision;
-
-            //var sidesCollidion = TileCollisions.HandleCollisionSides(entity, delta, planet);
-
-
-
-            if (bottomCollision.MinTime <= topCollision.MinTime)
-            {
-                result.MinTime = bottomCollision.MinTime;
-                result.MinNormal = bottomCollision.MinNormal;
-                result.GeometryTileShape = bottomCollision.GeometryTileShape;
-                result.Material = bottomCollision.Material;
-            }
-            else /*if (topCollision.MinTime <= sidesCollidion.MinTime)*/
-            {
-                result.MinTime = topCollision.MinTime;
-                result.MinNormal = topCollision.MinNormal;
-                result.GeometryTileShape = topCollision.GeometryTileShape;
-                result.Material = topCollision.Material;
-            }
-
-
-            return result;
-        }
-
         public static HandleCollisionResult HandleCollisionCircleBottom(AgentEntity entity, Vec2f delta, Planet.PlanetState planet)
         {
             HandleCollisionResult result = new HandleCollisionResult();
@@ -576,45 +545,67 @@ namespace Collisions
             if (delta.X == 0 && delta.Y == 0) return result;
 
            Vec2f colliderPosition = physicsState.PreviousPosition + box2dCollider.Offset;
+
+           var tilesInProximity = GetTilesInProximity(physicsState.PreviousPosition + box2dCollider.Offset, box2dCollider.Size, delta);
             
-            /*int y1 = (int)(colliderPosition.Y + delta.Y);
-            int y2 = (int)(colliderPosition.Y + box2dCollider.Size.Y + delta.Y);
-
-            int ymin;
-            int ymax;
-            if (y1 >= y2)
-            {
-                ymin = y2;
-                ymax = y1;
-            }
-            else
-            {
-                ymin = y1;
-                ymax = y2;
-            }
-
-
-            int x1 = (int)(colliderPosition.X + delta.X);
-            int x2 = (int)(colliderPosition.X + box2dCollider.Size.X + delta.X);
-
-            int xmin;
-            int xmax;
-            if (x1 >= x2)
-            {
-                xmin = x2;
-                xmax = x1;
-            }
-            else
-            {
-                xmin = x1;
-                xmax = x2;
-            }*/
-
-    
             float minTime = 1.0f;
             Vec2f minNormal = new Vec2f();
             Enums.TileGeometryAndRotation minShape = 0;
             Enums.MaterialType minMaterial = 0;
+
+
+
+            for(int y = tilesInProximity.MinY; y <= tilesInProximity.MaxY; y++)
+            {
+                for(int x = tilesInProximity.MinX; x <= tilesInProximity.MaxX; x++)
+                {
+                    if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
+                    {
+                        PlanetTileMap.Tile tile = planet.TileMap.GetTile(x, y);
+                        var tileProperties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                        Enums.TileGeometryAndRotation shape = tileProperties.BlockShapeType;
+                        Enums.MaterialType material = tileProperties.MaterialType;
+
+
+
+
+                        if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
+                        {
+                                                //    UnityEngine.Debug.Log("tile " + tile.FrontTileID + " adjacency " + tile.Adjacency);
+                        var adjacencyProperties = GameState.AdjacencyCreationApi.GetProperties(tile.Adjacency);
+                        for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
+                        {
+                            var lineEnum = GameState.AdjacencyCreationApi.GetLine(i);
+
+                            Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);
+                            Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);
+
+                            planet.AddDebugLine(line, UnityEngine.Color.red);
+
+                            // if its a platform
+                            // only collide when going downwards
+                            if (!(delta.Y >= 0.0f && (shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
+                            shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3)))
+                            {
+
+                                // circle line sweep test
+                                var collisionResult = 
+                                CircleLineCollision.TestCollision(colliderPosition + box2dCollider.Size.X / 2.0f, box2dCollider.Size.X / 2.0f, delta, line.A, line.B);
+
+                                if (collisionResult.Time < minTime)
+                                {
+                                    minTime = collisionResult.Time;
+                                    minNormal = normal;// collisionResult.Normal;
+                                    minShape = shape;
+                                    minMaterial = material;
+                                }
+                            }
+                        }
+                        }
+                    }
+                }
+            }
+
 
             //TODO(Mahdi):
             // 1- do not iterate over all the lines in the tile map

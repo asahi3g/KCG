@@ -3,6 +3,9 @@ namespace Enums
 
     public enum TileGeometryAndRotationAndAdjacency
     {
+        // Adjacency is (Right Left Top Bottom)
+        // Example: A0101 Means Right=0, Left=1, Top=0, Bottom=1
+        
         Error,
         
         SB_R0_A0000,

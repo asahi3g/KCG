@@ -32,7 +32,7 @@ class BigArena : UnityEngine.MonoBehaviour
 
     private void OnDrawGizmos()
     {
-      
+       Screen.OnDrawGizmos();
     }
 
 }

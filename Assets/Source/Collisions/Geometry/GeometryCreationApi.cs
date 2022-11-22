@@ -15,13 +15,13 @@ namespace Collisions
 
         private int LineOffset;
         private int LineCount;
-        private TileLineSegment[] SegmentArray;
+        private GeometryLineProperty[] SegmentArray;
 
 
         public GeometryCreationApi()
         {
             PropertiesArray = new GeometryProperties[256];
-            SegmentArray = new TileLineSegment[1024];
+            SegmentArray = new GeometryLineProperty[1024];
             
 
             CurrentIndex = 0;
@@ -49,14 +49,21 @@ namespace Collisions
         {
              Utility.Utils.Assert((int)index >= 0 && (int)index < SegmentArray.Length);
 
-             return SegmentArray[index];
+             return SegmentArray[index].Line;
+        }
+
+        public GeometryLineSide GetSide(int index)
+        {
+            Utility.Utils.Assert((int)index >= 0 && (int)index < SegmentArray.Length);
+
+             return SegmentArray[index].Side;
         }
 
         public void Create(Enums.TileGeometryAndRotation Id)
         {
             if ((int)Id + 1 >= PropertiesArray.Length)
             {
-                Array.Resize(ref PropertiesArray, PropertiesArray.Length * 2);
+                Array.Resize(ref PropertiesArray, PropertiesArray.Length + 1024);
             }
 
             CurrentIndex = (int)Id;
@@ -65,14 +72,15 @@ namespace Collisions
         
 
         
-        public void AddLine(TileLineSegment line)
+        public void AddLine(TileLineSegment line, GeometryLineSide side = GeometryLineSide.Right)
         {
             if ((int)line >= SegmentArray.Length)
             {
                 Array.Resize(ref SegmentArray, SegmentArray.Length * 2);
             }
 
-            SegmentArray[LineOffset++] = line;
+            SegmentArray[LineOffset].Side = side;
+            SegmentArray[LineOffset++].Line = line;
             LineCount++;
         }
 
@@ -88,10 +96,10 @@ namespace Collisions
         public void InitializeResources()
         {
             GameState.GeometryCreationApi.Create(Enums.TileGeometryAndRotation.SB_R0);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3);
-            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0);
+            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C0_C1, GeometryLineSide.Top);
+            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C1_C2, GeometryLineSide.Right);
+            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C2_C3, GeometryLineSide.Bottom);
+            GameState.GeometryCreationApi.AddLine(TileLineSegment.L_C3_C0, GeometryLineSide.Left);
             GameState.GeometryCreationApi.End();
 
 

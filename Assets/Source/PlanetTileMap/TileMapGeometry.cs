@@ -52,7 +52,7 @@ namespace PlanetTileMap
             tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(tileMap.MapSize.X, tileMap.MapSize.Y), new KMath.Vec2f(0.0f, tileMap.MapSize.Y)), new KMath.Vec2f(0.0f, -1.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
             tileMap.AddGeometryLine(new KMath.Line2D(new KMath.Vec2f(0.0f, tileMap.MapSize.Y), new KMath.Vec2f(0.0f, 0.0f)), new KMath.Vec2f(1.0f, 0.0f), Enums.TileGeometryAndRotation.Error, Enums.MaterialType.Metal);
 
-            for(int j = 0; j < tileMap.MapSize.Y; j++)
+            /*for(int j = 0; j < tileMap.MapSize.Y; j++)
             {
                 for(int i = 0; i < tileMap.MapSize.X; i++)
                 {
@@ -689,18 +689,6 @@ namespace PlanetTileMap
                             bool leftLine = true;
 
 
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
-                            {
-                                rightLine = false;
-                            }
-
-                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment. L_C1_M1))
-                            {
-                                bottomLine = false;
-                            }*/
-
                             if (bottomLine)
                             {
                                 tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
@@ -779,17 +767,6 @@ namespace PlanetTileMap
                             bool leftLine = true;
 
 
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
-                            {
-                                rightLine = false;
-                            }
-
-                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment. L_C1_M1))
-                            {
-                                bottomLine = false;
-                            }*/
 
                             if (topLine)
                             {
@@ -822,18 +799,6 @@ namespace PlanetTileMap
                             bool leftLine = true;
 
 
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
-                            {
-                                rightLine = false;
-                            }
-
-                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment. L_C1_M1))
-                            {
-                                bottomLine = false;
-                            }*/
-
                             if (topLine)
                             {
                                 tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
@@ -862,18 +827,6 @@ namespace PlanetTileMap
                             bool rightLine = true;
                             bool leftLine = true;
 
-
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
-                            {
-                                rightLine = false;
-                            }
-
-                            Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
-                            if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C1_M1, Collisions.TileLineSegment. L_C1_M1))
-                            {
-                                bottomLine = false;
-                            }*/
 
                             if (topLine)
                             {
@@ -967,12 +920,6 @@ namespace PlanetTileMap
                             bool topLine = true;
 
 
-                           /* Enums.TileGeometryAndRotation rightGeometry = tileMap.GetFrontTileGeometry(i + 1, j);
-                            if (FindLine(rightGeometry, Collisions.TileLineSegment.L_C3_C0, Collisions.TileLineSegment.L_C0_C3))
-                            {
-                                rightLine = false;
-                            }*/
-
                             Enums.TileGeometryAndRotation bottomGeometry = tileMap.GetFrontTileGeometry(i, j - 1);
                             if (FindLine(bottomGeometry, Collisions.TileLineSegment.L_C2_C3, Collisions.TileLineSegment.L_C3_C2))
                             {
@@ -1064,7 +1011,7 @@ namespace PlanetTileMap
                         
                     }
                 }
-            }
+            }*/
         }
     }
 }

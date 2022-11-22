@@ -12,6 +12,9 @@ namespace Collisions
         private int CurrentIndex;
         private LineProperties[] PropertiesArray;
 
+        private int CurrentMatchOffset;
+        private TileLineSegment[] MatchArray;
+
         public LineCreationApi()
         {
             PropertiesArray = new LineProperties[1024];
@@ -20,6 +23,9 @@ namespace Collisions
                 PropertiesArray[i] = new LineProperties();
             }
             CurrentIndex = -1;
+
+            MatchArray = new TileLineSegment[1024];
+            CurrentMatchOffset = 0;
         }
 
         public void InitStage1()
@@ -47,6 +53,7 @@ namespace Collisions
 
             return new Line2D();
         }
+        
 
         public Vec2f GetNormal(TileLineSegment Id)
         {
@@ -57,6 +64,17 @@ namespace Collisions
 
             return new Vec2f();
         }
+
+        public LineProperties GetLineProperties(TileLineSegment Id)
+        {
+            if ((int)Id >= 0 && (int)Id < PropertiesArray.Length)
+            {
+                return PropertiesArray[(int)Id];
+            }
+
+            return new LineProperties();
+        }
+
         public void Create(TileLineSegment Id, Vec2f pointA, Vec2f pointB, Vec2f Normal)
         {
             while ((int)Id >= PropertiesArray.Length)
@@ -69,7 +87,26 @@ namespace Collisions
             {
                 PropertiesArray[CurrentIndex].Line = new Line2D(pointA, pointB);
                 PropertiesArray[CurrentIndex].Normal = Normal;   
+                PropertiesArray[CurrentIndex].MatchOffset = CurrentMatchOffset;
             }
+        }
+
+        public void AddMatch(TileLineSegment Match)
+        {
+            if (CurrentMatchOffset + 1 >= MatchArray.Length)
+            {
+                Array.Resize(ref MatchArray, MatchArray.Length + 1024);
+            }
+
+            MatchArray[CurrentMatchOffset++] = Match;
+            PropertiesArray[CurrentIndex].MatchCount++;
+        }
+
+        public TileLineSegment GetMatch(int index)
+        {
+            Utility.Utils.Assert((int)index >= 0 && (int)index < MatchArray.Length);
+
+            return MatchArray[index];
         }
 
 
@@ -87,9 +124,21 @@ namespace Collisions
             Vec2f M3 = GameState.PointCreationApi.GetPoint(TilePoint.M3);
 
             GameState.LineCreationApi.Create(TileLineSegment.L_C0_C1, C0 + new Vec2f(epsilon, epsilon), C1 + new Vec2f(-epsilon, epsilon), new Vec2f(0.0f, 1.0f));
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C2_C3);
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C3_C2);
+
             GameState.LineCreationApi.Create(TileLineSegment.L_C1_C2, C1 + new Vec2f(epsilon, -epsilon), C2 + new Vec2f(epsilon, epsilon), new Vec2f(1.0f, 0.0f));
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C3_C0);
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C0_C3);
+
             GameState.LineCreationApi.Create(TileLineSegment.L_C2_C3, C2 + new Vec2f(-epsilon, -epsilon), C3 + new Vec2f(epsilon, -epsilon), new Vec2f(0.0f, -1.0f));
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C0_C1);
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C1_C0);
+
             GameState.LineCreationApi.Create(TileLineSegment.L_C3_C0, C3 + new Vec2f(-epsilon, epsilon), C0 + new Vec2f(-epsilon, -epsilon), new Vec2f(-1.0f, 0.0f));
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C1_C2);
+            GameState.LineCreationApi.AddMatch(TileLineSegment.L_C2_C1);
+
 
             GameState.LineCreationApi.Create(TileLineSegment.L_C0_M0, C0, M0, new Vec2f(0.0f, 1.0f)); 
             GameState.LineCreationApi.Create(TileLineSegment.L_M0_M2, M0, M2, new Vec2f(1.0f, 0.0f)); 

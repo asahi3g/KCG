@@ -82,6 +82,12 @@ namespace GameScreen
             //GameState.Planet.DrawHUD(Player);
         }
 
+        public override void OnDrawGizmos()
+        {
+            base.OnDrawGizmos();
+            GameState.Planet.DrawDebugEx();
+        }
+
         public override void Init(UnityEngine.Transform sceneTransform)
         {
             Transform = sceneTransform;

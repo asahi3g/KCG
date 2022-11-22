@@ -34,7 +34,7 @@ namespace Agent
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
         
-            float epsilon = 0.1f;
+            float epsilon = Physics.Constants.CollisionEpsilon;
 
 
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);

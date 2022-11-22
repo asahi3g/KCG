@@ -82,6 +82,8 @@ public static class GameState
     public static readonly Collisions.PointCreationApi PointCreationApi;
     public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
 
+    public static readonly Collisions.AdjacencyCreationApi AdjacencyCreationApi;
+
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
     public static readonly Inventory.InventoryManager InventoryManager;
@@ -178,6 +180,7 @@ public static class GameState
         PointCreationApi.InitStage1();
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
+        AdjacencyCreationApi.InitStage1();
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
     }
@@ -190,6 +193,7 @@ public static class GameState
         PointCreationApi.InitStage2();
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
+        AdjacencyCreationApi.InitStage2();
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
     }
@@ -241,6 +245,7 @@ public static class GameState
         LineCreationApi = new Collisions.LineCreationApi();
         PointCreationApi = new Collisions.PointCreationApi();
         GeometryCreationApi = new Collisions.GeometryCreationApi();
+        AdjacencyCreationApi = new Collisions.AdjacencyCreationApi();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem();
