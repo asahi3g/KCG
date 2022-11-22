@@ -1,7 +1,7 @@
 ﻿namespace Inventory
 {
     // Todo: Allow personalize toolbar.
-    public struct InventoryModel
+    public struct InventoryTemplateData
     {
         public int ID;
         public bool HasToolBar;

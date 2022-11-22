@@ -54,15 +54,6 @@ public class GameManager : UnityEngine.MonoBehaviour
     {
         //Note: Not Used right now
     }
-    
-    
-    //Documentation: https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnGUI.html 
-    //OnGUI is called for rendering and handling GUI events.
-    //OnGUI is the only function that can implement the "Immediate Mode" GUI (IMGUI) system for rendering and handling GUI events.
-    private void OnGUI()
-    {
-        //Note: Not used right now
-    }
 
     //Documentation: https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnDisable.html
     //This function is called when the behaviour becomes disabled.

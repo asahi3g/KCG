@@ -6,7 +6,7 @@ namespace Node.Action
 {
     public class ToolActionPlaceChest : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionPlaceChest;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionPlaceChest;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

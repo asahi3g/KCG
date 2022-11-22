@@ -7,7 +7,7 @@ namespace Node
 {
     public class PickaxeAction : NodeBase
     {
-        public override NodeType Type => NodeType.PickaxeAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .PickaxeAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)

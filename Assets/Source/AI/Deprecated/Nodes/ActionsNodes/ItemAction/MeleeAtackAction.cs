@@ -8,7 +8,7 @@ namespace Node
 {
     public class MeleeAtackAction : NodeBase
     {
-        public override NodeType Type => NodeType.MeleeAttackAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.MeleeAttackAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

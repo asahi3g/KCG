@@ -6,7 +6,7 @@ namespace Node
 {
     public class ToolActionPlaceParticleEmitter : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionPlaceParticleEmitter;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionPlaceParticleEmitter;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

@@ -5,7 +5,7 @@ namespace Node
 {
     public class ToolActionRemoveMech : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionRemoveMech;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionRemoveMech;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

@@ -48,9 +48,11 @@ namespace Planet.Unity
 
             MaterialBag.hasInventoryDraw =
                 planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;

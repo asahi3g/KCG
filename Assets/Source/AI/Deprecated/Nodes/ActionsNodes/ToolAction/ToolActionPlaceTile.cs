@@ -6,7 +6,7 @@ namespace Node
 {
     public class ToolActionPlaceTile : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionPlaceTile;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionPlaceTile;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

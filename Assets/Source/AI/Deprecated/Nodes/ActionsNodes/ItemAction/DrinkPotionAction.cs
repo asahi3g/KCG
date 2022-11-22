@@ -6,7 +6,7 @@ namespace Node
 {
     public class DrinkPotionAction : NodeBase
     {
-        public override NodeType Type => NodeType.DrinkPotionAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.DrinkPotionAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
@@ -29,7 +29,7 @@ namespace Node
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
 
                             for (int i = 0; i < Slots.Length; i++)
                             {

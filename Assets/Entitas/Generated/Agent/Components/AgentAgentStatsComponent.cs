@@ -11,25 +11,25 @@ public partial class AgentEntity {
     public Agent.StatsComponent agentStats { get { return (Agent.StatsComponent)GetComponent(AgentComponentsLookup.AgentStats); } }
     public bool hasAgentStats { get { return HasComponent(AgentComponentsLookup.AgentStats); } }
 
-    public void AddAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel) {
+    public void AddAgentStats(ContainerInt newHealth, ContainerFloat newFood, ContainerFloat newWater, ContainerFloat newOxygen, ContainerFloat newFuel) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
-        component.Health.Set(newHealth);
-        component.Food.Set(newFood);
-        component.Water.Set(newWater);
-        component.Oxygen.Set(newOxygen);
-        component.Fuel.Set(newFuel);
+        component.Health = newHealth;
+        component.Food = newFood;
+        component.Water = newWater;
+        component.Oxygen = newOxygen;
+        component.Fuel = newFuel;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentStats(int newHealth, float newFood, float newWater, float newOxygen, float newFuel) {
+    public void ReplaceAgentStats(ContainerInt newHealth, ContainerFloat newFood, ContainerFloat newWater, ContainerFloat newOxygen, ContainerFloat newFuel) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
-        component.Health.Set(newHealth);
-        component.Food.Set(newFood);
-        component.Water.Set(newWater);
-        component.Oxygen.Set(newOxygen);
-        component.Fuel.Set(newFuel);
+        component.Health = newHealth;
+        component.Food = newFood;
+        component.Water = newWater;
+        component.Oxygen = newOxygen;
+        component.Fuel = newFuel;
         ReplaceComponent(index, component);
     }
 

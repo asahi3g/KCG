@@ -7,7 +7,7 @@ namespace Node
 {
     public class ShootPulseWeaponAction : NodeBase
     {
-        public override NodeType Type => NodeType.ShootPulseWeaponAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ShootPulseWeaponAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

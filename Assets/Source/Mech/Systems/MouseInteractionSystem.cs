@@ -69,7 +69,7 @@ namespace Mech
                 var proprieties = planet.MechList.Get(i).GetProperties();
                 string str;
 
-                if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.NodeType.None)
+                if (Vec2f.Distance(pos, playerPos) < 2.0f && proprieties.Action != Enums.ItemUsageActionType .None)
                 {
                     string nodeDescription = "";
                     str = "Press E to " + (!(nodeDescription.Length == 0) ?

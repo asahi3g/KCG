@@ -20,12 +20,12 @@ namespace Item
                 ItemParticleEntity itemParticle = planet.ItemParticleList.Get(i);
 
                 // Update unpickable items.
-                if (itemParticle.hasItemUnpickable)
+                if (itemParticle.hasItemItemParticleAttributeUnpickable)
                 {
-                    itemParticle.itemUnpickable.Duration += Time.deltaTime;
+                    itemParticle.itemItemParticleAttributeUnpickable.Duration += Time.deltaTime;
                     const float Unpickable_State_Duration = 2.0f; // How long item stays unpickable after dropped.
-                    if (itemParticle.itemUnpickable.Duration >= Unpickable_State_Duration)
-                        itemParticle.RemoveItemUnpickable();
+                    if (itemParticle.itemItemParticleAttributeUnpickable.Duration >= Unpickable_State_Duration)
+                        itemParticle.RemoveItemItemParticleAttributeUnpickable();
                     continue;
                 }
 
@@ -41,7 +41,7 @@ namespace Item
                     if (!agent.agentInventory.AutoPick)
                         continue;
 
-                    GameState.ActionCreationSystem.CreateAction(Enums.NodeType.PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
+                    GameState.ActionCreationSystem.CreateAction(Enums.ItemUsageActionType .PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
                 }
             }
         }

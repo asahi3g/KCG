@@ -6,7 +6,7 @@ namespace Node
 {
     public class ToolActionRemoveTile : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionRemoveTile;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionRemoveTile;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

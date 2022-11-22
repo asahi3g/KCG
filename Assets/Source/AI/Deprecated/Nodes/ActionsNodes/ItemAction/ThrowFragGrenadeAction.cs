@@ -7,7 +7,7 @@ namespace Node
 {
     public class ThrowFragGrenadeAction : NodeBase
     {
-        public override NodeType Type => NodeType.ThrowFragGrenadeAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ThrowFragGrenadeAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

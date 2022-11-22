@@ -6,7 +6,7 @@ namespace Node
 {
     public class ToolActionMiningLaser : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionMiningLaser;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionMiningLaser;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

@@ -9,7 +9,7 @@ namespace Node
 {
     public class PlantAction : NodeBase
     {
-        public override NodeType Type => NodeType.PlantAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .PlantAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override List<Tuple<string, Type>> RegisterEntries()

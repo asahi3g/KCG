@@ -4,7 +4,7 @@ namespace Node
 {
     public class ToolActionPotion : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionPotion;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionPotion;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

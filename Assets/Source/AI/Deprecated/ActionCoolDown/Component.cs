@@ -8,7 +8,7 @@ namespace ActionCoolDown
     public struct Component : IComponent
     {
         [EntityIndex]
-        public Enums.NodeType TypeID;
+        public Enums.ItemUsageActionType  TypeID;
         [EntityIndex]
         public int AgentID;
     }

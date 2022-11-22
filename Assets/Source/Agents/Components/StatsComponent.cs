@@ -7,11 +7,11 @@ namespace Agent
     public class StatsComponent : IComponent
     {
 
-        public readonly ContainerInt Health = new ContainerInt(100, 0, 100);
-        public readonly ContainerFloat Food = new ContainerFloat(100f, 0f, 100f);
-        public readonly ContainerFloat Water = new ContainerFloat(100f, 0f, 100f);
-        public readonly ContainerFloat Oxygen = new ContainerFloat(100f, 0f, 100f);
-        public readonly ContainerFloat Fuel = new ContainerFloat(100f, 0f, 100f);
+        public ContainerInt Health = new ContainerInt(100, 0, 100);
+        public ContainerFloat Food = new ContainerFloat(100f, 0f, 100f);
+        public ContainerFloat Water = new ContainerFloat(100f, 0f, 100f);
+        public ContainerFloat Oxygen = new ContainerFloat(100f, 0f, 100f);
+        public ContainerFloat Fuel = new ContainerFloat(100f, 0f, 100f);
 
         public bool IsLimping => Health.GetValue() <= 50.0f;
         
