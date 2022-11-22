@@ -25,7 +25,7 @@ namespace Item
                 entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
 
             if (weaponProperty.HasCharge())
-                entity.AddItemFireWeaponCharge(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
+                entity.AddItemFireWeaponChargedWeapon(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
                     weaponProperty.ChargePerShot, weaponProperty.ChargeMin, weaponProperty.ChargeMax);
 
             ItemID++;

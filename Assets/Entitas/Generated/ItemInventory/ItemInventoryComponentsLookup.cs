@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 public static class ItemInventoryComponentsLookup {
 
-    public const int ItemFireWeaponCharge = 0;
+    public const int ItemFireWeaponChargedWeapon = 0;
     public const int ItemFireWeaponClip = 1;
     public const int ItemID = 2;
     public const int ItemInventory = 3;
@@ -22,7 +22,7 @@ public static class ItemInventoryComponentsLookup {
     public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
-        "ItemFireWeaponCharge",
+        "ItemFireWeaponChargedWeapon",
         "ItemFireWeaponClip",
         "ItemID",
         "ItemInventory",
@@ -35,7 +35,7 @@ public static class ItemInventoryComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Item.FireWeapon.ChargeComponent),
+        typeof(Item.FireWeapon.ChargedWeaponComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.IDComponent),
         typeof(Item.InventoryComponent),

@@ -41,7 +41,7 @@ namespace Node.Action
                 return;
             }
             
-            bool isChargable = itemEntity.hasItemFireWeaponCharge;
+            bool isChargable = itemEntity.hasItemFireWeaponChargedWeapon;
             if (isChargable)
             {
                 nodeEntity.nodeExecution.State = NodeState.Running;
@@ -54,9 +54,9 @@ namespace Node.Action
         {
             ItemInventoryEntity itemEntity = GetItem(nodeEntity);
 
-            if (itemEntity.itemFireWeaponCharge.ChargeRate < itemEntity.itemFireWeaponCharge.ChargeMax)
+            if (itemEntity.itemFireWeaponChargedWeapon.ChargeRate < itemEntity.itemFireWeaponChargedWeapon.ChargeMax)
             {
-                itemEntity.itemFireWeaponCharge.ChargeRate += itemEntity.itemFireWeaponCharge.ChargeRatio;
+                itemEntity.itemFireWeaponChargedWeapon.ChargeRate += itemEntity.itemFireWeaponChargedWeapon.ChargeRatio;
                 nodeEntity.nodeExecution.State = NodeState.Success;
             }
         }
@@ -68,10 +68,10 @@ namespace Node.Action
 
             float tempCharge = 0.0f;
 
-            if(itemEntity.hasItemFireWeaponCharge)
-                tempCharge = itemEntity.itemFireWeaponCharge.ChargeRate;
+            if(itemEntity.hasItemFireWeaponChargedWeapon)
+                tempCharge = itemEntity.itemFireWeaponChargedWeapon.ChargeRate;
 
-            float difference = itemEntity.itemFireWeaponCharge.ChargeRate - tempCharge;
+            float difference = itemEntity.itemFireWeaponChargedWeapon.ChargeRate - tempCharge;
             if (nodeEntity.nodeExecution.State == NodeState.Fail)
             {
                 UnityEngine.Debug.Log("Reload Failed.");

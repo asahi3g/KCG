@@ -9,7 +9,7 @@
 public static class ItemParticleComponentsLookup {
 
     public const int ItemDrawPosition2D = 0;
-    public const int ItemFireWeaponCharge = 1;
+    public const int ItemFireWeaponChargedWeapon = 1;
     public const int ItemFireWeaponClip = 2;
     public const int ItemID = 3;
     public const int ItemItemParticleAttributeUnpickable = 4;
@@ -24,7 +24,7 @@ public static class ItemParticleComponentsLookup {
 
     public static readonly string[] componentNames = {
         "ItemDrawPosition2D",
-        "ItemFireWeaponCharge",
+        "ItemFireWeaponChargedWeapon",
         "ItemFireWeaponClip",
         "ItemID",
         "ItemItemParticleAttributeUnpickable",
@@ -38,7 +38,7 @@ public static class ItemParticleComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(Item.DrawPosition2DComponent),
-        typeof(Item.FireWeapon.ChargeComponent),
+        typeof(Item.FireWeapon.ChargedWeaponComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.IDComponent),
         typeof(Item.ItemParticleAttributeUnpickableComponent),
