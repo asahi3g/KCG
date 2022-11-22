@@ -3,7 +3,7 @@ using Entitas;
 namespace Item.FireWeapon
 {
     [ItemParticle, ItemInventory]
-    public class ChargeComponent : IComponent
+    public class ChargedWeaponComponent : IComponent
     {
         public bool CanCharge;
         public float ChargeRate;

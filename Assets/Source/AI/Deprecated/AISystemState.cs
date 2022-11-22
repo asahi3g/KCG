@@ -14,14 +14,14 @@ namespace AI
         {
             CreateNodes();
         }
-        public static NodeGroup GetNodeGroup(NodeType type)
+        public static NodeGroup GetNodeGroup(ItemUsageActionType  type)
         {
             return Nodes[(int)type].NodeGroup;
         }
 
         static void CreateNodes()
         {
-            int length = Enum.GetNames(typeof(NodeType)).Length - 1;
+            int length = Enum.GetNames(typeof(ItemUsageActionType )).Length - 1;
             Nodes = new NodeBase[length];
 
             foreach (Type type in Assembly.GetAssembly(typeof(NodeBase)).GetTypes()

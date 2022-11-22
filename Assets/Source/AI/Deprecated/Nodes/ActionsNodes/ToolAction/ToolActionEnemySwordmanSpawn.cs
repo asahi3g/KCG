@@ -6,7 +6,7 @@ namespace Node.Action
 {
     public class ToolActionEnemySwordmanSpawn : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionEnemySwordmanSpawn;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionEnemySwordmanSpawn;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

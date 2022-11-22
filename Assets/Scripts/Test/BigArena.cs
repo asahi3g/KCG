@@ -22,10 +22,12 @@ class BigArena : UnityEngine.MonoBehaviour
     {
         Screen.Update();
         Screen.Draw();
+
+        Draw();
     }
 
 
-    private void OnGUI()
+    private void Draw()
     {
         Screen.OnGui(); 
     }

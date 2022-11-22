@@ -16,7 +16,7 @@ namespace Item
             Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
 
             var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
-            entity.AddItemID(ItemID, -1);
+            entity.AddItemID(ItemID, -1, "");
             entity.AddItemType(itemType);
             entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
@@ -25,7 +25,7 @@ namespace Item
                 entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
 
             if (weaponProperty.HasCharge())
-                entity.AddItemFireWeaponCharge(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
+                entity.AddItemFireWeaponChargedWeapon(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
                     weaponProperty.ChargePerShot, weaponProperty.ChargeMin, weaponProperty.ChargeMax);
 
             ItemID++;
@@ -38,8 +38,8 @@ namespace Item
         {
             var entity = SpawnItemParticle(itemInventoryEntity.itemType.Type, pos);
 
-            if(itemInventoryEntity.hasItemLabel)
-                entity.AddItemLabel(itemInventoryEntity.itemLabel.ItemName);
+            if (entity.hasItemID)
+                entity.itemID.ItemName = itemInventoryEntity.itemID.ItemName;
 
             if(itemInventoryEntity.hasItemStack)
                 entity.AddItemStack(itemInventoryEntity.itemStack.Count);
@@ -60,7 +60,7 @@ namespace Item
             FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = GameState.Planet.EntitasContext.itemInventory.CreateEntity();
-            entity.AddItemID(ItemID, -1);
+            entity.AddItemID(ItemID, -1, "");
             entity.AddItemType(itemType);
 
             if (itemProperty.IsPlacementTool())
@@ -96,8 +96,8 @@ namespace Item
         {
             var entity = SpawnInventoryItem(itemParticleEntity.itemType.Type);
 
-            if (itemParticleEntity.hasItemLabel)
-                entity.AddItemLabel(itemParticleEntity.itemLabel.ItemName);
+            if (entity.hasItemID)
+                entity.itemID.ItemName = itemParticleEntity.itemID.ItemName;
 
             if (itemParticleEntity.hasItemStack)
                 entity.AddItemStack(itemParticleEntity.itemStack.Count);

@@ -13,7 +13,7 @@ namespace NodeSystem
         int[] Children = new int[64];
         int childrenCount = 0;
 
-        public int CreateNode(string Name, NodeType type)
+        public int CreateNode(string Name, ItemUsageActionType  type)
         {
             currentID = Length++;
             Names[currentID] = Name;
@@ -23,26 +23,26 @@ namespace NodeSystem
 
             switch (type)
             {
-                case NodeType.Decorator:
+                case ItemUsageActionType .Decorator:
                     SetCondition(ConditionManager.TrueConditionID);
                     break;
-                case NodeType.Repeater:
+                case ItemUsageActionType .Repeater:
                     SetCondition(ConditionManager.TrueConditionID);
                     break;
-                case NodeType.Sequence:
-                    SetCondition(ConditionManager.TrueConditionID);
-                    SetData(BTSpecialChild.NotInitialized);
-                    break;
-                case NodeType.Selector:
+                case ItemUsageActionType .Sequence:
                     SetCondition(ConditionManager.TrueConditionID);
                     SetData(BTSpecialChild.NotInitialized);
                     break;
-                case NodeType.ActionSequence:
+                case ItemUsageActionType .Selector:
+                    SetCondition(ConditionManager.TrueConditionID);
+                    SetData(BTSpecialChild.NotInitialized);
+                    break;
+                case ItemUsageActionType .ActionSequence:
                     Nodes[currentID].ActionID = GameState.ActionManager.GetID("ActionSequence");
                     SetCondition(ConditionManager.TrueConditionID);
                     SetData(new ActionSequenceNode.ActionSequenceData());
                     break;
-                case NodeType.Action:
+                case ItemUsageActionType .Action:
                     SetCondition(ConditionManager.TrueConditionID);
                     node.DataInit = new byte[0];
                     break;
@@ -67,21 +67,21 @@ namespace NodeSystem
 
         public void SetAction(int actionID)
         {
-            if (Nodes[currentID].Type == NodeType.Action)
+            if (Nodes[currentID].Type == ItemUsageActionType .Action)
                 Nodes[currentID].ActionID = actionID;
-            else if (Nodes[currentID].Type == NodeType.ActionSequence)
+            else if (Nodes[currentID].Type == ItemUsageActionType .ActionSequence)
             {
                 int id = currentID;
-                int childId = CreateNode(Names[id] + "Enter" , NodeType.Action);
+                int childId = CreateNode(Names[id] + "Enter" , ItemUsageActionType .Action);
                 SetAction(actionID);
                 EndNode();
-                CreateNode(Names[id] + "Update", NodeType.Action);
+                CreateNode(Names[id] + "Update", ItemUsageActionType .Action);
                 SetAction(actionID + 1);
                 EndNode();
-                CreateNode(Names[id] + "Success", NodeType.Action);
+                CreateNode(Names[id] + "Success", ItemUsageActionType .Action);
                 SetAction(actionID + 2);
                 EndNode();
-                CreateNode(Names[id] + "Failure", NodeType.Action);
+                CreateNode(Names[id] + "Failure", ItemUsageActionType .Action);
                 SetAction(actionID + 3);
                 EndNode();
                 currentID = id;
@@ -102,7 +102,7 @@ namespace NodeSystem
 
         public void AddChild(int nodeId)
         {
-            Assert.IsTrue(Nodes[currentID].Type != NodeType.Action, "Action node can't have children.");
+            Assert.IsTrue(Nodes[currentID].Type != ItemUsageActionType .Action, "Action node can't have children.");
             Children[childrenCount++] = nodeId;
             Nodes[currentID].SubTreeNodeCount += Nodes[nodeId].SubTreeNodeCount;
         }
@@ -112,7 +112,7 @@ namespace NodeSystem
             {
                 Nodes[currentID].Children = new int[childrenCount];
                 Array.Copy(Children, Nodes[currentID].Children, childrenCount);
-                Nodes[currentID].SubTreeNodeCount += (Nodes[currentID].Type != NodeType.ActionSequence) ? childrenCount : 0; 
+                Nodes[currentID].SubTreeNodeCount += (Nodes[currentID].Type != ItemUsageActionType .ActionSequence) ? childrenCount : 0; 
                 childrenCount = 0;
             }
             currentID = -1;

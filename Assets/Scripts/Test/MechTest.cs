@@ -61,9 +61,11 @@ namespace Planet.Unity
             planet.Update(UnityEngine.Time.deltaTime);
             
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init) return;
 

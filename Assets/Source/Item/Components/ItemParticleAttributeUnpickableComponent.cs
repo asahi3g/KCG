@@ -3,7 +3,7 @@
 namespace Item
 {
     [ItemParticle]
-    public class Unpickable : IComponent
+    public class ItemParticleAttributeUnpickableComponent : IComponent
     {
         // Time in seconds being unpickable.
         public float Duration;

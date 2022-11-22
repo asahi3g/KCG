@@ -12,10 +12,11 @@ namespace Item
 
     public struct ItemProprieties
     {
+        public string ItemLabel;                 // Item Label
         public ItemType ItemType;
         public ItemGroups Group;
-        public NodeType ToolActionType;
-        public MechType MechType;               // Used only when item is a mech type.
+        public ItemUsageActionType ToolActionType;
+        public MechType  MechType;               // Used only when item is a mech type.
         public TileID TileType;                 // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet;   // used to change agent animations (like walking with rifle)

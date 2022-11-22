@@ -7,7 +7,7 @@ namespace Node
 {
     public class AxeAction : NodeBase
     {
-        public override NodeType Type => NodeType.AxeAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.AxeAction;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

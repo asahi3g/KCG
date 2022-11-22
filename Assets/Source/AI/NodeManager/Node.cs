@@ -8,7 +8,7 @@ namespace NodeSystem
         public delegate int GetNextChild(in NodeManager nodeManager, ref Node node, ArraySegment<byte> data, NodeState lastResult);
 
         public int ID;
-        public NodeType Type;
+        public ItemUsageActionType  Type;
         public int ActionID;
         public int ConditionalID;
         public int[] Children;

@@ -8,26 +8,24 @@
 //------------------------------------------------------------------------------
 public static class ItemInventoryComponentsLookup {
 
-    public const int ItemFireWeaponCharge = 0;
+    public const int ItemFireWeaponChargedWeapon = 0;
     public const int ItemFireWeaponClip = 1;
     public const int ItemID = 2;
     public const int ItemInventory = 3;
-    public const int ItemLabel = 4;
-    public const int ItemMechPlacement = 5;
-    public const int ItemPotion = 6;
-    public const int ItemPulseWeaponPulse = 7;
-    public const int ItemStack = 8;
-    public const int ItemTile = 9;
-    public const int ItemType = 10;
+    public const int ItemMechPlacement = 4;
+    public const int ItemPotion = 5;
+    public const int ItemPulseWeaponPulse = 6;
+    public const int ItemStack = 7;
+    public const int ItemTile = 8;
+    public const int ItemType = 9;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
-        "ItemFireWeaponCharge",
+        "ItemFireWeaponChargedWeapon",
         "ItemFireWeaponClip",
         "ItemID",
         "ItemInventory",
-        "ItemLabel",
         "ItemMechPlacement",
         "ItemPotion",
         "ItemPulseWeaponPulse",
@@ -37,11 +35,10 @@ public static class ItemInventoryComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Item.FireWeapon.ChargeComponent),
+        typeof(Item.FireWeapon.ChargedWeaponComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.IDComponent),
         typeof(Item.InventoryComponent),
-        typeof(Item.LabelComponent),
         typeof(Item.MechPlacementComponent),
         typeof(Item.PotionComponent),
         typeof(Item.PulseWeapon.PulseComponent),

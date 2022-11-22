@@ -11,5 +11,8 @@ namespace Item
         // Todo use one id instead of two: https://news.ycombinator.com/item?id=17995634
         public int              ID;
         public int              Index;
+
+        // Item label : Appears when Item is used.
+        public string           ItemName;
     }
 }
