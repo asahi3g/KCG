@@ -146,7 +146,14 @@ namespace Projectile
             {
                 PropertiesArray[CurrentIndex].Flags |= ProjectileProperties.ProjFlags.CanBounce;
                 PropertiesArray[CurrentIndex].BounceValue = value;
+            }
+        }
 
+        public void SetTimeToLive(float value)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].TimeToLive = value;
             }
         }
 
@@ -218,6 +225,7 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ProjectileCreationApi.SetStartVelocity(25.0f);
             GameState.ProjectileCreationApi.SetLinearDrag(0.73f, 0.01f);
+            GameState.ProjectileCreationApi.SetTimeToLive(40.0f);
             GameState.ProjectileCreationApi.SetAffectedByGravity();
             GameState.ProjectileCreationApi.End();
 

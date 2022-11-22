@@ -25,6 +25,8 @@ namespace Projectile
         public float BounceValue;
         public float GravityScale;
 
+        public float TimeToLive;
+
         public ProjFlags Flags;
 
         [Flags]
