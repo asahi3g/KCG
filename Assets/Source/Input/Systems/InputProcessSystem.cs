@@ -52,7 +52,7 @@ namespace ECSInput
             var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(
                 AgentMatcher.ECSInput, AgentMatcher.ECSInputXY));
 
-            //UpdateMainCameraZoom();
+            UpdateMainCameraZoom();
 
             int x = 0;
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) && mode == Mode.Agent)
