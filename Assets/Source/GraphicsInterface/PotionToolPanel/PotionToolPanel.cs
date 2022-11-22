@@ -35,7 +35,7 @@ namespace KGUI
                 if (inventory.inventoryName.Name != "MaterialBag") continue;
 
                 var materialBag = planet.EntitasContext.inventory
-                    .GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryInventory.Slots;
+                    .GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryInventoryEntity.Slots;
 
                 for (int i = 0; i < materialBag.Length; i++)
                 {

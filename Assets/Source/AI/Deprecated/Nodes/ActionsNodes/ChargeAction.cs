@@ -20,7 +20,7 @@ namespace Node.Action
                 return null;
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
-            InventoryComponent inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
+            InventoryEntityComponent inventory = entitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity;
             ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(inventory.InventoryEntityTemplateID);
 
             if (InventoryEntityTemplate.HasToolBar)

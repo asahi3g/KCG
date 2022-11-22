@@ -4,7 +4,7 @@ using Utility;
 namespace Inventory
 {
     [Inventory]
-    public class InventoryComponent : IComponent
+    public class InventoryEntityComponent : IComponent
     {
         public int Index;               // Index in inventory list.
         public int InventoryEntityTemplateID;

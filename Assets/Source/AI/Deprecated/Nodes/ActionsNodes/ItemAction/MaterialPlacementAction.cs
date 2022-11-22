@@ -28,7 +28,7 @@ namespace Node.Action
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventory.Slots;
+                            var slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
                             for(int i = 0; i < slots.Length; i++)
                             {
                                 ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);

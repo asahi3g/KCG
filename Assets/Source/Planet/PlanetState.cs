@@ -214,7 +214,7 @@ namespace Planet
             // Spawn itemsInventory inside as item particles.
             InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
-            for (int i = 0; i < entity.inventoryInventory.Size; i++)
+            for (int i = 0; i < entity.inventoryInventoryEntity.Size; i++)
             {
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                 if (itemInventory == null)
@@ -225,7 +225,7 @@ namespace Planet
             }
 
             Utils.Assert(entity.isEnabled);
-            InventoryList.Remove(entity.inventoryInventory.Index);
+            InventoryList.Remove(entity.inventoryInventoryEntity.Index);
         }
 
         // Remove Items and Spawn itemsParticles.
@@ -235,7 +235,7 @@ namespace Planet
             // Spawn itemsInventory inside as item particles.
             InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
-            for (int i = 0; i < entity.inventoryInventory.Size; i++)
+            for (int i = 0; i < entity.inventoryInventoryEntity.Size; i++)
             {
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                 if (itemInventory == null)
@@ -248,7 +248,7 @@ namespace Planet
             }
 
             Utils.Assert(entity.isEnabled);
-            InventoryList.Remove(entity.inventoryInventory.Index);
+            InventoryList.Remove(entity.inventoryInventoryEntity.Index);
         }
 
 

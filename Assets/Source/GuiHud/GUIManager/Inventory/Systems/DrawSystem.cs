@@ -17,7 +17,7 @@ namespace Inventory
             // Draw tool bar.
             int id = planet.Player.agentInventory.InventoryID;
             InventoryEntity playerInventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(id);
-            DrawInventory(playerInventory, ref GameState.InventoryCreationApi.Get(playerInventory.inventoryInventory.InventoryEntityTemplateID), true);
+            DrawInventory(playerInventory, ref GameState.InventoryCreationApi.Get(playerInventory.inventoryInventoryEntity.InventoryEntityTemplateID), true);
 
             for (int i = 0; i < inventoryList.Length; i++)
             {
@@ -25,7 +25,7 @@ namespace Inventory
                 if (!inventoryEntity.hasInventoryDraw)
                     continue;
                 ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
-                    inventoryEntity.inventoryInventory.InventoryEntityTemplateID);
+                    inventoryEntity.inventoryInventoryEntity.InventoryEntityTemplateID);
                 DrawInventory(inventoryEntity, ref InventoryEntityTemplate, false);
             }
 
@@ -126,7 +126,7 @@ namespace Inventory
 
             if (InventoryEntityTemplate.RenderProprieties.HasBorder())
             {
-                if (inventoryEntity.inventoryInventory.SelectedSlotID == i
+                if (inventoryEntity.inventoryInventoryEntity.SelectedSlotID == i
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw selected border in tool bar.
                     && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
@@ -155,7 +155,7 @@ namespace Inventory
             }
             else
             {
-                if (gridSlot.SlotID == inventoryEntity.inventoryInventory.SelectedSlotID
+                if (gridSlot.SlotID == inventoryEntity.inventoryInventoryEntity.SelectedSlotID
                     && !InventoryEntityTemplate.RenderProprieties.HasBorder() // If there is no border slot will have selected slot color.
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw slot with selected color in tool bar.
                     && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.
@@ -172,7 +172,7 @@ namespace Inventory
                 GameState.Renderer.DrawSpriteGui(posX, posY, sizeX, sizeY, sprite);
             }
 
-            Slot slot = inventoryEntity.inventoryInventory.Slots[gridSlot.SlotID];
+            Slot slot = inventoryEntity.inventoryInventoryEntity.Slots[gridSlot.SlotID];
             if (slot.ItemID != -1)
             {
                 ItemInventoryEntity entity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(slot.ItemID);

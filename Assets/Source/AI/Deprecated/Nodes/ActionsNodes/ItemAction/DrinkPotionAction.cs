@@ -29,7 +29,7 @@ namespace Node
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventory.Slots;
+                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
 
                             for (int i = 0; i < Slots.Length; i++)
                             {
