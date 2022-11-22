@@ -298,7 +298,7 @@ namespace Planet
             Utils.Assert(entity.isEnabled);
 
             entity.DieInPlace();
-            AgentProperties properties = GameState.AgentCreationApi.Get((int)entity.agentID.Type);
+            AgentPropertiesTemplate properties = GameState.AgentCreationApi.Get((int)entity.agentID.Type);
 
             if (!entity.hasAgentInventory)
             {

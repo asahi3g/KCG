@@ -26,7 +26,7 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
-            ref AgentProperties agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
+            ref AgentPropertiesTemplate agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
 
             if (stateData.NodesExecutiondata[index].ExecutionTime <= agentProperties.Attack.Windup)
                 return NodeState.Running;
