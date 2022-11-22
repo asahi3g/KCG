@@ -6,7 +6,8 @@ namespace Inventory
     public class InventoryManager
     {
         static int uniqueID = 0;
-        public InventoryEntity CreateInventory(int InventoryEntityTemplateID, string name = "")
+        public InventoryEntity CreateInventory(int InventoryEntityTemplateID, Enums.InventoryEntityType type = 
+                Enums.InventoryEntityType.Default, string name = "")
         {
             var InventoryEntityTemplate = GameState.InventoryCreationApi.Get(InventoryEntityTemplateID);
             var inventoryEntity = GameState.Planet.EntitasContext.inventory.CreateEntity();
@@ -15,7 +16,8 @@ namespace Inventory
                 inventoryEntity.hasInventoryToolBarDraw = true;
             
             int size = InventoryEntityTemplate.SlotCount;
-            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], 0, size, new BitSet((uint)size));
+            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], 0, size,
+                new BitSet((uint)size), type);
 
             for (int i = 0; i < InventoryEntityTemplate.Slots.Length; i++)
             {
@@ -39,9 +41,9 @@ namespace Inventory
             return inventoryEntity;
         }
 
-        public InventoryEntity CreateDefaultInventory(string name = "")
+        public InventoryEntity CreateDefaultInventory(Enums.InventoryEntityType type = Enums.InventoryEntityType.Default, string name = "")
         {
-            return CreateInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), name);
+            return CreateInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), type, name);
         }
 
         public void OpenInventory(InventoryEntity inventoryEntity)

@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Utility;
+using Enums;
 
 namespace Inventory
 {
@@ -12,5 +13,6 @@ namespace Inventory
         public int SelectedSlotID;
         public int Size;                // Total number of slots in the inventory.
         public BitSet SlotsMask;        // Free slots set to 0/ Fill slots to 1.
+        public InventoryEntityType InventoryType;   // Type of inventory (agentEquipment, agent, vehilce, mechStorage);
     }
 }
