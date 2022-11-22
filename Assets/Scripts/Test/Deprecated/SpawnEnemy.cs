@@ -122,7 +122,7 @@ public class SpawnEnemy : MonoBehaviour
         GameState.ItemCreationApi.SetTexture(slimeIcon);
 
         // Create Inventory texture
-        GameState.ItemCreationApi.SetInventoryTexture(slimeIcon);
+        GameState.ItemCreationApi.SetInventoryItemIcon(slimeIcon);
 
         // End of the item
         GameState.ItemCreationApi.EndItem();
