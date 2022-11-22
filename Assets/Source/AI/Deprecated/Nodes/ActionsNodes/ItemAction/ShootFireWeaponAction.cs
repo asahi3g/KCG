@@ -33,7 +33,7 @@ namespace Node
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
+            int selected = inventoryEntity.inventoryInventory.SelectedSlotID;
             ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
             if (itemEntity == null)
             {

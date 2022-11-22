@@ -42,7 +42,7 @@ namespace Planet.Unity
             {
                 ref var planet = ref GameState.Planet;
                 var entitasContext = planet.EntitasContext;
-                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
+                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryInventory.SelectedSlotID;
 
                 ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(InventoryID, selectedSlot);
                 if (item != null)

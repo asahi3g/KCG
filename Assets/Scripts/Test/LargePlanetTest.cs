@@ -32,7 +32,7 @@ namespace Planet.Unity
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
+            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
             ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);

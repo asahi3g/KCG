@@ -15,7 +15,7 @@ namespace Inventory
                 inventoryEntity.hasInventoryToolBarDraw = true;
             
             int size = inventoryModel.SlotCount;
-            inventoryEntity.AddInventoryEntity(-1, inventoryModelID, new Slot[size], 0, size, new BitSet((uint)size));
+            inventoryEntity.AddInventoryInventory(-1, inventoryModelID, new Slot[size], 0, size, new BitSet((uint)size));
 
             for (int i = 0; i < inventoryModel.Slots.Length; i++)
             {
@@ -23,7 +23,7 @@ namespace Inventory
                 if (slotID == -1)
                     continue;
 
-                inventoryEntity.inventoryEntity.Slots[slotID] = new Slot
+                inventoryEntity.inventoryInventory.Slots[slotID] = new Slot
                 {
                     ItemID = -1,
                     GridSlotID = i,
@@ -58,7 +58,7 @@ namespace Inventory
 
         public bool AddItemAtSlot(ItemInventoryEntity itemEntity, int inventoryID, int slotID)
         {
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
             
             itemEntity.ReplaceItemInventory(inventoryID, slotID);
 
@@ -92,7 +92,7 @@ namespace Inventory
 
         public bool AddItemAtFirstEmptySlot(ItemInventoryEntity itemEntity, int inventoryID)
         {
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
             int fistEmptySlot = GetFirstEmptySlot(inventory.SlotsMask, inventory);
 
             if (fistEmptySlot < 0)
@@ -167,7 +167,7 @@ namespace Inventory
 
         public void RemoveItem(int inventoryID, int slotID)
         {
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
             if (!inventory.SlotsMask[slotID])
                 return;
 
@@ -179,13 +179,13 @@ namespace Inventory
         
         public void ChangeSlot(int newSelectedSlot, int inventoryID)
         {
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
             inventory.SelectedSlotID = newSelectedSlot;
         }
 
         public bool IsFull(int inventoryID)
         {
-            EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
 
             if (inventory.SlotsMask.All()) // Test if all bits are set to one.
                 return true;
@@ -202,7 +202,7 @@ namespace Inventory
         public ItemInventoryEntity GetItemInSlot(int inventoryID, int slot)
         {
             ref var planet = ref GameState.Planet;
-            EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+            InventoryComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
             int itemID = inventory.Slots[slot].ItemID;
 
             // Check if there is an item in the slot.
@@ -211,7 +211,7 @@ namespace Inventory
             return null;
         }
 
-        private int GetFirstEmptySlot(BitSet slots, EntityComponent inventory)
+        private int GetFirstEmptySlot(BitSet slots, InventoryComponent inventory)
         {
             if (IsFull(slots))
             {

@@ -19,16 +19,16 @@ namespace Inventory
             if (!InventorySystemsState.MouseHold) // if less than 250ms consider it a click.
             {
                 var player = planet.Player;
-                if (player != null && inventoryEntity.inventoryEntity.SelectedSlotID !=
+                if (player != null && inventoryEntity.inventoryInventory.SelectedSlotID !=
                     InventorySystemsState.ClickedSlotslotID)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventory.SelectedSlotID);
                     player.HandleItemDeselected(item);
                 }
-                inventoryEntity.inventoryEntity.SelectedSlotID = InventorySystemsState.ClickedSlotslotID;
+                inventoryEntity.inventoryInventory.SelectedSlotID = InventorySystemsState.ClickedSlotslotID;
                 if (player != null)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventory.SelectedSlotID);
                     player.HandleItemSelected(item);
                 }
                 InventorySystemsState.ClickedSlotslotID = -1;
@@ -43,7 +43,7 @@ namespace Inventory
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
-                    openInventoryEntity.inventoryEntity.InventoryModelID);
+                    openInventoryEntity.inventoryInventory.InventoryModelID);
 
                 if (!openInventoryEntity.hasInventoryDraw)
                     continue;
@@ -56,7 +56,7 @@ namespace Inventory
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
-                    openInventoryEntity.inventoryEntity.InventoryModelID); 
+                    openInventoryEntity.inventoryInventory.InventoryModelID); 
                 
                 if (!openInventory.HasToolBar || !inventoryEntity.hasInventoryToolBarDraw)
                     continue;
@@ -82,7 +82,7 @@ namespace Inventory
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
-                    openInventoryEntity.inventoryEntity.InventoryModelID);
+                    openInventoryEntity.inventoryInventory.InventoryModelID);
                 
                 if (!openInventoryEntity.hasInventoryDraw)
                     continue;
@@ -95,7 +95,7 @@ namespace Inventory
             {
                 InventoryEntity openInventoryEntity = inventoryList.Get(i);
                 ref InventoryModel openInventory = ref GameState.InventoryCreationApi.Get(
-                    openInventoryEntity.inventoryEntity.InventoryModelID);
+                    openInventoryEntity.inventoryInventory.InventoryModelID);
 
                 if (!openInventory.HasToolBar || !openInventoryEntity.hasInventoryToolBarDraw)
                     continue;
@@ -143,7 +143,7 @@ namespace Inventory
                 if (GameState.InventoryManager.AddItemAtSlot(GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(
                     InventorySystemsState.GrabbedItemID), inventoryEntity.inventoryID.ID, slotID))
                 {
-                    inventoryEntity.inventoryEntity.SelectedSlotID = slotID;
+                    inventoryEntity.inventoryInventory.SelectedSlotID = slotID;
                     InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;
                     // Reset values.
                     InventorySystemsState.MouseHold = false;
@@ -175,7 +175,7 @@ namespace Inventory
 
             InventorySystemsState.ClickedSlotslotID = slotID;
             InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;
-            InventorySystemsState.GrabbedItemID = inventoryEntity.inventoryEntity.Slots[slotID].ItemID;
+            InventorySystemsState.GrabbedItemID = inventoryEntity.inventoryInventory.Slots[slotID].ItemID;
             return true;
         }
     }

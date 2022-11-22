@@ -445,11 +445,11 @@ namespace ECSInput
                 {
                     int inventoryID = entity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                    ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryEntity.InventoryModelID);
+                    ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.inventoryInventory.InventoryModelID);
                     if (!inventoryModel.HasToolBar)
                         return;
 
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventory.SelectedSlotID);
 
                     if (item.itemType.Type == ItemType.PulseWeapon)
                     {
@@ -474,12 +474,12 @@ namespace ECSInput
                 int inventoryID = entity.agentInventory.InventoryID;
                 InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
                 ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
-                    inventory.inventoryEntity.InventoryModelID);
+                    inventory.inventoryInventory.InventoryModelID);
                 if (!inventoryModel.HasToolBar)
                     return;
 
                 // Get Inventory
-                var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryEntity.SelectedSlotID);
+                var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventory.SelectedSlotID);
                 if (item == null) return;
                 var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
@@ -505,11 +505,11 @@ namespace ECSInput
                     var keyCode = UnityEngine.KeyCode.Alpha1 + i;
                     if (UnityEngine.Input.GetKeyDown(keyCode))
                     {
-                        if (inventory.inventoryEntity.SelectedSlotID != i)
+                        if (inventory.inventoryInventory.SelectedSlotID != i)
                         {
                             entity.HandleItemDeselected(item);
                         }
-                        inventory.inventoryEntity.SelectedSlotID = i;
+                        inventory.inventoryInventory.SelectedSlotID = i;
                         item = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                         GameState.GUIManager.SelectedInventoryItem = item;
                         if (item == null) return;
@@ -522,7 +522,7 @@ namespace ECSInput
                 }
 
 
-                int selectedSlot = inventory.inventoryEntity.SelectedSlotID;
+                int selectedSlot = inventory.inventoryInventory.SelectedSlotID;
                 var selectedItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
                 var selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
 

@@ -18,7 +18,7 @@ public partial class AgentEntity
             return null;
 
         int inventoryID = agentInventory.InventoryID;
-        EntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
+        Inventory.InventoryComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventory;
         int selectedSlot = inventory.SelectedSlotID;
         return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }

@@ -26,7 +26,7 @@ namespace Inventory
             ExpandArray();
 
             int LastIndex = Length;
-            entity.inventoryEntity.Index = LastIndex;
+            entity.inventoryInventory.Index = LastIndex;
             List[LastIndex] = entity;
             Length++;
 
@@ -52,7 +52,7 @@ namespace Inventory
             if (index != Length - 1)
             {
                 entity = List[Length - 1];
-                entity.inventoryEntity.Index = index;
+                entity.inventoryInventory.Index = index;
             }
             Length--;
         }

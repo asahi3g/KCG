@@ -22,11 +22,11 @@ namespace Action
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
             ref Inventory.InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(
-                inventoryEntity.inventoryEntity.InventoryModelID);
+                inventoryEntity.inventoryInventory.InventoryModelID);
 
             if (inventoryModel.HasToolBar)
             {
-                int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
+                int selected = inventoryEntity.inventoryInventory.SelectedSlotID;
 
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(
                     agentEntity.agentInventory.InventoryID, selected);
