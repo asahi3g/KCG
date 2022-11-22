@@ -401,7 +401,7 @@ namespace Agent
                 var IDComponent = entity.agentID;
                 var box2DComponent = entity.physicsBox2DCollider;
 
-                AgentProperties properties = GameState.AgentCreationApi.Get((int)IDComponent.Type);
+                AgentPropertiesTemplate properties = GameState.AgentCreationApi.Get((int)IDComponent.Type);
 
                 if (entity.IsCrouched())
                 {

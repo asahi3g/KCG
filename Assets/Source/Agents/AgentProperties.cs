@@ -4,7 +4,7 @@ using KMath;
 
 namespace Agent
 {
-    public struct AgentProperties
+    public struct AgentPropertiesTemplate
     {
         public int PropertiesId;
         public string Name;
@@ -22,7 +22,7 @@ namespace Agent
         public int BehaviorTreeRootID;
 
         // Stats
-        public int Health;
+        public int DefaultHealth;
 
         public BasicAttack Attack;
         public MovementProperties MovProperties;

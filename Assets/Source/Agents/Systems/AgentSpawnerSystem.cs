@@ -17,7 +17,7 @@ namespace Agent
             int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
+            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
 
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
@@ -77,7 +77,7 @@ namespace Agent
         public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, int inventoryID)
         {
             var entity = entitasContext.agent.CreateEntity();
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
             var spriteSize = properties.SpriteSize;
 
             entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
@@ -130,7 +130,7 @@ namespace Agent
         {
             var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
 
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
             var spriteSize = properties.SpriteSize;
             var spriteId = 0;
