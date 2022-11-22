@@ -12,12 +12,12 @@ public static class ItemParticleComponentsLookup {
     public const int ItemFireWeaponCharge = 1;
     public const int ItemFireWeaponClip = 2;
     public const int ItemID = 3;
-    public const int ItemLabel = 4;
-    public const int ItemPhysicsState = 5;
-    public const int ItemPulseWeaponPulse = 6;
-    public const int ItemStack = 7;
-    public const int ItemType = 8;
-    public const int ItemUnpickable = 9;
+    public const int ItemItemParticleAttributeUnpickable = 4;
+    public const int ItemLabel = 5;
+    public const int ItemPhysicsState = 6;
+    public const int ItemPulseWeaponPulse = 7;
+    public const int ItemStack = 8;
+    public const int ItemType = 9;
     public const int PhysicsBox2DCollider = 10;
     public const int PhysicsSphere2DCollider = 11;
 
@@ -28,12 +28,12 @@ public static class ItemParticleComponentsLookup {
         "ItemFireWeaponCharge",
         "ItemFireWeaponClip",
         "ItemID",
+        "ItemItemParticleAttributeUnpickable",
         "ItemLabel",
         "ItemPhysicsState",
         "ItemPulseWeaponPulse",
         "ItemStack",
         "ItemType",
-        "ItemUnpickable",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider"
     };
@@ -43,12 +43,12 @@ public static class ItemParticleComponentsLookup {
         typeof(Item.FireWeapon.ChargeComponent),
         typeof(Item.FireWeapon.ClipComponent),
         typeof(Item.IDComponent),
+        typeof(Item.ItemParticleAttributeUnpickableComponent),
         typeof(Item.LabelComponent),
         typeof(Item.PhysicsStateComponent),
         typeof(Item.PulseWeapon.PulseComponent),
         typeof(Item.StackComponent),
         typeof(Item.TypeComponent),
-        typeof(Item.Unpickable),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent)
     };

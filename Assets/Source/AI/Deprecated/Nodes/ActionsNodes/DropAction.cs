@@ -44,7 +44,7 @@ namespace Node.Action
                 Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
                 ItemParticleEntity itemParticle = GameState.Planet.AddItemParticle(itemInventory, pos);
                 itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
-                itemParticle.AddItemUnpickable(0);
+                itemParticle.AddItemItemParticleAttributeUnpickable(0);
                 nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);
 
                 nodeEntity.nodeExecution.State = NodeState.Running;
