@@ -17,7 +17,7 @@ namespace Action
         }
 
         // Action used by either player and AI.
-        static public NodeSystem.NodeState OnEnter(object ptr, int id)
+        static public NodeSystem.NodeState Action(object ptr, int id)
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref PlanetState planet = ref GameState.Planet;
@@ -85,23 +85,6 @@ namespace Action
             }
 
             return NodeSystem.NodeState.Failure;
-        }
-
-        static public NodeSystem.NodeState OnUpdate(object ptr, int id)
-        {
-            ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
-            ref PlanetState planet = ref GameState.Planet;
-            ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
-
-            // Todo: Remove magic number.
-            const float FIRE_DELAY = 0.0f;
-            Vec2f target = shootingData.Target;
-
-            if (data.NodesExecutiondata[id].ExecutionTime >= FIRE_DELAY)
-            {
-                
-            }
-            return NodeSystem.NodeState.Running;
         }
     }
 }
