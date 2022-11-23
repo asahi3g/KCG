@@ -82,6 +82,8 @@ namespace PlanetTileMap
                         break;
                     }
                 }
+
+                UnityEngine.Debug.Log("lineEnum : " + lineEnum + " side : " + side + " testline : " + testLine);
                 
                 if (testLine != Collisions.TileLineSegment.Error)
                 {
@@ -89,9 +91,11 @@ namespace PlanetTileMap
                     for(int matchIndex = lineProperties.MatchOffset; matchIndex < lineProperties.MatchOffset + lineProperties.MatchCount; matchIndex++)
                     {
                         var match = GameState.LineCreationApi.GetMatch(matchIndex);
+                        UnityEngine.Debug.Log("match : " + match);
                         if (match == testLine)
                         {
-                            result = result + (int)side;
+                            result |= (int)side;
+                            UnityEngine.Debug.Log("matched " + result);
                             break;
                         }
                     }
@@ -118,6 +122,8 @@ namespace PlanetTileMap
                     break;
                 }
             }
+
+            UnityEngine.Debug.Log("conclusion : " + tile.Adjacency);
             
         }
     }

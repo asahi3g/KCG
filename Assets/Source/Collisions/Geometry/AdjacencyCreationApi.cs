@@ -303,19 +303,187 @@ namespace Collisions
             Api.AddLine(TileLineSegment.L_C1_C2);
             Api.AddLine(TileLineSegment.L_C2_C3);
             Api.AddLine(TileLineSegment.L_C3_M3);
+            Api.End();*/
+
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0000);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0001);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0010);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0011);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0100);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0101);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0110);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0111);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1000);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1001);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1010);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1011);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1100);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1101);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1110);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A1111);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
             Api.End();
 
 
 
-            
 
-            Api.Create(Enums.TileGeometryAndRotation.TB_R0);
-            Api.AddLine(TileLineSegment.L_C3_C1);
-            Api.AddLine(TileLineSegment.L_C1_C2);
+
+
+
+
+
+
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0000);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+
+            Api.AddLine(TileLineSegment.L_C0_C2); // 
             Api.AddLine(TileLineSegment.L_C2_C3);
+            Api.AddLine(TileLineSegment.L_C3_C0);
+
             Api.End();
 
-            Api.Create(Enums.TileGeometryAndRotation.TB_R1);
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0001);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0010);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0011);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0100);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0101);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0110);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0111);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C1_C2); // right (1000)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1000);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1001);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1010);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1011);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1100);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1101);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1110);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.AddLine(TileLineSegment.L_C2_C3); // bottom (0001)
+            Api.End();
+
+            Api.Create(Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A1111);
+            Api.AddLine(TileLineSegment.L_C3_C1); // top (0010)
+            Api.End();
+
+
+            /*Api.Create(Enums.TileGeometryAndRotation.TB_R1);
             Api.AddLine(TileLineSegment.L_C0_C2);
             Api.AddLine(TileLineSegment.L_C2_C3);
             Api.AddLine(TileLineSegment.L_C3_C0);

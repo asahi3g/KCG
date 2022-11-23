@@ -124,10 +124,10 @@ namespace Collisions
 
 
             TilesInProximityResult result = new TilesInProximityResult();
-            result.MinX = (int)min.X;
-            result.MaxX = (int)(max.X + 1.0f);
-            result.MinY = (int)min.Y;
-            result.MaxY = (int)(max.Y + 1.0f);
+            result.MinX = (int)min.X - 1;
+            result.MaxX = (int)(max.X + 1.0f) + 1;
+            result.MinY = (int)min.Y - 1;
+            result.MaxY = (int)(max.Y + 1.0f) + 1;
 
             return result;
         }
@@ -571,7 +571,6 @@ namespace Collisions
 
                         if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
                         {
-                                                //    UnityEngine.Debug.Log("tile " + tile.FrontTileID + " adjacency " + tile.Adjacency);
                         var adjacencyProperties = GameState.AdjacencyCreationApi.GetProperties(tile.Adjacency);
                         for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
                         {
@@ -580,13 +579,15 @@ namespace Collisions
                             Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);
                             Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);
 
-                            planet.AddDebugLine(line, UnityEngine.Color.red);
+                            
 
                             // if its a platform
                             // only collide when going downwards
                             if (!(delta.Y >= 0.0f && (shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
                             shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3)))
                             {
+
+                                planet.AddDebugLine(line, UnityEngine.Color.red);
 
                                 // circle line sweep test
                                 var collisionResult = 

@@ -185,6 +185,8 @@ namespace GameScreen
             PlanetTileMap.TileMapGeometry.BuildGeometry(GameState.Planet.TileMap);
 
             UpdateMode(Player);
+
+            GameState.Planet.TileMap.SetFrontTile(119, 7, Enums.PlanetTileMap.TileID.Bedrock);
         }
 
         public void AddItemsToPlayer()
