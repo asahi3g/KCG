@@ -3,6 +3,7 @@ using Utility;
 
 namespace Item
 {
+    // Don't use entitas internal lists because they don't have deterministic order.
     public class ItemParticleList
     {
         

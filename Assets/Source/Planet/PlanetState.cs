@@ -395,7 +395,6 @@ namespace Planet
         public void RemoveProjectile(int index)
         {
             ProjectileEntity entity = ProjectileList.Get(index);
-            Utils.Assert(entity.isEnabled);
             ProjectileList.Remove(index);
         }
 
@@ -515,6 +514,8 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessState.Update();
+            int enemyFaction = 1;
+            GameState.MovementPositionScoreSystem.Update(enemyFaction);
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();
