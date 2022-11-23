@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class ToolActionGeometryPlacement : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionGeometryPlacement;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionGeometryPlacement;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

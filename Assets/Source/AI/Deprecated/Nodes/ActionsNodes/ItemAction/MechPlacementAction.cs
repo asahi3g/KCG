@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class MechPlacementAction : NodeBase
     {
-        public override NodeType Type => NodeType.MechPlacementAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .MechPlacementAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

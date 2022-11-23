@@ -13,11 +13,11 @@ namespace Mech
         public Vec2f SpriteSize;
         public int XMin, XMax, YMin, YMax;
 
-        public NodeType Action;
+        public ItemUsageActionType  Action;
         public Flags MechFlags;
 
         public int DropTableID;
-        public int InventoryModelID; // Only used if has inventory.
+        public int InventoryEntityTemplateID; // Only used if has inventory.
         public int Durability;       // Mech "health" Use only if Mech is breakable.
 
         public int TreeHealth;      // Mech "health" Use only if Mech is breakable.

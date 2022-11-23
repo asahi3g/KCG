@@ -82,8 +82,7 @@ public class CameraInfo : UnityEngine.MonoBehaviour
         }
     }
 
-    // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnGUI.html
-    private void OnGUI()
+    private void Draw()
     {
         // Assigning struct values to camera values. Reciving all the info of the camera to our struct. So, we can save later on.
         if (canUpdate)
@@ -423,6 +422,9 @@ public class CameraInfo : UnityEngine.MonoBehaviour
         cam.nearClipPlane = camProp.nearZ;
         cam.transform.position = camProp.Position;
         cam.transform.eulerAngles = camProp.Rotation;
+
+        Draw();
+
         canUpdate = true;
     }
 }

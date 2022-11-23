@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class HarvestAction : NodeBase
     {
-        public override NodeType Type => NodeType.HarvestAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .HarvestAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)

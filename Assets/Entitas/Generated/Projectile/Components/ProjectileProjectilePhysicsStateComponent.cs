@@ -11,7 +11,7 @@ public partial class ProjectileEntity {
     public Projectile.PhysicsStateComponent projectilePhysicsState { get { return (Projectile.PhysicsStateComponent)GetComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
     public bool hasProjectilePhysicsState { get { return HasComponent(ProjectileComponentsLookup.ProjectilePhysicsState); } }
 
-    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded) {
+    public void AddProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded, float newTimeToLive) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -20,10 +20,11 @@ public partial class ProjectileEntity {
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
         component.OnGrounded = newOnGrounded;
+        component.TimeToLive = newTimeToLive;
         AddComponent(index, component);
     }
 
-    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded) {
+    public void ReplaceProjectilePhysicsState(KMath.Vec2f newPosition, KMath.Vec2f newPreviousPosition, float newRotation, KMath.Vec2f newVelocity, KMath.Vec2f newAcceleration, bool newOnGrounded, float newTimeToLive) {
         var index = ProjectileComponentsLookup.ProjectilePhysicsState;
         var component = (Projectile.PhysicsStateComponent)CreateComponent(index, typeof(Projectile.PhysicsStateComponent));
         component.Position = newPosition;
@@ -32,6 +33,7 @@ public partial class ProjectileEntity {
         component.Velocity = newVelocity;
         component.Acceleration = newAcceleration;
         component.OnGrounded = newOnGrounded;
+        component.TimeToLive = newTimeToLive;
         ReplaceComponent(index, component);
     }
 

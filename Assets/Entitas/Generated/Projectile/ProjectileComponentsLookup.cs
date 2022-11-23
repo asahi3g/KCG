@@ -9,28 +9,26 @@
 public static class ProjectileComponentsLookup {
 
     public const int AnimationState = 0;
-    public const int ECSInput = 1;
-    public const int PhysicsBox2DCollider = 2;
-    public const int PhysicsSphere2DCollider = 3;
-    public const int ProjectileDamage = 4;
-    public const int ProjectileDelete = 5;
-    public const int ProjectileExplosive = 6;
-    public const int ProjectileFirstFrame = 7;
-    public const int ProjectileFirstHIt = 8;
-    public const int ProjectileID = 9;
-    public const int ProjectileLinearDrag = 10;
-    public const int ProjectileOnHit = 11;
-    public const int ProjectilePhysicsState = 12;
-    public const int ProjectileRange = 13;
-    public const int ProjectileSprite2D = 14;
-    public const int ProjectileStart = 15;
-    public const int ProjectileType = 16;
+    public const int PhysicsBox2DCollider = 1;
+    public const int PhysicsSphere2DCollider = 2;
+    public const int ProjectileDamage = 3;
+    public const int ProjectileDelete = 4;
+    public const int ProjectileExplosive = 5;
+    public const int ProjectileFirstFrame = 6;
+    public const int ProjectileFirstHIt = 7;
+    public const int ProjectileID = 8;
+    public const int ProjectileLinearDrag = 9;
+    public const int ProjectileOnHit = 10;
+    public const int ProjectilePhysicsState = 11;
+    public const int ProjectileRange = 12;
+    public const int ProjectileSprite2D = 13;
+    public const int ProjectileStart = 14;
+    public const int ProjectileType = 15;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "AnimationState",
-        "ECSInput",
         "PhysicsBox2DCollider",
         "PhysicsSphere2DCollider",
         "ProjectileDamage",
@@ -50,7 +48,6 @@ public static class ProjectileComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(Animation.StateComponent),
-        typeof(ECSInput.Component),
         typeof(Physics.Box2DColliderComponent),
         typeof(Physics.Sphere2DColliderComponent),
         typeof(Projectile.DamageComponent),

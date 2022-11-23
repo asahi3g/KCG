@@ -7,7 +7,7 @@ namespace Node
 {
     public class ThrowGasBombAction : NodeBase
     {
-        public override NodeType Type => NodeType.ThrowGasBombAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ThrowGasBombAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

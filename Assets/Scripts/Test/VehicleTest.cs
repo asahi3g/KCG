@@ -51,9 +51,11 @@ namespace Planet.Unity
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;

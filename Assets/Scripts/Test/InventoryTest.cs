@@ -99,9 +99,11 @@ public class InventoryTest : UnityEngine.MonoBehaviour
             GetInventory(customRestrictionInventoryID).hasInventoryDraw = !GetInventory(customRestrictionInventoryID).hasInventoryDraw;
             GetInventory(materialBag.inventoryID.ID).hasInventoryDraw = !GetInventory(materialBag.inventoryID.ID).hasInventoryDraw;
         }
+
+        Draw();
     }
 
-    private void OnGUI()
+    private void Draw()
     {
         if (!Init)
             return;

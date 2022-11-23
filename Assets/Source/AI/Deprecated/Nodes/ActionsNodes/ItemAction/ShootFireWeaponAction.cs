@@ -9,7 +9,7 @@ namespace Node
 {
     public class ShootFireWeaponAction : NodeBase
     {
-        public override NodeType Type => NodeType.ShootFireWeaponAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ShootFireWeaponAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override List<Tuple<string, Type>> RegisterEntries()
@@ -33,7 +33,7 @@ namespace Node
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            int selected = inventoryEntity.inventoryEntity.SelectedSlotID;
+            int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotID;
             ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
             if (itemEntity == null)
             {

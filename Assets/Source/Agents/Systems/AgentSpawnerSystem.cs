@@ -22,8 +22,6 @@ namespace Agent
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
             entity.isAgentPlayer = true;
-            entity.isECSInput = true;
-            entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
             entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
@@ -31,7 +29,8 @@ namespace Agent
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel);
+            entity.AddAgentStats(new ContainerInt(9999, 0, 9999), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 
+                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
@@ -137,7 +136,8 @@ namespace Agent
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats((int)properties.DefaultHealth, 100, 100, 100, 100);
+            entity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f,
+                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
 
             entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 
@@ -233,8 +233,6 @@ namespace Agent
 
                        // entity.agentPhysicsState.Speed = 10.0f;
                         entity.isAgentPlayer = true;
-                        entity.isECSInput = true;
-                        entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
                         if(!entity.hasAgentAction)
                             entity.AddAgentAction(AgentAlertState.UnAlert);

@@ -7,7 +7,7 @@ namespace Node
 {
     public class ThrowFlareAction : NodeBase
     {
-        public override NodeType Type => NodeType.ThrowFlareAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ThrowFlareAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 

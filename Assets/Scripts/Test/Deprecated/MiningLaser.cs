@@ -112,7 +112,7 @@ public class MiningLaser : MonoBehaviour
         GameState.ItemCreationApi.SetTexture(LaserIcon);
 
         // Create Inventory texture
-        GameState.ItemCreationApi.SetInventoryTexture(LaserIcon);
+        GameState.ItemCreationApi.SetInventoryItemIcon(LaserIcon);
 
         // Create Size Component
         GameState.ItemCreationApi.SetSize(new Vec2f(1.0f, 0.5f));

@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class ToolActionConstruction : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionConstruction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionConstruction;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {

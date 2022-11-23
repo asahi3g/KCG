@@ -79,7 +79,7 @@ namespace GameScreen
 
         public override void OnGui()
         {
-            //GameState.Planet.DrawHUD(Player);
+            GameState.Planet.DrawHUD(Player);
         }
 
         public override void OnDrawGizmos()

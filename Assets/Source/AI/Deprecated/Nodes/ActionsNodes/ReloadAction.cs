@@ -6,7 +6,7 @@ namespace Node.Action
 {
     public class ReloadAction : NodeBase
     {
-        public override NodeType Type => NodeType.ReloadAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ReloadAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)
