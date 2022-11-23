@@ -15,8 +15,6 @@ namespace PlanetTileMap
             var properties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
             int adjacency = GetAdjacencyFromTile(x, y, tileMap);
 
-            UnityEngine.Debug.Log("update x " + x + " : y " + y + " tile type " + tile.FrontTileID);
-
             UpdateTile(ref tile, properties.BlockShapeType, adjacency);
         }
 
@@ -28,11 +26,11 @@ namespace PlanetTileMap
                 ref var tile = ref tileMap.GetTile(x, y);
                 var properties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
-                var shapeProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                var shapeProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
                 for(int lineIndex = shapeProperties.Offset; lineIndex < shapeProperties.Offset + shapeProperties.Size; lineIndex++)
                 {
-                    Collisions.TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(lineIndex);
-                    Collisions.GeometryLineSide side = GameState.GeometryCreationApi.GetSide(lineIndex);
+                    Collisions.TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(lineIndex);
+                    Collisions.GeometryLineSide side = GameState.GeometryPropertiesManager.GetSide(lineIndex);
 
                     if (testSide == side)
                     {
@@ -52,11 +50,11 @@ namespace PlanetTileMap
             var properties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
 
 
-            var shapeProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+            var shapeProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
             for(int lineIndex = shapeProperties.Offset; lineIndex < shapeProperties.Offset + shapeProperties.Size; lineIndex++)
             {
-                Collisions.TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(lineIndex);
-                Collisions.GeometryLineSide side = GameState.GeometryCreationApi.GetSide(lineIndex);
+                Collisions.TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(lineIndex);
+                Collisions.GeometryLineSide side = GameState.GeometryPropertiesManager.GetSide(lineIndex);
 
                 Collisions.TileLineSegment testLine = Collisions.TileLineSegment.Error;
                 switch(side)
@@ -82,20 +80,16 @@ namespace PlanetTileMap
                         break;
                     }
                 }
-
-                UnityEngine.Debug.Log("lineEnum : " + lineEnum + " side : " + side + " testline : " + testLine);
                 
                 if (testLine != Collisions.TileLineSegment.Error)
                 {
-                    var lineProperties = GameState.LineCreationApi.GetLineProperties(lineEnum);
+                    var lineProperties = GameState.LinePropertiesManager.GetLineProperties(lineEnum);
                     for(int matchIndex = lineProperties.MatchOffset; matchIndex < lineProperties.MatchOffset + lineProperties.MatchCount; matchIndex++)
                     {
-                        var match = GameState.LineCreationApi.GetMatch(matchIndex);
-                        UnityEngine.Debug.Log("match : " + match);
+                        var match = GameState.LinePropertiesManager.GetMatch(matchIndex);
                         if (match == testLine)
                         {
                             result |= (int)side;
-                            UnityEngine.Debug.Log("matched " + result);
                             break;
                         }
                     }
@@ -116,14 +110,247 @@ namespace PlanetTileMap
 
                     break;
                 }
+
+
+                case Enums.TileGeometryAndRotation.FP_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.FP_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.FP_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.FP_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.FP_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.FP_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.FP_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.FP_R3_A0000 + adjacency);
+
+                    break;
+                }
+
+
+                case Enums.TileGeometryAndRotation.HB_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HB_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HB_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HB_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R3_A0000 + adjacency);
+
+                    break;
+                }
+
+
+
+
+                case Enums.TileGeometryAndRotation.HP_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HP_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HP_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HP_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HP_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HP_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.HP_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HP_R3_A0000 + adjacency);
+
+                    break;
+                }
+
+
+                case Enums.TileGeometryAndRotation.L1_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R3_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R4:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R4_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R5:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R5_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R6:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R6_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L1_R7:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L1_R7_A0000 + adjacency);
+
+                    break;
+                }
+
+
+
+                case Enums.TileGeometryAndRotation.L2_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R3_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R4:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R4_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R5:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R5_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R6:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R6_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.L2_R7:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.L2_R7_A0000 + adjacency);
+
+                    break;
+                }
+
+
+
+                case Enums.TileGeometryAndRotation.QP_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.QP_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.QP_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.QP_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.QP_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.QP_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.QP_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.QP_R3_A0000 + adjacency);
+
+                    break;
+                }
+           
+
+
+                case Enums.TileGeometryAndRotation.TB_R0:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.TB_R0_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.TB_R1:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.TB_R1_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.TB_R2:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.TB_R2_A0000 + adjacency);
+
+                    break;
+                }
+                case Enums.TileGeometryAndRotation.TB_R3:
+                {
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.TB_R3_A0000 + adjacency);
+
+                    break;
+                }
                 default:
                 {
                     tile.Adjacency = Enums.TileGeometryAndRotationAndAdjacency.SB_R0_A1111;
                     break;
                 }
             }
-
-            UnityEngine.Debug.Log("conclusion : " + tile.Adjacency);
             
         }
     }

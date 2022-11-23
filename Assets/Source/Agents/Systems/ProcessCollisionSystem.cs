@@ -45,7 +45,7 @@ namespace Agent
             {
 
                 // physicsState.Position -= delta.Normalize() * 0.02f;
-                float coefficientOfRest = 0.6f;
+                float coefficientOfRest = Physics.Constants.CoefficientOfRestitution;
                 Vec2f velocity = deltaLeft;
 
 

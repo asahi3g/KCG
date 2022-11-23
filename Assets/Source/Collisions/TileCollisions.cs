@@ -232,13 +232,13 @@ namespace Collisions
                         {
                            PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
                                 {
@@ -451,13 +451,13 @@ namespace Collisions
 
                         if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
                         {
-                        var adjacencyProperties = GameState.AdjacencyCreationApi.GetProperties(tile.Adjacency);
+                        var adjacencyProperties = GameState.AdjacencyPropertiesManager.GetProperties(tile.Adjacency);
                         for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
                         {
-                            var lineEnum = GameState.AdjacencyCreationApi.GetLine(i);
+                            var lineEnum = GameState.AdjacencyPropertiesManager.GetLine(i);
 
-                            Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);
-                            Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);
+                            Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);
+                            Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);
 
                             planet.AddDebugLine(line, UnityEngine.Color.red);
 
@@ -571,13 +571,13 @@ namespace Collisions
 
                         if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
                         {
-                        var adjacencyProperties = GameState.AdjacencyCreationApi.GetProperties(tile.Adjacency);
+                        var adjacencyProperties = GameState.AdjacencyPropertiesManager.GetProperties(tile.Adjacency);
                         for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
                         {
-                            var lineEnum = GameState.AdjacencyCreationApi.GetLine(i);
+                            var lineEnum = GameState.AdjacencyPropertiesManager.GetLine(i);
 
-                            Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);
-                            Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);
+                            Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);
+                            Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);
 
                             
 
@@ -695,13 +695,13 @@ namespace Collisions
                         {
                             PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
                                 {
@@ -748,13 +748,13 @@ namespace Collisions
                         {
                             PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                  if (linesCount + 1 >= lines.Length)
                                 {
@@ -877,13 +877,13 @@ namespace Collisions
                         {
                             PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
                                 {
@@ -1057,13 +1057,13 @@ namespace Collisions
                         {
                             PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
                                 {
@@ -1200,13 +1200,13 @@ namespace Collisions
                         {
                             PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                            GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                            GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
                             for(int i = 0; i < geometryProperties.Size; i++)
                             {
-                                TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                 if (linesCount + 1 >= lines.Length)
                                 {
@@ -1368,7 +1368,7 @@ namespace Collisions
                             {
                                 PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                                GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                                GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
 
                                 colliderPosition = physicsState.Position + box2dCollider.Offset;
@@ -1381,9 +1381,9 @@ namespace Collisions
 
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
-                                    TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                    Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                    TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                    Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                    Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 1 >= tileVertices.Length)
                                     {
@@ -1453,7 +1453,7 @@ namespace Collisions
                             {
                                 PlanetTileMap.TileProperty properties = GameState.TileCreationApi.GetTileProperty(frontTileID);
 
-                                GeometryProperties geometryProperties = GameState.GeometryCreationApi.GetProperties(properties.BlockShapeType);
+                                GeometryProperties geometryProperties = GameState.GeometryPropertiesManager.GetProperties(properties.BlockShapeType);
 
 
                                 colliderPosition = physicsState.Position + box2dCollider.Offset;
@@ -1466,9 +1466,9 @@ namespace Collisions
 
                                 for(int i = 0; i < geometryProperties.Size; i++)
                                 {
-                                    TileLineSegment lineEnum = GameState.GeometryCreationApi.GetLine(geometryProperties.Offset + i);  
-                                    Line2D line = GameState.LineCreationApi.GetLine(lineEnum, x, y);  
-                                    Vec2f normal = GameState.LineCreationApi.GetNormal(lineEnum);                         
+                                    TileLineSegment lineEnum = GameState.GeometryPropertiesManager.GetLine(geometryProperties.Offset + i);  
+                                    Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);  
+                                    Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);                         
 
                                     if (tileVerticesCount + 2 >= tileVertices.Length)
                                     {

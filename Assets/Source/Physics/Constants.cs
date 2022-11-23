@@ -12,5 +12,6 @@ namespace Physics
         public const float DashTime = 0.3f;
         public const float DashSpeedMultiplier = 4.0f;
         public const float CollisionEpsilon = 0.1f;
+        public const float CoefficientOfRestitution = 0.6f;
     }
 }

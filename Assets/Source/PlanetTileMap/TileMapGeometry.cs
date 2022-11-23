@@ -10,10 +10,10 @@ namespace PlanetTileMap
 
         public static bool FindLine(Enums.TileGeometryAndRotation shape, Collisions.TileLineSegment line)
         {
-            var properties = GameState.GeometryCreationApi.GetProperties(shape);
+            var properties = GameState.GeometryPropertiesManager.GetProperties(shape);
             for(int i = 0; i < properties.Size; i++)
             {
-                Collisions.TileLineSegment testLine = GameState.GeometryCreationApi.GetLine(i + properties.Offset);
+                Collisions.TileLineSegment testLine = GameState.GeometryPropertiesManager.GetLine(i + properties.Offset);
 
                 if (testLine == line)
                 {
@@ -28,10 +28,10 @@ namespace PlanetTileMap
         {
             if (shape != Enums.TileGeometryAndRotation.Error)
             {
-                var properties = GameState.GeometryCreationApi.GetProperties(shape);
+                var properties = GameState.GeometryPropertiesManager.GetProperties(shape);
                 for(int i = 0; i < properties.Size; i++)
                 {
-                    Collisions.TileLineSegment testLine = GameState.GeometryCreationApi.GetLine(i + properties.Offset);
+                    Collisions.TileLineSegment testLine = GameState.GeometryPropertiesManager.GetLine(i + properties.Offset);
 
                     if (testLine == line1 || testLine == line2)
                     {
@@ -97,26 +97,26 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j), 
-                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j), 
+                                GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
                             break;
                         }
@@ -144,20 +144,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             break;
@@ -187,20 +187,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
 
@@ -231,20 +231,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -273,20 +273,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
 
@@ -334,26 +334,26 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_M2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_M2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_M2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_M2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M2_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
                             break;
                         }
@@ -396,26 +396,26 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_M1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_M1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_M1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_M1), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M1_M3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M1_M3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M1_M3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M1_M3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M3_C0), shape, properties.MaterialType);
                             }
                             break;
                         }
@@ -459,26 +459,26 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_M2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_M2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_M2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_M2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M2_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M2_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M2_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M2_M0), shape, properties.MaterialType);
                             }
                             break;
                         }
@@ -520,26 +520,26 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M3_M1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M3_M1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M3_M1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M3_M1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M1_C2), shape, properties.MaterialType);
                             }
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_M3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_M3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_M3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_M3), shape, properties.MaterialType);
                             }
                             break;
                         }
@@ -570,20 +570,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C3), shape, properties.MaterialType);
                             }
 
                             break;
@@ -614,20 +614,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_M1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_M1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_M1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_M1), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M1_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M1_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M1_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M1_C0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -662,20 +662,20 @@ namespace PlanetTileMap
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_M2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_M2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_M2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_M2), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M2_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M2_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M2_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M2_C1), shape, properties.MaterialType);
                             }
 
                             break;
@@ -691,20 +691,20 @@ namespace PlanetTileMap
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -738,20 +738,20 @@ namespace PlanetTileMap
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M2_C3), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_M2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_M2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_M2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_M2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -770,20 +770,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_M3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_M3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_M3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_M3), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M3_C0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -801,20 +801,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_M0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -830,20 +830,20 @@ namespace PlanetTileMap
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_M0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -885,26 +885,26 @@ namespace PlanetTileMap
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_M0), shape, properties.MaterialType);
                             }
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C1, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C1), shape, properties.MaterialType);
                             }
 
                             break;
@@ -939,26 +939,26 @@ namespace PlanetTileMap
 
                             if (bottomLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
                             }
 
                             if (rightLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_M0_C2, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_M0_C2), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_M0_C2, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_M0_C2), shape, properties.MaterialType);
                             }
 
                             if (leftLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
                             }
 
                             if (topLine)
                             {
-                                tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
-                                 GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
+                                tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_M0, i, j),
+                                 GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_M0), shape, properties.MaterialType);
                             }
 
                             break;
@@ -970,8 +970,8 @@ namespace PlanetTileMap
                         {
                             Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R0;
 
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
-                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
+                            tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C0_C1, i, j),
+                                GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C0_C1), shape, properties.MaterialType);
 
                             break;
                         }
@@ -980,8 +980,8 @@ namespace PlanetTileMap
                         {
                             Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R1;
 
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
-                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
+                            tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C1_C2, i, j),
+                                GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C1_C2), shape, properties.MaterialType);
 
                             break;
                         }
@@ -990,8 +990,8 @@ namespace PlanetTileMap
                         {
                             Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R2;
 
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
-                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
+                            tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C2_C3, i, j),
+                                GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C2_C3), shape, properties.MaterialType);
 
                             break;
                         }
@@ -1000,8 +1000,8 @@ namespace PlanetTileMap
                         {
                             Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.QP_R3;
 
-                            tileMap.AddGeometryLine(GameState.LineCreationApi.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
-                                GameState.LineCreationApi.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
+                            tileMap.AddGeometryLine(GameState.LinePropertiesManager.GetLine(Collisions.TileLineSegment.L_C3_C0, i, j),
+                                GameState.LinePropertiesManager.GetNormal(Collisions.TileLineSegment.L_C3_C0), shape, properties.MaterialType);
 
                             break;
                         }

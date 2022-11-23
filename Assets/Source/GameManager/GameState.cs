@@ -78,11 +78,11 @@ public static class GameState
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
-    public static readonly Collisions.LineCreationApi LineCreationApi;
+    public static readonly Collisions.LinePropertiesManager LinePropertiesManager;
     public static readonly Collisions.PointCreationApi PointCreationApi;
-    public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
+    public static readonly Collisions.GeometryPropertiesManager GeometryPropertiesManager;
 
-    public static readonly Collisions.AdjacencyCreationApi AdjacencyCreationApi;
+    public static readonly Collisions.AdjacencyPropertiesManager AdjacencyPropertiesManager;
 
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
@@ -178,9 +178,9 @@ public static class GameState
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
         PointCreationApi.InitStage1();
-        LineCreationApi.InitStage1();
-        GeometryCreationApi.InitStage1();
-        AdjacencyCreationApi.InitStage1();
+        LinePropertiesManager.InitStage1();
+        GeometryPropertiesManager.InitStage1();
+        AdjacencyPropertiesManager.InitStage1();
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
     }
@@ -191,9 +191,9 @@ public static class GameState
         SpriteAtlasManager.InitStage2();
         AgentMovementAnimationTable.InitStage2();
         PointCreationApi.InitStage2();
-        LineCreationApi.InitStage2();
-        GeometryCreationApi.InitStage2();
-        AdjacencyCreationApi.InitStage2();
+        LinePropertiesManager.InitStage2();
+        GeometryPropertiesManager.InitStage2();
+        AdjacencyPropertiesManager.InitStage2();
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
     }
@@ -242,10 +242,10 @@ public static class GameState
         AgentProcessState = new Agent.ProcessState();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
-        LineCreationApi = new Collisions.LineCreationApi();
+        LinePropertiesManager = new Collisions.LinePropertiesManager();
         PointCreationApi = new Collisions.PointCreationApi();
-        GeometryCreationApi = new Collisions.GeometryCreationApi();
-        AdjacencyCreationApi = new Collisions.AdjacencyCreationApi();
+        GeometryPropertiesManager = new Collisions.GeometryPropertiesManager();
+        AdjacencyPropertiesManager = new Collisions.AdjacencyPropertiesManager();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem();
