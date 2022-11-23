@@ -140,25 +140,25 @@ namespace PlanetTileMap
 
                 case Enums.TileGeometryAndRotation.HB_R0:
                 {
-                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R0_A0000 + adjacency);
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R0_A0X00 + adjacency);
 
                     break;
                 }
                 case Enums.TileGeometryAndRotation.HB_R1:
                 {
-                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R1_A0000 + adjacency);
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R1_A00X0 + adjacency);
 
                     break;
                 }
                 case Enums.TileGeometryAndRotation.HB_R2:
                 {
-                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R2_A0000 + adjacency);
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R2_A000X + adjacency);
 
                     break;
                 }
                 case Enums.TileGeometryAndRotation.HB_R3:
                 {
-                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R3_A0000 + adjacency);
+                    tile.Adjacency = (Enums.TileGeometryAndRotationAndAdjacency)((int)Enums.TileGeometryAndRotationAndAdjacency.HB_R3_AX000 + adjacency);
 
                     break;
                 }
