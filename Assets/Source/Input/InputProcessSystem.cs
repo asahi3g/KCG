@@ -51,7 +51,15 @@ namespace ECSInput
 
             return new Vec2f(worldPosition.x, worldPosition.y);
         }
-        
+
+        public static Vec2f GetCursorWorldPosition(float z)
+        {
+            var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
+                Input.mousePosition.y, z));
+
+            return new Vec2f(worldPosition.x, worldPosition.y);
+        }
+
         public static Vec2f GetCursorScreenPosition()
         {
             Vector3 mousePos = Input.mousePosition;

@@ -30,13 +30,7 @@ namespace GameScreen
         {
             base.Update();
 
-            UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
-            p.z = 20;
-            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
-
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
-
-
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
             {

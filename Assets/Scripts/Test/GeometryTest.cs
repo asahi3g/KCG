@@ -141,10 +141,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-
-            Vector3 p = Input.mousePosition;
-            p.z = 20;
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(p);
+            var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
             
             var playerPhysicsState = Player.agentPhysicsState;
             Vec2f playerPosition = playerPhysicsState.Position;
@@ -154,7 +151,7 @@ namespace Planet.Unity
             orrectedBox.h = playerCollider.Size.Y;
 
             
-            Vec2f velocity = new Vec2f(mouse.x - orrectedBox.x, mouse.y - orrectedBox.y);
+            Vec2f velocity = new Vec2f(mouse.X - orrectedBox.x, mouse.Y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
 

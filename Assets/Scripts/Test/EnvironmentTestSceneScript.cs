@@ -105,10 +105,7 @@ namespace Planet.Foreground
 
         public void Update()
         {
-
-            UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
-            p.z = 20;
-            UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
+            var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
             var playerPhysicsState = Player.agentPhysicsState;
             Vec2f playerPosition = playerPhysicsState.Position;
@@ -118,7 +115,7 @@ namespace Planet.Foreground
             orrectedBox.h = playerCollider.Size.Y;
 
 
-            Vec2f velocity = new Vec2f(mouse.x - orrectedBox.x, mouse.y - orrectedBox.y);
+            Vec2f velocity = new Vec2f(mouse.X - orrectedBox.x, mouse.Y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
 
@@ -352,16 +349,14 @@ namespace Planet.Foreground
 
             if (drawRayCast)
             {
-                UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
-                p.z = 20;
-                UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
+                var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
                 var rayCastResult =
                     Collisions.Collisions.RayCastAgainstTileMap(new Line2D(Player.agentPhysicsState.Position,
-                        new Vec2f(mouse.x, mouse.y)));
+                        new Vec2f(mouse.X, mouse.Y)));
 
                 Vec2f startPos = Player.agentPhysicsState.Position;
-                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
+                Vec2f endPos = new Vec2f(mouse.X, mouse.Y);
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20),
                     new UnityEngine.Vector3(endPos.X, endPos.Y, 20));
 
@@ -379,13 +374,12 @@ namespace Planet.Foreground
 
 
             var worldPosition =
-                UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            worldPosition.z = 20.0f;
+                ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
             if (testCircleCollision)
             {
                 int[] agentIds =
-                    Collisions.Collisions.BroadphaseAgentCircleTest(new Vec2f(worldPosition.x, worldPosition.y), 0.5f);
+                    Collisions.Collisions.BroadphaseAgentCircleTest(new Vec2f(worldPosition.X, worldPosition.Y), 0.5f);
 
                 UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
@@ -393,14 +387,15 @@ namespace Planet.Foreground
                     UnityEngine.Gizmos.color = UnityEngine.Color.red;
                 }
 
-                UnityEngine.Gizmos.DrawSphere(worldPosition, 0.5f);
+                UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(worldPosition.X,
+                    worldPosition.Y, 20), 0.5f);
             }
 
             if (testRectangleCollision)
             {
                 int[] agentIds =
                     Collisions.Collisions.BroadphaseAgentBoxTest(
-                        new AABox2D(new Vec2f(worldPosition.x, worldPosition.y), new Vec2f(0.5f, 0.75f)));
+                        new AABox2D(new Vec2f(worldPosition.X, worldPosition.Y), new Vec2f(0.5f, 0.75f)));
 
                 UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
                 if (agentIds != null && agentIds.Length > 0)
@@ -408,7 +403,8 @@ namespace Planet.Foreground
                     UnityEngine.Gizmos.color = UnityEngine.Color.red;
                 }
 
-                UnityEngine.Gizmos.DrawWireCube(worldPosition + new UnityEngine.Vector3(0.25f, 0.75f * 0.5f, 0),
+                UnityEngine.Gizmos.DrawWireCube(new UnityEngine.Vector3(worldPosition.X,
+                    worldPosition.Y, 20) + new UnityEngine.Vector3(0.25f, 0.75f * 0.5f, 0),
                     new UnityEngine.Vector3(0.5f, 0.75f, 0.5f));
             }
 
@@ -416,16 +412,14 @@ namespace Planet.Foreground
 
             if (testRayAgainstCircle)
             {
-                UnityEngine.Vector3 p = UnityEngine.Input.mousePosition;
-                p.z = 20;
-                UnityEngine.Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(p);
+                var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
                 var rayCastResult = Collisions.Collisions.RayCastAgainstCircle(
-                    new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.x, mouse.y)),
+                    new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.X, mouse.Y)),
                     new Vec2f(9, 19), 1.0f);
 
                 Vec2f startPos = Player.agentPhysicsState.Position;
-                Vec2f endPos = new Vec2f(mouse.x, mouse.y);
+                Vec2f endPos = new Vec2f(mouse.X, mouse.Y);
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20),
                     new UnityEngine.Vector3(endPos.X, endPos.Y, 20));
 
