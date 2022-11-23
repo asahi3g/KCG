@@ -30,8 +30,8 @@ namespace Item
                 }
 
                 // Get item ceter position.
-                var itemProprieties = GameState.ItemCreationApi.Get(itemParticle.itemType.Type);
-                Vec2f centerPos = itemParticle.itemPhysicsState.Position + itemProprieties.SpriteSize / 2.0f;
+                var ItemProperties = GameState.ItemCreationApi.Get(itemParticle.itemType.Type);
+                Vec2f centerPos = itemParticle.itemPhysicsState.Position + ItemProperties.SpriteSize / 2.0f;
                 const float PickingRadius = 2.0f; // Minimum distance to pick item.
                 int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(centerPos, PickingRadius);
 

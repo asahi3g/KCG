@@ -72,7 +72,7 @@ namespace Inventory
 
             if (inventory.SlotsMask[slotID])
             {
-                ItemProprieties proprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
+                ItemProperties proprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
                 ItemInventoryEntity currentItem = GetItemInSlot(inventoryID, slotID);
 
                 // If stackable check if there are any available stack in the inventory.
@@ -145,7 +145,7 @@ namespace Inventory
 
         public bool AddItem(ItemInventoryEntity entity, int inventoryID)
         {
-            ItemProprieties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+            ItemProperties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
             // If stackable check if there are any available stack in the inventory.
             if (proprieties.IsStackable())

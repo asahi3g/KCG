@@ -46,9 +46,9 @@ namespace ECSInput
 
         public static Vec2f GetCursorWorldPosition()
         {
-            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            var worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            return new Vec2f(worldPosition.X, worldPosition.Y);
+            return new Vec2f(worldPosition.x, worldPosition.y);
         }
         
         public static Vec2f GetCursorScreenPosition()
@@ -140,11 +140,11 @@ namespace ECSInput
                     player.Walk(x);
                 }
 
-                var mouseWorldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                var mouseWorldPosition = GetCursorWorldPosition();
 
                 if (player.CanFaceMouseDirection())
                 {
-                    if (mouseWorldPosition.x >= physicsState.Position.X)
+                    if (mouseWorldPosition.X >= physicsState.Position.X)
                     {
                         physicsState.FacingDirection = 1;
                     }
