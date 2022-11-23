@@ -5,13 +5,14 @@ using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
+using Unity.VisualScripting;
 using Utility;
 
 /*
     How To use it:
         CreateItem(Item Type, Item Type Name);
         SetTexture(SpriteSheetID);
-        SetInventoryTexture(SpriteSheetID);
+        SetInventoryItemIcon(SpriteSheetID);
         MakeStackable(Max number of items in a stack.);
         EndItem();
 */
@@ -23,9 +24,8 @@ namespace Item
         // Constructor is called before the first frame update.
          
         // Note[Joao] this arrays are very memory expensive: use array of pointers instead?
-        private ItemProprieties[] PropertiesArray;
+        private ItemProperties[] PropertiesArray;
         private FireWeaponPropreties[] WeaponList;
-        private string[] ItemTypeLabels;
 
         private ItemType currentIndex;
         private int weaponListSize;
@@ -33,8 +33,7 @@ namespace Item
         public ItemCreationApi()
         {
             int length = Enum.GetValues(typeof(ItemType)).Length - 1; // -1 beacause of error item type.
-            PropertiesArray = new ItemProprieties[length];
-            ItemTypeLabels = new string[length];
+            PropertiesArray = new ItemProperties[length];
             WeaponList = new FireWeaponPropreties[16];
             currentIndex = ItemType.Error;
             weaponListSize = 0;
@@ -47,14 +46,13 @@ namespace Item
 
         public string GetLabel(ItemType type)
         {
-            ItemType itemType = PropertiesArray[(int)type].ItemType;
-            IsItemTypeValid(itemType);
+            string itemLabel = PropertiesArray[(int)type].ItemLabel;
 
-            return ItemTypeLabels[(int)type];
+            return itemLabel;
         }
 
 
-        public ItemProprieties Get(ItemType type)
+        public ItemProperties Get(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -76,14 +74,14 @@ namespace Item
 
             PropertiesArray[(int)itemType].ItemType = itemType;
             PropertiesArray[(int)itemType].MechType = MechType.Error;
-            ItemTypeLabels[(int)itemType] = name;
+            PropertiesArray[(int)itemType].ItemLabel = name;
         }
 
         public void SetName(string name)
         {
             IsItemTypeValid();
 
-            ItemTypeLabels[(int)currentIndex] = name;
+            PropertiesArray[(int)currentIndex].ItemLabel = name;
         }
 
         public void SetGroup(ItemGroups group)
@@ -107,13 +105,6 @@ namespace Item
             PropertiesArray[(int)currentIndex].TileType = tile;
         }
 
-        public void SetSpriteSize(Vec2f size)
-        {
-            IsItemTypeValid();
-
-            PropertiesArray[(int)currentIndex].SpriteSize = size;
-        }
-
         public void SetTexture(int spriteId)
         {
             IsItemTypeValid();
@@ -122,38 +113,38 @@ namespace Item
         }
 
 
-        public void SetInventoryTexture(int spriteId)
+        public void SetInventoryItemIcon(int spriteId)
         {
             IsItemTypeValid();
 
             PropertiesArray[(int)currentIndex].InventorSpriteID = spriteId;
         }
 
-        public void SetAction(NodeType nodeID)
+        public void SetAction(ItemUsageActionType  nodeID)
         {
             IsItemTypeValid();
 
             PropertiesArray[(int)currentIndex].ToolActionType = nodeID;
-            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Tool;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Tool;
         }
 
         public void SetConsumable()
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Consumable;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Consumable;
         }
 
         public void SetStackable(int maxStackCount = 99)
         {
             IsItemTypeValid();
             PropertiesArray[(int)currentIndex].MaxStackCount = maxStackCount;
-            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Stackable;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Stackable;
         }
 
         public void SetUIPanel(PanelEnums panelEnums)
         {
-            PropertiesArray[(int) currentIndex].ItemFlags |= ItemProprieties.Flags.UI;
+            PropertiesArray[(int) currentIndex].ItemFlags |= ItemProperties.Flags.UI;
             PropertiesArray[(int) currentIndex].ItemPanelEnums = panelEnums;
         }
 
@@ -161,7 +152,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProprieties.Flags.Placeable;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Placeable;
         }
 
         public void SetSpreadAngle(float spreadAngle)
@@ -172,7 +163,7 @@ namespace Item
             fireWeapon.SpreadAngle = spreadAngle;
         }
 
-        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, int basicDamage)
+        public void SetRangedWeaponAttribute (float bulletSpeed, float coolDown, float range, int basicDamage)
         {
             IsItemTypeValid();
 
@@ -188,7 +179,7 @@ namespace Item
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
-        public void SetRangedWeapon(float bulletSpeed, float coolDown, float range, bool isLaunchGrenade, int basicDamage)
+        public void SetRangedWeaponAttribute(float bulletSpeed, float coolDown, float range, bool isLaunchGrenade, int basicDamage)
         {
             IsItemTypeValid();
 
@@ -314,7 +305,7 @@ namespace Item
             fireWeapon.GrenadeFlags |= flags;
         }
 
-        public void SetFlags(ItemProprieties.Flags flags)
+        public void SetFlags(ItemProperties.Flags flags)
         {
             IsItemTypeValid();
 
@@ -530,7 +521,7 @@ namespace Item
             DracaenaTrifasciataIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", 16, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
             ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture2\\dev-furniture-2.png", 12, 12);
-            ChestIconItem = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
+            int ChestIconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIconItem = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
             Light2IconItem = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
             HelmetsSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Character\\Helmets\\character-helmets.png", 64, 64);
@@ -572,7 +563,8 @@ namespace Item
             DracaenaTrifasciataIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(DracaenaTrifasciataIcon, 0, 0, AtlasType.Particle);
             WaterIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(WaterIcon, 0, 0, AtlasType.Particle);
             ConstructionToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(ConstructionToolIcon, 0, 0, AtlasType.Particle);
-            ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconItem, 0, 0, AtlasType.Particle);
+            ChestIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconSheet, 0, 0, AtlasType.Particle);
+            ChestIconParticle = GameState.SpriteAtlasManager.CopySpriteToAtlas(ChestIconSheet, 0, 0, AtlasType.Particle);
             PotIconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(PotIconItem, 0, 0, AtlasType.Particle);
             Light2IconItem = GameState.SpriteAtlasManager.CopySpriteToAtlas(Light2IconItem, 0, 0, AtlasType.Particle);
             HemeltSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(HelmetsSpriteSheet, 0, 0, AtlasType.Particle);
@@ -673,56 +665,51 @@ namespace Item
             CreateItem(ItemType.SniperRifle, "SniperRifle");
             SetGroup(ItemGroups.Gun);
             SetTexture(SniperRifleIcon);
-            SetInventoryTexture(SniperRifleIcon);
-            SetRangedWeapon(200.0f, 1f, 350.0f, 60);
-            SetRangedWeaponClip(6, 1, 1.3f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(SniperRifleIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
+            SetRangedWeaponClip(clipSize: 6, bulletsPerShot: 1, reloadTime: 1.3f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.LongRifle, "LongRifle");
             SetGroup(ItemGroups.Gun);
             SetTexture(LongRifleIcon);
-            SetInventoryTexture(LongRifleIcon);
-            SetRangedWeapon(50.0f, 1f, 20.0f, 40);
-            SetRangedWeaponClip(25, 1, 2f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(LongRifleIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
+            SetRangedWeaponClip(clipSize: 25, bulletsPerShot: 1, reloadTime: 2f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.PulseWeapon, "PulseWeapon");
             SetGroup(ItemGroups.Gun);
             SetTexture(PulseIcon);
-            SetInventoryTexture(PulseIcon);
-            SetRangedWeapon(20.0f, 0.5f, 10.0f, false, 25);
+            SetInventoryItemIcon(PulseIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
             SetRangedWeaponClip(25, 4, 1, 1);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootPulseWeaponAction);
+            SetAction(ItemUsageActionType .ShootPulseWeaponAction);
             EndItem();
 
             CreateItem(ItemType.AutoCannon, "AutoCannon");
             SetGroup(ItemGroups.Gun);
             SetTexture(LongRifleIcon);
-            SetInventoryTexture(LongRifleIcon);
-            SetRangedWeapon(50.0f, 0.5f, 20.0f, 40);
-            SetRangedWeaponClip(40, 3, 4f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(LongRifleIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
+            SetRangedWeaponClip(clipSize: 40, bulletsPerShot: 3, reloadTime: 4f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.SMG, "SMG");
             SetGroup(ItemGroups.Gun);
             SetTexture(SMGIcon);
-            SetInventoryTexture(SMGIcon);
-            SetRangedWeapon(50.0f, 0.2f, 20.0f, 15);
-            SetRangedWeaponClip(50, 1, 1f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(SMGIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
+            SetRangedWeaponClip(clipSize: 50,  bulletsPerShot: 1, reloadTime:1f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             SetItemToolType(ItemToolType.Pistol);
             SetItemToolType(ItemToolType.Rifle);
             SetAnimationSet(ItemAnimationSet.HoldingRifle);
@@ -732,38 +719,35 @@ namespace Item
             CreateItem(ItemType.Shotgun, "Shotgun");
             SetGroup(ItemGroups.Gun);
             SetTexture(ShotgunIcon);
-            SetInventoryTexture(ShotgunIcon);
-            SetRangedWeapon(30.0f, 1f, 10.0f, 35);
+            SetInventoryItemIcon(ShotgunIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 30.0f, coolDown: 1f, range: 10.0f, basicDamage: 35);
             SetSpreadAngle(1.0f);
-            SetRangedWeaponClip(6, 2, 2.5f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
             SetProjectileType(ProjectileType.Bullet);
             SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.PumpShotgun, "PumpShotgun");
             SetGroup(ItemGroups.Gun);
             SetTexture(ShotgunIcon);
-            SetInventoryTexture(ShotgunIcon);
-            SetRangedWeapon(20.0f, 2f, 5.0f, 30);
+            SetInventoryItemIcon(ShotgunIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
             SetSpreadAngle(1.0f);
-            SetRangedWeaponClip(8, 4, 2.5f);
+            SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
             SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Pistol, "Pistol");
             SetGroup(ItemGroups.Gun);
             SetTexture(PistolIcon);
-            SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(50.0f, 0.4f, 100.0f, 25);
-            SetRangedWeaponClip(8, 1, 1f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(PistolIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
+            SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 1, reloadTime: 1f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             SetItemToolType(ItemToolType.Pistol);
             SetAnimationSet(ItemAnimationSet.HoldingPistol);
             EndItem();
@@ -771,1083 +755,963 @@ namespace Item
             CreateItem(ItemType.RPG, "RPG");
             SetGroup(ItemGroups.Gun);
             SetTexture(RPGIcon);
-            SetInventoryTexture(RPGIcon);
-            SetRangedWeapon(50.0f, 3f, 50.0f, 100);
-            SetRangedWeaponClip(2, 1, 3);
+            SetInventoryItemIcon(RPGIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 3f, range: 50.0f, basicDamage: 100);
+            SetRangedWeaponClip(clipSize: 2, bulletsPerShot: 1, reloadTime: 3);
             SetExplosion(3.0f, 15, 0f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetProjectileType(ProjectileType.Rocket);
-            SetAction(NodeType.ThrowFragGrenadeAction);
+            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            EndItem();
+
+            CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
+            SetTexture(GrenadeSpriteId);
+            SetInventoryItemIcon(GrenadeSpriteId);
+            SetGroup(ItemGroups.Gun);
+            SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
+            SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
+            SetExplosion(4.0f, 15, 0f);
+            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
+            SetProjectileType(ProjectileType.Grenade);
+            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            EndItem();
+
+            CreateItem(ItemType.Bow, "Bow");
+            SetGroup(ItemGroups.None);
+            SetTexture(PistolIcon);
+            SetInventoryItemIcon(PistolIcon);
+            SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
+            SetRangedWeaponClip(clipSize: 1, bulletsPerShot: 1, reloadTime: 2f);
+            SetProjectileType(ProjectileType.Arrow);
+            SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Moon, "Moon");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryTexture(BedrockIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(BedrockIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Moon);
             EndItem();
 
             CreateItem(ItemType.Dirt, "Dirt");
             SetGroup(ItemGroups.None);
             SetTexture(DirtIcon);
-            SetInventoryTexture(DirtIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(DirtIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
             CreateItem(ItemType.Bedrock, "Bedrock");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryTexture(BedrockIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(BedrockIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Bedrock);
             EndItem();
 
             CreateItem(ItemType.Pipe, "Pipe");
             SetGroup(ItemGroups.None);
             SetTexture(PipeIcon);
-            SetInventoryTexture(PipeIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PipeIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Pipe);
             EndItem();
 
             CreateItem(ItemType.Wire, "Wire");
             SetGroup(ItemGroups.None);
             SetTexture(WireIcon);
-            SetInventoryTexture(WireIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(WireIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetTile(TileID.Wire);
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryTexture(GrenadeSprite5);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowGasBombAction);
+            SetInventoryItemIcon(GrenadeSprite5);
+            SetAction(ItemUsageActionType .ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
-            SetInventoryTexture(GrenadeSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowFragGrenadeAction);
-            EndItem();
-
-            CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
-            SetTexture(GrenadeSpriteId);
-            SetInventoryTexture(GrenadeSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetGroup(ItemGroups.Gun);
-            SetRangedWeapon(20.0f, 1f, 20.0f, 25);
-            SetRangedWeaponClip(4, 1, 2);
-            SetExplosion(4.0f, 15, 0f);
-            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
-            SetProjectileType(ProjectileType.Grenade);
-            SetAction(NodeType.ThrowFragGrenadeAction);
-            EndItem();
-
-            CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.None);
-            SetTexture(PistolIcon);
-            SetInventoryTexture(PistolIcon);
-            SetRangedWeapon(70.0f, 3f, 100.0f, 30);
-            SetRangedWeaponClip(1, 1, 2f);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetProjectileType(ProjectileType.Arrow);
-            SetAction(NodeType.ShootFireWeaponAction);
+            SetInventoryItemIcon(GrenadeSpriteId);
+            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.Sword, "Sword");
             SetGroup(ItemGroups.Weapon);
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
+            SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
             SetFlags(FireWeaponPropreties.MeleeFlags.Stab);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MeleeAttackAction);
+            SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 
             CreateItem(ItemType.StunBaton, "StunBaton");
             SetGroup(ItemGroups.Weapon);
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
+            SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
             SetFlags(FireWeaponPropreties.MeleeFlags.Slash);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MeleeAttackAction);
+            SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 
             CreateItem(ItemType.RiotShield, "RiotShield");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
+            SetInventoryItemIcon(SwordSpriteId);
             SetShield(false);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.UseShieldAction);
+            SetAction(ItemUsageActionType .UseShieldAction);
             EndItem();
 
             CreateItem(ItemType.Ore, "Ore");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryTexture(OreIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Slime, "Slime");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
-            SetInventoryTexture(SlimeIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(SlimeIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Food, "Food");
             SetGroup(ItemGroups.None);
             SetTexture(FoodIcon);
-            SetInventoryTexture(FoodIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(FoodIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Bone, "Bone");
             SetGroup(ItemGroups.None);
             SetTexture(BoneIcon);
-            SetInventoryTexture(BoneIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(BoneIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PotionTool, "PotionTool");
             SetGroup(ItemGroups.None);
             SetTexture(BoneIcon);
-            SetInventoryTexture(BoneIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetInventoryItemIcon(BoneIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PotionTool);
-            SetAction(NodeType.ToolActionPotion);
+            SetAction(ItemUsageActionType .ToolActionPotion);
             EndItem();
 
             CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
             SetTexture(BoneIcon);
-            SetInventoryTexture(BoneIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.DrinkPotionAction);
+            SetInventoryItemIcon(BoneIcon);
+            SetAction(ItemUsageActionType .DrinkPotionAction);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Ore, "Ore");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryTexture(OreIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
             SetGroup(ItemGroups.BuildTools);
             SetTexture(PlacementToolIcon);
-            SetInventoryTexture(PlacementToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetInventoryItemIcon(PlacementToolIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementTool);
-            SetAction(NodeType.ToolActionPlaceTile);
+            SetAction(ItemUsageActionType .ToolActionPlaceTile);
             EndItem();
 
             CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
             SetGroup(ItemGroups.BuildTools);
             SetTexture(PlacementToolIcon);
-            SetInventoryTexture(PlacementToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetInventoryItemIcon(PlacementToolIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementMaterialTool);
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
             SetGroup(ItemGroups.None);
             SetTexture(RemoveToolIcon);
-            SetInventoryTexture(RemoveToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionRemoveTile);
+            SetInventoryItemIcon(RemoveToolIcon);
+            SetAction(ItemUsageActionType .ToolActionRemoveTile);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
-            SetInventoryTexture(SlimeIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionEnemySpawn);
+            SetInventoryItemIcon(SlimeIcon);
+            SetAction(ItemUsageActionType .ToolActionEnemySpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
-            SetInventoryTexture(SlimeIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionEnemyGunnerSpawn);
+            SetInventoryItemIcon(SlimeIcon);
+            SetAction(ItemUsageActionType .ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
-            SetInventoryTexture(SlimeIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionEnemySwordmanSpawn);
+            SetInventoryItemIcon(SlimeIcon);
+            SetAction(ItemUsageActionType .ToolActionEnemySwordmanSpawn);
             EndItem();
 
             CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
             SetGroup(ItemGroups.None);
             SetTexture(MiningLaserToolIcon);
-            SetInventoryTexture(MiningLaserToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionMiningLaser);
+            SetInventoryItemIcon(MiningLaserToolIcon);
+            SetAction(ItemUsageActionType .ToolActionMiningLaser);
             EndItem();
 
             CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryTexture(OreIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionPlaceParticleEmitter);
+            SetInventoryItemIcon(OreIcon);
+            SetAction(ItemUsageActionType .ToolActionPlaceParticleEmitter);
             EndItem();
 
             CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryTexture(OreIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionPlaceChest);
+            SetInventoryItemIcon(OreIcon);
+            SetAction(ItemUsageActionType .ToolActionPlaceChest);
             EndItem();
 
             CreateItem(ItemType.MajestyPalm, "MajestyPlant");
             SetTexture(MajestyPalmIcon);
-            SetInventoryTexture(MajestyPalmIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.PlantAction);
+            SetInventoryItemIcon(MajestyPalmIcon);
+            SetAction(ItemUsageActionType .PlantAction);
             EndItem();
 
             CreateItem(ItemType.SagoPalm, "SagoPlant");
             SetTexture(SagoPalmIcon);
-            SetInventoryTexture(SagoPalmIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.PlantAction);
+            SetInventoryItemIcon(SagoPalmIcon);
+            SetAction(ItemUsageActionType .PlantAction);
             EndItem();
 
             CreateItem(ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
             SetTexture(DracaenaTrifasciataIcon);
-            SetInventoryTexture(DracaenaTrifasciataIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.PlantAction);
+            SetInventoryItemIcon(DracaenaTrifasciataIcon);
+            SetAction(ItemUsageActionType .PlantAction);
             EndItem();
 
             CreateItem(ItemType.WaterBottle, "Water");
             SetTexture(WaterIcon);
-            SetInventoryTexture(WaterIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.WaterAction);
+            SetInventoryItemIcon(WaterIcon);
+            SetAction(ItemUsageActionType .WaterAction);
             EndItem();
 
             CreateItem(ItemType.HarvestTool, "HarvestTool");
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.HarvestAction);
+            SetInventoryItemIcon(SwordSpriteId);
+            SetAction(ItemUsageActionType .HarvestAction);
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
             SetTexture(ConstructionToolIcon);
-            SetInventoryTexture(ConstructionToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetInventoryItemIcon(ConstructionToolIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
-            SetAction(NodeType.ToolActionConstruction);
+            SetAction(ItemUsageActionType .ToolActionConstruction);
             EndItem();
 
             CreateItem(ItemType.Chest, "Chest");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryTexture(ChestIconItem);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.MechPlacementAction);
+            SetInventoryItemIcon(ChestIconItem);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.SmashableBox, "SmashableBox");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryTexture(ChestIconItem);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.MechPlacementAction);
+            SetInventoryItemIcon(ChestIconItem);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.SmashableEgg, "SmashableEgg");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryTexture(ChestIconItem);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.MechPlacementAction);
+            SetInventoryItemIcon(ChestIconItem);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.Planter, "Planter");
             SetGroup(ItemGroups.Mech);
             SetTexture(PotIconItem);
-            SetInventoryTexture(PotIconItem);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.MechPlacementAction);
+            SetInventoryItemIcon(PotIconItem);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.Light, "Light");
             SetGroup(ItemGroups.Mech);
             SetTexture(Light2IconItem);
-            SetInventoryTexture(Light2IconItem);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.MechPlacementAction);
+            SetInventoryItemIcon(Light2IconItem);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.RemoveMech, "RemoveMech");
             SetTexture(ConstructionToolIcon);
-            SetInventoryTexture(ConstructionToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
-            SetAction(NodeType.ToolActionRemoveMech);
+            SetInventoryItemIcon(ConstructionToolIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetAction(ItemUsageActionType .ToolActionRemoveMech);
             EndItem();
 
             CreateItem(ItemType.ScannerTool, "ScannerTool");
             SetTexture(ConstructionToolIcon);
-            SetInventoryTexture(ConstructionToolIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ToolActionScanner);
+            SetInventoryItemIcon(ConstructionToolIcon);
+            SetAction(ItemUsageActionType .ToolActionScanner);
             EndItem();
 
             CreateItem(ItemType.Helmet, "Helmet");
             SetGroup(ItemGroups.Helmet);
             SetTexture(HemeltSprite);
-            SetInventoryTexture(HemeltSprite);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(HemeltSprite);
             EndItem();
 
             CreateItem(ItemType.Suit, "Suit");
             SetGroup(ItemGroups.Armour);
             SetTexture(SuitSprite);
-            SetInventoryTexture(SuitSprite);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
+            SetInventoryItemIcon(SuitSprite);
             EndItem();
 
 
             CreateItem(ItemType.Moon, "Moon");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryTexture(BedrockIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(BedrockIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Moon);
             EndItem();
 
             CreateItem(ItemType.Dirt, "Dirt");
             SetGroup(ItemGroups.None);
             SetTexture(DirtIcon);
-            SetInventoryTexture(DirtIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(DirtIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
             CreateItem(ItemType.Bedrock, "Bedrock");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryTexture(BedrockIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(BedrockIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Bedrock);
             EndItem();
 
             CreateItem(ItemType.Pipe, "Pipe");
             SetGroup(ItemGroups.None);
             SetTexture(PipeIcon);
-            SetInventoryTexture(PipeIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PipeIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Pipe);
             EndItem();
 
             CreateItem(ItemType.Wire, "Wire");
             SetGroup(ItemGroups.None);
             SetTexture(WireIcon);
-            SetInventoryTexture(WireIcon);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(WireIcon);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             SetTile(TileID.Wire);
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryTexture(GrenadeSprite5);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowGasBombAction);
+            SetInventoryItemIcon(GrenadeSprite5);
+            SetAction(ItemUsageActionType .ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.Flare, "Flare");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryTexture(GrenadeSprite5);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowFlareAction);
+            SetInventoryItemIcon(GrenadeSprite5);
+            SetAction(ItemUsageActionType .ThrowFlareAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
-            SetInventoryTexture(GrenadeSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.ThrowFragGrenadeAction);
+            SetInventoryItemIcon(GrenadeSpriteId);
+            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryTexture(OreIcon);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetFlags(ItemProprieties.Flags.PlacementTool);
+            SetInventoryItemIcon(OreIcon);
+            SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.GeometryTool);
-            SetAction(NodeType.ToolActionGeometryPlacement);
+            SetAction(ItemUsageActionType .ToolActionGeometryPlacement);
             EndItem();
 
             CreateItem(ItemType.AxeTool, "AxeTool");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.AxeAction);
+            SetInventoryItemIcon(SwordSpriteId);
+            SetAction(ItemUsageActionType .AxeAction);
             EndItem();
 
             CreateItem(ItemType.Pickaxe, "Pickaxe");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
-            SetInventoryTexture(SwordSpriteId);
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.PickaxeAction);
+            SetInventoryItemIcon(SwordSpriteId);
+            SetAction(ItemUsageActionType .PickaxeAction);
             EndItem();
 
             CreateItem(ItemType.Wood, "Wood");
             SetGroup(ItemGroups.None);
             SetTexture(WoodTile);
-            SetInventoryTexture(WoodTile);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(WoodTile);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
-            SetAction(NodeType.MaterialPlacementAction);
+            SetAction(ItemUsageActionType .MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
             CreateItem(ItemType.Diamond_0, "Diamond_0");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_0);
-            SetInventoryTexture(Diamond_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_1, "Diamond_1");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_1);
-            SetInventoryTexture(Diamond_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_2, "Diamond_2");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_2);
-            SetInventoryTexture(Diamond_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_3, "Diamond_3");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_3);
-            SetInventoryTexture(Diamond_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_4, "Diamond_4");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_4);
-            SetInventoryTexture(Diamond_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_5, "Diamond_5");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_5);
-            SetInventoryTexture(Diamond_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_6, "Diamond_6");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_6);
-            SetInventoryTexture(Diamond_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Diamond_7, "Diamond_7");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond_7);
-            SetInventoryTexture(Diamond_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Diamond_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_0, "Gold_0");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_0);
-            SetInventoryTexture(Gold_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_1, "Gold_1");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_1);
-            SetInventoryTexture(Gold_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_2, "Gold_2");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_2);
-            SetInventoryTexture(Gold_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_3, "Gold_3");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_3);
-            SetInventoryTexture(Gold_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_4, "Gold_4");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_4);
-            SetInventoryTexture(Gold_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_5, "Gold_5");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_5);
-            SetInventoryTexture(Gold_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_6, "Gold_6");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_6);
-            SetInventoryTexture(Gold_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Gold_7, "Gold_7");
             SetGroup(ItemGroups.None);
             SetTexture(Gold_7);
-            SetInventoryTexture(Gold_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Gold_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_0, "Iron_0");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_0);
-            SetInventoryTexture(Iron_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_1, "Iron_1");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_1);
-            SetInventoryTexture(Iron_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_2, "Iron_2");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_2);
-            SetInventoryTexture(Iron_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_3, "Iron_3");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_3);
-            SetInventoryTexture(Iron_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_4, "Iron_4");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_4);
-            SetInventoryTexture(Iron_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_5, "Iron_5");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_5);
-            SetInventoryTexture(Iron_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_6, "Iron_6");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_6);
-            SetInventoryTexture(Iron_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Iron_7, "Iron_7");
             SetGroup(ItemGroups.None);
             SetTexture(Iron_7);
-            SetInventoryTexture(Iron_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Iron_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_0, "Emerald_0");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_0);
-            SetInventoryTexture(Emerald_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_1, "Emerald_1");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_1);
-            SetInventoryTexture(Emerald_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_2, "Emerald_2");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_2);
-            SetInventoryTexture(Emerald_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_3, "Emerald_3");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_3);
-            SetInventoryTexture(Emerald_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_4, "Emerald_4");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_4);
-            SetInventoryTexture(Emerald_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_5, "Emerald_5");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_5);
-            SetInventoryTexture(Emerald_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_6, "Emerald_6");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_6);
-            SetInventoryTexture(Emerald_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Emerald_7, "Emerald_7");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald_7);
-            SetInventoryTexture(Emerald_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Emerald_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_0, "Coal_0");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_0);
-            SetInventoryTexture(Coal_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_1, "Coal_1");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_1);
-            SetInventoryTexture(Coal_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_2, "Coal_2");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_2);
-            SetInventoryTexture(Coal_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_3, "Coal_3");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_3);
-            SetInventoryTexture(Coal_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_4, "Coal_4");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_4);
-            SetInventoryTexture(Coal_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_5, "Coal_5");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_5);
-            SetInventoryTexture(Coal_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_6, "Coal_6");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_6);
-            SetInventoryTexture(Coal_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Coal_7, "Coal_7");
             SetGroup(ItemGroups.None);
             SetTexture(Coal_7);
-            SetInventoryTexture(Coal_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Coal_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_0, "Lapis_0");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_0);
-            SetInventoryTexture(Lapis_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_1, "Lapis_1");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_1);
-            SetInventoryTexture(Lapis_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_2, "Lapis_2");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_2);
-            SetInventoryTexture(Lapis_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_3, "Lapis_3");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_3);
-            SetInventoryTexture(Lapis_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_4, "Lapis_4");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_4);
-            SetInventoryTexture(Lapis_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_5, "Lapis_5");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_5);
-            SetInventoryTexture(Lapis_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_6, "Lapis_6");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_6);
-            SetInventoryTexture(Lapis_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.Lapis_7, "Lapis_7");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis_7);
-            SetInventoryTexture(Lapis_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(Lapis_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_0, "PinkDia_0");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_0);
-            SetInventoryTexture(PinkDiamond_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_1, "PinkDia_1");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_1);
-            SetInventoryTexture(PinkDiamond_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_2, "PinkDia_2");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_2);
-            SetInventoryTexture(PinkDiamond_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_3, "PinkDia_3");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_3);
-            SetInventoryTexture(PinkDiamond_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_4, "PinkDia_4");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_4);
-            SetInventoryTexture(PinkDiamond_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_5, "PinkDia_5");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_5);
-            SetInventoryTexture(PinkDiamond_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_6, "PinkDia_6");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_6);
-            SetInventoryTexture(PinkDiamond_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.PinkDia_7, "PinkDia_7");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond_7);
-            SetInventoryTexture(PinkDiamond_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(PinkDiamond_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_0, "RedStone_0");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_0);
-            SetInventoryTexture(RedStone_0);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_0);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_1, "RedStone_1");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_1);
-            SetInventoryTexture(RedStone_1);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_1);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_2, "RedStone_2");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_2);
-            SetInventoryTexture(RedStone_2);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_2);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_3, "RedStone_3");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_3);
-            SetInventoryTexture(RedStone_3);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_3);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_4, "RedStone_4");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_4);
-            SetInventoryTexture(RedStone_4);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_4);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_5, "RedStone_5");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_5);
-            SetInventoryTexture(RedStone_5);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_5);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_6, "RedStone_6");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_6);
-            SetInventoryTexture(RedStone_6);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_6);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
             CreateItem(ItemType.RedStone_7, "RedStone_7");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone_7);
-            SetInventoryTexture(RedStone_7);
-            SetFlags(ItemProprieties.Flags.Stackable);
+            SetInventoryItemIcon(RedStone_7);
+            SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetSpriteSize(new Vec2f(0.5f, 0.5f));
             EndItem();
 
         }

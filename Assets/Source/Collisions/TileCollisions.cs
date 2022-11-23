@@ -642,7 +642,7 @@ namespace Collisions
                     if (collisionResult.Time < minTime)
                     {
                         minTime = collisionResult.Time;
-                        minNormal = collisionResult.Normal;
+                        minNormal = normal;// collisionResult.Normal;
                         minShape = shape;
                         minMaterial = material;
                     }

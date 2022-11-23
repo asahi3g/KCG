@@ -9,7 +9,7 @@ namespace Agent
             var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
             foreach (var entity in entities)
             {
-                ref Agent.AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)AgentType.EnemyMarine);
+                ref Agent.AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)AgentType.EnemyMarine);
 
                 var physicsState = entity.agentPhysicsState;
 

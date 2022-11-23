@@ -7,7 +7,7 @@ namespace Node
 {
     public class PickaxeAction : NodeBase
     {
-        public override NodeType Type => NodeType.PickaxeAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .PickaxeAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)
@@ -16,9 +16,9 @@ namespace Node
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
 
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;

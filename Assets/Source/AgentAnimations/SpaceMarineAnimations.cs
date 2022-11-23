@@ -43,7 +43,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineJumpFall, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Dashing, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.015f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Drink, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDrink, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -114,7 +114,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineRifleJumpFall, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Dashing, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.015f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Drink, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingRifle, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDrink, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -203,7 +203,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarinePistolJumpFall, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Dashing, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.015f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Drink, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingPistol, 
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDrink, FadeTime=0.125f, Looping = false, Speed = 1.0f, MovementSpeedFactor = 0.0f});

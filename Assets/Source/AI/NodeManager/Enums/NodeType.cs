@@ -1,6 +1,6 @@
 ﻿namespace NodeSystem
 {
-    public enum NodeType
+    public enum ItemUsageActionType 
     {
         Decorator,
         Repeater,

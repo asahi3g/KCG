@@ -1,5 +1,6 @@
 //import UnityEngine
 
+using Enums;
 using Enums.PlanetTileMap;
 using KMath;
 
@@ -30,13 +31,15 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
             //   Vector2 playerPosition = Player.Entity.agentPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
+
+            Draw();
         }
         
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
@@ -62,7 +65,7 @@ namespace Planet.Unity
             planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-            Player = planet.AddPlayer(new Vec2f(3.0f, 25));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 25));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
 
@@ -201,14 +204,14 @@ namespace Planet.Unity
             float spawnHeight = tileMap.MapSize.Y - 2;
 
 
-            planet.AddAgent(new Vec2f(6.0f, spawnHeight));
-            planet.AddAgent(new Vec2f(1.0f, spawnHeight));
+            planet.AddAgent(new Vec2f(6.0f, spawnHeight), AgentType.Agent);
+            planet.AddAgent(new Vec2f(1.0f, spawnHeight), AgentType.Agent);
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
                 if (random.Next() % 5 == 0)
                 {
-                    planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
+                    planet.AddAgentAsEnemy(new Vec2f((float)i, spawnHeight));    
                 }
             }
 

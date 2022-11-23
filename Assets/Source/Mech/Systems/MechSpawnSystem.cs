@@ -27,7 +27,7 @@ namespace Mech
                 entity.AddMechPlanter(false, -1);
 
             if (mechProperties.HasInventory())
-                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryModelID, "Chest").inventoryID.ID);
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryEntityTemplateID, InventoryEntityType.Default, "Chest").inventoryID.ID);
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.Durability);

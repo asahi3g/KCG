@@ -14,6 +14,8 @@ namespace Projectile
         public Vec2f Acceleration; // Instantaneous, reset to zero at the end of the frame.
 
         public bool OnGrounded = true;
+
+        public float TimeToLive;
     }
 }
 

@@ -254,6 +254,6 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
             UnityEngine.Debug.Log("False");
         }
 
-        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 }

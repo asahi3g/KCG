@@ -4,6 +4,7 @@ using KMath;
 using Animancer;
 using AI;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Agent
 {
@@ -16,13 +17,11 @@ namespace Agent
             int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
+            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
 
             var spriteSize = new Vec2f(width / 32f, height / 32f);
 
             entity.isAgentPlayer = true;
-            entity.isECSInput = true;
-            entity.AddECSInputXY(new Vec2f(0, 0), false, false);
             entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
             entity.isAgentAlive = true;
             entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
@@ -30,10 +29,13 @@ namespace Agent
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(playerHealth, playerFood, playerWater, playerOxygen, playerFuel, false);
+            entity.AddAgentStats(new ContainerInt(9999, 0, 9999), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 
+                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
+
+            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 
             entity.AddAgentPhysicsState(
                  newPosition: position,
@@ -70,69 +72,23 @@ namespace Agent
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, int inventoryID)
-        {
-            var entity = entitasContext.agent.CreateEntity();
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
-            var spriteSize = properties.SpriteSize;
-
-            entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
-            entity.isAgentCorpse = true;
-            entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, -1, false);
-
-            // used for physics simulation
-            entity.AddAgentPhysicsState(
-                newPosition: position,
-                newPreviousPosition: default,
-                newSpeed: properties.MovProperties.DefaultSpeed,
-                newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
-                newVelocity: Vec2f.Zero,
-                newAcceleration: Vec2f.Zero,
-                newMovingDirection: 1,
-                newFacingDirection: 1,
-                newGroundNormal: new Vec2f(0, 1.0f),
-                newMovementState: Enums.AgentMovementState.None,
-                newLastAgentAnimation: new AgentAnimation(),
-                newSetMovementState: false,
-                newAffectedByGravity: true,
-                newAffectedByFriction: true,
-                newInvulnerable: false,
-                newOnGrounded: false,
-                newDroping: false,
-                newActionInProgress: false,
-                newActionJustEnded: false,
-                newIdleAfterShootingTime: 0,
-                newJumpCounter: 0,
-                newSlidingTime: 0,
-                newActionDuration: 0,
-                newDyingDuration: 0,
-                newDashCooldown: 0,
-                newStaggerDuration: 0,
-                newRollCooldown: 0,
-                newRollImpactDuration: 0);
-
-            return entity;
-        }
-
 
         public AgentEntity Spawn(Vec2f position, Enums.AgentType agentType, int faction,
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
             var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
 
-            ref AgentProperties properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
-            var spriteSize = properties.SpriteSize;
             var spriteId = 0;
             entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats((int)properties.Health, 100, 100, 100, 100, false);
+            entity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f,
+                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
+
+            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
 
             entity.AddAgentPhysicsState(
                 newPosition: position,
@@ -216,6 +172,9 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
+
+                        //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
                             properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
                             Vec2f.Zero);
@@ -223,8 +182,6 @@ namespace Agent
 
                        // entity.agentPhysicsState.Speed = 10.0f;
                         entity.isAgentPlayer = true;
-                        entity.isECSInput = true;
-                        entity.AddECSInputXY(new Vec2f(0, 0), false, false);
 
                         if(!entity.hasAgentAction)
                             entity.AddAgentAction(AgentAlertState.UnAlert);
@@ -232,19 +189,19 @@ namespace Agent
                     }
                 case Enums.AgentType.Agent:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.Slime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                       // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         break;
                     }
                 case Enums.AgentType.EnemyGunner:

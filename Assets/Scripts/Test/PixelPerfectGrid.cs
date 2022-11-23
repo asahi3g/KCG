@@ -56,8 +56,7 @@ public class PixelPerfectGrid : UnityEngine.MonoBehaviour
         }
     }
 
-    // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnGUI.html
-    private void OnGUI()
+    private void Draw()
     {
         // When we off the cursor following, grid go backs to his offset
         if (!followCursor)
@@ -83,6 +82,8 @@ public class PixelPerfectGrid : UnityEngine.MonoBehaviour
             // Then sign grid's transform to cursor
             transform.position = UnityEngine.Vector2.Lerp(transform.position, mousePosition, CursorMoveSpeed);
         }
+
+        Draw();
     }
 
    

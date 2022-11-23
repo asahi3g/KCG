@@ -6,7 +6,7 @@ namespace Node
 {
     public class DrinkPotionAction : NodeBase
     {
-        public override NodeType Type => NodeType.DrinkPotionAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.DrinkPotionAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
@@ -29,7 +29,7 @@ namespace Node
                     {
                         if (entity.inventoryName.Name == "MaterialBag")
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryEntity.Slots;
+                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
 
                             for (int i = 0; i < Slots.Length; i++)
                             {
@@ -50,9 +50,7 @@ namespace Node
                                             case PotionType.HealthPotion:
                                                 if (item.itemType.Type == ItemType.HealthPotion)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
                                                     player.UsePotion(2.0f);
                                                     item.itemStack.Count--;

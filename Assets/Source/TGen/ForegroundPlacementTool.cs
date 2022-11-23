@@ -75,10 +75,10 @@ namespace TGen
             }
             else if(UnityEngine.Input.GetMouseButtonUp(2))
             {
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                int x = (int)worldPosition.x;
-                int y = (int)worldPosition.y;
+                int x = (int)worldPosition.X;
+                int y = (int)worldPosition.Y;
 
                 GameState.TGenGrid.SetTile(x, y, selectedTileIsotype);
             }

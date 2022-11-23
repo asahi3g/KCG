@@ -62,7 +62,7 @@ namespace Planet.Foreground
             Vec2i mapSize = new Vec2i(128, 96);
             planet.Init(mapSize);
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
             PlayerID = Player.agentID.ID;
 
             PlayerID = Player.agentID.ID;
@@ -160,7 +160,7 @@ namespace Planet.Foreground
 
                 planet.InitializeSystems(Material, transform);
 
-                Player = planet.AddPlayer(new Vec2f(3.0f, 20));
+                Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
                 PlayerID = Player.agentID.ID;
 
                 inventoryID = Player.agentInventory.InventoryID;
@@ -170,15 +170,17 @@ namespace Planet.Foreground
                 UnityEngine.Debug.Log("loaded!");
             }
 
+            Draw();
+
 
             CharacterDisplay.Update();
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
 
         }
 
         UnityEngine.Texture2D texture;
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
@@ -236,10 +238,10 @@ namespace Planet.Foreground
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition =
-                UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int) worldPosition.x;
-            int y = (int) worldPosition.y;
+            var worldPosition =
+                ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int) worldPosition.X;
+            int y = (int) worldPosition.Y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
@@ -376,7 +378,7 @@ namespace Planet.Foreground
             bool testRectangleCollision = false;
 
 
-            UnityEngine.Vector3 worldPosition =
+            var worldPosition =
                 UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             worldPosition.z = 20.0f;
 

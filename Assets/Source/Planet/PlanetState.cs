@@ -11,6 +11,7 @@ using Enums;
 using Item;
 using Inventory;
 using KMath;
+using UnityEngine;
 using Vehicle.Pod;
 using Utility;
 
@@ -110,8 +111,7 @@ namespace Planet
         }
 
         // Note(Mahdi): Deprecated will be removed soon
-        public AgentEntity AddPlayer(int spriteId, int width, int height, Vec2f position, int startingAnimation, 
-            int health, int food, int water, int oxygen, int fuel)
+        public AgentEntity AddAgentAsPlayer(int spriteId, int width, int height, Vec2f position, int startingAnimation, int health, int food, int water, int oxygen, int fuel)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -128,32 +128,39 @@ namespace Planet
             return newEntity;
         }
 
-        public AgentEntity AddPlayer(Vec2f position, int faction = 0)
+        public AgentEntity AddAgentAsPlayer(Vec2f position, int faction = 0)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
             int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
-            int equipmentInventoryID =
-                AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, AgentType.Player, faction, inventoryID, equipmentInventoryID));
-
-            Player = newEntity;
-
-            return newEntity;
+            int equipmentInventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
+            
+            AgentEntity agent = AddAgent(position, AgentType.Player, faction, inventoryID, equipmentInventoryID);
+            Player = agent;
+            return agent;
+        }
+        
+        public AgentEntity AddAgent(Vec2f position, AgentType agentType)
+        {
+            return AddAgent(position, agentType, 0);
         }
 
-        public AgentEntity AddAgent(Vec2f position, AgentType agentType = AgentType.Agent, int faction = 0)
+        public AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
             int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, agentType, faction, inventoryID));
+            return AddAgent(position, agentType, faction, inventoryID, -1);
+        }
+        
+        private AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction, int inventoryID, int equipmentInventoryID)
+        {
+            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, agentType, faction, inventoryID, equipmentInventoryID));
             return newEntity;
         }
 
-        public AgentEntity AddEnemy(Vec2f position)
+        public AgentEntity AddAgentAsEnemy(Vec2f position)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -191,7 +198,7 @@ namespace Planet
 
         public InventoryEntity AddInventory(int inventoryModelID, string name = "")
         {
-            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, name);
+            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, InventoryEntityType.Default, name);
             AddInventory(inventoryEntity);
             return inventoryEntity;
         }
@@ -207,7 +214,7 @@ namespace Planet
             // Spawn itemsInventory inside as item particles.
             InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
-            for (int i = 0; i < entity.inventoryEntity.Size; i++)
+            for (int i = 0; i < entity.inventoryInventoryEntity.Size; i++)
             {
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                 if (itemInventory == null)
@@ -218,7 +225,7 @@ namespace Planet
             }
 
             Utils.Assert(entity.isEnabled);
-            InventoryList.Remove(entity.inventoryEntity.Index);
+            InventoryList.Remove(entity.inventoryInventoryEntity.Index);
         }
 
         // Remove Items and Spawn itemsParticles.
@@ -228,7 +235,7 @@ namespace Planet
             // Spawn itemsInventory inside as item particles.
             InventoryEntity entity = EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
 
-            for (int i = 0; i < entity.inventoryEntity.Size; i++)
+            for (int i = 0; i < entity.inventoryInventoryEntity.Size; i++)
             {
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                 if (itemInventory == null)
@@ -241,7 +248,7 @@ namespace Planet
             }
 
             Utils.Assert(entity.isEnabled);
-            InventoryList.Remove(entity.inventoryEntity.Index);
+            InventoryList.Remove(entity.inventoryInventoryEntity.Index);
         }
 
 
@@ -291,7 +298,7 @@ namespace Planet
             Utils.Assert(entity.isEnabled);
 
             entity.DieInPlace();
-            AgentProperties properties = GameState.AgentCreationApi.Get((int)entity.agentID.Type);
+            AgentPropertiesTemplate properties = GameState.AgentCreationApi.Get((int)entity.agentID.Type);
 
             if (!entity.hasAgentInventory)
             {
@@ -349,7 +356,7 @@ namespace Planet
         }
 
 
-        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type, float health = 1.0f)
+        public ParticleEntity AddParticle(Vec2f position, Vec2f velocity, ParticleType type, int health = 1)
         {
             Utils.Assert(ParticleList.Length < PlanetEntityLimits.ParticleLimit);
 
@@ -389,7 +396,7 @@ namespace Planet
         {
             ProjectileEntity entity = ProjectileList.Get(index);
             Utils.Assert(entity.isEnabled);
-            ProjectileList.Remove(entity.projectileID.Index);
+            ProjectileList.Remove(index);
         }
 
         public VehicleEntity AddVehicle(VehicleType vehicleType, Vec2f position)
@@ -434,10 +441,14 @@ namespace Planet
         }
 
         // updates the entities, must call the systems and so on ..
-        public void Update(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform)
+        public void Update(float deltaTime)
         {
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
+
+
+
+            DebugLinesCount = 1;
 
             /*TimeState.Deficit += deltaTime;
 
@@ -453,7 +464,7 @@ namespace Planet
 
             }*/
 
-              PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
+            PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
 
             // check if the sprite atlas teSetTilextures needs to be updated
             for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
@@ -549,13 +560,10 @@ namespace Planet
             GameState.AgentModel3DMovementSystem.Update();
             GameState.AgentModel3DAnimationSystem.Update();
 
-            GameState.FloatingTextDrawSystem.Draw(transform, 10000);
+            GameState.FloatingTextDrawSystem.Draw(10000);
 
             // Delete Entities.
             GameState.ProjectileDeleteSystem.Update();
-
-
-            DebugLinesCount = 0;
         }
 
         public void DrawDebug()
@@ -594,6 +602,17 @@ namespace Planet
                 UnityEngine.Gizmos.DrawSphere(new UnityEngine.Vector3(bottomPos.X, bottomPos.Y, 20.0f), agentBox2dCollider.Size.X * 0.5f);*/
 
             }
+
+
+            for(int i = 0; i < DebugLinesCount; i++)
+            {
+                Line2D line = DebugLines[i];
+                UnityEngine.Color color = DebugLinesColors[i];
+                UnityEngine.Gizmos.color = color;
+                UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(line.A.X, line.A.Y, 0.0f), new UnityEngine.Vector3(line.B.X, line.B.Y));
+
+            }
+
         }
 
         public void DrawHUD(AgentEntity agentEntity)

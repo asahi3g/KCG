@@ -35,10 +35,12 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(Time.deltaTime, Material, transform);
+            GameState.Planet.Update(Time.deltaTime);
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             GameState.Planet.DrawHUD(player);
         }
@@ -52,7 +54,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(32, 32);
             planet.Init(mapSize);
 
-            player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            player = planet.AddAgentAsPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
 
             inventoryManager = new Inventory.InventoryManager();
 

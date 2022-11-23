@@ -216,6 +216,21 @@ namespace Utility
             GUI.Label(pos, label);
         }
 
+         public void DrawStringGui(float x, float y, float w, float h, string label, Font font, int fontSize = 16,
+            TextAnchor alignment = TextAnchor.UpperLeft, Color color = default(Color))
+        {
+            y += h;
+            y = Screen.height - y;
+
+            Rect pos = new Rect(x, y, w, h);
+
+            GUI.contentColor = color;
+            GUI.skin.label.font = font;
+            GUI.skin.label.fontSize = fontSize;
+            GUI.skin.label.alignment = alignment;
+            GUI.Label(pos, label);
+        }
+
 
         // Helper Functions.
         private void DrawGlSprite(float x, float y, float w, float h,

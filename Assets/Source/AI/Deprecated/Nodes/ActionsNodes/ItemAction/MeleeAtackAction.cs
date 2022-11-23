@@ -8,7 +8,7 @@ namespace Node
 {
     public class MeleeAtackAction : NodeBase
     {
-        public override NodeType Type => NodeType.MeleeAttackAction;
+        public override ItemUsageActionType Type => ItemUsageActionType.MeleeAttackAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
@@ -20,10 +20,6 @@ namespace Node
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             float damage = weaponProperty.BasicDemage;
-
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
 
             // Check if projectile has hit a enemy.
             var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
@@ -62,7 +58,7 @@ namespace Node
                             planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
                             new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
 
-                            agent.agentStats.Health -= (int)damage;
+                            agent.agentStats.Health.Remove((int)damage);
                         }
                     }
                 }

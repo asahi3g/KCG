@@ -31,6 +31,10 @@ namespace Action
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
 
+            physicsState.FacingDirection = direction;
+            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
+            agent.Run(direction);
+
             // Walk diagonal if there is an obstacle jump.
             ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
             if (condition(ptr))
@@ -46,7 +50,16 @@ namespace Action
             if (!PathFollowing.IsPathFree(new KMath.Vec2i((int)(physicsState.Position.X), (int)physicsState.Position.Y), direction)
                 && agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump)
             {
-                agent.Jump();
+
+                // if next tile is solid jump.
+                TileID frontTileIDX = planet.TileMap.GetFrontTileID((int)(physicsState.Position.X + direction), (int)physicsState.Position.Y);
+
+                if (frontTileIDX != TileID.Air &&
+                    agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Jump &&
+                    agent.agentPhysicsState.MovementState != Enums.AgentMovementState.Falling)
+                {
+                    agent.Jump();
+                }
             }
 
             return NodeState.Running;

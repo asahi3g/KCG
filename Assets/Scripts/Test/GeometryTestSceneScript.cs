@@ -40,12 +40,12 @@ namespace Planet.Unity
             {
                 ref var planet = ref GameState.Planet;
                 var entitasContext = planet.EntitasContext;
-                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryEntity.SelectedSlotID;
+                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryInventoryEntity.SelectedSlotID;
 
                 ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(InventoryID, selectedSlot);
                 if (item != null)
                 {
-                    ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                    ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
                     if (itemProperty.IsTool())
                     {
                         if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
@@ -57,8 +57,8 @@ namespace Planet.Unity
                     }
                 }
 
-                planet.Update(UnityEngine.Time.deltaTime, Material, transform);
-                planet.DrawHUD(planet.Player);
+                planet.Update(UnityEngine.Time.deltaTime);
+                planet.DrawHUD(Player);
 
                 if (enableGeometryPlacementTool)
                 {
@@ -356,9 +356,9 @@ namespace Planet.Unity
             tileMap.SetFrontTile(29, 12, TileID.SB_R0_Metal);
             tileMap.SetFrontTile(30, 12, TileID.SB_R0_Metal);
 
-            planet.AddEnemy(new Vec2f(20, 10));
-            planet.AddEnemy(new Vec2f(20, 15));
-            planet.AddEnemy(new Vec2f(15, 15));
+            planet.AddAgentAsEnemy(new Vec2f(20, 10));
+            planet.AddAgentAsEnemy(new Vec2f(20, 15));
+            planet.AddAgentAsEnemy(new Vec2f(15, 15));
 
             planet.AddAgent(new Vec2f(10, 22), Enums.AgentType.EnemyInsect);
             planet.AddAgent(new Vec2f(20, 22), Enums.AgentType.EnemyInsect);
@@ -400,7 +400,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            planet.Player = planet.AddPlayer(new Vec2f(2,3));
+            planet.Player = planet.AddAgentAsPlayer(new Vec2f(2,3));
         }
     }
 }

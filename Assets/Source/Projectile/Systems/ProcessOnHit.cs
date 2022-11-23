@@ -6,6 +6,7 @@ namespace Projectile
 {
     public class ProcessOnHit
     {
+        float elapsed;
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -57,15 +58,18 @@ namespace Projectile
             var stats = agentEntity.agentStats;
             if (projectileEntity.hasProjectileDamage)
             {
+                if(agentEntity.hasAgentStagger)
+                {
+                    agentEntity.Stagger();
+                }
+
                 int damage = projectileEntity.projectileDamage.Damage;
 
                 // Change damage depends on velocity (more velo = more damage)
                 // In another term: close shot = more damage
-                var additionalHealth = (Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.X) +
-                    Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.Y)) / 4;
-                Debug.Log(additionalHealth);
+                var additionalHealth = Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.Magnitude) / 4;
 
-                stats.Health -= damage + (int)additionalHealth;
+                stats.Health.Remove(damage + (int)additionalHealth);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood2);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.BloodSmoke);

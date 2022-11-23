@@ -140,8 +140,7 @@ namespace Planet.Unity
 
             int playerFaction = 0;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, 24), playerFaction);
-            planet.AddMech(new Vec2f(3.0f, 20), MechType.SmashableBox);
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 24), playerFaction);
             PlayerID = Player.agentID.ID;
 
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -473,9 +472,9 @@ namespace Planet.Unity
 
                 planet.InitializeSystems(Material, transform);
 
-                Player = planet.AddPlayer(new Vec2f(3.0f, 20));
-                PlayerID = Player.agentID.ID;
-                inventoryID = Player.agentInventory.InventoryID;
+               Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
+               PlayerID = Player.agentID.ID;
+               inventoryID = Player.agentInventory.InventoryID;
 
                 AddItemsToPlayer();
 
@@ -484,7 +483,7 @@ namespace Planet.Unity
 
 
            // CharacterDisplay.Update();
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
                       
 
         }
@@ -547,9 +546,9 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int)worldPosition.X;
+            int y = (int)worldPosition.Y;
 
             ref var planet = ref GameState.Planet;
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));

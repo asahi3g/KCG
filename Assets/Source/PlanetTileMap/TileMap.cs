@@ -340,6 +340,13 @@ namespace PlanetTileMap
         {
             TileSpriteUpdate.UpdateFrontTileMapPositions(this, x, y);
         }
+
+        public void UpdateTileMapPositions(int x, int y)
+        {
+            UpdateBackTileMapPositions(x, y);
+            UpdateMidTileMapPositions(x, y);
+            UpdateFrontTileMapPositions(x, y);
+        }
         
         // this is called every frame to update a limited number of sprite ids
         // the excess will be pushed to the next frame

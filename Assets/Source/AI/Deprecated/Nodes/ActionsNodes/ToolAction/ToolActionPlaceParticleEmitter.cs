@@ -6,7 +6,7 @@ namespace Node
 {
     public class ToolActionPlaceParticleEmitter : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionPlaceParticleEmitter;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionPlaceParticleEmitter;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
@@ -15,7 +15,7 @@ namespace Node
             float y = worldPosition.y;
             int t = System.Math.Abs((int)KMath.Random.Mt19937.genrand_int32() % System.Enum.GetNames(typeof(Particle.ParticleType)).Length);
 
-            GameState.Planet.AddDebris(new Vec2f(x, y), GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
+            GameState.Planet.AddDebris(new Vec2f(x, y), GameState.ItemCreationApi.ChestIconItem, 1.5f, 1.0f);
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }

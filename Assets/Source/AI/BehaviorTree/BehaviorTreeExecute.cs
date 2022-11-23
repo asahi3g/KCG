@@ -95,16 +95,16 @@ namespace BehaviorTree
             int nextChildIndex = 0;
             switch (currentNode.Type)
             {
-                case NodeType.Decorator:
+                case ItemUsageActionType .Decorator:
                     nextChildIndex = DecoratorNode.NextRoute(GetCurrentChild());
                     break;
-                case NodeType.Repeater:
+                case ItemUsageActionType .Repeater:
                     nextChildIndex = RepeaterNode.NextRoute(ptr, index, GetCurrentChild());
                     break;
-                case NodeType.Sequence:
+                case ItemUsageActionType .Sequence:
                     nextChildIndex = SequenceNode.GetNextChildren(ptr, index, LastResult);
                     break;
-                case NodeType.Selector:
+                case ItemUsageActionType .Selector:
                     nextChildIndex = SelectorNode.GetNextChildren(ptr, index, LastResult);
                     break;
                 default:
@@ -146,7 +146,7 @@ namespace BehaviorTree
             int childIndex = index + 1;
             DataState.NodesExecutiondata[childIndex].MemoryOffset = DataStateSize;
             
-            if (node.Children == null || node.Type == NodeType.ActionSequence)
+            if (node.Children == null || node.Type == ItemUsageActionType .ActionSequence)
                 return;
             
             for (int i = 0; i < node.Children.Length; i++)

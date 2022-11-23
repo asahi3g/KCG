@@ -7,7 +7,7 @@ namespace Node
 {
     public class ShootGrenadeAction : NodeBase
     {
-        public override NodeType Type => NodeType.ShootGrenadeAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ShootGrenadeAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)

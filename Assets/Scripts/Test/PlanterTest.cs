@@ -24,7 +24,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     public void Update()
     {
-        GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+        GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 
     private void OnGUI()
@@ -148,7 +148,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
     void SpawnStuff()
     {
         ref var planet = ref GameState.Planet;
-        Player = planet.AddPlayer(new Vec2f(2, 2), 0);
+        Player = planet.AddAgentAsPlayer(new Vec2f(2, 2), 0);
         planet.AddMech(new Vec2f(4, 2), Enums.MechType.Planter);
         planet.AddMech(new Vec2f(8, 2), Enums.MechType.Planter);
         planet.AddMech(new Vec2f(12, 2), Enums.MechType.Planter);

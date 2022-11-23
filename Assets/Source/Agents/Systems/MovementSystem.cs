@@ -4,6 +4,7 @@ using Physics;
 using System;
 using KMath;
 using Enums;
+using Unity.VisualScripting;
 
 namespace Agent
 {
@@ -61,6 +62,8 @@ namespace Agent
 
         private void UpdateLand(AgentEntity entity, float deltaTime, Planet.PlanetState planet)
         {
+
+            
             // Note(Joao) Increase gravity and initial velocity for smaller air time during jump. 
             var physicsState = entity.agentPhysicsState;
 
@@ -68,6 +71,8 @@ namespace Agent
             {
                 physicsState.Acceleration.Y -= Constants.Gravity;
             }
+
+            
 
             // maximum acceleration in the game
             if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)
@@ -177,6 +182,23 @@ namespace Agent
             physicsState.Acceleration = Vec2f.Zero; // Reset acceleration.
         }
 
+        public void UpdateStagger(AgentEntity entity)
+        {
+            if(entity.agentStagger.Stagger)
+            {
+                entity.agentStagger.elapsed += UnityEngine.Time.deltaTime;
+
+                if(entity.agentStagger.elapsed > entity.agentStagger.StaggerAffectTime)
+                {
+                    entity.UnStagger();
+                }
+            }
+            else
+            {
+                entity.agentStagger.elapsed = 0.0f;
+            }
+        }
+
         public void Update()
         {
 
@@ -188,6 +210,8 @@ namespace Agent
                     UpdateLand(entity, deltaTime, GameState.Planet);
                 else
                     UpdateFlying(entity, deltaTime);
+
+                UpdateStagger(entity);
             }
         }
     }

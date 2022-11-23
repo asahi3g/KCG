@@ -42,7 +42,7 @@ namespace Vehicle.Pod
             entity.AddVehiclePodState(podState);
 
             List<AgentEntity> Members = new List<AgentEntity>();
-            entity.AddVehiclePodStatus(Members, podProperties.DefaultAgentCount, false, false, false, false, false, Vec2f.Zero, Vec2f.Zero, Vec2f.Zero,
+            entity.AddVehiclePodStatus(Members, podProperties.DefaultAgentCount, true, true, true, true, false, false, false, false, false, Vec2f.Zero, Vec2f.Zero, Vec2f.Zero,
                 Vec2f.Zero, podProperties.RightPanel, podProperties.LeftPanel, podProperties.TopPanel, podProperties.BottomPanel, podProperties.RightPanelWidth, podProperties.LeftPanelWidth,
                 podProperties.TopPanelWidth, podProperties.BottomPanelWidth, podProperties.RightPanelHeight, podProperties.LeftPanelHeight, podProperties.TopPanelHeight, podProperties.BottomPanelHeight);
 

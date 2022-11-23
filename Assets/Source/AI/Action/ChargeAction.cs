@@ -21,7 +21,7 @@ namespace Action
                 return NodeState.Failure;
             }
             
-            bool isChargable = item.hasItemFireWeaponCharge;
+            bool isChargable = item.hasItemFireWeaponChargedWeapon;
             if (isChargable)
             {
                 return NodeState.Running;
@@ -37,9 +37,9 @@ namespace Action
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
 
-            if (item.itemFireWeaponCharge.ChargeRate < item.itemFireWeaponCharge.ChargeMax)
+            if (item.itemFireWeaponChargedWeapon.ChargeRate < item.itemFireWeaponChargedWeapon.ChargeMax)
             {
-                item.itemFireWeaponCharge.ChargeRate += item.itemFireWeaponCharge.ChargeRatio;
+                item.itemFireWeaponChargedWeapon.ChargeRate += item.itemFireWeaponChargedWeapon.ChargeRatio;
                 return NodeState.Success;
             }
 
@@ -54,8 +54,8 @@ namespace Action
             ItemInventoryEntity item = agentEntity.GetItem();
 
             Item.FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
-            float tempCharge = item.itemFireWeaponCharge.ChargeRate;
-            float difference = item.itemFireWeaponCharge.ChargeRate - tempCharge;
+            float tempCharge = item.itemFireWeaponChargedWeapon.ChargeRate;
+            float difference = item.itemFireWeaponChargedWeapon.ChargeRate - tempCharge;
             Debug.Log("Weapon Charged: " + difference.ToString());
             return NodeState.Success;
         }

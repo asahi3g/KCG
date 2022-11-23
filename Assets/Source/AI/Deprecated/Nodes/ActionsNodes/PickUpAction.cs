@@ -8,7 +8,7 @@ namespace Node.Action
 {
     public class PickUpAction : NodeBase
     {
-        public override NodeType Type => NodeType.PickUpAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .PickUpAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
@@ -37,7 +37,7 @@ namespace Node.Action
             {
                 itemEntity.AddItemDrawPosition2D(Vec2f.Zero, drawPos);
             }
-            itemEntity.AddItemUnpickable(0);
+            itemEntity.AddItemItemParticleAttributeUnpickable(0);
             nodeEntity.nodeExecution.State = NodeState.Running;
         }
 

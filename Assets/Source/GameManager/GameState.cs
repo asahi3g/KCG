@@ -74,7 +74,7 @@ public static class GameState
     public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
     public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
-    public static readonly Agent.ProcessStats AgentProcessStats;
+    public static readonly Agent.ProcessState AgentProcessState;
 
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
@@ -158,17 +158,21 @@ public static class GameState
     #endregion
 
     #region GUI/HUD
-
+    public static readonly Gui.GuiResourceManager GuiResourceManager;
+    // outdated
     public static readonly KGUI.GUIManager GUIManager;
 
     #endregion
 
     public static readonly Prefab.PrefabManager PrefabManager;
 
+
+    public static readonly GameScreen.ScreenManager ScreenManager;
+
     public static void InitStage1()
     {
-        Planet = new PlanetState();
-        
+
+    
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
@@ -176,6 +180,7 @@ public static class GameState
         LineCreationApi.InitStage1();
         GeometryCreationApi.InitStage1();
         GUIManager.InitStage1();
+        GuiResourceManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -187,13 +192,18 @@ public static class GameState
         LineCreationApi.InitStage2();
         GeometryCreationApi.InitStage2();
         GUIManager.InitStage2();
+        GuiResourceManager.InitStage2();
     }
 
 
     static GameState()
     {
+        Planet = new PlanetState();
+
         PrefabManager = new Prefab.PrefabManager();
         
+        GuiResourceManager = new Gui.GuiResourceManager();
+
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
@@ -228,7 +238,7 @@ public static class GameState
         AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
-        AgentProcessStats = new Agent.ProcessStats();
+        AgentProcessState = new Agent.ProcessState();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         LineCreationApi = new Collisions.LineCreationApi();
@@ -309,7 +319,6 @@ public static class GameState
         PodSpawnerSystem = new Vehicle.Pod.SpawnerSystem(PodCreationApi);
         PodMeshBuilderSystem = new Vehicle.Pod.MeshBuilderSystem();
         PodAISystem = new Vehicle.Pod.AISystem();
-
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
@@ -319,5 +328,6 @@ public static class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
+        ScreenManager = new GameScreen.ScreenManager();
     }
 }

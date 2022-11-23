@@ -54,6 +54,7 @@ namespace Collisions
             // keep the original values
             Vec2f tmpP1 = p1;
             Vec2f originalPoint = point;
+            Vec2f originalVelocity = velocity;
 
             p2 -= p1;
             point -= p1;
@@ -84,19 +85,23 @@ namespace Collisions
             // step 5: compute the time of collision
             float k = p1.X;
             float timeX = 1.0f;
-            if (k >= 0)
+            if (k >= circleRadius)
             {
                 // if the line is on the right 
                 // the time is (k-circleRadius) / velocity.X
 
                 timeX = (k-circleRadius) / velocity.X;
             }
-            else
+            else if (k <= -circleRadius)
             {
                 // if the line is on the left 
                 // the time is (k+circleRadius) / velocity.X
 
                 timeX = (k+circleRadius) / velocity.X;
+            }
+            else
+            {
+                timeX = 1.0f;
             }
 
                 
@@ -127,7 +132,7 @@ namespace Collisions
 
 
 
-            if (!line.OnLine(stopPoint))
+            if (stopPoint.Y > MathF.Max(p1.Y, p2.Y) || stopPoint.Y < MathF.Min(p1.Y, p2.Y))
             {
                 // testing collision against p1 and p2
                 // raycasting the circle against p1 and p2
@@ -163,8 +168,7 @@ namespace Collisions
             collisionPoint += tmpP1;
 
 
-            result.Normal = (originalPoint - collisionPoint).Normalize();
-
+            result.Normal = ((originalPoint + originalVelocity * timeX) - collisionPoint).Normalized;
 
             return result;
         }

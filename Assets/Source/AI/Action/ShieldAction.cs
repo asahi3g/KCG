@@ -21,10 +21,10 @@ namespace Action
                 return NodeState.Failure;
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
-            EntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity;
-            ref InventoryModel inventoryModel = ref GameState.InventoryCreationApi.Get(inventory.InventoryModelID);
+            InventoryEntityComponent inventory = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity;
+            ref InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(inventory.InventoryEntityTemplateID);
 
-            if (inventoryModel.HasToolBar)  
+            if (InventoryEntityTemplate.HasToolBar)  
             {
                 int selectedSlot = inventory.SelectedSlotID;
                 ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);

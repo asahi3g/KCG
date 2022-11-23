@@ -8,7 +8,7 @@ namespace Inventory
     public class CreationApi
     {
         bool Init = false;
-        InventoryModel[] InventoryModels;
+        InventoryTemplateData[] InventoryModels;
         int ArrayLenth = 0;
 
         // Current Inventory info.
@@ -21,7 +21,7 @@ namespace Inventory
         float LeftBorderOffSet;
         float RightBorderOffSet;
 
-        private void InitializeInventory(ref InventoryModel inventory)
+        private void InitializeInventory(ref InventoryTemplateData inventory)
         {
             inventory.RenderProprieties = new RenderProprieties();
             inventory.MainWindow = new Window();
@@ -47,10 +47,10 @@ namespace Inventory
 
         public CreationApi()
         {
-            InventoryModels = new InventoryModel[16];
+            InventoryModels = new InventoryTemplateData[16];
             for (int i = 0; i < InventoryModels.Length; i++)
             {
-                InventoryModels[i] = new InventoryModel();
+                InventoryModels[i] = new InventoryTemplateData();
                 InitializeInventory(ref InventoryModels[i]);
             }
             const int MAX_SIZE_INVENTORY = 256;
@@ -64,10 +64,10 @@ namespace Inventory
 
         public void Expand()
         {
-            Array.Resize<InventoryModel>(ref InventoryModels, InventoryModels.Length * 2);
+            Array.Resize<InventoryTemplateData>(ref InventoryModels, InventoryModels.Length * 2);
             for (int i = ArrayLenth; i < InventoryModels.Length; i++)
             {
-                InventoryModels[i] = new InventoryModel();
+                InventoryModels[i] = new InventoryTemplateData();
                 InitializeInventory(ref InventoryModels[i]);
             }
         }
@@ -80,16 +80,16 @@ namespace Inventory
         public void InitStage2()
         {
             Init = true;
-            CreateDefaultPlayerInventoryModel();
-            CreateDefaultRestrictionInventoryModel();
-            CreateDefaultChestInventoryModel();
-            CreateDefaultCorpseInventoryModel();
-            CreateDefaultMaterialBagInventoryModel();
-            CreateDefaultCraftingBenchInputInventoryModel();
-            CreateDefaultCraftingBenchOutputInventoryModel();
+            CreateDefaultPlayerInventoryTemplate();
+            CreateDefaultRestrictionInventoryTemplate();
+            CreateDefaultChestInventoryTemplate();
+            CreateDefaultCorpseInventoryTemplate();
+            CreateDefaultMaterialBagInventoryTemplate();
+            CreateDefaultCraftingBenchInputInventoryTemplate();
+            CreateDefaultCraftingBenchOutputInventoryTemplate();
         }
 
-        public ref InventoryModel Get(int id)
+        public ref InventoryTemplateData Get(int id)
         {
             if (id < 0 || id >= InventoryModels.Length)
             {
@@ -160,7 +160,7 @@ namespace Inventory
             RestoreState();
         }
 
-        private void CreateDefaultPlayerInventoryModel()
+        private void CreateDefaultPlayerInventoryTemplate()
         {
             Create();
             SetInventoryPos(560f, 340f);
@@ -177,7 +177,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultRestrictionInventoryModel()
+        private void CreateDefaultRestrictionInventoryTemplate()
         {
             Create();
             SetInventoryPos(1_730f, 355f);
@@ -203,7 +203,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultChestInventoryModel()
+        private void CreateDefaultChestInventoryTemplate()
         {
             Create();
             SetInventoryPos(560f, 630f);
@@ -219,7 +219,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultCorpseInventoryModel()
+        private void CreateDefaultCorpseInventoryTemplate()
         {
             Create();
             SetInventoryPos(560f, 810f);
@@ -235,7 +235,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultMaterialBagInventoryModel()
+        private void CreateDefaultMaterialBagInventoryTemplate()
         {
             Create();
             SetInventoryPos(250f, 330f);
@@ -251,7 +251,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultCraftingBenchInputInventoryModel()
+        private void CreateDefaultCraftingBenchInputInventoryTemplate()
         {
             Create();
             SetInventoryPos(400f, 800f);
@@ -267,7 +267,7 @@ namespace Inventory
             End();
         }
 
-        private void CreateDefaultCraftingBenchOutputInventoryModel()
+        private void CreateDefaultCraftingBenchOutputInventoryTemplate()
         {
             Create();
             SetInventoryPos(750f, 900f);

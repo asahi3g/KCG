@@ -26,7 +26,7 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
-            ref AgentProperties agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
+            ref AgentPropertiesTemplate agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
 
             if (stateData.NodesExecutiondata[index].ExecutionTime <= agentProperties.Attack.Windup)
                 return NodeState.Running;
@@ -63,7 +63,7 @@ namespace Action
                     planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f),
                     new Vec2f(agentPhysicsState.Position.X, agentPhysicsState.Position.Y + 0.35f));
 
-                    agent.agentStats.Health -= damage;
+                    agent.agentStats.Health.Remove(damage);
                 }
             }
 

@@ -5,7 +5,7 @@ namespace Node
 {
     public class ToolActionScanner : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionScanner;
+        public override ItemUsageActionType Type => ItemUsageActionType.ToolActionScanner;
 
         // Todo: Fix scanner item crashing bug and fix this action.
         public override void OnEnter(NodeEntity nodeEntity)

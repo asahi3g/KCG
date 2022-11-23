@@ -1,5 +1,6 @@
 //import UnityEngine
 
+using Enums;
 using Enums.PlanetTileMap;
 using KMath;
 using Item;
@@ -31,11 +32,14 @@ namespace Planet.Unity
 
         public void Update()
         {
+            if (!Init)
+                return;
+
             ref var planet = ref GameState.Planet;
-            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryEntity.SelectedSlotID;
+            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+            ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
@@ -45,13 +49,15 @@ namespace Planet.Unity
                 }
             }
 
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
             //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
 
             // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
@@ -78,7 +84,7 @@ namespace Planet.Unity
             planet.InitializeSystems(Material, transform);
 
             GenerateMap();
-            Player = planet.AddPlayer(new Vec2f(3.0f, 1600));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 1600));
             PlayerID = Player.agentID.ID;
             //SpawnStuff();
 
@@ -222,14 +228,14 @@ namespace Planet.Unity
             float spawnHeight = tileMap.MapSize.Y - 2;
 
 
-            planet.AddAgent(new Vec2f(6.0f, spawnHeight));
-            planet.AddAgent(new Vec2f(1.0f, spawnHeight));
+            planet.AddAgent(new Vec2f(6.0f, spawnHeight), AgentType.Agent);
+            planet.AddAgent(new Vec2f(1.0f, spawnHeight), AgentType.Agent);
 
             for(int i = 0; i < tileMap.MapSize.X; i++)
             {
                 if (random.Next() % 5 == 0)
                 {
-                    planet.AddEnemy(new Vec2f((float)i, spawnHeight));    
+                    planet.AddAgentAsEnemy(new Vec2f((float)i, spawnHeight));    
                 }
             }
             

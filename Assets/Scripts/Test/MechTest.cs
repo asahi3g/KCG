@@ -58,12 +58,14 @@ namespace Planet.Unity
 
             selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
-            planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            planet.Update(UnityEngine.Time.deltaTime);
             
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init) return;
 
@@ -77,9 +79,9 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int)worldPosition.X;
+            int y = (int)worldPosition.Y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
             ref var planet = ref GameState.Planet;
@@ -176,7 +178,7 @@ namespace Planet.Unity
 
             GenerateMap();
 
-            Player = planet.AddPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
+            Player = planet.AddAgentAsPlayer(GameState.AnimationManager.CharacterSpriteId, 32, 48, new Vec2f(2.0f, 4.0f), 0, 100, 100, 100, 100, 100);
             int inventoryID = Player.agentInventory.InventoryID;
 
             planet.AddItemParticle(ItemType.Pistol, new Vec2f(2.0f, 4.0f));
@@ -289,9 +291,9 @@ namespace Planet.Unity
         {
             UnityEngine.Debug.Log("PLACE MECH");
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
 
             GameState.Planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
         }

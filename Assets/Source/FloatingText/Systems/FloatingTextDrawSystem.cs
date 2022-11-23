@@ -4,7 +4,7 @@ namespace FloatingText
 {
     public class FloatingTextDrawSystem
     {
-        public void Draw(UnityEngine.Transform transform, int drawOrder)
+        public void Draw(int drawOrder)
         {
             var entities = GameState.Planet.EntitasContext.floatingText.GetEntities();
 

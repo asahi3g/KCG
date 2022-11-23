@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class MechPlacementAction : NodeBase
     {
-        public override NodeType Type => NodeType.MechPlacementAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .MechPlacementAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
 
@@ -16,11 +16,11 @@ namespace Node.Action
             ref var planet = ref GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int)worldPosition.X;
+            int y = (int)worldPosition.Y;
 
-            planet.AddMech(new Vec2f(x, y), itemEntity.itemMech.MechID);
+            planet.AddMech(new Vec2f(x, y), itemEntity.itemMechPlacement.MechID);
 
             nodeEntity.nodeExecution.State = NodeState.Success;
         }

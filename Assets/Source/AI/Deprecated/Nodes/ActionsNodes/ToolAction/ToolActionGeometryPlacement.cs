@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class ToolActionGeometryPlacement : NodeBase
     {
-        public override NodeType Type => NodeType.ToolActionGeometryPlacement;
+        public override ItemUsageActionType  Type => ItemUsageActionType .ToolActionGeometryPlacement;
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
@@ -23,9 +23,9 @@ namespace Node.Action
 
                 if (itemEntity.itemTile.InputsActive)
                 {
-                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                    int x = (int)worldPosition.x;
-                    int y = (int)worldPosition.y;
+                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                    int x = (int)worldPosition.X;
+                    int y = (int)worldPosition.Y;
 
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {

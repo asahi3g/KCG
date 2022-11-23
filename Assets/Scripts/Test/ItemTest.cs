@@ -24,10 +24,12 @@ namespace Planet.Unity
 
         public void Update()
         {
-            GameState.Planet.Update(UnityEngine.Time.deltaTime, Material, transform);
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
@@ -51,7 +53,7 @@ namespace Planet.Unity
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            Player = planet.AddPlayer(new Vec2f(6.0f, 4.0f));
+            Player = planet.AddAgentAsPlayer(new Vec2f(6.0f, 4.0f));
 
             int inventoryID = Player.agentInventory.InventoryID;
 

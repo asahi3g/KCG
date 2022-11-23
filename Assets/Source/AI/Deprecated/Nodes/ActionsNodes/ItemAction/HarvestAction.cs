@@ -7,7 +7,7 @@ namespace Node.Action
 {
     public class HarvestAction : NodeBase
     {
-        public override NodeType Type => NodeType.HarvestAction;
+        public override ItemUsageActionType  Type => ItemUsageActionType .HarvestAction;
         public override NodeGroup NodeGroup => NodeGroup.ActionNode;
 
         public override void OnEnter(NodeEntity nodeEntity)
@@ -15,9 +15,9 @@ namespace Node.Action
             ref var planet = ref GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
    
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             MechEntity plant = null;

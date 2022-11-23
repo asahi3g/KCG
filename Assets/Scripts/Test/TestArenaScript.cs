@@ -40,7 +40,7 @@ namespace Planet.Unity
         public void Update()
         {
             ref var planet = ref GameState.Planet;
-            planet.Update(Time.deltaTime, Material, transform);
+            planet.Update(Time.deltaTime);
             planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
@@ -49,9 +49,11 @@ namespace Planet.Unity
             }
 
             MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
+
+            Draw();
         }
 
-        private void OnGUI()
+        private void Draw()
         {
             if (!Init)
                 return;
@@ -176,7 +178,7 @@ namespace Planet.Unity
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 
-            Player = planet.AddPlayer(new Vec2f(3.0f, spawnHeight));
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, spawnHeight));
             PlayerID = Player.agentID.ID;
 
             planet.AddFixedFloatingText("BASIC MOTIONS\n1>Use arrow keys to move aronud and jump.", new Vec2f(10, 5), Color.white, 20);
