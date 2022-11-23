@@ -395,7 +395,6 @@ namespace Planet
         public void RemoveProjectile(int index)
         {
             ProjectileEntity entity = ProjectileList.Get(index);
-            Utils.Assert(entity.isEnabled);
             ProjectileList.Remove(index);
         }
 

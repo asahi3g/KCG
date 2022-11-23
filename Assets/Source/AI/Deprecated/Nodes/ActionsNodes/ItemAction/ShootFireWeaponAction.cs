@@ -105,19 +105,5 @@ namespace Node
                 nodeEntity.nodeExecution.State = NodeState.Fail;
             }
         }
-
-        public override void OnUpdate(NodeEntity nodeEntity)
-        {
-            ref var planet = ref GameState.Planet;
-            const float FIRE_DELAY = 0.25f;
-            float elapsed = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
-            Vec2f target = nodeEntity.nodeTarget.TargetPos;
-
-            if (elapsed >= FIRE_DELAY)
-            {
-                
-            }
-
-        }
     }
 }
