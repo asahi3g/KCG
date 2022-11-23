@@ -504,6 +504,8 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessStats.Update();
+            int enemyFaction = 1;
+            GameState.MovementPositionScoreSystem.Update(enemyFaction);
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();
