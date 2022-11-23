@@ -8,7 +8,6 @@ namespace Agent
     {
         public int PropertiesId;
         public string Name;
-        public Vec2f SpriteSize;
         public int StartingAnimation;
 
         public Vec2f CollisionOffset;
