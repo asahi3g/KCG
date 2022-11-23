@@ -238,10 +238,10 @@ namespace Planet.Foreground
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition =
-                UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int) worldPosition.x;
-            int y = (int) worldPosition.y;
+            var worldPosition =
+                ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int) worldPosition.X;
+            int y = (int) worldPosition.Y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
@@ -378,7 +378,7 @@ namespace Planet.Foreground
             bool testRectangleCollision = false;
 
 
-            UnityEngine.Vector3 worldPosition =
+            var worldPosition =
                 UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             worldPosition.z = 20.0f;
 

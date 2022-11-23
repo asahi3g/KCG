@@ -546,9 +546,9 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int)worldPosition.X;
+            int y = (int)worldPosition.Y;
 
             ref var planet = ref GameState.Planet;
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
