@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System;
 using Collisions;
 using PlanetTileMap;
+using Audio;
 
 namespace Planet.Unity
 {
     class GeometryTest : MonoBehaviour
     {
         Material Material;
-
-
-
 
         AgentEntity Player;
         int PlayerID;
@@ -27,10 +25,12 @@ namespace Planet.Unity
 
         Planet.PlanetState Planet;
 
-
         public void Start()
         {
+            GameState.AudioSystem = new AudioSystem(GetComponent<AudioSource>());
+
             Initialize();
+
         }
 
         // create the sprite atlas for testing purposes
@@ -52,12 +52,11 @@ namespace Planet.Unity
 
             GameResources.Initialize();
 
-             for(int i = 0; i < GameState.TileCreationApi.TilePropertyArray.Length; i++)
+            for(int i = 0; i < GameState.TileCreationApi.TilePropertyArray.Length; i++)
             {
                 ref TileProperty property = ref GameState.TileCreationApi.TilePropertyArray[i];
 
                 MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
-
             }
 
             // Generating the map
@@ -89,12 +88,11 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
+
             //GenerateMap();
+
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
-
-            /*planet.TileMap = TileMapManager.Load("generated-maps/movement-map.kmap", (int)lookAtPosition.x, (int)lookAtPosition.y);
-                Debug.Log("loaded!");*/
 
             for(int j = 0; j < tileMap.height; j++)
             {
@@ -133,8 +131,6 @@ namespace Planet.Unity
             AddItemsToPlayer();
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
-
-
 
             PlanetTileMap.TileMapGeometry.BuildGeometry(Planet.TileMap);
 

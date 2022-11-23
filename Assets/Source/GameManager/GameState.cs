@@ -1,4 +1,5 @@
 
+using Audio;
 using Planet;
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
@@ -160,6 +161,12 @@ public static class GameState
     public static readonly Gui.GuiResourceManager GuiResourceManager;
     // outdated
     public static readonly KGUI.GUIManager GUIManager;
+
+    #endregion
+
+    #region Audio
+
+    public static AudioSystem AudioSystem;
 
     #endregion
 
@@ -326,5 +333,7 @@ public static class GameState
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
         ScreenManager = new GameScreen.ScreenManager();
+
+        AudioSystem = new AudioSystem(null);
     }
 }

@@ -7,6 +7,7 @@ using KGUI.Statistics;
 using KMath;
 using Mech;
 using PlanetTileMap;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -579,6 +580,18 @@ namespace ECSInput
                         mode = Mode.Agent;
 
                     UpdateMode(entity);
+                }
+
+                // Take Screen-Shot
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F12))
+                {
+                    var date = DateTime.Now;
+                    var fileName = date.Year.ToString() + "-" + date.Month.ToString() +
+                        "-" + date.Day.ToString() + "-" + date.Hour.ToString() + "-" + date.Minute.ToString() +
+                        "-" + date.Second.ToString() + "-" + date.Millisecond + ".png";
+                    ScreenCapture.CaptureScreenshot("Assets\\Screenshots\\" + fileName);
+
+                    GameState.AudioSystem.PlayOneShot("AudioClips\\steam_screenshot_effect");
                 }
             }
         }
