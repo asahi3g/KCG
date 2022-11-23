@@ -50,9 +50,7 @@ namespace Node
                                             case PotionType.HealthPotion:
                                                 if (item.itemType.Type == ItemType.HealthPotion)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
                                                     player.UsePotion(2.0f);
                                                     item.itemStack.Count--;

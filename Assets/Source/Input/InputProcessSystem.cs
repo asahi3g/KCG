@@ -44,6 +44,21 @@ namespace ECSInput
             Camera.main.orthographicSize = 20.0f / scale;
         }
 
+        public static Vec2f GetCursorWorldPosition()
+        {
+            var worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            return new Vec2f(worldPosition.x, worldPosition.y);
+        }
+        
+        public static Vec2f GetCursorScreenPosition()
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.nearClipPlane;
+            return new Vec2f(Camera.main.ScreenToWorldPoint(mousePos).x,
+                Camera.main.ScreenToWorldPoint(mousePos).y);
+        }
+
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -125,11 +140,11 @@ namespace ECSInput
                     player.Walk(x);
                 }
 
-                var mouseWorldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                var mouseWorldPosition = GetCursorWorldPosition();
 
                 if (player.CanFaceMouseDirection())
                 {
-                    if (mouseWorldPosition.x >= physicsState.Position.X)
+                    if (mouseWorldPosition.X >= physicsState.Position.X)
                     {
                         physicsState.FacingDirection = 1;
                     }
@@ -384,15 +399,15 @@ namespace ECSInput
             // Remove Tile Front At Cursor Position.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
             {
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                planet.TileMap.RemoveFrontTile((int)worldPosition.x, (int)worldPosition.y);
+                var worldPosition = GetCursorWorldPosition();
+                planet.TileMap.RemoveFrontTile((int)worldPosition.X, (int)worldPosition.Y);
             }
 
             // Remove Tile Back At Cursor Position.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
             {
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                planet.TileMap.RemoveBackTile((int)worldPosition.x, (int)worldPosition.y);
+                var worldPosition = GetCursorWorldPosition();
+                planet.TileMap.RemoveBackTile((int)worldPosition.X, (int)worldPosition.Y);
             }
 
             // Enable tile collision isotype rendering.

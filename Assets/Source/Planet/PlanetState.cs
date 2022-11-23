@@ -396,7 +396,7 @@ namespace Planet
         {
             ProjectileEntity entity = ProjectileList.Get(index);
             Utils.Assert(entity.isEnabled);
-            ProjectileList.Remove(entity.projectileID.Index);
+            ProjectileList.Remove(index);
         }
 
         public VehicleEntity AddVehicle(VehicleType vehicleType, Vec2f position)

@@ -39,7 +39,7 @@ namespace Planet.Unity
             int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity.SelectedSlotID;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+            ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
             if (itemProperty.IsTool())
             {
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))

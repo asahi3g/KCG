@@ -17,10 +17,10 @@ namespace Events
         IEnumerator SpawnDropShip()
         {
             yield return new UnityEngine.WaitForSeconds(1.0f);
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
 
             vehicle = GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(x, y));
 

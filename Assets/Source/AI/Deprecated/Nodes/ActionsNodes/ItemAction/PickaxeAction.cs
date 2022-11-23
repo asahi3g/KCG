@@ -16,9 +16,9 @@ namespace Node
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
 
 
             var tile = planet.TileMap.GetTile((int)x, (int)y).FrontTileID;

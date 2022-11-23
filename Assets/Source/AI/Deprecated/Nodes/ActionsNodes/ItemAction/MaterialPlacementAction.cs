@@ -50,9 +50,9 @@ namespace Node.Action
                                             case TileID.Moon:
                                                 if (item.itemType.Type == ItemType.Dirt)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                                                    int x = (int)worldPosition.X;
+                                                    int y = (int)worldPosition.Y;
 
                                                     if (planet.TileMap.GetFrontTileID(x, y) == TileID.Moon)
                                                     {
@@ -76,9 +76,9 @@ namespace Node.Action
                                             case TileID.Bedrock:
                                                 if (item.itemType.Type == ItemType.Bedrock)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                                                    int x = (int)worldPosition.X;
+                                                    int y = (int)worldPosition.Y;
 
                                                     // If Selected Tile Already Have Same Tile
                                                     if (planet.TileMap.GetFrontTileID(x, y) == TileID.Bedrock)
@@ -103,9 +103,9 @@ namespace Node.Action
                                             case TileID.Pipe:
                                                 if (item.itemType.Type == ItemType.Pipe)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                                                    int x = (int)worldPosition.X;
+                                                    int y = (int)worldPosition.Y;
 
                                                     if (planet.TileMap.GetFrontTileID(x, y) == TileID.Pipe)
                                                     {
@@ -129,9 +129,9 @@ namespace Node.Action
                                             case TileID.Wire:
                                                 if (item.itemType.Type == ItemType.Wire)
                                                 {
-                                                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
+                                                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                                                    int x = (int)worldPosition.X;
+                                                    int y = (int)worldPosition.Y;
 
                                                     // If Selected Tile Already Have Same Tile
                                                     if (planet.TileMap.GetFrontTileID(x, y) == TileID.Wire)
@@ -162,9 +162,9 @@ namespace Node.Action
 
                 if (itemEntity.itemTile.InputsActive && CanPlace)
                 {
-                    UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                    int x = (int)worldPosition.x;
-                    int y = (int)worldPosition.y;
+                    var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                    int x = (int)worldPosition.X;
+                    int y = (int)worldPosition.Y;
 
                     // Check Map Size
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
@@ -173,9 +173,9 @@ namespace Node.Action
             }
             else
             {
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                int x = (int)worldPosition.x;
-                int y = (int)worldPosition.y;
+                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                int x = (int)worldPosition.X;
+                int y = (int)worldPosition.Y;
 
                 // Check Map Size
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&

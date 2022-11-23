@@ -16,7 +16,7 @@ namespace Condition
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ItemInventoryEntity item = agent.GetItem();
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+            ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
             if (itemProperty.Group == ItemGroups.Gun)
             {

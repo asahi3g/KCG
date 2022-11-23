@@ -21,10 +21,6 @@ namespace Node
 
             float damage = weaponProperty.BasicDemage;
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
-
             // Check if projectile has hit a enemy.
             var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 

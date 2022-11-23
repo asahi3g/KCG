@@ -31,9 +31,9 @@ namespace Node
             Vec2f planterPosition = Vec2f.Zero;
             if (agentEntity.isAgentPlayer)
             {
-                UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                float x = worldPosition.x;
-                float y = worldPosition.y;
+                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                float x = worldPosition.X;
+                float y = worldPosition.Y;
 
                 for (int i = 0; i < planet.MechList.Length; i++)
                 {
