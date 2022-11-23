@@ -58,7 +58,7 @@ namespace Planet.Unity
                 }
 
                 planet.Update(UnityEngine.Time.deltaTime);
-                planet.DrawHUD(Player);
+                planet.DrawHUD(planet.Player);
 
                 if (enableGeometryPlacementTool)
                 {

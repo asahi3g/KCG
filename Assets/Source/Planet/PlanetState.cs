@@ -514,7 +514,7 @@ namespace Planet
             GameState.PodCollisionSystem.Update();
             GameState.MechPlantGrowthSystem.Update();
 
-            GameState.AgentProcessStats.Update();
+            GameState.AgentProcessState.Update();
             int enemyFaction = 1;
             GameState.MovementPositionScoreSystem.Update(enemyFaction);
             GameState.SensorUpdateSystem.Update();
