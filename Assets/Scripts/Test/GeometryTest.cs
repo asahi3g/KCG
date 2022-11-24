@@ -2,7 +2,6 @@ using UnityEngine;
 using Enums.PlanetTileMap;
 using KMath;
 using System.Linq;
-using System.Collections.Generic;
 using System;
 using Collisions;
 using PlanetTileMap;
@@ -17,6 +16,8 @@ namespace Planet.Unity
         AgentEntity Player;
         int PlayerID;
 
+        [UnityEngine.SerializeField] private bool enableBackgroundPlacementTool;
+
         int CharacterSpriteId;
         int inventoryID;
 
@@ -24,6 +25,8 @@ namespace Planet.Unity
         private int selectedMechIndex;
 
         Planet.PlanetState Planet;
+
+        private BackgroundPlacementTool backgroundPlacementTool;
 
         public void Start()
         {
@@ -88,6 +91,12 @@ namespace Planet.Unity
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
+
+            if (enableBackgroundPlacementTool)
+            {
+                backgroundPlacementTool = new BackgroundPlacementTool(true, true);
+                backgroundPlacementTool.Initialize(Material, transform);
+            }
 
             //GenerateMap();
 
@@ -154,7 +163,6 @@ namespace Planet.Unity
             Vec2f velocity = new Vec2f(mouse.X - orrectedBox.x, mouse.Y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
-
             ref var planet = ref GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             Material material = Material;
@@ -189,11 +197,12 @@ namespace Planet.Unity
 
                planet.InitializeSystems(Material, transform);
 
+
                Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;
                inventoryID = Player.agentInventory.InventoryID;
 
-               AddItemsToPlayer();
+                AddItemsToPlayer();
 
                 Debug.Log("loaded!");
             }
@@ -201,6 +210,11 @@ namespace Planet.Unity
             Debug.Log(GameState.Planet.ParticleList.Length);
 
             planet.Update(Time.deltaTime);
+
+            if (enableBackgroundPlacementTool)
+            {
+                backgroundPlacementTool.UpdateToolGrid();
+            }
 
         }
         Texture2D texture;
