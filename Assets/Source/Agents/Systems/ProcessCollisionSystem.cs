@@ -26,13 +26,13 @@ namespace Agent
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
             PlanetTileMap.TileMap tileMap = planet.TileMap;
 
-
-            Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
-            var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
-
-        
             float epsilon = Physics.Constants.CollisionEpsilon;
 
+
+            Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+            // sweep test with 2 circles for now
+            // in the future it should be a capsule
+            var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
             Vec2f deltaLeft = delta  * (1.0f - (agentCollision.MinTime - epsilon));

@@ -143,22 +143,60 @@ namespace Collisions
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C0_M0, C0, M0, new Vec2f(0.0f, 1.0f)); 
             GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_C3);
             GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_C2);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M2_C3);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_M2);
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M0_M2, M0, M2, new Vec2f(1.0f, 0.0f)); 
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M2_C3, M2, C3, new Vec2f(0.0f, -1.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_C1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_C0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M0_C0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_M0);
+
           //  GameState.LinePropertiesManager.Create(TileLineSegment.L_C3_C0, C3, C0, new Vec2f(1.0f, 0.0f)); 
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C1_M1, C1, M1, new Vec2f(1.0f, 0.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_C0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_C3);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M3_C0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_M3);
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M1_M3, M1, M3, new Vec2f(0.0f, -1.0f)); 
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M3_C0, M3, C0, new Vec2f(-1.0f, 0.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_C2);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_C1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_M1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M1_C1);
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M0_C1, M0, C1, new Vec2f(0.0f, 1.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_C3);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_C2);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_M2);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M2_C2);
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C2_M2, C2, M2, new Vec2f(0.0f, -1.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_M0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M0_C1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_C1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_C0);
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M2_M0, M2, M0, new Vec2f(-1.0f, 0.0f)); 
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M3_M1, M3, M1, new Vec2f(0.0f, 1.0f)); 
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_M1_C2, M1, C2, new Vec2f(1.0f, 0.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_C0);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C0_C3);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C3_M3);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M3_C3);
+
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C3_M3, C3, M3, new Vec2f(-1.0f, 0.0f)); 
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C1_C2);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_C1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_C2_M1);
+            GameState.LinePropertiesManager.AddMatch(TileLineSegment.L_M1_C2);
 
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C3_C1, C3, C1, new Vec2f(-1.0f, 1.0f).Normalize());
@@ -173,7 +211,6 @@ namespace Collisions
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C0_M2, C0, M2, new Vec2f(1.0f, 0.5f).Normalize());
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C1_M3, C1, M3, new Vec2f(0.5f, -1.0f).Normalize());
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C2_M0, C2, M0, new Vec2f(-1.0f, -0.5f).Normalize());
-            GameState.LinePropertiesManager.Create(TileLineSegment.L_M1_C0, M1, C0, new Vec2f(-0.5f, 1.0f).Normalize());
 
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C1_M2, C1, M2, new Vec2f(1.0f, -0.5f).Normalize());
             GameState.LinePropertiesManager.Create(TileLineSegment.L_C0_M1, C0, M1, new Vec2f(0.5f, 1.0f).Normalize());

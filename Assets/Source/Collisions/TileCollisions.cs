@@ -124,10 +124,10 @@ namespace Collisions
 
 
             TilesInProximityResult result = new TilesInProximityResult();
-            result.MinX = (int)min.X - 1;
-            result.MaxX = (int)(max.X + 1.0f) + 1;
-            result.MinY = (int)min.Y - 1;
-            result.MaxY = (int)(max.Y + 1.0f) + 1;
+            result.MinX = (int)(min.X - 0.25f);
+            result.MaxX = (int)(max.X + 1.0f);
+            result.MinY = (int)(min.Y - 0.25f);
+            result.MaxY = (int)(max.Y + 1.0f);
 
             return result;
         }
