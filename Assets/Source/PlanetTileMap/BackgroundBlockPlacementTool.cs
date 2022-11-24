@@ -5,7 +5,7 @@ using TGen;
 
 namespace Planet
 {
-    public class GeometryBlockPlacementTool
+    public class BackgroundPlacementTool
     {
         private bool enableTileGrid = true;
 
@@ -13,7 +13,7 @@ namespace Planet
 
         private ForegroundPlacementTool placementTool;
 
-        public GeometryBlockPlacementTool(bool tileGrid, bool mapBorder)
+        public BackgroundPlacementTool(bool tileGrid, bool mapBorder)
         {
             enableTileGrid = tileGrid;
             drawMapBorder = mapBorder;

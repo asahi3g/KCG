@@ -49,6 +49,15 @@ public static class GameState
 
     #endregion
 
+    #region DarkGreyBackground
+
+    public static readonly TGen.DarkGreyBackground.BackgroundGrid BackgroundGrid;
+    public static readonly TGen.DarkGreyBackground.RenderGridOverlay BackgroundGridOverlay;
+    public static readonly TGen.DarkGreyBackground.RenderMapBorder BackgroundRenderMapBorder;
+    public static readonly TGen.DarkGreyBackground.RenderMapMesh BackgroundRenderMapMesh;
+
+    #endregion
+
     #region Sprites
 
     public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
@@ -310,6 +319,11 @@ public static class GameState
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();
         TGenRenderMapBorder = new TGen.RenderMapBorder();
         TGenRenderMapMesh = new TGen.RenderMapMesh();
+
+        BackgroundGrid = new TGen.DarkGreyBackground.BackgroundGrid();
+        BackgroundGridOverlay = new TGen.DarkGreyBackground.RenderGridOverlay();
+        BackgroundRenderMapBorder = new TGen.DarkGreyBackground.RenderMapBorder();
+        BackgroundRenderMapMesh = new TGen.DarkGreyBackground.RenderMapMesh();
 
         GUIManager = new KGUI.GUIManager();
 
