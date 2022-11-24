@@ -70,7 +70,7 @@ namespace Planet.Unity
             if (drawMapBorder)
                 GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
-            materialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            materialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID());
 
             inventoryID = player.agentInventory.InventoryID;
 

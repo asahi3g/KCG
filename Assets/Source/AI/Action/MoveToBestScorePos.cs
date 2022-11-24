@@ -19,7 +19,8 @@ namespace Action
             
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             blackboard.MoveToTarget = GameState.MovementPositionScoreSystem.GetHighestScorePosition(agent);
-            if (MathF.Abs(physicsState.Position.X - blackboard.MoveToTarget.X) < 0.25f)
+            const float AcceptableMargin = 0.25f;
+            if (MathF.Abs(physicsState.Position.X - blackboard.MoveToTarget.X) < AcceptableMargin)
             {
                 return NodeState.Success;
             }

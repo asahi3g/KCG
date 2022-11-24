@@ -19,135 +19,132 @@ namespace Action
                 var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
                 {
-                    if (entity.hasInventoryName)
+                    if (entity.inventoryInventoryEntity.InventoryType == Enums.InventoryEntityType.AgentInventory)
                     {
-                        if (entity.inventoryName.Name == "MaterialBag")
+                        var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
+                        for(int i = 0; i < Slots.Length; i++)
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
-                            for(int i = 0; i < Slots.Length; i++)
+                            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
+
+                            if (item != null)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
-
-                                if (item != null)
+                                if (item.hasItemStack)
                                 {
-                                    if (item.hasItemStack)
+                                    if (itemEntity.itemTile.TileID == TileID.Error ||
+                                                    itemEntity.itemTile.TileID == TileID.Air ||
+                                                    itemEntity.itemTile.Layer != MapLayerType.Front)
                                     {
-                                        if (itemEntity.itemTile.TileID == TileID.Error ||
-                                                        itemEntity.itemTile.TileID == TileID.Air ||
-                                                        itemEntity.itemTile.Layer != MapLayerType.Front)
-                                        {
-                                            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                            return;
-                                        }
+                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                        return;
+                                    }
 
-                                        switch (itemEntity.itemTile.TileID)
-                                        {
-                                            case TileID.Moon:
-                                                if (item.itemType.Type == Enums.ItemType.Dirt)
+                                    switch (itemEntity.itemTile.TileID)
+                                    {
+                                        case TileID.Moon:
+                                            if (item.itemType.Type == Enums.ItemType.Dirt)
+                                            {
+                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                int x = (int)worldPosition.x;
+                                                int y = (int)worldPosition.y;
+
+                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Moon)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
-
-                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Moon)
-                                                    {
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
-                                                    item.itemStack.Count--;
-                                                    if (item.itemStack.Count < 1)
-                                                    {
-                                                        CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
-                                                        item.Destroy();
-                                                        itemEntity.itemTile.TileID = TileID.Error;
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
                                                 }
-                                                break;
-
-                                            // If Case Is Bedrock
-                                            case TileID.Bedrock:
-                                                if (item.itemType.Type == Enums.ItemType.Bedrock)
+                                                item.itemStack.Count--;
+                                                if (item.itemStack.Count < 1)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
-
-                                                    // If Selected Tile Already Have Same Tile
-                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Bedrock)
-                                                    {
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
-
-                                                    item.itemStack.Count--;
-                                                    if (item.itemStack.Count < 1)
-                                                    {
-                                                        CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
-                                                        item.Destroy();
-                                                        itemEntity.itemTile.TileID = TileID.Error;
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
+                                                    CanPlace = false;
+                                                    GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    item.Destroy();
+                                                    itemEntity.itemTile.TileID = TileID.Error;
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
                                                 }
-                                                break;
+                                            }
+                                            break;
 
-                                            case TileID.Pipe:
-                                                if (item.itemType.Type == Enums.ItemType.Pipe)
+                                        // If Case Is Bedrock
+                                        case TileID.Bedrock:
+                                            if (item.itemType.Type == Enums.ItemType.Bedrock)
+                                            {
+                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                int x = (int)worldPosition.x;
+                                                int y = (int)worldPosition.y;
+
+                                                // If Selected Tile Already Have Same Tile
+                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Bedrock)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
-
-                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Pipe)
-                                                    {
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
-
-                                                    item.itemStack.Count--;
-                                                    if (item.itemStack.Count < 1)
-                                                    {
-                                                        CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
-                                                        item.Destroy();
-                                                        itemEntity.itemTile.TileID = TileID.Error;
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
                                                 }
-                                                break;
 
-                                            case TileID.Wire:
-                                                if (item.itemType.Type == Enums.ItemType.Wire)
+                                                item.itemStack.Count--;
+                                                if (item.itemStack.Count < 1)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
-
-                                                    // If Selected Tile Already Have Same Tile
-                                                    if (planet.TileMap.GetFrontTileID(x, y) == TileID.Wire)
-                                                    {
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
-
-                                                    item.itemStack.Count--;
-                                                    if (item.itemStack.Count < 1)
-                                                    {
-                                                        CanPlace = false;
-                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
-                                                        item.Destroy();
-                                                        itemEntity.itemTile.TileID = TileID.Error;
-                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                        return;
-                                                    }
+                                                    CanPlace = false;
+                                                    GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    item.Destroy();
+                                                    itemEntity.itemTile.TileID = TileID.Error;
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
                                                 }
-                                                break;
-                                        }
+                                            }
+                                            break;
+
+                                        case TileID.Pipe:
+                                            if (item.itemType.Type == Enums.ItemType.Pipe)
+                                            {
+                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                int x = (int)worldPosition.x;
+                                                int y = (int)worldPosition.y;
+
+                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Pipe)
+                                                {
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
+                                                }
+
+                                                item.itemStack.Count--;
+                                                if (item.itemStack.Count < 1)
+                                                {
+                                                    CanPlace = false;
+                                                    GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    item.Destroy();
+                                                    itemEntity.itemTile.TileID = TileID.Error;
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
+                                                }
+                                            }
+                                            break;
+
+                                        case TileID.Wire:
+                                            if (item.itemType.Type == Enums.ItemType.Wire)
+                                            {
+                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                int x = (int)worldPosition.x;
+                                                int y = (int)worldPosition.y;
+
+                                                // If Selected Tile Already Have Same Tile
+                                                if (planet.TileMap.GetFrontTileID(x, y) == TileID.Wire)
+                                                {
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
+                                                }
+
+                                                item.itemStack.Count--;
+                                                if (item.itemStack.Count < 1)
+                                                {
+                                                    CanPlace = false;
+                                                    GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                    item.Destroy();
+                                                    itemEntity.itemTile.TileID = TileID.Error;
+                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                    return;
+                                                }
+                                            }
+                                            break;
                                     }
                                 }
                             }

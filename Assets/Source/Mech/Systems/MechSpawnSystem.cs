@@ -27,15 +27,15 @@ namespace Mech
                 entity.AddMechPlanter(false, -1);
 
             if (mechProperties.HasInventory())
-                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryEntityTemplateID, InventoryEntityType.Default, "Chest").inventoryID.ID);
+                entity.AddMechInventory(GameState.InventoryManager.CreateInventory(mechProperties.InventoryEntityTemplateID, InventoryEntityType.Default).inventoryID.ID);
 
             if (mechProperties.IsBreakable())
                 entity.AddMechDurability(mechProperties.Durability);
 
             if (mechType == MechType.CraftingTable)
             {
-                entity.AddMechCraftingTable(planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID(), "Input"),
-                    planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID(), "Out"));
+                entity.AddMechCraftingTable(planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchInputInventoryModelID()),
+                    planet.AddInventory(GameState.InventoryCreationApi.GetDefaultCraftingBenchOutputInventoryModelID()));
             }
 
             if (mechType == MechType.Tree)

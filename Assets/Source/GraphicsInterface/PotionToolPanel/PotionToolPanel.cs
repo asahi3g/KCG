@@ -28,11 +28,11 @@ namespace KGUI
             if (selectedInventoryItem == null) return;
             
             ref var planet = ref GameState.Planet;
-            var inventories = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID, InventoryMatcher.InventoryName));
+            var inventories = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
 
             foreach (var inventory in inventories)
             {
-                if (inventory.inventoryName.Name != "MaterialBag") continue;
+                if (inventory.inventoryInventoryEntity.InventoryType != InventoryEntityType.AgentInventory) continue;
 
                 var materialBag = planet.EntitasContext.inventory
                     .GetEntityWithInventoryID(inventory.inventoryID.ID).inventoryInventoryEntity.Slots;
