@@ -18,7 +18,7 @@ namespace Events
         IEnumerator SpawnMarine()
         {
             yield return new UnityEngine.WaitForSeconds(1.0f);
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
             enemy = GameState.Planet.AddAgent(new Vec2f(transform.position.x, transform.position.y), Enums.AgentType.EnemyMarine);
 

@@ -176,8 +176,8 @@ namespace Inventory
             if (slot.ItemID != -1)
             {
                 ItemInventoryEntity entity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(slot.ItemID);
-                ItemProprieties itemProprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
-                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(itemProprieties.InventorSpriteID, Enums.AtlasType.Particle);
+                ItemProperties ItemProperties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+                Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(ItemProperties.InventorSpriteID, Enums.AtlasType.Particle);
                 GameState.Renderer.DrawSpriteGui(posX, posY, sizeX, sizeY, sprite);
 
                 // Draw Count if stackable.

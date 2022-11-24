@@ -16,7 +16,7 @@ namespace Condition
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ItemInventoryEntity item = agent.GetItem();
-            ItemProprieties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+            ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
             if (itemProperty.Group == ItemGroups.Gun)
             {
@@ -55,7 +55,7 @@ namespace Condition
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             
             float distance = (agent.GetGunFiringPosition() - blackboard.AttackTarget).Magnitude;
-            float attackRange = 5.0f; // Todo: Create method to get attack range.
+            float attackRange = 20.0f; // Todo: Create method to get attack range.
             return (distance < attackRange) ? true : false;
         }
 

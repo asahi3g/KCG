@@ -6,11 +6,9 @@ using Enums.PlanetTileMap;
 using KGUI;
 using KMath;
 
-
 namespace Item
 {
-
-    public struct ItemProprieties
+    public struct ItemProperties
     {
         public string ItemLabel;                 // Item Label
         public ItemType ItemType;

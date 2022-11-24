@@ -19,9 +19,7 @@ namespace Action
                 onUpdate: ReloadAction.OnUpdate,
                 onSuccess: ReloadAction.OnSuccess,
                 onFailure:ReloadAction.OnFailure);
-            ActionManager.RegisterActionSequence("FireWeapon",
-                onEnter: ShootFireWeaponAction.OnEnter,
-                onUpdate: ShootFireWeaponAction.OnUpdate);
+            ActionManager.RegisterAction("FireWeapon", ShootFireWeaponAction.Action);
         }
     }
 }

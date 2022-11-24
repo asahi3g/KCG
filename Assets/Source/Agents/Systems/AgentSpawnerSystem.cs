@@ -72,56 +72,6 @@ namespace Agent
         }
 
 
-        public AgentEntity SpawnCorpse(Contexts entitasContext, Vec2f position, int spriteId, Enums.AgentType agentType, int inventoryID)
-        {
-            var entity = entitasContext.agent.CreateEntity();
-            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
-            var spriteSize = properties.SpriteSize;
-
-            entity.AddAgentID(UniqueID++, -1, agentType, 0); // agent id 
-            entity.isAgentCorpse = true;
-            entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, -1, false);
-
-            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
-
-            // used for physics simulation
-            entity.AddAgentPhysicsState(
-                newPosition: position,
-                newPreviousPosition: default,
-                newSpeed: properties.MovProperties.DefaultSpeed,
-                newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
-                newVelocity: Vec2f.Zero,
-                newAcceleration: Vec2f.Zero,
-                newMovingDirection: 1,
-                newFacingDirection: 1,
-                newGroundNormal: new Vec2f(0, 1.0f),
-                newMovementState: Enums.AgentMovementState.None,
-                newLastAgentAnimation: new AgentAnimation(),
-                newSetMovementState: false,
-                newAffectedByGravity: true,
-                newAffectedByFriction: true,
-                newInvulnerable: false,
-                newOnGrounded: false,
-                newDroping: false,
-                newActionInProgress: false,
-                newActionJustEnded: false,
-                newIdleAfterShootingTime: 0,
-                newJumpCounter: 0,
-                newSlidingTime: 0,
-                newActionDuration: 0,
-                newDyingDuration: 0,
-                newDashCooldown: 0,
-                newStaggerDuration: 0,
-                newRollCooldown: 0,
-                newRollImpactDuration: 0);
-
-            return entity;
-        }
-
 
         public AgentEntity Spawn(Vec2f position, Enums.AgentType agentType, int faction,
             int inventoryID = -1, int equipmentInventoryID = -1)
@@ -130,7 +80,6 @@ namespace Agent
 
             ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
-            var spriteSize = properties.SpriteSize;
             var spriteId = 0;
             entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
@@ -240,19 +189,19 @@ namespace Agent
                     }
                 case Enums.AgentType.Agent:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.Slime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                       // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
                     {
-                        entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
+                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
                         break;
                     }
                 case Enums.AgentType.EnemyGunner:

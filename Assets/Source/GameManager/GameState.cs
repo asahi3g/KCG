@@ -1,4 +1,5 @@
 
+using Audio;
 using Planet;
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
@@ -13,6 +14,7 @@ public static class GameState
     #region AI
     public static readonly AI.Movement.PathFinding PathFinding;
     public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
+    public static readonly AI.Movement.PositionScoreSystem MovementPositionScoreSystem;
     public static readonly AI.BlackboardManager BlackboardManager;
     public static readonly AI.UpdatePosition BlackboardUpdatePosition;
     public static readonly NodeSystem.NodeManager NodeManager;
@@ -165,6 +167,12 @@ public static class GameState
 
     #endregion
 
+    #region Audio
+
+    public static AudioSystem AudioSystem;
+
+    #endregion
+
     public static readonly Prefab.PrefabManager PrefabManager;
 
 
@@ -209,6 +217,8 @@ public static class GameState
 
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
+        PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
+        MovementPositionScoreSystem = new AI.Movement.PositionScoreSystem();
         BlackboardManager = new AI.BlackboardManager();
         BlackboardUpdatePosition = new AI.UpdatePosition();
         NodeManager =   new NodeSystem.NodeManager();
@@ -331,5 +341,7 @@ public static class GameState
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
         ScreenManager = new GameScreen.ScreenManager();
+
+        AudioSystem = new AudioSystem(null);
     }
 }

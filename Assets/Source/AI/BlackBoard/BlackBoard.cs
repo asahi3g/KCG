@@ -14,7 +14,6 @@ namespace AI
 
     public struct SquadBalckboard
     {
-        public int[] Members; // List with ids of each member of the squad.
         public int[] Enemies; // List with ids of every know enemy location.
     }
 }

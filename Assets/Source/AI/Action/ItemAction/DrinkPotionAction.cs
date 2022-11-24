@@ -43,10 +43,6 @@ namespace Action
                                             case Enums.PotionType.HealthPotion:
                                                 if (item.itemType.Type == Enums.ItemType.HealthPotion)
                                                 {
-                                                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                    int x = (int)worldPosition.x;
-                                                    int y = (int)worldPosition.y;
-
                                                     player.UsePotion(2.0f);
                                                     item.itemStack.Count--;
                                                     if (item.itemStack.Count < 1)

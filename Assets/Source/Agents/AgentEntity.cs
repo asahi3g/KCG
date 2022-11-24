@@ -153,23 +153,23 @@ public partial class AgentEntity
     {
         var physicsState = agentPhysicsState;
 
-         UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+        var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
         float rightGunXPosition = physicsState.Position.X + 10.0f;
         float leftGunXPosition = physicsState.Position.X - 10.0f;
 
-        if (worldPosition.x < rightGunXPosition && worldPosition.x > physicsState.Position.X)
+        if (worldPosition.X < rightGunXPosition && worldPosition.X > physicsState.Position.X)
         {
-            worldPosition.x = physicsState.Position.X + 10.0f;
+            worldPosition.X = physicsState.Position.X + 10.0f;
         }
 
 
-        if (worldPosition.x > leftGunXPosition && worldPosition.x < physicsState.Position.X)
+        if (worldPosition.X > leftGunXPosition && worldPosition.X < physicsState.Position.X)
         {
-            worldPosition.x = physicsState.Position.X - 10.0f;
+            worldPosition.X = physicsState.Position.X - 10.0f;
         }
 
-        return new Vec2f(worldPosition.x, worldPosition.y);
+        return new Vec2f(worldPosition.X, worldPosition.Y);
     }
 
     public Vec2f GetGunOrigin()
@@ -510,6 +510,7 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
+            GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
         }

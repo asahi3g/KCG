@@ -79,9 +79,9 @@ namespace Planet.Unity
 
         private void DrawCurrentMechHighlighter()
         {
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            int x = (int)worldPosition.X;
+            int y = (int)worldPosition.Y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
             ref var planet = ref GameState.Planet;
@@ -291,9 +291,9 @@ namespace Planet.Unity
         {
             UnityEngine.Debug.Log("PLACE MECH");
 
-            UnityEngine.Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-            float x = worldPosition.x;
-            float y = worldPosition.y;
+            var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
 
             GameState.Planet.AddMech(new Vec2f(x + 2F, y), MechType.Storage);
         }
