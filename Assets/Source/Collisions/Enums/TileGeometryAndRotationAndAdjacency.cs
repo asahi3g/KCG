@@ -63,10 +63,10 @@ namespace Enums
         HB_R3_AX110,
         HB_R3_AX111,
         
-        TB_R0_X00X,
-        TB_R0_X01X,
-        TB_R0_X10X,
-        TB_R0_X11X,
+        TB_R0_AX00X,
+        TB_R0_AX01X,
+        TB_R0_AX10X,
+        TB_R0_AX11X,
 
         TB_R1_AXX00,
         TB_R1_AXX01,
@@ -218,140 +218,12 @@ namespace Enums
         L2_R7_AX101,
         L2_R7_AX110,
         L2_R7_AX111,
-        
-        QP_R0_A0XXX,
-        QP_R0_A1XXX,
 
 
-
-        QP_R1_AX0XX,
-        QP_R1_AX1XX,
-
-
-
-        QP_R2_AXX0X,
-        QP_R2_AXX1X,
-
-
-
-        QP_R3_AXXX0,
-        QP_R3_AXXX1,
-        
-        HP_R0_A00X0,
-        HP_R0_A00X1,
-        HP_R0_A01X0,
-        HP_R0_A01X1,
-        HP_R0_A10X0,
-        HP_R0_A10X1,
-        HP_R0_A11X0,
-        HP_R0_A11X1,
-
-
-
-        HP_R1_A000X,
-        HP_R1_A001X,
-        HP_R1_A010X,
-        HP_R1_A011X,
-        HP_R1_A100X,
-        HP_R1_A101X,
-        HP_R1_A110X,
-        HP_R1_A111X,
-
-
-
-        HP_R2_AX000,
-        HP_R2_AX001,
-        HP_R2_AX010,
-        HP_R2_AX011,
-        HP_R2_AX100,
-        HP_R2_AX101,
-        HP_R2_AX110,
-        HP_R2_AX111,
-
-
-
-        HP_R3_A0X00,
-        HP_R3_A0X01,
-        HP_R3_A0X10,
-        HP_R3_A0X11,
-        HP_R3_A1X00,
-        HP_R3_A1X01,
-        HP_R3_A1X10,
-        HP_R3_A1X11,
-        
-        FP_R0_A0000,
-        FP_R0_A0001,
-        FP_R0_A0010,
-        FP_R0_A0011,
-        FP_R0_A0100,
-        FP_R0_A0101,
-        FP_R0_A0110,
-        FP_R0_A0111,
-        FP_R0_A1000,
-        FP_R0_A1001,
-        FP_R0_A1010,
-        FP_R0_A1011,
-        FP_R0_A1100,
-        FP_R0_A1101,
-        FP_R0_A1110,
-        FP_R0_A1111,
-
-
-
-        FP_R1_A0000,
-        FP_R1_A0001,
-        FP_R1_A0010,
-        FP_R1_A0011,
-        FP_R1_A0100,
-        FP_R1_A0101,
-        FP_R1_A0110,
-        FP_R1_A0111,
-        FP_R1_A1000,
-        FP_R1_A1001,
-        FP_R1_A1010,
-        FP_R1_A1011,
-        FP_R1_A1100,
-        FP_R1_A1101,
-        FP_R1_A1110,
-        FP_R1_A1111,
-
-
-
-        FP_R2_A0000,
-        FP_R2_A0001,
-        FP_R2_A0010,
-        FP_R2_A0011,
-        FP_R2_A0100,
-        FP_R2_A0101,
-        FP_R2_A0110,
-        FP_R2_A0111,
-        FP_R2_A1000,
-        FP_R2_A1001,
-        FP_R2_A1010,
-        FP_R2_A1011,
-        FP_R2_A1100,
-        FP_R2_A1101,
-        FP_R2_A1110,
-        FP_R2_A1111,
-
-
-
-        FP_R3_A0000,
-        FP_R3_A0001,
-        FP_R3_A0010,
-        FP_R3_A0011,
-        FP_R3_A0100,
-        FP_R3_A0101,
-        FP_R3_A0110,
-        FP_R3_A0111,
-        FP_R3_A1000,
-        FP_R3_A1001,
-        FP_R3_A1010,
-        FP_R3_A1011,
-        FP_R3_A1100,
-        FP_R3_A1101,
-        FP_R3_A1110,
-        FP_R3_A1111,
+        QP_R0_XXXX,
+        QP_R1_XXXX,
+        QP_R2_XXXX,
+        QP_R3_XXXX,
         
     }
 

@@ -8,5 +8,6 @@ namespace Collisions
     {
         public int Offset;
         public int Size;
+        public int Mask;
     }
 }

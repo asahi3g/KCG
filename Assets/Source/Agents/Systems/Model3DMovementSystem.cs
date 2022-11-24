@@ -22,7 +22,6 @@ namespace Agent
                 if (physicsState.MovementState != AgentMovementState.Dashing)
                     GameState.AgentIKSystem.SetIKEnabled(true);
 
-                UnityEngine.Debug.Log(GameState.AgentIKSystem.IKEnabled);
 
                 if (physicsState.FacingDirection == 1)
                 {
