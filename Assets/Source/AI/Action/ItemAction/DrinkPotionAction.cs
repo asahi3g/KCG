@@ -49,10 +49,15 @@ namespace Action
                                                 item.itemStack.Count--;
                                                 if (item.itemStack.Count < 1)
                                                 {
-                                                    GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
-                                                    item.Destroy();
-                                                    nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                                    return;
+                                                    player.UsePotion(2.0f);
+                                                    item.itemStack.Count--;
+                                                    if (item.itemStack.Count < 1)
+                                                    {
+                                                        GameState.InventoryManager.RemoveItem(entity.inventoryID.ID, item.itemInventory.SlotID);
+                                                        item.Destroy();
+                                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                                        return;
+                                                    }
                                                 }
                                             }
                                             break;

@@ -510,6 +510,7 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
+            GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
         }
