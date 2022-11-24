@@ -132,7 +132,7 @@ namespace AI.Movement
         {
             // Should iterate for every faction we only have enemy faction.
             const int enemyfaction = 1;
-            //Update(enemyfaction);
+            Update(enemyfaction);
         }
     }
 }

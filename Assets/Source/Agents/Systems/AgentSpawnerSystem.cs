@@ -63,6 +63,7 @@ namespace Agent
                  newSlidingTime: 0,
                  newDyingDuration: 0,
                  newDashCooldown: 0,
+                 newDashDuration: 0,
                  newStaggerDuration: 0,
                  newRollCooldown: 0,
                  newRollImpactDuration: 0);
@@ -115,6 +116,7 @@ namespace Agent
                 newSlidingTime: 0,
                 newDyingDuration: 0,
                 newDashCooldown: 0,
+                newDashDuration: 0,
                 newActionDuration: 0,
                 newStaggerDuration: 0,
                 newRollCooldown: 0,

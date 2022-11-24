@@ -29,8 +29,8 @@ namespace Agent
     {
         UnityEngine.Transform transform;
 
-        UnityEngine.Transform Pistol;
-        UnityEngine.Transform Rifle;
+        public UnityEngine.Transform Pistol;
+        public UnityEngine.Transform Rifle;
 
         UnityEngine.Transform RigLayerRifle_BodyAim;
         UnityEngine.Transform RigLayerRifle_WeaponPose;

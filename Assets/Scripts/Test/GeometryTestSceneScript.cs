@@ -153,7 +153,7 @@ namespace Planet.Unity
 
             //TileMapManager.Save(planet.TileMap, "map.kmap");
 
-            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID());
 
             InventoryID = planet.Player.agentInventory.InventoryID;
 

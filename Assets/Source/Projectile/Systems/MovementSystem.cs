@@ -7,11 +7,8 @@ namespace Projectile
 {
     public class MovementSystem
     {
-        float elapsed = 0.0f;
         private void Update(ProjectileEntity entityP, float deltaTime)
         {
-            elapsed += Time.deltaTime;
-
             if (entityP.isProjectileFirstFrame)
             {
                 entityP.isProjectileFirstFrame = false;

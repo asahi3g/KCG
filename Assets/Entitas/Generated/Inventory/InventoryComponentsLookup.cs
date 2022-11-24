@@ -11,17 +11,15 @@ public static class InventoryComponentsLookup {
     public const int InventoryDraw = 0;
     public const int InventoryID = 1;
     public const int InventoryInventoryEntity = 2;
-    public const int InventoryName = 3;
-    public const int InventoryToolBarDraw = 4;
-    public const int InventoryWindowAdjustment = 5;
+    public const int InventoryToolBarDraw = 3;
+    public const int InventoryWindowAdjustment = 4;
 
-    public const int TotalComponents = 6;
+    public const int TotalComponents = 5;
 
     public static readonly string[] componentNames = {
         "InventoryDraw",
         "InventoryID",
         "InventoryInventoryEntity",
-        "InventoryName",
         "InventoryToolBarDraw",
         "InventoryWindowAdjustment"
     };
@@ -30,7 +28,6 @@ public static class InventoryComponentsLookup {
         typeof(Inventory.DrawComponent),
         typeof(Inventory.IDComponent),
         typeof(Inventory.InventoryEntityComponent),
-        typeof(Inventory.NameComponent),
         typeof(Inventory.ToolBarDrawComponent),
         typeof(Inventory.WindowAdjustmentComponent)
     };
