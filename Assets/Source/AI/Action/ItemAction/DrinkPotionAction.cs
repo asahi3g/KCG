@@ -18,30 +18,36 @@ namespace Action
                 var entities = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
                 foreach (var entity in entities)
                 {
-                    if (entity.hasInventoryName)
+                    if (entity.inventoryInventoryEntity.InventoryType == Enums.InventoryEntityType.AgentInventory)
                     {
-                        if (entity.inventoryName.Name == "MaterialBag")
+                        var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
+
+                        for (int i = 0; i < Slots.Length; i++)
                         {
-                            var Slots = planet.EntitasContext.inventory.GetEntityWithInventoryID(entity.inventoryID.ID).inventoryInventoryEntity.Slots;
+                            ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
 
-                            for (int i = 0; i < Slots.Length; i++)
+                            if (item != null)
                             {
-                                ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(entity.inventoryID.ID, i);
-
-                                if (item != null)
+                                if (item.hasItemStack)
                                 {
-                                    if (item.hasItemStack)
+                                    if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
                                     {
-                                        if (ItemEntity.itemPotion.potionType == Enums.PotionType.Error)
-                                        {
-                                            nodeEntity.nodeExecution.State = Enums.NodeState.Success;
-                                            return;
-                                        }
+                                        nodeEntity.nodeExecution.State = Enums.NodeState.Success;
+                                        return;
+                                    }
 
-                                        switch (ItemEntity.itemPotion.potionType)
-                                        {
-                                            case Enums.PotionType.HealthPotion:
-                                                if (item.itemType.Type == Enums.ItemType.HealthPotion)
+                                    switch (ItemEntity.itemPotion.potionType)
+                                    {
+                                        case Enums.PotionType.HealthPotion:
+                                            if (item.itemType.Type == Enums.ItemType.HealthPotion)
+                                            {
+                                                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                                int x = (int)worldPosition.x;
+                                                int y = (int)worldPosition.y;
+
+                                                player.UsePotion(2.0f);
+                                                item.itemStack.Count--;
+                                                if (item.itemStack.Count < 1)
                                                 {
                                                     player.UsePotion(2.0f);
                                                     item.itemStack.Count--;
@@ -53,8 +59,8 @@ namespace Action
                                                         return;
                                                     }
                                                 }
-                                                break;
-                                        }
+                                            }
+                                            break;
                                     }
                                 }
                             }

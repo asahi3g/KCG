@@ -204,7 +204,7 @@ namespace Planet.Unity
 
             planet.InitializeSystems(Material, transform);
             
-            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID());
             
             InventoryID = Player.agentInventory.InventoryID;
 

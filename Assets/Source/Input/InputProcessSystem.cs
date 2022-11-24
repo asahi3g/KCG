@@ -73,7 +73,7 @@ namespace ECSInput
             ref var planet = ref GameState.Planet;
             Contexts contexts = planet.EntitasContext;
 
-            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
 
             UpdateMainCameraZoom();
 

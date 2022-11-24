@@ -337,12 +337,12 @@ namespace Agent
 
             int wait0_1sId = NodeManager.CreateNode("Wait", NodeSystem.ItemUsageActionType .Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
-            NodeManager.SetData(new WaitAction.WaitActionData(0.1f));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
             NodeManager.EndNode();
 
             int wait1sId = NodeManager.CreateNode("Wait", NodeSystem.ItemUsageActionType .Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
-            NodeManager.SetData(new WaitAction.WaitActionData(1f));
+            NodeManager.SetData(new WaitAction.WaitActionData(0f));
             NodeManager.EndNode();
 
             int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.ItemUsageActionType .Action);

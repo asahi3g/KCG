@@ -135,7 +135,7 @@ namespace Planet.Unity
 
             //TileMapManager.Save(GameState.Planet.TileMap, "map.kmap");
 
-            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID(), "MaterialBag");
+            MaterialBag = planet.AddInventory(GameState.InventoryCreationApi.GetDefaultMaterialBagInventoryModelID());
 
             InventoryID = Player.agentInventory.InventoryID;
 
@@ -143,7 +143,7 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Pistol);
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore);
 
-            // Admin API Add Items
+            // Admin API Add s
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.Flare);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.PlacementTool);
             Admin.AdminAPI.AddItem(inventoryManager, InventoryID, Enums.ItemType.GeometryPlacementTool);

@@ -6,9 +6,9 @@ namespace Enums
         Default,
         Toolbar,
         AgentInventory,
+        AgentEquipmentInventory,
         VehicleInventory,
         VehicleEquipmentInventory,
-        AgentEquipmentInventory,
         MechStorageChest
     }
 }

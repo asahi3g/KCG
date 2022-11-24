@@ -115,7 +115,7 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), "Bag").inventoryID.ID;
+            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
             int equipmentInventoryID =
                 AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
 
@@ -196,9 +196,9 @@ namespace Planet
             MechList.Remove(index);
         }
 
-        public InventoryEntity AddInventory(int inventoryModelID, string name = "")
+        public InventoryEntity AddInventory(int inventoryModelID)
         {
-            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, InventoryEntityType.Default, name);
+            InventoryEntity inventoryEntity = GameState.InventoryManager.CreateInventory(inventoryModelID, InventoryEntityType.Default);
             AddInventory(inventoryEntity);
             return inventoryEntity;
         }
@@ -302,12 +302,12 @@ namespace Planet
 
             if (!entity.hasAgentInventory)
             {
-                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID());
                 entity.AddAgentInventory(inventoryEntity.inventoryID.ID, -1, false);
             }
             else if (entity.agentInventory.InventoryID == -1)
             {
-                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID(), "Corpse Bag");
+                InventoryEntity inventoryEntity = AddInventory(GameState.InventoryCreationApi.GetDefaultCorpseInventoryModelID());
                 entity.agentInventory.InventoryID = inventoryEntity.inventoryID.ID;
             }
 
@@ -514,8 +514,7 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessState.Update();
-            int enemyFaction = 1;
-            GameState.MovementPositionScoreSystem.Update(enemyFaction);
+            GameState.MovementPositionScoreSystem.UpdateEx();
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();

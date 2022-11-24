@@ -7,7 +7,7 @@ namespace Inventory
     {
         static int uniqueID = 0;
         public InventoryEntity CreateInventory(int InventoryEntityTemplateID, Enums.InventoryEntityType type = 
-                Enums.InventoryEntityType.Default, string name = "")
+                Enums.InventoryEntityType.Default)
         {
             var InventoryEntityTemplate = GameState.InventoryCreationApi.Get(InventoryEntityTemplateID);
             var inventoryEntity = GameState.Planet.EntitasContext.inventory.CreateEntity();
@@ -33,17 +33,12 @@ namespace Inventory
                 };
             }
 
-            if (name != "")
-            {
-                inventoryEntity.AddInventoryName(name);
-            }
-
             return inventoryEntity;
         }
 
-        public InventoryEntity CreateDefaultInventory(Enums.InventoryEntityType type = Enums.InventoryEntityType.Default, string name = "")
+        public InventoryEntity CreateDefaultInventory(Enums.InventoryEntityType type = Enums.InventoryEntityType.Default)
         {
-            return CreateInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), type, name);
+            return CreateInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), type);
         }
 
         public void OpenInventory(InventoryEntity inventoryEntity)
