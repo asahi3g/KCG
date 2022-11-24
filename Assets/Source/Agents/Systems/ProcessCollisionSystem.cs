@@ -28,9 +28,6 @@ namespace Agent
 
 
             Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
-
-            //planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + delta * 20.0f), UnityEngine.Color.red);
-
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
         
@@ -43,8 +40,7 @@ namespace Agent
 
             if (agentCollision.MinTime < 1.0 && (agentCollision.MinNormal.X != 0 || agentCollision.MinNormal.Y != 0))
             {
-
-                // physicsState.Position -= delta.Normalize() * 0.02f;
+;
                 float coefficientOfRest = Physics.Constants.CoefficientOfRestitution;
                 Vec2f velocity = deltaLeft;
 
@@ -196,28 +192,23 @@ namespace Agent
 
                 if (!isPlatform || !physicsState.Droping)
                 {
-                   // physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                     physicsState.Velocity.Y = 0.0f;
                     physicsState.Acceleration.Y = 0.0f;
-                  //  physicsState.OnGrounded = true;
                     if (!isPlatform)
                         physicsState.Droping = false;
                 }
                 else
                 {
-                 //   physicsState.OnGrounded = false;
                 }
             }
             else
             {
-             //   physicsState.OnGrounded = false;
                 physicsState.Droping = false;
             }
 
 
             if (collidingTop)
             {   
-                //physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                 physicsState.Velocity.Y = 0.0f;
                 physicsState.Acceleration.Y = 0.0f;
             }
@@ -225,11 +216,9 @@ namespace Agent
             entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y) + box2DCollider.Offset, box2DCollider.Size);
 
 
-           // if (physicsState.Position.Y <= 16.0f)physicsState.Position.Y = 16.0f;
 
            if (collidingLeft)
             {
-                //physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingLeft)
@@ -239,7 +228,6 @@ namespace Agent
            }
             else if (collidingRight)
             {
-               // physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingRight)
