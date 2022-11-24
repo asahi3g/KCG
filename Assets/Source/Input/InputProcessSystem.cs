@@ -7,6 +7,7 @@ using KGUI.Statistics;
 using KMath;
 using Mech;
 using PlanetTileMap;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +51,15 @@ namespace ECSInput
 
             return new Vec2f(worldPosition.x, worldPosition.y);
         }
-        
+
+        public static Vec2f GetCursorWorldPosition(float z)
+        {
+            var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
+                Input.mousePosition.y, z));
+
+            return new Vec2f(worldPosition.x, worldPosition.y);
+        }
+
         public static Vec2f GetCursorScreenPosition()
         {
             Vector3 mousePos = Input.mousePosition;
@@ -579,6 +588,18 @@ namespace ECSInput
                         mode = Mode.Agent;
 
                     UpdateMode(entity);
+                }
+
+                // Take Screen-Shot
+                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F12))
+                {
+                    var date = DateTime.Now;
+                    var fileName = date.Year.ToString() + "-" + date.Month.ToString() +
+                        "-" + date.Day.ToString() + "-" + date.Hour.ToString() + "-" + date.Minute.ToString() +
+                        "-" + date.Second.ToString() + "-" + date.Millisecond + ".png";
+                    ScreenCapture.CaptureScreenshot("Assets\\Screenshots\\" + fileName);
+
+                    GameState.AudioSystem.PlayOneShot("AudioClips\\steam_screenshot_effect");
                 }
             }
         }
