@@ -13,7 +13,7 @@ namespace Node.Action
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            GameState.Planet.AddAgent(new Vec2f(x, y), AgentType.EnemyInsect, 1);
+            GameState.Planet.AddAgent(new Vec2f(x, y), AgentType.EnemyMarine, 1);
 
             nodeEntity.nodeExecution.State = NodeState.Success;
         }

@@ -362,9 +362,9 @@ namespace Agent
             NodeManager.SetAction(ActionManager.GetID("ReloadWeapon"));
             NodeManager.EndNode();
 
-            int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.ItemUsageActionType .ActionSequence);
+            int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.ItemUsageActionType .Action);
             NodeManager.SetAction(ActionManager.GetID("FireWeapon"));
-            NodeManager.AddData(new ShootFireWeaponAction.ShootFireWeaponData());
+            NodeManager.SetData(new ShootFireWeaponAction.ShootFireWeaponData());
             NodeManager.EndNode();
 
             int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.ItemUsageActionType .Sequence);

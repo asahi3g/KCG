@@ -57,11 +57,6 @@ namespace Projectile
 
             physicsState.Velocity = newVelocity;
             physicsState.Acceleration = KMath.Vec2f.Zero;
-
-            if(elapsed > physicsState.TimeToLive)
-            {
-                GameState.Planet.RemoveProjectile(entityP.creationIndex);
-            }
         }
 
         public void Update()

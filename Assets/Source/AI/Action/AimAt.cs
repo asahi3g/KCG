@@ -20,7 +20,7 @@ namespace Action
             // Vary angle in 15 degrees.
             Vec2f gunPos = agent.GetGunFiringPosition();
             float angle = gunPos.GetAngle(blackboard.AttackTarget);
-            const float SpreadAngle = 10.0f * Mathf.Deg2Rad;
+            const float SpreadAngle = 20.0f * Mathf.Deg2Rad;
             float randomAngle = UnityEngine.Random.Range(-SpreadAngle, SpreadAngle);
             Vec2f dir = blackboard.AttackTarget - gunPos;
             Vec2f aimTarget = dir.Rotate(randomAngle) + gunPos;
