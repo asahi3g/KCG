@@ -54,7 +54,7 @@ namespace TGen.DarkGreyBackground
                             if (spriteId >= 0)
                             {
                                 {
-                                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.PlacableBackground).TextureCoords;
+                                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.TGen).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
@@ -81,7 +81,7 @@ namespace TGen.DarkGreyBackground
 
         public void Draw()
         {
-            GameState.Renderer.DrawFrame(ref Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.PlacableBackground));
+            GameState.Renderer.DrawFrame(ref Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.TGen));
         }
     }
 }

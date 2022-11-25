@@ -21,7 +21,7 @@ namespace Planet
 
         public void UpdateToolGrid()
         {
-            placementTool.UpdateToolGrid();
+            placementTool.UpdateToolGrid(GameState.Planet.TileMap);
         }
 
         public void Initialize(UnityEngine.Material Material, UnityEngine.Transform transform, int mapWidth,

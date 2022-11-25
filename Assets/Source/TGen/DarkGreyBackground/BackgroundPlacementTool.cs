@@ -54,7 +54,7 @@ namespace TGen.DarkGreyBackground
             }
         }
 
-        public void UpdateToolGrid()
+        public void UpdateToolGrid(PlanetTileMap.TileMap tileMap)
         {
             if(UnityEngine.Input.GetMouseButtonUp(0))
             {
@@ -63,7 +63,7 @@ namespace TGen.DarkGreyBackground
                 int x = (int)worldPosition.X;
                 int y = (int)worldPosition.Y;
 
-                GameState.BackgroundGrid.SetTile(x, y, UnityEngine.Random.Range(2, GameState.BackgroundGridOverlay.TGenIsotypeSprites.Length));
+                tileMap.SetBackTile(x, y, Enums.PlanetTileMap.TileID.Background);
             }
             else if (UnityEngine.Input.GetMouseButtonDown(1))
             {
@@ -72,7 +72,7 @@ namespace TGen.DarkGreyBackground
                 int x = (int)worldPosition.X;
                 int y = (int)worldPosition.Y;
 
-                GameState.BackgroundGrid.RemoveTile(x, y);
+                tileMap.RemoveBackTile(x, y);
             }
         }
 
