@@ -7,16 +7,16 @@ namespace Particle
     public class ParticleSpawnerSystem
     {
         public static int UniqueID = 0;
-        ParticleCreationApi ParticleCreationApi;
-        public ParticleSpawnerSystem(ParticleCreationApi particleCreationApi)
+        ParticlePropertiesManager ParticlePropertiesManager;
+        public ParticleSpawnerSystem(ParticlePropertiesManager particlePropertiesManager)
         {
-            ParticleCreationApi = particleCreationApi;
+            ParticlePropertiesManager = particlePropertiesManager;
         }
 
         public ParticleEntity Spawn(ParticleType particleType, Vec2f position, Vec2f velocity, float health = 1.0f)
         {
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get(particleType);
+                        ParticlePropertiesManager.Get(particleType);
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
             Vec2f size = particleProperties.MinSize + (particleProperties.MaxSize - particleProperties.MinSize)  *  KMath.Random.Mt19937.genrand_realf();
@@ -45,7 +45,7 @@ namespace Particle
         public ParticleEntity SpawnDebrisParticle(Vec2f position, Vec2f[] triangles, Vec2f[] textureCoords, Vec2f velocity)
         {
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get(ParticleType.Debris);
+                        ParticlePropertiesManager.Get(ParticleType.Debris);
 
             var entity = GameState.Planet.EntitasContext.particle.CreateEntity();
             entity.AddParticleID(UniqueID++, -1, ParticleType.Debris);

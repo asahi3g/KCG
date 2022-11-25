@@ -206,7 +206,6 @@ namespace Planet.Unity
 
                 Debug.Log("loaded!");
             }
-            
 
             planet.Update(Time.deltaTime);
 

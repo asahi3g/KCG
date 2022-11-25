@@ -342,6 +342,16 @@ namespace Planet
             FloatingTextList.Remove(index);
         }
 
+        public void AddParticleEffect(Vec2f position, Enums.ParticleEffect type)
+        {
+            Particle.ParticleEffectProperties properties = GameState.ParticleEffectPropertiesManager.GetProperties(type);
+            for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
+            {
+                Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
+                AddParticleEmitter(position + element.Offset, element.Emitter);
+            }
+        }
+
         public ParticleEntity AddParticleEmitter(Vec2f position, ParticleEmitterType type)
         {
             ParticleEntity newEntity = ParticleEmitterList.Add(GameState.ParticleEmitterSpawnerSystem.Spawn(type, position));

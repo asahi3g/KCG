@@ -72,12 +72,12 @@ public class GameResources
 
     private static void CreateParticles()
     {
-        GameState.ParticleCreationApi.InitializeResources();
+        GameState.ParticlePropertiesManager.InitializeResources();
     }
 
     private static void CreateParticleEmitters()
     {
-        GameState.ParticleCreationApi.InitializeEmitterResources();
+        GameState.ParticlePropertiesManager.InitializeEmitterResources();
     }
 
     private static void CreateProjectiles()
