@@ -119,8 +119,8 @@ namespace Collisions
         // getting closest tiles for moving box 2d
         public static TilesInProximityResult GetTilesInProximity(Vec2f position, Vec2f dimensions, Vec2f delta)
         {
-            Vec2f min = new Vec2f(MathF.Min(position.X, position.X + delta.Y), MathF.Min(position.Y, position.Y + delta.Y));
-            Vec2f max = new Vec2f(MathF.Max(position.X, position.X + delta.Y), MathF.Max(position.Y, position.Y + delta.Y)) + dimensions;
+            Vec2f min = new Vec2f(MathF.Min(position.X, position.X + delta.X), MathF.Min(position.Y, position.Y + delta.Y));
+            Vec2f max = new Vec2f(MathF.Max(position.X, position.X + delta.X), MathF.Max(position.Y, position.Y + delta.Y)) + dimensions;
 
 
             TilesInProximityResult result = new TilesInProximityResult();
