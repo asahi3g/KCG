@@ -33,7 +33,7 @@ namespace Node
 
             int inventoryID = agentEntity.agentInventory.InventoryID;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
-            int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotID;
+            int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex;
             ItemInventoryEntity itemEntity = GameState.InventoryManager.GetItemInSlot(inventoryID, selected);
             if (itemEntity == null)
             {
@@ -66,7 +66,7 @@ namespace Node
                     int numBullet = itemEntity.itemFireWeaponClip.NumOfBullets;
                     if (numBullet <= 0)
                     {
-                        Debug.Log("Clip is empty. Press R to reload.");
+                        //Debug.Log("Clip is empty. Press R to reload.");
                         nodeEntity.nodeExecution.State = NodeState.Fail;
                         return;
                     }

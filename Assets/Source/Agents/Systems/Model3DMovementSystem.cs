@@ -19,7 +19,6 @@ namespace Agent
 
                 var renderer = model3d.GameObject.transform.GetChild(0).GetComponent<UnityEngine.Renderer>();
 
-
                 if (physicsState.FacingDirection == 1)
                 {
                     if(model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)

@@ -56,7 +56,8 @@ namespace Engine3D
             LoadMaterials();
             LoadAnimations();
             LoadModels();
-            UnityEngine.Debug.Log("3d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+            
+            UnityEngine.Debug.Log($"{nameof(AssetManager)} initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds");
         }
 
         public ref UnityEngine.AnimationClip GetAnimationClip(AnimationType animationType)

@@ -1,6 +1,7 @@
 //imports UnityEngine
 
 using System;
+using UnityEngine;
 
 public class GameResources
 {
@@ -8,27 +9,29 @@ public class GameResources
 
     public static void Initialize()
     {
-        if (!isInitialized)
+        if (isInitialized)
         {
-            long beginTime = DateTime.Now.Ticks;
-            
-            CreateDropTables();
-            InitializeTGenTiles();
-
-            CreateTiles();
-            CreateAnimations();
-            CreateItems();
-            CreateAgents();
-            CreateParticles();
-            CreateParticleEmitters();
-            CreateProjectiles();
-            CreateMechs();
-            CreateVehicles();
-
-            UnityEngine.Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
-
-            isInitialized = true;
+            Debug.Log("Game resources already initialized");
+            return;
         }
+        long beginTime = DateTime.Now.Ticks;
+            
+        CreateDropTables();
+        InitializeTGenTiles();
+
+        CreateTiles();
+        CreateAnimations();
+        CreateItems();
+        CreateAgents();
+        CreateParticles();
+        CreateParticleEmitters();
+        CreateProjectiles();
+        CreateMechs();
+        CreateVehicles();
+
+        UnityEngine.Debug.Log($"{nameof(GameResources)} initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds");
+
+        isInitialized = true;
     }
 
 

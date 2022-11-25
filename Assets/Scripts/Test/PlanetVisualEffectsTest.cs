@@ -28,16 +28,10 @@ public class PlanetVisualEffectsTest : UnityEngine.MonoBehaviour
         if(Init)
         {
             // check if the sprite atlas textures needs to be updated
-            for (int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
-            {
-                GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.SpriteAtlasManager.UpdateAtlasTextures();
 
             // check if the tile sprite atlas textures needs to be updated
-            for (int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-            {
-                GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
 
             // Draw The Visual Effects
             planetVisualEffects.Draw(Material, transform, 1);

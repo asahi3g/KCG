@@ -25,7 +25,7 @@ namespace Node.Action
 
             if (InventoryEntityTemplate.HasToolBar)
             {
-                int selectedSlot = inventory.SelectedSlotID;
+                int selectedSlot = inventory.SelectedSlotIndex;
                 return GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
             }
 

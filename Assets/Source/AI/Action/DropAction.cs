@@ -26,7 +26,7 @@ namespace Action
 
             if (InventoryEntityTemplate.HasToolBar)
             {
-                int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotID;
+                int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex;
 
                 ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(
                     agentEntity.agentInventory.InventoryID, selected);
