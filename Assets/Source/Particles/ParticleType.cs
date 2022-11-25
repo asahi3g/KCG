@@ -21,5 +21,11 @@ namespace Particle
         BloodImpact,
         BulletTrail,
         MuzzleFlash,
+
+
+        Explosion_2_Part1,
+        Explosion_2_Part2,
+        Explosion_2_Part3,
+        Explosion_2_Part4
     }
 }
