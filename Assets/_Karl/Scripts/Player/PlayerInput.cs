@@ -26,7 +26,7 @@ public class PlayerInput : BaseMonoBehaviour
     {
         if (IsGameplayBlocked()) return;
         
-        if (App.Instance.GetUI().GetView<UIViewGame>().GetInventory().GetSlot(slotIndex, out UIContentElementInventorySlot slot))
+        if (App.Instance.GetUI().GetView<UIViewInventory>().GetSlot(slotIndex, out UIContentElementInventorySlot slot))
         {
             slot.Select();
             //Debug.Log($"Quick slot index[{slotIndex}] selected by keyboard");

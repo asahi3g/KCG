@@ -48,13 +48,13 @@ public class Player : BaseMonoBehaviour
                 
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
-
-                UIViewGame viewGame = App.Instance.GetUI().GetView<UIViewGame>();
-                UIInventory inventory = viewGame.GetInventory();
+                
+                UIViewInventory inventory = App.Instance.GetUI().GetView<UIViewInventory>();
                 inventory.SetInventoryEntityComponent(inventoryEntityComponent);
                 inventory.GetSelection().onSelectWithPrevious.AddListener(OnInventorySelectionEvent);
 
-                UpdateGameViewVisibility(true);
+                SetViewInventoryVisibility(true);
+                
                 Debug.Log("Agent Renderer Set");
             }
             else Debug.LogWarning("Player has no inventory");
@@ -62,7 +62,10 @@ public class Player : BaseMonoBehaviour
             // Set stats
             if (agentEntity.hasAgentStats)
             {
-                App.Instance.GetUI().GetView<UIViewGame>().SetStats(agentEntity.agentStats);
+                UIViewStats stats = App.Instance.GetUI().GetView<UIViewStats>();
+                stats.SetStats(agentEntity.agentStats);
+                
+                SetViewStatsVisibility(true);
             }
             else Debug.LogWarning("Player has no stats");
         }
@@ -70,10 +73,14 @@ public class Player : BaseMonoBehaviour
         onPlayerAgentCreated.Invoke(_currentPlayer);
     }
 
-    private void UpdateGameViewVisibility(bool isVisible)
+    private void SetViewStatsVisibility(bool isVisible)
     {
-        UIViewGame viewGame = App.Instance.GetUI().GetView<UIViewGame>();
-        viewGame.GetGroup().GetIdentifier().Alter(_identifier, isVisible);
+        App.Instance.GetUI().GetView<UIViewStats>().GetGroup().GetIdentifier().Alter(_identifier, isVisible);
+    }
+    
+    private void SetViewInventoryVisibility(bool isVisible)
+    {
+        App.Instance.GetUI().GetView<UIViewInventory>().GetGroup().GetIdentifier().Alter(_identifier, isVisible);
     }
 
     public void ClearAgentRenderer()
@@ -85,12 +92,13 @@ public class Player : BaseMonoBehaviour
         App.Instance.GetPlayer().GetCamera().ClearTarget();
         
         // Unsubscribe inventory
-        UIInventory inventory = App.Instance.GetUI().GetView<UIViewGame>().GetInventory();
+        UIViewInventory inventory = App.Instance.GetUI().GetView<UIViewInventory>();
         inventory.GetSelection().onSelectWithPrevious.RemoveListener(OnInventorySelectionEvent);
         inventory.Clear();
         
-        // Hide game UI
-        UpdateGameViewVisibility(false);
+        // Hide views
+        SetViewStatsVisibility(false);
+        SetViewInventoryVisibility(false);
     }
     
     public bool GetCurrentPlayerAgent(out AgentRenderer character)
