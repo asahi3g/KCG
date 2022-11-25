@@ -273,14 +273,17 @@ namespace Planet.Unity
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
         }
 
-            private void UpdateMode(AgentEntity agentEntity)
+        private void UpdateMode(AgentEntity agentEntity)
         {
-            ref var planet = ref GameState.Planet;
+            CameraMove cameraMove = Camera.main.gameObject.GetComponent<CameraMove>();
+            if (cameraMove == null) return;
+            
+            var planet = GameState.Planet;
             agentEntity.agentPhysicsState.Invulnerable = false;
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            cameraMove.enabled = false;
             planet.CameraFollow.canFollow = false;
 
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            cameraMove.enabled = false;
             planet.CameraFollow.canFollow = true;
         }
 
