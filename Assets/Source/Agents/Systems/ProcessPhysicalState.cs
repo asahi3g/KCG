@@ -262,7 +262,8 @@ namespace Agent
                 // if we are dashing we add some particles
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
+                    //planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEffect(particlesSpawnPosition, Enums.ParticleEffect.Smoke_2);
                 }
 
                 // if we are sliding

@@ -17,10 +17,9 @@ namespace Node
 
             
             GameState.Planet.AddDebris(new Vec2f(x, y), GameState.ItemCreationApi.ChestIconItem, 1.5f, 1.0f);
-            GameState.Planet.AddParticleEmitter(new Vec2f(x - 0.3f, y - 0.3f), Particle.ParticleEmitterType.Explosion_2_Part4);
-            GameState.Planet.AddParticleEmitter(new Vec2f(x, y), Particle.ParticleEmitterType.Explosion_2_Part3);
-            GameState.Planet.AddParticleEmitter(new Vec2f(x, y), Particle.ParticleEmitterType.Explosion_2_Part2);
-            GameState.Planet.AddParticleEmitter(new Vec2f(x, y), Particle.ParticleEmitterType.Explosion_2_Part1);
+            //GameState.Planet.AddParticleEffect(new Vec2f(x, y), Enums.ParticleEffect.Explosion_2);
+            //GameState.Planet.AddParticleEffect(new Vec2f(x, y), Enums.ParticleEffect.Smoke_2);
+            GameState.Planet.AddParticleEffect(new Vec2f(x, y), Enums.ParticleEffect.Smoke_3);
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }

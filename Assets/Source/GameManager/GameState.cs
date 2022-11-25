@@ -153,7 +153,8 @@ public static class GameState
     #endregion
 
     #region Particle
-    public static readonly Particle.ParticleCreationApi ParticleCreationApi;
+    public static readonly Particle.ParticleEffectPropertiesManager ParticleEffectPropertiesManager;
+    public static readonly Particle.ParticlePropertiesManager ParticlePropertiesManager;
     public static readonly Particle.ParticleEmitterCreationApi ParticleEmitterCreationApi;
     public static readonly Particle.ParticleEmitterUpdateSystem ParticleEmitterUpdateSystem;
     public static readonly Particle.ParticleUpdateSystem ParticleUpdateSystem;
@@ -197,6 +198,7 @@ public static class GameState
         GeometryCreationApi.InitStage1();
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
+        ParticleEffectPropertiesManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -209,6 +211,7 @@ public static class GameState
         GeometryCreationApi.InitStage2();
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
+        ParticleEffectPropertiesManager.InitStage2();
     }
 
 
@@ -294,13 +297,14 @@ public static class GameState
         ActionSchedulerSystem = new Node.SchedulerSystem();
         ActionCoolDownSystem = new ActionCoolDown.CoolDownSystem();
 
-        ParticleCreationApi = new Particle.ParticleCreationApi();
+        ParticleEffectPropertiesManager = new Particle.ParticleEffectPropertiesManager();
+        ParticlePropertiesManager = new Particle.ParticlePropertiesManager();
         ParticleEmitterCreationApi = new Particle.ParticleEmitterCreationApi();
-        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticleCreationApi);
+        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
         ParticleMeshBuilderSystem = new Particle.MeshBuilderSystem();
         ParticleUpdateSystem = new Particle.ParticleUpdateSystem();
-        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticleCreationApi);
-        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticleCreationApi);
+        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
+        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticlePropertiesManager);
         ParticleProcessCollisionSystem = new Particle.ParticleProcessCollisionSystem();
 
         ProjectileCreationApi = new Projectile.ProjectileCreationApi();

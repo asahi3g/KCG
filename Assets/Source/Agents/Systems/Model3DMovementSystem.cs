@@ -19,7 +19,6 @@ namespace Agent
 
                 var renderer = model3d.GameObject.transform.GetChild(0).GetComponent<UnityEngine.Renderer>();
 
-                UnityEngine.Debug.Log(GameState.AgentIKSystem.IKEnabled);
 
                 if (physicsState.FacingDirection == 1)
                 {
