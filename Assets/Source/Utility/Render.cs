@@ -307,7 +307,7 @@ namespace Utility
             int iconID = GameState.SpriteAtlasManager.CopySpriteToAtlas(iconSheet, 0, 0, atlasType);
             var iconSpriteData = new byte[width * height * 4];
             GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, atlasType);
-            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            var iconTex = Texture.CreateTextureFromRGBA(atlasType.ToString(), iconSpriteData, width, height);
             return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
         }
         
@@ -316,7 +316,7 @@ namespace Utility
         {
             var iconSpriteData = new byte[width * height * 4];
             GameState.SpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData, atlasType);
-            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            var iconTex = Texture.CreateTextureFromRGBA(atlasType.ToString(), iconSpriteData, width, height);
             return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
         }
         
@@ -326,7 +326,7 @@ namespace Utility
             var iconSpriteData = new byte[width * height * 4];
             
             GameState.TileSpriteAtlasManager.GetSpriteBytes(iconID, iconSpriteData);
-            var iconTex = Texture.CreateTextureFromRGBA(iconSpriteData, width, height);
+            var iconTex = Texture.CreateTextureFromRGBA(iconID.ToString(), iconSpriteData, width, height);
             return Sprite.Create(iconTex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
         }
     }

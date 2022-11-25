@@ -61,7 +61,7 @@ namespace Planet.Unity
         // drawing the sprite atlas
         void DrawSpriteAtlas()
         {
-            ref Sprites.SpriteAtlas atlas = ref GameState.TileSpriteAtlasManager.GetSpriteAtlas(0);
+            Sprites.SpriteAtlas atlas = GameState.TileSpriteAtlasManager.GetSpriteAtlas(0);
             Sprites.Sprite sprite = new Sprites.Sprite();
             sprite.Texture = atlas.Texture;
             sprite.TextureCoords = new Vector4(0, 0, 1, 1);

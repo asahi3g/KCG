@@ -206,8 +206,7 @@ namespace Planet.Unity
 
                 Debug.Log("loaded!");
             }
-
-            Debug.Log(GameState.Planet.ParticleList.Length);
+            
 
             planet.Update(Time.deltaTime);
 

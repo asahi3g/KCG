@@ -1,9 +1,12 @@
+using Enums;
 using UnityEngine;
 
 namespace Sprites
 {
-    public struct SpriteAtlas
+    [System.Serializable]
+    public class SpriteAtlas
     {
+        private AtlasType _atlasType;
         public int AtlasID;
         public int GLTextureID;
 
@@ -16,14 +19,24 @@ namespace Sprites
         public RectpackSharp.PackingRectangle[] Rectangles;
 
 
-        public void UpdateTexture()
+        public SpriteAtlas()
         {
-            if (TextureNeedsUpdate)
-            {
-                TextureNeedsUpdate = false;
+            
+        }
 
-                 Texture = Utility.Texture.CreateTextureFromRGBA(Data, Width, Height);
+        public SpriteAtlas(AtlasType atlasType, int width, int height, int byteLength)
+        {
+            _atlasType = atlasType;
+            this.Width = width;
+            this.Height = height;
+            this.Data = new byte[byteLength];
+            
+            for(int i = 0; i < byteLength; i++)
+            {
+                Data[i] = 255;
             }
         }
+
+        public AtlasType GetAtlasType() => _atlasType;
     }
 }
