@@ -37,9 +37,23 @@ namespace Projectile
         }
 
 
-        public ProjectileEntity Get(int Index)
+        public ProjectileEntity Get(int index)
         {
-            return List[Index];
+            Get(index, out ProjectileEntity entity);
+            return entity;
+        }
+
+        public bool Get(int index, out ProjectileEntity entity)
+        {
+            entity = null;
+            if (List != null)
+            {
+                if (index >= 0 && index < List.Length)
+                {
+                    entity = List[index];
+                }
+            }
+            return entity != null;
         }
 
 

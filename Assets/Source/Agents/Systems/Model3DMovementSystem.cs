@@ -19,9 +19,6 @@ namespace Agent
 
                 var renderer = model3d.GameObject.transform.GetChild(0).GetComponent<UnityEngine.Renderer>();
 
-                if (physicsState.MovementState != AgentMovementState.Dashing)
-                    GameState.AgentIKSystem.SetIKEnabled(true);
-
 
                 if (physicsState.FacingDirection == 1)
                 {

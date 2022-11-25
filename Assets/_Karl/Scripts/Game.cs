@@ -1,5 +1,7 @@
+using Engine3D;
 using Enums;
 using Enums.PlanetTileMap;
+using Inventory;
 using KMath;
 using Planet;
 using UnityEngine;
@@ -7,39 +9,89 @@ using UnityEngine;
 public class Game : Singleton<Game>
 {
     [SerializeField] private PlanetRenderer _planet;
-    [SerializeField] private Player _player;
 
-    private IPlanetCreationResult _currentPlanet;
-    private CharacterRenderer _currentPlayer;
+    private IPlanetCreationResult _current;
+    private AgentRenderer _currentPlayer;
     
-    public readonly CharacterRenderer.Event onPlayerCharacterAdded = new CharacterRenderer.Event();
+    public readonly AgentRenderer.Event onPlayerAgentCreated = new AgentRenderer.Event();
 
     protected override void Awake()
     {
         base.Awake();
+
         GameResources.Initialize();
+        AssetManager assetManager = AssetManager.Singelton; // force initialization
+        
+        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
+        GameState.SpriteAtlasManager.UpdateAtlasTextures();
     }
 
     protected override void Start()
     {
         base.Start();
 
-        _planet.Initialize(_player.GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
+        // Create planet
+        _planet.Initialize(App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
 
+        // Planet creation successful
         void OnPlanetCreationSuccess(IPlanetCreationResult result)
         {
             Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
-            _currentPlanet = result;
+            _current = result;
 
-            // Create player
-            if (_planet.CreateCharacter(new Vec2f(10f, 10f), AgentType.Player, out CharacterRenderer characterRenderer))
+            // Player agent creation successful
+            if (_planet.CreateAgent(new Vec2f(10f, 10f), AgentType.Player, out AgentRenderer agentRenderer))
             {
-                _currentPlayer = characterRenderer;
-                _player.GetCamera().SetTarget(_currentPlayer.transform, true);
-                onPlayerCharacterAdded.Invoke(_currentPlayer);
+                _currentPlayer = agentRenderer;
+                AgentEntity agentEntity = agentRenderer.GetAgent();
+                
+                // Set player camera new target
+                App.Instance.GetPlayer().GetCamera().SetTarget(_currentPlayer.transform, true);
+                
+                // Setup inventory
+                if (agentEntity.hasAgentInventory)
+                {
+                    int inventoryID = agentEntity.agentInventory.InventoryID;
+                    InventoryEntityComponent inventoryEntityComponent = GameState.Planet.GetInventoryEntityComponent(inventoryID);
+                    
+                    // Add some test items
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
+                    
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
+                    
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
+                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+                    
+                    
+                    
+                    App.Instance.GetUI().GetView<UIViewGame>().GetInventory().SetInventoryEntityComponent(inventoryEntityComponent);
+                }
+                else Debug.LogWarning("Player has no inventory");
+                
+                // Set stats
+                if (agentEntity.hasAgentStats)
+                {
+                    App.Instance.GetUI().GetView<UIViewGame>().SetStats(agentEntity.agentStats);
+                }
+                else Debug.LogWarning("Player has no stats");
+
+                onPlayerAgentCreated.Invoke(_currentPlayer);
+            }
+            
+            // Player agent creation failed
+            else
+            {
+                Debug.LogWarning("Failed to create player agent");
             }
         }
         
+        // Planet creation failed
         void OnPlanetCreationFailed(IError error)
         {
             Debug.LogError($"Planet creation failed, reason: {error.GetMessage()}");
@@ -49,13 +101,13 @@ public class Game : Singleton<Game>
 
     private void Update()
     {
-        if (_currentPlanet != null)
+        if (_current != null)
         {
-            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _currentPlanet.GetPlanet());
+            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _current.GetPlanet());
         }
     }
 
-    public bool GetCurrentPlayerCharacter(out CharacterRenderer character)
+    public bool GetCurrentPlayerAgent(out AgentRenderer character)
     {
         character = _currentPlayer;
         return character != null;
@@ -82,21 +134,15 @@ public class Game : Singleton<Game>
         PlanetTileMap.TileMapGeometry.BuildGeometry(planetState.TileMap);
 
         // check if the sprite atlas teSetTilextures needs to be updated
-        for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
-        {
-            GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-        }
+        GameState.SpriteAtlasManager.UpdateAtlasTextures();
 
         // check if the tile sprite atlas textures needs to be updated
-        for(int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-        {
-            GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-        }
+        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
 
         // calling all the systems we have
 
         //GameState.InputProcessSystem.Update();
-        _player.GetInput().Tick();
+        App.Instance.GetPlayer().GetInput().Tick();
         
         // Movement Systems
         GameState.AgentIKSystem.Update(planetState.EntitasContext.agent);
@@ -136,7 +182,7 @@ public class Game : Singleton<Game>
         GameState.BehaviorTreeUpdateSystem.Update();
         GameState.BlackboardUpdatePosition.Update();
 
-        _player.GetCamera().Tick(deltaTime);
+        App.Instance.GetPlayer().GetCamera().Tick(deltaTime);
 
         planetState.TileMap.UpdateTileSprites();
 

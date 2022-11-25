@@ -42,7 +42,7 @@ namespace Node
         {
             if (GameState.ActionCoolDownSystem.InCoolDown(ItemUsageActionTypeID, agentID))
             {
-                UnityEngine.Debug.Log("Action " + ItemUsageActionTypeID.ToString() + " in CoolDown");
+                //UnityEngine.Debug.Log("Action " + ItemUsageActionTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
