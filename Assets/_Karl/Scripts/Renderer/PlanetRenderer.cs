@@ -11,7 +11,7 @@ public class PlanetRenderer : BaseMonoBehaviour
     [TextArea(3, 6)]
     [SerializeField] private string _fileName;
     [SerializeField] private Material _tileMaterial;
-    [SerializeField] private Transform _characters;
+    [SerializeField] private Transform _agents;
 
     private Planet.PlanetState _planet;
     private Utility.FrameMesh _highlightMesh;
@@ -110,7 +110,7 @@ public class PlanetRenderer : BaseMonoBehaviour
         }
     }
 
-    public bool CreateCharacter(Vec2f position, AgentType agentType, out CharacterRenderer result)
+    public bool CreateAgent(Vec2f position, AgentType agentType, out AgentRenderer result)
     {
         result = null;
         if (_planet == null)
@@ -122,10 +122,10 @@ public class PlanetRenderer : BaseMonoBehaviour
             AgentEntity agent = _planet.AddAgent(position, agentType);
             if (agent.hasAgentModel3D)
             {
-                CharacterRenderer c = agent.agentModel3D.GameObject.GetComponent<CharacterRenderer>();
-                c.transform.parent = _characters;
-                c.SetAgent(agent);
-                result = c;
+                AgentRenderer agentRenderer = agent.agentModel3D.GameObject.GetComponent<AgentRenderer>();
+                agentRenderer.transform.parent = _agents;
+                agentRenderer.SetAgent(agent);
+                result = agentRenderer;
             }
         }
 

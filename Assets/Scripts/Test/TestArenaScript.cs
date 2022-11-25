@@ -141,11 +141,11 @@ namespace Planet.Unity
             Admin.AdminAPI.SpawnItem(Enums.ItemType.Ore);
 
             // Admin API Add Items
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPotion, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Dirt, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Pipe, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.Wire, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, MaterialBag.inventoryID.ID, Enums.ItemType.HealthPotion, 64);
         }
 
         void GenerateMap()

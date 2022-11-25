@@ -109,7 +109,7 @@ namespace KGUI
             }
             else
             {
-                UnityEngine.Debug.LogError("No such panel in prefab list");
+                UnityEngine.Debug.LogWarning("No such panel in prefab list");
             }
         }
 

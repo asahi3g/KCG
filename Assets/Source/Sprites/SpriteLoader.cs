@@ -1,6 +1,7 @@
 using BigGustave;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Sprites
 {
@@ -27,12 +28,7 @@ namespace Sprites
 
         public int GetSpriteSheetID(string filename, int spriteWidth, int spriteHeight)
         {
-
-            if (SpriteSheetID.ContainsKey(filename))
-            {
-                return SpriteSheetID[filename];
-            }
-
+            if (SpriteSheetID.ContainsKey(filename)) return SpriteSheetID[filename];
             return LoadImageFile(filename, spriteWidth, spriteHeight);
         }
 
@@ -44,22 +40,41 @@ namespace Sprites
 
             SpriteSheetID.Add(filename, imageCount - 1);
 
-            var data = Png.Open(filename);
-            SpriteSheet sheet = new SpriteSheet();
-            sheet.Index = imageCount - 1;
-            sheet.Width = data.Header.Width;
-            sheet.Height = data.Header.Height;
-            sheet.SpriteWidth = spriteWidth;
-            sheet.SpriteHeight = spriteHeight;
+            Png data = Png.Open(filename);
 
-            sheet.Data = new byte[4 * data.Header.Width * data.Header.Height];
+            int w = data.Header.Width;
+            int h = data.Header.Height;
 
-            for (int y = 0; y < data.Header.Height; y++)
+            //spriteWidth = w;
+            //spriteHeight = h;
+
+            bool wMatch = w % spriteWidth == 0;
+            bool hMatch = h % spriteHeight == 0;
+
+            if (!wMatch || !hMatch)
             {
-                for (int x = 0; x < data.Header.Width; x++)
+                Debug.LogWarning($"{nameof(SpriteLoader)} LoadImageFile() filename[{filename.Color(Color.cyan)}] spriteWidth[{spriteWidth.ToString().Color(wMatch ? Color.green : Color.red)}] or spriteHeight[{spriteHeight.ToString().Color(hMatch ? Color.green : Color.red)}] does not match PNG w[{w.ToString().Color(wMatch ? Color.green : Color.red)}] h[{h.ToString().Color(hMatch ? Color.green : Color.red)}]");
+            }
+            
+            SpriteSheet sheet = new SpriteSheet
+            {
+                Index = imageCount - 1,
+                Width = w,
+                Height = h,
+                SpriteWidth = spriteWidth,
+                SpriteHeight = spriteHeight,
+                Data = new byte[4 * w * h]
+            };
+
+
+            for (int y = 0; y < h; y++)
+            {
+                for (int x = 0; x < w; x++)
                 {
-                    var pixel = data.GetPixel(x, y);
-                    int index = y * data.Header.Width + x;
+                    Pixel pixel = data.GetPixel(x, y);
+                    //int index = y * w + x; // this made all pixels (textures, sprites, tiles, atlases) inverted on y axis
+                    int index = (h - 1 - y) * w + x; // invert on y axis
+                    
                     sheet.Data[4 * index + 0] = pixel.R;
                     sheet.Data[4 * index + 1] = pixel.G;
                     sheet.Data[4 * index + 2] = pixel.B;

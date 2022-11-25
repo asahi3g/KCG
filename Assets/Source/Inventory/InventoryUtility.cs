@@ -87,11 +87,41 @@ namespace Inventory
         }
     }
 
-    public struct Slot
+    public class Slot
     {
-        public int GridSlotID;                  // Index of Gui slot.                        
-        public int ItemID;                      // If -1 slot is empty.
-        public Enums.ItemGroups Restriction;
+        private int _inventoryId;
+        private int _index;
+        private Enums.ItemGroups _itemGroups;
+        private int _itemId;
+        
+
+        public int InventoryId => _inventoryId;
+        public int Index => _index;
+        public Enums.ItemGroups Restriction => _itemGroups;
+
+        public int ItemID => _itemId;
+        
+
+        public Slot(int inventoryId, int index, Enums.ItemGroups itemGroups) : this(inventoryId, index, itemGroups, -1) { }
+        
+        public Slot(int inventoryId, int index, Enums.ItemGroups itemGroups, int itemId)
+        {
+            _inventoryId = inventoryId;
+            _index = index;
+            _itemGroups = itemGroups;
+            _itemId = itemId;
+        }
+
+
+        public void SetItemId(int itemId)
+        {
+            _itemId = itemId;
+        }
+
+        public void ClearItemId()
+        {
+            SetItemId(-1);
+        }
     }
 
 }

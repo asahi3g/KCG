@@ -1,16 +1,18 @@
+using Agent;
 using UnityEngine;
 
 public class UIViewGame : UIView
 {
     [Header(H_A + "Game" + H_B)]
-    [SerializeField] private UIContent _contentQuickSlots;
+    [SerializeField] private UIInventory _inventory;
 
     [SerializeField] private UIStatsComponentRendererFloat _food;
     [SerializeField] private UIStatsComponentRendererFloat _water;
     [SerializeField] private UIStatsComponentRendererFloat _oxygen;
     [SerializeField] private UIStatsComponentRendererFloat _fuel;
-    
-    
+
+    public UIInventory GetInventory() => _inventory;
+
     protected override void OnGroupOpened()
     {
         
@@ -21,30 +23,11 @@ public class UIViewGame : UIView
         
     }
 
-    protected override void Awake()
+    public void SetStats(StatsComponent statsComponent)
     {
-        base.Awake();
-        Game.Instance.onPlayerCharacterAdded.AddListener(OnPlayerCharacterAdded);
-    }
-
-    public bool GetQuickSlot(int index, out UIContentElementInventory slot)
-    {
-        slot = null;
-        UIContentElementInventory[] slots = _contentQuickSlots.GetComponentsInChildren<UIContentElementInventory>();
-        if (index >= 0 && index < slots.Length)
-        {
-            slot = slots[index];
-        }
-        return slot != null;
-    }
-
-    private void OnPlayerCharacterAdded(CharacterRenderer cr)
-    {
-        Agent.StatsComponent stats = cr.GetAgent().agentStats;
-        
-        _food.SetStats(stats);
-        _water.SetStats(stats);
-        _oxygen.SetStats(stats);
-        _fuel.SetStats(stats);
+        _food.SetStats(statsComponent);
+        _water.SetStats(statsComponent);
+        _oxygen.SetStats(statsComponent);
+        _fuel.SetStats(statsComponent);
     }
 }

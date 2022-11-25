@@ -347,6 +347,16 @@ namespace Planet
             FloatingTextList.Remove(index);
         }
 
+        public void AddParticleEffect(Vec2f position, Enums.ParticleEffect type)
+        {
+            Particle.ParticleEffectProperties properties = GameState.ParticleEffectPropertiesManager.GetProperties(type);
+            for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
+            {
+                Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
+                AddParticleEmitter(position + element.Offset, element.Emitter);
+            }
+        }
+
         public ParticleEntity AddParticleEmitter(Vec2f position, ParticleEmitterType type)
         {
             ParticleEntity newEntity = ParticleEmitterList.Add(GameState.ParticleEmitterSpawnerSystem.Spawn(type, position));
@@ -399,8 +409,10 @@ namespace Planet
 
         public void RemoveProjectile(int index)
         {
-            ProjectileEntity entity = ProjectileList.Get(index);
-            ProjectileList.Remove(index);
+            if (ProjectileList.Get(index, out ProjectileEntity entity))
+            {
+                ProjectileList.Remove(entity.projectileID.Index);
+            }
         }
 
         public VehicleEntity AddVehicle(VehicleType vehicleType, Vec2f position)
@@ -471,16 +483,10 @@ namespace Planet
             PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
 
             // check if the sprite atlas teSetTilextures needs to be updated
-            for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
-            {
-                GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.SpriteAtlasManager.UpdateAtlasTextures();
 
             // check if the tile sprite atlas textures needs to be updated
-            for(int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-            {
-                GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
 
             // calling all the systems we have
 
@@ -652,6 +658,29 @@ namespace Planet
                 GameState.GUIManager.Update();
                 GameState.GUIManager.Draw();
             }
+        }
+        
+        
+        public InventoryEntityComponent GetInventoryEntityComponent(int inventoryId)
+        {
+            return EntitasContext.inventory.GetEntityWithInventoryID(inventoryId).inventoryInventoryEntity;
+        }
+        
+        public bool GetItemInventoryEntity(Slot slot, out ItemInventoryEntity itemInventoryEntity)
+        {
+            itemInventoryEntity = null;
+
+            if (slot != null)
+            {
+                int itemId = slot.ItemID;
+            
+                if (itemId != -1)
+                {
+                    itemInventoryEntity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(itemId);
+                }
+            }
+
+            return itemInventoryEntity != null;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Particle
             foreach (var entity in entities)
             {
                 int spriteId = entity.particleSprite2D.SpriteId;
-                ParticleProperties properties = GameState.ParticleCreationApi.Get(entity.particleID.ParticleType);
+                ParticleProperties properties = GameState.ParticlePropertiesManager.Get(entity.particleID.ParticleType);
 
                 if (entity.hasParticleAnimation)
                 {

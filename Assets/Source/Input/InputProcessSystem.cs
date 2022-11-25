@@ -469,7 +469,7 @@ namespace ECSInput
                     if (!InventoryEntityTemplate.HasToolBar)
                         return;
 
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventoryEntity.SelectedSlotIndex);
 
                     if (item.itemType.Type == ItemType.PulseWeapon)
                     {
@@ -499,7 +499,7 @@ namespace ECSInput
                     return;
 
                 // Get Inventory
-                var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventoryEntity.SelectedSlotID);
+                var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventoryEntity.SelectedSlotIndex);
                 if (item == null) return;
                 var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
 
@@ -525,11 +525,11 @@ namespace ECSInput
                     var keyCode = UnityEngine.KeyCode.Alpha1 + i;
                     if (UnityEngine.Input.GetKeyDown(keyCode))
                     {
-                        if (inventory.inventoryInventoryEntity.SelectedSlotID != i)
+                        if (inventory.inventoryInventoryEntity.SelectedSlotIndex != i)
                         {
                             entity.HandleItemDeselected(item);
                         }
-                        inventory.inventoryInventoryEntity.SelectedSlotID = i;
+                        inventory.inventoryInventoryEntity.SetSelectedSlotIndex(i);
                         item = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
                         GameState.GUIManager.SelectedInventoryItem = item;
                         if (item == null) return;
@@ -542,7 +542,7 @@ namespace ECSInput
                 }
 
 
-                int selectedSlot = inventory.inventoryInventoryEntity.SelectedSlotID;
+                int selectedSlot = inventory.inventoryInventoryEntity.SelectedSlotIndex;
                 var selectedItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
                 var selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
 
