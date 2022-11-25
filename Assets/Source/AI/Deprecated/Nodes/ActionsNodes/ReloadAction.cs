@@ -27,13 +27,13 @@ namespace Node.Action
         public override void OnUpdate(NodeEntity nodeEntity)
         {
             ItemInventoryEntity item = nodeEntity.GetItem();
-            FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
+            FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
 
             float runningTime = Time.realtimeSinceStartup - nodeEntity.nodeTime.StartTime;
-            if (runningTime >= WeaponPropreties.ReloadTime)
+            if (runningTime >= fireWeaponProperties.ReloadTime)
             {
                 if(item.hasItemFireWeaponClip)
-                    item.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;
+                    item.itemFireWeaponClip.NumOfBullets = fireWeaponProperties.ClipSize;
 
                 nodeEntity.nodeExecution.State =  NodeState.Success;
             }

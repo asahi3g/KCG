@@ -16,12 +16,12 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
-            Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            int bulletsPerShot = WeaponProperty.BulletsPerShot;
+            int bulletsPerShot = fireWeaponProperties.BulletsPerShot;
 
             // Check if gun got any ammo
             if (itemEntity.hasItemFireWeaponClip)
@@ -46,7 +46,7 @@ namespace Action
             if (itemEntity.itemType.Type == Enums.ItemType.GrenadeLauncher)
             {
                 projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.Grenade, agentEntity.agentID.ID);
-                planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
+                planet.AddFloatingText(fireWeaponProperties.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
             }
             else if (itemEntity.itemType.Type == Enums.ItemType.RPG)
             {
@@ -58,7 +58,7 @@ namespace Action
 
             }
 
-            projectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
+            projectileEntity.AddProjectileExplosive(fireWeaponProperties.BlastRadius, fireWeaponProperties.MaxDamage, fireWeaponProperties.Elapse);
             // Todo: Urgent(Create new cool down system)
             //GameState.ActionCoolDownSystem.SetCoolDown(planet.EntitasContext, nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, WeaponProperty.CoolDown);
             return NodeState.Success;

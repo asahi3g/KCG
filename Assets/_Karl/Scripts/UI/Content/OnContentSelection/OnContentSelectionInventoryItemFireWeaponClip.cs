@@ -19,9 +19,9 @@ public class OnContentSelectionInventoryItemFireWeaponClip : OnContentSelectionI
     private class EventData
     {
         public readonly ClipComponent clipComponent;
-        public readonly FireWeaponPropreties fireWeaponPropreties;
+        public readonly FireWeaponProperties fireWeaponPropreties;
 
-        public EventData(ClipComponent clipComponent, FireWeaponPropreties fireWeaponPropreties)
+        public EventData(ClipComponent clipComponent, FireWeaponProperties fireWeaponPropreties)
         {
             this.clipComponent = clipComponent;
             this.fireWeaponPropreties = fireWeaponPropreties;
@@ -57,7 +57,7 @@ public class OnContentSelectionInventoryItemFireWeaponClip : OnContentSelectionI
             if (itemInventoryEntity.hasItemFireWeaponClip)
             {
                 ClipComponent clipComponent = itemInventoryEntity.itemFireWeaponClip;
-                FireWeaponPropreties fireWeaponPropreties = GameState.ItemCreationApi.GetWeapon(itemInventoryEntity.itemType.Type);
+                FireWeaponProperties fireWeaponPropreties = GameState.ItemCreationApi.GetWeapon(itemInventoryEntity.itemType.Type);
 
                 int length = fireWeaponPropreties.ClipSize;
                 for (int i = 0; i < length; i++)

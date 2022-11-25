@@ -32,12 +32,12 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
-            FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
+            FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
 
-            if (data.NodesExecutiondata[id].ExecutionTime >= WeaponPropreties.ReloadTime)
+            if (data.NodesExecutiondata[id].ExecutionTime >= fireWeaponProperties.ReloadTime)
             {
                 if(item.hasItemFireWeaponClip)
-                    item.itemFireWeaponClip.NumOfBullets = WeaponPropreties.ClipSize;
+                    item.itemFireWeaponClip.NumOfBullets = fireWeaponProperties.ClipSize;
 
                 return NodeState.Success;
             }

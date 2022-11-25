@@ -53,7 +53,7 @@ namespace Action
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
 
-            Item.FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(item.itemType.Type);
             float tempCharge = item.itemFireWeaponChargedWeapon.ChargeRate;
             float difference = item.itemFireWeaponChargedWeapon.ChargeRate - tempCharge;
             Debug.Log("Weapon Charged: " + difference.ToString());

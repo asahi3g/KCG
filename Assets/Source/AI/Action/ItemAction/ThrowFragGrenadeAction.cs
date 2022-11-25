@@ -16,7 +16,7 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
-            Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
@@ -28,8 +28,8 @@ namespace Action
             StartPos.Y += 2.0f;
 
             ProjectileEntity projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.FragGrenade, agentEntity.agentID.ID);
-            projectileEntity.AddProjectileExplosive(WeaponProperty.BlastRadius, WeaponProperty.MaxDamage, WeaponProperty.Elapse);
-            planet.AddFloatingText(WeaponProperty.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
+            projectileEntity.AddProjectileExplosive(fireWeaponProperties.BlastRadius, fireWeaponProperties.MaxDamage, fireWeaponProperties.Elapse);
+            planet.AddFloatingText(fireWeaponProperties.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
             agentEntity.UseTool(1.0f);
 
             return NodeState.Success;
