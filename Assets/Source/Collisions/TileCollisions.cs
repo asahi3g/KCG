@@ -457,7 +457,7 @@ namespace Collisions
                             Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);
                             Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);
 
-                            planet.AddDebugLine(line, UnityEngine.Color.red);
+                            //planet.AddDebugLine(line, UnityEngine.Color.red);
 
                             // make sure its not a platform
                             // we cant collide with a platform

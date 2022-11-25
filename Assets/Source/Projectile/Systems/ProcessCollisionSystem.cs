@@ -42,12 +42,59 @@ namespace Projectile
 
 
                 Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
+
+                var tilesInProximity = Collisions.TileCollisions.GetTilesInProximity(physicsState.PreviousPosition + box2DCollider.Offset, box2DCollider.Size, delta);
                 
 
                 float minTime = 1.0f;
                 Vec2f minNormal = new Vec2f();
                 Enums.TileGeometryAndRotation minShape = 0;
                 Enums.MaterialType minMaterial = Enums.MaterialType.Error;
+
+                for(int y = tilesInProximity.MinY; y <= tilesInProximity.MaxY; y++)
+                {
+                    for(int x = tilesInProximity.MinX; x <= tilesInProximity.MaxX; x++)
+                    {
+                        if (x >= 0 && x < tileMap.MapSize.X && y >= 0 && y < tileMap.MapSize.Y)
+                        {
+                            PlanetTileMap.Tile tile = planet.TileMap.GetTile(x, y);
+                            var tileProperties = GameState.TileCreationApi.GetTileProperty(tile.FrontTileID);
+                            Enums.TileGeometryAndRotation shape = tileProperties.BlockShapeType;
+                            Enums.MaterialType material = tileProperties.MaterialType;
+
+
+                            if (tile.Adjacency != Enums.TileGeometryAndRotationAndAdjacency.Error)
+                            {
+                                var adjacencyProperties = GameState.AdjacencyPropertiesManager.GetProperties(tile.Adjacency);
+                                for(int i = adjacencyProperties.Offset; i < adjacencyProperties.Offset + adjacencyProperties.Size; i++)
+                                {
+                                    var lineEnum = GameState.AdjacencyPropertiesManager.GetLine(i);
+
+                                    Line2D line = GameState.LinePropertiesManager.GetLine(lineEnum, x, y);
+                                    Vec2f normal = GameState.LinePropertiesManager.GetNormal(lineEnum);
+
+                                    if (!(shape == Enums.TileGeometryAndRotation.QP_R0 || shape == Enums.TileGeometryAndRotation.QP_R1 || 
+                                    shape == Enums.TileGeometryAndRotation.QP_R2 || shape == Enums.TileGeometryAndRotation.QP_R3))
+                                    {
+
+                                        // circle line sweep test
+                                        var collisionResult = 
+                                        Collisions.CircleLineCollision.TestCollision(physicsState.PreviousPosition + box2DCollider.Size.X / 2.0f, box2DCollider.Size.X / 2.0f, delta, line.A, line.B);
+
+                                        if (collisionResult.Time < minTime)
+                                        {
+                                            minTime = collisionResult.Time;
+                                            minNormal = collisionResult.Normal;
+                                            minShape = shape;
+                                            minMaterial = material;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
 
                 //TODO(Mahdi):
                 // 1- do not iterate over all the lines in the tile map
@@ -91,21 +138,7 @@ namespace Projectile
                         Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
                         bool collided = false;
 
-                        // static check first
-
-                      /*  // first check if the rectangles overlap at the target position
-                        if (Collisions.Collisions.RectOverlapRect(agentPosition.X, agentPosition.X + agentBox2dCollider.Size.X,
-                         agentPosition.Y, agentPosition.Y + agentBox2dCollider.Size.Y, 
-                         physicsState.Position.X, physicsState.Position.X + box2DCollider.Size.X,
-                          physicsState.Position.Y, physicsState.Position.Y + box2DCollider.Size.Y))
-                        {
-                            minTime = 0.0f;
-                            minNormal = new Vec2f();
-                            minShape = Enums.TileGeometryAndRotation.Error;
-                            collided = true;
-                        }*/
-
-
+                        // static check
                         // check if the rectangles overlap at the starting position
                         if (Collisions.Collisions.RectOverlapRect(agentPosition.X, agentPosition.X + agentBox2dCollider.Size.X,
                          agentPosition.Y, agentPosition.Y + agentBox2dCollider.Size.Y, 
