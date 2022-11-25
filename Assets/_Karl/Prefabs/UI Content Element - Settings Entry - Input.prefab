@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 5624068666912573238}
   - component: {fileID: 4917546405706406363}
   m_Layer: 5
-  m_Name: UI Content Element - Settings - Input
+  m_Name: UI Content Element - Settings Entry - Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,6 +7,7 @@ public abstract class UIContentElement : UIMonoBehaviour
     [SerializeField] private UIContent _content;
     
     public class Event : UnityEvent<UIContentElement>{ }
+    public class Event2 : UnityEvent<UIContentElement, UIContentElement>{ }
     
     public UIContent GetContent() => _content;
     

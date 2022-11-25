@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 
 namespace PlanetTileMap
 {
@@ -10,6 +11,8 @@ namespace PlanetTileMap
 
         public int Length => SpritesArray.Length;
 
+        public Sprites.SpriteAtlas[] GetSpriteAtlases() => SpritesArray;
+
         public void InitStage1(Sprites.SpriteLoader spriteLoader)
         {
             SpriteLoader = spriteLoader;
@@ -20,16 +23,10 @@ namespace PlanetTileMap
             SpritesArray = new Sprites.SpriteAtlas[1];
             SpriteCount = new int[1];
 
-            var atlas = new Sprites.SpriteAtlas
-            {
-                Width = 128,
-                Height = 128
-            };
-            atlas.Data = new byte[4 * 32 * 32 * atlas.Width * atlas.Height]; // 4 * 32 * 32 = 4096
-            for(int j = 0; j < atlas.Data.Length; j++)
-            {
-                atlas.Data[j] = 255;
-            }
+            int w = 128;
+            int h = 128;
+
+            Sprites.SpriteAtlas atlas = new Sprites.SpriteAtlas(AtlasType.Unknown, w, h, 4 * 32 * 32 * w * h); //4 * 32 * 32 = 4096
             SpritesArray[0] = atlas;
         }
 
@@ -39,21 +36,27 @@ namespace PlanetTileMap
             
         }
 
-        public void UpdateAtlasTexture(int id)
+        public void UpdateAtlasTextures()
         {
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[id];
-            if (atlas.TextureNeedsUpdate)
+            int length = Length;
+            for(int i = 0; i < length; i++)
             {
-                atlas.Texture = Utility.Texture.CreateTextureFromRGBA(atlas.Data, atlas.Width * 32, atlas.Height * 32);
-                atlas.TextureNeedsUpdate = false;
+                UpdateAtlasTexture(SpritesArray[i]);
             }
         }
-        
-        public ref Sprites.SpriteAtlas GetSpriteAtlas(int id)
-        {
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[id];
 
-            return ref SpritesArray[id];
+        public void UpdateAtlasTexture(Sprites.SpriteAtlas atlas)
+        {
+            if (atlas == null) return;
+            if (!atlas.TextureNeedsUpdate) return;
+            
+            atlas.Texture = Utility.Texture.CreateTextureFromRGBA(atlas.GetAtlasType().ToString(), atlas.Data, atlas.Width * 32, atlas.Height * 32);
+            atlas.TextureNeedsUpdate = false;
+        }
+        
+        public Sprites.SpriteAtlas GetSpriteAtlas(int id)
+        {
+            return SpritesArray[id];
         }
 
         public int GetGlTextureId(int id, int type = 0)
@@ -64,14 +67,14 @@ namespace PlanetTileMap
 
         public Texture2D GetTexture(int id, int type = 0)
         {
-            ref Sprites.SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            Sprites.SpriteAtlas atlas = GetSpriteAtlas(type);
             return atlas.Texture; 
         }
 
         public Sprites.Sprite GetSprite(int id, int type = 0)
         {
             var sprite = new Sprites.Sprite();
-            ref Sprites.SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            Sprites.SpriteAtlas atlas = GetSpriteAtlas(type);
 
             sprite.Texture = atlas.Texture;
 
@@ -88,7 +91,7 @@ namespace PlanetTileMap
 
         public void GetSpriteBytes(int spriteID, byte[] data, int type = 0)
         {
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[type];
+            Sprites.SpriteAtlas atlas = SpritesArray[type];
 
             int xOffset = (spriteID % atlas.Width) * 32;
             int yOffset = (spriteID / atlas.Height) * 32;
@@ -115,9 +118,9 @@ namespace PlanetTileMap
         // returns an id that can be used later to get texture coordinates
         public int CopyTileSpriteToAtlas(int spriteSheetID, int row, int column, int atlasId)
         {
-            ref Sprites.SpriteSheet sheet = ref SpriteLoader.SpriteSheets[spriteSheetID];
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[atlasId];
-            ref int count = ref SpriteCount[atlasId];
+            Sprites.SpriteSheet sheet = SpriteLoader.SpriteSheets[spriteSheetID];
+            Sprites.SpriteAtlas atlas = SpritesArray[atlasId];
+            int count = SpriteCount[atlasId];
             
             int xOffset = (count % atlas.Width) * 32;
             int yOffset = (count / atlas.Height) * 32;
@@ -152,9 +155,9 @@ namespace PlanetTileMap
         // returns an id that can be used later to get texture coordinates
          public int CopyTileSpriteToAtlas16To32(int spriteSheetID, int row, int column, int atlasId)
         {
-            ref Sprites.SpriteSheet sheet = ref SpriteLoader.SpriteSheets[spriteSheetID];
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[atlasId];
-            ref int count = ref SpriteCount[atlasId];
+            Sprites.SpriteSheet sheet = SpriteLoader.SpriteSheets[spriteSheetID];
+            Sprites.SpriteAtlas atlas = SpritesArray[atlasId];
+            int count = SpriteCount[atlasId];
             
             int xOffset = (count % atlas.Width) * 32;
             int yOffset = (count / atlas.Height) * 32;
@@ -193,9 +196,9 @@ namespace PlanetTileMap
         // returns an id that can be used later to get texture coordinates
         public int CopyTileSpriteToAtlas8To32(int spriteSheetID, int row, int column, int atlasId)
         {
-            ref Sprites.SpriteSheet sheet = ref SpriteLoader.SpriteSheets[spriteSheetID];
-            ref Sprites.SpriteAtlas atlas = ref SpritesArray[atlasId];
-            ref int count = ref SpriteCount[atlasId];
+            Sprites.SpriteSheet sheet = SpriteLoader.SpriteSheets[spriteSheetID];
+            Sprites.SpriteAtlas atlas = SpritesArray[atlasId];
+            int count = SpriteCount[atlasId];
             
             int xOffset = (count % atlas.Width) * 32;
             int yOffset = (count / atlas.Height) * 32;

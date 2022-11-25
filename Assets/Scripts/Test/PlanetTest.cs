@@ -155,11 +155,11 @@ namespace Planet.Unity
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.PotionTool);
             Admin.AdminAPI.AddItem(inventoryManager, inventoryID, Enums.ItemType.GasBomb);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Dirt, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Pipe, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Wire, 64);
-            Admin.AdminAPI.AddItemStackable(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.HealthPotion, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Dirt, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Bedrock, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Pipe, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.Wire, 64);
+            Admin.AdminAPI.AddItem(inventoryManager, materialBag.inventoryID.ID, Enums.ItemType.HealthPotion, 64);
 
             init = true;
         }

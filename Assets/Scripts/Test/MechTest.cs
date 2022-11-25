@@ -218,15 +218,15 @@ namespace Planet.Unity
             HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Generic), 30);
             
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.MajestyPalm, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SagoPalm, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.WaterBottle, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.DracaenaTrifasciata, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Chest, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Planter, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Light, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableBox, 1);
-            Admin.AdminAPI.AddItemStackable(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableEgg, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.MajestyPalm, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SagoPalm, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.WaterBottle, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.DracaenaTrifasciata, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Chest, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Planter, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.Light, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableBox, 1);
+            Admin.AdminAPI.AddItem(InventoryManager, MaterialBag.inventoryID.ID, ItemType.SmashableEgg, 1);
         }
         
         /*

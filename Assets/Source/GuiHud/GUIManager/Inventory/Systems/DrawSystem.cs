@@ -110,7 +110,7 @@ namespace Inventory
 
             if (InventoryEntityTemplate.RenderProprieties.HasBorder())
             {
-                if (inventoryEntity.inventoryInventoryEntity.SelectedSlotID == i
+                if (inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex == i
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw selected border in tool bar.
                     && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.
                     && !InventorySystemsState.MouseDown) // If grabbing item doesn't draw selection.
@@ -139,7 +139,7 @@ namespace Inventory
             }
             else
             {
-                if (gridSlot.SlotID == inventoryEntity.inventoryInventoryEntity.SelectedSlotID
+                if (gridSlot.SlotID == inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex
                     && !InventoryEntityTemplate.RenderProprieties.HasBorder() // If there is no border slot will have selected slot color.
                     && !(isDrawingToolBar && inventoryEntity.hasInventoryDraw) // If InventoryEntityTemplate is open doesn't draw slot with selected color in tool bar.
                     && !(!isDrawingToolBar && InventorySystemsState.ClickedInventoryID != inventoryEntity.inventoryID.ID) // Only draw selection to one InventoryEntityTemplate at time.

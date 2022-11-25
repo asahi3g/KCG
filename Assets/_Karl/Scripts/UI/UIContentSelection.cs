@@ -8,6 +8,7 @@ public class UIContentSelection : BaseMonoBehaviour
     [SerializeField] private UIContent[] _scope;
 
     public readonly UIContentElement.Event onSelect = new UIContentElement.Event();
+    public readonly UIContentElement.Event2 onSelectWithPrevious = new UIContentElement.Event2();
 
     public bool IsSelected() => _selected != null;
 
@@ -46,35 +47,40 @@ public class UIContentSelection : BaseMonoBehaviour
                 value = null;
             }
         }
+
+        UIContentElement previous = _selected;
         
         if (_selected != null)
         {
             _selected.SetIsSelected(false);
+            _selected = null;
         }
+
         _selected = value;
-        UpdateIsSelected();
+        
+        if (_scope != null)
+        {
+            int length = _scope.Length;
+        
+            onSelect.Invoke(_selected);
+            onSelectWithPrevious.Invoke(previous, _selected);
+        
+            for(int i = 0; i < length; i++) {
+                UIContent content = _scope[i];
+                UIContentElement[] elements = content.GetElements<UIContentElement>(true);
+                foreach(UIContentElement element in elements) {
+                    if(element == null) continue;
+                    bool isSelected = element == _selected;
+                    element.SetIsSelected(isSelected);
+                }
+            }
+        }
+        
         return true;
     }
 
     public void Deselect()
     {
         SetSelected(null);
-    }
-    
-    public void UpdateIsSelected() {
-        if(_scope == null) return;
-        int length = _scope.Length;
-        
-        onSelect.Invoke(_selected);
-        
-        for(int i = 0; i < length; i++) {
-            UIContent content = _scope[i];
-            UIContentElement[] elements = content.GetElements<UIContentElement>(true);
-            foreach(UIContentElement element in elements) {
-                if(element == null) continue;
-                bool isSelected = element == _selected;
-                element.SetIsSelected(isSelected);
-            }
-        }
     }
 }
