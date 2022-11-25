@@ -198,53 +198,6 @@ public partial class AgentEntity
         return position;
     }
 
-
-    public void HandleItemSelected(ItemInventoryEntity item)
-    {
-        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-
-        if (hasAgentModel3D)
-        {
-            var model3d = agentModel3D;
-
-            model3d.ItemAnimationSet = itemProperty.AnimationSet;
-
-            //if (model3d.Weapon != null)
-            //{
-            //    if(model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3d.Weapon);
-            //}
-
-            switch (itemProperty.ToolType)
-            {
-                case ItemToolType.Pistol:
-                    {
-                        SetAgentWeapon(Model3DWeaponType.Pistol);
-
-                        break;
-                    }
-                case ItemToolType.Rifle:
-                    {
-                        SetAgentWeapon(Model3DWeaponType.Rifle);
-                        break;
-                    }
-                case ItemToolType.Sword:
-                    {
-                        SetAgentWeapon(Model3DWeaponType.Sword);
-                        break;
-                    }
-                default:
-                    SetAgentWeapon(Model3DWeaponType.None);
-                    break;
-            }
-        }
-
-        if (isAgentPlayer && itemProperty.HasUI())
-        {
-            GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
-        }
-    }
-
     public bool CanSee(int targetId)
     {
         return LineOfSight.CanSeeAlert(agentID.ID, targetId);
@@ -265,94 +218,87 @@ public partial class AgentEntity
         }
     }
 
-    public void SetAgentWeapon(Model3DWeaponType weapon)
+    public void ClearModel3DWeapon()
     {
-        if (hasAgentModel3D)
+        SetModel3DWeapon(Model3DWeaponType.None);
+    }
+    
+    public void SetModel3DWeapon(ItemInventoryEntity item)
+    {
+        if (!hasAgentModel3D) return;
+        
+        SetModel3DWeapon(item.itemType.Type);
+    }
+
+    public void SetModel3DWeapon(Enums.ItemType itemType)
+    {
+        if (!hasAgentModel3D) return;
+        
+        var itemProperty = GameState.ItemCreationApi.Get(itemType);
+        agentModel3D.ItemAnimationSet = itemProperty.AnimationSet;
+        SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
+    }
+
+    public void SetModel3DWeapon(Model3DWeaponType weapon)
+    {
+        if (!hasAgentModel3D) return;
+
+        Model3DComponent model3d = agentModel3D;
+        model3d.CurrentWeapon = weapon;
+        
+        switch(weapon)
         {
-            Model3DComponent model3d = agentModel3D;
-            model3d.CurrentWeapon = weapon;
-
-            //if (model3d.Weapon != null)
-            //{
-            //    if (model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3d.Weapon);
-            //}
-
-            switch(weapon)
+            case Model3DWeaponType.None:
             {
-                case Model3DWeaponType.Sword:
+                model3d.Weapon = null;
+                break;
+            }
+            case Model3DWeaponType.Sword:
+            {
+                UnityEngine.GameObject hand = model3d.LeftHand;
+
+                UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
+                UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
+
+                var gunRotation = rapier.transform.rotation;
+                rapier.transform.parent = hand.transform;
+                rapier.transform.position = hand.transform.position;
+                rapier.transform.localRotation = gunRotation;
+                rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
+
+                model3d.Weapon = rapier;
+                break;
+            }
+
+            case Model3DWeaponType.Pistol:
+            {
+                UnityEngine.GameObject hand = model3d.RightHand;
+                if (hand != null)
                 {
-                    UnityEngine.GameObject hand = model3d.LeftHand;
-
-                    UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                        UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
-
-                    var gunRotation = rapier.transform.rotation;
-                    rapier.transform.parent = hand.transform;
-                    rapier.transform.position = hand.transform.position;
-                    rapier.transform.localRotation = gunRotation;
-                    rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
-
-                    model3d.Weapon = rapier;
-                    break;
-                }
-
-                case Model3DWeaponType.Pistol:
-                {
-                    UnityEngine.GameObject hand = model3d.RightHand;
-                    if (hand != null)
+                    if (model3d.Weapon == null)
                     {
-                        //UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
-                        //    UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
-
-                        if (model3d.Weapon == null)
-                        {
-                            UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
-                            model3d.Weapon = PistolPivot.GetChild(0).gameObject;
-                        }
-
-                        //    var gunRotation = gun.transform.rotation;
-                        //gun.transform.parent = hand.transform;
-                        //gun.transform.position = hand.transform.position;
-                        //gun.transform.localRotation = gunRotation;
-                        //gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
-
-                        //model3d.Weapon = gun;
-
+                        UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
+                        model3d.Weapon = PistolPivot.GetChild(0).gameObject;
                     }
-                    break;
                 }
+                break;
+            }
 
-                case Model3DWeaponType.Rifle:
+            case Model3DWeaponType.Rifle:
+            {
+                UnityEngine.GameObject hand = model3d.RightHand;
+                if (hand != null)
                 {
-                    UnityEngine.GameObject hand = model3d.RightHand;
-                    if (hand != null)
+                    if(model3d.Weapon == null)
                     {
-                        //UnityEngine.Transform ref_right_hand_grip = model3d.GameObject.transform.Find("ref_right_hand_grip");
-                        //UnityEngine.Transform ref_left_hand_grip = model3d.GameObject.transform.Find("ref_left_hand_grip");
-                        if(model3d.Weapon == null)
-                        {
-                                UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
-                            model3d.Weapon = RiflePivot.GetChild(0).gameObject;
-                        }
+                        UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot"); model3d.Weapon = RiflePivot.GetChild(0).gameObject;
+                    }
 
-                            //    UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
-                            //UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
-
-
-                            //var gunRotation = gun.transform.rotation;
-                            //gun.transform.parent = RiflePivot.transform;
-                            //gun.transform.position = UnityEngine.Vector3.zero;
-                            //gun.transform.localRotation = UnityEngine.Quaternion.identity;
-                            //gun.transform.localScale = new UnityEngine.Vector3(100.0f, 100.0f, 100.0f);
-
-                            //ref_right_hand_grip.transform.parent = gun.transform;
-                            //ref_left_hand_grip.transform.parent = gun.transform;
-                        }
-                    break;
                 }
+                break;
             }
         }
+        
         
     }
 
@@ -717,46 +663,59 @@ public partial class AgentEntity
     }
 
 
-    public void Jump()
+    public void Jump() {
+        
+        var physicsState = agentPhysicsState;
+        if (isAgentAlive && IsStateFree() && CanMove())
         {
-            var physicsState = agentPhysicsState;
-            if (isAgentAlive && IsStateFree() && CanMove())
+            // we can start jumping only if the jump counter is 0
+            if (physicsState.JumpCounter == 0)
             {
-                // we can start jumping only if the jump counter is 0
-                if (physicsState.JumpCounter == 0)
-                {
-                    
-                        // first jump
+                
+                    // first jump
 
-                        // if we are sticking to a wall 
-                        // throw the agent in the opphysicsStateite direction
-                        // Inpulse so use immediate speed intead of acceleration.
-                        if (physicsState.MovementState == AgentMovementState.SlidingLeft)
-                        {
-                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
-                        }
-                        else if (physicsState.MovementState == AgentMovementState.SlidingRight)
-                        {
-                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
-                        }
-
-                        // jumping
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
-                        physicsState.JumpCounter++;
-                }
-                else
-                {
-                    // double jump
-                    if (physicsState.JumpCounter <= 1)
+                    // if we are sticking to a wall 
+                    // throw the agent in the opphysicsStateite direction
+                    // Inpulse so use immediate speed intead of acceleration.
+                    if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                     {
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
-                        physicsState.JumpCounter++;
+                        physicsState.Velocity.X = physicsState.Speed * 1.0f;
                     }
-                }
+                    else if (physicsState.MovementState == AgentMovementState.SlidingRight)
+                    {
+                        physicsState.Velocity.X = - physicsState.Speed * 1.0f;
+                    }
 
-                physicsState.OnGrounded = false;
+                    // jumping
+                    physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
+                    physicsState.JumpCounter++;
             }
-        }
+            else
+            {
+                // double jump
+                if (physicsState.JumpCounter <= 1)
+                {
+                    physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
+                    physicsState.JumpCounter++;
+                }
+            }
 
+            physicsState.OnGrounded = false;
+        }
+    }
+
+    private Model3DWeaponType GetModel3DWeaponFromItemToolType(ItemToolType itemToolType)
+    {
+        switch (itemToolType)
+        {
+            case ItemToolType.None: return Model3DWeaponType.None;
+            case ItemToolType.Sword: return Model3DWeaponType.Sword;
+            case ItemToolType.Pistol: return Model3DWeaponType.Pistol;
+            case ItemToolType.Rifle: return Model3DWeaponType.Rifle;
+        }
+        
+        Debug.LogWarning($"Cant resolve {nameof(ItemToolType)}.{itemToolType} as {nameof(Model3DWeaponType)} type");
+        return Model3DWeaponType.None;
+    }
 
 }

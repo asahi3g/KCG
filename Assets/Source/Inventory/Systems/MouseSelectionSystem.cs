@@ -29,7 +29,7 @@ namespace Inventory
                 if (player != null)
                 {
                     var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex);
-                    player.HandleItemSelected(item);
+                    player.SetModel3DWeapon(item);
                 }
                 InventorySystemsState.ClickedSlotslotID = -1;
                 return;

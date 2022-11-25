@@ -233,7 +233,7 @@ namespace Agent
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
-                        entity.SetAgentWeapon(Model3DWeaponType.Pistol);
+                        entity.SetModel3DWeapon(Model3DWeaponType.Pistol);
                         Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                         break;
                     }
@@ -262,7 +262,7 @@ namespace Agent
                         Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
-                        entity.SetAgentWeapon(Model3DWeaponType.Sword);
+                        entity.SetModel3DWeapon(Model3DWeaponType.Sword);
                         break;
                     }
                 case Enums.AgentType.EnemyInsect:
@@ -343,7 +343,7 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
-                        entity.HandleItemSelected(item);
+                        entity.SetModel3DWeapon(item);
                         break;
                     }
             }

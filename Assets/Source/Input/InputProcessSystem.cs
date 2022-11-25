@@ -535,7 +535,7 @@ namespace ECSInput
                         GameState.GUIManager.SelectedInventoryItem = item;
                         if (item == null) return;
 
-                        entity.HandleItemSelected(item);
+                        entity.SetModel3DWeapon(item);
                         
                         planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
                                     entity.agentPhysicsState.Position.Y));
