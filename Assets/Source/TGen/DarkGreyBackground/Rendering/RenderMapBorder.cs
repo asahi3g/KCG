@@ -8,9 +8,9 @@ namespace TGen.DarkGreyBackground
     {
         public Utility.FrameMesh Mesh;
 
-        private Color borderColor = new Color(1F, 0F, 0F, 1F);
+        private Color borderColor = new Color(1F, 0F, 0F, 0F);
 
-        private float borderThickness = 0.1F;
+        private float borderThickness = 0.05F;
 
         public void Initialize(Material material, Transform transform, int w, int h, int drawOrder = 0)
         {

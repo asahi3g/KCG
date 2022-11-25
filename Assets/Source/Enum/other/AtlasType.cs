@@ -10,6 +10,7 @@ namespace Enums
         BackGround = 5,
         Mech = 6,
         Gui = 7,
-        TGen = 8
+        TGen = 8,
+        PlacableBackground = 9, // Dark Grey Background, we can fill it with tiles.
     }
 }

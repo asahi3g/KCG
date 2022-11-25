@@ -8,9 +8,9 @@ namespace TGen.DarkGreyBackground
     {
         public Utility.FrameMesh Mesh;
 
-        private Color gridColor = new Color(0.5F, 0.5F, 0.5F, 0.5F);
+        private Color gridColor = new Color(0.0F, 0.0F, 0.0F, 1.0F);
 
-        private float gridThickness = 0.1F;
+        private float gridThickness = 0.05F;
 
         public void Initialize(Material material, Transform transform, int w, int h, int drawOrder = 0)
         {          
@@ -207,16 +207,16 @@ namespace TGen.DarkGreyBackground
 
             TGenIsotypeSprites = new int[tileCount];
 
-            TGenIsotypeSprites[0] = GameState.SpriteAtlasManager.CopySpriteToAtlas(emptySprite, 0, 0, Enums.AtlasType.TGen);
+            TGenIsotypeSprites[0] = GameState.SpriteAtlasManager.CopySpriteToAtlas(emptySprite, 0, 0, Enums.AtlasType.PlacableBackground);
 
-            TGenIsotypeSprites[1] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, 1, 1, Enums.AtlasType.TGen);
+            TGenIsotypeSprites[1] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, 1, 1, Enums.AtlasType.PlacableBackground);
 
             var row = 3;
             var column = 1;
 
             for (int i = 2; i < tileCount; i++)
             {
-                TGenIsotypeSprites[i] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, column, row, Enums.AtlasType.TGen);
+                TGenIsotypeSprites[i] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, column, row, Enums.AtlasType.PlacableBackground);
 
                 column += 2;
 

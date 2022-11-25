@@ -14,6 +14,7 @@ public class GameResources
             
             CreateDropTables();
             InitializeTGenTiles();
+            InitializePlaceableBackgroundTiles();
 
             CreateTiles();
             CreateAnimations();
@@ -40,6 +41,11 @@ public class GameResources
     private static void InitializeTGenTiles()
     {
         GameState.TGenRenderGridOverlay.InitializeResources();
+    }
+
+    private static void InitializePlaceableBackgroundTiles()
+    {
+        GameState.BackgroundGridOverlay.InitializeResources();
     }
 
     private static void CreateTiles()

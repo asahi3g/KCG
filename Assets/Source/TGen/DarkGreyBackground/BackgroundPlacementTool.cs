@@ -1,6 +1,7 @@
 //imports UnityEngine
 
 using KMath;
+using System;
 using Utility;
 
 namespace TGen.DarkGreyBackground
@@ -29,16 +30,16 @@ namespace TGen.DarkGreyBackground
 
             initialY = 300;
 
-            PlaceBlockButtons = new ImageWrapper[GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length];
+            PlaceBlockButtons = new ImageWrapper[GameState.BackgroundGridOverlay.TGenIsotypeSprites.Length];
 
             var row = 0;
             var column = 0;
 
-            for (int i = 0; i < GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length; i++)
+            for (int i = 0; i < GameState.BackgroundGridOverlay.TGenIsotypeSprites.Length; i++)
             {
                 PlaceBlockButtons[i] = new ImageWrapper(((BlockTypeAndRotation) i).ToString(),
                     UnityEngine.GameObject.Find("Canvas").transform, cellSize, cellSize,
-                    GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i]);
+                    GameState.BackgroundGridOverlay.TGenIsotypeSprites[i]);
                 
                 PlaceBlockButtons[i].SetPosition(new UnityEngine.Vector3(initialX + column * xInterval, initialY + row * yInterval));
                 PlaceBlockButtons[i].SetScale(new UnityEngine.Vector3(size, -size, size));
@@ -57,28 +58,21 @@ namespace TGen.DarkGreyBackground
         {
             if(UnityEngine.Input.GetMouseButtonUp(0))
             {
-                for (int i = 0; i < PlaceBlockButtons.Length; i++)
-                {
-                    if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y)))
-                    {
-                        selectedTileIsotype = i + 1;
+                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                        var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
+                int x = (int)worldPosition.X;
+                int y = (int)worldPosition.Y;
 
-
-
-                        UnityEngine.Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
-                    }
-                }
+                GameState.BackgroundGrid.SetTile(x, y, UnityEngine.Random.Range(2, GameState.BackgroundGridOverlay.TGenIsotypeSprites.Length));
             }
-            else if(UnityEngine.Input.GetMouseButtonUp(2))
+            else if (UnityEngine.Input.GetMouseButtonDown(1))
             {
                 var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
                 int x = (int)worldPosition.X;
                 int y = (int)worldPosition.Y;
 
-                GameState.TGenGrid.SetTile(x, y, selectedTileIsotype);
+                GameState.BackgroundGrid.RemoveTile(x, y);
             }
         }
 

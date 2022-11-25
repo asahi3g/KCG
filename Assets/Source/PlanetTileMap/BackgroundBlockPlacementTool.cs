@@ -1,7 +1,7 @@
 //imports UnityEngine
 
 using KMath;
-using TGen;
+using TGen.DarkGreyBackground;
 
 namespace Planet
 {
@@ -11,7 +11,7 @@ namespace Planet
 
         private bool drawMapBorder = true;
 
-        private ForegroundPlacementTool placementTool;
+        private TGen.DarkGreyBackground.BackgroundPlacementTool placementTool;
 
         public BackgroundPlacementTool(bool tileGrid, bool mapBorder)
         {
@@ -24,22 +24,23 @@ namespace Planet
             placementTool.UpdateToolGrid();
         }
 
-        public void Initialize(UnityEngine.Material Material, UnityEngine.Transform transform)
+        public void Initialize(UnityEngine.Material Material, UnityEngine.Transform transform, int mapWidth,
+            int mapHeight)
         {
             // Generating the map
-            Vec2i mapSize = new Vec2i(32, 32);
+            Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
 
-            GameState.Planet.InitializeTGen(Material, transform);
+            GameState.Planet.InitializePlaceableBackground(Material, transform);
 
-            GameState.TGenGrid.InitStage1(mapSize);
+            GameState.BackgroundGrid.InitStage1(mapSize);
 
             if (enableTileGrid)
-                GameState.TGenRenderGridOverlay.Initialize(Material, transform, mapSize.X, mapSize.Y, 30);
+                GameState.BackgroundGridOverlay.Initialize(Material, transform, mapSize.X, mapSize.Y, 30);
 
             if (drawMapBorder)
-                GameState.TGenRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
+                GameState.BackgroundRenderMapBorder.Initialize(Material, transform, mapSize.X - 1, mapSize.Y - 1, 31);
 
-            placementTool = new ForegroundPlacementTool();
+            placementTool = new TGen.DarkGreyBackground.BackgroundPlacementTool();
             placementTool.Initialize();
         }
     }

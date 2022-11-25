@@ -14,11 +14,11 @@ namespace TGen.DarkGreyBackground
 
         public void Initialize(UnityEngine.Material material, UnityEngine.Transform transform, int drawOrder)
         {
-            Mesh = new FrameMesh(("TGenMesh"), material, transform,
+            Mesh = new FrameMesh(("PlaceableBackground"), material, transform,
                     GameState.TileSpriteAtlasManager.GetSpriteAtlas(0), drawOrder);           
         }
 
-        public void UpdateMesh(Grid grid)
+        public void UpdateMesh(TGen.DarkGreyBackground.BackgroundGrid grid)
         {
             if (UnityEngine.Camera.main == null) { UnityEngine.Debug.LogError("Camera.main not found, failed to create edge colliders"); return; }
 
@@ -54,7 +54,7 @@ namespace TGen.DarkGreyBackground
                             if (spriteId >= 0)
                             {
                                 {
-                                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.TGen).TextureCoords;
+                                    UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(spriteId, Enums.AtlasType.PlacableBackground).TextureCoords;
 
                                     const float width = 1;
                                     const float height = 1;
@@ -81,7 +81,7 @@ namespace TGen.DarkGreyBackground
 
         public void Draw()
         {
-            GameState.Renderer.DrawFrame(ref Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.TGen));
+            GameState.Renderer.DrawFrame(ref Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.PlacableBackground));
         }
     }
 }

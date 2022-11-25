@@ -98,6 +98,11 @@ namespace Planet
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
 
+        public void InitializePlaceableBackground(UnityEngine.Material material, UnityEngine.Transform transform)
+        {
+            GameState.BackgroundRenderMapMesh.Initialize(material, transform, 9);
+        }
+
         public void AddDebugLine(Line2D line, UnityEngine.Color color)
         {
             if (DebugLinesCount + 1 >= DebugLines.Length)
@@ -528,6 +533,13 @@ namespace Planet
                 GameState.TGenGrid.Update();
                 GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
                 GameState.TGenRenderMapMesh.Draw();
+            }
+
+            if (GameState.BackgroundGrid is { Initialized: true })
+            {
+                GameState.BackgroundGrid.Update();
+                GameState.BackgroundRenderMapMesh.UpdateMesh(GameState.BackgroundGrid);
+                GameState.BackgroundRenderMapMesh.Draw();
             }
 
             // Update Meshes.
