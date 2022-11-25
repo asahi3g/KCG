@@ -2657,6 +2657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _input: {fileID: 1007612823}
+  _inputArea: {fileID: 463226317}
   _moveUp: {fileID: 11400000, guid: 6c37a7a93f6bcfd4f8b6f225568f5336, type: 2}
   _moveDown: {fileID: 11400000, guid: 4478e80b7775d9947b9d74ef81a752f8, type: 2}
   _moveLeft: {fileID: 11400000, guid: 4ce9f2ef32520464fac3ec5b5df3b3f5, type: 2}

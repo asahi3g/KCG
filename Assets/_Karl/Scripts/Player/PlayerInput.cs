@@ -131,6 +131,14 @@ public class PlayerInput : BaseMonoBehaviour
         }
     }
 
+    public void DoPlayerLookTarget(Vector2 screenPosition)
+    {
+        if (IsGameplayBlocked()) return;
+        
+        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent()
+            .SetAimTarget(new KMath.Vec2f(screenPosition.x, screenPosition.y));
+    }
+
     public int GetPlayerDirection(bool left, bool right)
     {
         // Either both are turned on or both are off - which means they cancel each other out and no need to do anything

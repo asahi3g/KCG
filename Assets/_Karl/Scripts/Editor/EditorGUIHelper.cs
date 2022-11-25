@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Agent;
 using UnityEditor;
 using UnityEngine;
@@ -9,6 +6,7 @@ public static class EditorGUIHelper
 {
     
     private static bool _showID = false;
+    private static bool _model3D = false;
     private static bool _showPhysics = false;
     private static bool _showPhysicsAnimations = true;
     private static bool _showStats = false;
@@ -50,6 +48,23 @@ public static class EditorGUIHelper
                 EditorGUILayout.LabelField($"{nameof(agentID.Index)}: {agentID.Index.ToStringPretty()}", GetStyle());
                 EditorGUI.indentLevel--;
             }
+            
+            // 3D Model
+            _model3D = EditorGUILayout.Foldout(_model3D, "Model 3D");
+            if (_model3D)
+            {
+                EditorGUI.indentLevel++;
+                if (agentEntity.hasAgentModel3D)
+                {
+                    Draw(agentEntity.agentModel3D);
+                }
+                else
+                {
+                    GUILayout.Box("None");
+                }
+                EditorGUI.indentLevel--;
+            }
+            
             
             // Physics
             _showPhysics = EditorGUILayout.Foldout(_showPhysics, "Physics");
@@ -145,6 +160,33 @@ public static class EditorGUIHelper
                 EditorGUI.indentLevel--;
             }
         }
+    }
+
+
+    public static void Draw(Model3DComponent model3DComponent)
+    {
+        // GameObject
+        model3DComponent.GameObject = (GameObject)EditorGUILayout
+            .ObjectField($"{nameof(model3DComponent.GameObject)}", model3DComponent.GameObject, typeof(GameObject), true);
+        // LeftHand
+        model3DComponent.LeftHand = (GameObject)EditorGUILayout
+            .ObjectField($"{nameof(model3DComponent.LeftHand)}", model3DComponent.LeftHand, typeof(GameObject), true);
+        // RightHand
+        model3DComponent.RightHand = (GameObject)EditorGUILayout
+            .ObjectField($"{nameof(model3DComponent.RightHand)}", model3DComponent.RightHand, typeof(GameObject), true);
+        // Current Weapon
+        EditorGUILayout.LabelField($"{nameof(model3DComponent.CurrentWeapon)}: {model3DComponent.CurrentWeapon.ToStringPretty()}", GetStyle());
+        // Weapon
+        model3DComponent.Weapon = (GameObject)EditorGUILayout
+            .ObjectField($"{nameof(model3DComponent.Weapon)}", model3DComponent.Weapon, typeof(GameObject), true);
+        // Animation Type
+        EditorGUILayout.LabelField($"{nameof(model3DComponent.AnimationType)}: {model3DComponent.AnimationType.ToStringPretty()}", GetStyle());
+        // Item Animation Set
+        EditorGUILayout.LabelField($"{nameof(model3DComponent.ItemAnimationSet)}: {model3DComponent.ItemAnimationSet.ToStringPretty()}", GetStyle());
+        // Model Scale
+        EditorGUILayout.LabelField($"{nameof(model3DComponent.ModelScale)}: {model3DComponent.ModelScale.ToStringPretty()}", GetStyle());
+        // Aim Target
+        EditorGUILayout.LabelField($"{nameof(model3DComponent.AimTarget)}: {model3DComponent.AimTarget.ToStringPretty()}", GetStyle());
     }
     
     
