@@ -65,12 +65,16 @@ public class PlayerInput : BaseMonoBehaviour
 
     public bool DoPlayerWalk(bool left, bool right)
     {
+        if (IsGameplayBlocked()) return false;
+        
         if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Walk(GetPlayerDirection(left, right));
         return true;
     }
     
     public bool DoPlayerCrouchBegin(bool left, bool right)
     {
+        if (IsGameplayBlocked()) return false;
+        
         if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().CrouchBegin(GetPlayerDirection(left, right));
         return true;
     }
@@ -83,12 +87,16 @@ public class PlayerInput : BaseMonoBehaviour
     
     public bool DoPlayerSprint(bool left, bool right)
     {
+        if (IsGameplayBlocked()) return false;
+        
         if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Run(GetPlayerDirection(left, right));
         return true;
     }
 
     public void DoPlayerDash(bool left, bool right)
     {
+        if (IsGameplayBlocked()) return;
+        
         if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Dash(GetPlayerDirection(left, right));
     }
 
