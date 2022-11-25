@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.Model3DComponent agentModel3D { get { return (Agent.Model3DComponent)GetComponent(AgentComponentsLookup.AgentModel3D); } }
     public bool hasAgentModel3D { get { return HasComponent(AgentComponentsLookup.AgentModel3D); } }
 
-    public void AddAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
+    public void AddAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
         component.GameObject = newGameObject;
@@ -27,7 +27,7 @@ public partial class AgentEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeapon newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
+    public void ReplaceAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
         component.GameObject = newGameObject;

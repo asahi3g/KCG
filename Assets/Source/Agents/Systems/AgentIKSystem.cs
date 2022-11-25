@@ -121,7 +121,7 @@ namespace Agent
                                             }
                                         }
 
-                                        if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
+                                        if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Rifle)
                                         {
                                             Pistol.gameObject.SetActive(false);
                                             Rifle.gameObject.SetActive(true);
@@ -133,7 +133,7 @@ namespace Agent
 
                                             entity.agentAction.Action = AgentAlertState.Alert;
                                         }
-                                        else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
+                                        else if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Pistol)
                                         {
                                             Pistol.gameObject.SetActive(true);
                                             Rifle.gameObject.SetActive(false);

@@ -1,7 +1,7 @@
 namespace Agent
 {
 
-    public enum Model3DWeapon
+    public enum Model3DWeaponType
     {
         None,
         Sword,

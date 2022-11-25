@@ -219,22 +219,22 @@ public partial class AgentEntity
             {
                 case ItemToolType.Pistol:
                     {
-                        SetAgentWeapon(Model3DWeapon.Pistol);
+                        SetAgentWeapon(Model3DWeaponType.Pistol);
 
                         break;
                     }
                 case ItemToolType.Rifle:
                     {
-                        SetAgentWeapon(Model3DWeapon.Rifle);
+                        SetAgentWeapon(Model3DWeaponType.Rifle);
                         break;
                     }
                 case ItemToolType.Sword:
                     {
-                        SetAgentWeapon(Model3DWeapon.Sword);
+                        SetAgentWeapon(Model3DWeaponType.Sword);
                         break;
                     }
                 default:
-                    SetAgentWeapon(Model3DWeapon.None);
+                    SetAgentWeapon(Model3DWeaponType.None);
                     break;
             }
         }
@@ -265,7 +265,7 @@ public partial class AgentEntity
         }
     }
 
-    public void SetAgentWeapon(Model3DWeapon weapon)
+    public void SetAgentWeapon(Model3DWeaponType weapon)
     {
         if (hasAgentModel3D)
         {
@@ -280,7 +280,7 @@ public partial class AgentEntity
 
             switch(weapon)
             {
-                case Model3DWeapon.Sword:
+                case Model3DWeaponType.Sword:
                 {
                     UnityEngine.GameObject hand = model3d.LeftHand;
 
@@ -297,7 +297,7 @@ public partial class AgentEntity
                     break;
                 }
 
-                case Model3DWeapon.Pistol:
+                case Model3DWeaponType.Pistol:
                 {
                     UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)
@@ -323,7 +323,7 @@ public partial class AgentEntity
                     break;
                 }
 
-                case Model3DWeapon.Rifle:
+                case Model3DWeaponType.Rifle:
                 {
                     UnityEngine.GameObject hand = model3d.RightHand;
                     if (hand != null)

@@ -21,7 +21,7 @@ namespace Agent
 
                 if (physicsState.FacingDirection == 1)
                 {
-                    if(model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
+                    if(model3d.CurrentWeapon != Model3DWeaponType.Pistol || model3d.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
                         model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
                     }
@@ -33,7 +33,7 @@ namespace Agent
                 }
                 else if (physicsState.FacingDirection == -1)
                 {
-                    if (model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
+                    if (model3d.CurrentWeapon != Model3DWeaponType.Pistol || model3d.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
                         model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -120, 0);
                     }
