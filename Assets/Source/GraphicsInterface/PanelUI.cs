@@ -24,8 +24,8 @@ namespace KGUI
                 ElementList.Add(element.ID, element);
             }
             
-            GameState.GUIManager.PanelList.Add(ID, this);
-            OnActivate();
+            //GameState.GUIManager.PanelList.Add(ID, this);
+           // OnActivate();
         }
 
         public virtual void HandleClickEvent(ElementEnums elementID) { }
