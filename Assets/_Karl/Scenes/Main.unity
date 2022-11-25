@@ -5148,6 +5148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1020607319}
+  - component: {fileID: 1020607321}
   - component: {fileID: 1020607320}
   m_Layer: 0
   m_Name: Player
@@ -5185,8 +5186,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fad01ca894397428bbbb6b690a6c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _identifier: {fileID: 1020607321}
   _input: {fileID: 1007612823}
   _camera: {fileID: 790884125}
+--- !u!114 &1020607321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020607318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffa7f420fce8b848a8256cf6efb880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: player
 --- !u!1001 &1051811204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8540,7 +8555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: {fileID: 1706512181}
-  _invert: 1
+  _invert: 0
   _canvas: {fileID: 1706512179}
 --- !u!114 &1706512181
 MonoBehaviour:

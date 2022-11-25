@@ -11,7 +11,6 @@ public class Game : Singleton<Game>
 
     private IPlanetCreationResult _current;
 
-    
 
     protected override void Awake()
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : BaseMonoBehaviour
 {
+    [SerializeField] private Identifier _identifier;
     [SerializeField] private PlayerInput _input;
     [SerializeField] private PlayerCamera _camera;
     
@@ -13,14 +14,6 @@ public class Player : BaseMonoBehaviour
 
     public PlayerInput GetInput() => _input;
     public PlayerCamera GetCamera() => _camera;
-
-
-    protected override void Start()
-    {
-        base.Start();
-        UIInventory inventory = App.Instance.GetUI().GetView<UIViewGame>().GetInventory();
-        //inventory.GetSelection().onSelect.AddListener();
-    }
 
     public void SetAgentRenderer(AgentRenderer agentRenderer)
     {
@@ -56,9 +49,13 @@ public class Player : BaseMonoBehaviour
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
 
-                UIInventory inventory = App.Instance.GetUI().GetView<UIViewGame>().GetInventory();
+                UIViewGame viewGame = App.Instance.GetUI().GetView<UIViewGame>();
+                UIInventory inventory = viewGame.GetInventory();
                 inventory.SetInventoryEntityComponent(inventoryEntityComponent);
                 inventory.GetSelection().onSelectWithPrevious.AddListener(OnInventorySelectionEvent);
+
+                UpdateGameViewVisibility(true);
+                Debug.Log("Agent Renderer Set");
             }
             else Debug.LogWarning("Player has no inventory");
             
@@ -73,14 +70,27 @@ public class Player : BaseMonoBehaviour
         onPlayerAgentCreated.Invoke(_currentPlayer);
     }
 
+    private void UpdateGameViewVisibility(bool isVisible)
+    {
+        UIViewGame viewGame = App.Instance.GetUI().GetView<UIViewGame>();
+        viewGame.GetGroup().GetIdentifier().Alter(_identifier, isVisible);
+    }
+
     public void ClearAgentRenderer()
     {
         if (_currentPlayer == null) return;
+        _currentPlayer = null;
         
+        // Clear camera target
+        App.Instance.GetPlayer().GetCamera().ClearTarget();
+        
+        // Unsubscribe inventory
         UIInventory inventory = App.Instance.GetUI().GetView<UIViewGame>().GetInventory();
         inventory.GetSelection().onSelectWithPrevious.RemoveListener(OnInventorySelectionEvent);
+        inventory.Clear();
         
-        _currentPlayer = null;
+        // Hide game UI
+        UpdateGameViewVisibility(false);
     }
     
     public bool GetCurrentPlayerAgent(out AgentRenderer character)
