@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using UnityEngine;
 
 namespace Tiled
 {
@@ -58,7 +59,11 @@ namespace Tiled
                 }
 
                 Enums.MaterialType material = Enums.MaterialType.Metal;
-                Enum.TryParse<Enums.MaterialType>(foundTileset.properties[0].value, out material);
+                string value = foundTileset.properties[0].value;
+                if (!Enum.TryParse<Enums.MaterialType>(value, out material))
+                {
+                    Debug.LogWarning($"TryParse failed value '{value}' to {nameof(Enums.MaterialType)}");
+                }
 
                 Enums.TileGeometryAndRotation shape = Enums.TileGeometryAndRotation.SB_R0;
                 Enum.TryParse<Enums.TileGeometryAndRotation>(foundTileset.Tiles[tileIndex].properties[0].value, out shape);

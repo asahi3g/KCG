@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using UnityEngine;
 
@@ -6,29 +7,27 @@ namespace Sprites
     [System.Serializable]
     public class SpriteAtlas
     {
-        private AtlasType _atlasType;
+        [SerializeField] private AtlasType _atlasType;
+        [SerializeField] private int _width;
+        [SerializeField] private int _height;
+        
         public int AtlasID;
         public int GLTextureID;
 
-        public int Width;
-        public int Height;
-
+        [NonSerialized]
         public byte[] Data;
         public Texture2D Texture;
         public bool TextureNeedsUpdate;
         public RectpackSharp.PackingRectangle[] Rectangles;
-
-
-        public SpriteAtlas()
-        {
-            
-        }
+        
+        public int Width => _width;
+        public int Height => _height;
 
         public SpriteAtlas(AtlasType atlasType, int width, int height, int byteLength)
         {
             _atlasType = atlasType;
-            this.Width = width;
-            this.Height = height;
+            _width = width;
+            _height = height;
             this.Data = new byte[byteLength];
             
             for(int i = 0; i < byteLength; i++)
@@ -38,5 +37,15 @@ namespace Sprites
         }
 
         public AtlasType GetAtlasType() => _atlasType;
+
+        public void SetWidth(int value)
+        {
+            _width = value;
+        }
+        
+        public void SetHeight(int value)
+        {
+            _height = value;
+        }
     }
 }

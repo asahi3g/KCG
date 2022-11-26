@@ -57,7 +57,7 @@ namespace PlanetTileMap
                 for(int i = 0; i < tileMap.MapSize.X; i++)
                 {
                     Enums.PlanetTileMap.TileID thisTile = tileMap.GetFrontTileID(i, j);
-                    var properties = GameState.TileCreationApi.GetTileProperty(thisTile);
+                    TileProperty properties = GameState.TileCreationApi.GetTileProperty(thisTile);
 
                     switch (properties.BlockShapeType)
                     {

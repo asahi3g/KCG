@@ -7,7 +7,11 @@ namespace Sprites
 {
     public class SpriteLoader
     {
-        private string _filePath;
+        /**
+         * Stores full filePath for debugging purposes.
+         * Example: "Assets\StreamingAssets\Tiles\GeometryMetal\metal_tiles_geometry.png"
+         */
+        private string _filePath; 
         
         public SpriteSheet[] SpriteSheets;
         public Dictionary<string, int> SpriteSheetID;
@@ -19,6 +23,16 @@ namespace Sprites
         }
 
         public string GetFilePath() => _filePath;
+        
+        public void InitStage1()
+        {
+            
+        }
+
+        public void InitStage2()
+        {
+        
+        }
 
         public int GetSpriteSheetID(string filePath, int spriteWidth, int spriteHeight)
         {
@@ -29,7 +43,13 @@ namespace Sprites
         private int LoadImageFile(string filePath, int spriteWidth, int spriteHeight)
         {
             _filePath = filePath;
+            Debug.Log($"Loading '{_filePath}'");
             int imageCount = SpriteSheets.Length + 1;
+
+            if (_filePath.Contains("rock_tiles_geometry"))
+            {
+                Debug.Log("ytep");
+            }
 
             Array.Resize(ref SpriteSheets, imageCount);
 
@@ -51,9 +71,12 @@ namespace Sprites
                 Debug.LogWarning($"{nameof(SpriteLoader)} LoadImageFile() filename[{_filePath.Color(Color.cyan)}] spriteWidth[{spriteWidth.ToString().Color(wMatch ? Color.green : Color.red)}] or spriteHeight[{spriteHeight.ToString().Color(hMatch ? Color.green : Color.red)}] does not match PNG w[{w.ToString().Color(wMatch ? Color.green : Color.red)}] h[{h.ToString().Color(hMatch ? Color.green : Color.red)}]");
             }
             
+            int sheetIndex = imageCount - 1;
+            
             SpriteSheet sheet = new SpriteSheet
             {
-                Index = imageCount - 1,
+                filePath = _filePath,
+                Index = sheetIndex,
                 Width = w,
                 Height = h,
                 SpriteWidth = spriteWidth,
@@ -77,9 +100,9 @@ namespace Sprites
                 }
             }
 
-            SpriteSheets[imageCount - 1] = sheet;
+            SpriteSheets[sheetIndex] = sheet;
 
-            return imageCount - 1;
+            return sheetIndex;
         }
 
         public ref SpriteSheet GetSpriteSheet(int id)
