@@ -46,11 +46,6 @@ namespace Sprites
             Debug.Log($"Loading '{_filePath}'");
             int imageCount = SpriteSheets.Length + 1;
 
-            if (_filePath.Contains("rock_tiles_geometry"))
-            {
-                Debug.Log("ytep");
-            }
-
             Array.Resize(ref SpriteSheets, imageCount);
 
             SpriteSheetID.Add(filePath, imageCount - 1);
