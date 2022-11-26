@@ -494,6 +494,16 @@ namespace Item
         public int Gold_6;
         public int Gold_7;
 
+        private int IconToolPlacement;
+        private int IconToolRemoveTile;
+        private int IconToolGeometryPlacement;
+        private int IconToolSpawnEnemyGunner;
+        private int IconToolSpawnEnemySwordsman;
+        private int IconToolConstruction;
+        
+        private int IconItemPotionHealth;
+        
+
         public PanelUI PlacementToolPrefab;
 
         public void InitializeResources()
@@ -541,7 +551,39 @@ namespace Item
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
             WoodTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\MixedTileset\\mixed-tileset_00.png", 32, 32);
             MineOreSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Gems-Ores\\gems-ores.png", 16, 16);
-
+            
+            // === Items ===
+            
+            IconItemPotionHealth = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\icon_potion_health.png", 32, 32);
+            IconItemPotionHealth = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconItemPotionHealth, 0, 0, AtlasType.Particle);
+            
+            
+            // === Tools ===
+            
+            // PlacementTool
+            IconToolPlacement = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_placement.png", 32, 32);
+            IconToolPlacement = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolPlacement, 0, 0, AtlasType.Particle);
+            
+            // Remove Tile Tool
+            IconToolRemoveTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_remove_tile.png", 32, 32);
+            IconToolRemoveTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolRemoveTile, 0, 0, AtlasType.Particle);
+            
+            // Geometry Placement Tool
+            IconToolGeometryPlacement = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_geometry_placement.png", 32, 32);
+            IconToolGeometryPlacement = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolGeometryPlacement, 0, 0, AtlasType.Particle);
+            
+            // Spawn Enemy Gunner
+            IconToolSpawnEnemyGunner = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_spawn_enemy_gunner.png", 32, 32);
+            IconToolSpawnEnemyGunner = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolSpawnEnemyGunner, 0, 0, AtlasType.Particle);
+            
+            // Spawn Enemy Swordsman
+            IconToolSpawnEnemySwordsman = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_spawn_enemy_swordsman.png", 32, 32);
+            IconToolSpawnEnemySwordsman = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolSpawnEnemySwordsman, 0, 0, AtlasType.Particle);
+            
+            // Construction Tool
+            IconToolConstruction = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_construction.png", 32, 32);
+            IconToolConstruction = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolConstruction, 0, 0, AtlasType.Particle);
+            
 
 
             SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, AtlasType.Particle);
@@ -917,8 +959,8 @@ namespace Item
 
             CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
-            SetTexture(BoneIcon);
-            SetInventoryItemIcon(BoneIcon);
+            SetTexture(IconItemPotionHealth);
+            SetInventoryItemIcon(IconItemPotionHealth);
             SetAction(ItemUsageActionType .DrinkPotionAction);
             SetStackable();
             EndItem();
@@ -932,8 +974,8 @@ namespace Item
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
             SetGroup(ItemGroups.BuildTools);
-            SetTexture(PlacementToolIcon);
-            SetInventoryItemIcon(PlacementToolIcon);
+            SetTexture(IconToolPlacement);
+            SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementTool);
             SetAction(ItemUsageActionType .ToolActionPlaceTile);
@@ -950,8 +992,8 @@ namespace Item
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
             SetGroup(ItemGroups.None);
-            SetTexture(RemoveToolIcon);
-            SetInventoryItemIcon(RemoveToolIcon);
+            SetTexture(IconToolRemoveTile);
+            SetInventoryItemIcon(IconToolRemoveTile);
             SetAction(ItemUsageActionType .ToolActionRemoveTile);
             EndItem();
 
@@ -964,15 +1006,15 @@ namespace Item
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
             SetGroup(ItemGroups.None);
-            SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon);
+            SetTexture(IconToolSpawnEnemyGunner);
+            SetInventoryItemIcon(IconToolSpawnEnemyGunner);
             SetAction(ItemUsageActionType .ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
             SetGroup(ItemGroups.None);
-            SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon);
+            SetTexture(IconToolSpawnEnemySwordsman);
+            SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
             SetAction(ItemUsageActionType .ToolActionEnemySwordmanSpawn);
             EndItem();
 
@@ -1028,8 +1070,8 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
-            SetTexture(ConstructionToolIcon);
-            SetInventoryItemIcon(ConstructionToolIcon);
+            SetTexture(IconToolConstruction);
+            SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
             SetAction(ItemUsageActionType .ToolActionConstruction);
@@ -1174,8 +1216,8 @@ namespace Item
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
             SetGroup(ItemGroups.None);
-            SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon);
+            SetTexture(IconToolGeometryPlacement);
+            SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.GeometryTool);
             SetAction(ItemUsageActionType .ToolActionGeometryPlacement);

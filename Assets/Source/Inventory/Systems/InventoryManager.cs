@@ -138,16 +138,16 @@ namespace Inventory
 
         public bool AddItem(ItemInventoryEntity entity, int inventoryID)
         {
-            ItemProperties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+            ItemProperties itemProperties = GameState.ItemCreationApi.Get(entity.itemType.Type);
 
             // If stackable check if there are any available stack in the inventory.
-            if (proprieties.IsStackable())
+            if (itemProperties.IsStackable())
             {
                 var Group = GameState.Planet.EntitasContext.itemInventory.GetEntitiesWithItemInventory(inventoryID); // Todo: Use multiple Entity Index. To narrow down the search with item type.
 
                 foreach (ItemInventoryEntity entityIT in Group)
                 {
-                    if (TryAddToStack(entity, entityIT, proprieties.MaxStackCount))
+                    if (TryAddToStack(entity, entityIT, itemProperties.MaxStackCount))
                         return true;
                 }
             }
