@@ -58,7 +58,7 @@ namespace Inventory
             itemEntity.ReplaceItemInventory(inventoryID, slotID);
 
             // Check restriction.
-            Enums.ItemGroups slotGroup = inventory.Slots[slotID].Restriction;
+            Enums.ItemGroups slotGroup = inventory.Slots[slotID].ItemGroups;
             Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
             if (slotGroup > 0 && group != slotGroup)
                 return false;
@@ -94,7 +94,7 @@ namespace Inventory
                 return false;
 
             // Check restriction.
-            Enums.ItemGroups slotGroup = inventory.Slots[fistEmptySlot].Restriction;
+            Enums.ItemGroups slotGroup = inventory.Slots[fistEmptySlot].ItemGroups;
             Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
             if (slotGroup > 0 && group != slotGroup)
                 return false;
