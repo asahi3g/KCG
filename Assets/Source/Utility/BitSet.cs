@@ -19,6 +19,8 @@ namespace Utility
         private UInt64[] bits;          // 0 Is the least significant bit.
         private UInt64 bitMask;         // Bit mask for most significant UInt64.
 
+        public UInt64 BitMask => bitMask;
+
         public BitSet(UInt32 bitLength)
         {
             Length = bitLength;

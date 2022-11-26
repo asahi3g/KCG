@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Agent;
+using Inventory;
 using UnityEditor;
 using UnityEngine;
+using Utility;
 
 public static class EditorGUIHelper
 {
@@ -14,6 +18,11 @@ public static class EditorGUIHelper
     private static bool _showPhysicsAnimations = true;
     private static bool _showStats = false;
     private static bool _showInventory = false;
+    private static bool _showInventoryEntity = true;
+    private static bool _showInventoryEntityBitSet = false;
+    private static bool _showInventoryEntitySlots = false;
+    private static Flag2Map _showInventoryEntitySlotsEntry = new Flag2Map();
+    private static Flag2Map _showInventoryEntitySlotsEntryItem = new Flag2Map();
 
     private static GUIStyle _style;
 
@@ -32,12 +41,12 @@ public static class EditorGUIHelper
     {
         if (agentEntity == null)
         {
-            GUILayout.Box("No Agent");
+            DrawNone();
         }
         else
         {
             // ID
-            _showID = EditorGUILayout.Foldout(_showID, "ID");
+            _showID = EditorGUILayout.Foldout(_showID, $"{nameof(Agent.IDComponent)}");
             if (_showID)
             {
                 EditorGUI.indentLevel++;
@@ -46,87 +55,68 @@ public static class EditorGUIHelper
             }
             
             // 3D Model
-            _model3D = EditorGUILayout.Foldout(_model3D, "Model 3D");
+            _model3D = EditorGUILayout.Foldout(_model3D, $"{nameof(Model3DComponent)}");
             if (_model3D)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentModel3D)
-                {
-                    Draw(agentEntity.agentModel3D);
-                }
-                else GUILayout.Box("None");
-                
+                if (agentEntity.hasAgentModel3D) Draw(agentEntity.agentModel3D);
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
 
             // Action
-            _action = EditorGUILayout.Foldout(_action, "Action");
+            _action = EditorGUILayout.Foldout(_action, $"{nameof(ActionComponent)}");
             if (_action)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentAction)
-                {
-                    Draw(agentEntity.agentAction);
-                }
-                else GUILayout.Box("None");
-
+                if (agentEntity.hasAgentAction) Draw(agentEntity.agentAction);
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
 
             // Controller
-            _controller = EditorGUILayout.Foldout(_controller, "Controller");
+            _controller = EditorGUILayout.Foldout(_controller, $"{nameof(ControllerComponent)}");
             if (_controller)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentController)
-                {
-                    Draw(agentEntity.agentController);
-                }
-                else GUILayout.Box("None");
-
+                if (agentEntity.hasAgentController) Draw(agentEntity.agentController);
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
 
-            _stagger = EditorGUILayout.Foldout(_stagger, "Stagger");
+            // Stagger
+            _stagger = EditorGUILayout.Foldout(_stagger, $"{nameof(StaggerComponent)}");
             if (_stagger)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentStagger)
-                {
-                    Draw(agentEntity.agentStagger);
-                }
-                else GUILayout.Box("None");
+                if (agentEntity.hasAgentStagger) Draw(agentEntity.agentStagger);
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
-            
-            
-            
+
             // Physics
-            _showPhysics = EditorGUILayout.Foldout(_showPhysics, "Physics");
+            _showPhysics = EditorGUILayout.Foldout(_showPhysics, $"{nameof(PhysicsStateComponent)}");
             if (_showPhysics)
             {
                 EditorGUI.indentLevel++;
-                
                 if (agentEntity.hasAgentPhysicsState)
                 {
                     Draw(agentEntity.agentPhysicsState);
 
-                    _showPhysicsAnimations = EditorGUILayout.Foldout(_showPhysicsAnimations, "Animations");
+                    _showPhysicsAnimations = EditorGUILayout.Foldout(_showPhysicsAnimations, $"{nameof(AgentAnimation)}");
                     if (_showPhysicsAnimations)
                     {
-
                         EditorGUI.indentLevel++;
                         Draw(agentEntity.agentPhysicsState.LastAgentAnimation);
                         EditorGUI.indentLevel--;
                     }
                 }
-                else EditorGUILayout.LabelField("None");
-
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
 
             // Stats
-            _showStats = EditorGUILayout.Foldout(_showStats, "Stats");
+            _showStats = EditorGUILayout.Foldout(_showStats, $"{nameof(StatsComponent)}");
             if (_showStats)
             {
                 EditorGUI.indentLevel++;
@@ -135,19 +125,23 @@ public static class EditorGUIHelper
             }
 
             // Inventory
-            _showInventory = EditorGUILayout.Foldout(_showInventory, "Inventory");
+            _showInventory = EditorGUILayout.Foldout(_showInventory, $"{nameof(InventoryComponent)}");
             if (_showInventory)
             {
                 EditorGUI.indentLevel++;
                 if (agentEntity.hasAgentInventory) Draw(agentEntity.agentInventory);
-                else EditorGUILayout.LabelField("None");
+                else DrawNone();
                 EditorGUI.indentLevel--;
             }
         }
     }
 
+    public static void DrawNone()
+    {
+        EditorGUILayout.LabelField("None");
+    }
 
-    public static void Draw(IDComponent value)
+    public static void Draw(Agent.IDComponent value)
     {
         EditorGUILayout.LabelField($"{nameof(value.ID)}: {value.ID.ToStringPretty()}", GetStyle());
         EditorGUILayout.LabelField($"{nameof(value.Type)}: {value.Type.ToStringPretty()}", GetStyle());
@@ -160,6 +154,100 @@ public static class EditorGUIHelper
         EditorGUILayout.LabelField($"{nameof(value.InventoryID)}: {value.InventoryID.ToStringPretty()}", GetStyle());
         EditorGUILayout.LabelField($"{nameof(value.EquipmentInventoryID)}: {value.EquipmentInventoryID.ToStringPretty()}", GetStyle());
         EditorGUILayout.LabelField($"{nameof(value.AutoPick)}: {value.AutoPick.ToStringPretty()}", GetStyle());
+
+        _showInventoryEntity = EditorGUILayout.Foldout(_showInventory, $"{nameof(InventoryEntityComponent)}");
+        if (_showInventoryEntity)
+        {
+            EditorGUI.indentLevel++;
+            InventoryEntityComponent inventoryEntityComponent = GameState.Planet.GetInventoryEntityComponent(value.InventoryID);
+            Draw(inventoryEntityComponent);
+            EditorGUI.indentLevel--;
+        }
+    }
+    
+    public static void Draw(InventoryEntityComponent value)
+    {
+        EditorGUILayout.LabelField($"{nameof(value.Index)}: {value.Index.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.InventoryEntityTemplateID)}: {value.InventoryEntityTemplateID.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.SelectedSlotIndex)}: {value.SelectedSlotIndex.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.Size)}: {value.Size.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.InventoryType)}: {value.InventoryType.ToStringPretty()}", GetStyle());
+        
+        // Bitset
+        _showInventoryEntityBitSet = EditorGUILayout.Foldout(_showInventoryEntityBitSet, $"{nameof(BitSet)}");
+        if (_showInventoryEntityBitSet)
+        {
+            EditorGUI.indentLevel++;
+            Draw(value.SlotsMask);
+            EditorGUI.indentLevel--;
+        }
+        
+        // Slots
+        _showInventoryEntitySlots = EditorGUILayout.Foldout(_showInventoryEntitySlots, $"{nameof(value.Slots)}");
+        if (_showInventoryEntitySlots)
+        {
+            EditorGUI.indentLevel++;
+            Draw(value.Slots);
+            EditorGUI.indentLevel--;
+        }
+    }
+    
+    public static void Draw(Slot[] value)
+    {
+        if (value == null)
+        {
+            DrawNone();
+            return;
+        }
+        
+        int length = value.Length;
+        for (int i = 0; i < length; i++)
+        {
+            Slot slot = value[i];
+
+            bool foldout = EditorGUILayout.Foldout(_showInventoryEntitySlotsEntry.Get(slot.InventoryId, slot.Index), $"{i}");
+            if (_showInventoryEntitySlotsEntry.Set(slot.InventoryId, slot.Index, foldout))
+            {
+                EditorGUI.indentLevel++;
+                Draw(slot);
+                EditorGUI.indentLevel--;
+            }
+        }
+    }
+
+    public static void Draw(Slot value)
+    {
+        EditorGUILayout.LabelField($"{nameof(value.InventoryId)}: {value.InventoryId.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.Index)}: {value.Index.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.ItemGroups)}: {value.ItemGroups.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.ItemID)}: {value.ItemID.ToStringPretty()}", GetStyle());
+        
+        bool foldout = EditorGUILayout.Foldout(_showInventoryEntitySlotsEntryItem.Get(value.InventoryId, value.Index), $"Item");
+        if (_showInventoryEntitySlotsEntryItem.Set(value.InventoryId, value.Index, foldout))
+        {
+            EditorGUI.indentLevel++;
+            if (GameState.Planet.GetItemInventoryEntity(value, out ItemInventoryEntity itemInventoryEntity))
+            {
+                Draw(itemInventoryEntity);
+            }
+            else
+            {
+                DrawNone();
+            }
+            EditorGUI.indentLevel--;
+        }
+    }
+
+    public static void Draw(ItemInventoryEntity value)
+    {
+        EditorGUILayout.LabelField($"{nameof(value.itemID)}: {value.itemID.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.itemType)}: {value.itemType.ToStringPretty()}", GetStyle());
+    }
+
+    public static void Draw(BitSet value)
+    {
+        EditorGUILayout.LabelField($"{nameof(value.Length)}: {value.Length.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.BitMask)}: {value.BitMask.ToStringBinary()}", GetStyle());
     }
 
     public static void Draw(AgentAnimation value)
@@ -254,9 +342,6 @@ public static class EditorGUIHelper
         EditorGUILayout.LabelField($"{nameof(value.AimTarget)}: {value.AimTarget.ToStringPretty()}", GetStyle());
     }
 
-    
-    
-    
     public static void DrawProgress(string title, ContainerFloat c)
     {
         Rect r = EditorGUILayout.BeginVertical();
@@ -264,5 +349,32 @@ public static class EditorGUIHelper
         EditorGUI.ProgressBar(r, c.GetValueNormalized(), $"{title} ({c.GetValue()}/{c.GetMax()}) {c.GetPercentage()}%");
         EditorGUILayout.EndVertical();
         GUILayout.Space(20);
+    }
+
+
+    private class Flag2Map
+    {
+        private readonly Dictionary<Tuple<int, int>, bool> Map = new Dictionary<Tuple<int, int>, bool>();
+
+        public bool Get(int keyA, int keyB)
+        {
+            Tuple<int, int> key = new Tuple<int, int>(keyA, keyB);
+            if (!Map.ContainsKey(key)) return false;
+            return Map[key];
+        }
+
+        public bool Set(int keyA, int keyB, bool value)
+        {
+            Tuple<int, int> key = new Tuple<int, int>(keyA, keyB);
+            if (Map.ContainsKey(key))
+            {
+                Map[key] = value;
+            }
+            else
+            {
+                Map.Add(key, value);
+            }
+            return value;
+        }
     }
 }

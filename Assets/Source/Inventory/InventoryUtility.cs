@@ -97,7 +97,7 @@ namespace Inventory
 
         public int InventoryId => _inventoryId;
         public int Index => _index;
-        public Enums.ItemGroups Restriction => _itemGroups;
+        public Enums.ItemGroups ItemGroups => _itemGroups;
 
         public int ItemID => _itemId;
         
