@@ -25,7 +25,7 @@ namespace Item
          
         // Note[Joao] this arrays are very memory expensive: use array of pointers instead?
         private ItemProperties[] PropertiesArray;
-        private FireWeaponPropreties[] WeaponList;
+        private FireWeaponProperties[] WeaponList;
 
         private ItemType currentIndex;
         private int weaponListSize;
@@ -34,7 +34,7 @@ namespace Item
         {
             int length = Enum.GetValues(typeof(ItemType)).Length - 1; // -1 beacause of error item type.
             PropertiesArray = new ItemProperties[length];
-            WeaponList = new FireWeaponPropreties[16];
+            WeaponList = new FireWeaponProperties[16];
             currentIndex = ItemType.Error;
             weaponListSize = 0;
 
@@ -60,7 +60,7 @@ namespace Item
             return PropertiesArray[(int)type];
         }
 
-        public FireWeaponPropreties GetWeapon(ItemType type)
+        public FireWeaponProperties GetWeapon(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -159,15 +159,15 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.SpreadAngle = spreadAngle;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.SpreadAngle = spreadAngle;
         }
 
         public void SetRangedWeaponAttribute (float bulletSpeed, float coolDown, float range, int basicDamage)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -175,7 +175,7 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -183,7 +183,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -192,7 +192,7 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -200,52 +200,52 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.ClipSize = clipSize;
-            fireWeapon.BulletsPerShot = bulletsPerShot;
-            fireWeapon.ReloadTime = reloadTime;
-            fireWeapon.WeaponFlags |= FireWeaponPropreties.Flags.HasClip;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.ClipSize = clipSize;
+            fireWeaponProperties.BulletsPerShot = bulletsPerShot;
+            fireWeaponProperties.ReloadTime = reloadTime;
+            fireWeaponProperties.WeaponFlags |= FireWeaponProperties.Flags.HasClip;
         }
 
         public void SetRangedWeaponClip(int bulletClipSize, int greandeClipSize, int bulletsPerShot, float bulletReloadTime)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.ClipSize = bulletClipSize;
-            fireWeapon.GrenadeClipSize = greandeClipSize;
-            fireWeapon.NumberOfGrenades = greandeClipSize;
-            fireWeapon.BulletsPerShot = bulletsPerShot;
-            fireWeapon.ReloadTime = bulletReloadTime;
-            fireWeapon.WeaponFlags |= FireWeaponPropreties.Flags.HasClip | FireWeaponPropreties.Flags.PulseWeapon;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.ClipSize = bulletClipSize;
+            fireWeaponProperties.GrenadeClipSize = greandeClipSize;
+            fireWeaponProperties.NumberOfGrenades = greandeClipSize;
+            fireWeaponProperties.BulletsPerShot = bulletsPerShot;
+            fireWeaponProperties.ReloadTime = bulletReloadTime;
+            fireWeaponProperties.WeaponFlags |= FireWeaponProperties.Flags.HasClip | FireWeaponProperties.Flags.PulseWeapon;
         }
 
         public void SetFireWeaponMultiShoot(float speadAngle, int numOfBullet)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.SpreadAngle = speadAngle;
-            fireWeapon.NumOfBullets = numOfBullet;
+            ref FireWeaponProperties fireWeaponProperties = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.SpreadAngle = speadAngle;
+            fireWeaponProperties.NumOfBullets = numOfBullet;
         }
 
         public void SetFireWeaponRecoil(float maxRecoilAngle, float minRecoilAngle, float rateOfChange, float recoverTime, float recoverDelay)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.MaxRecoilAngle = maxRecoilAngle;
-            fireWeapon.MinRecoilAngle = minRecoilAngle;
-            fireWeapon.RateOfChange = rateOfChange;
-            fireWeapon.RecoverTime = recoverTime;
-            fireWeapon.RecoverDelay = recoverDelay;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.MaxRecoilAngle = maxRecoilAngle;
+            fireWeaponProperties.MinRecoilAngle = minRecoilAngle;
+            fireWeaponProperties.RateOfChange = rateOfChange;
+            fireWeaponProperties.RecoverTime = recoverTime;
+            fireWeaponProperties.RecoverDelay = recoverDelay;
         }
 
         public void SetMeleeWeapon(float coolDown, float range, float staggerTime, float staggerRate, int basicDamage)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 CoolDown = coolDown,
                 Range = range,
@@ -254,7 +254,7 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -262,12 +262,12 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 ShieldActive = ShieldActive,
             }; 
 
-            WeaponList[weaponListSize] = fireWeapon;
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -275,34 +275,34 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            FireWeaponProperties fireWeapon = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.BlastRadius = radius;
             fireWeapon.MaxDamage = maxDamage;
             fireWeapon.Elapse = elapse;
         }
 
-        public void SetFlags(FireWeaponPropreties.MeleeFlags flags)
+        public void SetFlags(FireWeaponProperties.MeleeFlags flags)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            FireWeaponProperties fireWeapon = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.MeleeAttackFlags |= flags;
         }
 
-        public void SetFlags(FireWeaponPropreties.Flags flags)
+        public void SetFlags(FireWeaponProperties.Flags flags)
         {
             IsItemTypeValid();
 
-            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.WeaponFlags |= flags;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.WeaponFlags |= flags;
         }
 
-        public void SetFlags(FireWeaponPropreties.GrenadesFlags flags)
+        public void SetFlags(FireWeaponProperties.GrenadesFlags flags)
         {
             IsItemTypeValid();
 
-            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.GrenadeFlags |= flags;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.GrenadeFlags |= flags;
         }
 
         public void SetFlags(ItemProperties.Flags flags)
@@ -727,7 +727,7 @@ namespace Item
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
             SetProjectileType(ProjectileType.Bullet);
-            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetFlags(FireWeaponProperties.Flags.ShouldSpread);
             SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
@@ -738,7 +738,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
-            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetFlags(FireWeaponProperties.Flags.ShouldSpread);
             SetProjectileType(ProjectileType.Bullet);
             SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
@@ -773,7 +773,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
             SetExplosion(4.0f, 15, 0f);
-            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
+            SetFlags(FireWeaponProperties.GrenadesFlags.Flame);
             SetProjectileType(ProjectileType.Grenade);
             SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
@@ -857,7 +857,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
-            SetFlags(FireWeaponPropreties.MeleeFlags.Stab);
+            SetFlags(FireWeaponProperties.MeleeFlags.Stab);
             SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 
@@ -866,7 +866,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
-            SetFlags(FireWeaponPropreties.MeleeFlags.Slash);
+            SetFlags(FireWeaponProperties.MeleeFlags.Slash);
             SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 

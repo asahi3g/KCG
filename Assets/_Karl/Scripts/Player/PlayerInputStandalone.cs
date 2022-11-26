@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerInputStandalone : BaseMonoBehaviour
 {
     [SerializeField] private PlayerInput _input;
+    [SerializeField] private UIInputArea _inputArea;
     [Header("Player Controls")]
     [SerializeField] private SOInput _moveUp;
     [SerializeField] private SOInput _moveDown;
@@ -48,6 +49,9 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         bool right = IsKey(_moveRight);
         bool up = IsKey(_moveUp);
         bool down = IsKey(_moveDown);
+        
+        // Look Target
+        _input.DoPlayerLookTarget(_inputArea.GetLastMove().position);
 
         // Crouch
         if (IsKeyDown(_crouch)) _input.DoPlayerCrouchBegin(left, right);

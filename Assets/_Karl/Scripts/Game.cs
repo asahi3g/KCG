@@ -1,7 +1,6 @@
 using Engine3D;
 using Enums;
 using Enums.PlanetTileMap;
-using Inventory;
 using KMath;
 using Planet;
 using UnityEngine;
@@ -11,9 +10,7 @@ public class Game : Singleton<Game>
     [SerializeField] private PlanetRenderer _planet;
 
     private IPlanetCreationResult _current;
-    private AgentRenderer _currentPlayer;
-    
-    public readonly AgentRenderer.Event onPlayerAgentCreated = new AgentRenderer.Event();
+
 
     protected override void Awake()
     {
@@ -42,46 +39,7 @@ public class Game : Singleton<Game>
             // Player agent creation successful
             if (_planet.CreateAgent(new Vec2f(10f, 10f), AgentType.Player, out AgentRenderer agentRenderer))
             {
-                _currentPlayer = agentRenderer;
-                AgentEntity agentEntity = agentRenderer.GetAgent();
-                
-                // Set player camera new target
-                App.Instance.GetPlayer().GetCamera().SetTarget(_currentPlayer.transform, true);
-                
-                // Setup inventory
-                if (agentEntity.hasAgentInventory)
-                {
-                    int inventoryID = agentEntity.agentInventory.InventoryID;
-                    InventoryEntityComponent inventoryEntityComponent = GameState.Planet.GetInventoryEntityComponent(inventoryID);
-                    
-                    // Add some test items
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
-                    
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
-                    
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
-                    Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
-                    
-                    
-                    
-                    App.Instance.GetUI().GetView<UIViewGame>().GetInventory().SetInventoryEntityComponent(inventoryEntityComponent);
-                }
-                else Debug.LogWarning("Player has no inventory");
-                
-                // Set stats
-                if (agentEntity.hasAgentStats)
-                {
-                    App.Instance.GetUI().GetView<UIViewGame>().SetStats(agentEntity.agentStats);
-                }
-                else Debug.LogWarning("Player has no stats");
-
-                onPlayerAgentCreated.Invoke(_currentPlayer);
+                App.Instance.GetPlayer().SetAgentRenderer(agentRenderer);
             }
             
             // Player agent creation failed
@@ -105,12 +63,6 @@ public class Game : Singleton<Game>
         {
             UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _current.GetPlanet());
         }
-    }
-
-    public bool GetCurrentPlayerAgent(out AgentRenderer character)
-    {
-        character = _currentPlayer;
-        return character != null;
     }
 
     private void UpdateMainGameLoop(float deltaTime, float targetFrameRate, float targetPhysicsRate, PlanetState planetState)

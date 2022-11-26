@@ -32,13 +32,17 @@ public class PlayerCamera : BaseMonoBehaviour
     public void SetTarget(Transform target, bool instant)
     {
         _target = target;
-        if (_target != null)
+        if (_target == null) return;
+        
+        if (instant)
         {
-            if (instant)
-            {
-                transform.position = GetTargetPosition(_target.position);
-            }
+            transform.position = GetTargetPosition(_target.position);
         }
+    }
+
+    public void ClearTarget()
+    {
+        SetTarget(null, true);
     }
 
     private Vector3 GetTargetPosition(Vector3 vector)

@@ -11,7 +11,7 @@ namespace Agent
         public UnityEngine.GameObject GameObject;
         public UnityEngine.GameObject LeftHand;
         public UnityEngine.GameObject RightHand;
-        public Model3DWeapon CurrentWeapon;
+        public Model3DWeaponType CurrentWeapon;
         public UnityEngine.GameObject Weapon;
         public AnimancerComponent AnimancerComponent;
         public Enums.AgentAnimationType AnimationType;

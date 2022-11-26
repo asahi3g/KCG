@@ -177,7 +177,7 @@ namespace Agent
 
                         //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
 
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
                             properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
                             Vec2f.Zero);
 
@@ -227,13 +227,13 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
-                        entity.SetAgentWeapon(Model3DWeapon.Pistol);
+                        entity.SetModel3DWeapon(Model3DWeaponType.Pistol);
                         Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                         break;
                     }
@@ -258,11 +258,11 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
                         Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
-                        entity.SetAgentWeapon(Model3DWeapon.Sword);
+                        entity.SetModel3DWeapon(Model3DWeaponType.Sword);
                         break;
                     }
                 case Enums.AgentType.EnemyInsect:
@@ -282,7 +282,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
+                        entity.AddAgentModel3D(model, null, null, Model3DWeaponType.None, null, animancerComponent, 
                             properties.AnimationType, Enums.ItemAnimationSet.Default,
                             properties.ModelScale, Vec2f.Zero);
                       /*  entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
@@ -308,7 +308,7 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
+                        entity.AddAgentModel3D(model, null, null, Model3DWeaponType.None, null, animancerComponent,
                             properties.AnimationType,
                             Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero);
 
@@ -331,7 +331,7 @@ namespace Agent
 
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
+                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
                             Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
                         entity.agentPhysicsState.Speed = 10.0f;
@@ -343,7 +343,7 @@ namespace Agent
 
                         ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                         GameState.InventoryManager.AddItem(item, inventoryID);
-                        entity.HandleItemSelected(item);
+                        entity.SetModel3DWeapon(item);
                         break;
                     }
             }

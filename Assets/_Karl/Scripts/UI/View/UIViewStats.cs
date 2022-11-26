@@ -1,17 +1,13 @@
 using Agent;
 using UnityEngine;
 
-public class UIViewGame : UIView
+public class UIViewStats : UIView
 {
-    [Header(H_A + "Game" + H_B)]
-    [SerializeField] private UIInventory _inventory;
-
+    [Header(H_A + "Stats" + H_B)]
     [SerializeField] private UIStatsComponentRendererFloat _food;
     [SerializeField] private UIStatsComponentRendererFloat _water;
     [SerializeField] private UIStatsComponentRendererFloat _oxygen;
     [SerializeField] private UIStatsComponentRendererFloat _fuel;
-
-    public UIInventory GetInventory() => _inventory;
 
     protected override void OnGroupOpened()
     {
@@ -30,4 +26,5 @@ public class UIViewGame : UIView
         _oxygen.SetStats(statsComponent);
         _fuel.SetStats(statsComponent);
     }
+
 }

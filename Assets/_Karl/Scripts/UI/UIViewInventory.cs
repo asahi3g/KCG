@@ -1,7 +1,7 @@
 using Inventory;
 using UnityEngine;
 
-public class UIInventory : UIMonoBehaviour
+public class UIViewInventory : UIView
 {
     [SerializeField] private UIContent _content;
     [SerializeField] private UIContentSelection _selection;
@@ -21,6 +21,16 @@ public class UIInventory : UIMonoBehaviour
     {
         base.OnDisable();
         _selection.onSelectWithPrevious.RemoveListener(OnSelectionSelect);
+    }
+    
+    protected override void OnGroupOpened()
+    {
+        
+    }
+
+    protected override void OnGroupClosed()
+    {
+        
     }
 
     public void SetInventoryEntityComponent(InventoryEntityComponent inventory)
@@ -71,4 +81,6 @@ public class UIInventory : UIMonoBehaviour
             _inventoryEntityComponent.SetSelectedSlotIndex(((UIContentElementInventorySlot)selected).GetSlot().Index);
         }
     }
+
+    
 }

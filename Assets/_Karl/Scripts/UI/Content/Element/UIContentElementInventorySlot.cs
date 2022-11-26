@@ -11,7 +11,7 @@ public class UIContentElementInventorySlot : UIContentElement
     [SerializeField] private GameObject _quantity;
     [SerializeField] private TMP_Text _quantityText;
 
-    private UIInventory _inventory;
+    private UIViewInventory _inventory;
     private Slot _slot;
 
     public Slot GetSlot() => _slot;
@@ -27,7 +27,7 @@ public class UIContentElementInventorySlot : UIContentElement
         _selection.SetActive(isSelected);
     }
 
-    public void SetSlot(UIInventory inventory, Slot slot)
+    public void SetSlot(UIViewInventory inventory, Slot slot)
     {
         _inventory = inventory;
         _slot = slot;

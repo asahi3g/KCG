@@ -26,7 +26,7 @@ public class PlayerInput : BaseMonoBehaviour
     {
         if (IsGameplayBlocked()) return;
         
-        if (App.Instance.GetUI().GetView<UIViewGame>().GetInventory().GetSlot(slotIndex, out UIContentElementInventorySlot slot))
+        if (App.Instance.GetUI().GetView<UIViewInventory>().GetSlot(slotIndex, out UIContentElementInventorySlot slot))
         {
             slot.Select();
             //Debug.Log($"Quick slot index[{slotIndex}] selected by keyboard");
@@ -48,55 +48,63 @@ public class PlayerInput : BaseMonoBehaviour
     {
         if (IsGameplayBlocked()) return;
         
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Jump();
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Jump();
     }
 
     public void DoPlayerJetpackBegin()
     {
         if (IsGameplayBlocked()) return;
 
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().JetPackFlyingBegin();
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().JetPackFlyingBegin();
     }
     
     public void DoPlayerJetpackEnd()
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().JetPackFlyingEnd();
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().JetPackFlyingEnd();
     }
 
     public bool DoPlayerWalk(bool left, bool right)
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Walk(GetPlayerDirection(left, right));
+        if (IsGameplayBlocked()) return false;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Walk(GetPlayerDirection(left, right));
         return true;
     }
     
     public bool DoPlayerCrouchBegin(bool left, bool right)
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().CrouchBegin(GetPlayerDirection(left, right));
+        if (IsGameplayBlocked()) return false;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().CrouchBegin(GetPlayerDirection(left, right));
         return true;
     }
     
     public bool DoPlayerCrouchEnd(bool left, bool right)
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().CrouchEnd(GetPlayerDirection(left, right));
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().CrouchEnd(GetPlayerDirection(left, right));
         return true;
     }
     
     public bool DoPlayerSprint(bool left, bool right)
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Run(GetPlayerDirection(left, right));
+        if (IsGameplayBlocked()) return false;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Run(GetPlayerDirection(left, right));
         return true;
     }
 
     public void DoPlayerDash(bool left, bool right)
     {
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Dash(GetPlayerDirection(left, right));
+        if (IsGameplayBlocked()) return;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent().Dash(GetPlayerDirection(left, right));
     }
 
     public void DoPlayerFire()
     {
         if (IsGameplayBlocked()) return;
 
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
         {
             if (agentRenderer.GetInventory(out InventoryEntityComponent inventoryEntityComponent))
             {
@@ -117,10 +125,18 @@ public class PlayerInput : BaseMonoBehaviour
     {
         if (IsGameplayBlocked()) return;
         
-        if (Game.Instance.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
         {
             GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
         }
+    }
+
+    public void DoPlayerLookTarget(Vector2 screenPosition)
+    {
+        if (IsGameplayBlocked()) return;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer)) agentRenderer.GetAgent()
+            .SetAimTarget(new KMath.Vec2f(screenPosition.x, screenPosition.y));
     }
 
     public int GetPlayerDirection(bool left, bool right)
