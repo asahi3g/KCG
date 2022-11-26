@@ -95,7 +95,7 @@ namespace Planet.Unity
             if (enableBackgroundPlacementTool)
             {
                 backgroundPlacementTool = new BackgroundPlacementTool(true, true);
-                backgroundPlacementTool.Initialize(Material, transform);
+                backgroundPlacementTool.Initialize(Material, transform, tileMap.width, tileMap.height);
             }
 
             //GenerateMap();

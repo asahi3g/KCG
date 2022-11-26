@@ -10,6 +10,6 @@ namespace Enums
         BackGround = 5,
         Mech = 6,
         Gui = 7,
-        TGen = 8
+        TGen = 8,
     }
 }

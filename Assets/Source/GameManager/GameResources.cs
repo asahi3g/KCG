@@ -9,15 +9,11 @@ public class GameResources
 
     public static void Initialize()
     {
-        if (isInitialized)
-        {
-            Debug.Log("Game resources already initialized");
-            return;
-        }
         long beginTime = DateTime.Now.Ticks;
-            
+
         CreateDropTables();
         InitializeTGenTiles();
+        InitializePlaceableBackgroundTiles();
 
         CreateTiles();
         CreateAnimations();
@@ -43,6 +39,11 @@ public class GameResources
     private static void InitializeTGenTiles()
     {
         GameState.TGenRenderGridOverlay.InitializeResources();
+    }
+
+    private static void InitializePlaceableBackgroundTiles()
+    {
+        GameState.BackgroundGridOverlay.InitializeResources();
     }
 
     private static void CreateTiles()
