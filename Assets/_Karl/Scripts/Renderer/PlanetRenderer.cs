@@ -12,11 +12,14 @@ public class PlanetRenderer : BaseMonoBehaviour
     [SerializeField] private string _fileName;
     [SerializeField] private Material _tileMaterial;
     [SerializeField] private Transform _agents;
+    [SerializeField] private bool _debug;
+    [SerializeField] private Transform _debugParent;
+    [SerializeField] private DebugChunk _debugChunk;
 
     private Planet.PlanetState _planet;
     private Utility.FrameMesh _highlightMesh;
 
-    public void Initialize(Camera camera, UnityAction<IPlanetCreationResult> onSuccess, UnityAction<IError> onFailed)
+    public void Initialize(Camera cam, UnityAction<IPlanetCreationResult> onSuccess, UnityAction<IError> onFailed)
     {
         if (string.IsNullOrEmpty(_fileName))
         {
@@ -45,8 +48,10 @@ public class PlanetRenderer : BaseMonoBehaviour
 
             for (int i = 0; i < tilePropertiesLength; i++)
             {
-                ref TileProperty property = ref tileProperties[i];
-                tiles[(int) property.MaterialType][(int) property.BlockShapeType] = property;
+                TileProperty property = tileProperties[i];
+                int a = (int) property.MaterialType;
+                int b = (int) property.BlockShapeType;
+                tiles[a][b] = property;
             }
 
             int width = ((tileMap.width + 16 - 1) / 16) * 16;
@@ -66,23 +71,30 @@ public class PlanetRenderer : BaseMonoBehaviour
                     if (tileIndex >= 0)
                     {
                         Tiled.TiledMaterialAndShape tileMaterialAndShape = tileMap.GetTile(tileIndex);
-                        TileID tileID = tiles[(int)tileMaterialAndShape.Material][(int)tileMaterialAndShape.Shape].TileID;
 
-                        planet.TileMap.GetTile(i, j).FrontTileID = tileID;
+                        ref Tile tile = ref planet.TileMap.GetTile(i, j);
+                        int t1 = (int) tileMaterialAndShape.Material;
+                        int t2 = (int) tileMaterialAndShape.Shape;
+                        tile.FrontTileID = tiles[t1][t2].TileID;
                     }
                 }
             }
 
             
-            Vector3 scPoint = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+            Vector3 scPoint = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, cam.nearClipPlane));
             planet.TileMap.UpdateTileMapPositions((int)scPoint.x, (int)scPoint.y);
-            
+
             _highlightMesh = new Utility.FrameMesh("HighliterGameObject", _tileMaterial, transform, GameState.SpriteAtlasManager.GetSpriteAtlas(Enums.AtlasType.Generic), 30);
             
             PlanetTileMap.TileMapGeometry.BuildGeometry(planet.TileMap);
 
             _planet = planet;
             data = new PlanetCreationData(_fileName, tileMap, tiles, size, _planet);
+            
+            if (_debug)
+            {
+                DebugTiles(planet.TileMap);
+            }
         }
         catch (Exception e)
         {
@@ -130,5 +142,40 @@ public class PlanetRenderer : BaseMonoBehaviour
         }
 
         return result != null;
+    }
+
+    private void DebugTiles(PlanetTileMap.TileMap tileMap)
+    {
+        ClearDebugTiles();
+        if (tileMap == null) return;
+
+        Chunk[] chunks = tileMap.ChunkArray;
+        int length = chunks.Length;
+        
+        int y = tileMap.MapSize.Y;
+        int x = tileMap.MapSize.X;
+
+        for(int j = 0; j < y; j++)
+        {
+            for (int i = 0; i < x; i++)
+            {
+                Enums.PlanetTileMap.TileID tileID = tileMap.GetFrontTileID(i, j);
+
+                if (tileID == TileID.Air)
+                {
+                    continue;
+                }
+                
+                TileProperty properties = GameState.TileCreationApi.GetTileProperty(tileID);
+
+                DebugChunk debugChunk = Instantiate(_debugChunk, _debugParent, false);
+                debugChunk.SetChunk(i, j, properties);
+            }
+        }
+    }
+
+    private void ClearDebugTiles()
+    {
+        _debugParent.DestroyChildren();
     }
 }

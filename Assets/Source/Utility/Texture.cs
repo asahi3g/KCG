@@ -12,11 +12,14 @@ namespace Utility
                 Texture2D tex = new Texture2D(w, h, TextureFormat.RGBA32, false)
                 {
                     wrapMode = TextureWrapMode.Clamp,
-                    filterMode = FilterMode.Point
+                    filterMode = FilterMode.Point,
+                    name = name
                 };
-                tex.LoadRawTextureData(rgba);
-                tex.name = name;
 
+                // v2
+                tex.LoadRawTextureData(rgba);
+
+                // v1
                 /*
                 var pixels = new Color32[w * h];
                 for (int y = 0; y < h; y++)
@@ -32,12 +35,11 @@ namespace Utility
                         pixels[x + y * w] = new Color32(r, g, b, a);
                     }
                 }
-                
                 tex.SetPixels32(pixels);
                 */
                 
+                
                 tex.Apply();
-
                 return tex;
             }
         }

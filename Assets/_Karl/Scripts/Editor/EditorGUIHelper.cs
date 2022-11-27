@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using Agent;
 using Inventory;
+using Item;
 using UnityEditor;
 using UnityEngine;
 using Utility;
+using InventoryComponent = Agent.InventoryComponent;
+using PhysicsStateComponent = Agent.PhysicsStateComponent;
 
 public static class EditorGUIHelper
 {
@@ -23,6 +26,8 @@ public static class EditorGUIHelper
     private static bool _showInventoryEntitySlots = false;
     private static Flag2Map _showInventoryEntitySlotsEntry = new Flag2Map();
     private static Flag2Map _showInventoryEntitySlotsEntryItem = new Flag2Map();
+    private static Flag1Map _showItemIdComponent = new Flag1Map();
+    private static Flag1Map _showItemTypeComponent = new Flag1Map();
 
     private static GUIStyle _style;
 
@@ -205,14 +210,29 @@ public static class EditorGUIHelper
         {
             Slot slot = value[i];
 
-            bool foldout = EditorGUILayout.Foldout(_showInventoryEntitySlotsEntry.Get(slot.InventoryId, slot.Index), $"{i}");
-            if (_showInventoryEntitySlotsEntry.Set(slot.InventoryId, slot.Index, foldout))
-            {
-                EditorGUI.indentLevel++;
-                Draw(slot);
-                EditorGUI.indentLevel--;
-            }
+            bool foldout = Draw(slot, $"{i}", _showInventoryEntitySlotsEntry.Get(slot.InventoryId, slot.Index));
+            _showInventoryEntitySlotsEntry.Set(slot.InventoryId, slot.Index, foldout);
         }
+    }
+
+    public static bool Draw(Slot value, string foldoutTitle, bool foldout)
+    {
+        foldout = EditorGUILayout.Foldout(foldout, foldoutTitle);
+        if (foldout)
+        {
+            EditorGUI.indentLevel++;
+            if (value != null)
+            {
+                Draw(value);
+            }
+            else
+            {
+                DrawNone();
+            }
+            
+            EditorGUI.indentLevel--;
+        }
+        return foldout;
     }
 
     public static void Draw(Slot value)
@@ -240,8 +260,48 @@ public static class EditorGUIHelper
 
     public static void Draw(ItemInventoryEntity value)
     {
-        EditorGUILayout.LabelField($"{nameof(value.itemID)}: {value.itemID.ToStringPretty()}", GetStyle());
-        EditorGUILayout.LabelField($"{nameof(value.itemType)}: {value.itemType.ToStringPretty()}", GetStyle());
+        Draw(value.itemID);
+        Draw(value.itemType);
+        
+        ItemProperties itemProperties = GameState.ItemCreationApi.Get(value.itemType.Type);
+        
+        
+    }
+
+    public static void Draw(Item.IDComponent idComponent)
+    {
+        if (idComponent == null)
+        {
+            EditorGUILayout.LabelField($"{nameof(Item.IDComponent)} (None)", GetStyle());
+            return;
+        }
+        
+        bool foldout = EditorGUILayout.Foldout(_showItemIdComponent.Get(idComponent.ID), $"{nameof(Item.IDComponent)}");
+        if (_showItemIdComponent.Set(idComponent.ID, foldout))
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.LabelField($"{nameof(idComponent.ID)}: {idComponent.ID.ToStringPretty()}", GetStyle());
+            EditorGUILayout.LabelField($"{nameof(idComponent.Index)}: {idComponent.Index.ToStringPretty()}", GetStyle());
+            EditorGUILayout.LabelField($"{nameof(idComponent.ItemName)}: {idComponent.ItemName.ToStringPretty()}", GetStyle());
+            EditorGUI.indentLevel--;
+        }
+    }
+
+    public static void Draw(Item.TypeComponent typeComponent)
+    {
+        if (typeComponent == null)
+        {
+            EditorGUILayout.LabelField($"{nameof(Item.TypeComponent)} (None)", GetStyle());
+            return;
+        }
+        
+        bool foldout = EditorGUILayout.Foldout(true, $"{nameof(Item.TypeComponent)}");
+        if (foldout)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.LabelField($"{nameof(typeComponent.Type)}: {typeComponent.Type.ToStringPretty()}", GetStyle());
+            EditorGUI.indentLevel--;
+        }
     }
 
     public static void Draw(BitSet value)
@@ -351,6 +411,30 @@ public static class EditorGUIHelper
         GUILayout.Space(20);
     }
 
+    
+    private class Flag1Map
+    {
+        private readonly Dictionary<int, bool> Map = new Dictionary<int, bool>();
+
+        public bool Get(int key)
+        {
+            if (!Map.ContainsKey(key)) return false;
+            return Map[key];
+        }
+
+        public bool Set(int key, bool value)
+        {
+            if (Map.ContainsKey(key))
+            {
+                Map[key] = value;
+            }
+            else
+            {
+                Map.Add(key, value);
+            }
+            return value;
+        }
+    }
 
     private class Flag2Map
     {

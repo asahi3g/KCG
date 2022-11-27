@@ -47,7 +47,7 @@ public class Player : BaseMonoBehaviour
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
                 
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+                //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
                 
                 UIViewInventory inventory = App.Instance.GetUI().GetView<UIViewInventory>();
                 inventory.SetInventoryEntityComponent(inventoryEntityComponent);

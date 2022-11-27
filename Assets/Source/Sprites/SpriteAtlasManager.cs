@@ -227,8 +227,8 @@ namespace Sprites
             var widthPowerOf2 = (int)Math.Pow(2, Math.Ceiling(Math.Log(bounds.Width, 2)));
             var heightPowerOf2 = (int)Math.Pow(2, Math.Ceiling(Math.Log(bounds.Height, 2)));
 
-            atlas.Width = Math.Max(widthPowerOf2, atlas.Width);
-            atlas.Height = Math.Max(heightPowerOf2, atlas.Height);
+            atlas.SetWidth(Math.Max(widthPowerOf2, atlas.Width));
+            atlas.SetHeight(Math.Max(heightPowerOf2, atlas.Height));
             atlas.Data = new byte[4 * atlas.Width * atlas.Height]; 
 
             for(int i = 0; i < atlas.Data.Length; i++)

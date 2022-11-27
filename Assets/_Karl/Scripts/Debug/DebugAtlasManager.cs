@@ -6,6 +6,8 @@ public abstract class DebugAtlasManager : BaseMonoBehaviour
 {
     [TextArea(3,6)]
     [SerializeField] private string _directory;
+    [Space]
+    [SerializeField] private SpriteAtlas[] _atlases;
 
     public bool DirectoryExists() => Directory.Exists(_directory);
 
@@ -35,5 +37,10 @@ public abstract class DebugAtlasManager : BaseMonoBehaviour
             File.WriteAllBytes(path, tex.EncodeToPNG());
             Debug.Log($"New PNG saved at '{path}'");
         }
+    }
+    
+    protected virtual void Update()
+    {
+        _atlases = GetAtlases();
     }
 }

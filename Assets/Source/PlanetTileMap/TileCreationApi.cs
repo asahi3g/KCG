@@ -53,11 +53,12 @@ namespace PlanetTileMap
         public TileCreationApi()
         {
             var tilePropertyArray = new TileProperty[4096];
+            int length = tilePropertyArray.Length;
 
-            for (int i = 0; i < tilePropertyArray.Length; i++)
+            for (int i = 0; i < length; i++)
             {
-                tilePropertyArray[i].TileID = TileID.Error;
-                tilePropertyArray[i].BaseSpriteId = -1;
+                TileProperty tileProperty = new TileProperty(TileID.Error, -1);
+                tilePropertyArray[i] = tileProperty;
             }
 
             TilePropertyArray = tilePropertyArray;
@@ -595,9 +596,9 @@ namespace PlanetTileMap
 
         public void CreateRockGeometryTiles()
         {
-           GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Rock);
+            GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Rock);
             GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Rock);
-                     GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
             GameState.TileCreationApi.CreateTileProperty(TileID.FP_R0_Rock);
             GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.FP_R0);
             GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);

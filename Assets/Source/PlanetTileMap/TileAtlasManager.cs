@@ -120,7 +120,7 @@ namespace PlanetTileMap
         {
             Sprites.SpriteSheet sheet = SpriteLoader.SpriteSheets[spriteSheetID];
             Sprites.SpriteAtlas atlas = SpritesArray[atlasId];
-            int count = SpriteCount[atlasId];
+            ref int count = ref SpriteCount[atlasId];
             
             int xOffset = (count % atlas.Width) * 32;
             int yOffset = (count / atlas.Height) * 32;
