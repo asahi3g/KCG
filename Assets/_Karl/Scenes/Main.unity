@@ -1494,8 +1494,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419920045}
   m_HandleRect: {fileID: 419920044}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.5514706
+  m_Value: 0.9999998
+  m_Size: 0.5514705
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8212,6 +8212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runInBackground: 1
   _targetFrameRate: 60
+  _timeScale: 1
 --- !u!1001 &1521264088
 PrefabInstance:
   m_ObjectHideFlags: 0
