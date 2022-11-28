@@ -52,9 +52,10 @@ namespace Agent
             Utils.Assert(index >= 0 && index < Length);
 
             ref AgentEntity entity = ref List[index];
+            
             if (entity.hasAgentModel3D)
             {
-                UnityEngine.Object.Destroy(entity.agentModel3D.GameObject);
+                entity.agentModel3D.DestroyRenderer();
             }
             entity.Destroy();
 

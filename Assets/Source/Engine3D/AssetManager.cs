@@ -2,7 +2,8 @@
 
 using Agent;
 using System;
-using Vehicle;
+using Loader;
+using UnityEngine;
 
 namespace Engine3D
 {
@@ -12,52 +13,35 @@ namespace Engine3D
     {
 
         public static AssetManager AssetManagerSingelton;
+        AnimationLoader AnimationLoader;
+        MaterialLoader MaterialLoader;
+        private ModelLoaderAgents _modelLoaderAgents;
+        AgentAnimations agentAnimations;
+        private ModelLoaderItems _modelLoaderItems;
+        private UIHitpoints _prefabUIHitpoints;
 
         public static AssetManager Singelton
         {
             get
             {
-                if (AssetManagerSingelton == null)
-                {
-                    AssetManagerSingelton = new AssetManager();
-                }
-
+                if (AssetManagerSingelton == null) AssetManagerSingelton = new AssetManager();
                 return AssetManagerSingelton;
             }
         }
 
-        AnimationLoader AnimationLoader;
-        ModelLoader ModelLoader;
-        MaterialLoader MaterialLoader;
+        public UIHitpoints GetPrefabUIHitpoints() => _prefabUIHitpoints;
 
-        //Agent
-        AgentModels agentModels;
-        AgentAnimations agentAnimations;
-
-        //Vehicle
-        VehicleModels vehicleModels;
-        VehicleAnimations vehicleAnimations;
 
         public AssetManager()
         {
             AnimationLoader = new AnimationLoader();
-            ModelLoader = new ModelLoader();
             MaterialLoader = new MaterialLoader();
-
-            // Agent
-            agentModels = new AgentModels(ModelLoader, MaterialLoader);
-            agentAnimations = new AgentAnimations(AnimationLoader);
-
-            // Vehicle
-            vehicleModels = new VehicleModels(ModelLoader, MaterialLoader);
-            vehicleAnimations = new VehicleAnimations(AnimationLoader);
-
-            long beginTime = DateTime.Now.Ticks;
-            LoadMaterials();
-            LoadAnimations();
-            LoadModels();
             
-            UnityEngine.Debug.Log($"{nameof(AssetManager)} initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds");
+            _modelLoaderAgents = new ModelLoaderAgents(new ResourcesLoader<AgentRenderer>("Agents"));
+            agentAnimations = new AgentAnimations(AnimationLoader);
+            _modelLoaderItems = new ModelLoaderItems(new ResourcesLoader<ItemRenderer>("Items"));
+
+            LoadAll();
         }
 
         public ref UnityEngine.AnimationClip GetAnimationClip(AnimationType animationType)
@@ -65,9 +49,14 @@ namespace Engine3D
             return ref AnimationLoader.GetAnimationClip(animationType);
         }
 
-        public ref UnityEngine.GameObject GetModel(ModelType modelType)
+        public bool GetPrefabAgent(AgentModelType modelType, out AgentRenderer agentRenderer)
         {
-            return ref ModelLoader.GetModel(modelType);
+            return _modelLoaderAgents.Get(modelType, out agentRenderer);
+        }
+        
+        public bool GetPrefabItem(ItemModelType modelType, out ItemRenderer itemRenderer)
+        {
+            return _modelLoaderItems.Get(modelType, out itemRenderer);
         }
 
         public ref UnityEngine.Material GetMaterial(MaterialType materialType)
@@ -75,37 +64,23 @@ namespace Engine3D
             return ref MaterialLoader.GetMaterial(materialType);
         }
 
-        private void LoadMaterials()
+        private void LoadAll()
         {
-            // Agent
-            agentModels.LoadMaterials();
-
-            // Vehicle
-            vehicleModels.LoadMaterials();
-        }
-
-        private void LoadAnimations()
-        {
-            // Agent
+            long beginTime = DateTime.Now.Ticks;
+            
             agentAnimations.LoadAnimations();
+            _modelLoaderAgents.LoadAll();
+            _modelLoaderItems.LoadAll();
+            LoadUIHitpoints();
 
-            // Vehicle
-            vehicleAnimations.LoadAnimations();
+            UnityEngine.Debug.Log(DebugExtensions.Format(typeof(AssetManager), $"initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds"));
         }
 
-        private void LoadModels()
+        private void LoadUIHitpoints()
         {
-            // Agent
-            agentModels.LoadModels();
-
-            // Vehicle
-            vehicleModels.LoadModels();
-
-            ModelLoader.Load("Pistol", ModelType.Pistol);
-            ModelLoader.Load("Rapier", ModelType.Rapier);
-
-            ModelLoader.Load("Sword", ModelType.Sword);
-            ModelLoader.Load("SpaceGun", ModelType.SpaceGun);
+            ResourcesLoader<UIHitpoints> resourcesLoader = new ResourcesLoader<UIHitpoints>("UI");
+            resourcesLoader.LoadAll();
+            resourcesLoader.GetFirst(out _prefabUIHitpoints);
         }
 
     }

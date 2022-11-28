@@ -29,7 +29,7 @@ public class GameResources
         CreateMechs();
         CreateVehicles();
 
-        UnityEngine.Debug.Log($"{nameof(GameResources)} initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds");
+        Debug.Log(DebugExtensions.Format(typeof(GameResources), $"initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds"));
 
         isInitialized = true;
     }

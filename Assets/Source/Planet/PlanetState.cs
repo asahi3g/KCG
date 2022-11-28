@@ -12,6 +12,7 @@ using Item;
 using Inventory;
 using KMath;
 using UnityEngine;
+using UnityEngine.Events;
 using Vehicle.Pod;
 using Utility;
 
@@ -43,6 +44,8 @@ namespace Planet
         public int DebugLinesCount;
 
         public Contexts EntitasContext;
+
+        public class Event : UnityEvent<PlanetState>{}
 
         public void Init(Vec2i mapSize)
         {

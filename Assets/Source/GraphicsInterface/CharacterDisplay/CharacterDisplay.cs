@@ -1,5 +1,7 @@
 //imports UnityEngine
 
+using Agent;
+
 namespace KGui
 {
     public class CharacterDisplay
@@ -34,11 +36,11 @@ namespace KGui
         }
 
 
-        public void setPlayer(AgentEntity player)
+        public void SetPlayer(AgentEntity player)
         {
             Player = player;
-            var agentModel3D = player.agentModel3D;
-            CharacterModelDisplay.SetModel(agentModel3D.GameObject);
+            Model3DComponent model3DComponent = player.agentModel3D;
+            CharacterModelDisplay.SetModel(model3DComponent.Renderer.gameObject);
         }
 
         public void Update()

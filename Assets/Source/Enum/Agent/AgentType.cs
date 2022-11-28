@@ -10,7 +10,7 @@ namespace Enums
         EnemyMarine,
         EnemyGunner,
         EnemySwordman,
-        EnemyInsect,
-        EnemyHeavy,
+        InsectSmall,
+        InsectLarge,
     }
 }

@@ -5,6 +5,7 @@ using Enums;
 using Particle;
 using Collisions;
 using System;
+using System.Collections.Generic;
 
 namespace Vehicle
 {
@@ -123,20 +124,24 @@ namespace Vehicle
                         {
                             vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
 
-                            var agentsInside = vehicle.vehicleCapacity.agentsInside;
+                            List<AgentEntity> agentsInside = vehicle.vehicleCapacity.agentsInside;
                             if (vehicle.hasVehicleCapacity)
                             {
-                                for (int j = 0; j < agentsInside.Count; j++)
+                                int count = agentsInside.Count;
+                                
+                                for (int j = 0; j < count; j++)
                                 {
-                                    if (!agentsInside[j].agentModel3D.GameObject.gameObject.activeSelf)
+                                    AgentEntity agentEntity = agentsInside[j];
+                                    
+                                    if (!agentEntity.agentModel3D.IsActive)
                                     {
-                                        agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
+                                        agentEntity.agentModel3D.SetIsActive(true);
 
-                                        agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
-                                        agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
+                                        agentEntity.agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
+                                        agentEntity.agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);
 
-                                        agentsInside[j].isAgentAlive = true;
-                                        agentsInside[j].agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y);
+                                        agentEntity.isAgentAlive = true;
+                                        agentEntity.agentPhysicsState.Position = new Vec2f(vehicle.vehiclePhysicsState2D.Position.X, vehicle.vehiclePhysicsState2D.Position.Y);
                                         vehicle.vehicleThruster.Jet = false;
                                     }
                                     else

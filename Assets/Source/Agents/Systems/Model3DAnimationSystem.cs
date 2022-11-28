@@ -28,7 +28,7 @@ namespace Agent
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
-                    currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
+                    currentClip = model3d.Renderer.GetAnimancer().Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 
 
@@ -51,11 +51,6 @@ namespace Agent
 
                     physicsState.LastAgentAnimation = agentAnimation;
                 }
-
-                
-                
-
-                
             }
         }
     }

@@ -44,7 +44,7 @@ public class UIContentElementInventorySlot : UIContentElement
     {
         if (GetItem(out ItemInventoryEntity itemInventoryEntity))
         {
-            ItemProperties itemProprieties = GameState.ItemCreationApi.Get(itemInventoryEntity.itemType.Type);
+            ItemProperties itemProprieties = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
             Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(itemProprieties.InventorSpriteID, Enums.AtlasType.Particle);
 
             if (SetIcon(sprite.Texture))

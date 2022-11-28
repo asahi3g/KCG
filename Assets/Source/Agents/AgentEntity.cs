@@ -22,20 +22,8 @@ public partial class AgentEntity
         int selectedSlot = inventory.SelectedSlotIndex;
         return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }
-    public void DestroyModel()
-    {
-        if (hasAgentModel3D)
-        {
-            var model3D = agentModel3D;
-            //if (model3D.GameObject != null)
-            //{
-            //    if (model3D.Weapon.name != "SpaceGun" || model3D.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3D.GameObject);
-            //}
-        }
-    }
 
-    public bool CanMove()
+   public bool CanMove()
     {
         var physicsState = agentPhysicsState;
         return isAgentAlive && physicsState.MovementState != AgentMovementState.IdleAfterShooting;
@@ -210,7 +198,7 @@ public partial class AgentEntity
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
-        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
         if (isAgentPlayer && itemProperty.HasUI())
         {
@@ -234,7 +222,7 @@ public partial class AgentEntity
     {
         if (!hasAgentModel3D) return;
         
-        var itemProperty = GameState.ItemCreationApi.Get(itemType);
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
         agentModel3D.ItemAnimationSet = itemProperty.AnimationSet;
         SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
     }
@@ -255,30 +243,31 @@ public partial class AgentEntity
             }
             case Model3DWeaponType.Sword:
             {
-                UnityEngine.GameObject hand = model3d.LeftHand;
+                if (AssetManager.Singelton.GetPrefabItem(ItemModelType.Rapier, out ItemRenderer itemRenderer))
+                {
+                    UnityEngine.Transform hand = model3d.Renderer.GetHandLeft();
+                    UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(itemRenderer).gameObject;
 
-                UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
+                    var gunRotation = rapier.transform.rotation;
+                    rapier.transform.parent = hand;
+                    rapier.transform.position = hand.position;
+                    rapier.transform.localRotation = gunRotation;
+                    rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
-                var gunRotation = rapier.transform.rotation;
-                rapier.transform.parent = hand.transform;
-                rapier.transform.position = hand.transform.position;
-                rapier.transform.localRotation = gunRotation;
-                rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
-
-                model3d.Weapon = rapier;
+                    model3d.Weapon = rapier;
+                }
+                
                 break;
             }
 
             case Model3DWeaponType.Pistol:
             {
-                UnityEngine.GameObject hand = model3d.RightHand;
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
                 if (hand != null)
                 {
                     if (model3d.Weapon == null)
                     {
-                        UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
-                        model3d.Weapon = PistolPivot.GetChild(0).gameObject;
+                        model3d.Weapon = model3d.Renderer.GetPivotPistol().gameObject;
                     }
                 }
                 break;
@@ -286,12 +275,12 @@ public partial class AgentEntity
 
             case Model3DWeaponType.Rifle:
             {
-                UnityEngine.GameObject hand = model3d.RightHand;
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
                 if (hand != null)
                 {
                     if(model3d.Weapon == null)
                     {
-                        UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot"); model3d.Weapon = RiflePivot.GetChild(0).gameObject;
+                        model3d.Weapon = model3d.Renderer.GetPivotRifle().gameObject;
                     }
 
                 }

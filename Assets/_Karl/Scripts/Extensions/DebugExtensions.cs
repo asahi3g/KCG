@@ -7,6 +7,7 @@ public static class DebugExtensions
 
     public static readonly Color NumberColor = new Color(0.5f, 0.7f, 1f, 1f);
     public static readonly Color EnumColor = Color.Lerp(Color.red, Color.yellow, 0.5f);
+    public static readonly Color ClassColor = Color.Lerp(Color.red, Color.yellow, 0.5f);
     
 
     public static string ToStringPretty(this System.Object obj)
@@ -39,5 +40,10 @@ public static class DebugExtensions
         }
         
         return obj.ToString();
+    }
+
+    public static string Format(Type type, object message)
+    {
+        return $"{$"[{type.Name}]".Color(ClassColor)} {message}";
     }
 }

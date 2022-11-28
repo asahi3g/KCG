@@ -20,7 +20,7 @@ public class OnContentSelectionInventoryItemInformation : OnContentSelectionInve
 
         if (element.GetItem(out ItemInventoryEntity itemInventoryEntity))
         {
-            ItemProperties itemProperties = GameState.ItemCreationApi.Get(itemInventoryEntity.itemType.Type);
+            ItemProperties itemProperties = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
 
             _tmp.SetText($"{itemProperties.Group.ToStringPretty()} {itemProperties.ItemType.ToStringPretty()} {itemProperties.ItemLabel}");
         }

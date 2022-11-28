@@ -18,7 +18,7 @@
             ItemParticleEntity[] items = GameState.Planet.EntitasContext.itemParticle.GetEntities();
             foreach (var entity in items)
             {
-                ItemProperties proprieties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+                ItemProperties proprieties = GameState.ItemCreationApi.GetItemProperties(entity.itemType.Type);
 
                 int SpriteID = proprieties.SpriteID;
                 UnityEngine.Vector4 textureCoords = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle).TextureCoords;

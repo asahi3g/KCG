@@ -52,7 +52,7 @@ namespace Item
         }
 
 
-        public ItemProperties Get(ItemType type)
+        public ItemProperties GetItemProperties(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);

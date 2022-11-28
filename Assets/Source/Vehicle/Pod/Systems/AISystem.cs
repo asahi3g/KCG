@@ -47,17 +47,20 @@ namespace Vehicle.Pod
                                         var agentsInside = pod.vehiclePodStatus.AgentsInside;
                                         if (pod.hasVehiclePodStatus)
                                         {
-                                            for (int j = 0; j <= agentsInside.Count; j++)
+                                            int count = agentsInside.Count;
+                                            for (int j = 0; j <= count; j++)
                                             {
+                                                AgentEntity agentEntity = agentsInside[j];
+                                                
                                                 if (pod.vehiclePodStatus.DefaultAgentCount > 0)
                                                 {
-                                                    agentsInside[j].agentModel3D.GameObject.gameObject.SetActive(true);
-                                                    agentsInside[j].isAgentAlive = true;
+                                                    agentEntity.agentModel3D.SetIsActive(true);
+                                                    agentEntity.isAgentAlive = true;
 
-                                                    agentsInside[j].agentPhysicsState.Position = pod.vehiclePodPhysicsState2D.Position;
+                                                    agentEntity.agentPhysicsState.Position = pod.vehiclePodPhysicsState2D.Position;
 
-                                                    agentsInside[j].agentPhysicsState.Velocity.X += UnityEngine.Random.Range(5, 40);
-                                                    agentsInside[j].agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(10, 50);
+                                                    agentEntity.agentPhysicsState.Velocity.X += UnityEngine.Random.Range(5, 40);
+                                                    agentEntity.agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(10, 50);
 
                                                     pod.vehiclePodStatus.DefaultAgentCount--;
                                                 }
