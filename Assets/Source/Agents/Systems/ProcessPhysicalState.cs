@@ -241,7 +241,7 @@ namespace Agent
 
 
                     // if we are dashing we add some particles
-                    planet.AddParticleEffect(particlesSpawnPosition, Enums.ParticleEffect.Smoke_2);  
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);  
                 }
 
 
@@ -260,7 +260,7 @@ namespace Agent
                     {
                         physicsState.Velocity.Y = Agent.Constants.SlidingYVelocity;
                         //planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
-                        planet.AddParticleEffect(physicsState.Position + new Vec2f(0.0f, -0.5f), Enums.ParticleEffect.Smoke_2); 
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter); 
                     }
                     physicsState.AffectedByGravity = false;
                     
@@ -279,7 +279,7 @@ namespace Agent
                     {
                         physicsState.Velocity.Y = Agent.Constants.SlidingYVelocity;
                         //planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
-                        planet.AddParticleEffect(physicsState.Position + new Vec2f(-0.5f, -0.35f), Enums.ParticleEffect.Smoke_2); 
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter); 
                     }
                     physicsState.AffectedByGravity = false;
                 }
@@ -304,7 +304,7 @@ namespace Agent
                     }
 
                     //planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
-                    planet.AddParticleEffect(particlesSpawnPosition, Enums.ParticleEffect.Smoke_2); 
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter); 
 
                 }
                 else
