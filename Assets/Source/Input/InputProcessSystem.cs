@@ -134,7 +134,7 @@ namespace ECSInput
                 }
 
                 // JetPack
-                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel.GetValue() > 0)
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel > 0)
                 {
                     player.JetPackFlyingBegin();
                 }

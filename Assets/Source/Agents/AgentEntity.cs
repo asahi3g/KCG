@@ -425,7 +425,7 @@ public partial class AgentEntity
 
     public void JetPackFlyingBegin()
     {
-        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetMin()) return;
+        if (agentStats.Fuel <= agentStats.Fuel) return;
         if (!IsStateFree()) return;
         
         agentPhysicsState.MovementState = AgentMovementState.JetPackFlying;

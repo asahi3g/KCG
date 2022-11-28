@@ -7,16 +7,37 @@ namespace Agent
     public class StatsComponent : IComponent
     {
 
-        public ContainerInt Health = new ContainerInt(100, 0, 100);
-        public ContainerFloat Food = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Water = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Oxygen = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Fuel = new ContainerFloat(100f, 0f, 100f);
+        public int Health = 0;
+        public int Food = 0;
+        public int Water = 0;
+        public int Oxygen = 0;
+        public int Fuel = 0;
 
-        public bool IsLimping => Health.GetValue() <= 50.0f;
+        public bool IsLimping => Health <= 50.0f;
         
         
-        public ContainerInt GetValue(StatsKindInt kind)
+        public ContainerFloat GetValue(StatsKindInt kind)
+        {
+            switch (kind)
+            {
+                case StatsKindInt.Health: return new ContainerFloat(Health, 0, 100);
+            }
+            throw new NotImplementedException($"{nameof(StatsComponent)} by {kind} not implemented");
+        }
+
+        public ContainerFloat GetValue(StatsKindFloat kind)
+        {
+            switch (kind)
+            {
+                case StatsKindFloat.Food: return new ContainerFloat(Food, 0, 100);
+                case StatsKindFloat.Water: return new ContainerFloat(Water, 0, 100);
+                case StatsKindFloat.Oxygen: return new ContainerFloat(Oxygen, 0, 100);
+                case StatsKindFloat.Fuel: return new ContainerFloat(Fuel, 0, 100);
+            }
+            throw new NotImplementedException($"{nameof(StatsComponent)} by {kind} not implemented");
+        }
+
+        public int GetValueInt32(StatsKindInt kind)
         {
             switch (kind)
             {
@@ -25,7 +46,7 @@ namespace Agent
             throw new NotImplementedException($"{nameof(StatsComponent)} by {kind} not implemented");
         }
 
-        public ContainerFloat GetValue(StatsKindFloat kind)
+        public int GetValueInt32(StatsKindFloat kind)
         {
             switch (kind)
             {

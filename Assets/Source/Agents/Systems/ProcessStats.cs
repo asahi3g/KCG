@@ -17,10 +17,10 @@
                 if (physicsState.Position.X < -MaximumMapBoundaries || physicsState.Position.X >= planet.TileMap.MapSize.X + MaximumMapBoundaries ||
                 physicsState.Position.Y < -MaximumMapBoundaries || physicsState.Position.Y >= planet.TileMap.MapSize.Y + MaximumMapBoundaries)
                 {
-                    agentEntity.agentStats.Health.SetAsMin();
+                    agentEntity.agentStats.Health = 0;
                 }
                 
-                if (agentEntity.agentStats.Health.GetValue() <= 0 && agentEntity.isAgentAlive)
+                if (agentEntity.agentStats.Health <= 0 && agentEntity.isAgentAlive)
                 {
                     planet.KillAgent(i);
                     if (!agentEntity.hasAgentModel3D)

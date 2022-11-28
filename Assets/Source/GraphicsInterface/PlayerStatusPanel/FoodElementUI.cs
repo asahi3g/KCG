@@ -17,7 +17,7 @@ namespace KGUI
             
             ID = ElementEnums.FoodIndicatorPS;
             
-            foodAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Food.GetValue() : 0.0f;
+            foodAmount = GameState.Planet.Player != null ? GameState.Planet.Player.agentStats.Food : 0;
 
             icon.Init(13, 13,"Assets\\StreamingAssets\\UserInterface\\Icons\\hud_status_food.png", Enums.AtlasType.Gui);
             progressBar.Init(GameState.GUIManager.ProgressBar, foodAmount, UnityEngine.UI.Image.FillMethod.Radial360);
@@ -27,7 +27,7 @@ namespace KGUI
         {
             base.Update();
             ref var planet = ref GameState.Planet;
-            foodAmount = planet.Player?.agentStats.Food.GetValue() ?? 0.0f;
+            foodAmount = planet.Player?.agentStats.Food ?? 0;
             progressBar.Update(foodAmount);
             infoText.Update();
         }

@@ -63,7 +63,7 @@ namespace Action
                     planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f),
                     new Vec2f(agentPhysicsState.Position.X, agentPhysicsState.Position.Y + 0.35f));
 
-                    agent.agentStats.Health.Remove(damage);
+                    agent.agentStats.Health -= damage;
                 }
             }
 
