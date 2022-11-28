@@ -10,6 +10,9 @@ using Physics;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// TODO(Brandon): 
+// AgentSystem should not be importing GUI (for call back)
+
 public partial class AgentEntity
 {
    public ItemInventoryEntity GetItem()
@@ -557,7 +560,7 @@ public partial class AgentEntity
             // handling horizontal movement (left/right)
             if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
             {
-                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Constants.TimeToMax;
+                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
             }
 
             if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
@@ -592,11 +595,11 @@ public partial class AgentEntity
             {
                 if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
                 {
-                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * speed / Physics.Constants.TimeToMax;
                 }
                 else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
                 {
-                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * speed / Physics.Constants.TimeToMax;
                 }
             }
             else
@@ -605,11 +608,11 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * speed / Physics.Constants.TimeToMax;
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = horizontalDir * speed / Physics.Constants.TimeToMax;
                     }
                 }
                 else
@@ -717,5 +720,23 @@ public partial class AgentEntity
         Debug.LogWarning($"Cant resolve {nameof(ItemToolType)}.{itemToolType} as {nameof(Model3DWeaponType)} type");
         return Model3DWeaponType.None;
     }
+
+    public Vec2f GetFeetParticleSpawnPosition()
+    {
+        var physicsState = agentPhysicsState;
+
+        Vec2f result = physicsState.Position;
+        if (physicsState.FacingDirection == 1)
+        {
+            result += new Vec2f(-0.44f, 1.2f);
+        }
+        else if (physicsState.FacingDirection == -1)
+        {
+            result += new Vec2f(0.44f, 1.2f);
+        }
+
+        return result;
+    }
+
 
 }

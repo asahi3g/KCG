@@ -13,5 +13,10 @@ namespace Physics
         public const float DashSpeedMultiplier = 4.0f;
         public const float CollisionEpsilon = 0.1f;
         public const float CoefficientOfRestitution = 0.6f;
+        public const float MaximumVelocityToFall = 4.0f;
+
+        public const float MinimumJumpThreshold = 0.5f;
+        public const float MinimumVelocitySpeedRatioForMovement = 0.1f;
+        public const float GroundDistance = 1.25f;
     }
 }

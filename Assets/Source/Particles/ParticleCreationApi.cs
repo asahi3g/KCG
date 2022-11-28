@@ -251,7 +251,9 @@ namespace Particle
         public int WoodSprite;
         public int WhiteCircle;
         public int WoodSpriteSheet;
-
+        public int Smoke9_Sprite;
+        public int Smoke18_Sprite;
+        public int Fire4_Sprite;
 
         public void InitializeResources()
         {
@@ -260,12 +262,18 @@ namespace Particle
             int ParticleSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\particle.png", 128, 128);
             int CircleSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\circle.png", 128, 128);
             WoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\brown_32x32.png", 32, 32);
+            int Smoke9_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\smoke_9.png", 512, 512);
+            int Smoke18_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\smoke_18.png", 512, 512);
+            int Fire4_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\fire_4.png", 512, 512);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             WhitePixel = GameState.SpriteAtlasManager.CopySpriteToAtlas(WhitePixelSheet, 0, 0, Enums.AtlasType.Particle);
             WoodSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(WoodSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             int ParticleSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(ParticleSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             WhiteCircle = GameState.SpriteAtlasManager.CopySpriteToAtlas(CircleSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            Smoke9_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Smoke9_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            Smoke18_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Smoke18_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            Fire4_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Fire4_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Ore);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f);
@@ -782,7 +790,7 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Smoke_2);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
             GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.15f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(7);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0f), new Vec2f(-0.0f, 0f));
             GameState.ParticleEmitterCreationApi.End();

@@ -34,33 +34,47 @@ namespace NodeSystem
         // Register Action function
         public int RegisterAction(string name, Action action)
         {
-            Actions[Length] = action;
-            Names[Length] = name;
-            NameIDPairs.Add(name, Length);
-            return Length++;
+            if (NameIDPairs.ContainsKey(name))
+            {
+                return Length;
+            }
+            else
+            {
+                Actions[Length] = action;
+                Names[Length] = name;
+                NameIDPairs.Add(name, Length);
+                return Length++;
+            }
         }
 
         public int RegisterActionSequence(string name, Action onEnter = null, Action onUpdate = null, Action onSuccess = null, Action onFailure = null)
         {
-            if (onEnter == null)
-                onEnter = SuccessAction;
-            if (onUpdate == null)
-                onUpdate = SuccessAction;
-            if (onSuccess == null)
-                onSuccess = SuccessAction;
-            if (onFailure == null)
-                onFailure = SuccessAction;
+            if (NameIDPairs.ContainsKey(name))
+            {
+                return Length;
+            }
+            else
+            {
+                if (onEnter == null)
+                    onEnter = SuccessAction;
+                if (onUpdate == null)
+                    onUpdate = SuccessAction;
+                if (onSuccess == null)
+                    onSuccess = SuccessAction;
+                if (onFailure == null)
+                    onFailure = SuccessAction;
 
-            NameIDPairs.Add(name, Length);
-            Names[Length] = name + "Enter";
-            Names[Length + 1] = name + "Update";
-            Names[Length + 2] = name + "Success";
-            Names[Length + 3] = name + "Failure";
-            Actions[Length++] = onEnter;
-            Actions[Length++] = onUpdate;
-            Actions[Length++] = onSuccess;
-            Actions[Length++] = onFailure;
-            return Length;
+                NameIDPairs.Add(name, Length);
+                Names[Length] = name + "Enter";
+                Names[Length + 1] = name + "Update";
+                Names[Length + 2] = name + "Success";
+                Names[Length + 3] = name + "Failure";
+                Actions[Length++] = onEnter;
+                Actions[Length++] = onUpdate;
+                Actions[Length++] = onSuccess;
+                Actions[Length++] = onFailure;
+                return Length;
+            }
         }
     }
 }
