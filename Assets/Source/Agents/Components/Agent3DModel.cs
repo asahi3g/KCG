@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Agent
 {
     [Agent]
-    public class Model3DComponent : IComponent
+    public class Agent3DModel : IComponent
     {
         public Model3DWeaponType CurrentWeapon;
         public GameObject Weapon;

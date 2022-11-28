@@ -39,8 +39,8 @@ namespace KGui
         public void SetPlayer(AgentEntity player)
         {
             Player = player;
-            Model3DComponent model3DComponent = player.agentModel3D;
-            CharacterModelDisplay.SetModel(model3DComponent.Renderer.gameObject);
+            Agent3DModel agent3DModel = player.Agent3DModel;
+            CharacterModelDisplay.SetModel(agent3DModel.Renderer.gameObject);
         }
 
         public void Update()
@@ -51,9 +51,9 @@ namespace KGui
                 CharacterModelDisplay.Enabled = true;
                 CharacterModelDisplay.DebugDraw = DebugDraw;
 
-                if (Player.hasAgentModel3D)
+                if (Player.hasAgent3DModel)
                 {
-                    var agentModel3D = Player.agentModel3D;
+                    var agentModel3D = Player.Agent3DModel;
 
                     CharacterModelDisplay.Update();
                 }

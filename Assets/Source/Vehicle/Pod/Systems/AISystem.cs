@@ -54,7 +54,7 @@ namespace Vehicle.Pod
                                                 
                                                 if (pod.vehiclePodStatus.DefaultAgentCount > 0)
                                                 {
-                                                    agentEntity.agentModel3D.SetIsActive(true);
+                                                    agentEntity.Agent3DModel.SetIsActive(true);
                                                     agentEntity.isAgentAlive = true;
 
                                                     agentEntity.agentPhysicsState.Position = pod.vehiclePodPhysicsState2D.Position;

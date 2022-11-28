@@ -173,7 +173,7 @@ public partial class AgentEntity
     public Vec2f GetGunFiringPosition()
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D;
+        var model3d = Agent3DModel;
 
         Vec2f targetPosition = GetGunFiringTarget();
 
@@ -193,7 +193,7 @@ public partial class AgentEntity
 
     public void SetAimTarget(Vec2f AimTarget)
     {
-        agentModel3D.AimTarget = AimTarget;
+        Agent3DModel.AimTarget = AimTarget;
     }
     
     public void HandleItemDeselected(ItemInventoryEntity item)
@@ -213,25 +213,25 @@ public partial class AgentEntity
     
     public void SetModel3DWeapon(ItemInventoryEntity item)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
         
         SetModel3DWeapon(item.itemType.Type);
     }
 
     public void SetModel3DWeapon(Enums.ItemType itemType)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
         
         var itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
-        agentModel3D.ItemAnimationSet = itemProperty.AnimationSet;
+        Agent3DModel.ItemAnimationSet = itemProperty.AnimationSet;
         SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
     }
 
     public void SetModel3DWeapon(Model3DWeaponType weapon)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
 
-        Model3DComponent model3d = agentModel3D;
+        Agent3DModel model3d = Agent3DModel;
         model3d.CurrentWeapon = weapon;
         
         switch(weapon)
@@ -384,7 +384,7 @@ public partial class AgentEntity
     public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D; 
+        var model3d = Agent3DModel; 
 
         if (isAgentAlive && IsStateFree())
         {

@@ -154,11 +154,11 @@ namespace Agent
                         if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale,
                                 Vec2f.Zero);
 
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
                             // entity.agentPhysicsState.Speed = 10.0f;
                             entity.isAgentPlayer = true;
@@ -191,10 +191,10 @@ namespace Agent
                         if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
                             entity.agentPhysicsState.Speed = 6.0f;
 
@@ -210,11 +210,11 @@ namespace Agent
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
 
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
                                 Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             entity.SetModel3DWeapon(Model3DWeaponType.Sword);
                         }
                         
@@ -225,10 +225,10 @@ namespace Agent
                         if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer  agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default,
                                 agentPropertiesTemplate.ModelScale, Vec2f.Zero);
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
 
                         break;
@@ -238,10 +238,10 @@ namespace Agent
                         if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType,
                                 Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale, Vec2f.Zero);
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
 
                         break;
@@ -251,9 +251,9 @@ namespace Agent
                         if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Model3DComponent model3DComponent = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                            SetTransformHelper(model3DComponent, position.X, position.Y, 90f);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             
                             entity.agentPhysicsState.Speed = 10.0f;
 
@@ -271,7 +271,7 @@ namespace Agent
                     }
             }
 
-            void SetTransformHelper(Model3DComponent model3DComponent, float x, float y, float rotation)
+            void SetTransformHelper(Agent3DModel model3DComponent, float x, float y, float rotation)
             {
                 if (model3DComponent == null) return;
                 model3DComponent.SetPosition(x, y);

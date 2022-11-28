@@ -97,7 +97,7 @@ namespace ECSInput
                     // If player is inside the vehicle,
                     // Get out, turn off the jet and ignition.
 
-                    if (agentEntity.agentModel3D.IsActive)
+                    if (agentEntity.Agent3DModel.IsActive)
                     {
                         // Set custom events for different vehicle types.
                         // Spew out smoke when accelerate.
@@ -108,7 +108,7 @@ namespace ECSInput
 
                             // Player Gets inside of Rocket
                             // Hide Agent/Player
-                            agentEntity.agentModel3D.SetIsActive(false);
+                            agentEntity.Agent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
                             vehicle.vehicleType.HasAgent = true;
 
@@ -124,7 +124,7 @@ namespace ECSInput
 
                             // Player Gets inside of Rocket
                             // Hide Agent/Player
-                            agentEntity.agentModel3D.SetIsActive(false);
+                            agentEntity.Agent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
                             vehicle.vehicleType.HasAgent = true;
 
@@ -146,7 +146,7 @@ namespace ECSInput
 
                         vehicle.vehicleType.HasAgent = false;
                         agentEntity.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                        agentEntity.agentModel3D.SetIsActive(true);
+                        agentEntity.Agent3DModel.SetIsActive(true);
                         agentEntity.isAgentAlive = true;
 
                     }

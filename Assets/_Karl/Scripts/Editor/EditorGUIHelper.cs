@@ -60,11 +60,11 @@ public static class EditorGUIHelper
             }
             
             // 3D Model
-            _model3D = EditorGUILayout.Foldout(_model3D, $"{nameof(Model3DComponent)}");
+            _model3D = EditorGUILayout.Foldout(_model3D, $"{nameof(Agent3DModel)}");
             if (_model3D)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentModel3D) Draw(agentEntity.agentModel3D);
+                if (agentEntity.hasAgent3DModel) Draw(agentEntity.Agent3DModel);
                 else DrawNone();
                 EditorGUI.indentLevel--;
             }
@@ -376,7 +376,7 @@ public static class EditorGUIHelper
         EditorGUILayout.LabelField($"{nameof(value.elapsed)}: {value.elapsed.ToStringPretty()}", GetStyle());
     }
     
-    public static void Draw(Model3DComponent value)
+    public static void Draw(Agent3DModel value)
     {
         // Renderer
         value.SetGameObject((AgentRenderer)EditorGUILayout

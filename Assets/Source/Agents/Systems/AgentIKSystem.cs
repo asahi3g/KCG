@@ -59,11 +59,11 @@ namespace Agent
                 {
                     
                     PhysicsStateComponent physicsStateComponent = entity.agentPhysicsState;
-                    Model3DComponent model3DComponent = entity.agentModel3D;
-                    AgentRenderer agentRenderer = entity.agentModel3D.Renderer;
+                    Agent3DModel agent3DModel = entity.Agent3DModel;
+                    AgentRenderer agentRenderer = entity.Agent3DModel.Renderer;
                     transform = agentRenderer.GetModel().transform;
                     
-                    model3DComponent.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
+                    agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
                     
                     if(entity.isAgentAlive)
                     {
@@ -86,7 +86,7 @@ namespace Agent
 
                             AimTarget = agentRenderer.GetAimTarget();
 
-                            if (entity.hasAgentModel3D)
+                            if (entity.hasAgent3DModel)
                             {
                                 if (transform != null)
                                 {
@@ -99,11 +99,11 @@ namespace Agent
                                             {
                                                 if (entity.agentPhysicsState.FacingDirection == 1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3DComponent.AimTarget.X, model3DComponent.AimTarget.Y, -6.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, -6.0f);
                                                 }
                                                 else if (entity.agentPhysicsState.FacingDirection == -1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3DComponent.AimTarget.X, model3DComponent.AimTarget.Y, 1.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, 1.0f);
                                                 }
                                             }
                                             else
@@ -122,7 +122,7 @@ namespace Agent
                                             }
                                         }
 
-                                        if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Rifle)
+                                        if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Rifle)
                                         {
                                             Pistol.gameObject.SetActive(false);
                                             Rifle.gameObject.SetActive(true);
@@ -134,7 +134,7 @@ namespace Agent
 
                                             entity.agentAction.Action = AgentAlertState.Alert;
                                         }
-                                        else if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Pistol)
+                                        else if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Pistol)
                                         {
                                             Pistol.gameObject.SetActive(true);
                                             Rifle.gameObject.SetActive(false);

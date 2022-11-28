@@ -12,30 +12,30 @@ namespace Agent
             foreach (AgentEntity agentEntity in entities)
             {
                 PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
-                Model3DComponent model3DComponent = agentEntity.agentModel3D;
+                Agent3DModel agent3DModel = agentEntity.Agent3DModel;
                 
-                model3DComponent.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
+                agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
 
                 if (physicsStateComponent.FacingDirection == 1)
                 {
-                    if(model3DComponent.CurrentWeapon != Model3DWeaponType.Pistol || model3DComponent.CurrentWeapon != Model3DWeaponType.Rifle)
+                    if(agent3DModel.CurrentWeapon != Model3DWeaponType.Pistol || agent3DModel.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
-                        model3DComponent.SetRotation(90f);
+                        agent3DModel.SetRotation(90f);
                     }
                     else
                     {
-                        model3DComponent.SetRotation(0f);
+                        agent3DModel.SetRotation(0f);
                     }
                 }
                 else if (physicsStateComponent.FacingDirection == -1)
                 {
-                    if (model3DComponent.CurrentWeapon != Model3DWeaponType.Pistol || model3DComponent.CurrentWeapon != Model3DWeaponType.Rifle)
+                    if (agent3DModel.CurrentWeapon != Model3DWeaponType.Pistol || agent3DModel.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
-                        model3DComponent.SetRotation(-120f);
+                        agent3DModel.SetRotation(-120f);
                     }
                     else
                     {
-                        model3DComponent.SetRotation(0f);
+                        agent3DModel.SetRotation(0f);
                     }
                 }
             }

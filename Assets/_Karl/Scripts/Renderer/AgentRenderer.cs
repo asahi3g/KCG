@@ -41,9 +41,9 @@ public class AgentRenderer : BaseMonoBehaviour
     {
         _planetRenderer = planetRenderer;
         _agent = agent;
-        if (_agent.hasAgentModel3D)
+        if (_agent.hasAgent3DModel)
         {
-            _agent.agentModel3D.Renderer.transform.parent = transform;
+            _agent.Agent3DModel.Renderer.transform.parent = transform;
         }
 
         // Create UI hitpoints

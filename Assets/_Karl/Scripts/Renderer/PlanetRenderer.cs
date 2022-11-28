@@ -136,9 +136,9 @@ public class PlanetRenderer : BaseMonoBehaviour
         else
         {
             AgentEntity agent = _planet.AddAgent(position, agentType, faction);
-            if (agent.hasAgentModel3D)
+            if (agent.hasAgent3DModel)
             {
-                AgentRenderer agentRenderer = agent.agentModel3D.Renderer;
+                AgentRenderer agentRenderer = agent.Agent3DModel.Renderer;
                 agentRenderer.transform.parent = _agents;
                 agentRenderer.SetAgent(this, agent);
                 result = agentRenderer;
