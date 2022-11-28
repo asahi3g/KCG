@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Loader
 {
-    public class ModelLoaderItems : ModelLoader<ItemModelType, ItemRenderer>
+    public class ModelLoaderItems : ModelLoader<ItemModelType, AgentEquippedItemRenderer>
     {
-        public ModelLoaderItems(ResourcesLoader<ItemRenderer> resourcesLoader) : base(resourcesLoader) { }
+        public ModelLoaderItems(ResourcesLoader<AgentEquippedItemRenderer> resourcesLoader) : base(resourcesLoader) { }
 
-        protected override void OnLoadAll(IEnumerable<ItemRenderer> values, Dictionary<ItemModelType, ItemRenderer> map)
+        protected override void OnLoadAll(IEnumerable<AgentEquippedItemRenderer> values, Dictionary<ItemModelType, AgentEquippedItemRenderer> map)
         {
-            foreach (ItemRenderer value in values)
+            foreach (AgentEquippedItemRenderer value in values)
             {
                 ItemModelType modelType = value.GetModelType();
 

@@ -243,7 +243,7 @@ public partial class AgentEntity
             }
             case Model3DWeaponType.Sword:
             {
-                if (AssetManager.Singelton.GetPrefabItem(ItemModelType.Rapier, out ItemRenderer itemRenderer))
+                if (AssetManager.Singelton.GetPrefabItem(ItemModelType.Rapier, out AgentEquippedItemRenderer itemRenderer))
                 {
                     UnityEngine.Transform hand = model3d.Renderer.GetHandLeft();
                     UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(itemRenderer).gameObject;

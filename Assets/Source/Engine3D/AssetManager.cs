@@ -39,7 +39,7 @@ namespace Engine3D
             
             _modelLoaderAgents = new ModelLoaderAgents(new ResourcesLoader<AgentRenderer>("Agents"));
             agentAnimations = new AgentAnimations(AnimationLoader);
-            _modelLoaderItems = new ModelLoaderItems(new ResourcesLoader<ItemRenderer>("Items"));
+            _modelLoaderItems = new ModelLoaderItems(new ResourcesLoader<AgentEquippedItemRenderer>("Items"));
 
             LoadAll();
         }
@@ -54,7 +54,7 @@ namespace Engine3D
             return _modelLoaderAgents.Get(modelType, out agentRenderer);
         }
         
-        public bool GetPrefabItem(ItemModelType modelType, out ItemRenderer itemRenderer)
+        public bool GetPrefabItem(ItemModelType modelType, out AgentEquippedItemRenderer itemRenderer)
         {
             return _modelLoaderItems.Get(modelType, out itemRenderer);
         }

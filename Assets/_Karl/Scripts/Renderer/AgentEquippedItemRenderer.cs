@@ -1,7 +1,7 @@
 using Engine3D;
 using UnityEngine;
 
-public class ItemRenderer : BaseMonoBehaviour
+public class AgentEquippedItemRenderer : BaseMonoBehaviour
 {
     [SerializeField] private ItemModelType _modelType;
 
