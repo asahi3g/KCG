@@ -34,10 +34,13 @@ namespace Agent
             // in the future it should be a capsule
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
+
+            // applying movement
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
             Vec2f deltaLeft = delta  * (1.0f - (agentCollision.MinTime - epsilon));
             Vec2f newPosition = physicsState.Position;
 
+            // restitution
             if (agentCollision.MinTime < 1.0 && (agentCollision.MinNormal.X != 0 || agentCollision.MinNormal.Y != 0))
             {
 ;
@@ -53,6 +56,7 @@ namespace Agent
                 newPosition += reflectVelocity;
 
                 // 2nd collision test
+                // after restitution is applied
                 physicsState.PreviousPosition = physicsState.Position;
                 physicsState.Position = newPosition;
                 delta = physicsState.Position - physicsState.PreviousPosition;     
@@ -105,8 +109,9 @@ namespace Agent
                 }
             }
 
+            // NOTE(): these should be changed with a proper way to check if we are going to slide or not
+            // right now this is just placeholder logic
             bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
-
              bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
 
@@ -122,7 +127,7 @@ namespace Agent
 
  
 
-             if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f )
+             if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f/* && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f */)
              {
                 
                 physicsState.GroundNormal = bottomCollision.MinNormal;
@@ -144,7 +149,7 @@ namespace Agent
                 physicsState.MovementState != Enums.AgentMovementState.Falling)
                 {
                     physicsState.PreviousPosition = physicsState.Position;
-                    physicsState.Position.Y -= 1.25f;
+                    physicsState.Position.Y -= Physics.Constants.GroundDistance;
                     
                     delta = physicsState.Position - physicsState.PreviousPosition;           
     

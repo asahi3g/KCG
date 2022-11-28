@@ -1,4 +1,5 @@
-//imports UnityEngine
+// TODO(Brandon): 
+// AgentSystem should not be importing GUI (for call back)
 
 using System;
 using System.Collections.Generic;

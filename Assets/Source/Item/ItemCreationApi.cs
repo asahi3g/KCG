@@ -175,6 +175,11 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
@@ -191,6 +196,11 @@ namespace Item
                 IsLaunchGreanade = isLaunchGrenade,
                 BasicDemage = basicDamage,
             };
+
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
 
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
@@ -254,6 +264,11 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
@@ -266,6 +281,11 @@ namespace Item
             {
                 ShieldActive = ShieldActive,
             }; 
+
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
 
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
