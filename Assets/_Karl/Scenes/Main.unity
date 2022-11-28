@@ -8212,6 +8212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runInBackground: 1
   _targetFrameRate: 60
+  _timeScale: 1
 --- !u!1001 &1521264088
 PrefabInstance:
   m_ObjectHideFlags: 0

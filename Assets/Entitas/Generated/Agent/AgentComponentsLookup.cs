@@ -53,7 +53,7 @@ public static class AgentComponentsLookup {
         typeof(Agent.CorpseComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
-        typeof(Agent.Model3DComponent),
+        typeof(Agent.Agent3DModel),
         typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
         typeof(Agent.Sprite2DComponent),

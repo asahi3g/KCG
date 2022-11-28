@@ -1,6 +1,7 @@
-
 using Audio;
 using Planet;
+using Loader;
+
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
 {
@@ -61,7 +62,7 @@ public static class GameState
     #region Sprites
 
     public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
-    public static readonly Sprites.SpriteLoader SpriteLoader;
+    public static readonly SpriteLoader SpriteLoader;
 
     #endregion
 
@@ -190,8 +191,6 @@ public static class GameState
 
     public static void InitStage1()
     {
-
-    
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
@@ -241,7 +240,7 @@ public static class GameState
         SensorManager = new Sensor.SensorManager();
         SensorUpdateSystem = new Sensor.UpdateSystem();
 
-        SpriteLoader = new Sprites.SpriteLoader();
+        SpriteLoader = new SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
         SpriteAtlasManager = new Sprites.SpriteAtlasManager();
 

@@ -37,7 +37,7 @@ namespace Inventory
                 float size = 60f * scaleFacor;
 
                 ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(InventorySystemsState.GrabbedItemID);
-                int SpriteID = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).InventorSpriteID;
+                int SpriteID = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type).InventorSpriteID;
 
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(SpriteID, Enums.AtlasType.Particle);
                 GameState.Renderer.DrawSpriteGui(pos.X, pos.Y, size, size, sprite);
@@ -160,7 +160,7 @@ namespace Inventory
             if (slot.ItemID != -1)
             {
                 ItemInventoryEntity entity = GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(slot.ItemID);
-                ItemProperties ItemProperties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+                ItemProperties ItemProperties = GameState.ItemCreationApi.GetItemProperties(entity.itemType.Type);
                 Sprites.Sprite sprite = GameState.SpriteAtlasManager.GetSprite(ItemProperties.InventorSpriteID, Enums.AtlasType.Particle);
                 GameState.Renderer.DrawSpriteGui(posX, posY, sizeX, sizeY, sprite);
 

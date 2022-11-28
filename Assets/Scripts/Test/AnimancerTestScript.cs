@@ -2,6 +2,7 @@
 
 
 using Animancer;
+using UnityEngine;
 
 public class AnimancerTestScript : UnityEngine.MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class AnimancerTestScript : UnityEngine.MonoBehaviour
     UnityEngine.AnimationClip WalkAnimationClip ;
     UnityEngine.AnimationClip GolfSwingClip;
 
-
     AnimancerComponent[] AnimancerComponentArray;
 
     void Start()
@@ -24,20 +24,20 @@ public class AnimancerTestScript : UnityEngine.MonoBehaviour
         //GameObject humanoid = GameObject.Find("DefaultHumanoid");
 
         // load the 3d model from file
-        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
+        if (!Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+        {
+            Debug.LogWarning($"Failed to load 3d model '{Engine3D.AgentModelType.Humanoid}'");
+            return;
+        }
 
         HumanoidArray = new UnityEngine.GameObject[HumanoidCount];
         AnimancerComponentArray = new AnimancerComponent[HumanoidCount];
 
         for(int i = 0; i < HumanoidCount; i++)
         {
-            HumanoidArray[i] = Instantiate(prefab);
+            HumanoidArray[i] = Instantiate(agentRenderer).gameObject;
             HumanoidArray[i].transform.position = new UnityEngine.Vector3(i, 0.0f, 0.0f);
         }
-
-
-        
-
 
         // create an animancer object and give it a reference to the Animator component
         for(int i = 0; i < HumanoidCount; i++)

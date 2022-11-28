@@ -22,20 +22,8 @@ public partial class AgentEntity
         int selectedSlot = inventory.SelectedSlotIndex;
         return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }
-    public void DestroyModel()
-    {
-        if (hasAgentModel3D)
-        {
-            var model3D = agentModel3D;
-            //if (model3D.GameObject != null)
-            //{
-            //    if (model3D.Weapon.name != "SpaceGun" || model3D.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3D.GameObject);
-            //}
-        }
-    }
 
-    public bool CanMove()
+   public bool CanMove()
     {
         var physicsState = agentPhysicsState;
         return isAgentAlive && physicsState.MovementState != AgentMovementState.IdleAfterShooting;
@@ -185,7 +173,7 @@ public partial class AgentEntity
     public Vec2f GetGunFiringPosition()
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D;
+        var model3d = Agent3DModel;
 
         Vec2f targetPosition = GetGunFiringTarget();
 
@@ -205,12 +193,12 @@ public partial class AgentEntity
 
     public void SetAimTarget(Vec2f AimTarget)
     {
-        agentModel3D.AimTarget = AimTarget;
+        Agent3DModel.AimTarget = AimTarget;
     }
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
-        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
         if (isAgentPlayer && itemProperty.HasUI())
         {
@@ -225,25 +213,25 @@ public partial class AgentEntity
     
     public void SetModel3DWeapon(ItemInventoryEntity item)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
         
         SetModel3DWeapon(item.itemType.Type);
     }
 
     public void SetModel3DWeapon(Enums.ItemType itemType)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
         
-        var itemProperty = GameState.ItemCreationApi.Get(itemType);
-        agentModel3D.ItemAnimationSet = itemProperty.AnimationSet;
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
+        Agent3DModel.ItemAnimationSet = itemProperty.AnimationSet;
         SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
     }
 
     public void SetModel3DWeapon(Model3DWeaponType weapon)
     {
-        if (!hasAgentModel3D) return;
+        if (!hasAgent3DModel) return;
 
-        Model3DComponent model3d = agentModel3D;
+        Agent3DModel model3d = Agent3DModel;
         model3d.CurrentWeapon = weapon;
         
         switch(weapon)
@@ -255,30 +243,31 @@ public partial class AgentEntity
             }
             case Model3DWeaponType.Sword:
             {
-                UnityEngine.GameObject hand = model3d.LeftHand;
+                if (AssetManager.Singelton.GetPrefabItem(ItemModelType.Rapier, out AgentEquippedItemRenderer itemRenderer))
+                {
+                    UnityEngine.Transform hand = model3d.Renderer.GetHandLeft();
+                    UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(itemRenderer).gameObject;
 
-                UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
+                    var gunRotation = rapier.transform.rotation;
+                    rapier.transform.parent = hand;
+                    rapier.transform.position = hand.position;
+                    rapier.transform.localRotation = gunRotation;
+                    rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
-                var gunRotation = rapier.transform.rotation;
-                rapier.transform.parent = hand.transform;
-                rapier.transform.position = hand.transform.position;
-                rapier.transform.localRotation = gunRotation;
-                rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
-
-                model3d.Weapon = rapier;
+                    model3d.Weapon = rapier;
+                }
+                
                 break;
             }
 
             case Model3DWeaponType.Pistol:
             {
-                UnityEngine.GameObject hand = model3d.RightHand;
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
                 if (hand != null)
                 {
                     if (model3d.Weapon == null)
                     {
-                        UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
-                        model3d.Weapon = PistolPivot.GetChild(0).gameObject;
+                        model3d.Weapon = model3d.Renderer.GetPivotPistol().gameObject;
                     }
                 }
                 break;
@@ -286,12 +275,12 @@ public partial class AgentEntity
 
             case Model3DWeaponType.Rifle:
             {
-                UnityEngine.GameObject hand = model3d.RightHand;
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
                 if (hand != null)
                 {
                     if(model3d.Weapon == null)
                     {
-                        UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot"); model3d.Weapon = RiflePivot.GetChild(0).gameObject;
+                        model3d.Weapon = model3d.Renderer.GetPivotRifle().gameObject;
                     }
 
                 }
@@ -395,7 +384,7 @@ public partial class AgentEntity
     public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D; 
+        var model3d = Agent3DModel; 
 
         if (isAgentAlive && IsStateFree())
         {

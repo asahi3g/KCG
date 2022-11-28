@@ -12,8 +12,8 @@ namespace Agent
 
             foreach (var entity in entities)
             {
-                var physicsState = entity.agentPhysicsState;        
-                var model3d = entity.agentModel3D;
+                PhysicsStateComponent physicsState = entity.agentPhysicsState;        
+                Agent3DModel agent3DModel = entity.Agent3DModel;
 
                 /*if (entity.isAgentPlayer)
                 {
@@ -24,11 +24,11 @@ namespace Agent
 
                 {
                     AgentAnimation agentAnimation = 
-                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, model3d.AnimationType, model3d.ItemAnimationSet);
+                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet);
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
-                    currentClip = model3d.AnimancerComponent.Play(animation, agentAnimation.FadeTime);
+                    currentClip = agent3DModel.Renderer.GetAnimancer().Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 
 
@@ -51,11 +51,6 @@ namespace Agent
 
                     physicsState.LastAgentAnimation = agentAnimation;
                 }
-
-                
-                
-
-                
             }
         }
     }

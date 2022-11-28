@@ -8,6 +8,7 @@ using KMath;
 using Mech;
 using PlanetTileMap;
 using System;
+using Entitas;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,13 +69,100 @@ namespace ECSInput
                 Camera.main.ScreenToWorldPoint(mousePos).y);
         }
 
+        public void UpdateFacingDirection(AgentEntity agentEntity, Vec2f mouseWorldPosition)
+        {
+            PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
+                
+            if (agentEntity.CanFaceMouseDirection())
+            {
+                if (mouseWorldPosition.X >= physicsStateComponent.Position.X) physicsStateComponent.FacingDirection = 1;
+                else physicsStateComponent.FacingDirection = -1;
+            }
+            else physicsStateComponent.FacingDirection = physicsStateComponent.MovingDirection;
+        }
+
+        public void UpdateVehicles(AgentEntity agentEntity)
+        {
+            var vehicles = GameState.Planet.EntitasContext.vehicle.GetGroup(VehicleMatcher.VehicleID);
+            foreach (var vehicle in vehicles)
+            {
+                // Scan near vehicles.
+                // Hop in when keycode is called.
+
+                if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
+                {
+                    // If player is outside the vehicle.
+                    // Get in, turn on the jet and ignition.
+
+                    // If player is inside the vehicle,
+                    // Get out, turn off the jet and ignition.
+
+                    if (agentEntity.Agent3DModel.IsActive)
+                    {
+                        // Set custom events for different vehicle types.
+                        // Spew out smoke when accelerate.
+
+                        if (vehicle.vehicleType.Type == VehicleType.DropShip)
+                        {
+                            GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
+
+                            // Player Gets inside of Rocket
+                            // Hide Agent/Player
+                            agentEntity.Agent3DModel.SetIsActive(false);
+                            agentEntity.isAgentAlive = false;
+                            vehicle.vehicleType.HasAgent = true;
+
+                            GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
+
+                            vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
+                            vehicle.vehicleThruster.Jet = true;
+                            vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
+                        }
+                        else
+                        {
+                            GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+
+                            // Player Gets inside of Rocket
+                            // Hide Agent/Player
+                            agentEntity.Agent3DModel.SetIsActive(false);
+                            agentEntity.isAgentAlive = false;
+                            vehicle.vehicleType.HasAgent = true;
+
+                            if (vehicle.hasVehicleThruster)
+                            {
+                                vehicle.vehicleThruster.Jet = false;
+                                vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                                vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 0.0f);
+                            }
+
+                            GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
+                        }
+
+                    }
+                    else
+                    {
+                        vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
+                        GameState.VehicleAISystem.StopAI();
+
+                        vehicle.vehicleType.HasAgent = false;
+                        agentEntity.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
+                        agentEntity.Agent3DModel.SetIsActive(true);
+                        agentEntity.isAgentAlive = true;
+
+                    }
+
+                }
+            }
+        }
+
         public void Update()
         {
             ref var planet = ref GameState.Planet;
             Contexts contexts = planet.EntitasContext;
 
-            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-
+            IGroup<AgentEntity> agentEntities = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+            Vec2f mouseWorldPosition = GetCursorWorldPosition();
+            
             UpdateMainCameraZoom();
 
             int x = 0;
@@ -87,26 +175,25 @@ namespace ECSInput
                 x -= 1;
             }
 
-            foreach (var player in AgentsWithXY)
-            {
 
-                var physicsState = player.agentPhysicsState;
+            foreach (AgentEntity agentEntity in agentEntities)
+            {
 
                 // Jump
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W) && mode == Mode.Agent)
                 {
-                    player.Jump();
+                    agentEntity.Jump();
                 }
                 // Dash
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space) && mode == Mode.Agent)
                 {
-                    player.Dash(x);
+                    agentEntity.Dash(x);
                 }
 
                 // Attack
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.K) && mode == Mode.Agent)
                 {
-                    player.Roll(x);
+                    agentEntity.Roll(x);
                 }
 
 
@@ -114,68 +201,52 @@ namespace ECSInput
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftAlt))
                 {
                     if(mode == Mode.Agent)
-                    player.Run(x);
+                    agentEntity.Run(x);
                 }
                 else
                 {
                     if(mode == Mode.Agent)
-                    player.Walk(x);
+                    agentEntity.Walk(x);
                 }
 
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) && mode == Mode.Agent)
                 {
                     if(mode == Mode.Agent)
-                    player.CrouchBegin(x);
+                    agentEntity.CrouchBegin(x);
                 }
                 else
                 {
                     if(mode == Mode.Agent)
-                    player.CrouchEnd(x);
+                    agentEntity.CrouchEnd(x);
                 }
 
                 // JetPack
-                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && player.agentStats.Fuel.GetValue() > 0)
+                if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F) && agentEntity.agentStats.Fuel.GetValue() > 0)
                 {
-                    player.JetPackFlyingBegin();
+                    agentEntity.JetPackFlyingBegin();
                 }
                 else
                 {
-                    player.JetPackFlyingEnd();
+                    agentEntity.JetPackFlyingEnd();
                 }
 
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S))
                 {
                     if(mode == Mode.Agent)
-                    player.Walk(x);
+                    agentEntity.Walk(x);
                 }
-
-                var mouseWorldPosition = GetCursorWorldPosition();
-
-                if (player.CanFaceMouseDirection())
-                {
-                    if (mouseWorldPosition.X >= physicsState.Position.X)
-                    {
-                        physicsState.FacingDirection = 1;
-                    }
-                    else
-                    {
-                        physicsState.FacingDirection = -1;
-                    }
-                }
-                else
-                {
-                    physicsState.FacingDirection = physicsState.MovingDirection;
-                }
+                
+                UpdateFacingDirection(agentEntity, mouseWorldPosition);
 
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))
                 {
-                    player.JetPackFlyingBegin();
+                    agentEntity.JetPackFlyingBegin();
                 }
 
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow))
                 {
-                    player.agentPhysicsState.Droping = true;
+                    agentEntity.agentPhysicsState.Droping = true;
                 }
             }
 
@@ -224,77 +295,7 @@ namespace ECSInput
                         }
                     }
 
-                    var vehicles = contexts.vehicle.GetGroup(VehicleMatcher.VehicleID);
-                    foreach (var vehicle in vehicles)
-                    {
-                        // Scan near vehicles.
-                        // Hop in when keycode is called.
-
-                        if (Vec2f.Distance(player.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
-                        {
-                            // If player is outside the vehicle.
-                            // Get in, turn on the jet and ignition.
-
-                            // If player is inside the vehicle,
-                            // Get out, turn off the jet and ignition.
-
-                            if (player.agentModel3D.GameObject.gameObject.activeSelf)
-                            {
-                                // Set custom events for different vehicle types.
-                                // Spew out smoke when accelerate.
-
-                                if (vehicle.vehicleType.Type == VehicleType.DropShip)
-                                {
-                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
-
-                                    // Player Gets inside of Rocket
-                                    // Hide Agent/Player
-                                    player.agentModel3D.GameObject.gameObject.SetActive(false);
-                                    player.isAgentAlive = false;
-                                    vehicle.vehicleType.HasAgent = true;
-
-                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
-
-                                    vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 3.0f);
-                                    vehicle.vehicleThruster.Jet = true;
-                                    vehicle.vehiclePhysicsState2D.AffectedByGravity = false;
-                                }
-                                else
-                                {
-                                    GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
-
-                                    // Player Gets inside of Rocket
-                                    // Hide Agent/Player
-                                    player.agentModel3D.GameObject.gameObject.SetActive(false);
-                                    player.isAgentAlive = false;
-                                    vehicle.vehicleType.HasAgent = true;
-
-                                    if (vehicle.hasVehicleThruster)
-                                    {
-                                        vehicle.vehicleThruster.Jet = false;
-                                        vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
-                                        vehicle.vehiclePhysicsState2D.angularVelocity = new Vec2f(0, 0.0f);
-                                    }
-
-                                    GameState.VehicleAISystem.RunAI(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
-                                }
-
-                            }
-                            else
-                            {
-                                vehicle.vehiclePhysicsState2D.AffectedByGravity = true;
-                                GameState.VehicleAISystem.StopAI();
-
-                                vehicle.vehicleType.HasAgent = false;
-                                player.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                                player.agentModel3D.GameObject.gameObject.SetActive(true);
-                                player.isAgentAlive = true;
-
-                            }
-
-                        }
-                    }
-
+                    UpdateVehicles(player);
 
                     InventoryEntity inventory = null;
                     float smallestDistance = 2.0f;
@@ -501,7 +502,7 @@ namespace ECSInput
                 // Get Inventory
                 var item = GameState.InventoryManager.GetItemInSlot(inventoryID, inventory.inventoryInventoryEntity.SelectedSlotIndex);
                 if (item == null) return;
-                var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
                 if(itemProperty.Group is ItemGroups.Gun or ItemGroups.Weapon)
@@ -544,7 +545,7 @@ namespace ECSInput
 
                 int selectedSlot = inventory.inventoryInventoryEntity.SelectedSlotIndex;
                 var selectedItem = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
-                var selectedItemProperty = GameState.ItemCreationApi.Get(selectedItem.itemType.Type);
+                var selectedItemProperty = GameState.ItemCreationApi.GetItemProperties(selectedItem.itemType.Type);
 
 
                 if (selectedItemProperty.IsTool())

@@ -8,37 +8,32 @@
 //------------------------------------------------------------------------------
 public partial class AgentEntity {
 
-    public Agent.Model3DComponent agentModel3D { get { return (Agent.Model3DComponent)GetComponent(AgentComponentsLookup.AgentModel3D); } }
-    public bool hasAgentModel3D { get { return HasComponent(AgentComponentsLookup.AgentModel3D); } }
+    public Agent.Agent3DModel Agent3DModel { get { return (Agent.Agent3DModel)GetComponent(AgentComponentsLookup.AgentModel3D); } }
+    public bool hasAgent3DModel { get { return HasComponent(AgentComponentsLookup.AgentModel3D); } }
 
-    public void AddAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
+    public Agent.Agent3DModel AddAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
-        var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
-        component.GameObject = newGameObject;
-        component.LeftHand = newLeftHand;
-        component.RightHand = newRightHand;
+        var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
+        component.SetGameObject(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
-        component.AnimancerComponent = newAnimancerComponent;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
-        component.ModelScale = newModelScale;
+        component.SetLocalScale(newModelScale);
         component.AimTarget = newAimTarget;
         AddComponent(index, component);
+        return component;
     }
 
-    public void ReplaceAgentModel3D(UnityEngine.GameObject newGameObject, UnityEngine.GameObject newLeftHand, UnityEngine.GameObject newRightHand, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Animancer.AnimancerComponent newAnimancerComponent, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
+    public void ReplaceAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
-        var component = (Agent.Model3DComponent)CreateComponent(index, typeof(Agent.Model3DComponent));
-        component.GameObject = newGameObject;
-        component.LeftHand = newLeftHand;
-        component.RightHand = newRightHand;
+        var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
+        component.SetGameObject(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
-        component.AnimancerComponent = newAnimancerComponent;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
-        component.ModelScale = newModelScale;
+        component.SetLocalScale(newModelScale);
         component.AimTarget = newAimTarget;
         ReplaceComponent(index, component);
     }

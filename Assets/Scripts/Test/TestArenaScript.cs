@@ -222,7 +222,7 @@ namespace Planet.Unity
 
             planet.AddFixedFloatingText("Eliminate the enemies.", new Vec2f(180, 5), Color.white, 20);
             planet.AddAgent(new Vec2f(180, 7), Enums.AgentType.EnemyGunner);
-            planet.AddAgent(new Vec2f(185, 7), Enums.AgentType.EnemyHeavy);
+            planet.AddAgent(new Vec2f(185, 7), Enums.AgentType.InsectLarge);
 
             tileMap.SetFrontTile(180, 3, TileID.Platform);
             tileMap.SetFrontTile(181, 3, TileID.Platform);

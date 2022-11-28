@@ -3,6 +3,7 @@ using PlanetTileMap;
 
 public interface IPlanetCreationResult
 {
+    public PlanetRenderer GetPlanetRenderer();
     public string GetFileName();
     public Tiled.TiledMap GetTileMap();
     

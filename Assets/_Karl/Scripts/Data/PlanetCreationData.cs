@@ -6,14 +6,16 @@ using Tiled;
 [System.Serializable]
 public class PlanetCreationData : IPlanetCreationResult
 {
+    private PlanetRenderer _planetRenderer;
     private string _fileName;
     private Tiled.TiledMap _map;
     private TileProperty[][] _properties;
     private Vec2i _size;
     private Planet.PlanetState _planet;
 
-    public PlanetCreationData(string fileName, Tiled.TiledMap map, TileProperty[][] properties, Vec2i size, Planet.PlanetState planet)
+    public PlanetCreationData(PlanetRenderer planetRenderer, string fileName, Tiled.TiledMap map, TileProperty[][] properties, Vec2i size, Planet.PlanetState planet)
     {
+        _planetRenderer = planetRenderer;
         _fileName = fileName;
         _map = map;
         _properties = properties;
@@ -21,6 +23,11 @@ public class PlanetCreationData : IPlanetCreationResult
         _planet = planet;
     }
 
+
+    public PlanetRenderer GetPlanetRenderer()
+    {
+        return _planetRenderer;
+    }
 
     public string GetFileName()
     {

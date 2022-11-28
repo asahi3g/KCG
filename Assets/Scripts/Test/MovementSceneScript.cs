@@ -175,7 +175,7 @@ namespace Planet.Unity
 
 
 
-            planet.AddAgent(new Vec2f(12, 25), Enums.AgentType.EnemyHeavy, 1);
+            planet.AddAgent(new Vec2f(12, 25), Enums.AgentType.InsectLarge, 1);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
