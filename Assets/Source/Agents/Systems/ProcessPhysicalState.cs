@@ -93,11 +93,11 @@ namespace Agent
                     {
                         physicsState.MovementState = AgentMovementState.None;
                         GameState.AgentIKSystem.SetIKEnabled(true);
-                        if (GameState.AgentIKSystem.Rifle != null ||
-                            GameState.AgentIKSystem.Pistol != null)
+                        if (entity.agentModel3D.RifleIKBodyParts[4] != null ||
+                            entity.agentModel3D.PistolIKBodyParts[4] != null)
                         {
-                            GameState.AgentIKSystem.Rifle.gameObject.SetActive(true);
-                            GameState.AgentIKSystem.Pistol.gameObject.SetActive(true);
+                            entity.agentModel3D.RifleIKBodyParts[4].gameObject.SetActive(true);
+                            entity.agentModel3D.PistolIKBodyParts[4].gameObject.SetActive(true);
                         }
                     }
                 }

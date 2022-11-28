@@ -135,6 +135,8 @@
         RemoveMech,
         PotionTool,
         GeometryPlacementTool,
-        AxeTool
+        AxeTool,
+        PlacebleBackgroundTool, /*Placeable Dark-Grey Background.*/
+
     }
 }

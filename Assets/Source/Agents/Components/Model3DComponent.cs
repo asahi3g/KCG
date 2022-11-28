@@ -18,6 +18,9 @@ namespace Agent
         public Enums.ItemAnimationSet ItemAnimationSet;
         public KMath.Vec3f ModelScale;
         public KMath.Vec2f AimTarget;
+        public UnityEngine.Transform[] PistolIKBodyParts; // All the transforms uses Pistol IK Rig
+        public UnityEngine.Transform[] RifleIKBodyParts; // All the transforms uses Rifle IK Rig
+        public UnityEngine.Transform AimTargetObj;
     }
 
         

@@ -1759,6 +1759,11 @@ namespace Item
             SetStackable();
             EndItem();
 
+            CreateItem(ItemType.PlacebleBackgroundTool, "PlacebleBackgroundTool");
+            SetGroup(ItemGroups.BuildTools);
+            SetTexture(IconToolConstruction);
+            SetInventoryItemIcon(IconToolConstruction);
+            EndItem();
         }
     }
 }

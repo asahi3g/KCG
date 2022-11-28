@@ -177,9 +177,24 @@ namespace Agent
 
                         //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
 
+
+                        Transform[] RifleIKBodyParts = new Transform[5];
+                        RifleIKBodyParts[0] = model.transform.Find("RigLayerRifle_BodyAim");
+                        RifleIKBodyParts[1] = model.transform.Find("RigLayerRifle_WeaponPose");
+                        RifleIKBodyParts[2] = model.transform.Find("RigLayerRifle_WeaponAiming");
+                        RifleIKBodyParts[3] = model.transform.Find("RigLayerRifle_HandIK");
+                        RifleIKBodyParts[4] = model.transform.Find("RiflePivot");
+
+                        Transform[] PistolIKBodyParts = new Transform[5];
+                        PistolIKBodyParts[0] = model.transform.Find("RigLayerPistol_BodyAim");
+                        PistolIKBodyParts[1] = model.transform.Find("RigLayerPistol_WeaponPose");
+                        PistolIKBodyParts[2] = model.transform.Find("RigLayerPistol_WeaponAiming");
+                        PistolIKBodyParts[3] = model.transform.Find("RigLayerPistol_HandIK");
+                        PistolIKBodyParts[4] = model.transform.Find("PistolPivot");
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
                             properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
-                            Vec2f.Zero);
+                            Vec2f.Zero, PistolIKBodyParts, RifleIKBodyParts, model.transform.Find("AimTarget"));
 
 
                        // entity.agentPhysicsState.Speed = 10.0f;
@@ -227,9 +242,25 @@ namespace Agent
                         // this component is used by animancer
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
+
+                        Transform[] RifleIKBodyParts = new Transform[5];
+                        RifleIKBodyParts[0] = model.transform.Find("RigLayerRifle_BodyAim");
+                        RifleIKBodyParts[1] = model.transform.Find("RigLayerRifle_WeaponPose");
+                        RifleIKBodyParts[2] = model.transform.Find("RigLayerRifle_WeaponAiming");
+                        RifleIKBodyParts[3] = model.transform.Find("RigLayerRifle_HandIK");
+                        RifleIKBodyParts[4] = model.transform.Find("RiflePivot");
+
+                        Transform[] PistolIKBodyParts = new Transform[5];
+                        PistolIKBodyParts[0] = model.transform.Find("RigLayerPistol_BodyAim");
+                        PistolIKBodyParts[1] = model.transform.Find("RigLayerPistol_WeaponPose");
+                        PistolIKBodyParts[2] = model.transform.Find("RigLayerPistol_WeaponAiming");
+                        PistolIKBodyParts[3] = model.transform.Find("RigLayerPistol_HandIK");
+                        PistolIKBodyParts[4] = model.transform.Find("PistolPivot");
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
                           Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero,
+                         PistolIKBodyParts, RifleIKBodyParts, model.transform.Find("AimTarget"));
 
                         entity.agentPhysicsState.Speed = 6.0f;
 
@@ -260,7 +291,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,  
                         Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
+                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero, null, null, null);
 
                         entity.SetModel3DWeapon(Model3DWeaponType.Sword);
                         break;
@@ -284,7 +315,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeaponType.None, null, animancerComponent, 
                             properties.AnimationType, Enums.ItemAnimationSet.Default,
-                            properties.ModelScale, Vec2f.Zero);
+                            properties.ModelScale, Vec2f.Zero, null, null, null);
                       /*  entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
                             Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
                             new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);*/
@@ -310,7 +341,7 @@ namespace Agent
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
                         entity.AddAgentModel3D(model, null, null, Model3DWeaponType.None, null, animancerComponent,
                             properties.AnimationType,
-                            Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero);
+                            Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero, null, null, null);
 
                         break;
                     }
@@ -331,8 +362,23 @@ namespace Agent
 
                         AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
                         animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
+
+                        Transform[] RifleIKBodyParts = new Transform[5];
+                        RifleIKBodyParts[0] = model.transform.Find("RigLayerRifle_BodyAim");
+                        RifleIKBodyParts[1] = model.transform.Find("RigLayerRifle_WeaponPose");
+                        RifleIKBodyParts[2] = model.transform.Find("RigLayerRifle_WeaponAiming");
+                        RifleIKBodyParts[3] = model.transform.Find("RigLayerRifle_HandIK");
+                        RifleIKBodyParts[4] = model.transform.Find("RiflePivot");
+
+                        Transform[] PistolIKBodyParts = new Transform[5];
+                        PistolIKBodyParts[0] = model.transform.Find("RigLayerPistol_BodyAim");
+                        PistolIKBodyParts[1] = model.transform.Find("RigLayerPistol_WeaponPose");
+                        PistolIKBodyParts[2] = model.transform.Find("RigLayerPistol_WeaponAiming");
+                        PistolIKBodyParts[3] = model.transform.Find("RigLayerPistol_HandIK");
+                        PistolIKBodyParts[4] = model.transform.Find("PistolPivot");
+
                         entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeaponType.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
+                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero, PistolIKBodyParts, RifleIKBodyParts, model.transform.Find("AimTarget"));
 
                         entity.agentPhysicsState.Speed = 10.0f;
 

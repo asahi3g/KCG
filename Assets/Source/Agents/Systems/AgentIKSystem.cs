@@ -27,22 +27,6 @@ namespace Agent
 
     public class AgentIKSystem
     {
-        UnityEngine.Transform transform;
-
-        public UnityEngine.Transform Pistol;
-        public UnityEngine.Transform Rifle;
-
-        UnityEngine.Transform RigLayerRifle_BodyAim;
-        UnityEngine.Transform RigLayerRifle_WeaponPose;
-        UnityEngine.Transform RigLayerRifle_WeaponAiming;
-        UnityEngine.Transform RigLayerRifle_HandIK;
-        UnityEngine.Transform AimTarget;
-
-        UnityEngine.Transform RigLayerPistol_BodyAim;
-        UnityEngine.Transform RigLayerPistol_WeaponPose;
-        UnityEngine.Transform RigLayerPistol_WeaponAiming;
-        UnityEngine.Transform RigLayerPistol_HandIK;
-
         public bool IKEnabled = true;
 
         public void SetIKEnabled(bool value)
@@ -61,8 +45,6 @@ namespace Agent
 
                     var model3d = entity.agentModel3D;
                     model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
-                
-                    transform = entity.agentModel3D.GameObject.transform;
 
                     if(entity.isAgentAlive)
                     {
@@ -70,98 +52,83 @@ namespace Agent
                         {
                             model3d.AnimancerComponent.Playable.Evaluate();
 
-                            Pistol = transform.Find("PistolPivot").GetChild(0);
-                            Rifle = transform.Find("RiflePivot").GetChild(0);
-
-                            RigLayerRifle_BodyAim = transform.Find("RigLayerRifle_BodyAim");
-                            RigLayerRifle_WeaponPose = transform.Find("RigLayerRifle_WeaponPose");
-                            RigLayerRifle_WeaponAiming = transform.Find("RigLayerRifle_WeaponAiming");
-                            RigLayerRifle_HandIK = transform.Find("RigLayerRifle_HandIK");
-
-                            RigLayerPistol_BodyAim = transform.Find("RigLayerPistol_BodyAim");
-                            RigLayerPistol_WeaponPose = transform.Find("RigLayerPistol_WeaponPose");
-                            RigLayerPistol_WeaponAiming = transform.Find("RigLayerPistol_WeaponAiming");
-                            RigLayerPistol_HandIK = transform.Find("RigLayerPistol_HandIK");
-
-                            AimTarget = transform.Find("AimTarget");
-
                             if (entity.hasAgentModel3D)
                             {
-                                if (transform != null)
+                                if (model3d.GameObject.transform != null)
                                 {
-                                    if (RigLayerRifle_BodyAim != null && RigLayerRifle_WeaponPose != null &&
-                                         RigLayerRifle_WeaponAiming != null && RigLayerRifle_HandIK != null && AimTarget != null)
+                                    if (model3d != null && model3d.RifleIKBodyParts[1] != null &&
+                                         model3d.RifleIKBodyParts[2] != null && model3d.RifleIKBodyParts[3] != null && model3d.AimTargetObj != null)
                                     {
-                                        if (AimTarget != null)
+                                        if (model3d.AimTargetObj != null)
                                         {
                                             if (entity.hasAgentController)
                                             {
                                                 if (entity.agentPhysicsState.FacingDirection == 1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, -6.0f);
+                                                    model3d.AimTargetObj.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, -6.0f);
                                                 }
                                                 else if (entity.agentPhysicsState.FacingDirection == -1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, 1.0f);
+                                                    model3d.AimTargetObj.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, 1.0f);
                                                 }
                                             }
                                             else
                                             {
                                                 if (entity.agentPhysicsState.FacingDirection == 1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
-                                                       entity.GetGunFiringPosition().Y, AimTarget.position.z);
+                                                    model3d.AimTargetObj.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
+                                                       entity.GetGunFiringPosition().Y, model3d.AimTargetObj.position.z);
 
                                                 }
                                                 else if (entity.agentPhysicsState.FacingDirection == -1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
-                                                       entity.GetGunFiringPosition().Y, AimTarget.position.z);
+                                                    model3d.AimTargetObj.position = new UnityEngine.Vector3(entity.GetGunFiringPosition().X,
+                                                       entity.GetGunFiringPosition().Y, model3d.AimTargetObj.position.z);
                                                 }
                                             }
                                         }
 
                                         if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Rifle)
                                         {
-                                            Pistol.gameObject.SetActive(false);
-                                            Rifle.gameObject.SetActive(true);
+                                            model3d.PistolIKBodyParts[4].gameObject.SetActive(false);
+                                            model3d.RifleIKBodyParts[4].gameObject.SetActive(true);
 
-                                            RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerRifle_HandIK.GetComponent<Rig>().weight = 1.0f;
+                                            model3d.RifleIKBodyParts[0].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.RifleIKBodyParts[1].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.RifleIKBodyParts[2].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.RifleIKBodyParts[3].GetComponent<Rig>().weight = 1.0f;
 
                                             entity.agentAction.Action = AgentAlertState.Alert;
                                         }
                                         else if (entity.agentModel3D.CurrentWeapon == Model3DWeaponType.Pistol)
                                         {
-                                            Pistol.gameObject.SetActive(true);
-                                            Rifle.gameObject.SetActive(false);
+                                            model3d.PistolIKBodyParts[4].gameObject.SetActive(true);
+                                            model3d.RifleIKBodyParts[4].gameObject.SetActive(false);
 
-                                            RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[0].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[1].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[2].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[3].GetComponent<Rig>().weight = 0.0f;
 
-                                            RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 1.0f;
-                                            RigLayerPistol_HandIK.GetComponent<Rig>().weight = 1.0f;
+                                            model3d.PistolIKBodyParts[0].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.PistolIKBodyParts[1].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.PistolIKBodyParts[2].GetComponent<Rig>().weight = 1.0f;
+                                            model3d.PistolIKBodyParts[3].GetComponent<Rig>().weight = 1.0f;
                                         }
                                         else
                                         {
-                                            RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[0].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[1].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[2].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.RifleIKBodyParts[3].GetComponent<Rig>().weight = 0.0f;
 
-                                            RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                                            RigLayerPistol_HandIK.GetComponent<Rig>().weight = 0.0f;
+                                            model3d.PistolIKBodyParts[0].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.PistolIKBodyParts[1].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.PistolIKBodyParts[2].GetComponent<Rig>().weight = 0.0f;
+                                            model3d.PistolIKBodyParts[3].GetComponent<Rig>().weight = 0.0f;
 
-                                            Pistol.gameObject.SetActive(false);
-                                            Rifle.gameObject.SetActive(false);
+                                            model3d.PistolIKBodyParts[4].gameObject.SetActive(false);
+                                            model3d.RifleIKBodyParts[4].gameObject.SetActive(false);
 
                                             entity.agentAction.Action = AgentAlertState.UnAlert;
                                         }
@@ -174,15 +141,19 @@ namespace Agent
             }
             else
             {
-                RigLayerRifle_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                RigLayerRifle_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                RigLayerRifle_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                RigLayerRifle_HandIK.GetComponent<Rig>().weight = 0.0f;
+                var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+                foreach (var entity in entities)
+                {
+                    entity.agentModel3D.RifleIKBodyParts[0].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.RifleIKBodyParts[1].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.RifleIKBodyParts[2].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.RifleIKBodyParts[3].GetComponent<Rig>().weight = 0.0f;
 
-                RigLayerPistol_BodyAim.GetComponent<Rig>().weight = 0.0f;
-                RigLayerPistol_WeaponPose.GetComponent<Rig>().weight = 0.0f;
-                RigLayerPistol_WeaponAiming.GetComponent<Rig>().weight = 0.0f;
-                RigLayerPistol_HandIK.GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.PistolIKBodyParts[0].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.PistolIKBodyParts[1].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.PistolIKBodyParts[2].GetComponent<Rig>().weight = 0.0f;
+                    entity.agentModel3D.PistolIKBodyParts[3].GetComponent<Rig>().weight = 0.0f;
+                }
             }
         }
     }
