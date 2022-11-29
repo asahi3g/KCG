@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e758ff449546ee94ba6359bbdaeb5aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableBackgroundPlacementTool: 0
+  enableBackgroundPlacementTool: 1
 --- !u!82 &170111853
 AudioSource:
   m_ObjectHideFlags: 0

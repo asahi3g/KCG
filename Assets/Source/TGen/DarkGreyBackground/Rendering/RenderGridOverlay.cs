@@ -106,16 +106,10 @@ namespace TGen.DarkGreyBackground
         public int Star9;
         public int Star10;
 
-        public int EmptyBlockSheet;
-
-        public int TGenBlockSpriteSheet;
-        public int[] TGenIsotypeSprites;
-
         public void InitializeResources()
         {
             PlanetSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\galaxy_256x256.png", 32, 32);
             StarSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\starfield_test_16x16_tiles_8x8_tile_grid_128x128.png", 16, 16);
-            EmptyBlockSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
 
             // TileIsotypes.
             Planet1 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 5, 0, 0);
@@ -139,37 +133,6 @@ namespace TGen.DarkGreyBackground
             Star8 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 3, 3, 0);
             Star9 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 0, 1, 0);
             Star10 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 0, 2, 0);
-
-            EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
-
-            TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);
-
-
-            var emptySprite = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
-
-            int tileCount = 42;
-
-            TGenIsotypeSprites = new int[tileCount];
-
-            TGenIsotypeSprites[0] = GameState.SpriteAtlasManager.CopySpriteToAtlas(emptySprite, 0, 0, Enums.AtlasType.TGen);
-
-            TGenIsotypeSprites[1] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, 1, 1, Enums.AtlasType.TGen);
-
-            var row = 3;
-            var column = 1;
-
-            for (int i = 2; i < tileCount; i++)
-            {
-                TGenIsotypeSprites[i] = GameState.SpriteAtlasManager.CopySpriteToAtlas(TGenBlockSpriteSheet, column, row, Enums.AtlasType.TGen);
-
-                column += 2;
-
-                if (column > 8)
-                {
-                    column = 1;
-                    row += 2;
-                }
-            }
         }
 
     }

@@ -314,6 +314,8 @@ namespace PlanetTileMap
         public int Ore3SpriteSheet;
         public int PipeSpriteSheet;
         public int PlatformSpriteSheet;
+        public int PlanetSheet;
+        public int StarSheet;
 
         public int MetalTileSheet;
 
@@ -873,6 +875,8 @@ namespace PlanetTileMap
             MetalTileSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\GeometryMetal\\metal_tiles_geometry.png", 288, 736);
             RockTileSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\GeometryRock\\rock_tiles_geometry.png", 32, 32);
             OreStoneSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Gems-Ores\\Stone\\gems-ores-stone.png", 128, 128);
+            PlanetSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\galaxy_256x256.png", 32, 32);
+            StarSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\starfield_test_16x16_tiles_8x8_tile_grid_128x128.png", 16, 16);
 
             LoadingTilePlaceholderSpriteId =
                     GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(LoadingTilePlaceholderSpriteSheet, 0, 0, 0);
@@ -1738,6 +1742,19 @@ namespace PlanetTileMap
             GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
             GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
             GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Platform);
+            GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.Moon);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.QP_R0);
+            GameState.TileCreationApi.SetTilePropertyCollisionType(CollisionType.Platform);
+            GameState.TileCreationApi.SetTilePropertyTexture16(PlatformSpriteSheet, 0, 0);
+            GameState.TileCreationApi.EndTileProperty();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.Planet1);
+            GameState.TileCreationApi.SetTileMaterialType(Enums.MaterialType.OreStone);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.SB_R0);
+            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(PlanetSheet, 5, 0);
 
             CreateMetalGeometryTiles();
             CreateRockGeometryTiles();

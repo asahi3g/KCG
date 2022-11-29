@@ -26,7 +26,7 @@ namespace Planet.Unity
 
         Planet.PlanetState Planet;
 
-        private BackgroundPlacementTool backgroundPlacementTool;
+        private TGen.DarkGreyBackground.BackgroundPlacementTool placementTool;
 
         public void Start()
         {
@@ -94,8 +94,8 @@ namespace Planet.Unity
 
             if (enableBackgroundPlacementTool)
             {
-                backgroundPlacementTool = new BackgroundPlacementTool(true, true);
-                backgroundPlacementTool.Initialize(Material, transform, tileMap.width, tileMap.height);
+                placementTool = new TGen.DarkGreyBackground.BackgroundPlacementTool();
+                placementTool.Initialize(new Vec2i(tileMap.width, tileMap.height), Material, transform);
             }
 
             //GenerateMap();
@@ -194,6 +194,7 @@ namespace Planet.Unity
                 planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
                 planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
+                planet.TileMap.SetBackTile(22, 22, TileID.Planet1);
 
                planet.InitializeSystems(Material, transform);
 
@@ -211,7 +212,7 @@ namespace Planet.Unity
 
             if (enableBackgroundPlacementTool)
             {
-                backgroundPlacementTool.UpdateToolGrid();
+                placementTool.UpdateToolGrid(planet.TileMap);
             }
 
         }
