@@ -16,6 +16,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     [SerializeField] private SOInput _fire;
     [SerializeField] private SOInput _jetpack;
     [SerializeField] private SOInput _reload;
+    [SerializeField] private SOInput _inventory;
     [Header("Other")]
     [SerializeField] private SOInput _mainMenu;
     [SerializeField] private SOInput[] _quickSlots;
@@ -43,6 +44,8 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     {
         // Main menu
         if (IsKeyDown(_mainMenu)) _input.DoOpenEscapeMenu();
+
+        if (IsKeyDown(_inventory)) _input.DoToggleInventory();
 
         // Movement
         bool left = IsKey(_moveLeft);

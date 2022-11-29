@@ -44,6 +44,13 @@ public class PlayerInput : BaseMonoBehaviour
         App.Instance.GetUI().GetView<UIViewMenu>().GetGroup().GetIdentifier().Alter(_identifier, true);
     }
 
+    public void DoToggleInventory()
+    {
+        if (IsGameplayBlocked()) return;
+        
+        App.Instance.GetUI().GetView<UIViewInventory>().GetToggableInventoryGroup().GetIdentifier().Toggle(_identifier);
+    }
+
     public void DoPlayerJump()
     {
         if (IsGameplayBlocked()) return;
