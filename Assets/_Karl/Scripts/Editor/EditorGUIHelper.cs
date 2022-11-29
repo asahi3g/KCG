@@ -60,11 +60,11 @@ public static class EditorGUIHelper
             }
             
             // 3D Model
-            _model3D = EditorGUILayout.Foldout(_model3D, $"{nameof(Model3DComponent)}");
+            _model3D = EditorGUILayout.Foldout(_model3D, $"{nameof(Agent3DModel)}");
             if (_model3D)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgentModel3D) Draw(agentEntity.agentModel3D);
+                if (agentEntity.hasAgent3DModel) Draw(agentEntity.Agent3DModel);
                 else DrawNone();
                 EditorGUI.indentLevel--;
             }
@@ -263,7 +263,7 @@ public static class EditorGUIHelper
         Draw(value.itemID);
         Draw(value.itemType);
         
-        ItemProperties itemProperties = GameState.ItemCreationApi.Get(value.itemType.Type);
+        ItemProperties itemProperties = GameState.ItemCreationApi.GetItemProperties(value.itemType.Type);
         
         
     }
@@ -376,17 +376,11 @@ public static class EditorGUIHelper
         EditorGUILayout.LabelField($"{nameof(value.elapsed)}: {value.elapsed.ToStringPretty()}", GetStyle());
     }
     
-    public static void Draw(Model3DComponent value)
+    public static void Draw(Agent3DModel value)
     {
-        // GameObject
-        value.GameObject = (GameObject)EditorGUILayout
-            .ObjectField($"{nameof(value.GameObject)}", value.GameObject, typeof(GameObject), true);
-        // LeftHand
-        value.LeftHand = (GameObject)EditorGUILayout
-            .ObjectField($"{nameof(value.LeftHand)}", value.LeftHand, typeof(GameObject), true);
-        // RightHand
-        value.RightHand = (GameObject)EditorGUILayout
-            .ObjectField($"{nameof(value.RightHand)}", value.RightHand, typeof(GameObject), true);
+        // Renderer
+        value.SetGameObject((AgentRenderer)EditorGUILayout
+            .ObjectField($"{nameof(value.Renderer)}", value.Renderer, typeof(AgentRenderer), true));
         // Current Weapon
         EditorGUILayout.LabelField($"{nameof(value.CurrentWeapon)}: {value.CurrentWeapon.ToStringPretty()}", GetStyle());
         // Weapon
@@ -397,7 +391,7 @@ public static class EditorGUIHelper
         // Item Animation Set
         EditorGUILayout.LabelField($"{nameof(value.ItemAnimationSet)}: {value.ItemAnimationSet.ToStringPretty()}", GetStyle());
         // Model Scale
-        EditorGUILayout.LabelField($"{nameof(value.ModelScale)}: {value.ModelScale.ToStringPretty()}", GetStyle());
+        EditorGUILayout.LabelField($"{nameof(value.LocalScale)}: {value.LocalScale.ToStringPretty()}", GetStyle());
         // Aim Target
         EditorGUILayout.LabelField($"{nameof(value.AimTarget)}: {value.AimTarget.ToStringPretty()}", GetStyle());
     }

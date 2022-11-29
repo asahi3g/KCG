@@ -2,6 +2,7 @@ using System;
 using Enums;
 using UnityEngine;
 using KMath;
+using Loader;
 
 namespace Sprites
 {

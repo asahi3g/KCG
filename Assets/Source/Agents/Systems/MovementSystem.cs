@@ -15,9 +15,9 @@ namespace Agent
             var physicsState = entity.agentPhysicsState;
 
             // maximum acceleration in the game
-            if (physicsState.Acceleration.Magnitude >= Constants.MaxAcceleration)
+            if (physicsState.Acceleration.Magnitude >= Physics.Constants.MaxAcceleration)
             {
-                physicsState.Acceleration = physicsState.Acceleration.Normalized * Constants.MaxAcceleration;
+                physicsState.Acceleration = physicsState.Acceleration.Normalized * Physics.Constants.MaxAcceleration;
             }
 
             if (physicsState.AffectedByFriction)
@@ -25,9 +25,9 @@ namespace Agent
                 Vec2f direction = physicsState.Velocity.Normalized;
 
                 if (Math.Abs(physicsState.Velocity.Magnitude) >= physicsState.Speed)
-                    physicsState.Acceleration += 2 * -direction * physicsState.Speed / Constants.TimeToMax;
+                    physicsState.Acceleration += 2 * -direction * physicsState.Speed / Physics.Constants.TimeToMax;
                 if (Math.Abs(physicsState.Velocity.Magnitude) >= 0.25f)
-                    physicsState.Acceleration += -direction * physicsState.Speed / Constants.TimeToMax;
+                    physicsState.Acceleration += -direction * physicsState.Speed / Physics.Constants.TimeToMax;
                 else
                     physicsState.Velocity = Vec2f.Zero;
             }
@@ -49,8 +49,8 @@ namespace Agent
             }
 
             // maximum velocity in the game
-            if (newVelocity.Magnitude > Constants.MaxVelocityY)
-                physicsState.Velocity = physicsState.Velocity.Normalized * Constants.MaxVelocityX;
+            if (newVelocity.Magnitude > Physics.Constants.MaxVelocityY)
+                physicsState.Velocity = physicsState.Velocity.Normalized * Physics.Constants.MaxVelocityX;
 
             Vec2f newPosition = physicsState.Position + displacement;
             physicsState.PreviousPosition = physicsState.Position;
@@ -69,20 +69,20 @@ namespace Agent
 
             if (physicsState.AffectedByGravity && !physicsState.OnGrounded)
             {
-                physicsState.Acceleration.Y -= Constants.Gravity;
+                physicsState.Acceleration.Y -= Physics.Constants.Gravity;
             }
 
             
 
             // maximum acceleration in the game
-            if (physicsState.Acceleration.Y <= -Constants.MaxAcceleration)
+            if (physicsState.Acceleration.Y <= -Physics.Constants.MaxAcceleration)
             {
-                physicsState.Acceleration.Y = -Constants.MaxAcceleration;
+                physicsState.Acceleration.Y = -Physics.Constants.MaxAcceleration;
             }
 
-            if (physicsState.Acceleration.Y >= Constants.MaxAcceleration)
+            if (physicsState.Acceleration.Y >= Physics.Constants.MaxAcceleration)
             {
-                physicsState.Acceleration.Y = Constants.MaxAcceleration;
+                physicsState.Acceleration.Y = Physics.Constants.MaxAcceleration;
             }
 
 
@@ -94,11 +94,11 @@ namespace Agent
                     // ground friction at max speed. -> Equal the running acceleration.
                     if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
                     {
-                        physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                        physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Physics.Constants.TimeToMax;
                     }
                     if (Math.Abs(physicsState.Velocity.X) >= 0.25f)
                     {
-                        physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                        physicsState.Acceleration.X -= sign * physicsState.Speed / Physics.Constants.TimeToMax;
                     }
                     else
                     {
@@ -113,38 +113,17 @@ namespace Agent
 
                     if (Math.Abs(physicsState.Velocity.X) >= physicsState.Speed)
                     {
-                        physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Constants.TimeToMax;
+                        physicsState.Acceleration.X -= 2 * sign * physicsState.Speed / Physics.Constants.TimeToMax;
                     }
                     if (Math.Abs(physicsState.Velocity.X) >= 0.1f) // Equal half running acceleration.
                     {
-                        physicsState.Acceleration.X -= sign * physicsState.Speed / Constants.TimeToMax;
+                        physicsState.Acceleration.X -= sign * physicsState.Speed / Physics.Constants.TimeToMax;
                     }
                     else
                         physicsState.Velocity.X = 0;
                 }
             }
 
-            /*float speed = 5.0f;
-
-            physicsState.Velocity = new Vec2f();
-            physicsState.Acceleration = new Vec2f();
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                physicsState.Velocity.Y += speed;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                physicsState.Velocity.Y -= speed;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                physicsState.Velocity.X += speed;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                physicsState.Velocity.X -= speed;
-            }*/
 
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
@@ -164,13 +143,13 @@ namespace Agent
 
 
             // maximum velocity in the game
-            if (newVelocity.Y > Constants.MaxVelocityY)
+            if (newVelocity.Y > Physics.Constants.MaxVelocityY)
             {
-                newVelocity.Y = Constants.MaxVelocityY;
+                newVelocity.Y = Physics.Constants.MaxVelocityY;
             }
-            if (newVelocity.Y < -Constants.MaxVelocityY)
+            if (newVelocity.Y < -Physics.Constants.MaxVelocityY)
             {
-                newVelocity.Y = -Constants.MaxVelocityY;
+                newVelocity.Y = -Physics.Constants.MaxVelocityY;
             }
 
 

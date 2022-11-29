@@ -1,4 +1,5 @@
-//imports UnityEngine
+// TODO(Brandon): 
+// AgentSystem should not be importing GUI (for call back)
 
 using System;
 using System.Collections.Generic;
@@ -144,7 +145,7 @@ namespace Agent
             }
         }
 
-        public void SetAgentModelType(Engine3D.ModelType modelType)
+        public void SetAgentModelType(Engine3D.AgentModelType modelType)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
@@ -234,7 +235,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
             GameState.AgentCreationApi.SetDefaultHealth(30000);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.SpaceMarine);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));        
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
@@ -245,7 +246,7 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(5f, 3.5f, 1);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(0.25f, 0.0f), new Vec2f(0.5f, 1.5f));
             GameState.AgentCreationApi.SetStartingAnimation((int)Animation.AnimationType.CharacterMoveLeft);
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.SpaceMarine);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));
             GameState.AgentCreationApi.End();
@@ -289,7 +290,7 @@ namespace Agent
             GameState.AgentCreationApi.SetDefaultHealth(100);
             GameState.AgentCreationApi.End();
 
-            GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyInsect);
+            GameState.AgentCreationApi.Create((int)Enums.AgentType.InsectSmall);
             GameState.AgentCreationApi.SetName("enemy-insect");
             GameState.AgentCreationApi.SetMovement(6f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
@@ -297,20 +298,20 @@ namespace Agent
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 1.0f });
             GameState.AgentCreationApi.SetBehaviorTree(insectBehavior);
             GameState.AgentCreationApi.SetDefaultHealth(100);
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.SmallInsect);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.InsectSmall);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.0f, 1.0f, 1.0f));
             GameState.AgentCreationApi.End();
 
 
-            GameState.AgentCreationApi.Create((int)Enums.AgentType.EnemyHeavy);
+            GameState.AgentCreationApi.Create((int)Enums.AgentType.InsectLarge);
             GameState.AgentCreationApi.SetName("enemy-insect-heavy");
             GameState.AgentCreationApi.SetMovement(4.0f, 3.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.5f, 0.0f), new Vec2f(1.25f, 2.5f));
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 1.0f });
             GameState.AgentCreationApi.SetDefaultHealth(100);
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.ModelType.HeavyInsect);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.InsectHeavy);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectHeavyAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.6f, 1.6f, 1.6f));
             GameState.AgentCreationApi.SetBehaviorTree(insectBehavior);

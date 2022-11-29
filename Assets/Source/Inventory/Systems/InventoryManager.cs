@@ -59,13 +59,13 @@ namespace Inventory
 
             // Check restriction.
             Enums.ItemGroups slotGroup = inventory.Slots[slotID].ItemGroups;
-            Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
+            Enums.ItemGroups group = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type).Group;
             if (slotGroup > 0 && group != slotGroup)
                 return false;
 
             if (inventory.SlotsMask[slotID])
             {
-                ItemProperties proprieties = GameState.ItemCreationApi.Get(itemEntity.itemType.Type);
+                ItemProperties proprieties = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type);
                 ItemInventoryEntity currentItem = GetItemInSlot(inventoryID, slotID);
 
                 // If stackable check if there are any available stack in the inventory.
@@ -95,7 +95,7 @@ namespace Inventory
 
             // Check restriction.
             Enums.ItemGroups slotGroup = inventory.Slots[fistEmptySlot].ItemGroups;
-            Enums.ItemGroups group = GameState.ItemCreationApi.Get(itemEntity.itemType.Type).Group;
+            Enums.ItemGroups group = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type).Group;
             if (slotGroup > 0 && group != slotGroup)
                 return false;
 
@@ -138,7 +138,7 @@ namespace Inventory
 
         public bool AddItem(ItemInventoryEntity entity, int inventoryID)
         {
-            ItemProperties itemProperties = GameState.ItemCreationApi.Get(entity.itemType.Type);
+            ItemProperties itemProperties = GameState.ItemCreationApi.GetItemProperties(entity.itemType.Type);
 
             // If stackable check if there are any available stack in the inventory.
             if (itemProperties.IsStackable())

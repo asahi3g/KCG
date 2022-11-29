@@ -27,7 +27,7 @@ namespace Agent
         public MovementProperties MovProperties;
         public Enums.AgentAnimationType AnimationType;
 
-        public Engine3D.ModelType ModelType;
+        public Engine3D.AgentModelType ModelType;
         public Vec3f ModelScale;
 
         public bool Stagger;

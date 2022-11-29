@@ -10,10 +10,10 @@ namespace Item
 
         public ItemParticleEntity SpawnItemParticle(ItemType itemType, Vec2f position)
         {
-            ItemProperties itemProperty = GameState.ItemCreationApi.Get(itemType);
+            ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
             FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemType);
 
-            Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
+            Vec2f size = GameState.ItemCreationApi.GetItemProperties(itemType).SpriteSize;
 
             var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID, -1, "");
@@ -56,7 +56,7 @@ namespace Item
 
         public ItemInventoryEntity SpawnInventoryItem(ItemType itemType)
         {
-            ItemProperties itemProperty = GameState.ItemCreationApi.Get(itemType);
+            ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
             FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = GameState.Planet.EntitasContext.itemInventory.CreateEntity();

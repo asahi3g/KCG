@@ -8,28 +8,31 @@ namespace Node
         public void Update()
         {
             NodeEntity[] nodes = GameState.Planet.EntitasContext.node.GetEntities();
+            int length = nodes.Length;
 
-            for (int i = 0; i < nodes.Length; i++)
+            for (int i = 0; i < length; i++)
             {
-                if (nodes[i].isNodeBT)
+                NodeEntity node = nodes[i];
+                
+                if (node.isNodeBT)
                     continue;
 
-                int index = (int)nodes[i].nodeID.TypeID;
-                switch (nodes[i].nodeExecution.State)
+                int index = (int)node.nodeID.TypeID;
+                switch (node.nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        AISystemState.Nodes[index].OnEnter(nodes[i]);
+                        AISystemState.Nodes[index].OnEnter(node);
                         break;
                     case Enums.NodeState.Running:
-                        AISystemState.Nodes[index].OnUpdate(nodes[i]);
+                        AISystemState.Nodes[index].OnUpdate(node);
                         break;
                     case Enums.NodeState.Success:
-                        AISystemState.Nodes[index].OnExit(nodes[i]);
-                        nodes[i].Destroy();
+                        AISystemState.Nodes[index].OnExit(node);
+                        node.Destroy();
                         break;
                     case Enums.NodeState.Fail:
-                        AISystemState.Nodes[index].OnExit(nodes[i]);
-                        nodes[i].Destroy();
+                        AISystemState.Nodes[index].OnExit(node);
+                        node.Destroy();
                         break;
                     default:
                         Debug.Log("Not valid Action state.");

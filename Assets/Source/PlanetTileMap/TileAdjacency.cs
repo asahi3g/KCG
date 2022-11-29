@@ -103,11 +103,6 @@ namespace PlanetTileMap
 
         public static void UpdateTile(ref Tile tile, Enums.TileGeometryAndRotation shape, Enums.TileAdjacency adjacency)
         {
-            if (shape == Enums.TileGeometryAndRotation.QP_R0)
-            {
-                int brk = 0;
-            }
-
             int ShapeMask = GameState.GeometryPropertiesManager.GetProperties(shape).Mask;
             tile.Adjacency  = GameState.GeometryPropertiesManager.GetAdjacency(shape, (Enums.TileAdjacency)((int)adjacency & ShapeMask));
         }

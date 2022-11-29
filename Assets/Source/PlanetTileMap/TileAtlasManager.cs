@@ -1,11 +1,12 @@
 ﻿using Enums;
+using Loader;
 using UnityEngine;
 
 namespace PlanetTileMap
 {
     public class TileAtlasManager
     {
-        private Sprites.SpriteLoader SpriteLoader;
+        private SpriteLoader SpriteLoader;
         private Sprites.SpriteAtlas[] SpritesArray;
         private int[] SpriteCount;
 
@@ -13,7 +14,7 @@ namespace PlanetTileMap
 
         public Sprites.SpriteAtlas[] GetSpriteAtlases() => SpritesArray;
 
-        public void InitStage1(Sprites.SpriteLoader spriteLoader)
+        public void InitStage1(SpriteLoader spriteLoader)
         {
             SpriteLoader = spriteLoader;
         }

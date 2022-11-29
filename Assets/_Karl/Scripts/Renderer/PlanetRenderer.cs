@@ -19,6 +19,10 @@ public class PlanetRenderer : BaseMonoBehaviour
     private Planet.PlanetState _planet;
     private Utility.FrameMesh _highlightMesh;
 
+    public Planet.PlanetState GetPlanet() => _planet;
+
+    public class Event : UnityEvent<PlanetRenderer> { }
+
     public void Initialize(Camera cam, UnityAction<IPlanetCreationResult> onSuccess, UnityAction<IError> onFailed)
     {
         if (string.IsNullOrEmpty(_fileName))
@@ -89,7 +93,7 @@ public class PlanetRenderer : BaseMonoBehaviour
             PlanetTileMap.TileMapGeometry.BuildGeometry(planet.TileMap);
 
             _planet = planet;
-            data = new PlanetCreationData(_fileName, tileMap, tiles, size, _planet);
+            data = new PlanetCreationData(this, _fileName, tileMap, tiles, size, _planet);
             
             if (_debug)
             {
@@ -122,7 +126,7 @@ public class PlanetRenderer : BaseMonoBehaviour
         }
     }
 
-    public bool CreateAgent(Vec2f position, AgentType agentType, out AgentRenderer result)
+    public bool CreateAgent(Vec2f position, AgentType agentType, int faction, out AgentRenderer result)
     {
         result = null;
         if (_planet == null)
@@ -131,12 +135,12 @@ public class PlanetRenderer : BaseMonoBehaviour
         }
         else
         {
-            AgentEntity agent = _planet.AddAgent(position, agentType);
-            if (agent.hasAgentModel3D)
+            AgentEntity agent = _planet.AddAgent(position, agentType, faction);
+            if (agent.hasAgent3DModel)
             {
-                AgentRenderer agentRenderer = agent.agentModel3D.GameObject.GetComponent<AgentRenderer>();
+                AgentRenderer agentRenderer = agent.Agent3DModel.Renderer;
                 agentRenderer.transform.parent = _agents;
-                agentRenderer.SetAgent(agent);
+                agentRenderer.SetAgent(this, agent);
                 result = agentRenderer;
             }
         }

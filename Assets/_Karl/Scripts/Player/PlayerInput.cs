@@ -110,7 +110,7 @@ public class PlayerInput : BaseMonoBehaviour
             {
                 if (GameState.InventoryManager.GetItemInSlot(inventoryEntityComponent.Index, inventoryEntityComponent.SelectedSlotIndex, out ItemInventoryEntity itemInventoryEntity))
                 {
-                    ItemProperties itemProperty = GameState.ItemCreationApi.Get(itemInventoryEntity.itemType.Type);
+                    ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
             
                     if (itemProperty.IsTool())
                     {

@@ -19,7 +19,7 @@ namespace Events
         {
             yield return new UnityEngine.WaitForSeconds(1.0f);
 
-            enemy = GameState.Planet.AddAgent(new Vec2f(transform.position.x, transform.position.y), Enums.AgentType.EnemyInsect);
+            enemy = GameState.Planet.AddAgent(new Vec2f(transform.position.x, transform.position.y), Enums.AgentType.InsectSmall);
 
             Init = true;
             yield return null;
