@@ -250,10 +250,7 @@ public partial class AgentEntity
         return LineOfSight.CanSeeAlert(agentID.ID, targetId);
      }
 
-    public void SetAimTarget(Vec2f AimTarget)
-    {
-        agentModel3D.AimTarget = AimTarget;
-    }
+    public void SetAimTarget(Vec2f AimTarget) => agentModel3D.AimTarget = AimTarget;
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {

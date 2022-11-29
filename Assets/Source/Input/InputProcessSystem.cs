@@ -73,7 +73,7 @@ namespace ECSInput
             ref var planet = ref GameState.Planet;
             Contexts contexts = planet.EntitasContext;
 
-            var AgentsWithXY = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+            var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
 
             UpdateMainCameraZoom();
 
@@ -87,7 +87,7 @@ namespace ECSInput
                 x -= 1;
             }
 
-            foreach (var player in AgentsWithXY)
+            foreach (var player in players)
             {
 
                 var physicsState = player.agentPhysicsState;
@@ -182,7 +182,6 @@ namespace ECSInput
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
                 var mechEntities = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 int inventoryID;
@@ -365,7 +364,6 @@ namespace ECSInput
             // Recharge Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players) 
                     GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, player.agentID.ID);
             }
@@ -373,7 +371,6 @@ namespace ECSInput
             // Drop Action. 
             if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
                     GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, player.agentID.ID);
             }
@@ -381,7 +378,6 @@ namespace ECSInput
             // Reload Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
                     GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
             }
@@ -389,7 +385,6 @@ namespace ECSInput
             // Shield Action.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
                     GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, player.agentID.ID);
 
@@ -428,7 +423,6 @@ namespace ECSInput
             //  Open Inventory with Tab.        
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
                 foreach (var player in players)
                 {
                     int inventoryID = player.agentInventory.InventoryID;

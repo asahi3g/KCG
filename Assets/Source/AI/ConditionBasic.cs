@@ -55,7 +55,7 @@ namespace Condition
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             
             float distance = (agent.GetGunFiringPosition() - blackboard.AttackTarget).Magnitude;
-            float attackRange = 20.0f; // Todo: Create method to get attack range.
+            float attackRange = 30.0f; // Todo: Create method to get attack range.
             return (distance < attackRange) ? true : false;
         }
 
