@@ -2,6 +2,8 @@
 
 using Physics;
 using System;
+using ECSInput;
+using Entitas;
 using KMath;
 using Enums;
 using Unity.VisualScripting;
@@ -201,6 +203,7 @@ namespace Agent
 
         public void Update()
         {
+            UpdateFacingDirections();
 
             float deltaTime = UnityEngine.Time.deltaTime;
             var EntitiesWithVelocity = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState));
@@ -213,6 +216,30 @@ namespace Agent
 
                 UpdateStagger(entity);
             }
+        }
+
+
+        private void UpdateFacingDirections()
+        {
+            IGroup<AgentEntity> agentEntities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
+            Vec2f mouseWorldPosition = InputProcessSystem.GetCursorWorldPosition();
+
+            foreach (AgentEntity agentEntity in agentEntities)
+            {
+                UpdateFacingDirection(agentEntity, mouseWorldPosition);
+            }
+        }
+        
+        public void UpdateFacingDirection(AgentEntity agentEntity, Vec2f mouseWorldPosition)
+        {
+            PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
+                
+            if (agentEntity.CanFaceMouseDirection())
+            {
+                if (mouseWorldPosition.X >= physicsStateComponent.Position.X) physicsStateComponent.FacingDirection = 1;
+                else physicsStateComponent.FacingDirection = -1;
+            }
+            else physicsStateComponent.FacingDirection = physicsStateComponent.MovingDirection;
         }
     }
 }

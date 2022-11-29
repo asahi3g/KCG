@@ -187,17 +187,6 @@ public class Player : BaseMonoBehaviour
         App.Instance.GetPlayer().GetInput().Tick();
         
         //GameState.InputProcessSystem.Update();
-        
-        // Exported from InputProcessSystem
-        IGroup<AgentEntity> agentEntities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-        Vec2f mouseWorldPosition = InputProcessSystem.GetCursorWorldPosition();
-        
-        foreach (AgentEntity agentEntity in agentEntities)
-        {
-            GameState.InputProcessSystem.UpdateFacingDirection(agentEntity, mouseWorldPosition);
-        }
-        
-
 
         // Movement Systems
         GameState.AgentIKSystem.Update(planetState.EntitasContext.agent);
