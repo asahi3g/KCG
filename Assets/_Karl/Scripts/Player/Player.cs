@@ -1,10 +1,7 @@
 using Agent;
-using ECSInput;
-using Entitas;
 using Enums;
 using Enums.PlanetTileMap;
 using Inventory;
-using KMath;
 using Planet;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +10,7 @@ public class Player : BaseMonoBehaviour
 {
     [SerializeField] private Identifier _identifier;
     [SerializeField] private PlayerInput _input;
-    [SerializeField] private PlayerCamera _camera;
+    [SerializeField] private PlanetCamera _camera;
 
     private PlanetLoader.Result _currentPlanet;
     private AgentRenderer _currentPlayer;
@@ -22,7 +19,7 @@ public class Player : BaseMonoBehaviour
     public readonly AgentRenderer.Event onPlayerAgentCreated = new AgentRenderer.Event();
 
     public PlayerInput GetInput() => _input;
-    public PlayerCamera GetCamera() => _camera;
+    public PlanetCamera GetCamera() => _camera;
 
 
     public class PlanetCreationEvent : UnityEvent<PlanetLoader.Result>{}

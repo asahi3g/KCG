@@ -7537,7 +7537,7 @@ GameObject:
   - component: {fileID: 790884123}
   - component: {fileID: 790884125}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Planet Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7565,7 +7565,7 @@ Transform:
   m_Children:
   - {fileID: 205414133}
   m_Father: {fileID: 1020607319}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &790884125
 MonoBehaviour:
@@ -9404,7 +9404,7 @@ Transform:
   - {fileID: 612830001}
   - {fileID: 456664973}
   m_Father: {fileID: 1020607319}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1007612823
 MonoBehaviour:
@@ -9464,8 +9464,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1007612822}
   - {fileID: 790884124}
+  - {fileID: 1007612822}
   m_Father: {fileID: 1942146828}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

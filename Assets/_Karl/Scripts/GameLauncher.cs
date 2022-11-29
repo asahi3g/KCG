@@ -44,6 +44,12 @@ public class GameLauncher : BaseMonoBehaviour
                 // Add some test items
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Shotgun);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PumpShotgun);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GasBomb);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SniperRifle);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.LongRifle);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
             
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
