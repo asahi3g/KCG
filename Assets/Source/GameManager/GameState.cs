@@ -87,6 +87,9 @@ public static class GameState
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
     public static readonly Agent.ProcessState AgentProcessState;
 
+    public static readonly Agent.AgentEffectSystem AgentEffectSystem;
+    public static readonly Agent.AgentMoveListPropertiesManager AgentMoveListPropertiesManager;
+
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
@@ -201,6 +204,8 @@ public static class GameState
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
         ParticleEffectPropertiesManager.InitStage1();
+        AgentMoveListPropertiesManager.InitStage1();
+        AgentEffectSystem.InitStage1();
     }
 
     public static void InitStage2()
@@ -215,6 +220,8 @@ public static class GameState
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
         ParticleEffectPropertiesManager.InitStage2();
+        AgentMoveListPropertiesManager.InitStage2();
+        AgentEffectSystem.InitStage2();
     }
 
 
@@ -261,6 +268,8 @@ public static class GameState
         AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessState = new Agent.ProcessState();
+        AgentMoveListPropertiesManager = new Agent.AgentMoveListPropertiesManager();
+        AgentEffectSystem = new Agent.AgentEffectSystem();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         LinePropertiesManager = new Collisions.LinePropertiesManager();

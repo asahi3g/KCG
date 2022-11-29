@@ -220,6 +220,7 @@ namespace Agent
                 // move the agent along the normal of the surface
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
+                    
                     if (physicsState.OnGrounded)
                     {
                         if (physicsState.MovingDirection != 0)
@@ -238,10 +239,6 @@ namespace Agent
                         physicsState.Velocity.X = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime  - physicsState.DashDuration))) * physicsState.Speed * physicsState.MovingDirection;
                         physicsState.Velocity.Y = 0.0f;
                     }      
-
-
-                    // if we are dashing we add some particles
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);  
                 }
 
 

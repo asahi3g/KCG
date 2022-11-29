@@ -28,7 +28,7 @@ namespace Agent
         public bool OnGrounded;         // are we standing on a block or not // Updated by collision system.
         public bool Droping;            // dropping
 
-        public int   JumpCounter;
+        public int  JumpCounter;
 
         public float IdleAfterShootingTime;
         public float SlidingTime;
