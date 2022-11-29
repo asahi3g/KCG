@@ -25,6 +25,16 @@ namespace Vehicle
             CurrentIndex = -1;
         }
 
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2()
+        {
+
+        }
+
         public VehicleProperties Get(int Id)
         {
             if (Id >= 0 && Id < PropertiesArray.Length)
