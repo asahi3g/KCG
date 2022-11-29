@@ -14,7 +14,7 @@ public partial class AgentEntity {
     public Agent.Agent3DModel AddAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
-        component.SetGameObject(agentRenderer);
+        component.SetRenderer(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;
@@ -28,7 +28,7 @@ public partial class AgentEntity {
     public void ReplaceAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
         var index = AgentComponentsLookup.AgentModel3D;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
-        component.SetGameObject(agentRenderer);
+        component.SetRenderer(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;

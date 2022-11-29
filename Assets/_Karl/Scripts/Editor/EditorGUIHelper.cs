@@ -379,7 +379,7 @@ public static class EditorGUIHelper
     public static void Draw(Agent3DModel value)
     {
         // Renderer
-        value.SetGameObject((AgentRenderer)EditorGUILayout
+        value.SetRenderer((AgentRenderer)EditorGUILayout
             .ObjectField($"{nameof(value.Renderer)}", value.Renderer, typeof(AgentRenderer), true));
         // Current Weapon
         EditorGUILayout.LabelField($"{nameof(value.CurrentWeapon)}: {value.CurrentWeapon.ToStringPretty()}", GetStyle());

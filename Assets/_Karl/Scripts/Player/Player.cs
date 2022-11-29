@@ -15,7 +15,7 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private PlayerInput _input;
     [SerializeField] private PlayerCamera _camera;
 
-    private IPlanetCreationResult _currentPlanet;
+    private PlanetLoader.Result _currentPlanet;
     private AgentRenderer _currentPlayer;
     
     public readonly PlanetCreationEvent onCurrentPlanetChanged = new PlanetCreationEvent();
@@ -25,18 +25,18 @@ public class Player : BaseMonoBehaviour
     public PlayerCamera GetCamera() => _camera;
 
 
-    public class PlanetCreationEvent : UnityEvent<IPlanetCreationResult>{}
+    public class PlanetCreationEvent : UnityEvent<PlanetLoader.Result>{}
     
     
     private void Update()
     {
         if (_currentPlanet != null)
         {
-            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _currentPlanet.GetPlanet());
+            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _currentPlanet.GetPlanetState());
         }
     }
 
-    public void SetCurrentPlanet(IPlanetCreationResult planetRenderer)
+    public void SetCurrentPlanet(PlanetLoader.Result planetRenderer)
     {
         _currentPlanet = planetRenderer;
         onCurrentPlanetChanged.Invoke(_currentPlanet);

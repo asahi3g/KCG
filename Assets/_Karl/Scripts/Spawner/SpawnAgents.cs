@@ -19,14 +19,14 @@ public class SpawnAgents : BaseMonoBehaviour
         App.Instance.GetPlayer().onCurrentPlanetChanged.AddListener(OnCurrentPlanetChanged);
     }
 
-    private void OnCurrentPlanetChanged(IPlanetCreationResult planetCreationResult)
+    private void OnCurrentPlanetChanged(PlanetLoader.Result result)
     {
-        if (planetCreationResult == null) return;
-        StartCoroutine(SpawnHandler(planetCreationResult));
+        if (result == null) return;
+        StartCoroutine(SpawnHandler(result));
     }
 
 
-    private IEnumerator SpawnHandler(IPlanetCreationResult planetCreationResult)
+    private IEnumerator SpawnHandler(PlanetLoader.Result planetCreationResult)
     {
         yield return new WaitForSeconds(_initialDelay);
         for (int i = 0; i < _quantity; i++)
@@ -41,7 +41,14 @@ public class SpawnAgents : BaseMonoBehaviour
                     if (length == 1) agentType = _types[0];
                     else agentType = _types[Random.Range(0, length)];
 
-                    planetCreationResult.GetPlanetRenderer().CreateAgent(GetSpawnPosition(), agentType, _faction, out AgentRenderer agentRenderer);
+                    AgentEntity agentEntity = planetCreationResult.GetPlanetState().AddAgent(GetSpawnPosition(), agentType, _faction);
+                    if (agentEntity.hasAgent3DModel)
+                    {
+                        if (agentEntity.Agent3DModel.Renderer)
+                        {
+                            agentEntity.Agent3DModel.Renderer.transform.parent = transform;
+                        }
+                    }
                 }
             }
             yield return new WaitForSeconds(_delay);

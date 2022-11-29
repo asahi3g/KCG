@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Game : Singleton<Game>
 {
-    [SerializeField] private PlanetRenderer _planet;
+    [TextArea(3, 6)]
+    [SerializeField] private string _planet;
+    [SerializeField] private Material _tileMaterial;
 
 
     protected override void Awake()
@@ -24,20 +26,22 @@ public class Game : Singleton<Game>
         base.Start();
 
         // Create planet
-        _planet.Initialize(App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
+        PlanetLoader.Load(transform, _planet, _tileMaterial, App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
 
         // Planet creation successful
-        void OnPlanetCreationSuccess(IPlanetCreationResult result)
+        void OnPlanetCreationSuccess(PlanetLoader.Result result)
         {
             Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
             App.Instance.GetPlayer().SetCurrentPlanet(result);
 
+            AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(10f, 10f), AgentType.Player, 0);
+
             // Player agent creation successful
-            if (_planet.CreateAgent(new Vec2f(10f, 10f), AgentType.Player, 0, out AgentRenderer agentRenderer))
+            if (agentEntity != null)
             {
-                App.Instance.GetPlayer().SetAgentRenderer(agentRenderer);
+                App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
             }
-            
+
             // Player agent creation failed
             else
             {

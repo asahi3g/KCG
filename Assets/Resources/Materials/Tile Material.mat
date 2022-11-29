@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TextureMaterial
+  m_Name: Tile Material
   m_Shader: {fileID: 4800000, guid: e811691201866d34d85f5b2e66df1df1, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
