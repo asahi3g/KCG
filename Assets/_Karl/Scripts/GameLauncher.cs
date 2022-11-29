@@ -3,7 +3,7 @@ using Enums;
 using KMath;
 using UnityEngine;
 
-public class Game : Singleton<Game>
+public class GameLauncher : BaseMonoBehaviour
 {
     [TextArea(3, 6)]
     [SerializeField] private string _planet;
@@ -33,12 +33,27 @@ public class Game : Singleton<Game>
         {
             Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
             App.Instance.GetPlayer().SetCurrentPlanet(result);
-
+            
             AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(10f, 10f), AgentType.Player, 0);
 
             // Player agent creation successful
             if (agentEntity != null)
             {
+                int inventoryID = agentEntity.agentInventory.InventoryID;     
+            
+                // Add some test items
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
+            
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+                
                 App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
             }
 
