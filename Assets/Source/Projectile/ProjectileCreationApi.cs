@@ -25,6 +25,14 @@ namespace Projectile
             CurrentIndex = -1;
         }
 
+        public void InitStage1()
+        {
+        }
+
+        public void InitStage2()
+        {
+        }
+
         public ProjectileProperties Get(int Id)
         {
             if (Id >= 0 && Id < PropertiesArray.Length)
