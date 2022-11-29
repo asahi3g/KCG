@@ -29,8 +29,7 @@ namespace Agent
             Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
             entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(9999, 0, 9999), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 
-                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
+            entity.AddAgentStats(100, 100, 100, 100, 100);
 
             if (inventoryID != -1)
                 entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
@@ -86,8 +85,7 @@ namespace Agent
             entity.isAgentAlive = true;
             entity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f,
-                100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
+            entity.AddAgentStats(100, 100, 100, 100, 100);
 
             entity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
 

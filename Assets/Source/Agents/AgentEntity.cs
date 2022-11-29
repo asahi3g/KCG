@@ -448,12 +448,6 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
-            if (agentModel3D.RifleIKBodyParts[4] != null ||
-                   agentModel3D.PistolIKBodyParts[4] != null)
-            {
-                agentModel3D.RifleIKBodyParts[4].gameObject.SetActive(false);
-                agentModel3D.PistolIKBodyParts[4].gameObject.SetActive(false);
-            }
             GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
