@@ -133,10 +133,12 @@ namespace Agent
             {
                 if (newVelocity.X > 0)
                 {
+                    physicsState.LastMovingDirection = physicsState.MovingDirection;
                     physicsState.MovingDirection = 1;
                 }
                 else if (newVelocity.X < 0)
                 {
+                    physicsState.LastMovingDirection = physicsState.MovingDirection;
                     physicsState.MovingDirection = -1;
                 }
             }

@@ -35,6 +35,12 @@ namespace Agent
                     var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.Dust_2); 
                 }
 
+
+                if (physicsState.LastMovingDirection != physicsState.MovingDirection)
+                {
+                    var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.Dust_2);
+                }
+
             }
         }
     }

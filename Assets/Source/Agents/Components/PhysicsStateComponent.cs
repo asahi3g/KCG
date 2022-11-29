@@ -13,6 +13,7 @@ namespace Agent
         public float InitialJumpVelocity;       // Velocity at the beginning of the first jump
         public Vec2f Velocity;
         public Vec2f Acceleration;              // Instantaneous, reset to zero at the end of the frame.
+        public int LastMovingDirection;
         public int MovingDirection;             // 1 or -1 last direction the player was looking at
         public int FacingDirection;
         public Vec2f GroundNormal;
