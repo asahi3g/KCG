@@ -135,6 +135,7 @@
         RemoveMech,
         PotionTool,
         GeometryPlacementTool,
-        AxeTool
+        AxeTool,
+        PlaceableBackgroundTool, // Tool to fill out background grid (dark grey background)
     }
 }
