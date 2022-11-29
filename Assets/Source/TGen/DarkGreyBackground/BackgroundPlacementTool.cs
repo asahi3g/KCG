@@ -54,28 +54,33 @@ namespace TGen.DarkGreyBackground
             }
         }
 
-        public void UpdateToolGrid(PlanetTileMap.TileMap tileMap)
+        public void UpdateToolGrid()
         {
-            if(UnityEngine.Input.GetMouseButtonUp(0))
+            var item = GameState.Planet.Player.GetItem();
+            if(item != null)
             {
-                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                if(item.itemType.Type == Enums.ItemType.PlaceableBackgroundTool)
+                {
+                    if(UnityEngine.Input.GetMouseButtonUp(0))
+                    {
+                        var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                int x = (int)worldPosition.X;
-                int y = (int)worldPosition.Y;
+                        int x = (int)worldPosition.X;
+                        int y = (int)worldPosition.Y;
 
-                tileMap.SetBackTile(x, y, Enums.PlanetTileMap.TileID.Background);
-            }
-            else if (UnityEngine.Input.GetMouseButtonDown(1))
-            {
-                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                        GameState.Planet.TileMap.SetBackTile(x, y, Enums.PlanetTileMap.TileID.Background);
+                    }
+                    else if (UnityEngine.Input.GetMouseButtonDown(1))
+                    {
+                        var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                int x = (int)worldPosition.X;
-                int y = (int)worldPosition.Y;
+                        int x = (int)worldPosition.X;
+                        int y = (int)worldPosition.Y;
 
-                tileMap.RemoveBackTile(x, y);
+                        GameState.Planet.TileMap.RemoveBackTile(x, y);
+                    }
+                }
             }
         }
-
     }
-
 }

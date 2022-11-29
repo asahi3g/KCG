@@ -81,121 +81,65 @@ namespace TGen.DarkGreyBackground
         }
 
         // Tile CollisionIsotope
-        public int FB_R0000Sheet;
-        public int FB_R0001Sheet;
-        public int FB_R0010Sheet;
-        public int FB_R0011Sheet;
-        public int FB_R0100Sheet;
-        public int FB_R0101Sheet;
-        public int FB_R0110Sheet;
-        public int FB_R0111Sheet;
-        public int FB_R1000Sheet;
-        public int FB_R1001Sheet;
-        public int FB_R1010Sheet;
-        public int FB_R1011Sheet;
-        public int FB_R1100Sheet;
-        public int FB_R1101Sheet;
-        public int FB_R1110Sheet;
-        public int FB_R1111Sheet;
+        public int PlanetSheet;
+        public int StarSheet;
+
+        public int Planet1;
+        public int Planet2;
+        public int Planet3;
+        public int Planet4;
+        public int Planet5;
+        public int Planet6;
+        public int Planet7;
+        public int Planet8;
+        public int Planet9;
+        public int Planet10;
+
+        public int Star1;
+        public int Star2;
+        public int Star3;
+        public int Star4;
+        public int Star5;
+        public int Star6;
+        public int Star7;
+        public int Star8;
+        public int Star9;
+        public int Star10;
+
         public int EmptyBlockSheet;
-
-        //TGen
-        /*public static int TGen_SB_R0,
-
-            // HalfBlock
-            TGen_HB_R0,
-            TGen_HB_R1,
-            TGen_HB_R2,
-            TGen_HB_R3,
-
-            //TriangleBlock
-            TGen_TB_R0,
-            TGen_TB_R1,
-            TGen_TB_R2,
-            TGen_TB_R3,
-            TGen_TB_R4,
-            TGen_TB_R5,
-            TGen_TB_R6,
-            TGen_TB_R7,
-
-            //LBlock
-            TGen_LB_R0,
-            TGen_LB_R1,
-            TGen_LB_R2,
-            TGen_LB_R3,
-            TGen_LB_R4,
-            TGen_LB_R5,
-            TGen_LB_R6,
-            TGen_LB_R7,
-
-            //HalfTriangleBlock
-            TGen_HTB_R0,
-            TGen_HTB_R1,
-            TGen_HTB_R2,
-            TGen_HTB_R3,
-            TGen_HTB_R4,
-            TGen_HTB_R5,
-            TGen_HTB_R6,
-            TGen_HTB_R7,
-
-            //QuarterPlatform
-            TGen_QP_R0,
-            TGen_QP_R1,
-            TGen_QP_R2,
-            TGen_QP_R3,
-
-            //HalfPlatform
-            TGen_HP_R0,
-            TGen_HP_R1,
-            TGen_HP_R2,
-            TGen_HP_R3,
-
-            //FullPlatform
-            TGen_FP_R0,
-            TGen_FP_R1,
-            TGen_FP_R2,
-            TGen_FP_R3;*/
 
         public int TGenBlockSpriteSheet;
         public int[] TGenIsotypeSprites;
 
         public void InitializeResources()
         {
-            FB_R0000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0000.png", 32, 32);
-            FB_R0001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0001.png", 32, 32);
-            FB_R0010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0010.png", 32, 32);
-            FB_R0011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0011.png", 32, 32);
-            FB_R0100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0100.png", 32, 32);
-            FB_R0101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0101.png", 32, 32);
-            FB_R0110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0110.png", 32, 32);
-            FB_R0111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A0111.png", 32, 32);
-            FB_R1000Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1000.png", 32, 32);
-            FB_R1001Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1001.png", 32, 32);
-            FB_R1010Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1010.png", 32, 32);
-            FB_R1011Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1011.png", 32, 32);
-            FB_R1100Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1100.png", 32, 32);
-            FB_R1101Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1101.png", 32, 32);
-            FB_R1110Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1110.png", 32, 32);
-            FB_R1111Sheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\SB_A1111.png", 32, 32);
+            PlanetSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\galaxy_256x256.png", 32, 32);
+            StarSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\PlanetBackground\\StarField\\Stars\\starfield_test_16x16_tiles_8x8_tile_grid_128x128.png", 16, 16);
             EmptyBlockSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\TileCollision\\EmptyBlock.png", 32, 32);
 
             // TileIsotypes.
-            FB_R0000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0000Sheet, 0, 0, 0);
-            FB_R0001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0001Sheet, 0, 0, 0);
-            FB_R0010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0010Sheet, 0, 0, 0);
-            FB_R0011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0011Sheet, 0, 0, 0);
-            FB_R0100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0100Sheet, 0, 0, 0);
-            FB_R0101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0101Sheet, 0, 0, 0);
-            FB_R0110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0110Sheet, 0, 0, 0);
-            FB_R0111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R0111Sheet, 0, 0, 0);
-            FB_R1000Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1000Sheet, 0, 0, 0);
-            FB_R1001Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1001Sheet, 0, 0, 0);
-            FB_R1010Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1010Sheet, 0, 0, 0);
-            FB_R1011Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1011Sheet, 0, 0, 0);
-            FB_R1100Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1100Sheet, 0, 0, 0);
-            FB_R1101Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1101Sheet, 0, 0, 0);
-            FB_R1110Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1110Sheet, 0, 0, 0);
-            FB_R1111Sheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(FB_R1111Sheet, 0, 0, 0);
+            Planet1 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 5, 0, 0);
+            Planet2 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 6, 0, 0);
+            Planet3 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 7, 0);
+            Planet4 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 5, 4, 0);
+            Planet5 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 5, 7, 0);
+            Planet6 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 4, 0);
+            Planet7 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 6, 0);
+            Planet8 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 0, 0);
+            Planet9 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 2, 0);
+            Planet10 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(PlanetSheet, 4, 3, 0);
+
+            Star1 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 3, 0, 0);
+            Star2 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 0, 0, 0);
+            Star3 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 2, 0, 0);
+            Star4 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 2, 2, 0);
+            Star5 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 2, 3, 0);
+            Star6 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 3, 1, 0);
+            Star7 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 3, 2, 0);
+            Star8 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 3, 3, 0);
+            Star9 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 0, 1, 0);
+            Star10 = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(StarSheet, 0, 2, 0);
+
             EmptyBlockSheet = GameState.TileSpriteAtlasManager.CopyTileSpriteToAtlas(EmptyBlockSheet, 0, 0, 0);
 
             TGenBlockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\Test\\testBlocks.png", 32, 32);

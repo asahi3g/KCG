@@ -4,8 +4,6 @@ using System;
 using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
-using KMath;
-using Unity.VisualScripting;
 using Utility;
 
 /*
@@ -1778,6 +1776,12 @@ namespace Item
             SetInventoryItemIcon(RedStone_7);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
+            EndItem();
+
+            CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
+            SetGroup(ItemGroups.BuildTools);
+            SetTexture(ConstructionToolIcon);
+            SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();
 
         }

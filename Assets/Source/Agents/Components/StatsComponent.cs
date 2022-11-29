@@ -6,12 +6,11 @@ namespace Agent
     [Agent]
     public class StatsComponent : IComponent
     {
-
         public ContainerInt Health = new ContainerInt(100, 0, 100);
-        public ContainerFloat Food = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Water = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Oxygen = new ContainerFloat(100f, 0f, 100f);
-        public ContainerFloat Fuel = new ContainerFloat(100f, 0f, 100f);
+        public ContainerInt Food = new ContainerInt(100, 0, 100);
+        public ContainerInt Water = new ContainerInt(100, 0, 100);
+        public ContainerInt Oxygen = new ContainerInt(100, 0, 100);
+        public ContainerInt Fuel = new ContainerInt(100, 0, 100);
 
         public bool IsLimping => Health.GetValue() <= 50.0f;
         
@@ -25,7 +24,7 @@ namespace Agent
             throw new NotImplementedException($"{nameof(StatsComponent)} by {kind} not implemented");
         }
 
-        public ContainerFloat GetValue(StatsKindFloat kind)
+        public ContainerInt GetValue(StatsKindFloat kind)
         {
             switch (kind)
             {

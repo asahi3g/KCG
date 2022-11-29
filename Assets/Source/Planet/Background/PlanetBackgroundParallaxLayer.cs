@@ -150,7 +150,7 @@ namespace Planet.Background
             StarSpriteIDs.Add(star8ID);
 
             // Set Sprite ID from Sprite Atlas
-            int star9ID = GameState.SpriteAtlasManager.CopySpriteToAtlas(star1Sheet, 4, 3, Enums.AtlasType.BackGround);
+            int star9ID = GameState.SpriteAtlasManager.CopySpriteToAtlas(star1Sheet, 3, 4, Enums.AtlasType.BackGround);
 
             StarSpriteIDs.Add(star9ID);
 

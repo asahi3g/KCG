@@ -356,7 +356,8 @@ namespace Planet
             for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
             {
                 Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
-                AddParticleEmitter(position + element.Offset, element.Emitter);
+                var emitter = AddParticleEmitter(position + element.Offset, element.Emitter);
+                emitter.particleEmitterState.CurrentTime = element.Delay;
             }
         }
 

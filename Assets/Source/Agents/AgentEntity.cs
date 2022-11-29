@@ -681,6 +681,10 @@ public partial class AgentEntity
                     // jumping
                     physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
                     physicsState.JumpCounter++;
+
+
+                    GameState.Planet.AddParticleEffect(physicsState.Position + new Vec2f(0.125f, 0.0f), Enums.ParticleEffect.Dust_Jumping);
+
             }
             else
             {

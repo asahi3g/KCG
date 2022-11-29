@@ -133,8 +133,9 @@ namespace Agent
             {
                 physicsState.MovingDistance += displacement.Magnitude;
             }
-            
+
             physicsState.LastMovingDirection = physicsState.MovingDirection;
+            physicsState.LastMovementState = physicsState.MovementState;
 
             if (entity.isAgentAlive && Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
                 physicsState.MovementState != AgentMovementState.Stagger)

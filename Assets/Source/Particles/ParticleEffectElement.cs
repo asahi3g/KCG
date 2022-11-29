@@ -8,5 +8,6 @@ namespace Particle
     {
         public ParticleEmitterType Emitter;
         public KMath.Vec2f Offset;
+        public float Delay;
     }
 }

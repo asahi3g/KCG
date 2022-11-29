@@ -11,12 +11,12 @@ namespace Particle
     {
         List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
-        ParticleEmitterCreationApi ParticleEmitterCreationApi;
+        ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
         ParticlePropertiesManager ParticlePropertiesManager;
-        public ParticleEmitterUpdateSystem(ParticleEmitterCreationApi particleEmitterCreationApi,
+        public ParticleEmitterUpdateSystem(ParticleEmitterPropertiesManager particleEmitterCreationApi,
                                             ParticlePropertiesManager particlePropertiesManager)
         {
-            ParticleEmitterCreationApi = particleEmitterCreationApi;
+            ParticleEmitterPropertiesManager = particleEmitterCreationApi;
             ParticlePropertiesManager = particlePropertiesManager;
         }
 
@@ -35,7 +35,7 @@ namespace Particle
                 var position = gameEntity.particleEmitter2dPosition;
                 state.Duration -= UnityEngine.Time.deltaTime;
                 ParticleEmitterProperties emitterProperties = 
-                        ParticleEmitterCreationApi.Get((int)state.ParticleEmitterType);
+                        ParticleEmitterPropertiesManager.Get((int)state.ParticleEmitterType);
                 ParticleProperties particleProperties = 
                         ParticlePropertiesManager.Get(state.ParticleType);
                 if (state.Duration >= 0)

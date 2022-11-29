@@ -582,7 +582,7 @@ namespace Particle
 
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
-            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 1.0f);
+            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
@@ -594,6 +594,21 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
             //GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
             //GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1f, 1f, 1f, 0.5f));
+            GameState.ParticlePropertiesManager.End();
+
+
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_3);
+            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 4.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.15f, 0.15f));
+            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(0.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
             GameState.ParticlePropertiesManager.End();
 
 
@@ -627,209 +642,227 @@ namespace Particle
 
         public void InitializeEmitterResources()
         {
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.OreFountain);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Ore);
-            GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(1);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(0.05f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, 0.0f), new Vec2f(1.0f, 0.0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.OreFountain);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Ore);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(0.5f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(0.05f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.0f, 0.0f), new Vec2f(1.0f, 0.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.OreExplosion);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.OreExplosionParticle);
-            GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(15);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-10.0f, -10.0f), new Vec2f(10.0f, 10.0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.OreExplosion);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.OreExplosionParticle);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(15);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(1.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-10.0f, -10.0f), new Vec2f(10.0f, 10.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.DustEmitter);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.DustParticle);
-            GameState.ParticleEmitterCreationApi.SetDuration(0.1f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(1);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.DustEmitter);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.DustParticle);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(1.02f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.GasEmitter);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.GasParticle);
-            GameState.ParticleEmitterCreationApi.SetDuration(0.5f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.25f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(1);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.02f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.GasEmitter);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.GasParticle);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(0.5f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.25f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(1.02f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(0.0f, 0), new Vec2f(0.0f, 0));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Blood);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Blood);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.4f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.6f, -0.5f), new Vec2f(0.6f, 0.5f));
-            GameState.ParticleEmitterCreationApi.End();
-
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Blood2);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Blood2);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-4.0f, -10.0f), new Vec2f(4.0f, 2.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodSmoke);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodSmoke);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.3f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodFog);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodFog);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(15);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.1f, -0.1f), new Vec2f(0.1f, 0.1f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Blood);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Blood);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.4f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.6f, -0.5f), new Vec2f(0.6f, 0.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.WoodEmitter);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Wood);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Blood2);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Blood2);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-4.0f, -10.0f), new Vec2f(4.0f, 2.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.ExplosionEmitter);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion);
-            GameState.ParticleEmitterCreationApi.SetDuration(4.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.7f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(5);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(10.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(0.0f, 0.0f), new Vec2f(0.0f, 0.0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.BloodSmoke);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.BloodSmoke);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.3f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(6);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.ShrapnelEmitter);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Shrapnel);
-            GameState.ParticleEmitterCreationApi.SetDuration(0.15f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(30);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(1.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MetalBulletImpact);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MetalBulletImpact);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.RockBulletImpact);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.RockBulletImpact);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.BloodImpact);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.BloodImpact);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(6);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
-            GameState.ParticleEmitterCreationApi.End();
-
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.MuzzleFlash);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.MuzzleFlash);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.2f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.3f, -0.3f), new Vec2f(0.3f, 0.3f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.BloodFog);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.BloodFog);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.7f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(15);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.1f, -0.1f), new Vec2f(0.1f, 0.1f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Explosion_2_Part1);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion_2_Part1);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(15);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-2.5f, -2.5f), new Vec2f(2.5f, 2.5f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.WoodEmitter);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Wood);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.0f, -1.0f), new Vec2f(1.0f, 1.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Explosion_2_Part2);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion_2_Part2);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.ExplosionEmitter);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(4.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.7f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(5);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(10.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(0.0f, 0.0f), new Vec2f(0.0f, 0.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Explosion_2_Part3);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion_2_Part3);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(20);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.ShrapnelEmitter);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Shrapnel);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(30);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(1.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-5.0f, -5.0f), new Vec2f(5.0f, 5.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Explosion_2_Part4);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Explosion_2_Part4);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.0f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(10);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.MetalBulletImpact);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.MetalBulletImpact);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(6);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.RockBulletImpact);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.RockBulletImpact);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(6);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.BloodImpact);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.BloodImpact);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(6);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-3.0f, -3.0f), new Vec2f(3.0f, 3.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.MuzzleFlash);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.MuzzleFlash);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.2f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.3f, -0.3f), new Vec2f(0.3f, 0.3f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Dust_2);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Dust_2);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.2f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(60);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Part1);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Part1);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(15);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-2.5f, -2.5f), new Vec2f(2.5f, 2.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Part2);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Part2);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Part3);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Part3);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(20);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Part4);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Part4);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_2);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_2);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(60);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_Jumping);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_2);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_Lading);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_3);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
 
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Smoke_2);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Smoke_2);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.15f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(7);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0f), new Vec2f(-0.0f, 0f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Smoke_2);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Smoke_2);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0f), new Vec2f(-0.0f, 0f));
+            GameState.ParticleEmitterPropertiesManager.End();
 
 
-            GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Smoke_3);
-            GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Smoke_3);
-            GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.10f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(7);
-            GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(0.01f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.5f, -0f), new Vec2f(-1.0f, 0.3f));
-            GameState.ParticleEmitterCreationApi.End();
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Smoke_3);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Smoke_3);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.10f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(0.01f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -0f), new Vec2f(-1.0f, 0.3f));
+            GameState.ParticleEmitterPropertiesManager.End();
         }
     }
 

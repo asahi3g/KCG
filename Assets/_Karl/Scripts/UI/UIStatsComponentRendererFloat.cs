@@ -61,6 +61,11 @@ public class UIStatsComponentRendererFloat : UIMonoBehaviour
         UpdateLook(false);
     }
 
+    private void OnStatsChanged(ContainerInt.AlterData<int> ev)
+    {
+        UpdateLook(false);
+    }
+
     private void UpdateLook(bool isEditor)
     {
         // There is editor options because this makes easier to see UI in inspector
@@ -82,7 +87,7 @@ public class UIStatsComponentRendererFloat : UIMonoBehaviour
             }
             else
             {
-                ContainerFloat container = _stats.GetValue(_kind);
+                ContainerInt container = _stats.GetValue(_kind);
 
                 _slider.maxValue = container.GetMax();
                 _slider.minValue = container.GetMin();

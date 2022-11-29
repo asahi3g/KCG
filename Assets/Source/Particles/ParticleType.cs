@@ -29,7 +29,7 @@ namespace Particle
         Explosion_2_Part4,
 
         Dust_2,
-
+        Dust_3,
 
         Smoke_2,
         Smoke_3

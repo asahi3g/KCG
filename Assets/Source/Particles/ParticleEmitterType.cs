@@ -24,8 +24,9 @@ namespace Particle
         Explosion_2_Part3,
         Explosion_2_Part4,
 
-        Dust_2,
-
+        Dust_2, // used for turning
+        Dust_Jumping, // used for jumping
+        Dust_Lading, // used for landing
 
 
         Smoke_2,

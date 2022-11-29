@@ -20,6 +20,7 @@ namespace Agent
         public int FacingDirection;
         public Vec2f GroundNormal;
 
+        public Enums.AgentMovementState LastMovementState;
         public Enums.AgentMovementState MovementState;
         public AgentAnimation LastAgentAnimation;
         public bool SetMovementState;
