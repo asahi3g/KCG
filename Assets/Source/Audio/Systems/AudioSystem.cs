@@ -8,9 +8,19 @@ namespace Audio
     {
         private AudioSource audioSource;
 
+        public AudioSystem() { }
+
         public AudioSystem(AudioSource _audioSource)
         {
             audioSource = _audioSource;
+        }
+
+        public void InitStage1()
+        {
+        }
+
+        public void InitStage2()
+        {
         }
 
         public void PlayOneShot(AudioClip clip)
