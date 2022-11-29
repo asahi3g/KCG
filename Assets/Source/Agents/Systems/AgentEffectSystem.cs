@@ -27,18 +27,27 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var box2DCollider = entity.physicsBox2DCollider;
 
-                Vec2f feetPosition = physicsState.Position + new Vec2f(0.5f, 0.0f);
+                Vec2f feetPosition = physicsState.Position + new Vec2f(0.25f, 0.0f) + new Vec2f(0.25f, 0.0f) * physicsState.MovingDirection;
 
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
                     // if we are dashing we add some particles
-                    var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.Dust_2); 
+                    var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.DustEmitter); 
+                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-3.0f * physicsState.MovingDirection, 0.0f);
                 }
 
 
+                UnityEngine.Debug.Log(physicsState.MovingDistance);
                 if (physicsState.LastMovingDirection != physicsState.MovingDirection)
                 {
-                    var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.Dust_2);
+                    if (physicsState.MovingDistance >= Agent.Constants.MinimumDistanceToSpawnParticlesOnTurn)
+                    {
+                        var emitter = planet.AddParticleEmitter(feetPosition, Particle.ParticleEmitterType.Dust_2);
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-3.0f * physicsState.MovingDirection, 0.0f);
+                    }
+
+
+                    physicsState.MovingDistance = 0f;
                 }
 
             }

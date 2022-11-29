@@ -14,6 +14,8 @@ namespace Agent
         public Vec2f Velocity;
         public Vec2f Acceleration;              // Instantaneous, reset to zero at the end of the frame.
         public int LastMovingDirection;
+
+        public float MovingDistance; // moving  in the same direction will increase this value
         public int MovingDirection;             // 1 or -1 last direction the player was looking at
         public int FacingDirection;
         public Vec2f GroundNormal;

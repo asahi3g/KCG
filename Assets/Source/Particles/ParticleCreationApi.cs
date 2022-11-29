@@ -582,16 +582,18 @@ namespace Particle
 
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
-            GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
+            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
-            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.8f, 0.8f));
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.15f, 0.15f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
-            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(0.0f);
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
-            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+            //GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
+            //GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1f, 1f, 1f, 0.5f));
             GameState.ParticlePropertiesManager.End();
 
 
@@ -802,10 +804,10 @@ namespace Particle
             GameState.ParticleEmitterCreationApi.Create((int)ParticleEmitterType.Dust_2);
             GameState.ParticleEmitterCreationApi.SetParticleType(ParticleType.Dust_2);
             GameState.ParticleEmitterCreationApi.SetDuration(2.0f);
-            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.10f);
-            GameState.ParticleEmitterCreationApi.SetParticleCount(7);
+            GameState.ParticleEmitterCreationApi.SetSpawnRadius(0.2f);
+            GameState.ParticleEmitterCreationApi.SetParticleCount(60);
             GameState.ParticleEmitterCreationApi.SetTimeBetweenEmissions(3.0f);
-            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-1.5f, -0f), new Vec2f(-1.0f, 0.3f));
+            GameState.ParticleEmitterCreationApi.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
             GameState.ParticleEmitterCreationApi.End();
 
 

@@ -128,20 +128,28 @@ namespace Agent
             Vec2f displacement = 0.5f * physicsState.Acceleration * (deltaTime * deltaTime) + physicsState.Velocity * deltaTime;
             Vec2f newVelocity = physicsState.Acceleration * deltaTime + physicsState.Velocity;
 
+
+            if (physicsState.LastMovingDirection == physicsState.MovingDirection)
+            {
+                physicsState.MovingDistance += displacement.Magnitude;
+            }
+            
+            physicsState.LastMovingDirection = physicsState.MovingDirection;
+
             if (entity.isAgentAlive && Math.Abs(newVelocity.X) > physicsState.Speed * 0.1f && 
                 physicsState.MovementState != AgentMovementState.Stagger)
             {
                 if (newVelocity.X > 0)
                 {
-                    physicsState.LastMovingDirection = physicsState.MovingDirection;
                     physicsState.MovingDirection = 1;
                 }
                 else if (newVelocity.X < 0)
                 {
-                    physicsState.LastMovingDirection = physicsState.MovingDirection;
                     physicsState.MovingDirection = -1;
                 }
+                
             }
+
 
 
             // maximum velocity in the game
