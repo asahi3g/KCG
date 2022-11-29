@@ -1,6 +1,7 @@
-
 using Audio;
 using Planet;
+using Loader;
+
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
 {
@@ -49,10 +50,19 @@ public static class GameState
 
     #endregion
 
+    #region DarkGreyBackground
+
+    public static readonly TGen.DarkGreyBackground.BackgroundGrid BackgroundGrid;
+    public static readonly TGen.DarkGreyBackground.RenderGridOverlay BackgroundGridOverlay;
+    public static readonly TGen.DarkGreyBackground.RenderMapBorder BackgroundRenderMapBorder;
+    public static readonly TGen.DarkGreyBackground.RenderMapMesh BackgroundRenderMapMesh;
+
+    #endregion
+
     #region Sprites
 
     public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
-    public static readonly Sprites.SpriteLoader SpriteLoader;
+    public static readonly SpriteLoader SpriteLoader;
 
     #endregion
 
@@ -80,9 +90,11 @@ public static class GameState
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
-    public static readonly Collisions.LineCreationApi LineCreationApi;
+    public static readonly Collisions.LinePropertiesManager LinePropertiesManager;
     public static readonly Collisions.PointCreationApi PointCreationApi;
-    public static readonly Collisions.GeometryCreationApi GeometryCreationApi;
+    public static readonly Collisions.GeometryPropertiesManager GeometryPropertiesManager;
+
+    public static readonly Collisions.AdjacencyPropertiesManager AdjacencyPropertiesManager;
 
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
@@ -144,7 +156,8 @@ public static class GameState
     #endregion
 
     #region Particle
-    public static readonly Particle.ParticleCreationApi ParticleCreationApi;
+    public static readonly Particle.ParticleEffectPropertiesManager ParticleEffectPropertiesManager;
+    public static readonly Particle.ParticlePropertiesManager ParticlePropertiesManager;
     public static readonly Particle.ParticleEmitterCreationApi ParticleEmitterCreationApi;
     public static readonly Particle.ParticleEmitterUpdateSystem ParticleEmitterUpdateSystem;
     public static readonly Particle.ParticleUpdateSystem ParticleUpdateSystem;
@@ -178,16 +191,16 @@ public static class GameState
 
     public static void InitStage1()
     {
-
-    
         TileSpriteAtlasManager.InitStage1(SpriteLoader);
         SpriteAtlasManager.InitStage1(SpriteLoader);
         AgentMovementAnimationTable.InitStage1();
         PointCreationApi.InitStage1();
-        LineCreationApi.InitStage1();
-        GeometryCreationApi.InitStage1();
+        LinePropertiesManager.InitStage1();
+        GeometryPropertiesManager.InitStage1();
+        AdjacencyPropertiesManager.InitStage1();
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
+        ParticleEffectPropertiesManager.InitStage1();
     }
 
     public static void InitStage2()
@@ -196,10 +209,12 @@ public static class GameState
         SpriteAtlasManager.InitStage2();
         AgentMovementAnimationTable.InitStage2();
         PointCreationApi.InitStage2();
-        LineCreationApi.InitStage2();
-        GeometryCreationApi.InitStage2();
+        LinePropertiesManager.InitStage2();
+        GeometryPropertiesManager.InitStage2();
+        AdjacencyPropertiesManager.InitStage2();
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
+        ParticleEffectPropertiesManager.InitStage2();
     }
 
 
@@ -225,7 +240,7 @@ public static class GameState
         SensorManager = new Sensor.SensorManager();
         SensorUpdateSystem = new Sensor.UpdateSystem();
 
-        SpriteLoader = new Sprites.SpriteLoader();
+        SpriteLoader = new SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
         SpriteAtlasManager = new Sprites.SpriteAtlasManager();
 
@@ -248,9 +263,10 @@ public static class GameState
         AgentProcessState = new Agent.ProcessState();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
-        LineCreationApi = new Collisions.LineCreationApi();
+        LinePropertiesManager = new Collisions.LinePropertiesManager();
         PointCreationApi = new Collisions.PointCreationApi();
-        GeometryCreationApi = new Collisions.GeometryCreationApi();
+        GeometryPropertiesManager = new Collisions.GeometryPropertiesManager();
+        AdjacencyPropertiesManager = new Collisions.AdjacencyPropertiesManager();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem();
@@ -285,13 +301,14 @@ public static class GameState
         ActionSchedulerSystem = new Node.SchedulerSystem();
         ActionCoolDownSystem = new ActionCoolDown.CoolDownSystem();
 
-        ParticleCreationApi = new Particle.ParticleCreationApi();
+        ParticleEffectPropertiesManager = new Particle.ParticleEffectPropertiesManager();
+        ParticlePropertiesManager = new Particle.ParticlePropertiesManager();
         ParticleEmitterCreationApi = new Particle.ParticleEmitterCreationApi();
-        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticleCreationApi);
+        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
         ParticleMeshBuilderSystem = new Particle.MeshBuilderSystem();
         ParticleUpdateSystem = new Particle.ParticleUpdateSystem();
-        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticleCreationApi);
-        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticleCreationApi);
+        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
+        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticlePropertiesManager);
         ParticleProcessCollisionSystem = new Particle.ParticleProcessCollisionSystem();
 
         ProjectileCreationApi = new Projectile.ProjectileCreationApi();
@@ -310,6 +327,11 @@ public static class GameState
         TGenRenderGridOverlay = new TGen.RenderGridOverlay();
         TGenRenderMapBorder = new TGen.RenderMapBorder();
         TGenRenderMapMesh = new TGen.RenderMapMesh();
+
+        BackgroundGrid = new TGen.DarkGreyBackground.BackgroundGrid();
+        BackgroundGridOverlay = new TGen.DarkGreyBackground.RenderGridOverlay();
+        BackgroundRenderMapBorder = new TGen.DarkGreyBackground.RenderMapBorder();
+        BackgroundRenderMapMesh = new TGen.DarkGreyBackground.RenderMapMesh();
 
         GUIManager = new KGUI.GUIManager();
 

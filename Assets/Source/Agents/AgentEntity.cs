@@ -10,6 +10,9 @@ using Physics;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// TODO(Brandon): 
+// AgentSystem should not be importing GUI (for call back)
+
 public partial class AgentEntity
 {
    public ItemInventoryEntity GetItem()
@@ -19,23 +22,11 @@ public partial class AgentEntity
 
         int inventoryID = agentInventory.InventoryID;
         Inventory.InventoryEntityComponent inventory = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity;
-        int selectedSlot = inventory.SelectedSlotID;
+        int selectedSlot = inventory.SelectedSlotIndex;
         return GameState.InventoryManager.GetItemInSlot(agentInventory.InventoryID, selectedSlot);
     }
-    public void DestroyModel()
-    {
-        if (hasAgentModel3D)
-        {
-            var model3D = agentModel3D;
-            //if (model3D.GameObject != null)
-            //{
-            //    if (model3D.Weapon.name != "SpaceGun" || model3D.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3D.GameObject);
-            //}
-        }
-    }
 
-    public bool CanMove()
+   public bool CanMove()
     {
         var physicsState = agentPhysicsState;
         return isAgentAlive && physicsState.MovementState != AgentMovementState.IdleAfterShooting;
@@ -185,7 +176,7 @@ public partial class AgentEntity
     public Vec2f GetGunFiringPosition()
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D;
+        var model3d = Agent3DModel;
 
         Vec2f targetPosition = GetGunFiringTarget();
 
@@ -198,63 +189,19 @@ public partial class AgentEntity
         return position;
     }
 
-
-    public void HandleItemSelected(ItemInventoryEntity item)
-    {
-        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
-
-        if (hasAgentModel3D)
-        {
-            var model3d = agentModel3D;
-
-            model3d.ItemAnimationSet = itemProperty.AnimationSet;
-
-            //if (model3d.Weapon != null)
-            //{
-            //    if(model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3d.Weapon);
-            //}
-
-            switch (itemProperty.ToolType)
-            {
-                case ItemToolType.Pistol:
-                    {
-                        SetAgentWeapon(Model3DWeapon.Pistol);
-
-                        break;
-                    }
-                case ItemToolType.Rifle:
-                    {
-                        SetAgentWeapon(Model3DWeapon.Rifle);
-                        break;
-                    }
-                case ItemToolType.Sword:
-                    {
-                        SetAgentWeapon(Model3DWeapon.Sword);
-                        break;
-                    }
-                default:
-                    SetAgentWeapon(Model3DWeapon.None);
-                    break;
-            }
-        }
-
-        if (isAgentPlayer && itemProperty.HasUI())
-        {
-            GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums);
-        }
-    }
-
     public bool CanSee(int targetId)
     {
         return LineOfSight.CanSeeAlert(agentID.ID, targetId);
      }
 
-    public void SetAimTarget(Vec2f AimTarget) => agentModel3D.AimTarget = AimTarget;
+    public void SetAimTarget(Vec2f AimTarget)
+    {
+        Agent3DModel.AimTarget = AimTarget;
+    }
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
-        var itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
         if (isAgentPlayer && itemProperty.HasUI())
         {
@@ -262,94 +209,88 @@ public partial class AgentEntity
         }
     }
 
-    public void SetAgentWeapon(Model3DWeapon weapon)
+    public void ClearModel3DWeapon()
     {
-        if (hasAgentModel3D)
+        SetModel3DWeapon(Model3DWeaponType.None);
+    }
+    
+    public void SetModel3DWeapon(ItemInventoryEntity item)
+    {
+        if (!hasAgent3DModel) return;
+        
+        SetModel3DWeapon(item.itemType.Type);
+    }
+
+    public void SetModel3DWeapon(Enums.ItemType itemType)
+    {
+        if (!hasAgent3DModel) return;
+        
+        var itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
+        Agent3DModel.ItemAnimationSet = itemProperty.AnimationSet;
+        SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
+    }
+
+    public void SetModel3DWeapon(Model3DWeaponType weapon)
+    {
+        if (!hasAgent3DModel) return;
+
+        Agent3DModel model3d = Agent3DModel;
+        model3d.CurrentWeapon = weapon;
+        
+        switch(weapon)
         {
-            Model3DComponent model3d = agentModel3D;
-            model3d.CurrentWeapon = weapon;
-
-            //if (model3d.Weapon != null)
-            //{
-            //    if (model3d.Weapon.name != "SpaceGun" || model3d.Weapon.name != "Pistol")
-            //        UnityEngine.Object.Destroy(model3d.Weapon);
-            //}
-
-            switch(weapon)
+            case Model3DWeaponType.None:
             {
-                case Model3DWeapon.Sword:
+                model3d.Weapon = null;
+                break;
+            }
+            case Model3DWeaponType.Sword:
+            {
+                if (AssetManager.Singelton.GetPrefabItem(ItemModelType.Rapier, out AgentEquippedItemRenderer itemRenderer))
                 {
-                    UnityEngine.GameObject hand = model3d.LeftHand;
-
-                    UnityEngine.GameObject rapierPrefab = AssetManager.Singelton.GetModel(ModelType.Rapier);
-                        UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(rapierPrefab);
+                    UnityEngine.Transform hand = model3d.Renderer.GetHandLeft();
+                    UnityEngine.GameObject rapier = UnityEngine.Object.Instantiate(itemRenderer).gameObject;
 
                     var gunRotation = rapier.transform.rotation;
-                    rapier.transform.parent = hand.transform;
-                    rapier.transform.position = hand.transform.position;
+                    rapier.transform.parent = hand;
+                    rapier.transform.position = hand.position;
                     rapier.transform.localRotation = gunRotation;
                     rapier.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
 
                     model3d.Weapon = rapier;
-                    break;
                 }
+                
+                break;
+            }
 
-                case Model3DWeapon.Pistol:
+            case Model3DWeaponType.Pistol:
+            {
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
+                if (hand != null)
                 {
-                    UnityEngine.GameObject hand = model3d.RightHand;
-                    if (hand != null)
+                    if (model3d.Weapon == null)
                     {
-                        //UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.Pistol);
-                        //    UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
-
-                        if (model3d.Weapon == null)
-                        {
-                            UnityEngine.Transform PistolPivot = model3d.GameObject.transform.Find("PistolPivot");
-                            model3d.Weapon = PistolPivot.GetChild(0).gameObject;
-                        }
-
-                        //    var gunRotation = gun.transform.rotation;
-                        //gun.transform.parent = hand.transform;
-                        //gun.transform.position = hand.transform.position;
-                        //gun.transform.localRotation = gunRotation;
-                        //gun.transform.localScale = new UnityEngine.Vector3(1.0f, 1.0f, 1.0f);
-
-                        //model3d.Weapon = gun;
-
+                        model3d.Weapon = model3d.Renderer.GetPivotPistol().gameObject;
                     }
-                    break;
                 }
+                break;
+            }
 
-                case Model3DWeapon.Rifle:
+            case Model3DWeaponType.Rifle:
+            {
+                UnityEngine.Transform hand = model3d.Renderer.GetHandRight();
+                if (hand != null)
                 {
-                    UnityEngine.GameObject hand = model3d.RightHand;
-                    if (hand != null)
+                    if(model3d.Weapon == null)
                     {
-                        //UnityEngine.Transform ref_right_hand_grip = model3d.GameObject.transform.Find("ref_right_hand_grip");
-                        //UnityEngine.Transform ref_left_hand_grip = model3d.GameObject.transform.Find("ref_left_hand_grip");
-                        if(model3d.Weapon == null)
-                        {
-                                UnityEngine.Transform RiflePivot = model3d.GameObject.transform.Find("RiflePivot");
-                            model3d.Weapon = RiflePivot.GetChild(0).gameObject;
-                        }
+                        model3d.Weapon = model3d.Renderer.GetPivotRifle().gameObject;
+                    }
 
-                            //    UnityEngine.GameObject prefab = AssetManager.Singelton.GetModel(ModelType.SpaceGun);
-                            //UnityEngine.GameObject gun = UnityEngine.Object.Instantiate(prefab);
-
-
-                            //var gunRotation = gun.transform.rotation;
-                            //gun.transform.parent = RiflePivot.transform;
-                            //gun.transform.position = UnityEngine.Vector3.zero;
-                            //gun.transform.localRotation = UnityEngine.Quaternion.identity;
-                            //gun.transform.localScale = new UnityEngine.Vector3(100.0f, 100.0f, 100.0f);
-
-                            //ref_right_hand_grip.transform.parent = gun.transform;
-                            //ref_left_hand_grip.transform.parent = gun.transform;
-                        }
-                    break;
                 }
+                break;
             }
         }
+        
         
     }
 
@@ -446,7 +387,7 @@ public partial class AgentEntity
     public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
-        var model3d = agentModel3D; 
+        var model3d = Agent3DModel; 
 
         if (isAgentAlive && IsStateFree())
         {
@@ -507,6 +448,12 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
+            if (GameState.AgentIKSystem.Rifle != null ||
+                   GameState.AgentIKSystem.Pistol != null)
+            {
+                GameState.AgentIKSystem.Rifle.gameObject.SetActive(false);
+                GameState.AgentIKSystem.Pistol.gameObject.SetActive(false);
+            }
             GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
@@ -602,7 +549,7 @@ public partial class AgentEntity
             // handling horizontal movement (left/right)
             if (Math.Abs(PhysicsState.Velocity.X) < PhysicsState.Speed)
             {
-                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Constants.TimeToMax;
+                PhysicsState.Acceleration.X = horizontalDir * 2 * PhysicsState.Speed / Physics.Constants.TimeToMax;
             }
 
             if (horizontalDir > 0 && PhysicsState.MovementState == AgentMovementState.SlidingLeft)
@@ -637,11 +584,11 @@ public partial class AgentEntity
             {
                 if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
                 {
-                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 2.0f * horizontalDir * speed / Physics.Constants.TimeToMax;
                 }
                 else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
                 {
-                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * speed / Constants.TimeToMax;
+                    PhysicsState.Acceleration.X = 1.0f * horizontalDir * speed / Physics.Constants.TimeToMax;
                 }
             }
             else
@@ -650,11 +597,11 @@ public partial class AgentEntity
                 {
                     if (Math.Abs(PhysicsState.Velocity.X) < speed / 3) 
                     {
-                        PhysicsState.Acceleration.X = 2 * horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = 2 * horizontalDir * speed / Physics.Constants.TimeToMax;
                     }
                     else if (Math.Abs(PhysicsState.Velocity.X) == speed / 3) // Velocity equal drag.
                     {
-                        PhysicsState.Acceleration.X = horizontalDir * speed / Constants.TimeToMax;
+                        PhysicsState.Acceleration.X = horizontalDir * speed / Physics.Constants.TimeToMax;
                     }
                 }
                 else
@@ -708,46 +655,77 @@ public partial class AgentEntity
     }
 
 
-    public void Jump()
+    public void Jump() {
+        
+        var physicsState = agentPhysicsState;
+        if (isAgentAlive && IsStateFree() && CanMove())
         {
-            var physicsState = agentPhysicsState;
-            if (isAgentAlive && IsStateFree() && CanMove())
+            // we can start jumping only if the jump counter is 0
+            if (physicsState.JumpCounter == 0)
             {
-                // we can start jumping only if the jump counter is 0
-                if (physicsState.JumpCounter == 0)
-                {
-                    
-                        // first jump
+                
+                    // first jump
 
-                        // if we are sticking to a wall 
-                        // throw the agent in the opphysicsStateite direction
-                        // Inpulse so use immediate speed intead of acceleration.
-                        if (physicsState.MovementState == AgentMovementState.SlidingLeft)
-                        {
-                            physicsState.Velocity.X = physicsState.Speed * 1.0f;
-                        }
-                        else if (physicsState.MovementState == AgentMovementState.SlidingRight)
-                        {
-                            physicsState.Velocity.X = - physicsState.Speed * 1.0f;
-                        }
-
-                        // jumping
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
-                        physicsState.JumpCounter++;
-                }
-                else
-                {
-                    // double jump
-                    if (physicsState.JumpCounter <= 1)
+                    // if we are sticking to a wall 
+                    // throw the agent in the opphysicsStateite direction
+                    // Inpulse so use immediate speed intead of acceleration.
+                    if (physicsState.MovementState == AgentMovementState.SlidingLeft)
                     {
-                        physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
-                        physicsState.JumpCounter++;
+                        physicsState.Velocity.X = physicsState.Speed * 1.0f;
                     }
-                }
+                    else if (physicsState.MovementState == AgentMovementState.SlidingRight)
+                    {
+                        physicsState.Velocity.X = - physicsState.Speed * 1.0f;
+                    }
 
-                physicsState.OnGrounded = false;
+                    // jumping
+                    physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
+                    physicsState.JumpCounter++;
             }
+            else
+            {
+                // double jump
+                if (physicsState.JumpCounter <= 1)
+                {
+                    physicsState.Velocity.Y = physicsState.InitialJumpVelocity * 0.75f;
+                    physicsState.JumpCounter++;
+                }
+            }
+
+            physicsState.OnGrounded = false;
         }
+    }
+
+    private Model3DWeaponType GetModel3DWeaponFromItemToolType(ItemToolType itemToolType)
+    {
+        switch (itemToolType)
+        {
+            case ItemToolType.None: return Model3DWeaponType.None;
+            case ItemToolType.Sword: return Model3DWeaponType.Sword;
+            case ItemToolType.Pistol: return Model3DWeaponType.Pistol;
+            case ItemToolType.Rifle: return Model3DWeaponType.Rifle;
+        }
+        
+        Debug.LogWarning($"Cant resolve {nameof(ItemToolType)}.{itemToolType} as {nameof(Model3DWeaponType)} type");
+        return Model3DWeaponType.None;
+    }
+
+    public Vec2f GetFeetParticleSpawnPosition()
+    {
+        var physicsState = agentPhysicsState;
+
+        Vec2f result = physicsState.Position;
+        if (physicsState.FacingDirection == 1)
+        {
+            result += new Vec2f(-0.44f, 1.2f);
+        }
+        else if (physicsState.FacingDirection == -1)
+        {
+            result += new Vec2f(0.44f, 1.2f);
+        }
+
+        return result;
+    }
 
 
 }

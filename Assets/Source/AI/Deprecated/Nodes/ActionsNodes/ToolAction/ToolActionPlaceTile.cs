@@ -10,8 +10,20 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
+            if (nodeEntity == null)
+            {
+                Debug.Log($"{nameof(NodeEntity)} is null");
+                return;
+            }
+
+            if (nodeEntity.hasNodeTool)
+            {
+                Debug.Log($"{nameof(NodeEntity)}.{nameof(nodeEntity.hasNodeTool)} is false");
+                return;
+            }
+            
             ref var planet = ref GameState.Planet;
-            var itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
+            ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)
             {

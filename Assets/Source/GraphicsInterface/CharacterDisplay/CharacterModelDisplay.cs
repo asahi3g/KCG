@@ -59,14 +59,14 @@ namespace KGui
             height = 200;
         }
 
-        public void SetModel(UnityEngine.GameObject model)
+        public void SetModel(UnityEngine.GameObject gameObject)
         {
             if (Model != null)
             {
                 UnityEngine.Object.Destroy(Model);
             }
 
-            Model = UnityEngine.Object.Instantiate(model);
+            Model = UnityEngine.Object.Instantiate(gameObject);
             Model.transform.position = new UnityEngine.Vector3(-1000.0f - 2.5f, -1000.0f - 4.5f, 20.0f);
             Model.transform.localScale = new UnityEngine.Vector3(1.5f * 4, 1.5f * 4, 1.5f * 4);
 

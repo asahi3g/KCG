@@ -9,12 +9,14 @@ namespace Prefab
 
         public void InitializeResources()
         {
+            /*
             panelPrefabList.Add(PanelEnums.PlayerStatus, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlayerStatusPanel"));
             panelPrefabList.Add(PanelEnums.PlacementTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementToolPanel"));
             panelPrefabList.Add(PanelEnums.PlacementMaterialTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PlacementMaterialToolPanel"));
             panelPrefabList.Add(PanelEnums.PotionTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/PotionToolPanel"));
             panelPrefabList.Add(PanelEnums.GeometryTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/GeometryToolPanel"));
             panelPrefabList.Add(PanelEnums.MechTool, UnityEngine.Resources.Load<PanelUI>("GUIPrefabs/MechToolPanel"));
+            */
         }
 
         // Returns Panel or Null

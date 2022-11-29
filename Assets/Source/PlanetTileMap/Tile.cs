@@ -19,5 +19,7 @@ namespace PlanetTileMap
         
 
         public int MechID;
+
+        public Enums.TileGeometryAndRotationAndAdjacency Adjacency;
     }
 }

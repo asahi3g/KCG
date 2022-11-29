@@ -47,7 +47,7 @@ namespace Item
         public bool HasUI() => ItemFlags.HasFlag(Flags.UI);
     }
 
-    public struct FireWeaponPropreties
+    public class FireWeaponProperties
     {
         public float BulletSpeed;
         //How Long it takes to use again in seconds.

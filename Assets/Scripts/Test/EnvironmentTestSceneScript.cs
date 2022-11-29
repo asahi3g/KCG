@@ -22,7 +22,7 @@ namespace Planet.Foreground
 
 
 
-        AgentEntity Player;
+        AgentEntity playerAgentEntity;
         int PlayerID;
 
         int CharacterSpriteId;
@@ -62,11 +62,11 @@ namespace Planet.Foreground
             Vec2i mapSize = new Vec2i(128, 96);
             planet.Init(mapSize);
 
-            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
-            PlayerID = Player.agentID.ID;
+            playerAgentEntity = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
+            PlayerID = playerAgentEntity.agentID.ID;
 
-            PlayerID = Player.agentID.ID;
-            inventoryID = Player.agentInventory.InventoryID;
+            PlayerID = playerAgentEntity.agentID.ID;
+            inventoryID = playerAgentEntity.agentInventory.InventoryID;
 
             planet.InitializeSystems(Material, transform);
             //GenerateMap();
@@ -95,9 +95,9 @@ namespace Planet.Foreground
 
 
             CharacterDisplay = new KGui.CharacterDisplay();
-            CharacterDisplay.setPlayer(Player);
+            CharacterDisplay.SetPlayer(playerAgentEntity);
 
-            UpdateMode(Player);
+            UpdateMode(playerAgentEntity);
         }
 
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
@@ -107,9 +107,9 @@ namespace Planet.Foreground
         {
             var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
-            var playerPhysicsState = Player.agentPhysicsState;
+            var playerPhysicsState = playerAgentEntity.agentPhysicsState;
             Vec2f playerPosition = playerPhysicsState.Position;
-            var playerCollider = Player.physicsBox2DCollider;
+            var playerCollider = playerAgentEntity.physicsBox2DCollider;
 
             orrectedBox.w = playerCollider.Size.X;
             orrectedBox.h = playerCollider.Size.Y;
@@ -157,10 +157,10 @@ namespace Planet.Foreground
 
                 planet.InitializeSystems(Material, transform);
 
-                Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
-                PlayerID = Player.agentID.ID;
+                playerAgentEntity = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
+                PlayerID = playerAgentEntity.agentID.ID;
 
-                inventoryID = Player.agentInventory.InventoryID;
+                inventoryID = playerAgentEntity.agentInventory.InventoryID;
 
                 AddItemsToPlayer();
 
@@ -182,7 +182,7 @@ namespace Planet.Foreground
             if (!Init)
                 return;
 
-            GameState.Planet.DrawHUD(Player);
+            GameState.Planet.DrawHUD(playerAgentEntity);
 
             if (showMechInventory)
             {
@@ -306,38 +306,38 @@ namespace Planet.Foreground
                     new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 0.0f));
 
             // Draw lines around player if out of bounds
-            if (Player != null)
-                if (Player.agentPhysicsState.Position.X - 10.0f >= planet.TileMap.MapSize.X)
+            if (playerAgentEntity != null)
+                if (playerAgentEntity.agentPhysicsState.Position.X - 10.0f >= planet.TileMap.MapSize.X)
                 {
                     // Out of bounds
 
                     // X+
                     UnityEngine.Gizmos.DrawLine(
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y, 0.0f),
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X + 10.0f,
-                            Player.agentPhysicsState.Position.Y));
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X + 10.0f,
+                            playerAgentEntity.agentPhysicsState.Position.Y));
 
                     // X-
                     UnityEngine.Gizmos.DrawLine(
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y, 0.0f),
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X - 10.0f,
-                            Player.agentPhysicsState.Position.Y));
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X - 10.0f,
+                            playerAgentEntity.agentPhysicsState.Position.Y));
 
                     // Y+
                     UnityEngine.Gizmos.DrawLine(
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y, 0.0f),
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y + 10.0f));
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y + 10.0f));
 
                     // Y-
                     UnityEngine.Gizmos.DrawLine(
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y, 0.0f),
-                        new UnityEngine.Vector3(Player.agentPhysicsState.Position.X,
-                            Player.agentPhysicsState.Position.Y - 10.0f));
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y, 0.0f),
+                        new UnityEngine.Vector3(playerAgentEntity.agentPhysicsState.Position.X,
+                            playerAgentEntity.agentPhysicsState.Position.Y - 10.0f));
                 }
 
             // Draw Chunk Visualizer
@@ -352,10 +352,10 @@ namespace Planet.Foreground
                 var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
                 var rayCastResult =
-                    Collisions.Collisions.RayCastAgainstTileMap(new Line2D(Player.agentPhysicsState.Position,
+                    Collisions.Collisions.RayCastAgainstTileMap(new Line2D(playerAgentEntity.agentPhysicsState.Position,
                         new Vec2f(mouse.X, mouse.Y)));
 
-                Vec2f startPos = Player.agentPhysicsState.Position;
+                Vec2f startPos = playerAgentEntity.agentPhysicsState.Position;
                 Vec2f endPos = new Vec2f(mouse.X, mouse.Y);
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20),
                     new UnityEngine.Vector3(endPos.X, endPos.Y, 20));
@@ -415,10 +415,10 @@ namespace Planet.Foreground
                 var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
 
                 var rayCastResult = Collisions.Collisions.RayCastAgainstCircle(
-                    new Line2D(Player.agentPhysicsState.Position, new Vec2f(mouse.X, mouse.Y)),
+                    new Line2D(playerAgentEntity.agentPhysicsState.Position, new Vec2f(mouse.X, mouse.Y)),
                     new Vec2f(9, 19), 1.0f);
 
-                Vec2f startPos = Player.agentPhysicsState.Position;
+                Vec2f startPos = playerAgentEntity.agentPhysicsState.Position;
                 Vec2f endPos = new Vec2f(mouse.X, mouse.Y);
                 UnityEngine.Gizmos.DrawLine(new UnityEngine.Vector3(startPos.X, startPos.Y, 20),
                     new UnityEngine.Vector3(endPos.X, endPos.Y, 20));

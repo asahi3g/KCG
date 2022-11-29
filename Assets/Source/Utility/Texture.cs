@@ -6,30 +6,41 @@ namespace Utility
         // from pixels
         internal static class Texture
         {
-            public static Texture2D CreateTextureFromRGBA(byte[] rgba, int w, int h)
+            public static Texture2D CreateTextureFromRGBA(string name, byte[] rgba, int w, int h)
             {
 
-                var res = new Texture2D(w, h, TextureFormat.RGBA32, false)
+                Texture2D tex = new Texture2D(w, h, TextureFormat.RGBA32, false)
                 {
-                    filterMode = FilterMode.Point
+                    wrapMode = TextureWrapMode.Clamp,
+                    filterMode = FilterMode.Point,
+                    name = name
                 };
 
+                // v2
+                tex.LoadRawTextureData(rgba);
+
+                // v1
+                /*
                 var pixels = new Color32[w * h];
-                for (int x = 0 ; x < w; x++)
-                for (int y = 0 ; y < h; y++)
-                { 
-                    int index = (x + y * w) * 4;
-                    var r = rgba[index];
-                    var g = rgba[index + 1];
-                    var b = rgba[index + 2];
-                    var a = rgba[index + 3];
+                for (int y = 0; y < h; y++)
+                {
+                    for (int x = 0; x < w; x++)
+                    {
+                        int index = (x + y * w) * 4;
+                        byte r = rgba[index];
+                        byte g = rgba[index + 1];
+                        byte b = rgba[index + 2];
+                        byte a = rgba[index + 3];
 
-                    pixels[x + y * w] = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
+                        pixels[x + y * w] = new Color32(r, g, b, a);
+                    }
                 }
-                res.SetPixels32(pixels);
-                res.Apply();
-
-                return res;
+                tex.SetPixels32(pixels);
+                */
+                
+                
+                tex.Apply();
+                return tex;
             }
         }
 }

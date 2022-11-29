@@ -25,7 +25,7 @@ namespace Item
          
         // Note[Joao] this arrays are very memory expensive: use array of pointers instead?
         private ItemProperties[] PropertiesArray;
-        private FireWeaponPropreties[] WeaponList;
+        private FireWeaponProperties[] WeaponList;
 
         private ItemType currentIndex;
         private int weaponListSize;
@@ -34,7 +34,7 @@ namespace Item
         {
             int length = Enum.GetValues(typeof(ItemType)).Length - 1; // -1 beacause of error item type.
             PropertiesArray = new ItemProperties[length];
-            WeaponList = new FireWeaponPropreties[16];
+            WeaponList = new FireWeaponProperties[16];
             currentIndex = ItemType.Error;
             weaponListSize = 0;
 
@@ -52,7 +52,7 @@ namespace Item
         }
 
 
-        public ItemProperties Get(ItemType type)
+        public ItemProperties GetItemProperties(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -60,7 +60,7 @@ namespace Item
             return PropertiesArray[(int)type];
         }
 
-        public FireWeaponPropreties GetWeapon(ItemType type)
+        public FireWeaponProperties GetWeapon(ItemType type)
         {
             ItemType itemType = PropertiesArray[(int)type].ItemType;
             IsItemTypeValid(itemType);
@@ -159,15 +159,15 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.SpreadAngle = spreadAngle;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.SpreadAngle = spreadAngle;
         }
 
         public void SetRangedWeaponAttribute (float bulletSpeed, float coolDown, float range, int basicDamage)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -175,7 +175,12 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -183,7 +188,7 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 BulletSpeed = bulletSpeed,
                 CoolDown = coolDown,
@@ -192,7 +197,12 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -200,52 +210,52 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.ClipSize = clipSize;
-            fireWeapon.BulletsPerShot = bulletsPerShot;
-            fireWeapon.ReloadTime = reloadTime;
-            fireWeapon.WeaponFlags |= FireWeaponPropreties.Flags.HasClip;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.ClipSize = clipSize;
+            fireWeaponProperties.BulletsPerShot = bulletsPerShot;
+            fireWeaponProperties.ReloadTime = reloadTime;
+            fireWeaponProperties.WeaponFlags |= FireWeaponProperties.Flags.HasClip;
         }
 
         public void SetRangedWeaponClip(int bulletClipSize, int greandeClipSize, int bulletsPerShot, float bulletReloadTime)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.ClipSize = bulletClipSize;
-            fireWeapon.GrenadeClipSize = greandeClipSize;
-            fireWeapon.NumberOfGrenades = greandeClipSize;
-            fireWeapon.BulletsPerShot = bulletsPerShot;
-            fireWeapon.ReloadTime = bulletReloadTime;
-            fireWeapon.WeaponFlags |= FireWeaponPropreties.Flags.HasClip | FireWeaponPropreties.Flags.PulseWeapon;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.ClipSize = bulletClipSize;
+            fireWeaponProperties.GrenadeClipSize = greandeClipSize;
+            fireWeaponProperties.NumberOfGrenades = greandeClipSize;
+            fireWeaponProperties.BulletsPerShot = bulletsPerShot;
+            fireWeaponProperties.ReloadTime = bulletReloadTime;
+            fireWeaponProperties.WeaponFlags |= FireWeaponProperties.Flags.HasClip | FireWeaponProperties.Flags.PulseWeapon;
         }
 
         public void SetFireWeaponMultiShoot(float speadAngle, int numOfBullet)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.SpreadAngle = speadAngle;
-            fireWeapon.NumOfBullets = numOfBullet;
+            ref FireWeaponProperties fireWeaponProperties = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.SpreadAngle = speadAngle;
+            fireWeaponProperties.NumOfBullets = numOfBullet;
         }
 
         public void SetFireWeaponRecoil(float maxRecoilAngle, float minRecoilAngle, float rateOfChange, float recoverTime, float recoverDelay)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.MaxRecoilAngle = maxRecoilAngle;
-            fireWeapon.MinRecoilAngle = minRecoilAngle;
-            fireWeapon.RateOfChange = rateOfChange;
-            fireWeapon.RecoverTime = recoverTime;
-            fireWeapon.RecoverDelay = recoverDelay;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.MaxRecoilAngle = maxRecoilAngle;
+            fireWeaponProperties.MinRecoilAngle = minRecoilAngle;
+            fireWeaponProperties.RateOfChange = rateOfChange;
+            fireWeaponProperties.RecoverTime = recoverTime;
+            fireWeaponProperties.RecoverDelay = recoverDelay;
         }
 
         public void SetMeleeWeapon(float coolDown, float range, float staggerTime, float staggerRate, int basicDamage)
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 CoolDown = coolDown,
                 Range = range,
@@ -254,7 +264,12 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
-            WeaponList[weaponListSize] = fireWeapon;
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -262,12 +277,17 @@ namespace Item
         {
             IsItemTypeValid();
 
-            FireWeaponPropreties fireWeapon = new FireWeaponPropreties
+            FireWeaponProperties fireWeaponProperties = new FireWeaponProperties
             {
                 ShieldActive = ShieldActive,
             }; 
 
-            WeaponList[weaponListSize] = fireWeapon;
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
+            WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
 
@@ -275,34 +295,34 @@ namespace Item
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            FireWeaponProperties fireWeapon = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.BlastRadius = radius;
             fireWeapon.MaxDamage = maxDamage;
             fireWeapon.Elapse = elapse;
         }
 
-        public void SetFlags(FireWeaponPropreties.MeleeFlags flags)
+        public void SetFlags(FireWeaponProperties.MeleeFlags flags)
         {
             IsItemTypeValid();
 
-            ref FireWeaponPropreties fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            FireWeaponProperties fireWeapon = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
             fireWeapon.MeleeAttackFlags |= flags;
         }
 
-        public void SetFlags(FireWeaponPropreties.Flags flags)
+        public void SetFlags(FireWeaponProperties.Flags flags)
         {
             IsItemTypeValid();
 
-            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.WeaponFlags |= flags;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.WeaponFlags |= flags;
         }
 
-        public void SetFlags(FireWeaponPropreties.GrenadesFlags flags)
+        public void SetFlags(FireWeaponProperties.GrenadesFlags flags)
         {
             IsItemTypeValid();
 
-            ref var fireWeapon = ref WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
-            fireWeapon.GrenadeFlags |= flags;
+            FireWeaponProperties fireWeaponProperties = WeaponList[PropertiesArray[(int)currentIndex].FireWeaponID];
+            fireWeaponProperties.GrenadeFlags |= flags;
         }
 
         public void SetFlags(ItemProperties.Flags flags)
@@ -494,33 +514,46 @@ namespace Item
         public int Gold_6;
         public int Gold_7;
 
+        private int IconToolPlacement;
+        private int IconToolRemoveTile;
+        private int IconToolGeometryPlacement;
+        private int IconToolSpawnEnemyGunner;
+        private int IconToolSpawnEnemySwordsman;
+        private int IconToolConstruction;
+        
+        private int IconItemPotionHealth;
+        
+
         public PanelUI PlacementToolPrefab;
 
         public void InitializeResources()
         {
+            //Weapons
+            GunSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Weapons\\Pistol\\icon_weapon_pistol.png", 32, 32);
+            SMGIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Weapons\\Smg\\icon_weapon_smg.png", 32, 32);
+            
             SniperRifleIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun8.png", 48, 16);
             LongRifleIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun10.png", 48, 16);
             PulseIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun17.png", 48, 16);
-            SMGIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun6.png", 48, 16);
             ShotgunIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun13.png", 48, 16);
-            GunSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Pistol\\gun-temp.png", 44, 25);
             RPGIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Guns\\Pistol\\Guns\\Gun18.png", 48, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             GrenadeSprite5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades5.png", 16, 16);
             SwordSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Weapons\\Swords\\Sword1.png", 16, 48);
+            
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
             SlimeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Enemies\\Slime\\slime.png", 32, 32);
             FoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Food\\Food.png", 60, 60);
-            BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Bone\\Bone.png", 60, 60);
+            BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Bone\\Bone.png", 32, 32);
             RockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Rock\\rock1.png", 16, 16);
             Ore2SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Copper\\ore_copper_1.png", 16, 16);
             pipeIconSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
-            LaserSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\RailGun\\lasergun-temp.png", 195, 79);
+            LaserSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\RailGun\\lasergun-temp.png", 32, 32);
             MajestyPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\MajestyPalm\\plant_3.png", 16, 16);
             SagoPalmIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\SagoPalm\\plant_7.png", 16, 16);
             DracaenaTrifasciataIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\Source\\Mech\\Plants\\StagePlants\\DracaenaTrifasciata\\plant_6.png", 16, 16);
             WaterIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Water\\water_12px.png", 12, 12);
-            ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture2\\dev-furniture-2.png", 12, 12);
+            ConstructionToolIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Development\\Furnitures\\Furniture2\\dev-furniture-2.png", 32, 32);
             int ChestIconSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Containers\\Chest\\chest.png", 32, 32);
             PotIconItem = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Pots\\pot_1.png", 32, 16);
             Light2IconItem = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Furnitures\\Lights\\Light2\\On\\light_2_on.png", 48, 16);
@@ -538,7 +571,39 @@ namespace Item
             BeltSlotIcon = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\TestInventory\\Belt.png", 64, 64);
             WoodTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\MixedTileset\\mixed-tileset_00.png", 32, 32);
             MineOreSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Gems-Ores\\gems-ores.png", 16, 16);
-
+            
+            // === Items ===
+            
+            IconItemPotionHealth = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\icon_potion_health.png", 32, 32);
+            IconItemPotionHealth = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconItemPotionHealth, 0, 0, AtlasType.Particle);
+            
+            
+            // === Tools ===
+            
+            // PlacementTool
+            IconToolPlacement = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_placement.png", 32, 32);
+            IconToolPlacement = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolPlacement, 0, 0, AtlasType.Particle);
+            
+            // Remove Tile Tool
+            IconToolRemoveTile = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_remove_tile.png", 32, 32);
+            IconToolRemoveTile = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolRemoveTile, 0, 0, AtlasType.Particle);
+            
+            // Geometry Placement Tool
+            IconToolGeometryPlacement = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_geometry_placement.png", 32, 32);
+            IconToolGeometryPlacement = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolGeometryPlacement, 0, 0, AtlasType.Particle);
+            
+            // Spawn Enemy Gunner
+            IconToolSpawnEnemyGunner = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_spawn_enemy_gunner.png", 32, 32);
+            IconToolSpawnEnemyGunner = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolSpawnEnemyGunner, 0, 0, AtlasType.Particle);
+            
+            // Spawn Enemy Swordsman
+            IconToolSpawnEnemySwordsman = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_spawn_enemy_swordsman.png", 32, 32);
+            IconToolSpawnEnemySwordsman = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolSpawnEnemySwordsman, 0, 0, AtlasType.Particle);
+            
+            // Construction Tool
+            IconToolConstruction = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tools\\icon_tool_construction.png", 32, 32);
+            IconToolConstruction = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconToolConstruction, 0, 0, AtlasType.Particle);
+            
 
 
             SniperRifleIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SniperRifleIcon, 0, 0, AtlasType.Particle);
@@ -724,7 +789,7 @@ namespace Item
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
             SetProjectileType(ProjectileType.Bullet);
-            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetFlags(FireWeaponProperties.Flags.ShouldSpread);
             SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
 
@@ -735,7 +800,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
-            SetFlags(FireWeaponPropreties.Flags.ShouldSpread);
+            SetFlags(FireWeaponProperties.Flags.ShouldSpread);
             SetProjectileType(ProjectileType.Bullet);
             SetAction(ItemUsageActionType .ShootFireWeaponAction);
             EndItem();
@@ -770,7 +835,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
             SetExplosion(4.0f, 15, 0f);
-            SetFlags(FireWeaponPropreties.GrenadesFlags.Flame);
+            SetFlags(FireWeaponProperties.GrenadesFlags.Flame);
             SetProjectileType(ProjectileType.Grenade);
             SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
@@ -854,7 +919,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
-            SetFlags(FireWeaponPropreties.MeleeFlags.Stab);
+            SetFlags(FireWeaponProperties.MeleeFlags.Stab);
             SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 
@@ -863,7 +928,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
-            SetFlags(FireWeaponPropreties.MeleeFlags.Slash);
+            SetFlags(FireWeaponProperties.MeleeFlags.Slash);
             SetAction(ItemUsageActionType .MeleeAttackAction);
             EndItem();
 
@@ -914,8 +979,8 @@ namespace Item
 
             CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
-            SetTexture(BoneIcon);
-            SetInventoryItemIcon(BoneIcon);
+            SetTexture(IconItemPotionHealth);
+            SetInventoryItemIcon(IconItemPotionHealth);
             SetAction(ItemUsageActionType .DrinkPotionAction);
             SetStackable();
             EndItem();
@@ -929,8 +994,8 @@ namespace Item
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
             SetGroup(ItemGroups.BuildTools);
-            SetTexture(PlacementToolIcon);
-            SetInventoryItemIcon(PlacementToolIcon);
+            SetTexture(IconToolPlacement);
+            SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementTool);
             SetAction(ItemUsageActionType .ToolActionPlaceTile);
@@ -947,8 +1012,8 @@ namespace Item
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
             SetGroup(ItemGroups.None);
-            SetTexture(RemoveToolIcon);
-            SetInventoryItemIcon(RemoveToolIcon);
+            SetTexture(IconToolRemoveTile);
+            SetInventoryItemIcon(IconToolRemoveTile);
             SetAction(ItemUsageActionType .ToolActionRemoveTile);
             EndItem();
 
@@ -961,15 +1026,15 @@ namespace Item
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
             SetGroup(ItemGroups.None);
-            SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon);
+            SetTexture(IconToolSpawnEnemyGunner);
+            SetInventoryItemIcon(IconToolSpawnEnemyGunner);
             SetAction(ItemUsageActionType .ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
             SetGroup(ItemGroups.None);
-            SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon);
+            SetTexture(IconToolSpawnEnemySwordsman);
+            SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
             SetAction(ItemUsageActionType .ToolActionEnemySwordmanSpawn);
             EndItem();
 
@@ -1025,8 +1090,8 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
-            SetTexture(ConstructionToolIcon);
-            SetInventoryItemIcon(ConstructionToolIcon);
+            SetTexture(IconToolConstruction);
+            SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
             SetAction(ItemUsageActionType .ToolActionConstruction);
@@ -1171,8 +1236,8 @@ namespace Item
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
             SetGroup(ItemGroups.None);
-            SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon);
+            SetTexture(IconToolGeometryPlacement);
+            SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.GeometryTool);
             SetAction(ItemUsageActionType .ToolActionGeometryPlacement);

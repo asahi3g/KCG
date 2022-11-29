@@ -79,23 +79,23 @@ namespace Agent
         {
             var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
 
-            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)agentType);
+            ref AgentPropertiesTemplate agentPropertiesTemplate = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
             var spriteId = 0;
             entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
             entity.isAgentAlive = true;
-            entity.AddPhysicsBox2DCollider(properties.CollisionDimensions, properties.CollisionOffset);
+            entity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
             entity.AddAgentAction(AgentAlertState.UnAlert);
             entity.AddAgentStats(new ContainerInt(properties.DefaultHealth, 0, properties.DefaultHealth), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f,
                 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f), new ContainerFloat(100.0f, 0.0f, 100.0f));
 
-            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
+            entity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
 
             entity.AddAgentPhysicsState(
                 newPosition: position,
                 newPreviousPosition: position, 
-                newSpeed: properties.MovProperties.DefaultSpeed,
-                newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
+                newSpeed: agentPropertiesTemplate.MovProperties.DefaultSpeed,
+                newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(agentPropertiesTemplate.MovProperties.JumpHeight),
                 newVelocity: Vec2f.Zero, 
                 newAcceleration: Vec2f.Zero, 
                 newMovingDirection: 1,
@@ -135,7 +135,7 @@ namespace Agent
                     Dir = new Vec2f(entity.agentPhysicsState.FacingDirection, 0.0f)
                 });
 
-                int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(properties.BehaviorTreeRootID, entity.agentID.ID);
+                int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(agentPropertiesTemplate.BehaviorTreeRootID, entity.agentID.ID);
                 entity.AddAgentController(
                     newBehaviorTreeId: behaviorTreeID,
                     newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
@@ -151,54 +151,34 @@ namespace Agent
             {
                 case Enums.AgentType.Player:
                     {
-                        UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                                agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale,
+                                Vec2f.Zero);
 
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
-                        //GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).
-                        //GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        // GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(3).
-                        // GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                            // entity.agentPhysicsState.Speed = 10.0f;
+                            entity.isAgentPlayer = true;
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(0).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(1).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-
-
-                        // create an animancer object and give it a reference to the Animator component
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-
-                        //animancerComponent.Animator.runtimeAnimatorController = Resources.Load("path")
-
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            properties.AnimationType, Enums.ItemAnimationSet.Default, properties.ModelScale,
-                            Vec2f.Zero);
-
-
-                       // entity.agentPhysicsState.Speed = 10.0f;
-                        entity.isAgentPlayer = true;
-
-                        if(!entity.hasAgentAction)
-                            entity.AddAgentAction(AgentAlertState.UnAlert);
+                            if(!entity.hasAgentAction)
+                                entity.AddAgentAction(AgentAlertState.UnAlert);
+                        }
+                        
                         break;
                     }
                 case Enums.AgentType.Agent:
                     {
                         //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
+                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.Slime:
                     {
                        // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=properties.StartingAnimation});
+                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
@@ -208,144 +188,94 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemyGunner:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                                Enums.AgentAnimationType.HumanoidAnimation,
+                                Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                            entity.agentPhysicsState.Speed = 6.0f;
 
-                        model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
-
-                        UnityEngine.Vector3 eulers = model.transform.rotation.eulerAngles;
-                        model.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
-
-
-                        // create an animancer object and give it a reference to the Animator component
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                          Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-
-                        entity.agentPhysicsState.Speed = 6.0f;
-
-                        entity.SetAgentWeapon(Model3DWeapon.Pistol);
-                        Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+                            entity.SetModel3DWeapon(Model3DWeaponType.Pistol);
+                            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+                        }
+                        
                         break;
                     }
                 case Enums.AgentType.EnemySwordman:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.Stander);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).gameObject;
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
+                                Enums.AgentAnimationType.HumanoidAnimation,
+                                Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
-                        model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
-
-                        UnityEngine.Vector3 eulers = model.transform.rotation.eulerAngles;
-                        model.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
-
-
-                        // create an animancer object and give it a reference to the Animator component
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,  
-                        Enums.AgentAnimationType.HumanoidAnimation,
-                        Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-
-                        entity.SetAgentWeapon(Model3DWeapon.Sword);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                            entity.SetModel3DWeapon(Model3DWeaponType.Sword);
+                        }
+                        
                         break;
                     }
-                case Enums.AgentType.EnemyInsect:
+                case Enums.AgentType.InsectSmall:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
-
-                        model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
-
-                        UnityEngine.Vector3 eulers = model.transform.rotation.eulerAngles;
-                        model.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
-
-                        // create an animancer object and give it a reference to the Animator component
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent, 
-                            properties.AnimationType, Enums.ItemAnimationSet.Default,
-                            properties.ModelScale, Vec2f.Zero);
-                      /*  entity.AddAgentEnemy(EnemyBehaviour.Insect, properties.DetectionRadius, 0.0f);
-                            Enums.AgentAnimationType.GroundInsectAnimation, Enums.ItemAnimationSet.Default,
-                            new Vec3f(0.6f, 0.6f, 0.6f), Vec2f.Zero);*/
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer  agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
+                                agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default,
+                                agentPropertiesTemplate.ModelScale, Vec2f.Zero);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                        }
 
                         break;
                     }
-                case Enums.AgentType.EnemyHeavy:
+                case Enums.AgentType.InsectLarge:
                     {
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(properties.ModelType);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
-
-                        model.transform.position = new UnityEngine.Vector3(position.X, position.Y, -1.0f);
-
-                        UnityEngine.Vector3 eulers = model.transform.rotation.eulerAngles;
-                        model.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
-
-                        // create an animancer object and give it a reference to the Animator component
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-                        // get the animator component from the game object
-                        // this component is used by animancer
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, null, null, Model3DWeapon.None, null, animancerComponent,
-                            properties.AnimationType,
-                            Enums.ItemAnimationSet.Default, properties.ModelScale, Vec2f.Zero);
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                                agentPropertiesTemplate.AnimationType,
+                                Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale, Vec2f.Zero);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                        }
 
                         break;
                     }
                 case Enums.AgentType.EnemyMarine:
                     {
-                        UnityEngine.Material pixelMaterial = Engine3D.AssetManager.Singelton.GetMaterial(Engine3D.MaterialType.PixelMaterial);
+                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        {
+                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                                Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
+                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                            
+                            entity.agentPhysicsState.Speed = 10.0f;
 
-                        UnityEngine.GameObject prefab = Engine3D.AssetManager.Singelton.GetModel(Engine3D.ModelType.SpaceMarine);
-                        UnityEngine.GameObject model = UnityEngine.Object.Instantiate(prefab);
+                            if (!entity.hasAgentAction)
+                                entity.AddAgentAction(AgentAlertState.Alert);
+                            else
+                                entity.agentAction.Action = AgentAlertState.Alert;
 
-                        UnityEngine.GameObject leftHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(0).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-                        UnityEngine.GameObject rightHand = model.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetChild(2).GetChild(1).
-                        GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject;
-
-                        UnityEngine.GameObject animancerComponentGO = new UnityEngine.GameObject("AnimancerComponent", typeof(AnimancerComponent));
-                        animancerComponentGO.transform.parent = model.transform;
-
-                        AnimancerComponent animancerComponent = animancerComponentGO.GetComponent<AnimancerComponent>();
-                        animancerComponent.Animator = model.GetComponent<UnityEngine.Animator>();
-                        entity.AddAgentModel3D(model, leftHand, rightHand, Model3DWeapon.None, null, animancerComponent,
-                            Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-
-                        entity.agentPhysicsState.Speed = 10.0f;
-
-                        if (!entity.hasAgentAction)
-                            entity.AddAgentAction(AgentAlertState.Alert);
-                        else
-                            entity.agentAction.Action = AgentAlertState.Alert;
-
-                        ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
-                        GameState.InventoryManager.AddItem(item, inventoryID);
-                        entity.HandleItemSelected(item);
+                            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
+                            GameState.InventoryManager.AddItem(item, inventoryID);
+                            entity.SetModel3DWeapon(item);
+                        }
+                        
                         break;
                     }
+            }
+
+            void SetTransformHelper(Agent3DModel model3DComponent, float x, float y, float rotation)
+            {
+                if (model3DComponent == null) return;
+                model3DComponent.SetPosition(x, y);
+                model3DComponent.SetRotation(rotation);
             }
 
             return entity;

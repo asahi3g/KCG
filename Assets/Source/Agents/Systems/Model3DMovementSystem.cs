@@ -8,46 +8,35 @@ namespace Agent
         public void Update()
         {
             var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
-            foreach (var entity in entities)
+            
+            foreach (AgentEntity agentEntity in entities)
             {
-                ref Agent.AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)AgentType.EnemyMarine);
+                PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
+                Agent3DModel agent3DModel = agentEntity.Agent3DModel;
+                
+                agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
 
-                var physicsState = entity.agentPhysicsState;
-
-                var model3d = entity.agentModel3D;
-                model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -2.0f);
-
-                var renderer = model3d.GameObject.transform.GetChild(0).GetComponent<UnityEngine.Renderer>();
-
-                if (physicsState.MovementState != AgentMovementState.Dashing)
-                    GameState.AgentIKSystem.SetIKEnabled(true);
-
-                UnityEngine.Debug.Log(GameState.AgentIKSystem.IKEnabled);
-
-                if (physicsState.FacingDirection == 1)
+                if (physicsStateComponent.FacingDirection == 1)
                 {
-                    if(model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
+                    if(agent3DModel.CurrentWeapon != Model3DWeaponType.Pistol || agent3DModel.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 90, 0);
+                        agent3DModel.SetRotation(90f);
                     }
                     else
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 0);
+                        agent3DModel.SetRotation(0f);
                     }
-                    model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
                 }
-                else if (physicsState.FacingDirection == -1)
+                else if (physicsStateComponent.FacingDirection == -1)
                 {
-                    if (model3d.CurrentWeapon != Model3DWeapon.Pistol || model3d.CurrentWeapon != Model3DWeapon.Rifle)
+                    if (agent3DModel.CurrentWeapon != Model3DWeaponType.Pistol || agent3DModel.CurrentWeapon != Model3DWeaponType.Rifle)
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, -120, 0);
+                        agent3DModel.SetRotation(-120f);
                     }
                     else
                     {
-                        model3d.GameObject.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 0);
+                        agent3DModel.SetRotation(0f);
                     }
-
-                    model3d.GameObject.transform.localScale = new UnityEngine.Vector3(model3d.ModelScale.X, model3d.ModelScale.Y, model3d.ModelScale.Z);
                 }
             }
         }

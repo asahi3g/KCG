@@ -10,10 +10,10 @@ namespace Item
 
         public ItemParticleEntity SpawnItemParticle(ItemType itemType, Vec2f position)
         {
-            ItemProperties itemProperty = GameState.ItemCreationApi.Get(itemType);
-            FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
+            ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
+            FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemType);
 
-            Vec2f size = GameState.ItemCreationApi.Get(itemType).SpriteSize;
+            Vec2f size = GameState.ItemCreationApi.GetItemProperties(itemType).SpriteSize;
 
             var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID, -1, "");
@@ -21,12 +21,12 @@ namespace Item
             entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
             entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
 
-            if (weaponProperty.HasClip())
-                entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
+            if (fireWeaponProperties.HasClip())
+                entity.AddItemFireWeaponClip(fireWeaponProperties.ClipSize);
 
-            if (weaponProperty.HasCharge())
-                entity.AddItemFireWeaponChargedWeapon(weaponProperty.CanCharge, weaponProperty.ChargeRate, weaponProperty.ChargeRatio,
-                    weaponProperty.ChargePerShot, weaponProperty.ChargeMin, weaponProperty.ChargeMax);
+            if (fireWeaponProperties.HasCharge())
+                entity.AddItemFireWeaponChargedWeapon(fireWeaponProperties.CanCharge, fireWeaponProperties.ChargeRate, fireWeaponProperties.ChargeRatio,
+                    fireWeaponProperties.ChargePerShot, fireWeaponProperties.ChargeMin, fireWeaponProperties.ChargeMax);
 
             ItemID++;
             return entity;
@@ -56,8 +56,8 @@ namespace Item
 
         public ItemInventoryEntity SpawnInventoryItem(ItemType itemType)
         {
-            ItemProperties itemProperty = GameState.ItemCreationApi.Get(itemType);
-            FireWeaponPropreties weaponProperty = GameState.ItemCreationApi.GetWeapon(itemType);
+            ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
+            FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemType);
 
             var entity = GameState.Planet.EntitasContext.itemInventory.CreateEntity();
             entity.AddItemID(ItemID, -1, "");
@@ -85,8 +85,8 @@ namespace Item
                 entity.AddItemPotion(potionType);
             }
 
-            if (weaponProperty.HasClip())
-                entity.AddItemFireWeaponClip(weaponProperty.ClipSize);
+            if (fireWeaponProperties.HasClip())
+                entity.AddItemFireWeaponClip(fireWeaponProperties.ClipSize);
 
             ItemID++;
             return entity;

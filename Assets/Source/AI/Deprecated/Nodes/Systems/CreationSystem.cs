@@ -40,9 +40,11 @@ namespace Node
         // If actions is in cool down returns -1. 
         public int CreateAction(ItemUsageActionType ItemUsageActionTypeID, int agentID)
         {
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}");
+            
             if (GameState.ActionCoolDownSystem.InCoolDown(ItemUsageActionTypeID, agentID))
             {
-                UnityEngine.Debug.Log("Action " + ItemUsageActionTypeID.ToString() + " in CoolDown");
+                //UnityEngine.Debug.Log("Action " + ItemUsageActionTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
@@ -57,6 +59,8 @@ namespace Node
 
         public int CreateAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, int itemID)
         {
+            UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(itemID)}:{itemID}");
+            
             int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
             if (nodeID != -1)
             {
@@ -68,6 +72,8 @@ namespace Node
 
         public int CreateMovementAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, Vec2f goalPosition)
         {
+            UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateMovementAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(goalPosition)}:{goalPosition}");
+            
             int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
             if (nodeID != -1)
             {

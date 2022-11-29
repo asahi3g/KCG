@@ -1,6 +1,8 @@
 using System;
+using Enums;
 using UnityEngine;
 using KMath;
+using Loader;
 
 namespace Sprites
 {
@@ -21,16 +23,13 @@ namespace Sprites
 
             for (int i = 0; i < AtlasArray.Length; i++)
             {
-                SpriteAtlas atlas = new SpriteAtlas();
-                atlas.Width = 256;
-                atlas.Height = 256;
-                atlas.Data = new byte[4 * atlas.Width * atlas.Height]; // 4 * 32 * 32 = 4096
-                atlas.Rectangles = new RectpackSharp.PackingRectangle[0];
+                int w = 256;
+                int h = 256;
 
-                for(int j = 0; j < atlas.Data.Length; j++)
+                SpriteAtlas atlas = new SpriteAtlas(AtlasType.Unknown, w, h, 4 * w * h)
                 {
-                    atlas.Data[j] = 255;
-                }
+                    Rectangles = new RectpackSharp.PackingRectangle[0]
+                };
 
                 AtlasArray[i] = atlas;
             }
@@ -41,28 +40,35 @@ namespace Sprites
             
         }
 
-        public void UpdateAtlasTexture(int id)
+
+        public void UpdateAtlasTextures()
         {
-            ref SpriteAtlas atlas = ref AtlasArray[id];
-            if (atlas.TextureNeedsUpdate)
+            int length = AtlasArray.Length;
+            for(int i = 0; i < length; i++)
             {
-                atlas.Texture = Utility.Texture.CreateTextureFromRGBA(atlas.Data, atlas.Width, atlas.Height);
-                
-                atlas.TextureNeedsUpdate = false;
+                UpdateAtlasTexture(AtlasArray[i]);
             }
-            
         }
 
-        public ref SpriteAtlas GetSpriteAtlas(Enums.AtlasType type)
+        public void UpdateAtlasTexture(SpriteAtlas atlas)
         {
-            return ref AtlasArray[(int)type];
+            if (atlas == null) return;
+            if (!atlas.TextureNeedsUpdate) return;
+            
+            atlas.Texture = Utility.Texture.CreateTextureFromRGBA(atlas.GetAtlasType().ToString(), atlas.Data, atlas.Width, atlas.Height);
+            atlas.TextureNeedsUpdate = false;
+        }
+
+        public SpriteAtlas GetSpriteAtlas(Enums.AtlasType type)
+        {
+            return AtlasArray[(int)type];
         }
         
 
         public Sprite GetSprite(int id, Enums.AtlasType type)
         {
             Sprite sprite = new Sprite();
-            ref SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            SpriteAtlas atlas = GetSpriteAtlas(type);
 
             sprite.Texture = atlas.Texture;
 
@@ -83,7 +89,7 @@ namespace Sprites
 
         public Vec2i GetSpriteDimensions(int id, Enums.AtlasType type)
         {
-            ref SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            SpriteAtlas atlas = GetSpriteAtlas(type);
             if (id >= 0 && id < atlas.Rectangles.Length)
             {
                 int recIndex = Array.FindIndex(atlas.Rectangles, packingRectangle => packingRectangle.Id == id);
@@ -100,7 +106,7 @@ namespace Sprites
         // and return the sprite RGBA8 that correspond
         public void GetSpriteBytes(int id, byte[] data, Enums.AtlasType type)
         {
-            ref SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            SpriteAtlas atlas = GetSpriteAtlas(type);
             if (id >= 0 && id < atlas.Rectangles.Length)
             {
                 // TODO: Refactor
@@ -165,7 +171,7 @@ namespace Sprites
         // to the sprite atlas
         public int CopySpriteToAtlas(int spriteSheetID, int column, int row, Enums.AtlasType type)
         {
-            ref SpriteAtlas atlas = ref GetSpriteAtlas(type);
+            SpriteAtlas atlas = GetSpriteAtlas(type);
             int oldSize = atlas.Rectangles.Length;
             SpriteSheet sheet = SpriteLoader.SpriteSheets[spriteSheetID];
 
@@ -222,8 +228,8 @@ namespace Sprites
             var widthPowerOf2 = (int)Math.Pow(2, Math.Ceiling(Math.Log(bounds.Width, 2)));
             var heightPowerOf2 = (int)Math.Pow(2, Math.Ceiling(Math.Log(bounds.Height, 2)));
 
-            atlas.Width = Math.Max(widthPowerOf2, atlas.Width);
-            atlas.Height = Math.Max(heightPowerOf2, atlas.Height);
+            atlas.SetWidth(Math.Max(widthPowerOf2, atlas.Width));
+            atlas.SetHeight(Math.Max(heightPowerOf2, atlas.Height));
             atlas.Data = new byte[4 * atlas.Width * atlas.Height]; 
 
             for(int i = 0; i < atlas.Data.Length; i++)
@@ -264,13 +270,16 @@ namespace Sprites
             int xOffset = (int)rectangle.X;
             int yOffset = (int)rectangle.Y;
 
-            for (int y = 0; y < sheet.SpriteHeight; y++)
+            int spriteHeight = sheet.SpriteHeight;
+            int spriteWidth = sheet.SpriteWidth;
+
+            for (int y = 0; y < spriteHeight; y++)
             {
-                for (int x = 0; x < sheet.SpriteWidth; x++)
+                for (int x = 0; x < spriteWidth; x++)
                 {
                     int atlasIndex = 4 * ((yOffset + y)  * (atlas.Width) + (xOffset + x));
-                    int sheetIndex = 4 * ((x + column * sheet.SpriteWidth) + 
-                                    ((y + row * sheet.SpriteHeight) * sheet.Width));
+                    int sheetIndex = 4 * ((x + column * spriteWidth) + 
+                                    ((y + row * spriteHeight) * sheet.Width));
 
                     // RGBA8
                     atlas.Data[atlasIndex + 0] = 

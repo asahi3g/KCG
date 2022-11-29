@@ -76,6 +76,12 @@ namespace GameScreen
             GameState.Planet.DrawHUD(Player);
         }
 
+        public override void OnDrawGizmos()
+        {
+            base.OnDrawGizmos();
+            GameState.Planet.DrawDebugEx();
+        }
+
         public override void Init(UnityEngine.Transform sceneTransform)
         {
             Transform = sceneTransform;
@@ -173,6 +179,8 @@ namespace GameScreen
             PlanetTileMap.TileMapGeometry.BuildGeometry(GameState.Planet.TileMap);
 
             UpdateMode(Player);
+
+            GameState.Planet.TileMap.SetFrontTile(119, 7, Enums.PlanetTileMap.TileID.Bedrock);
         }
 
         public void AddItemsToPlayer()

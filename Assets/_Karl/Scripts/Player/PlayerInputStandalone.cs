@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerInputStandalone : BaseMonoBehaviour
 {
     [SerializeField] private PlayerInput _input;
+    [SerializeField] private UIInputArea _inputArea;
     [Header("Player Controls")]
     [SerializeField] private SOInput _moveUp;
     [SerializeField] private SOInput _moveDown;
@@ -14,6 +15,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     [SerializeField] private SOInput _speedDash;
     [SerializeField] private SOInput _fire;
     [SerializeField] private SOInput _jetpack;
+    [SerializeField] private SOInput _reload;
     [Header("Other")]
     [SerializeField] private SOInput _mainMenu;
     [SerializeField] private SOInput[] _quickSlots;
@@ -47,6 +49,9 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         bool right = IsKey(_moveRight);
         bool up = IsKey(_moveUp);
         bool down = IsKey(_moveDown);
+        
+        // Look Target
+        _input.DoPlayerLookTarget(_inputArea.GetLastMove().position);
 
         // Crouch
         if (IsKeyDown(_crouch)) _input.DoPlayerCrouchBegin(left, right);
@@ -67,6 +72,12 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         // Jetpack
         if(IsKeyDown(_jetpack)) _input.DoPlayerJetpackBegin();
         if(IsKeyUp(_jetpack)) _input.DoPlayerJetpackEnd();
+        
+        // Fire
+        if(IsKey(_fire)) _input.DoPlayerFire();
+
+        // Reload
+        if(IsKeyDown(_reload)) _input.DoPlayerReload();
         
 
         // Footer quick slots inventory

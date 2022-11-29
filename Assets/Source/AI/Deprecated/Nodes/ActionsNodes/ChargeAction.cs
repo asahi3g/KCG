@@ -25,7 +25,7 @@ namespace Node.Action
 
             if (InventoryEntityTemplate.HasToolBar)
             {
-                int selectedSlot = inventory.SelectedSlotID;
+                int selectedSlot = inventory.SelectedSlotIndex;
                 return GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
             }
 
@@ -64,7 +64,7 @@ namespace Node.Action
         public override void OnExit(NodeEntity nodeEntity)
         {
             ItemInventoryEntity itemEntity = GetItem(nodeEntity);
-            Item.FireWeaponPropreties WeaponPropreties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             float tempCharge = 0.0f;
 

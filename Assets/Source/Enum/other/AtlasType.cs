@@ -2,7 +2,7 @@ namespace Enums
 {
     public enum AtlasType
     {
-        Error = 0,
+        Unknown = 0,
         Generic = 1,
         Agent = 2,
         Vehicle = 3,
@@ -10,6 +10,6 @@ namespace Enums
         BackGround = 5,
         Mech = 6,
         Gui = 7,
-        TGen = 8
+        TGen = 8,
     }
 }

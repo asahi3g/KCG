@@ -1,6 +1,7 @@
 //imports UnityEngine
 
 using System;
+using UnityEngine;
 
 public class GameResources
 {
@@ -8,27 +9,25 @@ public class GameResources
 
     public static void Initialize()
     {
-        if (!isInitialized)
-        {
-            long beginTime = DateTime.Now.Ticks;
-            
-            CreateDropTables();
-            InitializeTGenTiles();
+        long beginTime = DateTime.Now.Ticks;
 
-            CreateTiles();
-            CreateAnimations();
-            CreateItems();
-            CreateAgents();
-            CreateParticles();
-            CreateParticleEmitters();
-            CreateProjectiles();
-            CreateMechs();
-            CreateVehicles();
+        CreateDropTables();
+        InitializeTGenTiles();
+        InitializePlaceableBackgroundTiles();
 
-            UnityEngine.Debug.Log("2d Assets Loading Time: " + (DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond + " miliseconds");
+        CreateTiles();
+        CreateAnimations();
+        CreateItems();
+        CreateAgents();
+        CreateParticles();
+        CreateParticleEmitters();
+        CreateProjectiles();
+        CreateMechs();
+        CreateVehicles();
 
-            isInitialized = true;
-        }
+        Debug.Log(DebugExtensions.Format(typeof(GameResources), $"initialized, loading time: {((DateTime.Now.Ticks - beginTime) / TimeSpan.TicksPerMillisecond)} milliseconds"));
+
+        isInitialized = true;
     }
 
 
@@ -40,6 +39,11 @@ public class GameResources
     private static void InitializeTGenTiles()
     {
         GameState.TGenRenderGridOverlay.InitializeResources();
+    }
+
+    private static void InitializePlaceableBackgroundTiles()
+    {
+        GameState.BackgroundGridOverlay.InitializeResources();
     }
 
     private static void CreateTiles()
@@ -69,12 +73,12 @@ public class GameResources
 
     private static void CreateParticles()
     {
-        GameState.ParticleCreationApi.InitializeResources();
+        GameState.ParticlePropertiesManager.InitializeResources();
     }
 
     private static void CreateParticleEmitters()
     {
-        GameState.ParticleCreationApi.InitializeEmitterResources();
+        GameState.ParticlePropertiesManager.InitializeEmitterResources();
     }
 
     private static void CreateProjectiles()

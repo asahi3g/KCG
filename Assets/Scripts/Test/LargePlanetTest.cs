@@ -34,12 +34,11 @@ namespace Planet.Unity
         {
             if (!Init)
                 return;
-
-            ref var planet = ref GameState.Planet;
-            int selectedSlot = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity.SelectedSlotID;
+            
+            int selectedSlot = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).inventoryInventoryEntity.SelectedSlotIndex;
 
             ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(inventoryID, selectedSlot);
-            ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+            ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
             if (itemProperty.IsTool())
             {
                 if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
@@ -49,11 +48,7 @@ namespace Planet.Unity
                 }
             }
 
-            planet.Update(UnityEngine.Time.deltaTime);
-            //   Vector2 playerPosition = Player.Entity.physicsPosition2D.Value;
-
-            // transform.position = new Vector3(playerPosition.x - 6.0f, playerPosition.y - 6.0f, -10.0f);
-
+            GameState.Planet.Update(UnityEngine.Time.deltaTime);
             Draw();
         }
 

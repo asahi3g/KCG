@@ -16,7 +16,7 @@ namespace Action
             ref PlanetState planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity itemEntity = agentEntity.GetItem();
-            Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;

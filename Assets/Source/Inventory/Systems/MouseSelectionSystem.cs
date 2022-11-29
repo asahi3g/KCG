@@ -19,17 +19,17 @@ namespace Inventory
             if (!InventorySystemsState.MouseHold) // if less than 250ms consider it a click.
             {
                 var player = planet.Player;
-                if (player != null && inventoryEntity.inventoryInventoryEntity.SelectedSlotID !=
+                if (player != null && inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex !=
                     InventorySystemsState.ClickedSlotslotID)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventoryEntity.SelectedSlotID);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex);
                     player.HandleItemDeselected(item);
                 }
-                inventoryEntity.inventoryInventoryEntity.SelectedSlotID = InventorySystemsState.ClickedSlotslotID;
+                inventoryEntity.inventoryInventoryEntity.SetSelectedSlotIndex(InventorySystemsState.ClickedSlotslotID);
                 if (player != null)
                 {
-                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventoryEntity.SelectedSlotID);
-                    player.HandleItemSelected(item);
+                    var item = GameState.InventoryManager.GetItemInSlot(inventoryEntity.inventoryID.ID, inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex);
+                    player.SetModel3DWeapon(item);
                 }
                 InventorySystemsState.ClickedSlotslotID = -1;
                 return;
@@ -144,7 +144,7 @@ namespace Inventory
                 if (GameState.InventoryManager.AddItemAtSlot(GameState.Planet.EntitasContext.itemInventory.GetEntityWithItemID(
                     InventorySystemsState.GrabbedItemID), inventoryEntity.inventoryID.ID, slotID))
                 {
-                    inventoryEntity.inventoryInventoryEntity.SelectedSlotID = slotID;
+                    inventoryEntity.inventoryInventoryEntity.SetSelectedSlotIndex(slotID);
                     InventorySystemsState.ClickedInventoryID = inventoryEntity.inventoryID.ID;
                     // Reset values.
                     InventorySystemsState.MouseHold = false;

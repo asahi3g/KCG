@@ -29,15 +29,33 @@ namespace NodeSystem
             return Get(NameIDPairs[name]);
         }
 
-        public int GetID(string name) => NameIDPairs[name];
+        public int GetID(string name)
+        {
+            if (NameIDPairs.ContainsKey(name))
+            {
+                return NameIDPairs[name];
+            }
+            else
+            {
+                return 0;
+            }
+            
+        }
 
         // Register conditional function
         public int RegisterCondition(string name, Condition condition)
         {
-            Conditions[Length] = condition;
-            Names[Length] = name;
-            NameIDPairs.Add(name, Length);
-            return Length++;
+            if (NameIDPairs.ContainsKey(name))
+            {
+                Conditions[Length] = condition;
+                Names[Length] = name;
+                NameIDPairs.Add(name, Length);
+                return Length++;
+            }
+            else
+            {
+                return Length;
+            }
         }
     }
 }

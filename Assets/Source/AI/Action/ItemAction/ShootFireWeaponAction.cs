@@ -26,9 +26,7 @@ namespace Action
 
             if (itemEntity == null)
                 return NodeSystem.NodeState.Failure;
-            Item.FireWeaponPropreties WeaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
-
-            var physicsState = agentEntity.agentPhysicsState;
+            Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
             if (/*physicsState.MovementState != AgentMovementState.Falling &&
             physicsState.MovementState != AgentMovementState.Jump &&
@@ -37,9 +35,9 @@ namespace Action
             physicsState.MovementState != AgentMovementState.SlidingLeft &&
             physicsState.MovementState != AgentMovementState.SlidingRight*/true)
             {
-                Vec2f target = agentEntity.agentModel3D.AimTarget;
+                Vec2f target = agentEntity.Agent3DModel.AimTarget;
 
-                int bulletsPerShot = WeaponProperty.BulletsPerShot;
+                int bulletsPerShot = fireWeaponProperties.BulletsPerShot;
 
                 if (itemEntity.hasItemFireWeaponClip)
                 {
@@ -53,7 +51,7 @@ namespace Action
                     itemEntity.itemFireWeaponClip.NumOfBullets -= bulletsPerShot;
                 }
 
-                agentEntity.FireGun(WeaponProperty.CoolDown);
+                agentEntity.FireGun(fireWeaponProperties.CoolDown);
                 Vec2f startPos = agentEntity.GetGunFiringPosition();
 
                 if (Math.Sign(target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.FacingDirection))
@@ -65,15 +63,15 @@ namespace Action
                 shootingData.Target = target;
 
                 GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition(), ParticleEmitterType.MuzzleFlash);
-                var spread = WeaponProperty.SpreadAngle;
+                var spread = fireWeaponProperties.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
                     float randomSpread = UnityEngine.Random.Range(-spread, spread);
                     ProjectileEntity projectileEntity = planet.AddProjectile(startPos, new Vec2f((target.X - startPos.X) - randomSpread,
-                        target.Y - startPos.Y).Normalized, WeaponProperty.ProjectileType, WeaponProperty.BasicDemage, agentEntity.agentID.ID);
+                        target.Y - startPos.Y).Normalized, fireWeaponProperties.ProjectileType, fireWeaponProperties.BasicDemage, agentEntity.agentID.ID);
 
 
-                    if (WeaponProperty.ProjectileType == Enums.ProjectileType.Arrow)
+                    if (fireWeaponProperties.ProjectileType == Enums.ProjectileType.Arrow)
                     {
                         projectileEntity.isProjectileFirstHIt = false;
                     }

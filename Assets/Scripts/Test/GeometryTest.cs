@@ -2,7 +2,6 @@ using UnityEngine;
 using Enums.PlanetTileMap;
 using KMath;
 using System.Linq;
-using System.Collections.Generic;
 using System;
 using Collisions;
 using PlanetTileMap;
@@ -17,6 +16,8 @@ namespace Planet.Unity
         AgentEntity Player;
         int PlayerID;
 
+        [UnityEngine.SerializeField] private bool enableBackgroundPlacementTool;
+
         int CharacterSpriteId;
         int inventoryID;
 
@@ -24,6 +25,8 @@ namespace Planet.Unity
         private int selectedMechIndex;
 
         Planet.PlanetState Planet;
+
+        private BackgroundPlacementTool backgroundPlacementTool;
 
         public void Start()
         {
@@ -78,16 +81,22 @@ namespace Planet.Unity
             Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
             PlayerID = Player.agentID.ID;
 
-            GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
+            //GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
 
-            GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
-            GameState.Planet.AddPod(new Vec2f(16.0f, 20), Enums.PodType.Default);
+            //GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
+            //GameState.Planet.AddPod(new Vec2f(16.0f, 20), Enums.PodType.Default);
 
 
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
             Planet.InitializeSystems(Material, transform);
+
+            if (enableBackgroundPlacementTool)
+            {
+                backgroundPlacementTool = new BackgroundPlacementTool(true, true);
+                backgroundPlacementTool.Initialize(Material, transform, tileMap.width, tileMap.height);
+            }
 
             //GenerateMap();
 
@@ -154,7 +163,6 @@ namespace Planet.Unity
             Vec2f velocity = new Vec2f(mouse.X - orrectedBox.x, mouse.Y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
-
             ref var planet = ref GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             Material material = Material;
@@ -189,18 +197,22 @@ namespace Planet.Unity
 
                planet.InitializeSystems(Material, transform);
 
+
                Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 20));
                PlayerID = Player.agentID.ID;
                inventoryID = Player.agentInventory.InventoryID;
 
-               AddItemsToPlayer();
+                AddItemsToPlayer();
 
                 Debug.Log("loaded!");
             }
 
-            Debug.Log(GameState.Planet.ParticleList.Length);
-
             planet.Update(Time.deltaTime);
+
+            if (enableBackgroundPlacementTool)
+            {
+                backgroundPlacementTool.UpdateToolGrid();
+            }
 
         }
         Texture2D texture;
@@ -260,14 +272,17 @@ namespace Planet.Unity
            // Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
         }
 
-            private void UpdateMode(AgentEntity agentEntity)
+        private void UpdateMode(AgentEntity agentEntity)
         {
-            ref var planet = ref GameState.Planet;
+            CameraMove cameraMove = Camera.main.gameObject.GetComponent<CameraMove>();
+            if (cameraMove == null) return;
+            
+            var planet = GameState.Planet;
             agentEntity.agentPhysicsState.Invulnerable = false;
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            cameraMove.enabled = false;
             planet.CameraFollow.canFollow = false;
 
-            Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
+            cameraMove.enabled = false;
             planet.CameraFollow.canFollow = true;
         }
 

@@ -40,12 +40,12 @@ namespace Planet.Unity
             {
                 ref var planet = ref GameState.Planet;
                 var entitasContext = planet.EntitasContext;
-                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryInventoryEntity.SelectedSlotID;
+                int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryInventoryEntity.SelectedSlotIndex;
 
                 ItemInventoryEntity item = GameState.InventoryManager.GetItemInSlot(InventoryID, selectedSlot);
                 if (item != null)
                 {
-                    ItemProperties itemProperty = GameState.ItemCreationApi.Get(item.itemType.Type);
+                    ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
                     if (itemProperty.IsTool())
                     {
                         if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse0))
@@ -360,9 +360,9 @@ namespace Planet.Unity
             planet.AddAgentAsEnemy(new Vec2f(20, 15));
             planet.AddAgentAsEnemy(new Vec2f(15, 15));
 
-            planet.AddAgent(new Vec2f(10, 22), Enums.AgentType.EnemyInsect);
-            planet.AddAgent(new Vec2f(20, 22), Enums.AgentType.EnemyInsect);
-            planet.AddAgent(new Vec2f(5, 12), Enums.AgentType.EnemyInsect);
+            planet.AddAgent(new Vec2f(10, 22), Enums.AgentType.InsectSmall);
+            planet.AddAgent(new Vec2f(20, 22), Enums.AgentType.InsectSmall);
+            planet.AddAgent(new Vec2f(5, 12), Enums.AgentType.InsectSmall);
 
             planet.AddAgent(new Vec2f(5, 28), Enums.AgentType.EnemyGunner);
             planet.AddAgent(new Vec2f(10, 28), Enums.AgentType.EnemyGunner);

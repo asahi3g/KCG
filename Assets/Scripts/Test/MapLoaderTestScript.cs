@@ -70,16 +70,10 @@ namespace Planet.Unity
         public void Update()
         {
             // check if the sprite atlas textures needs to be updated
-            for(int type = 0; type < GameState.SpriteAtlasManager.AtlasArray.Length; type++)
-            {
-                GameState.SpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.SpriteAtlasManager.UpdateAtlasTextures();
 
             // check if the tile sprite atlas textures needs to be updated
-            for(int type = 0; type < GameState.TileSpriteAtlasManager.Length; type++)
-            {
-                GameState.TileSpriteAtlasManager.UpdateAtlasTexture(type);
-            }
+            GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
             
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -123,8 +117,7 @@ namespace Planet.Unity
 
         public void CreateDefaultTiles()
         {
-            int metalSlabsTileSheet = 
-                        GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\BuildingBlocks\\Metal\\Slabs\\Tiles_metal_slabs.png", 16, 16);
+            int metalSlabsTileSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\BuildingBlocks\\Metal\\Slabs\\Tiles_metal_slabs.png", 16, 16);
             int stoneBulkheads = 
                         GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Blocks\\BuildingBlocks\\Stone\\Bulkheads\\Tiles_stone_bulkheads.png", 16, 16);
             int tilesMoon = 

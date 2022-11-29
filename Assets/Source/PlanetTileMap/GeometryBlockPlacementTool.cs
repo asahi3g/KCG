@@ -7,7 +7,6 @@ namespace Planet
 {
     public class GeometryBlockPlacementTool
     {
-
         private bool enableTileGrid = true;
 
         private bool drawMapBorder = true;

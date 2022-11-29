@@ -1,4 +1,3 @@
-//imports UnityEngine
 
 using Enums;
 using KMath;
@@ -29,8 +28,8 @@ namespace Agent
     {
         UnityEngine.Transform transform;
 
-        UnityEngine.Transform Pistol;
-        UnityEngine.Transform Rifle;
+        public UnityEngine.Transform Pistol;
+        public UnityEngine.Transform Rifle;
 
         UnityEngine.Transform RigLayerRifle_BodyAim;
         UnityEngine.Transform RigLayerRifle_WeaponPose;
@@ -57,21 +56,22 @@ namespace Agent
                 var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
                 foreach (var entity in entities)
                 {
-                    var physicsState = entity.agentPhysicsState;
-
-                    var model3d = entity.agentModel3D;
-                    model3d.GameObject.transform.position = new UnityEngine.Vector3(physicsState.Position.X, physicsState.Position.Y, -1.0f);
-                
-                    transform = entity.agentModel3D.GameObject.transform;
-
+                    
+                    PhysicsStateComponent physicsStateComponent = entity.agentPhysicsState;
+                    Agent3DModel agent3DModel = entity.Agent3DModel;
+                    AgentRenderer agentRenderer = entity.Agent3DModel.Renderer;
+                    transform = agentRenderer.GetModel().transform;
+                    
+                    agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
+                    
                     if(entity.isAgentAlive)
                     {
                         if (entity.agentID.Type == AgentType.Player || entity.agentID.Type == AgentType.EnemyMarine)
                         {
-                            model3d.AnimancerComponent.Playable.Evaluate();
+                            agentRenderer.GetAnimancer().Playable.Evaluate();
 
-                            Pistol = transform.Find("PistolPivot").GetChild(0);
-                            Rifle = transform.Find("RiflePivot").GetChild(0);
+                            Pistol = agentRenderer.GetPivotPistol();
+                            Rifle = agentRenderer.GetPivotRifle();
 
                             RigLayerRifle_BodyAim = transform.Find("RigLayerRifle_BodyAim");
                             RigLayerRifle_WeaponPose = transform.Find("RigLayerRifle_WeaponPose");
@@ -83,9 +83,9 @@ namespace Agent
                             RigLayerPistol_WeaponAiming = transform.Find("RigLayerPistol_WeaponAiming");
                             RigLayerPistol_HandIK = transform.Find("RigLayerPistol_HandIK");
 
-                            AimTarget = transform.Find("AimTarget");
+                            AimTarget = agentRenderer.GetAimTarget();
 
-                            if (entity.hasAgentModel3D)
+                            if (entity.hasAgent3DModel)
                             {
                                 if (transform != null)
                                 {
@@ -98,11 +98,11 @@ namespace Agent
                                             {
                                                 if (entity.agentPhysicsState.FacingDirection == 1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, -6.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, -6.0f);
                                                 }
                                                 else if (entity.agentPhysicsState.FacingDirection == -1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(model3d.AimTarget.X, model3d.AimTarget.Y, 1.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, 1.0f);
                                                 }
                                             }
                                             else
@@ -121,7 +121,7 @@ namespace Agent
                                             }
                                         }
 
-                                        if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Rifle)
+                                        if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Rifle)
                                         {
                                             Pistol.gameObject.SetActive(false);
                                             Rifle.gameObject.SetActive(true);
@@ -133,7 +133,7 @@ namespace Agent
 
                                             entity.agentAction.Action = AgentAlertState.Alert;
                                         }
-                                        else if (entity.agentModel3D.CurrentWeapon == Model3DWeapon.Pistol)
+                                        else if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Pistol)
                                         {
                                             Pistol.gameObject.SetActive(true);
                                             Rifle.gameObject.SetActive(false);

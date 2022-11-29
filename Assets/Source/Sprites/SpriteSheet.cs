@@ -1,7 +1,16 @@
+using System;
+using UnityEngine;
+
 namespace Sprites
 {
+    [System.Serializable]
     public struct SpriteSheet
     {
+        // File path for the given texture, for debugging purposes.
+        [TextArea(3,6)]
+        public string filePath;
+
+        [NonSerialized]
         public byte[] Data; // RGBA8 array
 
         public int Index; // Index of the sprite Sheet
