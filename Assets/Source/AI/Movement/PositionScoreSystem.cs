@@ -1,5 +1,6 @@
 ﻿using KMath;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 namespace AI.Movement
 {
@@ -14,6 +15,7 @@ namespace AI.Movement
         // Todo: Diffirent values for different types of properties.
         public int[] BasicScore;
         public int Length;
+        public const int OccupiedScore = -10000;
 
         public PositionScoreSystem()
         {
@@ -30,49 +32,60 @@ namespace AI.Movement
         {
             ref Planet.PlanetState planet = ref GameState.Planet;
             // Todo: Make range an attribute.
-            const int Range = 20;
-            const int DensityRange = 5;
+            const int Range = 30;
+            const int DensityRange = 8;
 
             // Todo Get enemy pos
             Vec2f enemyPos = GameState.Planet.Player.agentPhysicsState.Position;
             int x = (int)enemyPos.X;
             int y = (int)enemyPos.Y;
 
+            // Add positions and initialize score
+            float pos = x - Range;
+            for (int j = 0; pos < x + Range; j++)
+            {
+                Positions[j] = new Vec2f(pos, y);
+                BasicScore[j] = 0;
+                Length = j;
+                pos += 1.5f;
+            }
             // Todo function to get all tiles in radius
             // For now do horizontal check.
             // Initialize scores
-            for (int j = 0, i = x - Range; i < x + Range; i++, j++)
+            int[] agentIDs = Collisions.Collisions.BroadphaseAgentCircleTest(enemyPos, Range);
+            for (int j = 0; j < Length; j++)
             {
-                Positions[j] = new Vec2f(i, y);
-                BasicScore[j] = 0;
-                Length = j;
-
-                int[] agentIDs = Collisions.Collisions.BroadphaseAgentCircleTest(Positions[j], DensityRange);
-                int length = 0;
+                int density = 0; // Number of agents inside density range.
+                
                 // if there is an agent in this tile drastically reduce score.
                 foreach (int id in agentIDs)
                 {
                     AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(id);
                     if (agent.agentID.Faction != squadID)
                         continue;
-                    length++;
-                    const int score = 10000;
-                    if ((int)agent.agentPhysicsState.Position.X == x)
-                        BasicScore[j] -= score;
+                    // Use goal position not current position
+                    Vec2f TargetPos = GameState.BlackboardManager.Get(agent.agentController.BlackboardID).MoveToTarget;
+                    if (KMath.KMath.AlmostEquals(TargetPos.X, Positions[j].X, precision: 0.3f))
+                    {
+                        BasicScore[j] += OccupiedScore;
+                    }
+                    if (MathF.Abs(TargetPos.X - Positions[j].X) <= DensityRange)
+                    {
+                        density++;
+                    }
                 }
 
                 // The position score decrease when higher than 3 and increase when smaller than this; 
-                if (agentIDs.Length >= 3)
+                if (density > 3)
                 {
                     int score = 500;
-                    BasicScore[j] -= agentIDs.Length * score;
+                    BasicScore[j] -= (density - 3) * score;
                 }
                 else 
                 {
                     int score = 500;
-                    BasicScore[j] += agentIDs.Length * score;
+                    BasicScore[j] += density * score; 
                 }
-
             }
 
             // Get squad info.
@@ -107,16 +120,28 @@ namespace AI.Movement
         public Vec2f GetHighestScorePosition(AgentEntity agent)
         {
             int bestPosIndex = 0;
-            int highestTotalScore = 0;
+            int highestTotalScore = int.MinValue;
 
             for (int i = 0; i < Length; i++)
             {
                 int agentScore = 0;
-                // Account for distance to position.
-                float distance = Heuristics.ManhattanDistance(agent.agentPhysicsState.Position, Positions[bestPosIndex]);
-                agentScore = (int)distance * 100;
 
-                int totalScore = BasicScore[bestPosIndex] + agentScore;
+                // Account for distance to position.SS
+                Vec2f TargetPos = GameState.BlackboardManager.Get(agent.agentController.BlackboardID).MoveToTarget;
+                if (KMath.KMath.AlmostEquals(TargetPos.X, Positions[i].X, precision: 0.1f))
+                {
+                    BasicScore[i] -= OccupiedScore;
+                    agentScore += 1500;
+                }
+                else
+                {
+                    if (TargetPos == Vec2f.Zero)
+                        TargetPos = agent.agentPhysicsState.Position;
+                    float distance = Heuristics.ManhattanDistance(TargetPos, Positions[i]);
+                    agentScore = -(int)distance * 50;
+                }
+
+                int totalScore = BasicScore[i] + agentScore;
                 if (totalScore > highestTotalScore)
                 {
                     bestPosIndex = i;
@@ -125,6 +150,7 @@ namespace AI.Movement
 
             }
 
+            BasicScore[bestPosIndex] += OccupiedScore;
             return Positions[bestPosIndex];
         }
 

@@ -355,6 +355,10 @@ namespace Agent
             NodeManager.SetData(ConditionManager.GetID("CanSeeAndInRange"));
             NodeManager.EndNode();
 
+            int moveToBestScoreId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType.Action);
+            NodeManager.SetAction(ActionManager.GetID("MoveToBestScorePos"));
+            NodeManager.EndNode();
+
             int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.ItemUsageActionType .Action);
             NodeManager.SetAction(ActionManager.GetID("AimAt"));
             NodeManager.EndNode();
@@ -372,6 +376,7 @@ namespace Agent
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
             NodeManager.AddChild(moveToId);
+            NodeManager.AddChild(moveToBestScoreId);
             NodeManager.AddChild(aimAtId);
             NodeManager.AddChild(fireWeaponId);
             NodeManager.AddChild(wait0_1sId);
