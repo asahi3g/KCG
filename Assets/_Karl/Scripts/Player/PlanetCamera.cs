@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCamera : BaseMonoBehaviour
+public class PlanetCamera : BaseMonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _followSpeed;

@@ -63,7 +63,7 @@ namespace Agent
             UpdateIsActive();
         }
 
-        public void SetGameObject(AgentRenderer value)
+        public void SetRenderer(AgentRenderer value)
         {
             _renderer = value;
             if (_renderer == null) return;

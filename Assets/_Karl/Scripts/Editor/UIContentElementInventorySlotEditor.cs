@@ -1,5 +1,6 @@
 using UnityEditor;
 
+[CanEditMultipleObjects]
 [CustomEditor(typeof(UIContentElementInventorySlot))]
 public class UIContentElementInventorySlotEditor : BaseEditor<UIContentElementInventorySlot>
 {
