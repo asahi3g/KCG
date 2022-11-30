@@ -59,7 +59,7 @@ namespace Node
 
         public int CreateAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, int itemID)
         {
-            UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(itemID)}:{itemID}");
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(itemID)}:{itemID}");
             
             int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
             if (nodeID != -1)
@@ -72,7 +72,7 @@ namespace Node
 
         public int CreateMovementAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, Vec2f goalPosition)
         {
-            UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateMovementAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(goalPosition)}:{goalPosition}");
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateMovementAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(goalPosition)}:{goalPosition}");
             
             int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
             if (nodeID != -1)
