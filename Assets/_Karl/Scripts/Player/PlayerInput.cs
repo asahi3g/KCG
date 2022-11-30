@@ -114,7 +114,7 @@ public class PlayerInput : BaseMonoBehaviour
             
                     if (itemProperty.IsTool())
                     {
-                        GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID);
+                        GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
                     }
                 }
             }
