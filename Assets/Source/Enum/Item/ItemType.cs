@@ -136,7 +136,6 @@
         PotionTool,
         GeometryPlacementTool,
         AxeTool,
-        PlacebleBackgroundTool, /*Placeable Dark-Grey Background.*/
-
+        PlaceableBackgroundTool, // Tool to fill out background grid (dark grey background)
     }
 }

@@ -11,7 +11,7 @@ public partial class AgentEntity {
     public Agent.StatsComponent agentStats { get { return (Agent.StatsComponent)GetComponent(AgentComponentsLookup.AgentStats); } }
     public bool hasAgentStats { get { return HasComponent(AgentComponentsLookup.AgentStats); } }
 
-    public void AddAgentStats(int newHealth, int newFood, int newWater, int newOxygen, int newFuel) {
+    public void AddAgentStats(ContainerInt newHealth, ContainerInt newFood, ContainerInt newWater, ContainerInt newOxygen, ContainerInt newFuel) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
         component.Health = newHealth;
@@ -22,7 +22,7 @@ public partial class AgentEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentStats(int newHealth, int newFood, int newWater, int newOxygen, int newFuel) {
+    public void ReplaceAgentStats(ContainerInt newHealth, ContainerInt newFood, ContainerInt newWater, ContainerInt newOxygen, ContainerInt newFuel) {
         var index = AgentComponentsLookup.AgentStats;
         var component = (Agent.StatsComponent)CreateComponent(index, typeof(Agent.StatsComponent));
         component.Health = newHealth;

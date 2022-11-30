@@ -297,11 +297,11 @@ namespace Agent
                     // Reduce the fuel and spawn particles
 
                     var FuelUsage = Agent.Constants.StandardFuelConsumptionPerSecond * deltaTime;
-                    stats.Fuel -= (int)FuelUsage;
+                    stats.Fuel.Remove((int)FuelUsage);
                     
-                    if (stats.Fuel <= 1)
+                    if (stats.Fuel.GetValue() <= 1f)
                     {
-                        stats.Fuel -= 10;
+                        stats.Fuel.Remove(10);
                     }
 
                     //planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
@@ -311,15 +311,15 @@ namespace Agent
                 else
                 {
                     // make sure the fuel never goes up more than it should
-                    if (stats.Fuel <= 100)
+                    if (stats.Fuel.GetValue() <= stats.Fuel.GetMax())
                     {
                         // if we are not JetPackFlying, add fuel to the tank
                         var FuelUsage = Agent.Constants.StandardFuelConsumptionPerSecond * deltaTime;
-                        stats.Fuel += (int)FuelUsage;
+                        stats.Fuel.Add((int)FuelUsage);
                     }
                     else
                     {
-                        stats.Fuel = 100;
+                        stats.Fuel.SetAsMax();
                     }
                 }
                 

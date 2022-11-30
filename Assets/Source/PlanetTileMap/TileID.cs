@@ -165,5 +165,28 @@
         L2_R5_Rock,
         L2_R6_Rock,
         L2_R7_Rock,
+
+        // Planet/Space Background Tiles
+        Planet1,
+        Planet2,
+        Planet3,
+        Planet4,
+        Planet5,
+        Planet6,
+        Planet7,
+        Planet8,
+        Planet9,
+        Planet10,
+        Star1,
+        Star2,
+        Star3,
+        Star4,
+        Star5,
+        Star6,
+        Star7,
+        Star8,
+        Star9,
+        Star10,
+
     }
 }

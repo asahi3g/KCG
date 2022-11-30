@@ -4,8 +4,6 @@ using System;
 using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
-using KMath;
-using Unity.VisualScripting;
 using Utility;
 
 /*
@@ -1779,11 +1777,12 @@ namespace Item
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.PlacebleBackgroundTool, "PlacebleBackgroundTool");
+            CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
             SetGroup(ItemGroups.BuildTools);
-            SetTexture(IconToolConstruction);
-            SetInventoryItemIcon(IconToolConstruction);
+            SetTexture(ConstructionToolIcon);
+            SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();
+
         }
     }
 }

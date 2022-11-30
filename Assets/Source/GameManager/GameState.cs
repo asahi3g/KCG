@@ -186,7 +186,6 @@ public static class GameState
 
     public static readonly Prefab.PrefabManager PrefabManager;
 
-
     public static readonly GameScreen.ScreenManager ScreenManager;
 
     public static void InitStage1()
@@ -201,6 +200,11 @@ public static class GameState
         GUIManager.InitStage1();
         GuiResourceManager.InitStage1();
         ParticleEffectPropertiesManager.InitStage1();
+        AudioSystem.InitStage1();
+        VehicleCreationApi.InitStage1();
+        PodCreationApi.InitStage1();
+        MechCreationApi.InitStage1();
+        ProjectileCreationApi.InitStage1();
     }
 
     public static void InitStage2()
@@ -215,6 +219,12 @@ public static class GameState
         GUIManager.InitStage2();
         GuiResourceManager.InitStage2();
         ParticleEffectPropertiesManager.InitStage2();
+        AudioSystem.InitStage2();
+        VehicleCreationApi.InitStage2();
+        PodCreationApi.InitStage2();
+        MechCreationApi.InitStage2();
+        ProjectileCreationApi.InitStage2();
+
     }
 
 
@@ -348,9 +358,6 @@ public static class GameState
         PodSpawnerSystem = new Vehicle.Pod.SpawnerSystem(PodCreationApi);
         PodMeshBuilderSystem = new Vehicle.Pod.MeshBuilderSystem();
         PodAISystem = new Vehicle.Pod.AISystem();
-        //TODO(): move these out of here
-        InitStage1();
-        InitStage2();
 
         MechCreationApi = new Mech.MechCreationApi();
         MechSpawnerSystem = new Mech.MechSpawnSystem();
@@ -360,5 +367,9 @@ public static class GameState
         ScreenManager = new GameScreen.ScreenManager();
 
         AudioSystem = new AudioSystem(null);
+
+        //TODO(): move these out of here
+        InitStage1();
+        InitStage2();
     }
 }
