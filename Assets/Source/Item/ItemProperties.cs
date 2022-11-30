@@ -8,6 +8,7 @@ using KMath;
 
 namespace Item
 {
+    [System.Serializable]
     public struct ItemProperties
     {
         public string ItemLabel;                 // Item Label
@@ -47,6 +48,7 @@ namespace Item
         public bool HasUI() => ItemFlags.HasFlag(Flags.UI);
     }
 
+    [System.Serializable]
     public class FireWeaponProperties
     {
         public float BulletSpeed;

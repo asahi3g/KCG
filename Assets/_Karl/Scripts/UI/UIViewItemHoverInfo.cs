@@ -67,7 +67,7 @@ public class UIViewItemHoverInfo : UIView
 
         // Empty space
         _content.Create<UIContentElementItemInfoEntry>().SetInfo(null, null);
-        
+
         if (item.hasItemType)
         {
             TypeComponent type = item.itemType;
@@ -136,9 +136,27 @@ public class UIViewItemHoverInfo : UIView
             TileComponent tile = item.itemTile;
             
             _content.Create<UIContentElementItemInfoEntry>().SetInfo("------Tile------", null);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.TileID), tile.TileID);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.Layer), tile.Layer);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.InputsActive), tile.InputsActive);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.TileID), tile.TileID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.Layer), tile.Layer.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.InputsActive), tile.InputsActive.ToStringPretty());
+        }
+
+        if (item.hasItemMechPlacement)
+        {
+            MechPlacementComponent mech = item.itemMechPlacement;
+            
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo("------Mech------", null);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(mech.MechID), mech.MechID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(mech.InputsActive), mech.InputsActive.ToStringPretty());
+        }
+
+        if (item.hasItemInventory)
+        {
+            InventoryComponent inventory = item.itemInventory;
+            
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo("----Inventory----", null);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(inventory.InventoryID), inventory.InventoryID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(inventory.SlotID), inventory.SlotID.ToStringPretty());
         }
 
         GetGroup().GetIdentifier().Alter(GetIdentifier(), true);

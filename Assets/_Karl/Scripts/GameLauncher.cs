@@ -8,6 +8,17 @@ public class GameLauncher : BaseMonoBehaviour
     [TextArea(3, 6)]
     [SerializeField] private string _planet;
     [SerializeField] private Material _tileMaterial;
+    [Space]
+    [SerializeField] private TestItems _testItems;
+
+    [System.Serializable]
+    private class TestItems
+    {
+        public bool active;
+        public int maximumQuantity;
+        public ItemGroups[] itemGroups;
+    }
+    
 
 
     protected override void Awake()
@@ -39,27 +50,12 @@ public class GameLauncher : BaseMonoBehaviour
             // Player agent creation successful
             if (agentEntity != null)
             {
-                int inventoryID = agentEntity.agentInventory.InventoryID;     
-            
                 // Add some test items
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Shotgun);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PumpShotgun);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.FragGrenade);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GasBomb);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SniperRifle);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.LongRifle);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
-            
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
-                
+                if (_testItems.active)
+                {
+                    Admin.AdminAPI.AddItems(agentEntity, _testItems.itemGroups, _testItems.maximumQuantity);   
+                }
+
                 App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
             }
 
@@ -77,5 +73,4 @@ public class GameLauncher : BaseMonoBehaviour
         }
     }
 
-    
 }

@@ -1,9 +1,11 @@
 ﻿//imports UnityEngine
 
 using System;
+using System.Collections.Generic;
 using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
+using UnityEngine;
 using Utility;
 
 /*
@@ -52,7 +54,12 @@ namespace Item
 
         public ItemProperties GetItemProperties(ItemType type)
         {
-            ItemType itemType = PropertiesArray[(int)type].ItemType;
+            int index = (int) type;
+            if (index < 0 || index >= PropertiesArray.Length)
+            {
+                throw new UnityException($"Item properties array does not contain type {nameof(ItemType)}.{type} => index {index}");
+            }
+            ItemType itemType = PropertiesArray[index].ItemType;
             IsItemTypeValid(itemType);
 
             return PropertiesArray[(int)type];
@@ -68,6 +75,10 @@ namespace Item
 
         public void CreateItem(ItemType itemType, string name)
         {
+            if (itemType == ItemType.Error)
+            {
+                throw new UnityException($"Creating item name '{name}' with {nameof(ItemType)}.{itemType}");
+            }
             currentIndex = itemType;
 
             PropertiesArray[(int)itemType].ItemType = itemType;
@@ -379,6 +390,38 @@ namespace Item
         private void IsItemTypeValid()
         {
             IsItemTypeValid(currentIndex);
+        }
+
+        public ItemProperties[] GetAll() => PropertiesArray;
+
+        public FireWeaponProperties[] GetAllWeapons() => WeaponList;
+        
+        public List<ItemProperties> GetAllByItemGroups(params ItemGroups[] itemGroups)
+        {
+            List<ItemProperties> list = new List<ItemProperties>();
+            if (PropertiesArray != null)
+            {
+                int length = PropertiesArray.Length;
+                HashSet<ItemGroups> whitelist = new HashSet<ItemGroups>(itemGroups);
+                for (int i = 0; i < length; i++)
+                {
+                    ItemProperties itemProperties = PropertiesArray[i];
+                    
+                    if (itemProperties.ItemType == ItemType.Error)
+                    {
+                        Debug.LogError($"{nameof(PropertiesArray)} index[{i}] contains invalid item {nameof(ItemProperties)}.{nameof(ItemType)} == {ItemType.Error}");
+                        continue;
+                    }
+
+                    if (!whitelist.Contains(itemProperties.Group))
+                    {
+                        continue;
+                    }
+                    
+                    list.Add(itemProperties);
+                }
+            }
+            return list;
         }
 
         public int SniperRifleIcon;
