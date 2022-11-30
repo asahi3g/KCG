@@ -42,7 +42,7 @@ namespace Action
                 var agentPhysicsState = agent.agentPhysicsState;
 
                 //TODO(): not good we need collision checks
-                if (Vec2f.Distance(agentPhysicsState.Position, physicsState.Position) <= range)
+                if (Vec2f.Distance(pos, agentPhysicsState.Position) <= range)
                 {
                     Vec2f direction = physicsState.Position - agentPhysicsState.Position;
                     int KnockbackDir = 0;
