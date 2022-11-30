@@ -77,7 +77,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         if(IsKeyUp(_jetpack)) _input.DoPlayerJetpackEnd();
         
         // Fire
-        if(IsKey(_fire)) _input.DoPlayerFire();
+        if(IsKeyDown(_fire)) _input.DoPlayerFire();
 
         // Reload
         if(IsKeyDown(_reload)) _input.DoPlayerReload();
