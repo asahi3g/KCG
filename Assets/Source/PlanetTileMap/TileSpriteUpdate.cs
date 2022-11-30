@@ -120,6 +120,8 @@ namespace PlanetTileMap
                 tile.FrontTileSpriteID = -1;
             }
 
+             // updating tile adjacency also
+            TileAdjacency.UpdateFrontTile(x, y, tileMap);
 
         }
 

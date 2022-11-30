@@ -26,26 +26,25 @@ namespace Agent
             AABox2D entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.Position.Y) + box2DCollider.Offset, box2DCollider.Size);
             PlanetTileMap.TileMap tileMap = planet.TileMap;
 
+            float epsilon = Physics.Constants.CollisionEpsilon;
+
 
             Vec2f delta = physicsState.Position - physicsState.PreviousPosition;
-
-            //planet.AddDebugLine(new Line2D(physicsState.Position, physicsState.Position + delta * 20.0f), UnityEngine.Color.red);
-
+            // sweep test with 2 circles for now
+            // in the future it should be a capsule
             var agentCollision = TileCollisions.CapsuleCollision(entity, delta, planet);
 
-        
-            float epsilon = 0.1f;
 
-
+            // applying movement
             physicsState.Position = physicsState.PreviousPosition + delta * (agentCollision.MinTime - epsilon);
             Vec2f deltaLeft = delta  * (1.0f - (agentCollision.MinTime - epsilon));
             Vec2f newPosition = physicsState.Position;
 
+            // restitution
             if (agentCollision.MinTime < 1.0 && (agentCollision.MinNormal.X != 0 || agentCollision.MinNormal.Y != 0))
             {
-
-                // physicsState.Position -= delta.Normalize() * 0.02f;
-                float coefficientOfRest = 0.6f;
+;
+                float coefficientOfRest = Physics.Constants.CoefficientOfRestitution;
                 Vec2f velocity = deltaLeft;
 
 
@@ -57,6 +56,7 @@ namespace Agent
                 newPosition += reflectVelocity;
 
                 // 2nd collision test
+                // after restitution is applied
                 physicsState.PreviousPosition = physicsState.Position;
                 physicsState.Position = newPosition;
                 delta = physicsState.Position - physicsState.PreviousPosition;     
@@ -109,8 +109,9 @@ namespace Agent
                 }
             }
 
+            // NOTE(): these should be changed with a proper way to check if we are going to slide or not
+            // right now this is just placeholder logic
             bool slidingLeft = collidingLeft && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
-
              bool slidingRight = collidingRight && (agentCollision.GeometryTileShape == Enums.TileGeometryAndRotation.SB_R0);
 
 
@@ -126,7 +127,7 @@ namespace Agent
 
  
 
-             if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f )
+             if (/*rs.MinTime < 1.0f*/ bottomCollision.MinTime < 1.0f/* && angle <= System.MathF.PI * 0.33f && angle >= -System.MathF.PI * 0.33f */)
              {
                 
                 physicsState.GroundNormal = bottomCollision.MinNormal;
@@ -148,7 +149,7 @@ namespace Agent
                 physicsState.MovementState != Enums.AgentMovementState.Falling)
                 {
                     physicsState.PreviousPosition = physicsState.Position;
-                    physicsState.Position.Y -= 1.25f;
+                    physicsState.Position.Y -= Physics.Constants.GroundDistance;
                     
                     delta = physicsState.Position - physicsState.PreviousPosition;           
     
@@ -196,28 +197,23 @@ namespace Agent
 
                 if (!isPlatform || !physicsState.Droping)
                 {
-                   // physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                     physicsState.Velocity.Y = 0.0f;
                     physicsState.Acceleration.Y = 0.0f;
-                  //  physicsState.OnGrounded = true;
                     if (!isPlatform)
                         physicsState.Droping = false;
                 }
                 else
                 {
-                 //   physicsState.OnGrounded = false;
                 }
             }
             else
             {
-             //   physicsState.OnGrounded = false;
                 physicsState.Droping = false;
             }
 
 
             if (collidingTop)
             {   
-                //physicsState.Position = new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y);
                 physicsState.Velocity.Y = 0.0f;
                 physicsState.Acceleration.Y = 0.0f;
             }
@@ -225,11 +221,9 @@ namespace Agent
             entityBoxBorders = new AABox2D(new Vec2f(physicsState.Position.X, physicsState.PreviousPosition.Y) + box2DCollider.Offset, box2DCollider.Size);
 
 
-           // if (physicsState.Position.Y <= 16.0f)physicsState.Position.Y = 16.0f;
 
            if (collidingLeft)
             {
-                //physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingLeft)
@@ -239,7 +233,6 @@ namespace Agent
            }
             else if (collidingRight)
             {
-               // physicsState.Position = new Vec2f(physicsState.PreviousPosition.X, physicsState.Position.Y);
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingRight)

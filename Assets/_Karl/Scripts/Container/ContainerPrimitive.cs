@@ -1,5 +1,10 @@
 using System;
 
+// Note(Brandon): 
+// The Gui should use GetStat to determine if the value has changed instead of onChange Event
+// ---
+// We Should have an enum for each Stat Type (Health, Food ...)
+
 [System.Serializable]
 public abstract class ContainerPrimitive<T> : Container<T> where T : IComparable, IFormattable, IConvertible
 {

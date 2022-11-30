@@ -16,12 +16,14 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
-                float epsilon = 4.0f;
+
+
+                float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
                 physicsState.MovementState != AgentMovementState.SlidingRight)
                 {
-                    if (physicsState.Velocity.Y <= -epsilon && entity.IsStateFree() && !physicsState.OnGrounded)
+                    if (physicsState.Velocity.Y <= -MaximumVelocityToFall && entity.IsStateFree() && !physicsState.OnGrounded)
                     {
                         physicsState.MovementState = AgentMovementState.Falling;
                     }
@@ -120,7 +122,7 @@ namespace Agent
                         case AgentMovementState.FireGun:
                         {
                             physicsState.MovementState = AgentMovementState.IdleAfterShooting;
-                            physicsState.IdleAfterShootingTime = 0.7f;
+                            physicsState.IdleAfterShootingTime = Agent.Constants.IdleAfterShootingTime;
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
                             break;
@@ -205,38 +207,17 @@ namespace Agent
 
 
                 // if we are on the ground we reset the jump counter.
-                if (physicsState.OnGrounded && physicsState.Velocity.Y < 0.5f)
+                if (physicsState.OnGrounded && physicsState.Velocity.Y < Physics.Constants.MinimumJumpThreshold)
                 {
                     physicsState.JumpCounter = 0;
-                    /*if (physicsState.MovementState == AgentMovementState.SlidingRight || physicsState.MovementState == AgentMovementState.SlidingLeft)
-                    {*/
-                    /*if (entity.IsStateFree())
-                    {
-                        physicsState.MovementState = AgentMovementState.None;
-                    }*/
-                 //   }
-                }
-
-                Vec2f particlesSpawnPosition = physicsState.Position;
-                if (physicsState.FacingDirection == 1)
-                {
-                    particlesSpawnPosition += new Vec2f(-0.44f, 1.2f);
-                }
-                else if (physicsState.FacingDirection == -1)
-                {
-                    particlesSpawnPosition += new Vec2f(0.44f, 1.2f);
                 }
 
 
-                // the end of dashing
-                // we can do this using a fixed amount of time.
-                /*if (System.Math.Abs(physicsState.Velocity.X) <= 6.0f && physicsState.MovementState == AgentMovementState.Dashing)
-                {
-                    physicsState.MovementState = AgentMovementState.None;
-                    physicsState.Invulnerable = false;
-                    physicsState.AffectedByGravity = true;
-                }*/
+                Vec2f particlesSpawnPosition = entity.GetFeetParticleSpawnPosition();
 
+
+
+                // move the agent along the normal of the surface
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
                     if (physicsState.OnGrounded)
@@ -256,14 +237,13 @@ namespace Agent
                     {
                         physicsState.Velocity.X = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime  - physicsState.DashDuration))) * physicsState.Speed * physicsState.MovingDirection;
                         physicsState.Velocity.Y = 0.0f;
-                    }        
+                    }      
+
+
+                    // if we are dashing we add some particles
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);  
                 }
 
-                // if we are dashing we add some particles
-                if (physicsState.MovementState == AgentMovementState.Dashing)
-                {
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
-                }
 
                 // if we are sliding
                 // spawn some particles and limit vertical movement
@@ -272,14 +252,15 @@ namespace Agent
                     physicsState.SlidingTime += deltaTime;
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    if (physicsState.SlidingTime < 0.75f)
+                    if (physicsState.SlidingTime < Agent.Constants.TimeToStartSliding)
                     {
-                        physicsState.Velocity.Y = 0.0f;//-1.75f;
+                        physicsState.Velocity.Y = 0.0f;
                     }
                     else
                     {
-                        physicsState.Velocity.Y = -1.75f;
-                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                        physicsState.Velocity.Y = Agent.Constants.SlidingYVelocity;
+                        //planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter);
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.0f, -0.5f), Particle.ParticleEmitterType.DustEmitter); 
                     }
                     physicsState.AffectedByGravity = false;
                     
@@ -290,14 +271,15 @@ namespace Agent
 
                     physicsState.JumpCounter = 0;
                     physicsState.Acceleration.Y = 0.0f;
-                    if (physicsState.SlidingTime < 0.75f)
+                    if (physicsState.SlidingTime < Agent.Constants.TimeToStartSliding)
                     {
-                        physicsState.Velocity.Y = 0.0f;//-1.75f;
+                        physicsState.Velocity.Y = 0.0f;
                     }
                     else
                     {
-                        physicsState.Velocity.Y = -1.75f;
-                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                        physicsState.Velocity.Y = Agent.Constants.SlidingYVelocity;
+                        //planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                        planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter); 
                     }
                     physicsState.AffectedByGravity = false;
                 }
@@ -310,27 +292,30 @@ namespace Agent
                 {
                     // if we are using the jetpack
                     // set the Y velocity to a given value.
-                    physicsState.Velocity.Y = 3.5f;
+                    physicsState.Velocity.Y = Agent.Constants.JetPackYVelocity;
 
                     // Reduce the fuel and spawn particles
 
-                    stats.Fuel.Remove(30f * deltaTime);
+                    var FuelUsage = Agent.Constants.StandardFuelConsumptionPerSecond * deltaTime;
+                    stats.Fuel.Remove((int)FuelUsage);
                     
                     if (stats.Fuel.GetValue() <= 1f)
                     {
-                        stats.Fuel.Remove(10f);
+                        stats.Fuel.Remove(10);
                     }
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
 
-                    //physicsState.MovementState = AgentMovementState.None;
+                    //planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);
+                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter); 
+
                 }
                 else
                 {
                     // make sure the fuel never goes up more than it should
-                    if (stats.Fuel.GetValue() <= 100f)
+                    if (stats.Fuel.GetValue() <= stats.Fuel.GetMax())
                     {
                         // if we are not JetPackFlying, add fuel to the tank
-                        stats.Fuel.Add(30f * deltaTime);
+                        var FuelUsage = Agent.Constants.StandardFuelConsumptionPerSecond * deltaTime;
+                        stats.Fuel.Add((int)FuelUsage);
                     }
                     else
                     {
@@ -343,8 +328,8 @@ namespace Agent
                 if (physicsState.MovementState == AgentMovementState.Idle || 
                 physicsState.MovementState == AgentMovementState.None)
                 {
-                    if (physicsState.Velocity.X >= physicsState.Speed * 0.1f ||
-                    physicsState.Velocity.X <= -physicsState.Speed * 0.1f)
+                    if (physicsState.Velocity.X >= physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement||
+                    physicsState.Velocity.X <= -physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement)
                     {
                         if (stats.IsLimping)
                         {
@@ -378,8 +363,8 @@ namespace Agent
 
                 if (entity.IsCrouched())
                 {
-                    if (physicsState.Velocity.X >= physicsState.Speed * 0.1f ||
-                    physicsState.Velocity.X <= -physicsState.Speed * 0.1f)
+                    if (physicsState.Velocity.X >= physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement ||
+                    physicsState.Velocity.X <= -physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement)
                     {
                         if (physicsState.MovingDirection != physicsState.FacingDirection)
                         {
@@ -412,11 +397,11 @@ namespace Agent
 
                 if (entity.IsCrouched())
                 {
-                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * 0.65f;
+                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * Agent.Constants.CrouchingHeightRatio;
                 }
                 else if (physicsState.MovementState == AgentMovementState.Rolling)
                 {
-                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * 0.5f;
+                    box2DComponent.Size.Y = properties.CollisionDimensions.Y * Agent.Constants.RollingHeightRatio;
                 }
                 else
                 {

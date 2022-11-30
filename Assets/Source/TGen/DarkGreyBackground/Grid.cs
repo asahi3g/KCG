@@ -29,6 +29,19 @@ namespace TGen.DarkGreyBackground
             }
         }
 
+        public void RemoveTile(int x, int y)
+        {
+            if (x >= 0 && x < GridTiles.GetLength(0) && y >= 0 && y < GridTiles.GetLength(1))
+            {
+                GridTiles[x, y].TileIsoType = 0;
+                UnityEngine.Debug.Log(string.Format("Placed tile {0} at ({1}, {2})", ((BlockTypeAndRotation)0).ToString(), x.ToString(), y.ToString()));
+            }
+            else
+            {
+                UnityEngine.Debug.LogError(string.Format("Position ({0}, {1}) out of range", x, y));
+            }
+        }
+
         public void InitStage2()
         {
 

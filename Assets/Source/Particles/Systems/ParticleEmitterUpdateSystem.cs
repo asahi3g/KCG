@@ -12,12 +12,12 @@ namespace Particle
         List<ParticleEntity> ToDestroy = new List<ParticleEntity>();
 
         ParticleEmitterCreationApi ParticleEmitterCreationApi;
-        ParticleCreationApi ParticleCreationApi;
+        ParticlePropertiesManager ParticlePropertiesManager;
         public ParticleEmitterUpdateSystem(ParticleEmitterCreationApi particleEmitterCreationApi,
-                                            ParticleCreationApi particleCreationApi)
+                                            ParticlePropertiesManager particlePropertiesManager)
         {
             ParticleEmitterCreationApi = particleEmitterCreationApi;
-            ParticleCreationApi = particleCreationApi;
+            ParticlePropertiesManager = particlePropertiesManager;
         }
 
         public void Update()
@@ -37,7 +37,7 @@ namespace Particle
                 ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)state.ParticleEmitterType);
                 ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get(state.ParticleType);
+                        ParticlePropertiesManager.Get(state.ParticleType);
                 if (state.Duration >= 0)
                 {
                     if (state.CurrentTime <= 0.0f)

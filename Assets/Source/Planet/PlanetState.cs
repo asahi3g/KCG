@@ -101,6 +101,11 @@ namespace Planet
             GameState.TGenRenderMapMesh.Initialize(material, transform, 8);
         }
 
+        public void InitializePlaceableBackground(UnityEngine.Material material, UnityEngine.Transform transform)
+        {
+           GameState.BackgroundRenderMapMesh.Initialize(material, transform, 9);
+        }
+
         public void AddDebugLine(Line2D line, UnityEngine.Color color)
         {
             if (DebugLinesCount + 1 >= DebugLines.Length)
@@ -345,6 +350,16 @@ namespace Planet
             FloatingTextList.Remove(index);
         }
 
+        public void AddParticleEffect(Vec2f position, Enums.ParticleEffect type)
+        {
+            Particle.ParticleEffectProperties properties = GameState.ParticleEffectPropertiesManager.GetProperties(type);
+            for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
+            {
+                Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
+                AddParticleEmitter(position + element.Offset, element.Emitter);
+            }
+        }
+
         public ParticleEntity AddParticleEmitter(Vec2f position, ParticleEmitterType type)
         {
             ParticleEntity newEntity = ParticleEmitterList.Add(GameState.ParticleEmitterSpawnerSystem.Spawn(type, position));
@@ -527,6 +542,13 @@ namespace Planet
                 GameState.TGenGrid.Update();
                 GameState.TGenRenderMapMesh.UpdateMesh(GameState.TGenGrid);
                 GameState.TGenRenderMapMesh.Draw();
+            }
+
+            if (GameState.BackgroundGrid is { Initialized: true })
+            {
+                GameState.BackgroundGrid.Update();
+                GameState.BackgroundRenderMapMesh.UpdateMesh(GameState.BackgroundGrid);
+                GameState.BackgroundRenderMapMesh.Draw();
             }
 
             // Update Meshes.

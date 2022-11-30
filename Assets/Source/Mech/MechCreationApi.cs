@@ -23,6 +23,14 @@ namespace Mech
             CurrentIndex = -1;
         }
 
+        public void InitStage1()
+        {
+        }
+
+        public void InitStage2()
+        {
+        }
+
         public MechProperties Get(MechType type)
         {
             return PropertiesArray[(int)type];

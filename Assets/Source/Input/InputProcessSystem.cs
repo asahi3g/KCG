@@ -237,7 +237,6 @@ namespace ECSInput
                 }
             }
 
-
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E))
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
@@ -256,7 +255,7 @@ namespace ECSInput
 
                         inventoryID = player.agentInventory.EquipmentInventoryID;
                         equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
+                        
                         foreach (var mech in mechEntities)
                         {
                             if (mech.mechType.mechType == MechType.CraftingTable)

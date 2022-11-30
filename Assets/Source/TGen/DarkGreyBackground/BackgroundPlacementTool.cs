@@ -1,87 +1,52 @@
 //imports UnityEngine
 
 using KMath;
+using System;
+using UnityEngine;
 using Utility;
 
 namespace TGen.DarkGreyBackground
 {
     public class BackgroundPlacementTool
     {
-        private int initialX, initialY;
-
-        private int cellSize = 32;
-
-        private float interval = 2F;
-
-        private ImageWrapper[] PlaceBlockButtons;
-
-        private int selectedTileIsotype;
-
-        public void Initialize()
+        public void Initialize(Vec2i mapSize, Material Atlas, Transform transform)
         {
-            var xInterval = cellSize * interval;
+            GameState.Planet.InitializePlaceableBackground(Atlas, transform);
 
-            var yInterval = -cellSize * interval;
+            GameState.BackgroundGrid.InitStage1(mapSize);
 
-            var size = 0.6F;
+            GameState.BackgroundGridOverlay.Initialize(Atlas, transform, mapSize.X, mapSize.Y, 30);
 
-            initialX = 600;
-
-            initialY = 300;
-
-            PlaceBlockButtons = new ImageWrapper[GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length];
-
-            var row = 0;
-            var column = 0;
-
-            for (int i = 0; i < GameState.TGenRenderGridOverlay.TGenIsotypeSprites.Length; i++)
-            {
-                PlaceBlockButtons[i] = new ImageWrapper(((BlockTypeAndRotation) i).ToString(),
-                    UnityEngine.GameObject.Find("Canvas").transform, cellSize, cellSize,
-                    GameState.TGenRenderGridOverlay.TGenIsotypeSprites[i]);
-                
-                PlaceBlockButtons[i].SetPosition(new UnityEngine.Vector3(initialX + column * xInterval, initialY + row * yInterval));
-                PlaceBlockButtons[i].SetScale(new UnityEngine.Vector3(size, -size, size));
-
-                column++;
-
-                if (column == 4)
-                {
-                    column = 0;
-                    row++;
-                }
-            }
+            GameState.BackgroundRenderMapBorder.Initialize(Atlas, transform, mapSize.X - 1, mapSize.Y - 1, 31);
         }
 
-        public void UpdateToolGrid()
+        public void UpdateToolGrid(PlanetTileMap.TileMap tileMap)
         {
-            if(UnityEngine.Input.GetMouseButtonUp(0))
-            {
-                for (int i = 0; i < PlaceBlockButtons.Length; i++)
-                {
-                    if(PlaceBlockButtons[i].IsMouseOver(new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y)))
+            var item = GameState.Planet.Player.GetItem();
+            //if(item != null)
+            //{
+                //if(item.itemType.Type == Enums.ItemType.PlaceableBackgroundTool)
+                //{
+                    if(UnityEngine.Input.GetMouseButtonUp(0))
                     {
-                        selectedTileIsotype = i + 1;
+                        var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                        var blockIsotype = (BlockTypeAndRotation)(selectedTileIsotype);
+                        int x = (int)worldPosition.X;
+                        int y = (int)worldPosition.Y;
 
-
-
-                        UnityEngine.Debug.Log(string.Format("Select {0}", blockIsotype.ToString()));
+                        tileMap.SetBackTile(x, y, Enums.PlanetTileMap.TileID.Planet1);
                     }
-                }
-            }
-            else if(UnityEngine.Input.GetMouseButtonUp(2))
-            {
-                var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+                    else if (UnityEngine.Input.GetMouseButtonDown(1))
+                    {
+                        var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-                int x = (int)worldPosition.X;
-                int y = (int)worldPosition.Y;
+                        int x = (int)worldPosition.X;
+                        int y = (int)worldPosition.Y;
 
-                GameState.TGenGrid.SetTile(x, y, selectedTileIsotype);
-            }
+                        tileMap.RemoveBackTile(x, y);
+                    }
+                //}
+           // }
         }
-
     }
-
 }

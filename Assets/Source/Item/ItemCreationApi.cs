@@ -4,8 +4,6 @@ using System;
 using Enums;
 using Enums.PlanetTileMap;
 using KGUI;
-using KMath;
-using Unity.VisualScripting;
 using Utility;
 
 /*
@@ -175,6 +173,11 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
@@ -191,6 +194,11 @@ namespace Item
                 IsLaunchGreanade = isLaunchGrenade,
                 BasicDemage = basicDamage,
             };
+
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
 
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
@@ -254,6 +262,11 @@ namespace Item
                 BasicDemage = basicDamage,
             };
 
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
+
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
         }
@@ -266,6 +279,11 @@ namespace Item
             {
                 ShieldActive = ShieldActive,
             }; 
+
+            if (weaponListSize == WeaponList.Length)
+            {
+                System.Array.Resize(ref WeaponList, weaponListSize + 16);
+            }
 
             WeaponList[weaponListSize] = fireWeaponProperties;
             PropertiesArray[(int)currentIndex].FireWeaponID = weaponListSize++;
@@ -1757,6 +1775,12 @@ namespace Item
             SetInventoryItemIcon(RedStone_7);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
+            EndItem();
+
+            CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
+            SetGroup(ItemGroups.BuildTools);
+            SetTexture(ConstructionToolIcon);
+            SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();
 
         }

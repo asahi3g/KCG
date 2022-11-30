@@ -31,7 +31,7 @@ namespace Particle
 
                 var state = gameEntity.particleState;
                 var sprite = gameEntity.particleSprite2D;
-                ParticleProperties properties = GameState.ParticleCreationApi.Get(gameEntity.particleID.ParticleType);
+                ParticleProperties properties = GameState.ParticlePropertiesManager.Get(gameEntity.particleID.ParticleType);
 
                 float healthNormalized = (state.Health / state.StartingHealth);
 

@@ -396,7 +396,7 @@ public static class EditorGUIHelper
         EditorGUILayout.LabelField($"{nameof(value.AimTarget)}: {value.AimTarget.ToStringPretty()}", GetStyle());
     }
 
-    public static void DrawProgress(string title, ContainerFloat c)
+    public static void DrawProgress(string title, ContainerInt c)
     {
         Rect r = EditorGUILayout.BeginVertical();
         r.height = 16;

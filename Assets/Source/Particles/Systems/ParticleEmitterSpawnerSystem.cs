@@ -8,13 +8,13 @@ namespace Particle
     {
 
         ParticleEmitterCreationApi ParticleEmitterCreationApi;
-        ParticleCreationApi ParticleCreationApi;
+        ParticlePropertiesManager ParticlePropertiesManager;
         int uniqueID = 0;
         public ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi particleEmitterCreationApi,
-                                            ParticleCreationApi particleCreationApi)
+                                            ParticlePropertiesManager particlePropertiesManager)
         {
             ParticleEmitterCreationApi = particleEmitterCreationApi;
-            ParticleCreationApi = particleCreationApi;
+            ParticlePropertiesManager = particlePropertiesManager;
         }
 
         //Note(Mahdi): Deprecated will be removed later
@@ -41,7 +41,7 @@ namespace Particle
             ParticleEmitterProperties emitterProperties = 
                         ParticleEmitterCreationApi.Get((int)type);
             ParticleProperties particleProperties = 
-                        ParticleCreationApi.Get(emitterProperties.ParticleType);
+                        ParticlePropertiesManager.Get(emitterProperties.ParticleType);
             var e = GameState.Planet.EntitasContext.particle.CreateEntity();
             e.AddParticleEmitterID(uniqueID++, -1);
             e.AddParticleEmitter2dPosition(new UnityEngine.Vector2(position.X, position.Y), new UnityEngine.Vector2(), new UnityEngine.Vector2());
