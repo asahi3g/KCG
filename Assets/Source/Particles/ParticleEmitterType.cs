@@ -26,7 +26,7 @@ namespace Particle
 
         Dust_2, // used for turning
         Dust_Jumping, // used for jumping
-        Dust_Lading, // used for landing
+        Dust_Landing, // used for landing
 
 
         Smoke_2,

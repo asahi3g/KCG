@@ -582,34 +582,81 @@ namespace Particle
 
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
-            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 4.0f);
-            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
-            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.15f, 0.15f));
-            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
-            GameState.ParticlePropertiesManager.SetEndScale(0.0f);
+            GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
+           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(5.0f);
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
-            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
-            //GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
-            //GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1f, 1f, 1f, 0.5f));
+          //  GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+          //  GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
+
+          //  GameState.ParticlePropertiesManager.SetIsCollidable(true);
+          //  GameState.ParticlePropertiesManager.SetBounce(true);
+           // GameState.ParticlePropertiesManager.SetBounceFactor(new Vec2f(0.5f, 1.0f));
             GameState.ParticlePropertiesManager.End();
 
 
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_3);
-            GameState.ParticlePropertiesManager.SetDecayRate(8.0f, 4.0f);
-            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
-            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.15f, 0.15f));
-            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
-            GameState.ParticlePropertiesManager.SetEndScale(0.0f);
+            GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
+           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(5.0f);
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
-            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+           // GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+           // GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
+         //   GameState.ParticlePropertiesManager.SetIsCollidable(true);
+           // GameState.ParticlePropertiesManager.SetBounce(true);
+           // GameState.ParticlePropertiesManager.SetBounceFactor(new Vec2f(0.5f, 1.0f));
             GameState.ParticlePropertiesManager.End();
+
+
+
+
+          /*  GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
+            GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
+           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(10.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(2f, 2f, 2f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(2f, 2f, 2f, 0.0f));
+
+          //  GameState.ParticlePropertiesManager.SetIsCollidable(true);
+          //  GameState.ParticlePropertiesManager.SetBounce(true);
+           // GameState.ParticlePropertiesManager.SetBounceFactor(new Vec2f(0.5f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_3);
+            GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
+           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(10.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(2f, 2f, 2f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(2f, 2f, 2f, 0.0f));
+          //  GameState.ParticlePropertiesManager.SetIsCollidable(true);
+           // GameState.ParticlePropertiesManager.SetBounce(true);
+           // GameState.ParticlePropertiesManager.SetBounceFactor(new Vec2f(0.5f, 1.0f));
+            GameState.ParticlePropertiesManager.End();*/
 
 
 
@@ -820,7 +867,7 @@ namespace Particle
             GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_2);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
             GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.15f);
-            GameState.ParticleEmitterPropertiesManager.SetParticleCount(60);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(60 * 2);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
             GameState.ParticleEmitterPropertiesManager.End();
@@ -828,17 +875,17 @@ namespace Particle
             GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_Jumping);
             GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_2);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
-            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7 * 2);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
             GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_Lading);
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_Landing);
             GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_3);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
             GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.1f);
-            GameState.ParticleEmitterPropertiesManager.SetParticleCount(7);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(10 * 2);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
             GameState.ParticleEmitterPropertiesManager.End();

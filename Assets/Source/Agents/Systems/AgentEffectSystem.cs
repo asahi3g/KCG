@@ -36,6 +36,11 @@ namespace Agent
                     emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-3.0f * physicsState.MovingDirection, 0.0f);
                 }
 
+                if (physicsState.MovementState == AgentMovementState.Jump)
+                {
+                    GameState.Planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.125f, 0.0f), Particle.ParticleEmitterType.Dust_Jumping);
+                }
+
 
                 if (physicsState.LastMovingDirection != physicsState.MovingDirection)
                 {
@@ -56,19 +61,18 @@ namespace Agent
                 {
                     Vec2f particleSpawnPosition = physicsState.Position + new Vec2f(-0.25f, 0.0f);
 
-                    var emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Lading);
-                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-3.0f, 0.0f);
-
-                    emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Lading);
-                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-1.5f, 0.0f);
+                    for(int i = 0; i < 4; i++)
+                    {
+                        var emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Landing);
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-0.4f * (i + 1), 0.125f * i);
+                    }
 
                     particleSpawnPosition = physicsState.Position + new Vec2f(0.25f, 0.0f);
-
-                    emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Lading);
-                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(3.0f, 0.0f);
-
-                    emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Lading);
-                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(1.5f, 0.0f);
+                    for(int i = 0; i < 4; i++)
+                    {
+                        var emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Landing);
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(0.4f * (i + 1), 0.125f * i);
+                    }
                 }
 
             }

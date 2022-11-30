@@ -108,9 +108,9 @@ namespace Particle
 
 
             Api.Create(Enums.ParticleEffect.Dust_Jumping);
-            for(int i = 0; i < 6; i++)
+            for(int i = 0; i < 8; i++)
             {
-                Api.AddEmitter(ParticleEmitterType.Dust_Jumping, new Vec2f(0.0f, 0.2f * i), 0.015f * i);
+                Api.AddEmitter(ParticleEmitterType.Dust_Jumping, new Vec2f(0.0f, 0.15f * i), 0.015f * i);
             }
             Api.End();
         }
