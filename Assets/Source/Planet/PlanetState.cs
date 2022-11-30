@@ -103,7 +103,7 @@ namespace Planet
 
         public void InitializePlaceableBackground(UnityEngine.Material material, UnityEngine.Transform transform)
         {
-            GameState.BackgroundRenderMapMesh.Initialize(material, transform, 9);
+           GameState.BackgroundRenderMapMesh.Initialize(material, transform, 9);
         }
 
         public void AddDebugLine(Line2D line, UnityEngine.Color color)
