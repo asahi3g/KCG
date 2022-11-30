@@ -329,10 +329,10 @@ public static class EditorGUIHelper
 
     public static void Draw(StatsComponent value)
     {
-        DrawProgress(nameof(value.Food), new ContainerFloat(value.Food, 0, 100));
-        DrawProgress(nameof(value.Fuel), new ContainerFloat(value.Fuel, 0, 100));
-        DrawProgress(nameof(value.Water), new ContainerFloat(value.Water, 0, 100));
-        DrawProgress(nameof(value.Oxygen), new ContainerFloat(value.Oxygen, 0, 100));
+        DrawProgress(nameof(value.Food), new ContainerInt(value.Food.GetValue(), value.Food.GetMin(), value.Food.GetMax()));
+        DrawProgress(nameof(value.Fuel), new ContainerInt(value.Fuel.GetValue(), value.Fuel.GetMin(), value.Fuel.GetMax()));
+        DrawProgress(nameof(value.Water), new ContainerInt(value.Water.GetValue(), value.Water.GetMin(), value.Water.GetMax()));
+        DrawProgress(nameof(value.Oxygen), new ContainerInt(value.Oxygen.GetValue(), value.Oxygen.GetMin(), value.Oxygen.GetMax()));
     }
 
     public static void Draw(PhysicsStateComponent value)

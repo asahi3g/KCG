@@ -50,7 +50,8 @@ public class AgentRenderer : BaseMonoBehaviour
         if (_agent.hasAgentStats)
         {
             _hitpoints = Instantiate(AssetManager.Singelton.GetPrefabUIHitpoints(), _pivotHead, false);
-            _hitpoints.SetHitpoints(new ContainerInt(_agent.agentStats.Health, 0, 100));
+            _hitpoints.SetHitpoints(new ContainerInt(_agent.agentStats.Health.GetValue(), _agent.agentStats.Health.GetMax(),
+                _agent.agentStats.Health.GetMin()));
 
             bool factionFriendly = false;
             if(!agent.isAgentPlayer){

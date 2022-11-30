@@ -69,7 +69,7 @@ namespace Projectile
                 // In another term: close shot = more damage
                 var additionalHealth = Mathf.Abs(projectileEntity.projectilePhysicsState.Velocity.Magnitude) / 4;
 
-                stats.Health -= (damage + (int)additionalHealth);
+                stats.Health.Remove(damage + (int)additionalHealth);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.Blood2);
                 GameState.Planet.AddParticleEmitter(projectileEntity.projectilePhysicsState.Position, ParticleEmitterType.BloodSmoke);
