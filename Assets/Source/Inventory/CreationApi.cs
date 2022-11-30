@@ -14,7 +14,7 @@ namespace Inventory
         // Current Inventory info.
         int ID = -1;
         BitSet ActiveSlots;
-        Enums.ItemGroups[] Restrictions;
+        Enums.ItemGroupType[] Restrictions;
         int[] RestrictionSlotsTextures;       // One for each restriction.
         float UpBorderOffSet; 
         float DownBorderOffSet;
@@ -34,7 +34,7 @@ namespace Inventory
             ActiveSlots.Clear();
 
             for (int i = 0; i < Restrictions.Length; i++)
-                Restrictions[i] = Enums.ItemGroups.None;
+                Restrictions[i] = Enums.ItemGroupType.None;
 
             for (int i = 0; i < RestrictionSlotsTextures.Length; i++)
                 RestrictionSlotsTextures[i] = -1;
@@ -56,8 +56,8 @@ namespace Inventory
             const int MAX_SIZE_INVENTORY = 256;
 
             ActiveSlots = new BitSet(MAX_SIZE_INVENTORY);
-            Restrictions = new Enums.ItemGroups[MAX_SIZE_INVENTORY];
-            RestrictionSlotsTextures = new int[Enum.GetNames(typeof(Enums.ItemGroups)).Length];
+            Restrictions = new Enums.ItemGroupType[MAX_SIZE_INVENTORY];
+            RestrictionSlotsTextures = new int[Enum.GetNames(typeof(Enums.ItemGroupType)).Length];
 
             RestoreState();
         }
@@ -143,7 +143,7 @@ namespace Inventory
             int RealSlotCount = 0;
             for (int i = 0; i < length; i++)
             {
-                Enums.ItemGroups restriction = Restrictions[i];
+                Enums.ItemGroupType restriction = Restrictions[i];
                 int slotBackGroundIcon = -1;
                 if ((int)restriction >= 0)
                     slotBackGroundIcon = RestrictionSlotsTextures[(int)restriction];
@@ -184,16 +184,16 @@ namespace Inventory
             SetSize(2, 5);
             SetAllSlotsAsActive();
             SetDefaultRestrictionTexture();
-            SetRestriction(0, Enums.ItemGroups.Dye);
-            SetRestriction(2, Enums.ItemGroups.Dye);
-            SetRestriction(4, Enums.ItemGroups.Dye);
-            SetRestriction(6, Enums.ItemGroups.Dye);
-            SetRestriction(8, Enums.ItemGroups.Dye);
-            SetRestriction(1, Enums.ItemGroups.Helmet);
-            SetRestriction(3, Enums.ItemGroups.Ring);
-            SetRestriction(5, Enums.ItemGroups.Armour);
-            SetRestriction(7, Enums.ItemGroups.Belt);
-            SetRestriction(9, Enums.ItemGroups.Gloves);
+            SetRestriction(0, Enums.ItemGroupType.Dye);
+            SetRestriction(2, Enums.ItemGroupType.Dye);
+            SetRestriction(4, Enums.ItemGroupType.Dye);
+            SetRestriction(6, Enums.ItemGroupType.Dye);
+            SetRestriction(8, Enums.ItemGroupType.Dye);
+            SetRestriction(1, Enums.ItemGroupType.Helmet);
+            SetRestriction(3, Enums.ItemGroupType.Ring);
+            SetRestriction(5, Enums.ItemGroupType.Armour);
+            SetRestriction(7, Enums.ItemGroupType.Belt);
+            SetRestriction(9, Enums.ItemGroupType.Gloves);
             SetBackgroundColor(new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1.0f));
             SetSelectedtSlotColor(UnityEngine.Color.yellow);
             SetDefaultSlotColor(UnityEngine.Color.gray);
@@ -359,15 +359,15 @@ namespace Inventory
 
         public void SetDefaultRestrictionTexture()
         {
-            SetTextureRestriction(Enums.ItemGroups.Helmet, GameState.ItemCreationApi.HelmetSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Armour, GameState.ItemCreationApi.ArmourSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Gloves, GameState.ItemCreationApi.GlovesSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Ring, GameState.ItemCreationApi.RingSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Belt, GameState.ItemCreationApi.BeltSlotIcon);
-            SetTextureRestriction(Enums.ItemGroups.Dye, GameState.ItemCreationApi.DyeSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Helmet, GameState.ItemCreationApi.HelmetSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Armour, GameState.ItemCreationApi.ArmourSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Gloves, GameState.ItemCreationApi.GlovesSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Ring, GameState.ItemCreationApi.RingSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Belt, GameState.ItemCreationApi.BeltSlotIcon);
+            SetTextureRestriction(Enums.ItemGroupType.Dye, GameState.ItemCreationApi.DyeSlotIcon);
         }
 
-        public void SetTextureRestriction(Enums.ItemGroups itemGroup, int textureRestriction)
+        public void SetTextureRestriction(Enums.ItemGroupType itemGroup, int textureRestriction)
             => RestrictionSlotsTextures[(int)itemGroup] = textureRestriction;
 
         // Distance from start of the background texture to grid.
@@ -415,15 +415,15 @@ namespace Inventory
             ActiveSlots.SetAll();
         }
 
-        public void SetRestriction(int index, Enums.ItemGroups restriction) => Restrictions[index] = restriction;
+        public void SetRestriction(int index, Enums.ItemGroupType restriction) => Restrictions[index] = restriction;
 
-        public void SetRestriction(int startPos, int endPos, Enums.ItemGroups restriction)
+        public void SetRestriction(int startPos, int endPos, Enums.ItemGroupType restriction)
         {
             for (int i = startPos; i <= endPos; i++)
                 Restrictions[i] = restriction;
         }
 
-        public void SetRestriction(BitSet bitSet, Enums.ItemGroups restriction)
+        public void SetRestriction(BitSet bitSet, Enums.ItemGroupType restriction)
         {
             for (int i = 0; i < Restrictions.Length; i++)
             { 

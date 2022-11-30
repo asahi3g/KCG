@@ -13,7 +13,7 @@ namespace Item
     {
         public string ItemLabel;                 // Item Label
         public ItemType ItemType;
-        public ItemGroups Group;
+        public ItemGroupType Group;
         public ItemUsageActionType ToolActionType;
         public MechType  MechType;               // Used only when item is a mech type.
         public TileID TileType;                 // Used only when item is a material type.

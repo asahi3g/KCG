@@ -73,7 +73,7 @@ namespace Item
 
                 if (entity.itemType.Type == ItemType.ConstructionTool ||
                     entity.itemType.Type == ItemType.RemoveMech ||
-                    itemProperty.Group == ItemGroups.Mech)
+                    itemProperty.Group == ItemGroupType.Mech)
                 {
                     entity.AddItemMechPlacement(itemProperty.MechType, true);
                 }

@@ -16,7 +16,7 @@ public class GameLauncher : BaseMonoBehaviour
     {
         public bool active;
         public int maximumQuantity;
-        public ItemGroups[] itemGroups;
+        public ItemGroupType[] itemGroups;
     }
     
 
@@ -30,6 +30,8 @@ public class GameLauncher : BaseMonoBehaviour
         
         GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
         GameState.SpriteAtlasManager.UpdateAtlasTextures();
+
+        RunTests();
     }
 
     protected override void Start()
@@ -72,5 +74,24 @@ public class GameLauncher : BaseMonoBehaviour
             Debug.LogError($"Planet creation failed, reason: {error.GetMessage()}");
         }
     }
+
+    private void RunTests()
+    {
+        TestLoader.Result testResult = TestLoader.Run();
+        switch (testResult.Status)
+        {
+            case TestLoader.StatusType.Success:
+            {
+                Debug.Log("Tests passed successfully");
+                break;
+            }
+            case TestLoader.StatusType.Failed:
+            {
+                Debug.LogError($"Tests failed (Click on this message to see details)\n{testResult.Message}");
+                break;
+            }
+        }
+    }
+    
 
 }

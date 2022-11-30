@@ -93,7 +93,7 @@ namespace Item
             PropertiesArray[(int)currentIndex].ItemLabel = name;
         }
 
-        public void SetGroup(ItemGroups group)
+        public void SetGroup(ItemGroupType group)
         {
             IsItemTypeValid();
 
@@ -396,20 +396,19 @@ namespace Item
 
         public FireWeaponProperties[] GetAllWeapons() => WeaponList;
         
-        public List<ItemProperties> GetAllByItemGroups(params ItemGroups[] itemGroups)
+        public List<ItemProperties> GetAllByItemGroups(params ItemGroupType[] itemGroups)
         {
             List<ItemProperties> list = new List<ItemProperties>();
             if (PropertiesArray != null)
             {
                 int length = PropertiesArray.Length;
-                HashSet<ItemGroups> whitelist = new HashSet<ItemGroups>(itemGroups);
+                HashSet<ItemGroupType> whitelist = new HashSet<ItemGroupType>(itemGroups);
                 for (int i = 0; i < length; i++)
                 {
                     ItemProperties itemProperties = PropertiesArray[i];
                     
                     if (itemProperties.ItemType == ItemType.Error)
                     {
-                        Debug.LogError($"{nameof(PropertiesArray)} index[{i}] contains invalid item {nameof(ItemProperties)}.{nameof(ItemType)} == {ItemType.Error}");
                         continue;
                     }
 
@@ -769,7 +768,7 @@ namespace Item
             PinkDiamond_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 2, AtlasType.Particle);
 
             CreateItem(ItemType.SniperRifle, "SniperRifle");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(SniperRifleIcon);
             SetInventoryItemIcon(SniperRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
@@ -779,7 +778,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.LongRifle, "LongRifle");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(LongRifleIcon);
             SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
@@ -789,7 +788,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PulseWeapon, "PulseWeapon");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(PulseIcon);
             SetInventoryItemIcon(PulseIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
@@ -799,7 +798,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.AutoCannon, "AutoCannon");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(LongRifleIcon);
             SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
@@ -809,7 +808,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.SMG, "SMG");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(SMGIcon);
             SetInventoryItemIcon(SMGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
@@ -823,7 +822,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Shotgun, "Shotgun");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(ShotgunIcon);
             SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 30.0f, coolDown: 1f, range: 10.0f, basicDamage: 35);
@@ -835,7 +834,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PumpShotgun, "PumpShotgun");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(ShotgunIcon);
             SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
@@ -847,7 +846,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Pistol, "Pistol");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
@@ -859,7 +858,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RPG, "RPG");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetTexture(RPGIcon);
             SetInventoryItemIcon(RPGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 3f, range: 50.0f, basicDamage: 100);
@@ -872,7 +871,7 @@ namespace Item
             CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroupType.Gun);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
             SetExplosion(4.0f, 15, 0f);
@@ -882,7 +881,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
@@ -892,7 +891,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Moon, "Moon");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BedrockIcon);
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -902,7 +901,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Dirt, "Dirt");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(DirtIcon);
             SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -912,7 +911,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Bedrock, "Bedrock");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BedrockIcon);
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -922,7 +921,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Pipe, "Pipe");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PipeIcon);
             SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -932,7 +931,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Wire, "Wire");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(WireIcon);
             SetInventoryItemIcon(WireIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -942,21 +941,21 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ItemUsageActionType .ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
             SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.Sword, "Sword");
-            SetGroup(ItemGroups.Weapon);
+            SetGroup(ItemGroupType.Weapon);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
@@ -965,7 +964,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.StunBaton, "StunBaton");
-            SetGroup(ItemGroups.Weapon);
+            SetGroup(ItemGroupType.Weapon);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
@@ -974,7 +973,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RiotShield, "RiotShield");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetShield(false);
@@ -982,35 +981,35 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Ore, "Ore");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Slime, "Slime");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(SlimeIcon);
             SetInventoryItemIcon(SlimeIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Food, "Food");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(FoodIcon);
             SetInventoryItemIcon(FoodIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Bone, "Bone");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BoneIcon);
             SetInventoryItemIcon(BoneIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PotionTool, "PotionTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BoneIcon);
             SetInventoryItemIcon(BoneIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1019,7 +1018,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.HealthPotion, "HealthPotion");
-            SetGroup(ItemGroups.Potion);
+            SetGroup(ItemGroupType.Potion);
             SetTexture(IconItemPotionHealth);
             SetInventoryItemIcon(IconItemPotionHealth);
             SetAction(ItemUsageActionType .DrinkPotionAction);
@@ -1027,14 +1026,14 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Ore, "Ore");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroupType.BuildTools);
             SetTexture(IconToolPlacement);
             SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1043,7 +1042,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroupType.BuildTools);
             SetTexture(PlacementToolIcon);
             SetInventoryItemIcon(PlacementToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1052,49 +1051,49 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(IconToolRemoveTile);
             SetInventoryItemIcon(IconToolRemoveTile);
             SetAction(ItemUsageActionType .ToolActionRemoveTile);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(SlimeIcon);
             SetInventoryItemIcon(SlimeIcon);
             SetAction(ItemUsageActionType .ToolActionEnemySpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(IconToolSpawnEnemyGunner);
             SetInventoryItemIcon(IconToolSpawnEnemyGunner);
             SetAction(ItemUsageActionType .ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(IconToolSpawnEnemySwordsman);
             SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
             SetAction(ItemUsageActionType .ToolActionEnemySwordmanSpawn);
             EndItem();
 
             CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(MiningLaserToolIcon);
             SetInventoryItemIcon(MiningLaserToolIcon);
             SetAction(ItemUsageActionType .ToolActionMiningLaser);
             EndItem();
 
             CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetAction(ItemUsageActionType .ToolActionPlaceParticleEmitter);
             EndItem();
 
             CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetAction(ItemUsageActionType .ToolActionPlaceChest);
@@ -1139,7 +1138,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Chest, "Chest");
-            SetGroup(ItemGroups.Mech);
+            SetGroup(ItemGroupType.Mech);
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1147,7 +1146,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.SmashableBox, "SmashableBox");
-            SetGroup(ItemGroups.Mech);
+            SetGroup(ItemGroupType.Mech);
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1155,7 +1154,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.SmashableEgg, "SmashableEgg");
-            SetGroup(ItemGroups.Mech);
+            SetGroup(ItemGroupType.Mech);
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1163,7 +1162,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Planter, "Planter");
-            SetGroup(ItemGroups.Mech);
+            SetGroup(ItemGroupType.Mech);
             SetTexture(PotIconItem);
             SetInventoryItemIcon(PotIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1171,7 +1170,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Light, "Light");
-            SetGroup(ItemGroups.Mech);
+            SetGroup(ItemGroupType.Mech);
             SetTexture(Light2IconItem);
             SetInventoryItemIcon(Light2IconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1192,20 +1191,20 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Helmet, "Helmet");
-            SetGroup(ItemGroups.Helmet);
+            SetGroup(ItemGroupType.Helmet);
             SetTexture(HemeltSprite);
             SetInventoryItemIcon(HemeltSprite);
             EndItem();
 
             CreateItem(ItemType.Suit, "Suit");
-            SetGroup(ItemGroups.Armour);
+            SetGroup(ItemGroupType.Armour);
             SetTexture(SuitSprite);
             SetInventoryItemIcon(SuitSprite);
             EndItem();
 
 
             CreateItem(ItemType.Moon, "Moon");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BedrockIcon);
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1215,7 +1214,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Dirt, "Dirt");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(DirtIcon);
             SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1225,7 +1224,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Bedrock, "Bedrock");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(BedrockIcon);
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1235,7 +1234,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Pipe, "Pipe");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PipeIcon);
             SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1245,7 +1244,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Wire, "Wire");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(WireIcon);
             SetInventoryItemIcon(WireIcon);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1255,28 +1254,28 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ItemUsageActionType .ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.Flare, "Flare");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ItemUsageActionType .ThrowFlareAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
             SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(IconToolGeometryPlacement);
             SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1285,21 +1284,21 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.AxeTool, "AxeTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetAction(ItemUsageActionType .AxeAction);
             EndItem();
 
             CreateItem(ItemType.Pickaxe, "Pickaxe");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetAction(ItemUsageActionType .PickaxeAction);
             EndItem();
 
             CreateItem(ItemType.Wood, "Wood");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(WoodTile);
             SetInventoryItemIcon(WoodTile);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1309,7 +1308,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_0, "Diamond_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_0);
             SetInventoryItemIcon(Diamond_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1317,7 +1316,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_1, "Diamond_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_1);
             SetInventoryItemIcon(Diamond_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1325,7 +1324,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_2, "Diamond_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_2);
             SetInventoryItemIcon(Diamond_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1333,7 +1332,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_3, "Diamond_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_3);
             SetInventoryItemIcon(Diamond_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1341,7 +1340,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_4, "Diamond_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_4);
             SetInventoryItemIcon(Diamond_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1349,7 +1348,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_5, "Diamond_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_5);
             SetInventoryItemIcon(Diamond_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1357,7 +1356,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_6, "Diamond_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_6);
             SetInventoryItemIcon(Diamond_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1365,7 +1364,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Diamond_7, "Diamond_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Diamond_7);
             SetInventoryItemIcon(Diamond_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1373,7 +1372,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_0, "Gold_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_0);
             SetInventoryItemIcon(Gold_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1381,7 +1380,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_1, "Gold_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_1);
             SetInventoryItemIcon(Gold_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1389,7 +1388,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_2, "Gold_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_2);
             SetInventoryItemIcon(Gold_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1397,7 +1396,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_3, "Gold_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_3);
             SetInventoryItemIcon(Gold_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1405,7 +1404,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_4, "Gold_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_4);
             SetInventoryItemIcon(Gold_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1413,7 +1412,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_5, "Gold_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_5);
             SetInventoryItemIcon(Gold_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1421,7 +1420,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_6, "Gold_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_6);
             SetInventoryItemIcon(Gold_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1429,7 +1428,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Gold_7, "Gold_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Gold_7);
             SetInventoryItemIcon(Gold_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1437,7 +1436,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_0, "Iron_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_0);
             SetInventoryItemIcon(Iron_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1445,7 +1444,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_1, "Iron_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_1);
             SetInventoryItemIcon(Iron_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1453,7 +1452,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_2, "Iron_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_2);
             SetInventoryItemIcon(Iron_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1461,7 +1460,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_3, "Iron_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_3);
             SetInventoryItemIcon(Iron_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1469,7 +1468,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_4, "Iron_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_4);
             SetInventoryItemIcon(Iron_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1477,7 +1476,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_5, "Iron_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_5);
             SetInventoryItemIcon(Iron_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1485,7 +1484,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_6, "Iron_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_6);
             SetInventoryItemIcon(Iron_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1493,7 +1492,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Iron_7, "Iron_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Iron_7);
             SetInventoryItemIcon(Iron_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1501,7 +1500,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_0, "Emerald_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_0);
             SetInventoryItemIcon(Emerald_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1509,7 +1508,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_1, "Emerald_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_1);
             SetInventoryItemIcon(Emerald_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1517,7 +1516,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_2, "Emerald_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_2);
             SetInventoryItemIcon(Emerald_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1525,7 +1524,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_3, "Emerald_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_3);
             SetInventoryItemIcon(Emerald_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1533,7 +1532,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_4, "Emerald_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_4);
             SetInventoryItemIcon(Emerald_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1541,7 +1540,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_5, "Emerald_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_5);
             SetInventoryItemIcon(Emerald_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1549,7 +1548,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_6, "Emerald_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_6);
             SetInventoryItemIcon(Emerald_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1557,7 +1556,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Emerald_7, "Emerald_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Emerald_7);
             SetInventoryItemIcon(Emerald_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1565,7 +1564,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_0, "Coal_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_0);
             SetInventoryItemIcon(Coal_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1573,7 +1572,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_1, "Coal_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_1);
             SetInventoryItemIcon(Coal_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1581,7 +1580,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_2, "Coal_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_2);
             SetInventoryItemIcon(Coal_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1589,7 +1588,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_3, "Coal_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_3);
             SetInventoryItemIcon(Coal_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1597,7 +1596,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_4, "Coal_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_4);
             SetInventoryItemIcon(Coal_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1605,7 +1604,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_5, "Coal_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_5);
             SetInventoryItemIcon(Coal_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1613,7 +1612,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_6, "Coal_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_6);
             SetInventoryItemIcon(Coal_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1621,7 +1620,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Coal_7, "Coal_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Coal_7);
             SetInventoryItemIcon(Coal_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1629,7 +1628,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_0, "Lapis_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_0);
             SetInventoryItemIcon(Lapis_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1637,7 +1636,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_1, "Lapis_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_1);
             SetInventoryItemIcon(Lapis_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1645,7 +1644,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_2, "Lapis_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_2);
             SetInventoryItemIcon(Lapis_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1653,7 +1652,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_3, "Lapis_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_3);
             SetInventoryItemIcon(Lapis_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1661,7 +1660,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_4, "Lapis_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_4);
             SetInventoryItemIcon(Lapis_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1669,7 +1668,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_5, "Lapis_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_5);
             SetInventoryItemIcon(Lapis_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1677,7 +1676,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_6, "Lapis_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_6);
             SetInventoryItemIcon(Lapis_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1685,7 +1684,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Lapis_7, "Lapis_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(Lapis_7);
             SetInventoryItemIcon(Lapis_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1693,7 +1692,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_0, "PinkDia_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_0);
             SetInventoryItemIcon(PinkDiamond_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1701,7 +1700,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_1, "PinkDia_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_1);
             SetInventoryItemIcon(PinkDiamond_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1709,7 +1708,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_2, "PinkDia_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_2);
             SetInventoryItemIcon(PinkDiamond_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1717,7 +1716,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_3, "PinkDia_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_3);
             SetInventoryItemIcon(PinkDiamond_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1725,7 +1724,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_4, "PinkDia_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_4);
             SetInventoryItemIcon(PinkDiamond_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1733,7 +1732,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_5, "PinkDia_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_5);
             SetInventoryItemIcon(PinkDiamond_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1741,7 +1740,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_6, "PinkDia_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_6);
             SetInventoryItemIcon(PinkDiamond_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1749,7 +1748,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PinkDia_7, "PinkDia_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(PinkDiamond_7);
             SetInventoryItemIcon(PinkDiamond_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1757,7 +1756,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_0, "RedStone_0");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_0);
             SetInventoryItemIcon(RedStone_0);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1765,7 +1764,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_1, "RedStone_1");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_1);
             SetInventoryItemIcon(RedStone_1);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1773,7 +1772,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_2, "RedStone_2");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_2);
             SetInventoryItemIcon(RedStone_2);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1781,7 +1780,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_3, "RedStone_3");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_3);
             SetInventoryItemIcon(RedStone_3);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1789,7 +1788,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_4, "RedStone_4");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_4);
             SetInventoryItemIcon(RedStone_4);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1797,7 +1796,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_5, "RedStone_5");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_5);
             SetInventoryItemIcon(RedStone_5);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1805,7 +1804,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_6, "RedStone_6");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_6);
             SetInventoryItemIcon(RedStone_6);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1813,7 +1812,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RedStone_7, "RedStone_7");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroupType.None);
             SetTexture(RedStone_7);
             SetInventoryItemIcon(RedStone_7);
             SetFlags(ItemProperties.Flags.Stackable);
@@ -1821,7 +1820,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroupType.BuildTools);
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();

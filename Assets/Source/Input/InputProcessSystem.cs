@@ -492,7 +492,7 @@ namespace ECSInput
                 var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
-                if(itemProperty.Group is ItemGroups.Gun or ItemGroups.Weapon)
+                if(itemProperty.Group is ItemGroupType.Gun or ItemGroupType.Weapon)
                 {
                     if(entity.hasAgentAction)
                     {
