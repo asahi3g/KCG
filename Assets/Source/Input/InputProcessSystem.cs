@@ -69,17 +69,7 @@ namespace ECSInput
                 Camera.main.ScreenToWorldPoint(mousePos).y);
         }
 
-        public void UpdateFacingDirection(AgentEntity agentEntity, Vec2f mouseWorldPosition)
-        {
-            PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
-                
-            if (agentEntity.CanFaceMouseDirection())
-            {
-                if (mouseWorldPosition.X >= physicsStateComponent.Position.X) physicsStateComponent.FacingDirection = 1;
-                else physicsStateComponent.FacingDirection = -1;
-            }
-            else physicsStateComponent.FacingDirection = physicsStateComponent.MovingDirection;
-        }
+        
 
         public void UpdateVehicles(AgentEntity agentEntity)
         {
@@ -161,8 +151,7 @@ namespace ECSInput
             Contexts contexts = planet.EntitasContext;
 
             IGroup<AgentEntity> agentEntities = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-            Vec2f mouseWorldPosition = GetCursorWorldPosition();
-            
+
             UpdateMainCameraZoom();
 
             int x = 0;
@@ -235,8 +224,6 @@ namespace ECSInput
                     if(mode == Mode.Agent)
                     agentEntity.Walk(x);
                 }
-                
-                UpdateFacingDirection(agentEntity, mouseWorldPosition);
 
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))

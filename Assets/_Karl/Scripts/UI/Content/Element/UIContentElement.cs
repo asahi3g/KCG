@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public abstract class UIContentElement : UIMonoBehaviour
+public abstract class UIContentElement : UIMonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header(H_A + "Element" + H_B)]
     [SerializeField] private UIContent _content;
@@ -26,5 +27,15 @@ public abstract class UIContentElement : UIMonoBehaviour
     {
         if (!CanSelect()) return;
         _content.Select(this);
+    }
+
+    public virtual void OnPointerEnter(PointerEventData eventData)
+    {
+        
+    }
+
+    public virtual void OnPointerExit(PointerEventData eventData)
+    {
+        
     }
 }

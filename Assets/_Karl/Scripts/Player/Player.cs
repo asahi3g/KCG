@@ -1,10 +1,7 @@
 using Agent;
-using ECSInput;
-using Entitas;
 using Enums;
 using Enums.PlanetTileMap;
 using Inventory;
-using KMath;
 using Planet;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,30 +10,30 @@ public class Player : BaseMonoBehaviour
 {
     [SerializeField] private Identifier _identifier;
     [SerializeField] private PlayerInput _input;
-    [SerializeField] private PlayerCamera _camera;
+    [SerializeField] private PlanetCamera _camera;
 
-    private IPlanetCreationResult _currentPlanet;
+    private PlanetLoader.Result _currentPlanet;
     private AgentRenderer _currentPlayer;
     
     public readonly PlanetCreationEvent onCurrentPlanetChanged = new PlanetCreationEvent();
     public readonly AgentRenderer.Event onPlayerAgentCreated = new AgentRenderer.Event();
 
     public PlayerInput GetInput() => _input;
-    public PlayerCamera GetCamera() => _camera;
+    public PlanetCamera GetCamera() => _camera;
 
 
-    public class PlanetCreationEvent : UnityEvent<IPlanetCreationResult>{}
+    public class PlanetCreationEvent : UnityEvent<PlanetLoader.Result>{}
     
     
     private void Update()
     {
         if (_currentPlanet != null)
         {
-            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _currentPlanet.GetPlanet());
+            UpdateMainGameLoop(Time.deltaTime, Application.targetFrameRate, 30f, _currentPlanet.GetPlanetState());
         }
     }
 
-    public void SetCurrentPlanet(IPlanetCreationResult planetRenderer)
+    public void SetCurrentPlanet(PlanetLoader.Result planetRenderer)
     {
         _currentPlanet = planetRenderer;
         onCurrentPlanetChanged.Invoke(_currentPlanet);
@@ -62,21 +59,7 @@ public class Player : BaseMonoBehaviour
             {
                 int inventoryID = agentEntity.agentInventory.InventoryID;
                 InventoryEntityComponent inventoryEntityComponent = GameState.Planet.GetInventoryEntityComponent(inventoryID);
-                
-                // Add some test items
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
-                
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
-                
-                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
-                //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
-                
+
                 UIViewInventory inventory = App.Instance.GetUI().GetView<UIViewInventory>();
                 inventory.SetInventoryEntityComponent(inventoryEntityComponent);
                 inventory.GetSelection().onSelectWithPrevious.AddListener(OnInventorySelectionEvent);
@@ -187,17 +170,6 @@ public class Player : BaseMonoBehaviour
         App.Instance.GetPlayer().GetInput().Tick();
         
         //GameState.InputProcessSystem.Update();
-        
-        // Exported from InputProcessSystem
-        IGroup<AgentEntity> agentEntities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-        Vec2f mouseWorldPosition = InputProcessSystem.GetCursorWorldPosition();
-        
-        foreach (AgentEntity agentEntity in agentEntities)
-        {
-            GameState.InputProcessSystem.UpdateFacingDirection(agentEntity, mouseWorldPosition);
-        }
-        
-
 
         // Movement Systems
         GameState.AgentIKSystem.Update(planetState.EntitasContext.agent);

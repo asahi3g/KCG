@@ -44,6 +44,13 @@ public class PlayerInput : BaseMonoBehaviour
         App.Instance.GetUI().GetView<UIViewMenu>().GetGroup().GetIdentifier().Alter(_identifier, true);
     }
 
+    public void DoToggleInventory()
+    {
+        if (IsGameplayBlocked()) return;
+        
+        App.Instance.GetUI().GetView<UIViewInventory>().GetToggableInventoryGroup().GetIdentifier().Toggle(_identifier);
+    }
+
     public void DoPlayerJump()
     {
         if (IsGameplayBlocked()) return;
@@ -111,7 +118,7 @@ public class PlayerInput : BaseMonoBehaviour
                 if (GameState.InventoryManager.GetItemInSlot(inventoryEntityComponent.Index, inventoryEntityComponent.SelectedSlotIndex, out ItemInventoryEntity itemInventoryEntity))
                 {
                     ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
-            
+                    
                     if (itemProperty.IsTool())
                     {
                         GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);

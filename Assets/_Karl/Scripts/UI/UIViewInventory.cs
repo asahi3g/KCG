@@ -5,11 +5,13 @@ public class UIViewInventory : UIView
 {
     [SerializeField] private UIContent _content;
     [SerializeField] private UIContentSelection _selection;
+    [SerializeField] private UIGroup _toggableInventoryGroup;
 
     private InventoryEntityComponent _inventoryEntityComponent;
 
     public UIContentSelection GetSelection() => _selection;
     public InventoryEntityComponent GetInventoryEntityComponent() => _inventoryEntityComponent;
+    public UIGroup GetToggableInventoryGroup() => _toggableInventoryGroup;
 
     protected override void OnEnable()
     {
@@ -35,17 +37,20 @@ public class UIViewInventory : UIView
 
     public void SetInventoryEntityComponent(InventoryEntityComponent inventory)
     {
-        Clear();
+        _selection.ClearSelection();
         _inventoryEntityComponent = inventory;
         if (_inventoryEntityComponent == null) return;
 
         Slot[] slots = _inventoryEntityComponent.Slots;
-        int length = slots.Length;
-
+        
+        
+        UIContentElementInventorySlot[] elements = _content.GetElements<UIContentElementInventorySlot>(true);
+        int length = Mathf.Min(slots.Length, elements.Length);
+        
         for (int i = 0; i < length; i++)
         {
             Slot slot = slots[i];
-            UIContentElementInventorySlot entry = _content.Create<UIContentElementInventorySlot>();
+            UIContentElementInventorySlot entry = elements[i];
             entry.SetSlot(this, slot);
         }
     }
@@ -53,7 +58,7 @@ public class UIViewInventory : UIView
     public bool GetSlot(int index, out UIContentElementInventorySlot slot)
     {
         slot = null;
-        UIContentElementInventorySlot[] slots = _content.GetComponentsInChildren<UIContentElementInventorySlot>();
+        UIContentElementInventorySlot[] slots = _content.GetElements<UIContentElementInventorySlot>(true);
         if (index >= 0 && index < slots.Length)
         {
             slot = slots[index];
