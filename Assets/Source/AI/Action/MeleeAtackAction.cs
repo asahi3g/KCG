@@ -4,6 +4,7 @@ using NodeSystem;
 using Planet;
 using Entitas;
 using Agent;
+using UnityEngine;
 
 namespace Action
 {
@@ -40,27 +41,18 @@ namespace Action
                 if (agent.agentID.ID == agentEntity.agentID.ID || !agent.isAgentAlive || agent.agentID.Faction == agentEntity.agentID.Faction)
                     continue;
                 var agentPhysicsState = agent.agentPhysicsState;
+                Vec2f pos = (physicsState.FacingDirection == -1) ? physicsState.Position :
+                    physicsState.Position + new Vec2f(agentEntity.physicsBox2DCollider.Size.X, 0f);
 
                 //TODO(): not good we need collision checks
-                if (Vec2f.Distance(agentPhysicsState.Position, physicsState.Position) <= range)
+                if (Vec2f.Distance(pos, physicsState.Position) <= range)
                 {
-                    Vec2f direction = physicsState.Position - agentPhysicsState.Position;
-                    int KnockbackDir = 0;
-                    if (direction.X > 0)
-                    {
-                        KnockbackDir = 1;
-                    }
-                    else if (direction.X < 0)
-                    {
-                        KnockbackDir = -1;
-                    }
-                    direction.Y = 0;
-                    direction.Normalize();
+                    int direction = (int)Mathf.Sign(physicsState.Position.X - agentPhysicsState.Position.X);
 
-                    agent.Knockback(7.0f, -KnockbackDir);
+                    agent.Knockback(7.0f, -direction);
 
                     // spawns a debug floating text for damage 
-                    planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f),
+                    planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction * 0.05f, 0.05f),
                     new Vec2f(agentPhysicsState.Position.X, agentPhysicsState.Position.Y + 0.35f));
 
                     agent.agentStats.Health.Remove(damage);
