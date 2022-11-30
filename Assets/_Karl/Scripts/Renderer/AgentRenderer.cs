@@ -18,8 +18,7 @@ public class AgentRenderer : BaseMonoBehaviour
     [SerializeField] private Transform _pivotPistol;
     [SerializeField] private Transform _pivotRifle;
     [SerializeField] private Transform _aimTarget;
-
-    private PlanetRenderer _planetRenderer;
+    
     private AgentEntity _agent;
     private UIHitpoints _hitpoints;
 
@@ -37,9 +36,8 @@ public class AgentRenderer : BaseMonoBehaviour
     public Transform GetAimTarget() => _aimTarget;
     
 
-    public void SetAgent(PlanetRenderer planetRenderer, AgentEntity agent)
+    public void SetAgent(AgentEntity agent)
     {
-        _planetRenderer = planetRenderer;
         _agent = agent;
         if (_agent.hasAgent3DModel)
         {

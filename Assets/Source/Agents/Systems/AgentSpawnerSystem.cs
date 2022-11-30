@@ -73,24 +73,39 @@ namespace Agent
         }
 
 
+        private bool CreateAgentRenderer(AgentEntity agentEntity, out AgentRenderer agentRenderer)
+        {
+            agentRenderer = null;
+            if (agentEntity != null)
+            {
+                ref AgentPropertiesTemplate agentPropertiesTemplate = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);
+                
+                if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out agentRenderer))
+                {
+                    agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
+                    agentRenderer.SetAgent(agentEntity);
+                }
+            }
+            return agentRenderer != null;
+        }
 
         public AgentEntity Spawn(Vec2f position, Enums.AgentType agentType, int faction,
             int inventoryID = -1, int equipmentInventoryID = -1)
         {
-            var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.CreateEntity();
 
             ref AgentPropertiesTemplate agentPropertiesTemplate = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
-            entity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
-            entity.isAgentAlive = true;
-            entity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
-            entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0,
-                100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
+            var spriteId = 0;
+            agentEntity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
+            agentEntity.isAgentAlive = true;
+            agentEntity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
+            agentEntity.AddAgentAction(AgentAlertState.UnAlert);
+            agentEntity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0,100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
 
-            entity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
+            agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
 
-            entity.AddAgentPhysicsState(
+            agentEntity.AddAgentPhysicsState(
                 newPosition: position,
                 newPreviousPosition: position, 
                 newSpeed: agentPropertiesTemplate.MovProperties.DefaultSpeed,
@@ -122,26 +137,26 @@ namespace Agent
                 newRollImpactDuration: 0);
 
             if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
+                agentEntity.AddAgentInventory(inventoryID, equipmentInventoryID, (agentType == Enums.AgentType.Player) ? true : false);
 
             if (agentType != Enums.AgentType.Player)
             {
-                entity.AddAgentsLineOfSight(new CircleSector()
+                agentEntity.AddAgentsLineOfSight(new CircleSector()
                 {
                     Radius = 50,
                     Fov = 60,
                     StartPos = position,
-                    Dir = new Vec2f(entity.agentPhysicsState.FacingDirection, 0.0f)
+                    Dir = new Vec2f(agentEntity.agentPhysicsState.FacingDirection, 0.0f)
                 });
 
-                int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(agentPropertiesTemplate.BehaviorTreeRootID, entity.agentID.ID);
-                entity.AddAgentController(
+                int behaviorTreeID = GameState.BehaviorTreeManager.Instantiate(agentPropertiesTemplate.BehaviorTreeRootID, agentEntity.agentID.ID);
+                agentEntity.AddAgentController(
                     newBehaviorTreeId: behaviorTreeID,
                     newBlackboardID: GameState.BlackboardManager.CreateBlackboard(),
                     newSensorsID: new List<int>()
                     {
-                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, entity.agentID.ID, 0)
-                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, entity.agentID.ID, 0)
+                                GameState.SensorManager.CreateSensor(Sensor.SensorType.Sight, agentEntity.agentID.ID, 0)
+                                , GameState.SensorManager.CreateSensor(Sensor.SensorType.Hearing, agentEntity.agentID.ID, 0)
                     },
                     newSquadID: -1);
             }
@@ -150,20 +165,19 @@ namespace Agent
             {
                 case Enums.AgentType.Player:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale,
                                 Vec2f.Zero);
 
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
                             // entity.agentPhysicsState.Speed = 10.0f;
-                            entity.isAgentPlayer = true;
+                            agentEntity.isAgentPlayer = true;
 
-                            if(!entity.hasAgentAction)
-                                entity.AddAgentAction(AgentAlertState.UnAlert);
+                            if(!agentEntity.hasAgentAction)
+                                agentEntity.AddAgentAction(AgentAlertState.UnAlert);
                         }
                         
                         break;
@@ -171,13 +185,13 @@ namespace Agent
                 case Enums.AgentType.Agent:
                     {
                         //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
+                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.Slime:
                     {
                        // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        entity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
+                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
                         break;
                     }
                 case Enums.AgentType.FlyingSlime:
@@ -187,17 +201,16 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemyGunner:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
-                            entity.agentPhysicsState.Speed = 6.0f;
+                            agentEntity.agentPhysicsState.Speed = 6.0f;
 
-                            entity.SetModel3DWeapon(Model3DWeaponType.Pistol);
+                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Pistol);
                             Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                         }
                         
@@ -205,26 +218,23 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemySwordman:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
                                 Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
 
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            entity.SetModel3DWeapon(Model3DWeaponType.Sword);
+                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Sword);
                         }
                         
                         break;
                     }
                 case Enums.AgentType.InsectSmall:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer  agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default,
                                 agentPropertiesTemplate.ModelScale, Vec2f.Zero);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
@@ -234,10 +244,9 @@ namespace Agent
                     }
                 case Enums.AgentType.InsectLarge:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(agentPropertiesTemplate.ModelType, out AgentRenderer agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType,
                                 Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale, Vec2f.Zero);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
@@ -247,23 +256,22 @@ namespace Agent
                     }
                 case Enums.AgentType.EnemyMarine:
                     {
-                        if (Engine3D.AssetManager.Singelton.GetPrefabAgent(Engine3D.AgentModelType.Humanoid, out AgentRenderer agentRenderer))
+                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            Agent3DModel agent3DModel = entity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
+                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
                                 Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             
-                            entity.agentPhysicsState.Speed = 10.0f;
+                            agentEntity.agentPhysicsState.Speed = 10.0f;
 
-                            if (!entity.hasAgentAction)
-                                entity.AddAgentAction(AgentAlertState.Alert);
+                            if (!agentEntity.hasAgentAction)
+                                agentEntity.AddAgentAction(AgentAlertState.Alert);
                             else
-                                entity.agentAction.Action = AgentAlertState.Alert;
+                                agentEntity.agentAction.Action = AgentAlertState.Alert;
 
                             ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                             GameState.InventoryManager.AddItem(item, inventoryID);
-                            entity.SetModel3DWeapon(item);
+                            agentEntity.SetModel3DWeapon(item);
                         }
                         
                         break;
@@ -277,7 +285,7 @@ namespace Agent
                 model3DComponent.SetRotation(rotation);
             }
 
-            return entity;
+            return agentEntity;
         }
     }
 }
