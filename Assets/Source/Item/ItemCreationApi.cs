@@ -839,7 +839,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Gun);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);

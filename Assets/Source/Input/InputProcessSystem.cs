@@ -383,7 +383,12 @@ namespace ECSInput
             {
                 var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
                 foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
+                {
+                    if(GameState.ItemCreationApi.GetItemProperties(player.GetItem().itemType.Type).Group == ItemGroups.Gun)
+                    {
+                        GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
+                    }
+                }
             }
 
             // Shield Action.
