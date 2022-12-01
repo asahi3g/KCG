@@ -1,7 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Engine3D;
 using Enums;
+using Item;
 using KMath;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameLauncher : BaseMonoBehaviour
 {
@@ -32,6 +38,7 @@ public class GameLauncher : BaseMonoBehaviour
         GameState.SpriteAtlasManager.UpdateAtlasTextures();
 
         RunTests();
+        GameState.DebugAllItemsByItemGroup();
     }
 
     protected override void Start()
@@ -92,6 +99,4 @@ public class GameLauncher : BaseMonoBehaviour
             }
         }
     }
-    
-
 }

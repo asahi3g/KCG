@@ -1,6 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Audio;
+using Enums;
+using Item;
 using Planet;
 using Loader;
+using UnityEngine;
 
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
@@ -371,5 +377,22 @@ public static class GameState
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
+    }
+    
+    public static void DebugAllItemsByItemGroup()
+    {
+        StringBuilder sb = new StringBuilder();
+        ItemGroupType[] itemGroupTypes = (ItemGroupType[])Enum.GetValues(typeof(ItemGroupType));
+        foreach (ItemGroupType itemGroupType in itemGroupTypes)
+        {
+            List<ItemProperties> itemPropertiesList = GameState.ItemCreationApi.GetAllByItemGroups(itemGroupType);
+
+            sb.AppendLine(itemGroupType.ToString());
+            foreach (ItemProperties itemProperties in itemPropertiesList)
+            {
+                sb.AppendLine($"\t{itemProperties.ItemType}");
+            }
+        }
+        Debug.Log($"===== All Item By Group =====\n{sb.ToString()}");
     }
 }
