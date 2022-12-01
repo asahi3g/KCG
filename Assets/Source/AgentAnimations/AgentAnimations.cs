@@ -99,6 +99,7 @@ namespace Agent
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/SpaceMarinePistolShoot2", AnimationType.SpaceMarinePistolFireGun);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Throw", AnimationType.SpaceMarineUseTool);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Slide", AnimationType.SpaceMarineSliding);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarine/SwordAttack", AnimationType.SpaceMarineSwordAttack_1);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Jetpack", AnimationType.SpaceMarineJetPack);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Stagger", AnimationType.SpaceMarineStagger);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/DEFORM_DeathKnockback", AnimationType.SpaceMarineKnockedDownFront);

@@ -29,6 +29,7 @@ namespace Particle
         Explosion_2_Part4,
 
         Dust_2,
+        Dust_SwordAttack,
         Dust_3,
 
         Smoke_2,

@@ -15,11 +15,6 @@ namespace Agent
                 PhysicsStateComponent physicsState = entity.agentPhysicsState;        
                 Agent3DModel agent3DModel = entity.Agent3DModel;
 
-                /*if (entity.isAgentPlayer)
-                {
-                    Debug.Log(physicsState.MovementState);
-                }*/
-
                 Animancer.AnimancerState currentClip = null;
 
                 {

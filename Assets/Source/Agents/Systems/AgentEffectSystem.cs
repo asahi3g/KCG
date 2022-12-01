@@ -36,9 +36,20 @@ namespace Agent
                     emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-3.0f * physicsState.MovingDirection, 0.0f);
                 }
 
-                if (physicsState.MovementState == AgentMovementState.Jump)
+                if (physicsState.MovementState == AgentMovementState.Jump && physicsState.JumpedFromGround)
                 {
-                    GameState.Planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.125f, 0.0f), Particle.ParticleEmitterType.Dust_Jumping);
+                    physicsState.JumpingTime += deltaTime;
+
+                    if (physicsState.JumpingTime < Agent.Constants.JumpingParticlesMaximumTime)
+                    {
+                        var emitter = GameState.Planet.AddParticleEmitter(physicsState.Position + new Vec2f(0.125f, 0.0f), Particle.ParticleEmitterType.Dust_Jumping);
+                        Vec2f emitterVelocity = physicsState.Velocity.Normalized * 1.0f;
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(emitterVelocity.X, emitterVelocity.Y);
+                    }
+                }
+                else
+                {
+                    physicsState.JumpingTime = 0;
                 }
 
 
@@ -57,21 +68,24 @@ namespace Agent
 
 
                 if (physicsState.LastMovementState == Enums.AgentMovementState.Falling && 
-                physicsState.OnGrounded)
+                physicsState.OnGrounded && physicsState.MovementState != Enums.AgentMovementState.SlidingLeft && 
+                physicsState.MovementState != Enums.AgentMovementState.SlidingRight)
                 {
-                    Vec2f particleSpawnPosition = physicsState.Position + new Vec2f(-0.25f, 0.0f);
+                    Vec2f particleSpawnPosition = physicsState.Position + -0.25f * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
 
                     for(int i = 0; i < 4; i++)
                     {
                         var emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Landing);
-                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(-0.4f * (i + 1), 0.125f * i);
+                        Vec2f velocity = -0.4f * (i + 1) * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X) + new Vec2f(0.0f, 0.125f * i);
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
                     }
 
-                    particleSpawnPosition = physicsState.Position + new Vec2f(0.25f, 0.0f);
+                    particleSpawnPosition = physicsState.Position + 0.25f * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X);
                     for(int i = 0; i < 4; i++)
                     {
                         var emitter = planet.AddParticleEmitter(particleSpawnPosition, Particle.ParticleEmitterType.Dust_Landing);
-                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(0.4f * (i + 1), 0.125f * i);
+                        Vec2f velocity = 0.4f * (i + 1) * new Vec2f(physicsState.GroundNormal.Y, -physicsState.GroundNormal.X) + new Vec2f(0.0f, 0.125f * i);
+                        emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
                     }
                 }
 

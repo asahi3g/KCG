@@ -621,6 +621,24 @@ namespace Particle
             GameState.ParticlePropertiesManager.End();
 
 
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_SwordAttack);
+            GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
+           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(10.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(2f, 2f, 2f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(2f, 2f, 2f, 0.0f));
+
+          //  GameState.ParticlePropertiesManager.SetIsCollidable(true);
+          //  GameState.ParticlePropertiesManager.SetBounce(true);
+           // GameState.ParticlePropertiesManager.SetBounceFactor(new Vec2f(0.5f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+
 
 
           /*  GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
@@ -867,6 +885,16 @@ namespace Particle
             GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_2);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
             GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.15f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(60 * 2);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Dust_SwordAttack);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Dust_SwordAttack);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.25f);
             GameState.ParticleEmitterPropertiesManager.SetParticleCount(60 * 2);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.0f, -0.0f), new Vec2f(0.0f, 0f));

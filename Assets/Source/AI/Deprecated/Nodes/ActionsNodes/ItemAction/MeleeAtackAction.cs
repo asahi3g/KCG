@@ -15,21 +15,23 @@ namespace Node
         public override void OnEnter(NodeEntity nodeEntity)
         {
             ref var planet = ref GameState.Planet;
-            var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
-            var weaponProperty = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
-            float damage = weaponProperty.BasicDemage;
+            float damage = 15;
+            float range = 2.0f;
 
             // Check if projectile has hit a enemy.
             var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
-            planet.AddFloatingText(weaponProperty.MeleeAttackFlags.ToString(), 1.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.2f, agentEntity.agentPhysicsState.Position.Y));
-            var player = planet.Player;
+            var player = agentEntity;
             if (player != null)
             {
                 var physicsState = player.agentPhysicsState;
-                player.SwordSlash();
+                var box2dCollider = player.physicsBox2DCollider;
+                var model3d = player.Agent3DModel;
+
+                Vec2f playerCenterPosition = physicsState.Position + box2dCollider.Offset + box2dCollider.Size * 0.5f;
+                player.SwordSlash(0.75f);
                 foreach (var agent in agents)
                 {
                     if (agent != player && agent.isAgentAlive)
@@ -37,7 +39,7 @@ namespace Node
                         var testPhysicsState = agent.agentPhysicsState;
 
                         //TODO(): not good we need collision checks
-                        if (Vec2f.Distance(testPhysicsState.Position, physicsState.Position) <= weaponProperty.Range)
+                        if (Vec2f.Distance(testPhysicsState.Position, physicsState.Position) <= range)
                         {
                             Vec2f direction = physicsState.Position - testPhysicsState.Position;
                             int KnockbackDir = 0;
@@ -134,7 +136,7 @@ namespace Node
 
             nodeEntity.nodeExecution.State = NodeState.Success;
 
-            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, weaponProperty.CoolDown);
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, 0.3f);
         }
     }
 }

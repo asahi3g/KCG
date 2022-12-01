@@ -17,6 +17,18 @@ namespace Agent
                 var stats = entity.agentStats;
 
 
+                if (entity.isAgentPlayer &&
+                    physicsState.MovementState != Enums.AgentMovementState.Idle &&
+                    physicsState.MovementState != Enums.AgentMovementState.Move)
+                {
+                    UnityEngine.Debug.Log(physicsState.MovementState);
+                }
+
+
+                if (physicsState.MovementState == Enums.AgentMovementState.SwordSlash)
+                {
+                    int brk = 0;
+                }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
 
@@ -72,14 +84,14 @@ namespace Agent
                     physicsState.DashCooldown -= deltaTime;
                 }
 
-                // decrease the dash cooldown
+                // decrease the roll cooldown
                 if (physicsState.RollCooldown > 0)
                 {
                     physicsState.RollCooldown -= deltaTime;
                 }
                 else
                 {
-                    if (physicsState.MovementState == AgentMovementState.SwordSlash)
+                    if (physicsState.MovementState == AgentMovementState.Rolling)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -113,6 +125,11 @@ namespace Agent
                     switch(physicsState.MovementState)
                     {
                         case AgentMovementState.MonsterAttack:
+                        case AgentMovementState.SwordSlash:
+                        case AgentMovementState.UseTool:
+                        case AgentMovementState.Drink:
+                        case AgentMovementState.PickaxeHit:
+                        case AgentMovementState.ChoppingTree:
                         {
                             physicsState.MovementState = AgentMovementState.None;
                             physicsState.ActionInProgress = false;
@@ -127,15 +144,6 @@ namespace Agent
                             physicsState.ActionJustEnded = true;
                             break;
                         }
-                        case AgentMovementState.UseTool:
-                        case AgentMovementState.Drink:
-                        {
-                            physicsState.MovementState = AgentMovementState.None;
-                            physicsState.ActionInProgress = false;
-                            physicsState.ActionJustEnded = true;
-                            break;
-                        }
-
                         case AgentMovementState.Rolling:
                         {
                             physicsState.MovementState = AgentMovementState.StandingUpAfterRolling;
@@ -144,22 +152,6 @@ namespace Agent
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
                             break;
-                        }
-
-                        case AgentMovementState.PickaxeHit:
-                        {
-                                physicsState.MovementState = AgentMovementState.None;
-                                physicsState.ActionInProgress = false;
-                                physicsState.ActionJustEnded = true;
-                                break;
-                        }
-
-                        case AgentMovementState.ChoppingTree:
-                        {
-                                physicsState.MovementState = AgentMovementState.None;
-                                physicsState.ActionInProgress = false;
-                                physicsState.ActionJustEnded = true;
-                                break;
                         }
                     }
                 }

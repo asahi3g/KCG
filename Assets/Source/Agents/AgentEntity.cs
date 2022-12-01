@@ -93,6 +93,7 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.SlidingRight &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.MonsterAttack &&
+        physicsState.MovementState != AgentMovementState.SwordSlash &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
     }
 
@@ -400,18 +401,29 @@ public partial class AgentEntity
         }
     }
 
-    public void SwordSlash()
+    public void SwordSlash(float duration)
     {
-        var PhysicsState = agentPhysicsState;
+        var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree())
         {
-            //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
-            //PhysicsState.Velocity.Y = 0.0f;
+            physicsState.Velocity = 2.0f * physicsState.Speed * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
 
-            //PhysicsState.Invulnerable = false;
-            //PhysicsState.AffectedByGravity = true;
-            PhysicsState.MovementState = AgentMovementState.SwordSlash;
+            if (physicsState.OnGrounded)
+            {
+                Vec2f pos = physicsState.Position + new Vec2f(0.125f, 0.0f) + new Vec2f(0.125f, 0.0f) * physicsState.MovingDirection;
+
+                var emitter = GameState.Planet.AddParticleEmitter(pos, Particle.ParticleEmitterType.Dust_SwordAttack);
+                Vec2f velocity = -1.0f * 3.0f * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+                emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
+            }
+            
+            physicsState.MovementState = AgentMovementState.SwordSlash;
+            physicsState.SetMovementState = true;
+            
+
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = duration;
         }
     }
 
@@ -682,8 +694,14 @@ public partial class AgentEntity
                     physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
                     physicsState.JumpCounter++;
 
-
-                    //GameState.Planet.AddParticleEffect(physicsState.Position + new Vec2f(0.125f, 0.0f), Enums.ParticleEffect.Dust_Jumping);
+                    if (physicsState.OnGrounded)
+                    {
+                        physicsState.JumpedFromGround = true;
+                    }
+                    else
+                    {
+                        physicsState.JumpedFromGround = false;
+                    } 
 
             }
             else

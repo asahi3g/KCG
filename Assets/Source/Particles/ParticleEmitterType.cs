@@ -25,6 +25,7 @@ namespace Particle
         Explosion_2_Part4,
 
         Dust_2, // used for turning
+        Dust_SwordAttack,
         Dust_Jumping, // used for jumping
         Dust_Landing, // used for landing
 
