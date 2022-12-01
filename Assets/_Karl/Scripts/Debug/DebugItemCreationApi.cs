@@ -1,13 +1,14 @@
 using Item;
 using UnityEngine;
 
-public class DebugItemCreationApi : MonoBehaviour
+public class DebugItemCreationApi : DebugBase
 {
     [SerializeField] private ItemProperties[] PropertiesArray;
     [SerializeField] private FireWeaponProperties[] WeaponList;
     
-    void Update()
+    protected override void OnUpdate()
     {
+        base.OnUpdate();
         PropertiesArray = GameState.ItemCreationApi.GetAll();
         WeaponList = GameState.ItemCreationApi.GetAllWeapons();
     }

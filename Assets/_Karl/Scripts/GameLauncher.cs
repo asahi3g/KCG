@@ -1,19 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections;
 using Engine3D;
 using Enums;
-using Item;
 using KMath;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameLauncher : BaseMonoBehaviour
 {
     [TextArea(3, 6)]
     [SerializeField] private string _planet;
     [SerializeField] private Material _tileMaterial;
+    [SerializeField] private SOSceneName _mainSceneName;
     [Space]
     [SerializeField] private TestItems _testItems;
 
@@ -36,49 +35,66 @@ public class GameLauncher : BaseMonoBehaviour
         
         GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
         GameState.SpriteAtlasManager.UpdateAtlasTextures();
+        GameState.IsInitialized = true;
 
         RunTests();
         GameState.DebugAllItemsByItemGroup();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        GameState.IsInitialized = false;
     }
 
     protected override void Start()
     {
         base.Start();
 
-        // Create planet
-        PlanetLoader.Load(transform, _planet, _tileMaterial, App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
+        LoadMainScene(OnMainSceneLoadSuccess, OnMainSceneLoadFailed);
 
-        // Planet creation successful
-        void OnPlanetCreationSuccess(PlanetLoader.Result result)
+        void OnMainSceneLoadSuccess()
         {
-            Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
-            App.Instance.GetPlayer().SetCurrentPlanet(result);
-            
-            AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(10f, 10f), AgentType.Player, 0);
+            // Create planet
+            PlanetLoader.Load(transform, _planet, _tileMaterial, App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanetCreationSuccess, OnPlanetCreationFailed);
 
-            // Player agent creation successful
-            if (agentEntity != null)
+            // Planet creation successful
+            void OnPlanetCreationSuccess(PlanetLoader.Result result)
             {
-                // Add some test items
-                if (_testItems.active)
+                Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
+                App.Instance.GetPlayer().SetCurrentPlanet(result);
+            
+                AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(10f, 10f), AgentType.Player, 0);
+
+                // Player agent creation successful
+                if (agentEntity != null)
                 {
-                    Admin.AdminAPI.AddItems(agentEntity, _testItems.itemGroups, _testItems.maximumQuantity);   
+                    // Add some test items
+                    if (_testItems.active)
+                    {
+                        Admin.AdminAPI.AddItems(agentEntity, _testItems.itemGroups, _testItems.maximumQuantity);   
+                    }
+
+                    App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
                 }
 
-                App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
+                // Player agent creation failed
+                else
+                {
+                    Debug.LogWarning("Failed to create player agent");
+                }
             }
-
-            // Player agent creation failed
-            else
+        
+            // Planet creation failed
+            void OnPlanetCreationFailed(IError error)
             {
-                Debug.LogWarning("Failed to create player agent");
+                Debug.LogError($"Planet creation failed, reason: {error.GetMessage()}");
             }
         }
-        
-        // Planet creation failed
-        void OnPlanetCreationFailed(IError error)
+
+        void OnMainSceneLoadFailed(IError error)
         {
-            Debug.LogError($"Planet creation failed, reason: {error.GetMessage()}");
+            Debug.LogError(error.GetMessage());
         }
     }
 
@@ -98,5 +114,46 @@ public class GameLauncher : BaseMonoBehaviour
                 break;
             }
         }
+    }
+
+    private void LoadMainScene(UnityAction onSuccess, UnityAction<IError> onFailed)
+    {
+        if (_mainSceneName == null)
+        {
+            onFailed?.Invoke(new ErrorData("Main scene name scriptable object is missing"));
+            return;
+        }
+
+        string mainSceneName = _mainSceneName.GetValue();
+        int countLoaded = UnityEngine.SceneManagement.SceneManager.sceneCount;
+        bool mainSceneAlreadyLoaded = false;
+
+        for (int i = 0; i < countLoaded; i++)
+        {
+            Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+            bool isLoaded = String.CompareOrdinal(mainSceneName, scene.name) == 0;
+
+            if (isLoaded)
+            {
+                Debug.Log($"Scene '{mainSceneName}' already loaded");
+                mainSceneAlreadyLoaded = true;
+                break;
+            }
+        }
+
+        if (mainSceneAlreadyLoaded)
+        {
+            onSuccess?.Invoke();
+            return;
+        }
+
+        AsyncOperation asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(mainSceneName, LoadSceneMode.Additive);
+        asyncOperation.allowSceneActivation = true;
+        asyncOperation.completed += delegate(AsyncOperation operation)
+        {
+            Debug.Log($"Scene '{mainSceneName}' loaded from {nameof(GameLauncher)}");
+            onSuccess?.Invoke();
+            return;
+        };
     }
 }

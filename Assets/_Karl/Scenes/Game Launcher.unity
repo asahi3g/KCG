@@ -443,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _planet: map3
   _tileMaterial: {fileID: 2100000, guid: 22a8a64b44bd0094d85e88c8ce8b0d22, type: 2}
+  _mainSceneName: {fileID: 11400000, guid: 4bc971cb6818a224391e26e4d2ca58e8, type: 2}
   _testItems:
     active: 1
     maximumQuantity: 50
