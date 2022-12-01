@@ -14,6 +14,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     [SerializeField] private SOInput _sprint;
     [SerializeField] private SOInput _speedDash;
     [SerializeField] private SOInput _fire;
+    [SerializeField] private SOInput _secondAction;
     [SerializeField] private SOInput _jetpack;
     [SerializeField] private SOInput _reload;
     [SerializeField] private SOInput _inventory;
@@ -79,8 +80,11 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         // Fire
         if(IsKeyDown(_fire)) _input.DoPlayerFire();
 
+        // Second Action
+        if (IsKeyDown(_secondAction)) _input.DoSecondAction();
+
         // Reload
-        if(IsKeyDown(_reload)) _input.DoPlayerReload();
+        if (IsKeyDown(_reload)) _input.DoPlayerReload();
         
 
         // Footer quick slots inventory

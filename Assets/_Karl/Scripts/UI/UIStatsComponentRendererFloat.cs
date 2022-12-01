@@ -43,7 +43,7 @@ public class UIStatsComponentRendererFloat : UIMonoBehaviour
         _stats = stats;
         if (_stats == null) return;
         _group.GetIdentifier().Alter(_identifier, true);
-        _stats.GetValue(_kind).onChanged.AddListener(OnStatsChanged);
+        //_stats.onChanged.AddListener(OnStatsChanged);
         UpdateLook(false);
     }
 

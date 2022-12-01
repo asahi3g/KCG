@@ -14,6 +14,7 @@ namespace Item
         public ItemType ItemType;
         public ItemGroups Group;
         public ItemUsageActionType ToolActionType;
+        public ItemUsageActionType SecondToolActionType;
         public MechType  MechType;               // Used only when item is a mech type.
         public TileID TileType;                 // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement

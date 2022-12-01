@@ -390,7 +390,7 @@ public partial class AgentEntity
     public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
-        var model3d = Agent3DModel; 
+        var model3d = Agent3DModel;
 
         if (isAgentAlive && IsStateFree())
         {
@@ -459,7 +459,7 @@ public partial class AgentEntity
 
     public void JetPackFlyingBegin()
     {
-        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetMin()) return;
+        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetValue()) return;
         if (!IsStateFree()) return;
         
         agentPhysicsState.MovementState = AgentMovementState.JetPackFlying;
@@ -490,12 +490,6 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
-            if (GameState.AgentIKSystem.Rifle != null ||
-                   GameState.AgentIKSystem.Pistol != null)
-            {
-                GameState.AgentIKSystem.Rifle.gameObject.SetActive(false);
-                GameState.AgentIKSystem.Pistol.gameObject.SetActive(false);
-            }
             GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;

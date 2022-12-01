@@ -2305,7 +2305,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419920045}
   m_HandleRect: {fileID: 419920044}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999998
   m_Size: 0.52631575
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5295,6 +5295,7 @@ MonoBehaviour:
   _sprint: {fileID: 11400000, guid: 9835e67cbc53ee64c9cdf448ccc8f360, type: 2}
   _speedDash: {fileID: 11400000, guid: ac1ce309f8736c240841f0eaf8766c91, type: 2}
   _fire: {fileID: 11400000, guid: d2815272f5c3b264a977f7d009651c0d, type: 2}
+  _secondAction: {fileID: 11400000, guid: e1c02c1ed960c654ea18901e0b0adb30, type: 2}
   _jetpack: {fileID: 11400000, guid: 3eb4e49f52b3ec94f8d6518d8f5931e3, type: 2}
   _reload: {fileID: 11400000, guid: 343991af2a429a74c92d9e5aab24a34c, type: 2}
   _inventory: {fileID: 11400000, guid: d98d94ac1b6658e4f8ce9bc65433a96d, type: 2}

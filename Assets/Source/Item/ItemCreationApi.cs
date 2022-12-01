@@ -118,11 +118,19 @@ namespace Item
             PropertiesArray[(int)currentIndex].InventorSpriteID = spriteId;
         }
 
-        public void SetAction(ItemUsageActionType  nodeID)
+        public void SetAction(ItemUsageActionType nodeID)
         {
             IsItemTypeValid();
 
             PropertiesArray[(int)currentIndex].ToolActionType = nodeID;
+            PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Tool;
+        }
+
+        public void SetSecondaryAction(ItemUsageActionType  nodeID)
+        {
+            IsItemTypeValid();
+
+            PropertiesArray[(int)currentIndex].SecondToolActionType = nodeID;
             PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Tool;
         }
 
@@ -732,7 +740,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
             SetRangedWeaponClip(clipSize: 6, bulletsPerShot: 1, reloadTime: 1.3f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.LongRifle, "LongRifle");
@@ -742,7 +750,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
             SetRangedWeaponClip(clipSize: 25, bulletsPerShot: 1, reloadTime: 2f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.PulseWeapon, "PulseWeapon");
@@ -752,7 +760,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
             SetRangedWeaponClip(25, 4, 1, 1);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootPulseWeaponAction);
+            SetAction(ItemUsageActionType.ShootPulseWeaponAction);
             EndItem();
 
             CreateItem(ItemType.AutoCannon, "AutoCannon");
@@ -762,7 +770,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
             SetRangedWeaponClip(clipSize: 40, bulletsPerShot: 3, reloadTime: 4f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.SMG, "SMG");
@@ -772,8 +780,8 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
             SetRangedWeaponClip(clipSize: 50,  bulletsPerShot: 1, reloadTime:1f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
-            SetItemToolType(ItemToolType.Pistol);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
+            SetSecondaryAction(ItemUsageActionType.SecondActionTest);
             SetItemToolType(ItemToolType.Rifle);
             SetAnimationSet(ItemAnimationSet.HoldingRifle);
             SetItemKeyUsage(ItemKeyUsage.KeyDown);
@@ -788,7 +796,7 @@ namespace Item
             SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
             SetProjectileType(ProjectileType.Bullet);
             SetFlags(FireWeaponProperties.Flags.ShouldSpread);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.PumpShotgun, "PumpShotgun");
@@ -800,7 +808,7 @@ namespace Item
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
             SetFlags(FireWeaponProperties.Flags.ShouldSpread);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Pistol, "Pistol");
@@ -810,7 +818,7 @@ namespace Item
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 1, reloadTime: 1f);
             SetProjectileType(ProjectileType.Bullet);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             SetItemToolType(ItemToolType.Pistol);
             SetAnimationSet(ItemAnimationSet.HoldingPistol);
             EndItem();
@@ -823,7 +831,7 @@ namespace Item
             SetRangedWeaponClip(clipSize: 2, bulletsPerShot: 1, reloadTime: 3);
             SetExplosion(3.0f, 15, 0f);
             SetProjectileType(ProjectileType.Rocket);
-            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            SetAction(ItemUsageActionType.ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
@@ -835,17 +843,17 @@ namespace Item
             SetExplosion(4.0f, 15, 0f);
             SetFlags(FireWeaponProperties.GrenadesFlags.Flame);
             SetProjectileType(ProjectileType.Grenade);
-            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            SetAction(ItemUsageActionType.ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Gun);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
             SetRangedWeaponClip(clipSize: 1, bulletsPerShot: 1, reloadTime: 2f);
             SetProjectileType(ProjectileType.Arrow);
-            SetAction(ItemUsageActionType .ShootFireWeaponAction);
+            SetAction(ItemUsageActionType.ShootFireWeaponAction);
             EndItem();
 
             CreateItem(ItemType.Moon, "Moon");
@@ -854,7 +862,7 @@ namespace Item
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Moon);
             EndItem();
 
@@ -864,7 +872,7 @@ namespace Item
             SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
@@ -874,7 +882,7 @@ namespace Item
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Bedrock);
             EndItem();
 
@@ -884,7 +892,7 @@ namespace Item
             SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Pipe);
             EndItem();
 
@@ -895,21 +903,21 @@ namespace Item
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetTile(TileID.Wire);
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
-            SetAction(ItemUsageActionType .ThrowGasBombAction);
+            SetAction(ItemUsageActionType.ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            SetAction(ItemUsageActionType.ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.Sword, "Sword");
@@ -928,7 +936,7 @@ namespace Item
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
             SetFlags(FireWeaponProperties.MeleeFlags.Slash);
-            SetAction(ItemUsageActionType .MeleeAttackAction);
+            SetAction(ItemUsageActionType.MeleeAttackAction);
             EndItem();
 
             CreateItem(ItemType.RiotShield, "RiotShield");
@@ -936,7 +944,7 @@ namespace Item
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetShield(false);
-            SetAction(ItemUsageActionType .UseShieldAction);
+            SetAction(ItemUsageActionType.UseShieldAction);
             EndItem();
 
             CreateItem(ItemType.Ore, "Ore");
@@ -973,14 +981,14 @@ namespace Item
             SetInventoryItemIcon(BoneIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PotionTool);
-            SetAction(ItemUsageActionType .ToolActionPotion);
+            SetAction(ItemUsageActionType.ToolActionPotion);
             EndItem();
 
             CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
             SetTexture(IconItemPotionHealth);
             SetInventoryItemIcon(IconItemPotionHealth);
-            SetAction(ItemUsageActionType .DrinkPotionAction);
+            SetAction(ItemUsageActionType.DrinkPotionAction);
             SetStackable();
             EndItem();
 
@@ -997,7 +1005,7 @@ namespace Item
             SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementTool);
-            SetAction(ItemUsageActionType .ToolActionPlaceTile);
+            SetAction(ItemUsageActionType.ToolActionPlaceTile);
             EndItem();
 
             CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
@@ -1006,86 +1014,86 @@ namespace Item
             SetInventoryItemIcon(PlacementToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementMaterialTool);
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
             SetGroup(ItemGroups.None);
             SetTexture(IconToolRemoveTile);
             SetInventoryItemIcon(IconToolRemoveTile);
-            SetAction(ItemUsageActionType .ToolActionRemoveTile);
+            SetAction(ItemUsageActionType.ToolActionRemoveTile);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
             SetInventoryItemIcon(SlimeIcon);
-            SetAction(ItemUsageActionType .ToolActionEnemySpawn);
+            SetAction(ItemUsageActionType.ToolActionEnemySpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
             SetGroup(ItemGroups.None);
             SetTexture(IconToolSpawnEnemyGunner);
             SetInventoryItemIcon(IconToolSpawnEnemyGunner);
-            SetAction(ItemUsageActionType .ToolActionEnemyGunnerSpawn);
+            SetAction(ItemUsageActionType.ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
             SetGroup(ItemGroups.None);
             SetTexture(IconToolSpawnEnemySwordsman);
             SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
-            SetAction(ItemUsageActionType .ToolActionEnemySwordmanSpawn);
+            SetAction(ItemUsageActionType.ToolActionEnemySwordmanSpawn);
             EndItem();
 
             CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
             SetGroup(ItemGroups.None);
             SetTexture(MiningLaserToolIcon);
             SetInventoryItemIcon(MiningLaserToolIcon);
-            SetAction(ItemUsageActionType .ToolActionMiningLaser);
+            SetAction(ItemUsageActionType.ToolActionMiningLaser);
             EndItem();
 
             CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
-            SetAction(ItemUsageActionType .ToolActionPlaceParticleEmitter);
+            SetAction(ItemUsageActionType.ToolActionPlaceParticleEmitter);
             EndItem();
 
             CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
-            SetAction(ItemUsageActionType .ToolActionPlaceChest);
+            SetAction(ItemUsageActionType.ToolActionPlaceChest);
             EndItem();
 
             CreateItem(ItemType.MajestyPalm, "MajestyPlant");
             SetTexture(MajestyPalmIcon);
             SetInventoryItemIcon(MajestyPalmIcon);
-            SetAction(ItemUsageActionType .PlantAction);
+            SetAction(ItemUsageActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.SagoPalm, "SagoPlant");
             SetTexture(SagoPalmIcon);
             SetInventoryItemIcon(SagoPalmIcon);
-            SetAction(ItemUsageActionType .PlantAction);
+            SetAction(ItemUsageActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
             SetTexture(DracaenaTrifasciataIcon);
             SetInventoryItemIcon(DracaenaTrifasciataIcon);
-            SetAction(ItemUsageActionType .PlantAction);
+            SetAction(ItemUsageActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.WaterBottle, "Water");
             SetTexture(WaterIcon);
             SetInventoryItemIcon(WaterIcon);
-            SetAction(ItemUsageActionType .WaterAction);
+            SetAction(ItemUsageActionType.WaterAction);
             EndItem();
 
             CreateItem(ItemType.HarvestTool, "HarvestTool");
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
-            SetAction(ItemUsageActionType .HarvestAction);
+            SetAction(ItemUsageActionType.HarvestAction);
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
@@ -1093,7 +1101,7 @@ namespace Item
             SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
-            SetAction(ItemUsageActionType .ToolActionConstruction);
+            SetAction(ItemUsageActionType.ToolActionConstruction);
             EndItem();
 
             CreateItem(ItemType.Chest, "Chest");
@@ -1101,7 +1109,7 @@ namespace Item
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .MechPlacementAction);
+            SetAction(ItemUsageActionType.MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.SmashableBox, "SmashableBox");
@@ -1109,7 +1117,7 @@ namespace Item
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .MechPlacementAction);
+            SetAction(ItemUsageActionType.MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.SmashableEgg, "SmashableEgg");
@@ -1117,7 +1125,7 @@ namespace Item
             SetTexture(ChestIconItem);
             SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .MechPlacementAction);
+            SetAction(ItemUsageActionType.MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.Planter, "Planter");
@@ -1125,7 +1133,7 @@ namespace Item
             SetTexture(PotIconItem);
             SetInventoryItemIcon(PotIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .MechPlacementAction);
+            SetAction(ItemUsageActionType.MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.Light, "Light");
@@ -1133,20 +1141,20 @@ namespace Item
             SetTexture(Light2IconItem);
             SetInventoryItemIcon(Light2IconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .MechPlacementAction);
+            SetAction(ItemUsageActionType.MechPlacementAction);
             EndItem();
 
             CreateItem(ItemType.RemoveMech, "RemoveMech");
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetAction(ItemUsageActionType .ToolActionRemoveMech);
+            SetAction(ItemUsageActionType.ToolActionRemoveMech);
             EndItem();
 
             CreateItem(ItemType.ScannerTool, "ScannerTool");
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
-            SetAction(ItemUsageActionType .ToolActionScanner);
+            SetAction(ItemUsageActionType.ToolActionScanner);
             EndItem();
 
             CreateItem(ItemType.Helmet, "Helmet");
@@ -1168,7 +1176,7 @@ namespace Item
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Moon);
             EndItem();
 
@@ -1178,7 +1186,7 @@ namespace Item
             SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
@@ -1188,7 +1196,7 @@ namespace Item
             SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Bedrock);
             EndItem();
 
@@ -1198,7 +1206,7 @@ namespace Item
             SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Pipe);
             EndItem();
 
@@ -1209,28 +1217,28 @@ namespace Item
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetTile(TileID.Wire);
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             EndItem();
 
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
-            SetAction(ItemUsageActionType .ThrowGasBombAction);
+            SetAction(ItemUsageActionType.ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.Flare, "Flare");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
             SetInventoryItemIcon(GrenadeSprite5);
-            SetAction(ItemUsageActionType .ThrowFlareAction);
+            SetAction(ItemUsageActionType.ThrowFlareAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetAction(ItemUsageActionType .ThrowFragGrenadeAction);
+            SetAction(ItemUsageActionType.ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
@@ -1239,21 +1247,21 @@ namespace Item
             SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.GeometryTool);
-            SetAction(ItemUsageActionType .ToolActionGeometryPlacement);
+            SetAction(ItemUsageActionType.ToolActionGeometryPlacement);
             EndItem();
 
             CreateItem(ItemType.AxeTool, "AxeTool");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
-            SetAction(ItemUsageActionType .AxeAction);
+            SetAction(ItemUsageActionType.AxeAction);
             EndItem();
 
             CreateItem(ItemType.Pickaxe, "Pickaxe");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
-            SetAction(ItemUsageActionType .PickaxeAction);
+            SetAction(ItemUsageActionType.PickaxeAction);
             EndItem();
 
             CreateItem(ItemType.Wood, "Wood");
@@ -1262,7 +1270,7 @@ namespace Item
             SetInventoryItemIcon(WoodTile);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
-            SetAction(ItemUsageActionType .MaterialPlacementAction);
+            SetAction(ItemUsageActionType.MaterialPlacementAction);
             SetTile(TileID.Stone);
             EndItem();
 
