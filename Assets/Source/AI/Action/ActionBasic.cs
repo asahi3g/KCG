@@ -20,6 +20,7 @@ namespace Action
                 onSuccess: ReloadAction.OnSuccess,
                 onFailure:ReloadAction.OnFailure);
             ActionManager.RegisterAction("FireWeapon", ShootFireWeaponAction.Action);
+            ActionManager.RegisterAction("MoveToBestScorePos", MoveToBestScorePos.Action);
         }
     }
 }

@@ -69,17 +69,7 @@ namespace ECSInput
                 Camera.main.ScreenToWorldPoint(mousePos).y);
         }
 
-        public void UpdateFacingDirection(AgentEntity agentEntity, Vec2f mouseWorldPosition)
-        {
-            PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
-                
-            if (agentEntity.CanFaceMouseDirection())
-            {
-                if (mouseWorldPosition.X >= physicsStateComponent.Position.X) physicsStateComponent.FacingDirection = 1;
-                else physicsStateComponent.FacingDirection = -1;
-            }
-            else physicsStateComponent.FacingDirection = physicsStateComponent.MovingDirection;
-        }
+        
 
         public void UpdateVehicles(AgentEntity agentEntity)
         {
@@ -91,10 +81,10 @@ namespace ECSInput
 
                 if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
                 {
-                    // If player is outside the vehicle.
+                    // If agentEntity is outside the vehicle.
                     // Get in, turn on the jet and ignition.
 
-                    // If player is inside the vehicle,
+                    // If agentEntity is inside the vehicle,
                     // Get out, turn off the jet and ignition.
 
                     if (agentEntity.Agent3DModel.IsActive)
@@ -106,7 +96,7 @@ namespace ECSInput
                         {
                             GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
-                            // Player Gets inside of Rocket
+                            // agentEntity Gets inside of Rocket
                             // Hide Agent/Player
                             agentEntity.Agent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
@@ -122,7 +112,7 @@ namespace ECSInput
                         {
                             GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
 
-                            // Player Gets inside of Rocket
+                            // agentEntity Gets inside of Rocket
                             // Hide Agent/Player
                             agentEntity.Agent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
@@ -161,8 +151,7 @@ namespace ECSInput
             Contexts contexts = planet.EntitasContext;
 
             IGroup<AgentEntity> agentEntities = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-            Vec2f mouseWorldPosition = GetCursorWorldPosition();
-            
+
             UpdateMainCameraZoom();
 
             int x = 0;
@@ -235,8 +224,6 @@ namespace ECSInput
                     if(mode == Mode.Agent)
                     agentEntity.Walk(x);
                 }
-                
-                UpdateFacingDirection(agentEntity, mouseWorldPosition);
 
                 // JetPack
                 if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.F))
@@ -252,21 +239,20 @@ namespace ECSInput
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
                 var mechEntities = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 int inventoryID;
                 InventoryEntity playerInventory;
                 InventoryEntity equipmentInventory;
 
-                foreach (var player in players)
+                foreach (var agentEntity in agentEntities)
                 {
-                    if (player.isAgentPlayer)
+                    if (agentEntity.isAgentPlayer)
                     {
-                        inventoryID = player.agentInventory.InventoryID;
+                        inventoryID = agentEntity.agentInventory.InventoryID;
                         playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                        inventoryID = player.agentInventory.EquipmentInventoryID;
+                        inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                         equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
                         
                         foreach (var mech in mechEntities)
@@ -283,7 +269,7 @@ namespace ECSInput
                                     GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
                                 }
 
-                                if (Vec2f.Distance(player.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
+                                if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
                                 {
                                     GameState.InventoryManager.OpenInventory(playerInventory);
                                     GameState.InventoryManager.OpenInventory(equipmentInventory);
@@ -295,7 +281,7 @@ namespace ECSInput
                         }
                     }
 
-                    UpdateVehicles(player);
+                    UpdateVehicles(agentEntity);
 
                     InventoryEntity inventory = null;
                     float smallestDistance = 2.0f;
@@ -307,7 +293,7 @@ namespace ECSInput
                         {
                             
                             var physicsState = corpse.agentPhysicsState;
-                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
+                            float distance = Vec2f.Distance(physicsState.Position, agentEntity.agentPhysicsState.Position);
 
                             if (!corpse.hasAgentInventory || !(distance < smallestDistance))
                                 continue;
@@ -322,7 +308,7 @@ namespace ECSInput
                     var mechs = contexts.mech.GetEntities();
                     foreach (var mech in mechs)
                     {
-                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, player.agentPhysicsState.Position);
+                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, agentEntity.agentPhysicsState.Position);
                         if (!(distance < smallestDistance))
                             continue;
 
@@ -335,16 +321,16 @@ namespace ECSInput
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
                         if (mechProperties.Action != ItemUsageActionType .None)
-                            GameState.ActionCreationSystem.CreateAction(mechProperties.Action, player.agentID.ID);
+                            GameState.ActionCreationSystem.CreateAction(mechProperties.Action, agentEntity.agentID.ID);
                     }
 
                     if (inventory == null)
                         continue;
 
-                    inventoryID = player.agentInventory.InventoryID;
+                    inventoryID = agentEntity.agentInventory.InventoryID;
                     playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                     equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     if (!inventory.hasInventoryDraw)
@@ -365,33 +351,29 @@ namespace ECSInput
             // Recharge Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities) 
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, agentEntity.agentID.ID);
             }
 
             // Drop Action. 
             if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities)
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, agentEntity.agentID.ID);
             }
 
             // Reload Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities)
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, agentEntity.agentID.ID);
             }
 
             // Shield Action.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities)
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, agentEntity.agentID.ID);
 
             }
 
@@ -428,13 +410,12 @@ namespace ECSInput
             //  Open Inventory with Tab.        
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
-                foreach (var player in players)
+                foreach (var agentEntity in agentEntities)
                 {
-                    int inventoryID = player.agentInventory.InventoryID;
+                    int inventoryID = agentEntity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     if (!inventory.hasInventoryDraw)

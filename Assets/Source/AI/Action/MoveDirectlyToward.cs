@@ -1,6 +1,6 @@
 ﻿using AI;
 using AI.Movement;
-using Condition;
+using UnityEngine ;
 using Enums.PlanetTileMap;
 using NodeSystem;
 using Planet;
@@ -29,17 +29,13 @@ namespace Action
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             var physicsState = agent.agentPhysicsState;
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
-            int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
-
-            physicsState.FacingDirection = direction;
-            agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
-            agent.Run(direction);
 
             // Walk diagonal if there is an obstacle jump.
             ConditionManager.Condition condition = GameState.ConditionManager.Get(endConditionId);
             if (condition(ptr))
                 return NodeState.Success;
-            
+
+            int direction = Math.Sign(blackboard.AttackTarget.X - physicsState.Position.X);
             physicsState.FacingDirection = direction;
             agent.SetAimTarget(new KMath.Vec2f(physicsState.Position.X + direction, agent.GetGunFiringPosition().Y));
             agent.Walk(direction);

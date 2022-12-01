@@ -202,6 +202,8 @@ public partial class AgentEntity
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
+        if (item == null)
+            return;
         var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
         if (isAgentPlayer && itemProperty.HasUI())

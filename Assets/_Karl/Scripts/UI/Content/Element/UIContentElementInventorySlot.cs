@@ -2,6 +2,7 @@
 using Item;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIContentElementInventorySlot : UIContentElement
@@ -20,11 +21,32 @@ public class UIContentElementInventorySlot : UIContentElement
     {
         return true;
     }
-    
+
+    protected override void Start()
+    {
+        base.Start();
+        if (_slot == null)
+        {
+            ClearLook();
+        }
+    }
+
     public override void SetIsSelected(bool isSelected)
     {
         base.SetIsSelected(isSelected);
         _selection.SetActive(isSelected);
+    }
+    
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        base.OnPointerEnter(eventData);
+        App.Instance.GetUI().GetView<UIViewItemHoverInfo>().SetInfo(this);
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        base.OnPointerExit(eventData);
+        App.Instance.GetUI().GetView<UIViewItemHoverInfo>().ClearInfo(this);
     }
 
     public void SetSlot(UIViewInventory inventory, Slot slot)

@@ -55,7 +55,7 @@ namespace Condition
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             
             float distance = (agent.GetGunFiringPosition() - blackboard.AttackTarget).Magnitude;
-            float attackRange = 20.0f; // Todo: Create method to get attack range.
+            float attackRange = 30.0f; // Todo: Create method to get attack range.
             return (distance < attackRange) ? true : false;
         }
 
@@ -88,8 +88,11 @@ namespace Condition
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             AgentEntity target = planet.EntitasContext.agent.GetEntityWithAgentID(blackboard.AgentTargetID);
+            float distance = agent.agentPhysicsState.Position.X - target.agentPhysicsState.Position.X;
+            if (distance < 0)
+                distance += agent.physicsBox2DCollider.Size.X;
 
-            if (Mathf.Abs(agent.agentPhysicsState.Position.X - target.agentPhysicsState.Position.X) <= 1.0f)
+            if (Mathf.Abs(distance) <= 1.0f)
                 return true;
 
             return false;

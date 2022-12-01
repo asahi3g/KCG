@@ -17,7 +17,7 @@ namespace Inventory
                 inventoryEntity.hasInventoryToolBarDraw = true;
             
             int size = InventoryEntityTemplate.SlotCount;
-            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], -1, new BitSet((uint)size), type);
+            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], 0, new BitSet((uint)size), type);
 
             int inventoryId = inventoryEntity.inventoryID.ID;
             int length = InventoryEntityTemplate.Slots.Length;
