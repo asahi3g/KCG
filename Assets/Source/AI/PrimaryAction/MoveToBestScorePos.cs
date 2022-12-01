@@ -4,6 +4,7 @@ using KMath;
 using NodeSystem;
 using Planet;
 using System;
+using UnityEngine;
 
 namespace Action
 {
@@ -16,11 +17,11 @@ namespace Action
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             var physicsState = agent.agentPhysicsState;
-            
+
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
             blackboard.MoveToTarget = GameState.MovementPositionScoreSystem.GetHighestScorePosition(agent);
-            const float AcceptableMargin = 0.25f;
-            if (MathF.Abs(physicsState.Position.X - blackboard.MoveToTarget.X) < AcceptableMargin)
+            const float AcceptableMargin = 0.3f;
+            if (KMath.KMath.AlmostEquals(physicsState.Position.X, blackboard.MoveToTarget.X, AcceptableMargin))
             {
                 return NodeState.Success;
             }

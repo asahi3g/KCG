@@ -1,5 +1,7 @@
 ﻿using NodeSystem;
 using BehaviorTree;
+using Planet;
+using UnityEngine;
 
 namespace Action
 {
@@ -19,6 +21,9 @@ namespace Action
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref WaitActionData waitData = ref data.GetNodeData<WaitActionData>(id);
+            ref PlanetState planet = ref GameState.Planet;
+            AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
+            var physicsState = agent.agentPhysicsState;
 
             if (data.NodesExecutiondata[id].ExecutionTime > waitData.WaitTime)
                 return NodeState.Success;

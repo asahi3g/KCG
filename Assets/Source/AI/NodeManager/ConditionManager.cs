@@ -45,7 +45,7 @@ namespace NodeSystem
         // Register conditional function
         public int RegisterCondition(string name, Condition condition)
         {
-            if (NameIDPairs.ContainsKey(name))
+            if (!NameIDPairs.ContainsKey(name))
             {
                 Conditions[Length] = condition;
                 Names[Length] = name;
