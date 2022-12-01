@@ -21,18 +21,26 @@ namespace Node
                 switch (node.nodeExecution.State)
                 {
                     case Enums.NodeState.Entry:
-                        AISystemState.Nodes[index].OnEnter(node);
+                        if(AISystemState.Nodes[index] != null)
+                            AISystemState.Nodes[index].OnEnter(node);
                         break;
                     case Enums.NodeState.Running:
-                        AISystemState.Nodes[index].OnUpdate(node);
+                        if (AISystemState.Nodes[index] != null)
+                            AISystemState.Nodes[index].OnUpdate(node);
                         break;
                     case Enums.NodeState.Success:
-                        AISystemState.Nodes[index].OnExit(node);
-                        node.Destroy();
+                        if (AISystemState.Nodes[index] != null)
+                        {
+                            AISystemState.Nodes[index].OnExit(node);
+                            node.Destroy();
+                        }
                         break;
                     case Enums.NodeState.Fail:
-                        AISystemState.Nodes[index].OnExit(node);
-                        node.Destroy();
+                        if (AISystemState.Nodes[index] != null)
+                        {
+                            AISystemState.Nodes[index].OnExit(node);
+                            node.Destroy();
+                        }
                         break;
                     default:
                         Debug.Log("Not valid Action state.");

@@ -119,7 +119,7 @@ public class PlayerInput : BaseMonoBehaviour
                 {
                     ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
                     
-                    if (itemProperty.IsTool())
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
                     {
                         GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
                     }
@@ -140,7 +140,7 @@ public class PlayerInput : BaseMonoBehaviour
                 {
                     ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
 
-                    if (itemProperty.IsTool())
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
                     {
                         GameState.ActionCreationSystem.CreateAction(itemProperty.SecondToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
                     }
