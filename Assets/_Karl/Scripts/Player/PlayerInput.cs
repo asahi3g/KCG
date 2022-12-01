@@ -128,6 +128,27 @@ public class PlayerInput : BaseMonoBehaviour
         }
     }
 
+    public void DoSecondAction()
+    {
+        if (IsGameplayBlocked()) return;
+
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        {
+            if (agentRenderer.GetInventory(out InventoryEntityComponent inventoryEntityComponent))
+            {
+                if (GameState.InventoryManager.GetItemInSlot(inventoryEntityComponent.Index, inventoryEntityComponent.SelectedSlotIndex, out ItemInventoryEntity itemInventoryEntity))
+                {
+                    ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
+
+                    if (itemProperty.IsTool())
+                    {
+                        GameState.ActionCreationSystem.CreateAction(itemProperty.SecondToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
+                    }
+                }
+            }
+        }
+    }
+
     public void DoPlayerReload()
     {
         if (IsGameplayBlocked()) return;
