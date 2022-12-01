@@ -24,6 +24,14 @@ namespace Particle
         Explosion_2_Part3,
         Explosion_2_Part4,
 
+
+
+        SwordSlash_1_Right,
+        SwordSlash_1_Left,
+        SwordSlash_2_Right,
+        SwordSlash_2_Left,
+
+
         Dust_2, // used for turning
         Dust_SwordAttack,
         Dust_Jumping, // used for jumping

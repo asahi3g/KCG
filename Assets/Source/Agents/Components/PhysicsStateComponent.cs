@@ -15,10 +15,19 @@ namespace Agent
         public Vec2f Acceleration;              // Instantaneous, reset to zero at the end of the frame.
         public int LastMovingDirection;
 
+
+
         // should be moved into its own component
         public float MovingDistance; // moving  in the same direction will increase this value
         public float JumpingTime; // tracks the time between the starting frame of the jump and the current frame
         public bool JumpedFromGround; // whether the agent jumped from the ground
+
+
+        // move list
+        public Enums.AgentMoveList CurerentMoveList;
+        public int MoveIndex;
+        public float TimeBetweenMoves; // time between 2 actions
+        //-----
 
 
 

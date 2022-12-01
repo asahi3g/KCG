@@ -93,12 +93,12 @@ namespace Agent
         {
             AgentMoveListPropertiesManager Api = GameState.AgentMoveListPropertiesManager;
 
-            const float DefaultMoveListMaxDelay = 0.2f;
+            const float DefaultMoveListMaxDelay = 1.0f;
 
             Api.Create(Enums.AgentMoveList.Sword);
             Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
             Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
-            Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
+           // Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
             Api.End();
 
         

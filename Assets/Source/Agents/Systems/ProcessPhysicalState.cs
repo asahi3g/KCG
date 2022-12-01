@@ -17,17 +17,9 @@ namespace Agent
                 var stats = entity.agentStats;
 
 
-                if (entity.isAgentPlayer &&
-                    physicsState.MovementState != Enums.AgentMovementState.Idle &&
-                    physicsState.MovementState != Enums.AgentMovementState.Move)
+                if (entity.isAgentPlayer)
                 {
-                    UnityEngine.Debug.Log(physicsState.MovementState);
-                }
-
-
-                if (physicsState.MovementState == Enums.AgentMovementState.SwordSlash)
-                {
-                    int brk = 0;
+                  //  UnityEngine.Debug.Log(physicsState.MovementState);
                 }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
@@ -116,6 +108,20 @@ namespace Agent
                     }
                 }
 
+                physicsState.TimeBetweenMoves += deltaTime; 
+
+
+                if (physicsState.CurerentMoveList != Enums.AgentMoveList.Error)
+                {
+                    var moveList = GameState.AgentMoveListPropertiesManager.GetPosition(physicsState.CurerentMoveList);
+                    var moveListProperties = GameState.AgentMoveListPropertiesManager.Get(moveList.Offset + physicsState.MoveIndex);
+                    if (physicsState.TimeBetweenMoves > moveListProperties.MaxDelay)
+                    {
+                        physicsState.MoveIndex = 0;
+                        physicsState.CurerentMoveList = Enums.AgentMoveList.Error;
+                    }
+                }
+
                 if (physicsState.ActionDuration > 0)
                 {
                     physicsState.ActionDuration -= deltaTime;
@@ -125,7 +131,6 @@ namespace Agent
                     switch(physicsState.MovementState)
                     {
                         case AgentMovementState.MonsterAttack:
-                        case AgentMovementState.SwordSlash:
                         case AgentMovementState.UseTool:
                         case AgentMovementState.Drink:
                         case AgentMovementState.PickaxeHit:
@@ -151,6 +156,64 @@ namespace Agent
                             physicsState.RollImpactDuration = 0.8f;
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
+                            break;
+                        }
+                        case AgentMovementState.SwordSlash:
+                        {
+                            var box2dCollider = entity.physicsBox2DCollider;
+
+                            physicsState.MovementState = AgentMovementState.None;
+                            physicsState.ActionInProgress = false;
+                            physicsState.ActionJustEnded = true;
+
+                            Vec2f attackPosition = physicsState.Position;   
+                            attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
+                            attackPosition.Y -= 0.75f;                
+
+                            if (physicsState.FacingDirection == 1)
+                            {
+                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
+                                attackPosition.X += 1.5f;
+                                
+                                if (physicsState.MoveIndex == 0)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Right);
+                                }
+                                else if (physicsState.MoveIndex == 1)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Right);
+    
+                                }
+                            }
+                            else if (physicsState.FacingDirection == -1)
+                            {
+                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
+                                attackPosition.X -= 1.5f;
+
+                                if (physicsState.MoveIndex == 0)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Left);
+                                }
+                                else if (physicsState.MoveIndex == 1)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Left);
+    
+                                }
+                            }
+
+                            physicsState.TimeBetweenMoves = 0.0f;
+
+                            if (physicsState.CurerentMoveList != Enums.AgentMoveList.Error)
+                            {
+                                var moveList = GameState.AgentMoveListPropertiesManager.GetPosition(physicsState.CurerentMoveList);
+                                var moveListProperties = GameState.AgentMoveListPropertiesManager.Get(moveList.Offset + physicsState.MoveIndex);
+                                 if (physicsState.MoveIndex == (moveList.Size - 1))
+                                {
+                                    physicsState.MoveIndex = 0;
+                                    physicsState.CurerentMoveList = Enums.AgentMoveList.Error;
+                                }
+                            }
+
                             break;
                         }
                     }

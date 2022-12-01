@@ -12,5 +12,6 @@ namespace Agent
         public static readonly float RollingHeightRatio = 0.5f;
         public static readonly float MinimumDistanceToSpawnParticlesOnTurn = 2.0f;
         public static readonly float JumpingParticlesMaximumTime = 0.35f;
+        public static readonly float DefaultMaxTimeBetweenMoves = 0.5f;
     }
 }

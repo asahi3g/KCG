@@ -409,23 +409,51 @@ public partial class AgentEntity
 
         if (isAgentAlive && IsStateFree())
         {
-            physicsState.Velocity = 2.0f * physicsState.Speed * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+            var swordMoveList = GameState.AgentMoveListPropertiesManager.GetPosition(AgentMoveList.Sword);
+
+            var swordMoveListProperties = GameState.AgentMoveListPropertiesManager.Get(swordMoveList.Offset + physicsState.MoveIndex);
+
+            UnityEngine.Debug.Log("time betwween moves : " + physicsState.TimeBetweenMoves + "move " + physicsState.CurerentMoveList);
+
+            if (physicsState.TimeBetweenMoves <= swordMoveListProperties.MaxDelay && physicsState.CurerentMoveList == AgentMoveList.Sword)
+            {
+                physicsState.MoveIndex++;
+                physicsState.MoveIndex = (physicsState.MoveIndex % swordMoveList.Size);
+            }
+
+            physicsState.CurerentMoveList = AgentMoveList.Sword;
+
+            if (physicsState.MoveIndex == 1)
+            {
+                physicsState.Velocity = 2.0f * physicsState.Speed * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+            }
+            else
+            {
+                physicsState.Velocity = 0.5f * physicsState.Speed * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+            }
 
             if (physicsState.OnGrounded)
             {
                 Vec2f pos = physicsState.Position + new Vec2f(0.125f, 0.0f) + new Vec2f(0.125f, 0.0f) * physicsState.MovingDirection;
-
-                var emitter = GameState.Planet.AddParticleEmitter(pos, Particle.ParticleEmitterType.Dust_SwordAttack);
-                Vec2f velocity = -1.0f * 3.0f * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
-                emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
+                
+                if (physicsState.MoveIndex == 1)
+                {
+                    var emitter = GameState.Planet.AddParticleEmitter(pos, Particle.ParticleEmitterType.Dust_SwordAttack);
+                    Vec2f velocity = -1.0f * 3.0f * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
+                }
             }
-            
+
+
             physicsState.MovementState = AgentMovementState.SwordSlash;
             physicsState.SetMovementState = true;
             
 
             physicsState.ActionInProgress = true;
             physicsState.ActionDuration = duration;
+            physicsState.TimeBetweenMoves = 0.0f;
+
+            UnityEngine.Debug.Log("index: " + physicsState.MoveIndex);
         }
     }
 

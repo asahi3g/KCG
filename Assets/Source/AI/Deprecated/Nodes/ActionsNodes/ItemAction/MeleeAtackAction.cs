@@ -24,14 +24,16 @@ namespace Node
             var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             var player = agentEntity;
-            if (player != null)
+            if (player != null && player.IsStateFree())
             {
                 var physicsState = player.agentPhysicsState;
                 var box2dCollider = player.physicsBox2DCollider;
                 var model3d = player.Agent3DModel;
 
                 Vec2f playerCenterPosition = physicsState.Position + box2dCollider.Offset + box2dCollider.Size * 0.5f;
-                player.SwordSlash(0.75f);
+
+                player.SwordSlash(0.2f);
+
                 foreach (var agent in agents)
                 {
                     if (agent != player && agent.isAgentAlive)
@@ -136,7 +138,7 @@ namespace Node
 
             nodeEntity.nodeExecution.State = NodeState.Success;
 
-            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, 0.3f);
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, 0.0f);
         }
     }
 }

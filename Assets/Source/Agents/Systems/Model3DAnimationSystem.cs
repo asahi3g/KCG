@@ -19,7 +19,7 @@ namespace Agent
 
                 {
                     AgentAnimation agentAnimation = 
-                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet);
+                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet, physicsState.MoveIndex);
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
