@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 09975e376eea3144ca76aba7b9212293
+=======
+<<<<<<<< HEAD:Assets/Scenes/Deprecated/RectangleTileCollisionTest.unity.meta
+guid: 3e8ba8d679278c54ba13bda3a8b26fc3
+========
+guid: b6f71924175c2164c875b2c4b3faf3aa
+>>>>>>>> afed6219d5c052b5f33060f2b438ef57747365e0:Assets/Scenes/Test/RectangleTileCollisionTest/RectangleTileCollisionTest.unity.meta
+>>>>>>> afed6219d5c052b5f33060f2b438ef57747365e0
 DefaultImporter:
   externalObjects: {}
   userData: 
