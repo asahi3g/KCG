@@ -1103,6 +1103,14 @@ namespace Item
             SetAction(ItemUsageActionType.ToolActionConstruction);
             EndItem();
 
+            CreateItem(ItemType.MechPlacementTool, "MechPlacementTool");
+            SetTexture(IconToolConstruction);
+            SetInventoryItemIcon(IconToolConstruction);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetUIPanel(PanelEnums.MechTool);
+            SetAction(ItemUsageActionType.ToolActionMechPlacement);
+            EndItem();
+
             CreateItem(ItemType.Chest, "Chest");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);

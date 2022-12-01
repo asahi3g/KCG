@@ -61,5 +61,6 @@
         ToolActionRemoveMech,
         ToolActionPotion,
         ToolActionGeometryPlacement,
+        ToolActionMechPlacement,
     }
 }
