@@ -42,6 +42,7 @@
         ThrowFlareAction,
         PickaxeAction,
         AxeAction,
+        SecondActionTest,
 
 
         // Ttools actions

@@ -320,6 +320,7 @@ namespace ECSInput
 
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
+
                         if (mechProperties.Action != ItemUsageActionType .None)
                             GameState.ActionCreationSystem.CreateAction(mechProperties.Action, agentEntity.agentID.ID);
                     }
@@ -366,16 +367,21 @@ namespace ECSInput
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R))
             {
                 foreach (var agentEntity in agentEntities)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, agentEntity.agentID.ID);
+                {
+                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroups.Gun)
+                    {
+                        GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentEntity.agentID.ID);
+                    }
+                }
             }
 
-            // Shield Action.
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
-            {
-                foreach (var agentEntity in agentEntities)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, agentEntity.agentID.ID);
+            //// Shield Action.
+            //if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
+            //{
+            //    foreach (var agentEntity in agentEntities)
+            //        GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, agentEntity.agentID.ID);
 
-            }
+            ////}
 
             // Show/Hide Statistics
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
@@ -539,10 +545,21 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, item.itemID.ID);
+                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, 
+                                        item.itemID.ID);
                                 }
                             }
-
+                            else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Mouse1) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    if (selectedItemProperty.SecondToolActionType != null)
+                                    {
+                                        GameState.ActionCreationSystem.CreateAction(selectedItemProperty.SecondToolActionType,entity.agentID.ID,
+                                            item.itemID.ID);
+                                    }
+                                }
+                            }
                             break;
                         }
                         case ItemKeyUsage.KeyDown:
@@ -551,10 +568,21 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, item.itemID.ID);
+                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType,        
+                                        entity.agentID.ID, item.itemID.ID);
                                 }
                             }
-
+                            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Mouse1) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    if (selectedItemProperty.SecondToolActionType != null)
+                                    {
+                                        GameState.ActionCreationSystem.CreateAction(selectedItemProperty.SecondToolActionType,entity.agentID.ID, 
+                                            item.itemID.ID);
+                                    }
+                                }
+                            }
                             break;
                         }
                     }

@@ -119,9 +119,30 @@ public class PlayerInput : BaseMonoBehaviour
                 {
                     ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
                     
-                    if (itemProperty.IsTool())
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
                     {
                         GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
+                    }
+                }
+            }
+        }
+    }
+
+    public void DoSecondAction()
+    {
+        if (IsGameplayBlocked()) return;
+
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        {
+            if (agentRenderer.GetInventory(out InventoryEntityComponent inventoryEntityComponent))
+            {
+                if (GameState.InventoryManager.GetItemInSlot(inventoryEntityComponent.Index, inventoryEntityComponent.SelectedSlotIndex, out ItemInventoryEntity itemInventoryEntity))
+                {
+                    ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
+
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
+                    {
+                        GameState.ActionCreationSystem.CreateAction(itemProperty.SecondToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
                     }
                 }
             }
@@ -134,7 +155,14 @@ public class PlayerInput : BaseMonoBehaviour
         
         if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
         {
-            GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
+            if(agentRenderer.GetAgent().GetItem() != null)
+            {
+                if (GameState.ItemCreationApi.GetItemProperties(agentRenderer.GetAgent().GetItem().itemType.Type).Group == 
+                    ItemGroups.Gun)
+                {
+                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
+                }
+            }
         }
     }
 
