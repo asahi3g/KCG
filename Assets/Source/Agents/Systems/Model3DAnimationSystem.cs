@@ -8,12 +8,12 @@ namespace Agent
         {
             
             float deltaTime = UnityEngine.Time.deltaTime;
-            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentAgent3DModel));
 
             foreach (var entity in entities)
             {
                 PhysicsStateComponent physicsState = entity.agentPhysicsState;        
-                Agent3DModel agent3DModel = entity.Agent3DModel;
+                Agent3DModel agent3DModel = entity.agentAgent3DModel;
 
                 /*if (entity.isAgentPlayer)
                 {

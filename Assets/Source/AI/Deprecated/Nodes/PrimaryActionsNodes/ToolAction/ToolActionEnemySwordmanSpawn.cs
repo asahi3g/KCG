@@ -1,6 +1,7 @@
 using UnityEngine;
 using KMath;
 using Enums;
+using Item;
 
 namespace Node.Action
 {
@@ -13,8 +14,9 @@ namespace Node.Action
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = worldPosition.x;
             float y = worldPosition.y;
-            GameState.Planet.AddAgent(new Vec2f(x, y), AgentType.EnemyMarine, 1);
-
+            AgentEntity marine = GameState.Planet.AddAgent(new Vec2f(x, y), AgentType.EnemyMarine, Agent.AgentFaction.MarineEnemy);
+            marine.agentID.SquadID = 0;
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, nodeEntity.nodeOwner.AgentID, 0.5f);
             nodeEntity.nodeExecution.State = NodeState.Success;
         }
     }

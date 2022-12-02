@@ -25,6 +25,8 @@ public static class GameState
     public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
     public static readonly Sensor.SensorManager SensorManager;
     public static readonly Sensor.UpdateSystem SensorUpdateSystem;
+    public static readonly AI.SquadBehvaior.SquadManager SquadManager;
+    public static readonly AI.SquadBehvaior.SquadUpdateSystem SquadUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -82,8 +84,8 @@ public static class GameState
     public static readonly Agent.AgentIKSystem AgentIKSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-    public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
-    public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
+    public static readonly Agent.Model3DMovementSystem AgentAgent3DModelMovementSystem;
+    public static readonly Agent.Model3DAnimationSystem AgentAgent3DModelAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
     public static readonly Agent.ProcessState AgentProcessState;
 
@@ -249,6 +251,8 @@ public static class GameState
         BehaviorTreeUpdateSystem = new BehaviorTree.UpdateSystem();
         SensorManager = new Sensor.SensorManager();
         SensorUpdateSystem = new Sensor.UpdateSystem();
+        SquadManager = new AI.SquadBehvaior.SquadManager();
+        SquadUpdateSystem = new AI.SquadBehvaior.SquadUpdateSystem();
 
         SpriteLoader = new SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
@@ -267,8 +271,8 @@ public static class GameState
         AgentMovementSystem = new Agent.MovementSystem();
         AgentIKSystem = new Agent.AgentIKSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
-        AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
-        AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
+        AgentAgent3DModelMovementSystem = new Agent.Model3DMovementSystem();
+        AgentAgent3DModelAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessState = new Agent.ProcessState();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();

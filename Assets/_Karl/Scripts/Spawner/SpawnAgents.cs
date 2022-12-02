@@ -1,4 +1,5 @@
 using System.Collections;
+using Agent;
 using Enums;
 using KMath;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class SpawnAgents : BaseMonoBehaviour
     [SerializeField] private float _initialDelay;
     [SerializeField] private float _delay;
     [SerializeField] private float _quantity;
-    [SerializeField] private int _faction;
+    [SerializeField] private AgentFaction _faction;
     [SerializeField] private float _maxRadius;
 
 

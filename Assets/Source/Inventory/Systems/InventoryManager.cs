@@ -17,10 +17,10 @@ namespace Inventory
                 inventoryEntity.hasInventoryToolBarDraw = true;
             
             int size = InventoryEntityTemplate.SlotCount;
-            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], 0, new BitSet((uint)size), type);
+            inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], new BitSet((uint)size), type);
 
             int inventoryId = inventoryEntity.inventoryID.ID;
-            int length = InventoryEntityTemplate.Slots.Length;
+            int length = InventoryEntityTemplate.Slots.Length;  
 
             for (int i = 0; i < length; i++)
             {
@@ -136,6 +136,7 @@ namespace Inventory
             return false;
         }
 
+        // Return slot ID.
         public bool AddItem(ItemInventoryEntity entity, int inventoryID)
         {
             ItemProperties itemProperties = GameState.ItemCreationApi.GetItemProperties(entity.itemType.Type);
