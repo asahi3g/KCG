@@ -28,7 +28,7 @@ namespace Node
             {
                 var physicsState = player.agentPhysicsState;
                 var box2dCollider = player.physicsBox2DCollider;
-                var model3d = player.Agent3DModel;
+                var model3d = player.agentAgent3DModel;
 
 
                 var cursorWorldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
