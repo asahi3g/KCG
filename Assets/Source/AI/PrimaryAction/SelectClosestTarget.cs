@@ -8,6 +8,7 @@ namespace Action
     public class SelectClosestTarget
     {
         // Action used only by AI.
+        // Select closest visible target.
         static public NodeState Action(object ptr, int id)
         {
             ref PlanetState planet = ref GameState.Planet;
@@ -20,6 +21,9 @@ namespace Action
             {
                 AgentEntity entity = planet.AgentList.Get(i);
                 if (entity.agentID.ID == agent.agentID.ID || !entity.isAgentAlive || agent.agentID.Faction == entity.agentID.Faction)
+                    continue;
+
+                if (!agent.CanSee(entity.agentID.ID))
                     continue;
 
                 float newDist = (agent.agentPhysicsState.Position - entity.agentPhysicsState.Position).Magnitude;

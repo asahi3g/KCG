@@ -136,7 +136,7 @@ namespace Planet
             return newEntity;
         }
 
-        public AgentEntity AddAgentAsPlayer(Vec2f position, int faction = 0)
+        public AgentEntity AddAgentAsPlayer(Vec2f position, AgentFaction faction = AgentFaction.Player)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -153,7 +153,7 @@ namespace Planet
             return AddAgent(position, agentType, 0);
         }
 
-        public AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction)
+        public AgentEntity AddAgent(Vec2f position, AgentType agentType, AgentFaction faction)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -161,7 +161,7 @@ namespace Planet
             return AddAgent(position, agentType, faction, inventoryID, -1);
         }
         
-        private AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction, int inventoryID, int equipmentInventoryID)
+        private AgentEntity AddAgent(Vec2f position, AgentType agentType, AgentFaction faction, int inventoryID, int equipmentInventoryID)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, agentType, faction, inventoryID, equipmentInventoryID));
@@ -172,7 +172,7 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, AgentType.Slime, 1));
+            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, AgentType.Slime, AgentFaction.Enemy));
             return newEntity;
         }
 
@@ -486,14 +486,14 @@ namespace Planet
             GameState.AgentEffectSystem.Update(frameTime);
             GameState.AgentProcessPhysicalState.Update(frameTime);
             GameState.AgentMovementSystem.Update();
-            GameState.AgentModel3DMovementSystem.Update();
+            GameState.AgentAgent3DModelMovementSystem.Update();
             GameState.ItemMovableSystem.Update();
             GameState.VehicleMovementSystem.UpdateEx();
             GameState.PodMovementSystem.UpdateEx();
             GameState.ProjectileMovementSystem.Update();
 
 
-            GameState.AgentModel3DAnimationSystem.Update();
+            GameState.AgentAgent3DModelAnimationSystem.Update();
             GameState.LootDropSystem.Update();
             GameState.FloatingTextUpdateSystem.Update(frameTime);
             GameState.AnimationUpdateSystem.Update(frameTime);
@@ -516,7 +516,7 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessState.Update();
-            GameState.MovementPositionScoreSystem.UpdateEx();
+            GameState.SquadUpdateSystem.Update();
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();
@@ -564,8 +564,8 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
             
-            GameState.AgentModel3DMovementSystem.Update();
-            GameState.AgentModel3DAnimationSystem.Update();
+            GameState.AgentAgent3DModelMovementSystem.Update();
+            GameState.AgentAgent3DModelAnimationSystem.Update();
 
             GameState.FloatingTextDrawSystem.Draw(10000);
 

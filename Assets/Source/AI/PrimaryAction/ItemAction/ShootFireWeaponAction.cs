@@ -35,7 +35,7 @@ namespace Action
             physicsState.MovementState != AgentMovementState.SlidingLeft &&
             physicsState.MovementState != AgentMovementState.SlidingRight*/true)
             {
-                Vec2f target = agentEntity.Agent3DModel.AimTarget;
+                Vec2f target = agentEntity.agentAgent3DModel.AimTarget;
 
                 int bulletsPerShot = fireWeaponProperties.BulletsPerShot;
 

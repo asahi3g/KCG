@@ -351,8 +351,9 @@ namespace Agent
             NodeManager.EndNode();
 
             int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType .Action);
+            NodeManager.SetCondition(ConditionManager.GetID("InLineOfSight"));
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
-            NodeManager.SetData(ConditionManager.GetID("CanSeeAndInRange"));
+            NodeManager.SetData(ConditionManager.GetID("IsInAttackRange"));
             NodeManager.EndNode();
 
             int moveToBestScoreId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType.Action);

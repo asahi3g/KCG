@@ -53,9 +53,9 @@ namespace Agent
 
             ref AgentEntity entity = ref List[index];
             
-            if (entity.hasAgent3DModel)
+            if (entity.hasAgentAgent3DModel)
             {
-                entity.Agent3DModel.DestroyRenderer();
+                entity.agentAgent3DModel.DestroyRenderer();
             }
             entity.Destroy();
 

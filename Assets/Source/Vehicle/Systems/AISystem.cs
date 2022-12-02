@@ -133,9 +133,9 @@ namespace Vehicle
                                 {
                                     AgentEntity agentEntity = agentsInside[j];
                                     
-                                    if (!agentEntity.Agent3DModel.IsActive)
+                                    if (!agentEntity.agentAgent3DModel.IsActive)
                                     {
-                                        agentEntity.Agent3DModel.SetIsActive(true);
+                                        agentEntity.agentAgent3DModel.SetIsActive(true);
 
                                         agentEntity.agentPhysicsState.Velocity.X += UnityEngine.Random.Range(30, 360);
                                         agentEntity.agentPhysicsState.Velocity.Y += UnityEngine.Random.Range(25, 360);

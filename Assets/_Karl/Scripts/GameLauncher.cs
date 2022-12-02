@@ -60,7 +60,7 @@ public class GameLauncher : BaseMonoBehaviour
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
                 
-                App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
+                App.Instance.GetPlayer().SetAgentRenderer(agentEntity.agentAgent3DModel.Renderer);
             }
 
             // Player agent creation failed
