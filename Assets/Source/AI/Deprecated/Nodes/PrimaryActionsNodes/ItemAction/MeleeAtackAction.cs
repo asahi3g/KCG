@@ -18,7 +18,7 @@ namespace Node
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             float damage = 15;
-            float range = 2.0f;
+            float range = 3.0f;
 
             // Check if projectile has hit a enemy.
             var agents = planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
@@ -30,111 +30,77 @@ namespace Node
                 var box2dCollider = player.physicsBox2DCollider;
                 var model3d = player.Agent3DModel;
 
+
+                var cursorWorldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
+
                 Vec2f playerCenterPosition = physicsState.Position + box2dCollider.Offset + box2dCollider.Size * 0.5f;
 
-                player.SwordSlash(0.2f);
-
-                foreach (var agent in agents)
+                Vec2f attackPosition = physicsState.Position;   
+                attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
+                attackPosition.Y -= 0.75f;
+                if (physicsState.FacingDirection == 1)
                 {
-                    if (agent != player && agent.isAgentAlive)
+                    attackPosition.X += 1.5f;
+                }
+                else if (physicsState.FacingDirection == -1)
+                {
+                    attackPosition.X -= 1.5f;
+                }         
+                
+
+                if (player.SwordSlash(planet, attackPosition))
+                {
+
+                    foreach (var agent in agents)
                     {
-                        var testPhysicsState = agent.agentPhysicsState;
-
-                        //TODO(): not good we need collision checks
-                        if (Vec2f.Distance(testPhysicsState.Position, physicsState.Position) <= range)
+                        if (agent != player && agent.isAgentAlive)
                         {
-                            Vec2f direction = physicsState.Position - testPhysicsState.Position;
-                            int KnockbackDir = 0;
-                            if (direction.X > 0)
+                            var testPhysicsState = agent.agentPhysicsState;
+
+                            //TODO(): not good we need collision checks
+                            if (Vec2f.Distance(testPhysicsState.Position, attackPosition) <= range)
                             {
-                                KnockbackDir = 1;
+                                Vec2f direction = physicsState.Position - testPhysicsState.Position;
+                                int KnockbackDir = 0;
+                                if (direction.X > 0)
+                                {
+                                    KnockbackDir = 1;
+                                }
+                                else 
+                                {
+                                    KnockbackDir = -1;
+                                }
+                                direction.Y = 0;
+                                direction.Normalize();
+
+                                float KnockbackValue = 10.0f;
+                                Enums.ParticleEffect bloodEffect = Enums.ParticleEffect.Blood_Small;
+
+                                if (player.agentPhysicsState.MoveIndex == 2)
+                                {
+                                    KnockbackValue = 30.0f;
+                                    bloodEffect = Enums.ParticleEffect.Blood_Medium;
+                                }
+
+                                agent.Knockback(KnockbackValue, -KnockbackDir);
+
+                                // spawns a debug floating text for damage 
+                                planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
+                                new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
+
+                                planet.AddParticleEffect(agent.agentPhysicsState.Position + agent.physicsBox2DCollider.Offset + agent.physicsBox2DCollider.Size * 0.5f,
+                                bloodEffect);
+
+                                agent.agentStats.Health.Remove((int)damage);
                             }
-                            else if (direction.X < 0)
-                            {
-                                KnockbackDir = -1;
-                            }
-                            direction.Y = 0;
-                            direction.Normalize();
-
-                            agent.Knockback(7.0f, -KnockbackDir);
-
-                            // spawns a debug floating text for damage 
-                            planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
-                            new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
-
-                            agent.agentStats.Health.Remove((int)damage);
                         }
                     }
                 }
                 
                 var destructableMechs = planet.EntitasContext.mech.GetGroup(MechMatcher.AllOf(MechMatcher.MechDurability));
 
-              // Todo: Move this code to mech system 
-
-               //foreach (var mech in destructableMechs)
-               //{
-               //    var testMechPosition = mech.mechPosition2D;
-               //
-               //    if (Vec2f.Distance(testMechPosition.Value, physicsState.Position) <= WeaponProperty.Range)
-               //    {
-               //        mech.mechDurability.Durability -= 20;
-               //
-               //        if (mech.mechDurability.Durability <= 0)
-               //        {
-               //            ToRemoveMechs.Add(mech);
-               //        }
-               //    }
-               //}
             }
 
-            //foreach (var mech in ToRemoveMechs)
-            //{
-            //    planet.AddDebris(mech.mechPosition2D.Value, GameState.ItemCreationApi.ChestIconParticle, 1.5f, 1.0f);
-            //    planet.RemoveMech(mech.mechID.Index);
-            //}
-            //
-            //ToRemoveMechs.Clear();
-
-            /*// Todo: Create a agent colision system?
-            foreach (var entity in entities)
-            {
-                if (!entity.isAgentPlayer)
-                {
-                    if (IsInRange(new Vector2(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y)))
-                    {
-                        if(ActionPropertyEntity.actionPropertyShield.ShieldActive)
-                        {
-                            planet.AddFloatingText("Shield", 0.5f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X, entity.agentPhysicsState.Position.Y + 0.35f));
-                        }
-                        else
-                        {
-                            Vec2f entityPos = entity.agentPhysicsState.Position;
-                            Vec2f bulletPos = new Vec2f(x, y);
-                            Vec2f diff = bulletPos - entityPos;
-                            diff.Y = 0;
-                            diff.Normalize();
-
-                            Vector2 oppositeDirection = new Vector2(-diff.X, -diff.Y);
-
-                            Enemies.Add(entity);
-
-                            if (entity.hasAgentStats)
-                            {
-                                var stats = entity.agentStats;
-                                entity.ReplaceAgentStats(stats.Health - (int)damage, stats.Food, stats.Water, stats.Oxygen,
-                                    stats.Fuel, stats.AttackCooldown);
-
-                                entity.agentPhysicsState.Velocity = Vec2f.Zero;
-                                CanStun = true;
-
-                                // spawns a debug floating text for damage 
-                                planet.AddFloatingText("" + damage, 0.5f, new Vec2f(oppositeDirection.x * 0.05f, oppositeDirection.y * 0.05f), new Vec2f(entityPos.X, entityPos.Y + 0.35f));
-                                nodeEntity.nodeExecution.State = Enums.ActionState.Success;
-                            }
-                        }
-                    }
-                }
-            }*/
 
             nodeEntity.nodeExecution.State = NodeState.Success;
 

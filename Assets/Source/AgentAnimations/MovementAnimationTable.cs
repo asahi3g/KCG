@@ -61,6 +61,14 @@ namespace Agent
             Enums.ItemAnimationSet  animationSet, int moveListIndex, AgentAnimation animation)
         {
             AnimationTable[(int)movementState][(int)animationType][(int)animationSet][moveListIndex] = animation;
+
+            if (moveListIndex == 0)
+            {
+                for(int i = 1; i < MoveListMaximumCount; i++)
+                {
+                    AnimationTable[(int)movementState][(int)animationType][(int)animationSet][i] = animation;
+                }
+            }
         }
 
     }

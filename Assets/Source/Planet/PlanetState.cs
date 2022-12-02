@@ -91,6 +91,7 @@ namespace Planet
             GameState.PodMeshBuilderSystem.Initialize(material, transform, 14);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
+            GameState.ParticleMeshBuilderSystem.Mesh.obj.transform.position = new UnityEngine.Vector3(0.0f, 0.0f, -2.0f);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
             GameState.Renderer.Initialize(material);
 

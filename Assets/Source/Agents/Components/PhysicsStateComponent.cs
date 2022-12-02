@@ -24,6 +24,7 @@ namespace Agent
 
 
         // move list
+        public float ActionCooldown;
         public Enums.AgentMoveList CurerentMoveList;
         public int MoveIndex;
         public float TimeBetweenMoves; // time between 2 actions
