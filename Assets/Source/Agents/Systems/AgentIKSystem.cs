@@ -66,7 +66,7 @@ namespace Agent
                     
                     if(entity.isAgentAlive)
                     {
-                        if (entity.agentID.Type == AgentType.Player || entity.agentID.Type == AgentType.EnemyMarine)
+                        if (entity.agentID.Type == AgentType.Player || entity.agentID.Type == AgentType.Marine)
                         {
                             agentRenderer.GetAnimancer().Playable.Evaluate();
 

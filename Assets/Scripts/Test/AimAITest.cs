@@ -39,7 +39,7 @@ namespace Planet.Unity
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.EnemyMarine);
+            planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.Marine);
             
             GenerateMap();
         }

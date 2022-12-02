@@ -247,7 +247,7 @@ namespace Planet.Unity
             planet.AddItemParticle(Enums.ItemType.Pistol, new Vec2f(6.0f, spawnHeight));
             planet.AddItemParticle(Enums.ItemType.Ore, new Vec2f(10.0f, spawnHeight));
 
-            planet.AddAgent(new Vec2f(6.0f, spawnHeight), Enums.AgentType.EnemyMarine);
+            planet.AddAgent(new Vec2f(6.0f, spawnHeight), Enums.AgentType.Marine);
 
             //planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(25, 32));
         }
