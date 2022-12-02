@@ -44,12 +44,7 @@ namespace Node
 
             var physicsState = agentEntity.agentPhysicsState;
 
-            if (/*physicsState.MovementState != AgentMovementState.Falling &&
-            physicsState.MovementState != AgentMovementState.Jump &&
-            physicsState.MovementState != AgentMovementState.Flip &&
-            physicsState.MovementState != AgentMovementState.JetPackFlying &&
-            physicsState.MovementState != AgentMovementState.SlidingLeft &&
-            physicsState.MovementState != AgentMovementState.SlidingRight*/true)
+            if (true)
             {
                 Vec2f target = Vec2f.Zero;
                 if (agentEntity.isAgentPlayer)
