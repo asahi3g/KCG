@@ -20,7 +20,7 @@ namespace Events
             yield return new UnityEngine.WaitForSeconds(1.0f);
             var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
 
-            enemy = GameState.Planet.AddAgent(new Vec2f(transform.position.x, transform.position.y), Enums.AgentType.EnemyMarine);
+            enemy = GameState.Planet.AddAgent(new Vec2f(transform.position.x, transform.position.y), Enums.AgentType.Marine);
 
             Init = true;
             yield return null;

@@ -119,24 +119,6 @@ namespace Planet
 
         }
 
-        // Note(Mahdi): Deprecated will be removed soon
-        public AgentEntity AddAgentAsPlayer(int spriteId, int width, int height, Vec2f position, int startingAnimation, int health, int food, int water, int oxygen, int fuel)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
-            int equipmentInventoryID =
-                AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnPlayer(spriteId, 
-                width, height, position, startingAnimation, health, food, water, oxygen, fuel, 0.2f, inventoryID,
-                equipmentInventoryID));
-
-            Player = newEntity;
-
-            return newEntity;
-        }
-
         public AgentEntity AddAgentAsPlayer(Vec2f position, AgentFaction faction = AgentFaction.Player)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
@@ -166,14 +148,6 @@ namespace Planet
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, agentType, faction, inventoryID, equipmentInventoryID));
-            return newEntity;
-        }
-
-        public AgentEntity AddAgentAsEnemy(Vec2f position)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, AgentType.Slime, AgentFaction.Enemy));
             return newEntity;
         }
 

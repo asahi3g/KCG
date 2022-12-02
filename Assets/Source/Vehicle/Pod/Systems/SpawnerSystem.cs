@@ -48,7 +48,7 @@ namespace Vehicle.Pod
 
             for (int i = 0; i <= podProperties.DefaultAgentCount; i++)
             {
-                var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.EnemyMarine, Agent.AgentFaction.Enemy);
+                var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.Marine, Agent.AgentFaction.Enemy);
                 enemy.agentAgent3DModel.SetIsActive(false);
                 enemy.isAgentAlive = false;
 

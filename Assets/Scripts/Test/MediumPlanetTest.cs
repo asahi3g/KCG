@@ -211,7 +211,7 @@ namespace Planet.Unity
             {
                 if (random.Next() % 5 == 0)
                 {
-                    planet.AddAgentAsEnemy(new Vec2f((float)i, spawnHeight));    
+                    planet.AddAgent(new Vec2f((float)i, spawnHeight), AgentType.InsectSmall, Agent.AgentFaction.Enemy);    
                 }
             }
 

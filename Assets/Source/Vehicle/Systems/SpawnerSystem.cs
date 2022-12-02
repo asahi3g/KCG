@@ -60,7 +60,7 @@ namespace Vehicle
 
                 for(int i = 0; i <= vehicleProperties.DefaultAgentCount; i++)
                 {
-                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.EnemyMarine, Agent.AgentFaction.MarineEnemy);
+                    var enemy = planet.AddAgent(Vec2f.Zero, AgentType.Marine, Agent.AgentFaction.MarineEnemy);
                     enemy.agentAgent3DModel.SetIsActive(false);
                     enemy.isAgentAlive = false;
 

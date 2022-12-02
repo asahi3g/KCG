@@ -12,67 +12,6 @@ namespace Agent
     {
         private static int UniqueID = 0;
 
-        public AgentEntity SpawnPlayer(int spriteId, int width, int height, Vec2f position,
-            int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
-            int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
-        {
-            var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
-            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
-
-            var spriteSize = new Vec2f(width / 32f, height / 32f);
-
-            entity.isAgentPlayer = true;
-            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, AgentFaction.Player, -1);
-            entity.isAgentAlive = true;
-            entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-            Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
-            entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
-            entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(9999, 0, 9999), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 
-                100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
-
-            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
-
-            entity.AddAgentPhysicsState(
-                 newPosition: position,
-                 newPreviousPosition: default,
-                 newSpeed: properties.MovProperties.DefaultSpeed,
-                 newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
-                 newVelocity: Vec2f.Zero,
-                 newAcceleration: Vec2f.Zero,
-                 newMovingDirection: 1,
-                 newFacingDirection: 1,
-                 newGroundNormal: new Vec2f(0, 1.0f),
-                 newMovementState: Enums.AgentMovementState.None,
-                 newLastAgentAnimation: new AgentAnimation(),
-                 newSetMovementState: false,
-                 newAffectedByGravity: true,
-                 newAffectedByFriction: true,
-                 newInvulnerable: false,
-                 newOnGrounded: false,
-                 newDroping: false,
-                 newActionInProgress: false,
-                 newActionJustEnded: false,
-                 newIdleAfterShootingTime: 0,
-                 newJumpCounter: 0,
-                 newActionDuration: 0,
-                 newSlidingTime: 0,
-                 newDyingDuration: 0,
-                 newDashCooldown: 0,
-                 newDashDuration: 0,
-                 newStaggerDuration: 0,
-                 newRollCooldown: 0,
-                 newRollImpactDuration: 0);
-
-
-            return entity;
-        }
-
-
         private bool CreateAgentRenderer(AgentEntity agentEntity, out AgentRenderer agentRenderer)
         {
             agentRenderer = null;
@@ -159,114 +98,38 @@ namespace Agent
                     },
                     newSquadID: -1);
             }
+            if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
+            {
+                agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
+                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
+                Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+                agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
+                agent3DModel.SetRenderer(agentRenderer);
+                SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+            }
 
             switch (agentType)
             {
                 case Enums.AgentType.Player:
                     {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
-                                agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            agent3DModel.SetRenderer(agentRenderer);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                        agentEntity.isAgentPlayer = true;
 
-                            // entity.agentPhysicsState.Speed = 10.0f;
-                            agentEntity.isAgentPlayer = true;
-
-                            if(!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.UnAlert);
-                        }
-                        
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.UnAlert);
                         break;
                     }
-                case Enums.AgentType.EnemyGunner:
+                case Enums.AgentType.Marine:
                     {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation, 
-                                Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            agent3DModel.SetRenderer(agentRenderer);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.Alert);
+                        else
+                            agentEntity.agentAction.Action = AgentAlertState.Alert;
 
-                            agentEntity.agentPhysicsState.Speed = 6.0f;
+                        ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
+                        GameState.InventoryManager.AddItem(item, inventoryID);
+                        GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
+                        agentEntity.SetModel3DWeapon(item);
 
-                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Pistol);
-                            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
-                        }
-                        
-                        break;
-                    }
-                case Enums.AgentType.EnemySwordman:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation,
-                                Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetRenderer(agentRenderer);
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Sword);
-                        }
-                        
-                        break;
-                    }
-                case Enums.AgentType.InsectSmall:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType,
-                                Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetRenderer(agentRenderer);
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                        }
-
-                        break;
-                    }
-                case Enums.AgentType.InsectLarge:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType, 
-                                Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetRenderer(agentRenderer);
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                        }
-
-                        break;
-                    }
-                case Enums.AgentType.EnemyMarine:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.SpaceMarineAnimations, 
-                                Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                            agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-                            agent3DModel.SetRenderer(agentRenderer);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            agentEntity.agentPhysicsState.Speed = 10.0f;
-
-                            if (!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.Alert);
-                            else
-                                agentEntity.agentAction.Action = AgentAlertState.Alert;
-
-                            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
-                            GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
-                            agentEntity.SetModel3DWeapon(item);
-                        }
-                        
                         break;
                     }
             }
