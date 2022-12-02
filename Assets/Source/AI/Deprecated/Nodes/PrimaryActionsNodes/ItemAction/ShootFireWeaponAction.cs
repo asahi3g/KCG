@@ -25,6 +25,13 @@ namespace Node
         {
             ref var planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+
+            if (agentEntity.agentPhysicsState.ActionInProgress)
+            {
+                nodeEntity.nodeExecution.State = NodeState.Fail;
+                return;
+            }
+
             if (!agentEntity.hasAgentInventory)
             {
                 nodeEntity.nodeExecution.State = NodeState.Fail;

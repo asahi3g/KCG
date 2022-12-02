@@ -158,7 +158,7 @@ public class PlayerInput : BaseMonoBehaviour
             if(agentRenderer.GetAgent().GetItem() != null)
             {
                 if (GameState.ItemCreationApi.GetItemProperties(agentRenderer.GetAgent().GetItem().itemType.Type).Group == 
-                    ItemGroups.Gun)
+                    ItemGroups.ToolRangedWeapon)
                 {
                     GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
                 }

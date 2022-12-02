@@ -126,7 +126,6 @@ public partial class AgentEntity
         {
             agentStagger.Stagger = true;
             isAgentAlive = false;
-            Debug.Log("Freezed");
         }
     }
 
@@ -136,8 +135,6 @@ public partial class AgentEntity
         {
             agentStagger.Stagger = false;
             isAgentAlive = true;
-            Debug.Log("UnFreezed");
-
         }
     }
 
