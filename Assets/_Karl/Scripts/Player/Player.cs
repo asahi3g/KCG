@@ -190,14 +190,14 @@ public class Player : BaseMonoBehaviour
         GameState.AgentIKSystem.Update(planetState.EntitasContext.agent);
         GameState.AgentProcessPhysicalState.Update(frameTime);
         GameState.AgentMovementSystem.Update();
-        GameState.AgentModel3DMovementSystem.Update();
+        GameState.AgentAgent3DModelMovementSystem.Update();
         GameState.ItemMovableSystem.Update();
         GameState.VehicleMovementSystem.UpdateEx();
         GameState.PodMovementSystem.UpdateEx();
         GameState.ProjectileMovementSystem.Update();
 
 
-        GameState.AgentModel3DAnimationSystem.Update();
+        GameState.AgentAgent3DModelAnimationSystem.Update();
         GameState.LootDropSystem.Update();
         GameState.FloatingTextUpdateSystem.Update(frameTime);
         GameState.AnimationUpdateSystem.Update(frameTime);
@@ -260,8 +260,8 @@ public class Player : BaseMonoBehaviour
         GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
         
-        GameState.AgentModel3DMovementSystem.Update();
-        GameState.AgentModel3DAnimationSystem.Update();
+        GameState.AgentAgent3DModelMovementSystem.Update();
+        GameState.AgentAgent3DModelAnimationSystem.Update();
 
         GameState.FloatingTextDrawSystem.Draw(10000);
 

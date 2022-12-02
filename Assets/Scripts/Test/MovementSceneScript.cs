@@ -138,9 +138,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(128, 32);
             planet.Init(mapSize);
 
-            int playerFaction = 0;
-
-            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 24), playerFaction);
+            Player = planet.AddAgentAsPlayer(new Vec2f(3.0f, 24), Agent.AgentFaction.Player);
             PlayerID = Player.agentID.ID;
 
             //Planet.AddAgent(new Vec2f(16.0f, 20), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -168,14 +166,14 @@ namespace Planet.Unity
 
 
 
-           // CharacterDisplay = new KGui.CharacterDisplay();
+            // CharacterDisplay = new KGui.CharacterDisplay();
             //CharacterDisplay.setPlayer(Player);
 
             UpdateMode(Player);
 
 
 
-            planet.AddAgent(new Vec2f(12, 25), Enums.AgentType.InsectLarge, 1);
+            planet.AddAgent(new Vec2f(12, 25), Enums.AgentType.InsectLarge, Agent.AgentFaction.Enemy);
         }
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};

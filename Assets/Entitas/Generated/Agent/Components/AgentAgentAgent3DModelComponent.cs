@@ -8,38 +8,35 @@
 //------------------------------------------------------------------------------
 public partial class AgentEntity {
 
-    public Agent.Agent3DModel Agent3DModel { get { return (Agent.Agent3DModel)GetComponent(AgentComponentsLookup.AgentModel3D); } }
-    public bool hasAgent3DModel { get { return HasComponent(AgentComponentsLookup.AgentModel3D); } }
+    public Agent.Agent3DModel agentAgent3DModel { get { return (Agent.Agent3DModel)GetComponent(AgentComponentsLookup.AgentAgent3DModel); } }
+    public bool hasAgentAgent3DModel { get { return HasComponent(AgentComponentsLookup.AgentAgent3DModel); } }
 
-    public Agent.Agent3DModel AddAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
-        var index = AgentComponentsLookup.AgentModel3D;
+    public void AddAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
+        var index = AgentComponentsLookup.AgentAgent3DModel;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
-        component.SetRenderer(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
-        component.SetLocalScale(newModelScale);
         component.AimTarget = newAimTarget;
+        component.Renderer = newRenderer;
         AddComponent(index, component);
-        return component;
     }
 
-    public void ReplaceAgentModel3D(AgentRenderer agentRenderer, Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec3f newModelScale, KMath.Vec2f newAimTarget) {
-        var index = AgentComponentsLookup.AgentModel3D;
+    public void ReplaceAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
+        var index = AgentComponentsLookup.AgentAgent3DModel;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
-        component.SetRenderer(agentRenderer);
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
-        component.SetLocalScale(newModelScale);
         component.AimTarget = newAimTarget;
+        component.Renderer = newRenderer;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveAgentModel3D() {
-        RemoveComponent(AgentComponentsLookup.AgentModel3D);
+    public void RemoveAgentAgent3DModel() {
+        RemoveComponent(AgentComponentsLookup.AgentAgent3DModel);
     }
 }
 
@@ -53,17 +50,17 @@ public partial class AgentEntity {
 //------------------------------------------------------------------------------
 public sealed partial class AgentMatcher {
 
-    static Entitas.IMatcher<AgentEntity> _matcherAgentModel3D;
+    static Entitas.IMatcher<AgentEntity> _matcherAgentAgent3DModel;
 
-    public static Entitas.IMatcher<AgentEntity> AgentModel3D {
+    public static Entitas.IMatcher<AgentEntity> AgentAgent3DModel {
         get {
-            if (_matcherAgentModel3D == null) {
-                var matcher = (Entitas.Matcher<AgentEntity>)Entitas.Matcher<AgentEntity>.AllOf(AgentComponentsLookup.AgentModel3D);
+            if (_matcherAgentAgent3DModel == null) {
+                var matcher = (Entitas.Matcher<AgentEntity>)Entitas.Matcher<AgentEntity>.AllOf(AgentComponentsLookup.AgentAgent3DModel);
                 matcher.componentNames = AgentComponentsLookup.componentNames;
-                _matcherAgentModel3D = matcher;
+                _matcherAgentAgent3DModel = matcher;
             }
 
-            return _matcherAgentModel3D;
+            return _matcherAgentAgent3DModel;
         }
     }
 }

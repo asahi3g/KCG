@@ -139,10 +139,7 @@ namespace GameScreen
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
             GameState.Planet.Init(mapSize);
             
-            int PlayerFaction = 0;
-            int EnemyFaction = 1;
-
-            Player = GameState.Planet.AddAgentAsPlayer(new Vec2f(120.0f, 15.0f), PlayerFaction);
+            Player = GameState.Planet.AddAgentAsPlayer(new Vec2f(120.0f, 15.0f), Agent.AgentFaction.Player);
             PlayerID = Player.agentID.ID;
 
             PlayerID = Player.agentID.ID;

@@ -53,13 +53,13 @@ namespace Agent
         {
             if(IKEnabled)
             {
-                var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+                var entities = agentContext.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentAgent3DModel));
                 foreach (var entity in entities)
                 {
                     
                     PhysicsStateComponent physicsStateComponent = entity.agentPhysicsState;
-                    Agent3DModel agent3DModel = entity.Agent3DModel;
-                    AgentRenderer agentRenderer = entity.Agent3DModel.Renderer;
+                    Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                    AgentRenderer agentRenderer = entity.agentAgent3DModel.Renderer;
                     transform = agentRenderer.GetModel().transform;
                     
                     agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
@@ -85,7 +85,7 @@ namespace Agent
 
                             AimTarget = agentRenderer.GetAimTarget();
 
-                            if (entity.hasAgent3DModel)
+                            if (entity.hasAgentAgent3DModel)
                             {
                                 if (transform != null)
                                 {
@@ -121,7 +121,7 @@ namespace Agent
                                             }
                                         }
 
-                                        if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Rifle)
+                                        if (entity.agentAgent3DModel.CurrentWeapon == Model3DWeaponType.Rifle)
                                         {
                                             Pistol.gameObject.SetActive(false);
                                             Rifle.gameObject.SetActive(true);
@@ -133,7 +133,7 @@ namespace Agent
 
                                             entity.agentAction.Action = AgentAlertState.Alert;
                                         }
-                                        else if (entity.Agent3DModel.CurrentWeapon == Model3DWeaponType.Pistol)
+                                        else if (entity.agentAgent3DModel.CurrentWeapon == Model3DWeaponType.Pistol)
                                         {
                                             Pistol.gameObject.SetActive(true);
                                             Rifle.gameObject.SetActive(false);

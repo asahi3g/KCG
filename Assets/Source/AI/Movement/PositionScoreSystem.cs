@@ -1,28 +1,19 @@
 ﻿using KMath;
 using System;
-using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using AI.SquadBehvaior;
 
 namespace AI.Movement
 {
     // Evaluate score of positions around AI.
     public class PositionScoreSystem
     {
-        public Vec2f[] Positions;
-
         // Basic score Account for :
         //      1) Density of allies.
         //      2) (Todo)Cover value.
         // Todo: Diffirent values for different types of properties.
-        public int[] BasicScore;
-        public int Length;
         public const int OccupiedScore = -10000;
-
-        public PositionScoreSystem()
-        {
-            Positions = new Vec2f[1024];
-            BasicScore = new int[1024];
-            Length = 0;
-        }
+        public const int DensityScore = 500; // Cost increase for increasing the agent's Density by one unit in the tile's region.
 
         // - Draw a circle of radius maximum-firing-range around the player
         // -Distribute points    along the circle evenly
@@ -31,6 +22,7 @@ namespace AI.Movement
         public void Update(int squadID)
         {
             ref Planet.PlanetState planet = ref GameState.Planet;
+            ref Squad squad = ref GameState.SquadManager.Get(squadID);
             // Todo: Make range an attribute.
             const int Range = 30;
             const int DensityRange = 8;
@@ -44,32 +36,32 @@ namespace AI.Movement
             float pos = x - Range;
             for (int j = 0; pos < x + Range; j++)
             {
-                Positions[j] = new Vec2f(pos, y);
-                BasicScore[j] = 0;
-                Length = j;
+                squad.CombatPositions[j] = new Vec2f(pos, y);
+                squad.PositionsScore[j] = 0;
+                squad.PositionsLength = j;
                 pos += 1.5f;
             }
-            // Todo function to get all tiles in radius
-            // For now do horizontal check.
+            
+            // Todo function to get all tiles in radius..
             // Initialize scores
             int[] agentIDs = Collisions.Collisions.BroadphaseAgentCircleTest(enemyPos, Range);
-            for (int j = 0; j < Length; j++)
+            for (int j = 0; j < squad.PositionsLength; j++)
             {
                 int density = 0; // Number of agents inside density range.
                 
-                // if there is an agent in this tile drastically reduce score.
+                // If there is an agent in this tile drastically reduce score.
                 foreach (int id in agentIDs)
                 {
                     AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(id);
-                    if (agent.agentID.Faction != squadID)
+                    if (agent.agentID.SquadID != squadID)
                         continue;
                     // Use goal position not current position
                     Vec2f TargetPos = GameState.BlackboardManager.Get(agent.agentController.BlackboardID).MoveToTarget;
-                    if (KMath.KMath.AlmostEquals(TargetPos.X, Positions[j].X, precision: 0.3f))
+                    if (KMath.KMath.AlmostEquals(TargetPos.X, squad.CombatPositions[j].X, precision: 0.3f))
                     {
-                        BasicScore[j] += OccupiedScore;
+                        squad.PositionsScore[j] += OccupiedScore;
                     }
-                    if (MathF.Abs(TargetPos.X - Positions[j].X) <= DensityRange)
+                    if (MathF.Abs(TargetPos.X - squad.CombatPositions[j].X) <= DensityRange)
                     {
                         density++;
                     }
@@ -79,12 +71,12 @@ namespace AI.Movement
                 if (density > 3)
                 {
                     int score = 500;
-                    BasicScore[j] -= (density - 3) * score;
+                    squad.PositionsScore[j] -= (density - 3) * score;
                 }
                 else 
                 {
                     int score = 500;
-                    BasicScore[j] += density * score; 
+                    squad.PositionsScore[j] += density * score; 
                 }
             }
 
@@ -119,29 +111,36 @@ namespace AI.Movement
         //      1) Distance from position.
         public Vec2f GetHighestScorePosition(AgentEntity agent)
         {
+            if (agent.agentID.SquadID == -1)
+            {
+                Debug.Log("Agent with no squad.");
+                return agent.agentPhysicsState.Position;
+            }
+            ref Squad squad = ref GameState.SquadManager.Get(agent.agentID.SquadID);
+
             int bestPosIndex = 0;
             int highestTotalScore = int.MinValue;
 
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < squad.PositionsLength; i++)
             {
                 int agentScore = 0;
 
-                // Account for distance to position.SS
+                // Account for distance to position.
                 Vec2f TargetPos = GameState.BlackboardManager.Get(agent.agentController.BlackboardID).MoveToTarget;
-                if (KMath.KMath.AlmostEquals(TargetPos.X, Positions[i].X, precision: 0.1f))
+                if (KMath.KMath.AlmostEquals(TargetPos.X, squad.CombatPositions[i].X, precision: 0.1f))
                 {
-                    BasicScore[i] -= OccupiedScore;
-                    agentScore += 1500;
+                    squad.PositionsScore[i] -= OccupiedScore;
+                    agentScore += 4000;
                 }
                 else
                 {
                     if (TargetPos == Vec2f.Zero)
                         TargetPos = agent.agentPhysicsState.Position;
-                    float distance = Heuristics.ManhattanDistance(TargetPos, Positions[i]);
+                    float distance = Heuristics.ManhattanDistance(TargetPos, squad.CombatPositions[i]);
                     agentScore = -(int)distance * 50;
                 }
 
-                int totalScore = BasicScore[i] + agentScore;
+                int totalScore = squad.PositionsScore[i] + agentScore;
                 if (totalScore > highestTotalScore)
                 {
                     bestPosIndex = i;
@@ -150,15 +149,8 @@ namespace AI.Movement
 
             }
 
-            BasicScore[bestPosIndex] += OccupiedScore;
-            return Positions[bestPosIndex];
-        }
-
-        public void UpdateEx()
-        {
-            // Should iterate for every faction we only have enemy faction.
-            const int enemyfaction = 1;
-            Update(enemyfaction);
+            squad.PositionsScore[bestPosIndex] += OccupiedScore;
+            return squad.CombatPositions[bestPosIndex];
         }
     }
 }

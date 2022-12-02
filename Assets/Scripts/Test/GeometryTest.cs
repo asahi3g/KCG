@@ -75,10 +75,7 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
             Planet.Init(mapSize);
 
-            int PlayerFaction = 0;
-            int EnemyFaction = 1;
-
-            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
+            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), Agent.AgentFaction.Player);
             PlayerID = Player.agentID.ID;
 
             //GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);

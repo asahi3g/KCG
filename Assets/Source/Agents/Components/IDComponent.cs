@@ -13,6 +13,7 @@ namespace Agent
         public int ID;
         public int Index;
         public Enums.AgentType Type;
-        public int Faction;
+        public AgentFaction Faction;
+        public int SquadID; // If -1 it's not part of any squad.
     }
 }

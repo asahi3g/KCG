@@ -39,9 +39,9 @@ public class AgentRenderer : BaseMonoBehaviour
     public void SetAgent(AgentEntity agent)
     {
         _agent = agent;
-        if (_agent.hasAgent3DModel)
+        if (_agent.hasAgentAgent3DModel)
         {
-            _agent.Agent3DModel.Renderer.transform.parent = transform;
+            _agent.agentAgent3DModel.Renderer.transform.parent = transform;
         }
 
         // Create UI hitpoints

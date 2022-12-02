@@ -64,7 +64,7 @@ public static class EditorGUIHelper
             if (_model3D)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgent3DModel) Draw(agentEntity.Agent3DModel);
+                if (agentEntity.hasAgentAgent3DModel) Draw(agentEntity.agentAgent3DModel);
                 else DrawNone();
                 EditorGUI.indentLevel--;
             }

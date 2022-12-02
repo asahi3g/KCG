@@ -9,12 +9,12 @@
 public static class AgentComponentsLookup {
 
     public const int AgentAction = 0;
-    public const int AgentAlive = 1;
-    public const int AgentController = 2;
-    public const int AgentCorpse = 3;
-    public const int AgentID = 4;
-    public const int AgentInventory = 5;
-    public const int AgentModel3D = 6;
+    public const int AgentAgent3DModel = 1;
+    public const int AgentAlive = 2;
+    public const int AgentController = 3;
+    public const int AgentCorpse = 4;
+    public const int AgentID = 5;
+    public const int AgentInventory = 6;
     public const int AgentPhysicsState = 7;
     public const int AgentPlayer = 8;
     public const int AgentSprite2D = 9;
@@ -29,12 +29,12 @@ public static class AgentComponentsLookup {
 
     public static readonly string[] componentNames = {
         "AgentAction",
+        "AgentAgent3DModel",
         "AgentAlive",
         "AgentController",
         "AgentCorpse",
         "AgentID",
         "AgentInventory",
-        "AgentModel3D",
         "AgentPhysicsState",
         "AgentPlayer",
         "AgentSprite2D",
@@ -48,12 +48,12 @@ public static class AgentComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(Agent.ActionComponent),
+        typeof(Agent.Agent3DModel),
         typeof(Agent.AliveComponent),
         typeof(Agent.ControllerComponent),
         typeof(Agent.CorpseComponent),
         typeof(Agent.IDComponent),
         typeof(Agent.InventoryComponent),
-        typeof(Agent.Agent3DModel),
         typeof(Agent.PhysicsStateComponent),
         typeof(Agent.PlayerComponent),
         typeof(Agent.Sprite2DComponent),

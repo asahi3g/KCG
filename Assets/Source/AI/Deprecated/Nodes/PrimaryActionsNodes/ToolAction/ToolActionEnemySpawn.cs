@@ -14,6 +14,7 @@ namespace Node.Action
             float x = worldPosition.x;
             float y = worldPosition.y;
             GameState.Planet.AddAgentAsEnemy(new Vec2f(x, y));
+            GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, nodeEntity.nodeOwner.AgentID, 0.5f);
 
             nodeEntity.nodeExecution.State =  NodeState.Success;
         }

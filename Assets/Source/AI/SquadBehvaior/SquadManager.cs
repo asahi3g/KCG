@@ -1,28 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.UIElements;
-
-namespace AI.SquadBehvaior
+﻿namespace AI.SquadBehvaior
 {
     public class SquadManager
     {
         Squad[] Squads;
-        int Length;
+        string[] Names;
+        public int Length;
 
         public SquadManager()
         {
             Length = 0;
-            Squads = new Squad[1024];
+            Squads = new Squad[64];
+            Names = new string[64];
+            Create("Default Squad"); // WIll be removed latter. Used for testing.
         }
 
-        public int Create()
+        public int Create(string name)
         {
             ref Squad squad = ref Squads[Length];
+            Names[Length] = name;
             squad.BlackboardID = GameState.BlackboardManager.CreateSquadBlackboard();
-            return Length;
+            squad.PositionsLength = 256;
+            squad.PositionsScore = new int[squad.PositionsLength];
+            squad.CombatPositions = new KMath.Vec2f[squad.PositionsLength];
+            return Length++;
+        }
+
+        public ref Squad Get(int id)
+        {
+            return ref Squads[id];
+        }
+
+        public string GetName(int id)
+        {
+            return Names[id];
         }
     }
 }
