@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13199083e14744e429b79159753fe06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _types: 08000000
+  _types: 05000000
   _initialDelay: 0.5
   _delay: 1
   _quantity: 2
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13199083e14744e429b79159753fe06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _types: 08000000
+  _types: 05000000
   _initialDelay: 1
   _delay: 5
   _quantity: 3
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13199083e14744e429b79159753fe06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _types: 09000000
+  _types: 06000000
   _initialDelay: 1
   _delay: 5
   _quantity: 1
