@@ -139,10 +139,10 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineSwordAttack_1, FadeTime=0.00f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.SwordSlash, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingSword, 1, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineSwordAttack_1, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.SwordSlash, Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.HoldingSword, 2, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineSliding, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.SpaceMarineDash, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
 
 

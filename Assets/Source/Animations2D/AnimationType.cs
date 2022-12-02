@@ -15,5 +15,9 @@ namespace Animation
 
         SwordSlash_2_Right,
         SwordSlash_2_Left,
+
+
+        SwordSlash_3_Right,
+        SwordSlash_3_Left,
     }
 }

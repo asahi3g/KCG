@@ -19,7 +19,7 @@ namespace Agent
 
                 if (entity.isAgentPlayer)
                 {
-                  //  UnityEngine.Debug.Log(physicsState.MovementState);
+                    UnityEngine.Debug.Log(physicsState.MovementState);
                 }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
@@ -43,7 +43,8 @@ namespace Agent
 
 
                 if (physicsState.MovementState != AgentMovementState.Falling && 
-                    physicsState.MovementState != AgentMovementState.Dashing)
+                    physicsState.MovementState != AgentMovementState.Dashing && 
+                    entity.IsStateFree())
                     {
                         if (physicsState.JumpCounter == 1)
                         {
@@ -108,6 +109,7 @@ namespace Agent
                     }
                 }
 
+                physicsState.ActionCooldown -= deltaTime;
                 physicsState.TimeBetweenMoves += deltaTime; 
 
 
@@ -162,44 +164,18 @@ namespace Agent
                         {
                             var box2dCollider = entity.physicsBox2DCollider;
 
-                            physicsState.MovementState = AgentMovementState.None;
+                            if (!physicsState.OnGrounded)
+                            {
+                                physicsState.MovementState = Enums.AgentMovementState.Falling;
+                            }
+                            else
+                            {
+                                physicsState.MovementState = AgentMovementState.None;
+                            }
+                            
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
-
-                            Vec2f attackPosition = physicsState.Position;   
-                            attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
-                            attackPosition.Y -= 0.75f;                
-
-                            if (physicsState.FacingDirection == 1)
-                            {
-                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
-                                attackPosition.X += 1.5f;
-                                
-                                if (physicsState.MoveIndex == 0)
-                                {
-                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Right);
-                                }
-                                else if (physicsState.MoveIndex == 1)
-                                {
-                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Right);
-    
-                                }
-                            }
-                            else if (physicsState.FacingDirection == -1)
-                            {
-                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
-                                attackPosition.X -= 1.5f;
-
-                                if (physicsState.MoveIndex == 0)
-                                {
-                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Left);
-                                }
-                                else if (physicsState.MoveIndex == 1)
-                                {
-                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Left);
-    
-                                }
-                            }
+                            physicsState.AffectedByGravity = true;
 
                             physicsState.TimeBetweenMoves = 0.0f;
 
@@ -207,7 +183,7 @@ namespace Agent
                             {
                                 var moveList = GameState.AgentMoveListPropertiesManager.GetPosition(physicsState.CurerentMoveList);
                                 var moveListProperties = GameState.AgentMoveListPropertiesManager.Get(moveList.Offset + physicsState.MoveIndex);
-                                 if (physicsState.MoveIndex == (moveList.Size - 1))
+                                    if (physicsState.MoveIndex == (moveList.Size - 1))
                                 {
                                     physicsState.MoveIndex = 0;
                                     physicsState.CurerentMoveList = Enums.AgentMoveList.Error;
@@ -331,6 +307,11 @@ namespace Agent
                     {
                         physicsState.Velocity.Y = Agent.Constants.SlidingYVelocity;
                         //planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter);
+                    }
+
+                    if (physicsState.Velocity.Y >= Physics.Constants.MaximumVelocityToFall ||
+                    physicsState.Velocity.Y <= -Physics.Constants.MaximumVelocityToFall)
+                    {
                         planet.AddParticleEmitter(physicsState.Position + new Vec2f(-0.5f, -0.35f), Particle.ParticleEmitterType.DustEmitter); 
                     }
                     physicsState.AffectedByGravity = false;
@@ -378,7 +359,8 @@ namespace Agent
 
 
                 if (physicsState.MovementState == AgentMovementState.Idle || 
-                physicsState.MovementState == AgentMovementState.None)
+                physicsState.MovementState == AgentMovementState.None &&
+                 entity.IsStateFree())
                 {
                     if (physicsState.Velocity.X >= physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement||
                     physicsState.Velocity.X <= -physicsState.Speed * Physics.Constants.MinimumVelocitySpeedRatioForMovement)

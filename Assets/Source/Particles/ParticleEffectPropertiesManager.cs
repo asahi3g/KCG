@@ -89,6 +89,20 @@ namespace Particle
         public void InitializeResources()
         {
             ParticleEffectPropertiesManager Api = GameState.ParticleEffectPropertiesManager;
+
+            Api.Create(Enums.ParticleEffect.Blood_Small);
+            Api.AddEmitter(ParticleEmitterType.BloodSmoke, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.BloodFog, Vec2f.Zero, 0.0f);
+            Api.End();
+
+            Api.Create(Enums.ParticleEffect.Blood_Medium);
+            Api.AddEmitter(ParticleEmitterType.Blood, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Blood2, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.BloodSmoke, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.BloodFog, Vec2f.Zero, 0.0f);
+            Api.End();
+
+
             Api.Create(Enums.ParticleEffect.Explosion_2);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part4, new Vec2f(-0.3f, -0.3f), 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part3, Vec2f.Zero, 0.0f);

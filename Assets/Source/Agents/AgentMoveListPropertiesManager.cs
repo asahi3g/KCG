@@ -98,7 +98,7 @@ namespace Agent
             Api.Create(Enums.AgentMoveList.Sword);
             Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
             Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
-           // Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
+            Api.AddMove(Enums.AgentMovementState.SwordSlash, DefaultMoveListMaxDelay);
             Api.End();
 
         

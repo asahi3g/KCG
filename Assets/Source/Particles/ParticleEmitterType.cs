@@ -30,6 +30,8 @@ namespace Particle
         SwordSlash_1_Left,
         SwordSlash_2_Right,
         SwordSlash_2_Left,
+        SwordSlash_3_Right,
+        SwordSlash_3_Left,
 
 
         Dust_2, // used for turning

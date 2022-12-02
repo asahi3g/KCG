@@ -504,7 +504,7 @@ MonoBehaviour:
   _types: 08000000
   _initialDelay: 1
   _delay: 5
-  _quantity: 0
+  _quantity: 10
   _faction: 1
   _maxRadius: 1
 --- !u!1 &1784760944
@@ -554,7 +554,7 @@ MonoBehaviour:
   _types: 09000000
   _initialDelay: 1
   _delay: 5
-  _quantity: 0
+  _quantity: 10
   _faction: 1
   _maxRadius: 1
 --- !u!1 &1983614674
