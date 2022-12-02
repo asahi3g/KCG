@@ -17,6 +17,10 @@ namespace Agent
                 var stats = entity.agentStats;
 
 
+                if (entity.isAgentPlayer)
+                {
+                  //  UnityEngine.Debug.Log(physicsState.MovementState);
+                }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
 
@@ -72,14 +76,14 @@ namespace Agent
                     physicsState.DashCooldown -= deltaTime;
                 }
 
-                // decrease the dash cooldown
+                // decrease the roll cooldown
                 if (physicsState.RollCooldown > 0)
                 {
                     physicsState.RollCooldown -= deltaTime;
                 }
                 else
                 {
-                    if (physicsState.MovementState == AgentMovementState.SwordSlash)
+                    if (physicsState.MovementState == AgentMovementState.Rolling)
                     {
                         physicsState.MovementState = AgentMovementState.None;
                     }
@@ -104,6 +108,20 @@ namespace Agent
                     }
                 }
 
+                physicsState.TimeBetweenMoves += deltaTime; 
+
+
+                if (physicsState.CurerentMoveList != Enums.AgentMoveList.Error)
+                {
+                    var moveList = GameState.AgentMoveListPropertiesManager.GetPosition(physicsState.CurerentMoveList);
+                    var moveListProperties = GameState.AgentMoveListPropertiesManager.Get(moveList.Offset + physicsState.MoveIndex);
+                    if (physicsState.TimeBetweenMoves > moveListProperties.MaxDelay)
+                    {
+                        physicsState.MoveIndex = 0;
+                        physicsState.CurerentMoveList = Enums.AgentMoveList.Error;
+                    }
+                }
+
                 if (physicsState.ActionDuration > 0)
                 {
                     physicsState.ActionDuration -= deltaTime;
@@ -113,6 +131,10 @@ namespace Agent
                     switch(physicsState.MovementState)
                     {
                         case AgentMovementState.MonsterAttack:
+                        case AgentMovementState.UseTool:
+                        case AgentMovementState.Drink:
+                        case AgentMovementState.PickaxeHit:
+                        case AgentMovementState.ChoppingTree:
                         {
                             physicsState.MovementState = AgentMovementState.None;
                             physicsState.ActionInProgress = false;
@@ -127,15 +149,6 @@ namespace Agent
                             physicsState.ActionJustEnded = true;
                             break;
                         }
-                        case AgentMovementState.UseTool:
-                        case AgentMovementState.Drink:
-                        {
-                            physicsState.MovementState = AgentMovementState.None;
-                            physicsState.ActionInProgress = false;
-                            physicsState.ActionJustEnded = true;
-                            break;
-                        }
-
                         case AgentMovementState.Rolling:
                         {
                             physicsState.MovementState = AgentMovementState.StandingUpAfterRolling;
@@ -145,21 +158,63 @@ namespace Agent
                             physicsState.ActionJustEnded = true;
                             break;
                         }
-
-                        case AgentMovementState.PickaxeHit:
+                        case AgentMovementState.SwordSlash:
                         {
-                                physicsState.MovementState = AgentMovementState.None;
-                                physicsState.ActionInProgress = false;
-                                physicsState.ActionJustEnded = true;
-                                break;
-                        }
+                            var box2dCollider = entity.physicsBox2DCollider;
 
-                        case AgentMovementState.ChoppingTree:
-                        {
-                                physicsState.MovementState = AgentMovementState.None;
-                                physicsState.ActionInProgress = false;
-                                physicsState.ActionJustEnded = true;
-                                break;
+                            physicsState.MovementState = AgentMovementState.None;
+                            physicsState.ActionInProgress = false;
+                            physicsState.ActionJustEnded = true;
+
+                            Vec2f attackPosition = physicsState.Position;   
+                            attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
+                            attackPosition.Y -= 0.75f;                
+
+                            if (physicsState.FacingDirection == 1)
+                            {
+                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
+                                attackPosition.X += 1.5f;
+                                
+                                if (physicsState.MoveIndex == 0)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Right);
+                                }
+                                else if (physicsState.MoveIndex == 1)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Right);
+    
+                                }
+                            }
+                            else if (physicsState.FacingDirection == -1)
+                            {
+                                attackPosition.X -= 3.0f * 0.5f; // size of the sprite
+                                attackPosition.X -= 1.5f;
+
+                                if (physicsState.MoveIndex == 0)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_1_Left);
+                                }
+                                else if (physicsState.MoveIndex == 1)
+                                {
+                                    planet.AddParticleEmitter(attackPosition, Particle.ParticleEmitterType.SwordSlash_2_Left);
+    
+                                }
+                            }
+
+                            physicsState.TimeBetweenMoves = 0.0f;
+
+                            if (physicsState.CurerentMoveList != Enums.AgentMoveList.Error)
+                            {
+                                var moveList = GameState.AgentMoveListPropertiesManager.GetPosition(physicsState.CurerentMoveList);
+                                var moveListProperties = GameState.AgentMoveListPropertiesManager.Get(moveList.Offset + physicsState.MoveIndex);
+                                 if (physicsState.MoveIndex == (moveList.Size - 1))
+                                {
+                                    physicsState.MoveIndex = 0;
+                                    physicsState.CurerentMoveList = Enums.AgentMoveList.Error;
+                                }
+                            }
+
+                            break;
                         }
                     }
                 }
@@ -220,6 +275,7 @@ namespace Agent
                 // move the agent along the normal of the surface
                 if (physicsState.MovementState == AgentMovementState.Dashing)
                 {
+                    
                     if (physicsState.OnGrounded)
                     {
                         if (physicsState.MovingDirection != 0)
@@ -238,10 +294,6 @@ namespace Agent
                         physicsState.Velocity.X = (Physics.Constants.DashSpeedMultiplier - 1.0f * (1.0f - (Physics.Constants.DashTime  - physicsState.DashDuration))) * physicsState.Speed * physicsState.MovingDirection;
                         physicsState.Velocity.Y = 0.0f;
                     }      
-
-
-                    // if we are dashing we add some particles
-                    planet.AddParticleEmitter(particlesSpawnPosition, Particle.ParticleEmitterType.DustEmitter);  
                 }
 
 

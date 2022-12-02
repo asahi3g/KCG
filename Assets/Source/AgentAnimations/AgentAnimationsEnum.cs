@@ -96,5 +96,8 @@ namespace Engine3D
         SpaceMarineLyingFront,
         SpaceMarineKnockedDownBack,
         SpaceMarineLyingBack,
+        SpaceMarineSwordAttack_1,
+        SpaceMarineSwordAttack_2,
+        SpaceMarineSwordAttack_3,
     }
 }

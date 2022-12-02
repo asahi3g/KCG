@@ -15,16 +15,11 @@ namespace Agent
                 PhysicsStateComponent physicsState = entity.agentPhysicsState;        
                 Agent3DModel agent3DModel = entity.Agent3DModel;
 
-                /*if (entity.isAgentPlayer)
-                {
-                    Debug.Log(physicsState.MovementState);
-                }*/
-
                 Animancer.AnimancerState currentClip = null;
 
                 {
                     AgentAnimation agentAnimation = 
-                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet);
+                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet, physicsState.MoveIndex);
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);

@@ -64,7 +64,7 @@ namespace Particle
         
 
         
-        public void AddEmitter(ParticleEmitterType type, Vec2f elementOffset)
+        public void AddEmitter(ParticleEmitterType type, Vec2f elementOffset, float delay)
         {
             if ((int)type >= ElementArray.Length)
             {
@@ -74,6 +74,7 @@ namespace Particle
             PropertiesArray[CurrentIndex].Size++;
 
             ElementArray[CurrentOffset].Offset = elementOffset;
+            ElementArray[CurrentOffset].Delay = delay;
             ElementArray[CurrentOffset++].Emitter = type;
         }
 
@@ -89,20 +90,28 @@ namespace Particle
         {
             ParticleEffectPropertiesManager Api = GameState.ParticleEffectPropertiesManager;
             Api.Create(Enums.ParticleEffect.Explosion_2);
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part4, new Vec2f(-0.3f, -0.3f));
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part3, Vec2f.Zero);
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part2, Vec2f.Zero);
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part1, Vec2f.Zero);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part4, new Vec2f(-0.3f, -0.3f), 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part3, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part2, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part1, Vec2f.Zero, 0.0f);
             Api.End();
 
 
             Api.Create(Enums.ParticleEffect.Smoke_2);
-            Api.AddEmitter(ParticleEmitterType.Smoke_2, Vec2f.Zero);
+            Api.AddEmitter(ParticleEmitterType.Smoke_2, Vec2f.Zero, 0.0f);
             Api.End();
 
 
             Api.Create(Enums.ParticleEffect.Smoke_3);
-            Api.AddEmitter(ParticleEmitterType.Smoke_3, Vec2f.Zero);
+            Api.AddEmitter(ParticleEmitterType.Smoke_3, Vec2f.Zero, 0.0f);
+            Api.End();
+
+
+            Api.Create(Enums.ParticleEffect.Dust_Jumping);
+            for(int i = 0; i < 8; i++)
+            {
+                Api.AddEmitter(ParticleEmitterType.Dust_Jumping, new Vec2f(0.0f, 0.15f * i), 0.015f * i);
+            }
             Api.End();
         }
 

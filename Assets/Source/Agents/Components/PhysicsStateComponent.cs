@@ -13,10 +13,29 @@ namespace Agent
         public float InitialJumpVelocity;       // Velocity at the beginning of the first jump
         public Vec2f Velocity;
         public Vec2f Acceleration;              // Instantaneous, reset to zero at the end of the frame.
+        public int LastMovingDirection;
+
+
+
+        // should be moved into its own component
+        public float MovingDistance; // moving  in the same direction will increase this value
+        public float JumpingTime; // tracks the time between the starting frame of the jump and the current frame
+        public bool JumpedFromGround; // whether the agent jumped from the ground
+
+
+        // move list
+        public Enums.AgentMoveList CurerentMoveList;
+        public int MoveIndex;
+        public float TimeBetweenMoves; // time between 2 actions
+        //-----
+
+
+
         public int MovingDirection;             // 1 or -1 last direction the player was looking at
         public int FacingDirection;
         public Vec2f GroundNormal;
 
+        public Enums.AgentMovementState LastMovementState;
         public Enums.AgentMovementState MovementState;
         public AgentAnimation LastAgentAnimation;
         public bool SetMovementState;
@@ -28,7 +47,7 @@ namespace Agent
         public bool OnGrounded;         // are we standing on a block or not // Updated by collision system.
         public bool Droping;            // dropping
 
-        public int   JumpCounter;
+        public int  JumpCounter;
 
         public float IdleAfterShootingTime;
         public float SlidingTime;

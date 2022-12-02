@@ -9,6 +9,11 @@ namespace Animation
         SlimeMoveLeft,
         Dust,
         Smoke,
-        Explosion
+        Explosion,
+        SwordSlash_1_Right,
+        SwordSlash_1_Left,
+
+        SwordSlash_2_Right,
+        SwordSlash_2_Left,
     }
 }

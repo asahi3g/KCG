@@ -922,6 +922,7 @@ namespace Item
 
             CreateItem(ItemType.Sword, "Sword");
             SetGroup(ItemGroups.Weapon);
+            SetAnimationSet(Enums.ItemAnimationSet.HoldingSword);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);

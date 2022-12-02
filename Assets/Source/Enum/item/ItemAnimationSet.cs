@@ -8,5 +8,6 @@ namespace Enums
         Default,
         HoldingPistol, // used to play pistol animations instead of default
         HoldingRifle, // used to play rifle animations instead of default
+        HoldingSword,
     }
 }
