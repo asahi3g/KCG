@@ -166,12 +166,11 @@ namespace Agent
                     {
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
                             agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
-
+                            agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
                             // entity.agentPhysicsState.Speed = 10.0f;
@@ -183,32 +182,15 @@ namespace Agent
                         
                         break;
                     }
-                case Enums.AgentType.Agent:
-                    {
-                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
-                        break;
-                    }
-                case Enums.AgentType.Slime:
-                    {
-                       // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
-                        break;
-                    }
-                case Enums.AgentType.FlyingSlime:
-                    {
-                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        break;
-                    }
                 case Enums.AgentType.EnemyGunner:
                     {
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
                             agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation, 
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
+                            agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
                             agentEntity.agentPhysicsState.Speed = 6.0f;
@@ -223,11 +205,10 @@ namespace Agent
                     {
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-
                             agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+                            agent3DModel.SetRenderer(agentRenderer);
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             agentEntity.SetModel3DWeapon(Model3DWeaponType.Sword);
@@ -239,10 +220,10 @@ namespace Agent
                     {
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
                             agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType,
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+                            agent3DModel.SetRenderer(agentRenderer);
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
@@ -257,6 +238,7 @@ namespace Agent
                             agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType, 
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+                            agent3DModel.SetRenderer(agentRenderer);
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
@@ -271,6 +253,7 @@ namespace Agent
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
                             Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
+                            agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             agentEntity.agentPhysicsState.Speed = 10.0f;
 
