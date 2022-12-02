@@ -172,14 +172,10 @@ namespace Agent
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-
-                            // entity.agentPhysicsState.Speed = 10.0f;
-                            agentEntity.isAgentPlayer = true;
-
-                            if(!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.UnAlert);
                         }
-                        
+                        agentEntity.isAgentPlayer = true;
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.UnAlert);
                         break;
                     }
                 case Enums.AgentType.EnemyGunner:
@@ -192,13 +188,10 @@ namespace Agent
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-
-                            agentEntity.agentPhysicsState.Speed = 6.0f;
-
                             agentEntity.SetModel3DWeapon(Model3DWeaponType.Pistol);
-                            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                         }
-                        
+                        agentEntity.agentPhysicsState.Speed = 6.0f;
+                        Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
                         break;
                     }
                 case Enums.AgentType.EnemySwordman:
@@ -255,18 +248,19 @@ namespace Agent
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             agent3DModel.SetRenderer(agentRenderer);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            agentEntity.agentPhysicsState.Speed = 10.0f;
-
-                            if (!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.Alert);
-                            else
-                                agentEntity.agentAction.Action = AgentAlertState.Alert;
-
-                            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
-                            GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
-                            agentEntity.SetModel3DWeapon(item);
                         }
-                        
+                        agentEntity.agentPhysicsState.Speed = 10.0f;
+
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.Alert);
+                        else
+                            agentEntity.agentAction.Action = AgentAlertState.Alert;
+
+                        ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
+                        GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
+                        if (agentEntity.hasAgentAgent3DModel)
+                            agentEntity.SetModel3DWeapon(item);
+
                         break;
                     }
             }
