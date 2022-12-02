@@ -95,11 +95,11 @@ namespace Agent
 
             ref AgentPropertiesTemplate agentPropertiesTemplate = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
-            entity.AddAgentID(UniqueID++, -1, agentType, faction, -1); // agent id 
-            entity.isAgentAlive = true;
-            entity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
-            entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(agentPropertiesTemplate.DefaultHealth, 0, agentPropertiesTemplate.DefaultHealth), new ContainerInt(100, 0, 100), 
+            agentEntity.AddAgentID(UniqueID++, -1, agentType, faction, -1); // agent id 
+            agentEntity.isAgentAlive = true;
+            agentEntity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
+            agentEntity.AddAgentAction(AgentAlertState.UnAlert);
+            agentEntity.AddAgentStats(new ContainerInt(agentPropertiesTemplate.DefaultHealth, 0, agentPropertiesTemplate.DefaultHealth), new ContainerInt(100, 0, 100), 
                 new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
 
             agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
@@ -167,9 +167,9 @@ namespace Agent
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
                                 agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
 
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
@@ -205,9 +205,9 @@ namespace Agent
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation, 
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation, 
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
 
@@ -225,9 +225,9 @@ namespace Agent
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
 
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation,
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.HumanoidAnimation,
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                             agentEntity.SetModel3DWeapon(Model3DWeaponType.Sword);
@@ -240,9 +240,9 @@ namespace Agent
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType,
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType,
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
@@ -254,9 +254,9 @@ namespace Agent
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
                             agentRenderer = UnityEngine.Object.Instantiate(agentRenderer);
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType, 
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, agentPropertiesTemplate.AnimationType, 
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer); 
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
                         }
@@ -267,13 +267,21 @@ namespace Agent
                     {
                         if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
                         {
-                            entity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.SpaceMarineAnimations, 
+                            agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null, Enums.AgentAnimationType.SpaceMarineAnimations, 
                                 Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
-                            Agent3DModel agent3DModel = entity.agentAgent3DModel;
+                            Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                             agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                             SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                            agentEntity.agentPhysicsState.Speed = 10.0f;
+
+                            if (!agentEntity.hasAgentAction)
+                                agentEntity.AddAgentAction(AgentAlertState.Alert);
+                            else
+                                agentEntity.agentAction.Action = AgentAlertState.Alert;
+
+                            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
                             GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
-                            entity.SetModel3DWeapon(item);
+                            agentEntity.SetModel3DWeapon(item);
                         }
                         
                         break;

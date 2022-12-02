@@ -43,11 +43,11 @@ public class SpawnAgents : BaseMonoBehaviour
                     else agentType = _types[Random.Range(0, length)];
 
                     AgentEntity agentEntity = planetCreationResult.GetPlanetState().AddAgent(GetSpawnPosition(), agentType, _faction);
-                    if (agentEntity.hasAgent3DModel)
+                    if (agentEntity.hasAgentAgent3DModel)
                     {
-                        if (agentEntity.Agent3DModel.Renderer)
+                        if (agentEntity.agentAgent3DModel.Renderer)
                         {
-                            agentEntity.Agent3DModel.Renderer.transform.parent = transform;
+                            agentEntity.agentAgent3DModel.Renderer.transform.parent = transform;
                         }
                     }
                 }
