@@ -62,7 +62,7 @@ namespace Action
                 ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
                 shootingData.Target = target;
 
-                GameState.Planet.AddParticleEmitter(agentEntity.GetGunFiringPosition(), ParticleEmitterType.MuzzleFlash);
+                GameState.Planet.AddParticleEmitter(startPos, ParticleEmitterType.MuzzleFlash);
                 var spread = fireWeaponProperties.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
