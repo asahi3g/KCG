@@ -243,7 +243,7 @@ namespace Agent
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Marine);
             GameState.AgentCreationApi.SetName("Marine");
-            GameState.AgentCreationApi.SetMovement(3f, 4.5f, 2);
+            GameState.AgentCreationApi.SetMovement(10f, 4.5f, 2);
             GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);

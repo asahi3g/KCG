@@ -126,7 +126,6 @@ namespace Planet
             int equipmentInventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
             
             AgentEntity agent = AddAgent(position, AgentType.Player, faction, inventoryID, equipmentInventoryID);
-            Player = agent;
             return agent;
         }
         

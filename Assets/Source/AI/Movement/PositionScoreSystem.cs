@@ -27,11 +27,14 @@ namespace AI.Movement
             const int Range = 30;
             const int DensityRange = 8;
 
-            // Todo Get enemy pos
-            Vec2f enemyPos = GameState.Planet.Player.agentPhysicsState.Position;
+            // Todo Cache enemies in squad.cs and get choosen enemy position instead of player.
+            if (planet.Player == null)
+                return;
+            Vec2f enemyPos = planet.Player.agentPhysicsState.Position;
             int x = (int)enemyPos.X;
             int y = (int)enemyPos.Y;
 
+            // Todo use same logic as collision to get surface tiles.
             // Add positions and initialize score
             float pos = x - Range;
             for (int j = 0; pos < x + Range; j++)
@@ -137,7 +140,7 @@ namespace AI.Movement
                     if (TargetPos == Vec2f.Zero)
                         TargetPos = agent.agentPhysicsState.Position;
                     float distance = Heuristics.ManhattanDistance(TargetPos, squad.CombatPositions[i]);
-                    agentScore = -(int)distance * 50;
+                    agentScore = -(int)distance * 200;
                 }
 
                 int totalScore = squad.PositionsScore[i] + agentScore;
