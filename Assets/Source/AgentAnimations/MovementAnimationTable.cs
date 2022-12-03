@@ -13,22 +13,30 @@ namespace Agent
         public int AgentAnimationTypeCount = System.Enum.GetNames(typeof(Enums.AgentAnimationType)).Length;
         public int AnimationSetCount = System.Enum.GetNames(typeof(Enums.ItemAnimationSet)).Length;
 
+        public int MoveListMaximumCount = 5; 
 
 
-        public AgentAnimation[][][] AnimationTable;
+
+
+
+        public AgentAnimation[][][][] AnimationTable;
 
 
         public void InitStage1()
         {
-            AnimationTable = new AgentAnimation[MovementStateCount][][];
+            AnimationTable = new AgentAnimation[MovementStateCount][][][];
 
             for(int movementStateIndex = 0; movementStateIndex < MovementStateCount; movementStateIndex++)
             {
-                AnimationTable[movementStateIndex] = new AgentAnimation[AgentAnimationTypeCount][];
+                AnimationTable[movementStateIndex] = new AgentAnimation[AgentAnimationTypeCount][][];
 
                 for(int animationTypeIndex = 0; animationTypeIndex < AgentAnimationTypeCount; animationTypeIndex++)
                 {
-                    AnimationTable[movementStateIndex][animationTypeIndex] = new AgentAnimation[AnimationSetCount];
+                    AnimationTable[movementStateIndex][animationTypeIndex] = new AgentAnimation[AnimationSetCount][];
+                    for(int animationSetIndex = 0; animationSetIndex < AnimationSetCount; animationSetIndex++)
+                    {
+                        AnimationTable[movementStateIndex][animationTypeIndex][animationSetIndex] = new AgentAnimation[MoveListMaximumCount];
+                    }
                 }
             }
         }
@@ -43,16 +51,24 @@ namespace Agent
 
 
         public AgentAnimation GetAnimation(Enums.AgentMovementState movementState, Enums.AgentAnimationType animationType,
-            Enums.ItemAnimationSet animationSet)
+            Enums.ItemAnimationSet animationSet, int moveListIndex = 0)
         {
-            return AnimationTable[(int)movementState][(int)animationType][(int)animationSet];
+            return AnimationTable[(int)movementState][(int)animationType][(int)animationSet][moveListIndex];
         }
 
 
         public void SetAnimation(Enums.AgentMovementState movementState, Enums.AgentAnimationType animationType,
-            Enums.ItemAnimationSet  animationSet, AgentAnimation animation)
+            Enums.ItemAnimationSet  animationSet, int moveListIndex, AgentAnimation animation)
         {
-            AnimationTable[(int)movementState][(int)animationType][(int)animationSet] = animation;
+            AnimationTable[(int)movementState][(int)animationType][(int)animationSet][moveListIndex] = animation;
+
+            if (moveListIndex == 0)
+            {
+                for(int i = 1; i < MoveListMaximumCount; i++)
+                {
+                    AnimationTable[(int)movementState][(int)animationType][(int)animationSet][i] = animation;
+                }
+            }
         }
 
     }

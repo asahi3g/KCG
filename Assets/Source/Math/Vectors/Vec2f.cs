@@ -45,6 +45,12 @@ namespace KMath
             [MethodImpl((MethodImplOptions) 256)] get => MathF.Sqrt(X * X + Y * Y);
         }
         
+
+        public Vec2f Perpendicular()
+        {
+            return new Vec2f(Y, -X);
+        }
+        
         // Returns this vector with a magnitude of 1 (Read Only).
         public Vec2f Normalized
         {

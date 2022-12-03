@@ -29,6 +29,19 @@ namespace Particle
         Explosion_2_Part4,
 
 
+        SwordSlash_1_Right,
+        SwordSlash_1_Left,
+
+        SwordSlash_2_Right,
+        SwordSlash_2_Left,
+
+        SwordSlash_3_Right,
+        SwordSlash_3_Left,
+
+        Dust_2,
+        Dust_SwordAttack,
+        Dust_3,
+
         Smoke_2,
         Smoke_3
     }

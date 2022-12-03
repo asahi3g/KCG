@@ -93,6 +93,7 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.SlidingRight &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.MonsterAttack &&
+        physicsState.MovementState != AgentMovementState.SwordSlash &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
     }
 
@@ -125,7 +126,6 @@ public partial class AgentEntity
         {
             agentStagger.Stagger = true;
             isAgentAlive = false;
-            Debug.Log("Freezed");
         }
     }
 
@@ -135,8 +135,6 @@ public partial class AgentEntity
         {
             agentStagger.Stagger = false;
             isAgentAlive = true;
-            Debug.Log("UnFreezed");
-
         }
     }
 
@@ -315,6 +313,7 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.SlidingLeft;
             physicsState.JumpCounter = 0;
+
         }
     }
 
@@ -402,18 +401,83 @@ public partial class AgentEntity
         }
     }
 
-    public void SwordSlash()
+    public bool SwordSlash(Planet.PlanetState planet, Vec2f attackPosition)
     {
-        var PhysicsState = agentPhysicsState;
+        var physicsState = agentPhysicsState;
 
-        if (IsStateFree())
+        if (isAgentAlive && IsStateFree() && physicsState.ActionCooldown <= 0.0f)
         {
-            //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
-            //PhysicsState.Velocity.Y = 0.0f;
+            var swordMoveList = GameState.AgentMoveListPropertiesManager.GetPosition(AgentMoveList.Sword);
 
-            //PhysicsState.Invulnerable = false;
-            //PhysicsState.AffectedByGravity = true;
-            PhysicsState.MovementState = AgentMovementState.SwordSlash;
+            var swordMoveListProperties = GameState.AgentMoveListPropertiesManager.Get(swordMoveList.Offset + physicsState.MoveIndex);
+
+
+            if (physicsState.TimeBetweenMoves <= swordMoveListProperties.MaxDelay && physicsState.CurerentMoveList == AgentMoveList.Sword)
+            {
+                physicsState.MoveIndex++;
+                physicsState.MoveIndex = (physicsState.MoveIndex % swordMoveList.Size);
+            }
+
+            physicsState.CurerentMoveList = AgentMoveList.Sword;
+
+         //   if (physicsState.MoveIndex == 1)
+          //  {
+                //physicsState.Velocity.X = 0.4f * physicsState.Speed * physicsState.FacingDirection;
+               // physicsState.Velocity.Y = 0.0f;
+               //physicsState.Velocity = Vec2f.Zero;
+               //physicsState.MovingDirection =  physicsState.FacingDirection;
+          //  }
+           // else
+          //  {
+              //  physicsState.Velocity.X = 0.4f * physicsState.Speed * physicsState.FacingDirection;
+              //  physicsState.Velocity.Y = 0.0f;
+
+              //physicsState.Velocity = Vec2f.Zero;
+              //physicsState.MovingDirection =  physicsState.FacingDirection;
+          //  }
+
+            physicsState.Velocity = Vec2f.Zero;
+               physicsState.MovingDirection =  physicsState.FacingDirection;
+
+            if (physicsState.OnGrounded)
+            {
+                Vec2f pos = physicsState.Position + new Vec2f(0.125f, 0.0f) + new Vec2f(0.125f, 0.0f) * physicsState.MovingDirection;
+                
+                if (physicsState.MoveIndex == 1)
+                {
+                  /*  var emitter = GameState.Planet.AddParticleEmitter(pos, Particle.ParticleEmitterType.Dust_SwordAttack);
+                    Vec2f velocity = -1.0f * 3.0f * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+                    emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);*/
+                }
+            }
+
+
+            physicsState.MovementState = AgentMovementState.SwordSlash;
+            physicsState.SetMovementState = true;
+            physicsState.AffectedByGravity = false;
+            
+            float duration = 0.5f;
+
+            physicsState.ActionInProgress = true;
+            physicsState.ActionDuration = duration;
+            if (physicsState.MoveIndex == 2)
+            {
+                physicsState.ActionCooldown = 0.8f;
+            }
+            else
+            {
+                physicsState.ActionCooldown = duration;
+            }
+            physicsState.TimeBetweenMoves = 0.0f;
+
+
+            Agent.SwordMoveList.HandleAction(this, attackPosition, planet);
+            
+            return true;
+        }
+        else 
+        {
+            return false;
         }
     }
 
@@ -435,10 +499,14 @@ public partial class AgentEntity
     public void Knockback(float velocity, int horizontalDir)
     {
         var physicsState = agentPhysicsState;
-
-        physicsState.Velocity.X = velocity * horizontalDir;
+        
+        if (physicsState.OnGrounded)
+        {
+            physicsState.Velocity = velocity * horizontalDir * physicsState.GroundNormal.Perpendicular();
+        }
+        
         physicsState.MovementState = AgentMovementState.Stagger;
-        physicsState.StaggerDuration = 1.0f;
+        physicsState.StaggerDuration = 1.5f;
     }
 
     public void Dash(int horizontalDir)
@@ -677,6 +745,16 @@ public partial class AgentEntity
                     // jumping
                     physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
                     physicsState.JumpCounter++;
+
+                    if (physicsState.OnGrounded)
+                    {
+                        physicsState.JumpedFromGround = true;
+                    }
+                    else
+                    {
+                        physicsState.JumpedFromGround = false;
+                    } 
+
             }
             else
             {

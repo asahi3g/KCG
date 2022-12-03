@@ -25,6 +25,13 @@ namespace Node
         {
             ref var planet = ref GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+
+            if (agentEntity.agentPhysicsState.ActionInProgress)
+            {
+                nodeEntity.nodeExecution.State = NodeState.Fail;
+                return;
+            }
+
             if (!agentEntity.hasAgentInventory)
             {
                 nodeEntity.nodeExecution.State = NodeState.Fail;
@@ -44,12 +51,7 @@ namespace Node
 
             var physicsState = agentEntity.agentPhysicsState;
 
-            if (/*physicsState.MovementState != AgentMovementState.Falling &&
-            physicsState.MovementState != AgentMovementState.Jump &&
-            physicsState.MovementState != AgentMovementState.Flip &&
-            physicsState.MovementState != AgentMovementState.JetPackFlying &&
-            physicsState.MovementState != AgentMovementState.SlidingLeft &&
-            physicsState.MovementState != AgentMovementState.SlidingRight*/true)
+            if (true)
             {
                 Vec2f target = Vec2f.Zero;
                 if (agentEntity.isAgentPlayer)

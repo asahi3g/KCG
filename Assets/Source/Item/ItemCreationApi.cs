@@ -448,77 +448,14 @@ namespace Item
 
         public int MineOreSheet;
 
-        public int Diamond_0;
-        public int Diamond_1;
-        public int Diamond_2;
-        public int Diamond_3;
-        public int Diamond_4;
-        public int Diamond_5;
-        public int Diamond_6;
-        public int Diamond_7;
-
-        public int PinkDiamond_0;
-        public int PinkDiamond_1;
-        public int PinkDiamond_2;
-        public int PinkDiamond_3;
-        public int PinkDiamond_4;
-        public int PinkDiamond_5;
-        public int PinkDiamond_6;
-        public int PinkDiamond_7;
-
-        public int RedStone_0;
-        public int RedStone_1;
-        public int RedStone_2;
-        public int RedStone_3;
-        public int RedStone_4;
-        public int RedStone_5;
-        public int RedStone_6;
-        public int RedStone_7;
-
-        public int Emerald_0;
-        public int Emerald_1;
-        public int Emerald_2;
-        public int Emerald_3;
-        public int Emerald_4;
-        public int Emerald_5;
-        public int Emerald_6;
-        public int Emerald_7;
-
-        public int Lapis_0;
-        public int Lapis_1;
-        public int Lapis_2;
-        public int Lapis_3;
-        public int Lapis_4;
-        public int Lapis_5;
-        public int Lapis_6;
-        public int Lapis_7;
-
-        public int Coal_0;
-        public int Coal_1;
-        public int Coal_2;
-        public int Coal_3;
-        public int Coal_4;
-        public int Coal_5;
-        public int Coal_6;
-        public int Coal_7;
-
-        public int Iron_0;
-        public int Iron_1;
-        public int Iron_2;
-        public int Iron_3;
-        public int Iron_4;
-        public int Iron_5;
-        public int Iron_6;
-        public int Iron_7;
-
-        public int Gold_0;
-        public int Gold_1;
-        public int Gold_2;
-        public int Gold_3;
-        public int Gold_4;
-        public int Gold_5;
-        public int Gold_6;
-        public int Gold_7;
+        public int Diamond;
+        public int PinkDiamond;
+        public int RedStone;
+        public int Emerald;
+        public int Lapis;
+        public int Coal;
+        public int Iron;
+        public int Gold;
 
         private int IconToolPlacement;
         private int IconToolRemoveTile;
@@ -652,89 +589,18 @@ namespace Item
             RingSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RingSlotIcon, 0, 0, AtlasType.Gui);
             BeltSlotIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BeltSlotIcon, 0, 0, AtlasType.Gui);
 
-            Diamond_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 7, AtlasType.Particle);
-            Diamond_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 7, AtlasType.Particle);
-            Diamond_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 7, AtlasType.Particle);
-            Diamond_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 7, AtlasType.Particle);
-            Diamond_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 7, AtlasType.Particle);
-            Diamond_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 7, AtlasType.Particle);
-            Diamond_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 7, AtlasType.Particle);
-            Diamond_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 7, AtlasType.Particle);
-
-            Gold_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 6, AtlasType.Particle);
-            Gold_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 6, AtlasType.Particle);
-            Gold_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 6, AtlasType.Particle);
-            Gold_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 6, AtlasType.Particle);
-            Gold_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 6, AtlasType.Particle);
-            Gold_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 6, AtlasType.Particle);
-            Gold_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 6, AtlasType.Particle);
-            Gold_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 6, AtlasType.Particle);
-
-            Iron_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 3, AtlasType.Particle);
-            Iron_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 3, AtlasType.Particle);
-            Iron_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 3, AtlasType.Particle);
-            Iron_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 3, AtlasType.Particle);
-            Iron_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 3, AtlasType.Particle);
-            Iron_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 3, AtlasType.Particle);
-            Iron_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 3, AtlasType.Particle);
-            Iron_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 3, AtlasType.Particle);
-
-            Lapis_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
-            Lapis_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 0, AtlasType.Particle);
-            Lapis_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 0, AtlasType.Particle);
-            Lapis_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 0, AtlasType.Particle);
-            Lapis_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 0, AtlasType.Particle);
-            Lapis_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 0, AtlasType.Particle);
-            Lapis_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 0, AtlasType.Particle);
-            Lapis_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 0, AtlasType.Particle);
-
-            Emerald_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 4, AtlasType.Particle);
-            Emerald_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 4, AtlasType.Particle);
-            Emerald_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 4, AtlasType.Particle);
-            Emerald_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 4, AtlasType.Particle);
-            Emerald_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 4, AtlasType.Particle);
-            Emerald_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 4, AtlasType.Particle);
-            Emerald_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 4, AtlasType.Particle);
-            Emerald_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 4, AtlasType.Particle);
-
-            Coal_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 1, AtlasType.Particle);
-            Coal_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 1, AtlasType.Particle);
-            Coal_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 1, AtlasType.Particle);
-            Coal_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 1, AtlasType.Particle);
-            Coal_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 1, AtlasType.Particle);
-            Coal_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 1, AtlasType.Particle);
-            Coal_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 1, AtlasType.Particle);
-            Coal_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 1, AtlasType.Particle);
-
-            RedStone_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 5, AtlasType.Particle);
-            RedStone_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 5, AtlasType.Particle);
-            RedStone_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 5, AtlasType.Particle);
-            RedStone_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 5, AtlasType.Particle);
-            RedStone_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 5, AtlasType.Particle);
-            RedStone_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 5, AtlasType.Particle);
-            RedStone_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 5, AtlasType.Particle);
-            RedStone_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 5, AtlasType.Particle);
-
-            Lapis_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
-            Lapis_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 0, AtlasType.Particle);
-            Lapis_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 0, AtlasType.Particle);
-            Lapis_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 0, AtlasType.Particle);
-            Lapis_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 0, AtlasType.Particle);
-            Lapis_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 0, AtlasType.Particle);
-            Lapis_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 0, AtlasType.Particle);
-            Lapis_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 0, AtlasType.Particle);
-
-            PinkDiamond_0 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 2, AtlasType.Particle);
-            PinkDiamond_1 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 1, 2, AtlasType.Particle);
-            PinkDiamond_2 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 2, 2, AtlasType.Particle);
-            PinkDiamond_3 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 3, 2, AtlasType.Particle);
-            PinkDiamond_4 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 4, 2, AtlasType.Particle);
-            PinkDiamond_5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 5, 2, AtlasType.Particle);
-            PinkDiamond_6 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 6, 2, AtlasType.Particle);
-            PinkDiamond_7 = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 7, 2, AtlasType.Particle);
+            Diamond = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 7, AtlasType.Particle);
+            Gold = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 6, AtlasType.Particle);
+            Iron = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 3, AtlasType.Particle);
+            Lapis = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
+            Emerald = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 4, AtlasType.Particle);
+            Coal = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 1, AtlasType.Particle);
+            RedStone = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 5, AtlasType.Particle);
+            Lapis = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 0, AtlasType.Particle);
+            PinkDiamond = GameState.SpriteAtlasManager.CopySpriteToAtlas(MineOreSheet, 0, 2, AtlasType.Particle);
 
             CreateItem(ItemType.SniperRifle, "SniperRifle");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(SniperRifleIcon);
             SetInventoryItemIcon(SniperRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
@@ -744,7 +610,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.LongRifle, "LongRifle");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(LongRifleIcon);
             SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
@@ -754,7 +620,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PulseWeapon, "PulseWeapon");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PulseIcon);
             SetInventoryItemIcon(PulseIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
@@ -764,7 +630,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.AutoCannon, "AutoCannon");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(LongRifleIcon);
             SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
@@ -774,7 +640,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.SMG, "SMG");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(SMGIcon);
             SetInventoryItemIcon(SMGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
@@ -788,7 +654,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Shotgun, "Shotgun");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(ShotgunIcon);
             SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 30.0f, coolDown: 1f, range: 10.0f, basicDamage: 35);
@@ -800,7 +666,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PumpShotgun, "PumpShotgun");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(ShotgunIcon);
             SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
@@ -812,7 +678,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Pistol, "Pistol");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
@@ -824,7 +690,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RPG, "RPG");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(RPGIcon);
             SetInventoryItemIcon(RPGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 3f, range: 50.0f, basicDamage: 100);
@@ -837,7 +703,7 @@ namespace Item
             CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
             SetExplosion(4.0f, 15, 0f);
@@ -847,7 +713,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Bow, "Bow");
-            SetGroup(ItemGroups.Gun);
+            SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PistolIcon);
             SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
@@ -921,7 +787,8 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.Sword, "Sword");
-            SetGroup(ItemGroups.Weapon);
+            SetGroup(ItemGroups.ToolMelleWeapon);
+            SetAnimationSet(Enums.ItemAnimationSet.HoldingSword);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
@@ -930,7 +797,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.StunBaton, "StunBaton");
-            SetGroup(ItemGroups.Weapon);
+            SetGroup(ItemGroups.ToolMelleWeapon);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
@@ -975,7 +842,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PotionTool, "PotionTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(BoneIcon);
             SetInventoryItemIcon(BoneIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -999,7 +866,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroups.Tool);
             SetTexture(IconToolPlacement);
             SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1008,7 +875,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroups.Tool);
             SetTexture(PlacementToolIcon);
             SetInventoryItemIcon(PlacementToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1017,14 +884,14 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(IconToolRemoveTile);
             SetInventoryItemIcon(IconToolRemoveTile);
             SetAction(ItemUsageActionType.ToolActionRemoveTile);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(SlimeIcon);
             SetInventoryItemIcon(SlimeIcon);
             SetAction(ItemUsageActionType.ToolActionEnemySpawn);
@@ -1038,28 +905,28 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(IconToolSpawnEnemySwordsman);
             SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
             SetAction(ItemUsageActionType.ToolActionEnemySwordmanSpawn);
             EndItem();
 
             CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(MiningLaserToolIcon);
             SetInventoryItemIcon(MiningLaserToolIcon);
             SetAction(ItemUsageActionType.ToolActionMiningLaser);
             EndItem();
 
             CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetAction(ItemUsageActionType.ToolActionPlaceParticleEmitter);
             EndItem();
 
             CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(OreIcon);
             SetInventoryItemIcon(OreIcon);
             SetAction(ItemUsageActionType.ToolActionPlaceChest);
@@ -1096,11 +963,21 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
+            SetGroup(ItemGroups.Tool);
             SetTexture(IconToolConstruction);
             SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
             SetAction(ItemUsageActionType.ToolActionConstruction);
+            EndItem();
+
+            CreateItem(ItemType.MechPlacementTool, "MechPlacementTool");
+            SetGroup(ItemGroups.Tool);
+            SetTexture(IconToolConstruction);
+            SetInventoryItemIcon(IconToolConstruction);
+            SetFlags(ItemProperties.Flags.PlacementTool);
+            SetUIPanel(PanelEnums.MechTool);
+            SetAction(ItemUsageActionType.ToolActionMechPlacement);
             EndItem();
 
             CreateItem(ItemType.Chest, "Chest");
@@ -1144,6 +1021,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.RemoveMech, "RemoveMech");
+            SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1151,6 +1029,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.ScannerTool, "ScannerTool");
+            SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
             SetAction(ItemUsageActionType.ToolActionScanner);
@@ -1241,7 +1120,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(IconToolGeometryPlacement);
             SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
@@ -1250,7 +1129,7 @@ namespace Item
             EndItem();
 
             CreateItem(ItemType.AxeTool, "AxeTool");
-            SetGroup(ItemGroups.None);
+            SetGroup(ItemGroups.Tool);
             SetTexture(SwordSpriteId);
             SetInventoryItemIcon(SwordSpriteId);
             SetAction(ItemUsageActionType.AxeAction);
@@ -1273,520 +1152,72 @@ namespace Item
             SetTile(TileID.Stone);
             EndItem();
 
-            CreateItem(ItemType.Diamond_0, "Diamond_0");
+            CreateItem(ItemType.Diamond, "Diamond");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_0);
-            SetInventoryItemIcon(Diamond_0);
+            SetTexture(Diamond);
+            SetInventoryItemIcon(Diamond);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_1, "Diamond_1");
+            CreateItem(ItemType.Gold, "Gold");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_1);
-            SetInventoryItemIcon(Diamond_1);
+            SetTexture(Gold);
+            SetInventoryItemIcon(Gold);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_2, "Diamond_2");
+            CreateItem(ItemType.Iron, "Iron");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_2);
-            SetInventoryItemIcon(Diamond_2);
+            SetTexture(Iron);
+            SetInventoryItemIcon(Iron);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_3, "Diamond_3");
+            CreateItem(ItemType.Emerald, "Emerald");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_3);
-            SetInventoryItemIcon(Diamond_3);
+            SetTexture(Emerald);
+            SetInventoryItemIcon(Emerald);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_4, "Diamond_4");
+            CreateItem(ItemType.Coal, "Coal");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_4);
-            SetInventoryItemIcon(Diamond_4);
+            SetTexture(Coal);
+            SetInventoryItemIcon(Coal);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_5, "Diamond_5");
+            CreateItem(ItemType.Lapis, "Lapis");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_5);
-            SetInventoryItemIcon(Diamond_5);
+            SetTexture(Lapis);
+            SetInventoryItemIcon(Lapis);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_6, "Diamond_6");
+            CreateItem(ItemType.PinkDia, "PinkDia");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_6);
-            SetInventoryItemIcon(Diamond_6);
+            SetTexture(PinkDiamond);
+            SetInventoryItemIcon(PinkDiamond);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
-            CreateItem(ItemType.Diamond_7, "Diamond_7");
+            CreateItem(ItemType.RedStone, "RedStone");
             SetGroup(ItemGroups.None);
-            SetTexture(Diamond_7);
-            SetInventoryItemIcon(Diamond_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_0, "Gold_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_0);
-            SetInventoryItemIcon(Gold_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_1, "Gold_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_1);
-            SetInventoryItemIcon(Gold_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_2, "Gold_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_2);
-            SetInventoryItemIcon(Gold_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_3, "Gold_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_3);
-            SetInventoryItemIcon(Gold_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_4, "Gold_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_4);
-            SetInventoryItemIcon(Gold_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_5, "Gold_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_5);
-            SetInventoryItemIcon(Gold_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_6, "Gold_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_6);
-            SetInventoryItemIcon(Gold_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Gold_7, "Gold_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(Gold_7);
-            SetInventoryItemIcon(Gold_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_0, "Iron_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_0);
-            SetInventoryItemIcon(Iron_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_1, "Iron_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_1);
-            SetInventoryItemIcon(Iron_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_2, "Iron_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_2);
-            SetInventoryItemIcon(Iron_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_3, "Iron_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_3);
-            SetInventoryItemIcon(Iron_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_4, "Iron_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_4);
-            SetInventoryItemIcon(Iron_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_5, "Iron_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_5);
-            SetInventoryItemIcon(Iron_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_6, "Iron_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_6);
-            SetInventoryItemIcon(Iron_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Iron_7, "Iron_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(Iron_7);
-            SetInventoryItemIcon(Iron_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_0, "Emerald_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_0);
-            SetInventoryItemIcon(Emerald_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_1, "Emerald_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_1);
-            SetInventoryItemIcon(Emerald_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_2, "Emerald_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_2);
-            SetInventoryItemIcon(Emerald_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_3, "Emerald_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_3);
-            SetInventoryItemIcon(Emerald_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_4, "Emerald_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_4);
-            SetInventoryItemIcon(Emerald_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_5, "Emerald_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_5);
-            SetInventoryItemIcon(Emerald_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_6, "Emerald_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_6);
-            SetInventoryItemIcon(Emerald_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Emerald_7, "Emerald_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(Emerald_7);
-            SetInventoryItemIcon(Emerald_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_0, "Coal_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_0);
-            SetInventoryItemIcon(Coal_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_1, "Coal_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_1);
-            SetInventoryItemIcon(Coal_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_2, "Coal_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_2);
-            SetInventoryItemIcon(Coal_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_3, "Coal_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_3);
-            SetInventoryItemIcon(Coal_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_4, "Coal_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_4);
-            SetInventoryItemIcon(Coal_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_5, "Coal_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_5);
-            SetInventoryItemIcon(Coal_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_6, "Coal_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_6);
-            SetInventoryItemIcon(Coal_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Coal_7, "Coal_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(Coal_7);
-            SetInventoryItemIcon(Coal_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_0, "Lapis_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_0);
-            SetInventoryItemIcon(Lapis_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_1, "Lapis_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_1);
-            SetInventoryItemIcon(Lapis_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_2, "Lapis_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_2);
-            SetInventoryItemIcon(Lapis_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_3, "Lapis_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_3);
-            SetInventoryItemIcon(Lapis_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_4, "Lapis_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_4);
-            SetInventoryItemIcon(Lapis_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_5, "Lapis_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_5);
-            SetInventoryItemIcon(Lapis_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_6, "Lapis_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_6);
-            SetInventoryItemIcon(Lapis_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.Lapis_7, "Lapis_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(Lapis_7);
-            SetInventoryItemIcon(Lapis_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_0, "PinkDia_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_0);
-            SetInventoryItemIcon(PinkDiamond_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_1, "PinkDia_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_1);
-            SetInventoryItemIcon(PinkDiamond_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_2, "PinkDia_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_2);
-            SetInventoryItemIcon(PinkDiamond_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_3, "PinkDia_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_3);
-            SetInventoryItemIcon(PinkDiamond_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_4, "PinkDia_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_4);
-            SetInventoryItemIcon(PinkDiamond_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_5, "PinkDia_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_5);
-            SetInventoryItemIcon(PinkDiamond_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_6, "PinkDia_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_6);
-            SetInventoryItemIcon(PinkDiamond_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.PinkDia_7, "PinkDia_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(PinkDiamond_7);
-            SetInventoryItemIcon(PinkDiamond_7);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_0, "RedStone_0");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_0);
-            SetInventoryItemIcon(RedStone_0);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_1, "RedStone_1");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_1);
-            SetInventoryItemIcon(RedStone_1);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_2, "RedStone_2");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_2);
-            SetInventoryItemIcon(RedStone_2);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_3, "RedStone_3");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_3);
-            SetInventoryItemIcon(RedStone_3);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_4, "RedStone_4");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_4);
-            SetInventoryItemIcon(RedStone_4);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_5, "RedStone_5");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_5);
-            SetInventoryItemIcon(RedStone_5);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_6, "RedStone_6");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_6);
-            SetInventoryItemIcon(RedStone_6);
-            SetFlags(ItemProperties.Flags.Stackable);
-            SetStackable();
-            EndItem();
-
-            CreateItem(ItemType.RedStone_7, "RedStone_7");
-            SetGroup(ItemGroups.None);
-            SetTexture(RedStone_7);
-            SetInventoryItemIcon(RedStone_7);
+            SetTexture(RedStone);
+            SetInventoryItemIcon(RedStone);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
-            SetGroup(ItemGroups.BuildTools);
+            SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
             SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();

@@ -91,6 +91,7 @@ namespace Planet
             GameState.PodMeshBuilderSystem.Initialize(material, transform, 14);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
+            GameState.ParticleMeshBuilderSystem.Mesh.obj.transform.position = new UnityEngine.Vector3(0.0f, 0.0f, -2.0f);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
             GameState.Renderer.Initialize(material);
 
@@ -329,7 +330,8 @@ namespace Planet
             for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
             {
                 Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
-                AddParticleEmitter(position + element.Offset, element.Emitter);
+                var emitter = AddParticleEmitter(position + element.Offset, element.Emitter);
+                emitter.particleEmitterState.CurrentTime = element.Delay;
             }
         }
 
@@ -442,20 +444,6 @@ namespace Planet
 
             DebugLinesCount = 1;
 
-            /*TimeState.Deficit += deltaTime;
-
-            while (TimeState.Deficit >= frameTime)
-            {
-                TimeState.Deficit -= frameTime;
-                // do a server/client tick right here
-                {
-                    TimeState.TickTime++;
-
-
-                }
-
-            }*/
-
             PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
 
             // check if the sprite atlas teSetTilextures needs to be updated
@@ -469,6 +457,7 @@ namespace Planet
             GameState.InputProcessSystem.Update();
             // Movement Systems
             GameState.AgentIKSystem.Update(EntitasContext.agent);
+            GameState.AgentEffectSystem.Update(frameTime);
             GameState.AgentProcessPhysicalState.Update(frameTime);
             GameState.AgentMovementSystem.Update();
             GameState.AgentAgent3DModelMovementSystem.Update();

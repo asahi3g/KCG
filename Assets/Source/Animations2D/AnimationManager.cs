@@ -112,12 +112,24 @@ namespace Animation
             SlimeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Enemies\\Slime\\slime.png", 32, 32);
             DustSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Dust\\dust1.png", 16, 16);
             ExplosionSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\explosion.png", 182, 182);
+            int SwordSlash_1_Right_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_1_Right.png", 38, 70);
+            int SwordSlash_1_Left_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_1_Left.png", 38, 70);
+            int SwordSlash_2_Right_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_2_Right.png", 38, 70);
+            int SwordSlash_2_Left_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_2_Left.png", 38, 70);
+            int SwordSlash_3_Right_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_3_Right.png", 70, 37);
+            int SwordSlash_3_Left_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\BakedEffects\\Sword_Slash_3_Left.png", 70, 37);
 
 
             CharacterSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(CharacterSpriteSheet, 0, 0, Enums.AtlasType.Agent);
             SlimeMoveLeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SlimeSpriteSheet, 0, 0, 3, 0, Enums.AtlasType.Agent);
             DustBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(DustSpriteSheet, 0, 0, 5, 0, Enums.AtlasType.Particle);
             ExplosionBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(ExplosionSpriteSheet, 0, 0, 4, 1, Enums.AtlasType.Particle);
+            int SwordSlash_1_RightBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_1_Right_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
+            int SwordSlash_1_LeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_1_Left_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
+            int SwordSlash_2_RightBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_2_Right_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
+            int SwordSlash_2_LeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_2_Left_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
+             int SwordSlash_3_RightBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_3_Right_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
+            int SwordSlash_3_LeftBaseSpriteId = GameState.SpriteAtlasManager.CopySpritesToAtlas(SwordSlash_3_Left_SpriteSheet, 0, 0, 2, 0, Enums.AtlasType.Particle);
 
             GameState.AnimationManager.CreateAnimation((int)AnimationType.CharacterMoveLeft);
             GameState.AnimationManager.SetName("character-move-left");
@@ -160,6 +172,44 @@ namespace Animation
             GameState.AnimationManager.SetTimePerFrame(0.075f);
             GameState.AnimationManager.SetBaseSpriteID(ExplosionBaseSpriteId);
             GameState.AnimationManager.SetFrameCount(7);
+            GameState.AnimationManager.EndAnimation();
+
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_1_Right);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_1_RightBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_1_Left);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_1_LeftBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
+            GameState.AnimationManager.EndAnimation();
+
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_2_Right);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_2_RightBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_2_Left);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_2_LeftBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_3_Right);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_3_RightBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
+            GameState.AnimationManager.EndAnimation();
+
+            GameState.AnimationManager.CreateAnimation((int)AnimationType.SwordSlash_3_Left);
+            GameState.AnimationManager.SetTimePerFrame(0.075f);
+            GameState.AnimationManager.SetBaseSpriteID(SwordSlash_3_LeftBaseSpriteId);
+            GameState.AnimationManager.SetFrameCount(3);
             GameState.AnimationManager.EndAnimation();
         }
 
