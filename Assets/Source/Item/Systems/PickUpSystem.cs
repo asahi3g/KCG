@@ -41,7 +41,7 @@ namespace Item
                     if (!agent.agentInventory.AutoPick)
                         continue;
 
-                    GameState.ActionCreationSystem.CreateAction(Enums.ItemUsageActionType .PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
+                    GameState.ActionCreationSystem.CreateAction(Enums.ActionType .PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
                 }
             }
         }

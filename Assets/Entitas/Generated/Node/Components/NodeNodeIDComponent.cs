@@ -11,7 +11,7 @@ public partial class NodeEntity {
     public Node.IDComponent nodeID { get { return (Node.IDComponent)GetComponent(NodeComponentsLookup.NodeID); } }
     public bool hasNodeID { get { return HasComponent(NodeComponentsLookup.NodeID); } }
 
-    public void AddNodeID(int newID, Enums.ItemUsageActionType newTypeID) {
+    public void AddNodeID(int newID, Enums.ActionType newTypeID) {
         var index = NodeComponentsLookup.NodeID;
         var component = (Node.IDComponent)CreateComponent(index, typeof(Node.IDComponent));
         component.ID = newID;
@@ -19,7 +19,7 @@ public partial class NodeEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceNodeID(int newID, Enums.ItemUsageActionType newTypeID) {
+    public void ReplaceNodeID(int newID, Enums.ActionType newTypeID) {
         var index = NodeComponentsLookup.NodeID;
         var component = (Node.IDComponent)CreateComponent(index, typeof(Node.IDComponent));
         component.ID = newID;

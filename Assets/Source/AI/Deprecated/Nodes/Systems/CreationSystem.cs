@@ -4,6 +4,7 @@ using Enums;
 using KMath;
 using AI;
 using System.Collections.Generic;
+using NodeSystem;
 
 namespace Node
 {
@@ -12,56 +13,32 @@ namespace Node
 
         private static int ActionID;
 
-        public int CreateBehaviorTreeNode(ItemUsageActionType ItemUsageActionTypeID, int agentID, int[] entiresID = null)
-        {
-            NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.CreateEntity();
-            nodeEntity.AddNodeID(ActionID, ItemUsageActionTypeID);
-            nodeEntity.AddNodeOwner(agentID);
-            nodeEntity.AddNodeExecution(NodeState.Entry);
-            nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
-            if (entiresID != null)
-                nodeEntity.AddNodeBlackboardData(entiresID);
-
-            switch (AISystemState.Nodes[(int)ItemUsageActionTypeID].NodeGroup)
-            {
-                case NodeGroup.CompositeNode:
-                    nodeEntity.AddNodeComposite(new List<int>(), 0);
-                    break;
-                case NodeGroup.DecoratorNode:
-                    nodeEntity.AddNodeDecorator(-1);
-                    break;
-            }
-            nodeEntity.isNodeBT = true;
-
-            return ActionID++;
-        }
-
         // Create action and schedule it. Later we will be able to create action without scheduling immediately.
         // If actions is in cool down returns -1. 
-        public int CreateAction(ItemUsageActionType ItemUsageActionTypeID, int agentID)
+        public int CreateAction(ActionType ActionTypeID, int agentID)
         {
-            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}");
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ActionTypeID)}:{ActionTypeID}), {nameof(agentID)}:{agentID}");
             
-            if (GameState.ActionCoolDownSystem.InCoolDown(ItemUsageActionTypeID, agentID))
+            if (GameState.ActionCoolDownSystem.InCoolDown(ActionTypeID, agentID))
             {
-                //UnityEngine.Debug.Log("Action " + ItemUsageActionTypeID.ToString() + " in CoolDown");
+                //UnityEngine.Debug.Log("Action " + ActionTypeID.ToString() + " in CoolDown");
                 return -1;
             }
 
             NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.CreateEntity();
-            nodeEntity.AddNodeID(ActionID, ItemUsageActionTypeID);
+            nodeEntity.AddNodeID(ActionID, ActionTypeID);
             nodeEntity.AddNodeOwner(agentID);
-            nodeEntity.AddNodeExecution(NodeState.Entry);
+            nodeEntity.AddNodeExecution(Enums.NodeState.Entry);
             nodeEntity.AddNodeTime(UnityEngine.Time.realtimeSinceStartup);
 
             return ActionID++;
         }
 
-        public int CreateAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, int itemID)
+        public int CreateAction(ActionType ActionTypeID, int agentID, int itemID)
         {
-            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(itemID)}:{itemID}");
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateAction({nameof(ActionTypeID)}:{ActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(itemID)}:{itemID}");
             
-            int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
+            int nodeID = CreateAction(ActionTypeID, agentID);
             if (nodeID != -1)
             {
                 NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);
@@ -70,11 +47,11 @@ namespace Node
             return nodeID;
         }
 
-        public int CreateMovementAction(ItemUsageActionType ItemUsageActionTypeID, int agentID, Vec2f goalPosition)
+        public int CreateMovementAction(ActionType ActionTypeID, int agentID, Vec2f goalPosition)
         {
-            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateMovementAction({nameof(ItemUsageActionTypeID)}:{ItemUsageActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(goalPosition)}:{goalPosition}");
+            //UnityEngine.Debug.Log($"{nameof(CreationSystem)}.CreateMovementAction({nameof(ActionTypeID)}:{ActionTypeID}), {nameof(agentID)}:{agentID}, {nameof(goalPosition)}:{goalPosition}");
             
-            int nodeID = CreateAction(ItemUsageActionTypeID, agentID);
+            int nodeID = CreateAction(ActionTypeID, agentID);
             if (nodeID != -1)
             {
                 NodeEntity nodeEntity = GameState.Planet.EntitasContext.node.GetEntityWithNodeIDID(nodeID);

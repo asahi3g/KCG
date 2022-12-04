@@ -5,6 +5,8 @@
         Squad[] Squads;
         string[] Names;
         public int Length;
+        public int MAX_POSITION = 256;
+        public int MAX_AGENT_COUNT = 32;
 
         public SquadManager()
         {
@@ -19,9 +21,10 @@
             ref Squad squad = ref Squads[Length];
             Names[Length] = name;
             squad.BlackboardID = GameState.BlackboardManager.CreateSquadBlackboard();
-            squad.PositionsLength = 256;
-            squad.PositionsScore = new int[squad.PositionsLength];
-            squad.CombatPositions = new KMath.Vec2f[squad.PositionsLength];
+            squad.PositionsLength = 0;
+            squad.PositionsScore = new int[MAX_POSITION];
+            squad.CombatPositions = new KMath.Vec2f[MAX_POSITION];
+            squad.MemberIDs = new int[MAX_AGENT_COUNT];
             return Length++;
         }
 
