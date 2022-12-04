@@ -41,24 +41,24 @@ namespace Agent
 
                 
 
-
+                // update the jumping state
                 if (physicsState.MovementState != AgentMovementState.Falling && 
-                    physicsState.MovementState != AgentMovementState.Dashing && 
                     entity.IsStateFree())
+                {
+                    if (physicsState.JumpCounter == 1)
                     {
-                        if (physicsState.JumpCounter == 1)
-                        {
-                            physicsState.MovementState = AgentMovementState.Jump;
-                            physicsState.AffectedByGravity = true;
-                        }
-                        else if (physicsState.JumpCounter == 2)
-                        {
-                            physicsState.MovementState = AgentMovementState.Flip;
-                            physicsState.AffectedByGravity = true;
-                        }
+                        physicsState.MovementState = AgentMovementState.Jump;
+                        physicsState.AffectedByGravity = true;
                     }
+                    else if (physicsState.JumpCounter == 2)
+                    {
+                        physicsState.MovementState = AgentMovementState.Flip;
+                        physicsState.AffectedByGravity = true;
+                    }
+                }
 
 
+                
                 if (physicsState.IdleAfterShootingTime > 0)
                 {
                     physicsState.IdleAfterShootingTime -= deltaTime;
