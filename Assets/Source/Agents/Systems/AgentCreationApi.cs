@@ -319,48 +319,48 @@ namespace Agent
         int CreateMarineBehavior()
         {
             // Node always returns success.
-            int successNodeID = NodeManager.CreateNode("SuccessNode", NodeSystem.ItemUsageActionType .Action);
+            int successNodeID = NodeManager.CreateNode("SuccessNode", NodeSystem.NodeType.Action);
             NodeManager.SetAction(NodeSystem.ActionManager.SuccessActionID);
             NodeManager.EndNode();
 
-            int wait0_1sId = NodeManager.CreateNode("Wait", NodeSystem.ItemUsageActionType .Action);
+            int wait0_1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
             NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
             NodeManager.EndNode();
 
-            int wait1sId = NodeManager.CreateNode("Wait", NodeSystem.ItemUsageActionType .Action);
+            int wait1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
             NodeManager.SetData(new WaitAction.WaitActionData(0f));
             NodeManager.EndNode();
 
-            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.ItemUsageActionType .Action);
+            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("SelectClosestTarget"));
             NodeManager.EndNode();
 
-            int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType .Action);
+            int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
             NodeManager.SetCondition(ConditionManager.GetID("InLineOfSight"));
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
             NodeManager.SetData(ConditionManager.GetID("IsInAttackRange"));
             NodeManager.EndNode();
 
-            int moveToBestScoreId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType.Action);
+            int moveToBestScoreId = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("MoveToBestScorePos"));
             NodeManager.EndNode();
 
-            int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.ItemUsageActionType .Action);
+            int aimAtId = NodeManager.CreateNode("AimAt", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("AimAt"));
             NodeManager.EndNode();
 
-            int reloadWeaponId = NodeManager.CreateNode("ReloadWeapon", NodeSystem.ItemUsageActionType .ActionSequence);
+            int reloadWeaponId = NodeManager.CreateNode("ReloadWeapon", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("ReloadWeapon"));
             NodeManager.EndNode();
 
-            int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.ItemUsageActionType .Action);
+            int fireWeaponId = NodeManager.CreateNode("FireWeapon", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("FireWeapon"));
             NodeManager.SetData(new ShootFireWeaponAction.ShootFireWeaponData());
             NodeManager.EndNode();
 
-            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.ItemUsageActionType .Sequence);
+            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
             NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
             NodeManager.AddChild(selectTargetId);
             NodeManager.AddChild(moveToId);
@@ -370,22 +370,22 @@ namespace Agent
             NodeManager.AddChild(wait0_1sId);
             NodeManager.EndNode();
 
-            int selectorShootId = NodeManager.CreateNode("SelectorShoot", NodeSystem.ItemUsageActionType .Selector);
+            int selectorShootId = NodeManager.CreateNode("SelectorShoot", NodeSystem.NodeType.Selector);
             NodeManager.SetCondition(ConditionManager.GetID("HasEnemyAlive"));
             NodeManager.AddChild(sequenceId);
             NodeManager.AddChild(reloadWeaponId);
             NodeManager.EndNode();
 
-            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.ItemUsageActionType .Selector);
+            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.NodeType.Selector);
             NodeManager.AddChild(selectorShootId);
             NodeManager.AddChild(wait1sId);
             NodeManager.EndNode();
 
-            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.ItemUsageActionType .Repeater);
+            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
             NodeManager.AddChild(selectorStateId);
             NodeManager.EndNode();
 
-            int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.ItemUsageActionType .Decorator);
+            int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.NodeType.Decorator);
             NodeManager.AddChild(repeaterId);
             NodeManager.EndNode();
 
@@ -394,25 +394,25 @@ namespace Agent
 
         int CreateInsectBehavior()
         {
-            int waitId = NodeManager.CreateNode("Wait", NodeSystem.ItemUsageActionType .Action);
+            int waitId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("Wait"));
             NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
             NodeManager.EndNode();
 
-            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.ItemUsageActionType .Action);
+            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("SelectClosestTarget"));
             NodeManager.EndNode();
 
-            int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.ItemUsageActionType .Action);
+            int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
             NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
             NodeManager.SetData(ConditionManager.GetID("ItIsOnTheNextTile"));
             NodeManager.EndNode();
 
-            int meleeId = NodeManager.CreateNode("MeleeAtack", NodeSystem.ItemUsageActionType .ActionSequence);
+            int meleeId = NodeManager.CreateNode("MeleeAtack", NodeSystem.NodeType.ActionSequence);
             NodeManager.SetAction(ActionManager.GetID("MeleeAtack"));
             NodeManager.EndNode();
 
-            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.ItemUsageActionType .Sequence);
+            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
             NodeManager.SetCondition(ConditionManager.GetID("HasEnemyAlive"));
             NodeManager.AddChild(selectTargetId);
             NodeManager.AddChild(moveToId);
@@ -420,16 +420,16 @@ namespace Agent
             NodeManager.AddChild(waitId);
             NodeManager.EndNode();
 
-            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.ItemUsageActionType .Selector);
+            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.NodeType.Selector);
             NodeManager.AddChild(sequenceId);
             NodeManager.AddChild(waitId);
             NodeManager.EndNode();
 
-            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.ItemUsageActionType .Repeater);
+            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
             NodeManager.AddChild(selectorStateId);
             NodeManager.EndNode();
 
-            int rootId = NodeManager.CreateNode("InsectBehavior", NodeSystem.ItemUsageActionType .Decorator);
+            int rootId = NodeManager.CreateNode("InsectBehavior", NodeSystem.NodeType.Decorator);
             NodeManager.AddChild(repeaterId);
             NodeManager.EndNode();
 

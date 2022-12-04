@@ -13,7 +13,8 @@ namespace AI.Movement
         //      2) (Todo)Cover value.
         // Todo: Diffirent values for different types of properties.
         public const int OccupiedScore = -10000;
-        public const int DensityScore = 500; // Cost increase for increasing the agent's Density by one unit in the tile's region.
+        public const int DensityScore = 500;    // Cost increase for increasing the agent's Density by one unit in the tile's region.
+        public const int DistanceScore = -200;  // Cost per tile distance from agent.
 
         // - Draw a circle of radius maximum-firing-range around the player
         // -Distribute points    along the circle evenly

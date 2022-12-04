@@ -10,14 +10,16 @@ namespace AI
 {
     public class InspectorView : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<InspectorView, UxmlTraits> { }
+        public new class UxmlFactory :
+            UxmlFactory<BehaviorTreeView, UxmlTraits>
+        { }
 
-        Enums.BehaviorType Type;
+        int ID;
         ScrollView scrollView;
 
-        public InspectorView()
+        public InspectorView(int id)
         {
-            Type = Enums.BehaviorType.Error;
+            ID = id; 
             VisualElement container = new VisualElement();
             container.name = "Container";
             container.style.flexGrow = 1;
@@ -32,10 +34,10 @@ namespace AI
             Add(container);
         }
 
-        public void Init(BehaviorType type)
+        public void Init(int id)
         {
             scrollView.contentViewport.Clear();
-            Type = type;
+            ID = id;
         }
 
 

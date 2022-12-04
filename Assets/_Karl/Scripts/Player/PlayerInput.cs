@@ -160,7 +160,7 @@ public class PlayerInput : BaseMonoBehaviour
                 if (GameState.ItemCreationApi.GetItemProperties(agentRenderer.GetAgent().GetItem().itemType.Type).Group == 
                     ItemGroups.ToolRangedWeapon)
                 {
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
                 }
             }
         }

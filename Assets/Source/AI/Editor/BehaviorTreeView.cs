@@ -17,7 +17,7 @@ namespace AI
         { }
 
         public Action<NodeView> OnNodeSelected;
-        public BehaviorType Type;
+        public int ID;
         public List<NodeView> NodeViews;
 
         public BehaviorTreeView()
@@ -35,134 +35,52 @@ namespace AI
             styleSheets.Add(styleSheet);
         }
 
-        private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
+        public void Init(int Id)
         {
-            if (graphViewChange.elementsToRemove != null)
-            {
-                graphViewChange.elementsToRemove.ForEach(elem => {
-                    Edge edge = elem as Edge;
-                    if (edge != null)
-                    {
-                        NodeView parentView = edge.output.node as NodeView;
-                        NodeView childView = edge.input.node as NodeView;
-                        parentView.RemoveChild(childView);
-                    }
-                });
-            }
-
-            if (graphViewChange.edgesToCreate != null)
-            {
-                graphViewChange.edgesToCreate.ForEach(edge => {
-                    NodeView parentView = edge.output.node as NodeView;
-                    NodeView childView = edge.input.node as NodeView;
-                    parentView.AddChild(childView);
-                });
-            }
-
-            NodeViews.ForEach((n) => 
-            {
-                SortChildren(n);
-            });
-
-            return graphViewChange;
-        }
-
-        public void SortChildren(NodeView node)
-        {
-            NodeGroup nodeGroup = AISystemState.GetNodeGroup(node.Node.type);
-            if (nodeGroup == NodeGroup.CompositeNode)
-            {
-                node.Node.children.Sort(SortByHorizontalPosition);
-            }
-        }
-
-
-        private int SortByHorizontalPosition(int left, int right)
-        {
-            NodeView leftNode = NodeViews[left];
-            NodeView rightNode = NodeViews[right];
-            return leftNode.Node.pos.X < rightNode.Node.pos.X ? -1 : 1;
-        }
-
-        public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
-        {
-            foreach (var node in AISystemState.Nodes)
-            {
-                if (node == null)
-                    continue;
-
-                Vector2 nodePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
-
-                switch (node.NodeGroup)
-                {
-                    case NodeGroup.DecoratorNode:
-                        evt.menu.AppendAction($"Add Decorator Node/{node.Type.ToString()}", (a) => 
-                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
-                        break;
-                    case NodeGroup.CompositeNode:
-                        evt.menu.AppendAction($"Add Composite Node/{node.Type.ToString()}", (a) => 
-                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
-                        break;
-                    case NodeGroup.ActionNode:
-                        evt.menu.AppendAction($"Add Action Node/{node.Type.ToString()}", (a) => 
-                            CreateNodeView(node.Type, new Vec2f(nodePosition.x, nodePosition.y)));
-                        break;
-                }
-            }
-            evt.menu.AppendSeparator();
-            evt.menu.AppendAction($"Delete", (a) => DeleteSelected());
+            ID = Id;
         }
 
         public void PopulateView()
         {
-            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
-            {
-                CreateNodeView(AISystemState.Behaviors.Get((int)Type).Nodes[j]);
-            }
+            ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(ID);
+            NodeSystem.Node currentNode = GameState.NodeManager.Get(bt.RootNodeId);
 
-            for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
-            {
-                if (NodeViews[j].Node.children == null)
-                    continue;
+            // Get number of leaf nodes.
+            
 
-                foreach (var index in NodeViews[j].Node.children)
-                {
-                    Edge edge = NodeViews[j].Output.ConnectTo(NodeViews[index].Input);
-                    AddElement(edge);
-                }
-            }
-            graphViewChanged += OnGraphViewChanged;
+            //for (int j = 0; j < bt.; j++)
+            //{
+            //    CreateNodeView(AISystemState.Behaviors.Get((int)Type).Nodes[j]);
+            //}
+            //
+            //for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
+            //{
+            //    if (NodeViews[j].Node.children == null)
+            //        continue;
+            //
+            //    foreach (var index in NodeViews[j].Node.children)
+            //    {
+            //        Edge edge = NodeViews[j].Output.ConnectTo(NodeViews[index].Input);
+            //        AddElement(edge);
+            //    }
+            //}
         }
 
         public void ClearTree()
         {
-            graphViewChanged -= OnGraphViewChanged;
             NodeViews.Clear();
             DeleteElements(graphElements);
         }
 
-        private NodeView CreateNodeView(NodeInfo node)
+        private NodeView CreateNodeView(int nodeID)
         {
-            NodeView nodeView = new NodeView(node);
+            NodeView nodeView = new NodeView(nodeID);
             nodeView.OnNodeSelected = OnNodeSelected;
             AddElement(nodeView);
             NodeViews.Add(nodeView);
             return nodeView;
         }
 
-        private void CreateNodeView(NodeType nodeType, Vec2f position)
-        {
-            NodeInfo node = new NodeInfo
-            {
-                index = NodeViews.Count,
-                type = nodeType,
-                pos = position,
-                children = (AISystemState.GetNodeGroup(nodeType) == NodeGroup.ActionNode) ? null : new List<int>()
-            };
-            AISystemState.Behaviors.Get((int)Type).Nodes.Add(node);
-
-            CreateNodeView(node);
-        }
 
         private void DeleteSelected()
         {

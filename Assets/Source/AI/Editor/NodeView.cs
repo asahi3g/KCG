@@ -5,44 +5,46 @@ using UnityEditor.Experimental.GraphView;
 using static UnityEditor.Experimental.GraphView.Port;
 using UnityEngine.UIElements;
 using Enums;
+using UnityEngine.Networking.Types;
+using Codice.CM.WorkspaceServer.DataStore;
 
 namespace AI
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {
-        public NodeInfo Node;
+        public int nodeID;
         public const int Width = 128;
         public const int Height = 80;
         public Port Input = null;
         public Port Output = null;
         public Action<NodeView> OnNodeSelected;
+        Vector2 Position;
 
-        public NodeView(NodeInfo node) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
+        public NodeView(int nodeId, bool isEntryNode = false) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
-            Node = node;
-            CreatePorts();
-            SetupClasses();
-            if (Node.index == 0)
+            NodeSystem.Node node = GameState.NodeManager.Get(nodeId);
+            CreatePorts(isEntryNode);
+            SetupClasses(isEntryNode);
+            if (isEntryNode) // Todo how to check if it's root in the new sistem.
                 title = "Root";
             else
-                title = node.type.ToString();
-            style.left = Node.pos.X;
-            style.top = Node.pos.Y;
+                title = GameState.NodeManager.GetName(nodeId);
+            style.left = Position.x;
+            style.top = Position.y;
         }
 
-        private void CreatePorts()
+        private void CreatePorts(bool isEntryNode)
         {
-            if (Node.index != 0)
+            NodeSystem.Node node = GameState.NodeManager.Get(nodeID);
+
+            if (isEntryNode)
             {
                 Input = CreatePort(Direction.Input, Capacity.Single);
                 inputContainer.Add(Input);
             }
-            NodeGroup nodeGroup = AISystemState.GetNodeGroup(Node.type);
 
-            if (nodeGroup == NodeGroup.CompositeNode)
+            if (!IsLeafNode())
                 Output = CreatePort(Direction.Output, Capacity.Multi);
-            else if (nodeGroup == NodeGroup.DecoratorNode)
-                Output = CreatePort(Direction.Output, Capacity.Single);
             outputContainer.Add(Output);
         }
 
@@ -66,40 +68,57 @@ namespace AI
             }
         }
 
-        private void SetupClasses()
-        { 
-            if (Node.index == 0)
+        private void SetupClasses(bool isEntryNode)
+        {
+            NodeSystem.Node node = GameState.NodeManager.Get(nodeID);
+            if (isEntryNode)
                 AddToClassList("root");
-            else if (AISystemState.GetNodeGroup(Node.type) == NodeGroup.CompositeNode)
-                AddToClassList("composite");
-            else if (AISystemState.GetNodeGroup(Node.type) == NodeGroup.DecoratorNode)
-                AddToClassList("decorator");
             else
-                AddToClassList("action");
+            { 
+                switch (node.Type)
+                {
+                    case NodeSystem.NodeType.Sequence:
+                        AddToClassList("composite");
+                        break;
+                    case NodeSystem.NodeType.Selector:
+                        AddToClassList("composite");
+                        break;
+                    case NodeSystem.NodeType.Repeater:
+                        AddToClassList("decroator");
+                        break;
+                    case NodeSystem.NodeType.Decorator:
+                        AddToClassList("decroator");
+                        break;
+                    case NodeSystem.NodeType.Action:
+                        AddToClassList("Action");
+                        break;
+                    case NodeSystem.NodeType.ActionSequence:
+                        AddToClassList("Action");
+                        break;
+                }
+            }
         }
 
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-            Node.pos.X = newPos.xMin;
-            Node.pos.Y = newPos.yMin;
-        }
-
-        public void RemoveAll()
-        {
-            Node.children.Clear();
-        }
-
-        public void RemoveChild(NodeView nodeView)
-        {
-            Node.children.Remove(nodeView.Node.index);
+            Position.x = newPos.xMin;
+            Position.y = newPos.yMin;
         }
 
         public void AddChild(NodeView nodeView)
         {
-            if (Node.children == null)
-                Node.children = new List<int>();
-            Node.children.Add(nodeView.Node.index);
-        } 
+            //if (nodeView.children == null)
+            //    nodeView.children = new List<int>();
+            //nodeView.children.Add(nodeView.Node.index);
+        }
+
+        // Node with no child.
+        public bool IsLeafNode()
+        {
+            NodeSystem.Node node = GameState.NodeManager.Get(nodeID);
+            return (node.Type != NodeSystem.NodeType.Action && node.Type != NodeSystem.NodeType.ActionSequence) ? true : false;
+
+        }
     }
 }

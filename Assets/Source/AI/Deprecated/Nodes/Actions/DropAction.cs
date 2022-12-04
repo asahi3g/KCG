@@ -1,0 +1,56 @@
+﻿//imports UnityEngine
+
+using KMath;
+using Enums;
+
+namespace Node.Action
+{
+    public class DropAction : NodeBase
+    {
+        public override ActionType  Type => ActionType .DropAction;
+
+        public override void OnEnter(NodeEntity nodeEntity)
+        {
+            AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
+            if (!agentEntity.hasAgentInventory)
+            {
+                nodeEntity.nodeExecution.State = NodeState.Fail;
+                return;
+            }
+
+            int inventoryID = agentEntity.agentInventory.InventoryID;
+            InventoryEntity inventoryEntity = GameState.Planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID);
+            ref Inventory.InventoryTemplateData InventoryEntityTemplate = ref GameState.InventoryCreationApi.Get(
+                inventoryEntity.inventoryInventoryEntity.InventoryEntityTemplateID);
+
+            // Todo: start playing some animation
+            if (InventoryEntityTemplate.HasToolBar)
+            {
+                int selected = inventoryEntity.inventoryInventoryEntity.SelectedSlotIndex;
+
+
+                ItemInventoryEntity itemInventory = GameState.InventoryManager.GetItemInSlot(agentEntity.agentInventory.InventoryID, selected);
+                if (itemInventory == null)
+                {
+                    nodeEntity.nodeExecution.State = NodeState.Fail;
+                    return;
+                }
+
+                GameState.InventoryManager.RemoveItem(inventoryID, selected);
+
+                // Create item particle from item inventory.
+                Vec2f pos = agentEntity.agentPhysicsState.Position + agentEntity.physicsBox2DCollider.Size / 2f;
+                ItemParticleEntity itemParticle = GameState.Planet.AddItemParticle(itemInventory, pos);
+                itemParticle.itemPhysicsState.Velocity = new Vec2f(agentEntity.agentPhysicsState.FacingDirection * 8.0f, 8.0f);
+                itemParticle.AddItemItemParticleAttributeUnpickable(0);
+                nodeEntity.ReplaceNodeTool(itemParticle.itemID.ID);
+
+                nodeEntity.nodeExecution.State = NodeState.Running;
+                return;
+            }
+
+            // ToolBar is non existent. 
+            nodeEntity.nodeExecution.State = NodeState.Fail;
+        }
+    }
+}

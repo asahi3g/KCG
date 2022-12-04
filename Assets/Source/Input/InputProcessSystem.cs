@@ -321,7 +321,7 @@ namespace ECSInput
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
 
-                        if (mechProperties.Action != ItemUsageActionType .None)
+                        if (mechProperties.Action != ActionType .None)
                             GameState.ActionCreationSystem.CreateAction(mechProperties.Action, agentEntity.agentID.ID);
                     }
 
@@ -353,14 +353,14 @@ namespace ECSInput
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
                 foreach (var agentEntity in agentEntities) 
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, agentEntity.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ActionType .ChargeAction, agentEntity.agentID.ID);
             }
 
             // Drop Action. 
             if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
                 foreach (var agentEntity in agentEntities)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, agentEntity.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ActionType .DropAction, agentEntity.agentID.ID);
             }
 
             // Reload Weapon.
@@ -370,7 +370,7 @@ namespace ECSInput
                 {
                     if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroups.ToolRangedWeapon)
                     {
-                        GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentEntity.agentID.ID);
+                        GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentEntity.agentID.ID);
                     }
                 }
             }
@@ -379,7 +379,7 @@ namespace ECSInput
             //if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
             //{
             //    foreach (var agentEntity in agentEntities)
-            //        GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, agentEntity.agentID.ID);
+            //        GameState.ActionCreationSystem.CreateAction(ActionType .ShieldAction, agentEntity.agentID.ID);
 
             ////}
 
