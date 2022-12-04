@@ -52,7 +52,7 @@ namespace Action
                 }
 
                 agentEntity.FireGun(fireWeaponProperties.CoolDown);
-                Vec2f startPos = agentEntity.GetGunFiringPosition();
+                Vec2f startPos = agentEntity.GetAIGunFiringPosition();
 
                 if (Math.Sign(target.X - startPos.X) != Math.Sign(agentEntity.agentPhysicsState.FacingDirection))
                     agentEntity.agentPhysicsState.FacingDirection *= -1;

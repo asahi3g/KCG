@@ -98,11 +98,13 @@ namespace Agent
                                             {
                                                 if (entity.agentPhysicsState.FacingDirection == 1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, -6.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(entity.GetAIGunFiringPosition().X,
+                                                      entity.GetAIGunFiringPosition().Y, AimTarget.position.z);
                                                 }
                                                 else if (entity.agentPhysicsState.FacingDirection == -1)
                                                 {
-                                                    AimTarget.position = new UnityEngine.Vector3(agent3DModel.AimTarget.X, agent3DModel.AimTarget.Y, 1.0f);
+                                                    AimTarget.position = new UnityEngine.Vector3(entity.GetAIGunFiringPosition().X,
+                                                      entity.GetAIGunFiringPosition().Y, AimTarget.position.z);
                                                 }
                                             }
                                             else
