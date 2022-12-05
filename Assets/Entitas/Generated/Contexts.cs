@@ -105,7 +105,7 @@ public partial class Contexts {
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
-        actionCoolDown.AddEntityIndex(new Entitas.EntityIndex<ActionCoolDownEntity, Enums.ItemUsageActionType>(
+        actionCoolDown.AddEntityIndex(new Entitas.EntityIndex<ActionCoolDownEntity, Enums.ActionType>(
             ActionCoolDownTypeID,
             actionCoolDown.GetGroup(ActionCoolDownMatcher.ActionCoolDown),
             (e, c) => ((ActionCoolDown.Component)c).TypeID));
@@ -163,7 +163,7 @@ public partial class Contexts {
             node.GetGroup(NodeMatcher.NodeID),
             (e, c) => ((Node.IDComponent)c).ID));
 
-        node.AddEntityIndex(new Entitas.EntityIndex<NodeEntity, Enums.ItemUsageActionType>(
+        node.AddEntityIndex(new Entitas.EntityIndex<NodeEntity, Enums.ActionType>(
             NodeIDTypeID,
             node.GetGroup(NodeMatcher.NodeID),
             (e, c) => ((Node.IDComponent)c).TypeID));
@@ -207,8 +207,8 @@ public partial class Contexts {
 
 public static class ContextsExtensions {
 
-    public static System.Collections.Generic.HashSet<ActionCoolDownEntity> GetEntitiesWithActionCoolDownTypeID(this ActionCoolDownContext context, Enums.ItemUsageActionType TypeID) {
-        return ((Entitas.EntityIndex<ActionCoolDownEntity, Enums.ItemUsageActionType>)context.GetEntityIndex(Contexts.ActionCoolDownTypeID)).GetEntities(TypeID);
+    public static System.Collections.Generic.HashSet<ActionCoolDownEntity> GetEntitiesWithActionCoolDownTypeID(this ActionCoolDownContext context, Enums.ActionType TypeID) {
+        return ((Entitas.EntityIndex<ActionCoolDownEntity, Enums.ActionType>)context.GetEntityIndex(Contexts.ActionCoolDownTypeID)).GetEntities(TypeID);
     }
 
     public static System.Collections.Generic.HashSet<ActionCoolDownEntity> GetEntitiesWithActionCoolDownAgentID(this ActionCoolDownContext context, int AgentID) {
@@ -255,8 +255,8 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<NodeEntity, int>)context.GetEntityIndex(Contexts.NodeIDID)).GetEntity(ID);
     }
 
-    public static System.Collections.Generic.HashSet<NodeEntity> GetEntitiesWithNodeIDTypeID(this NodeContext context, Enums.ItemUsageActionType TypeID) {
-        return ((Entitas.EntityIndex<NodeEntity, Enums.ItemUsageActionType>)context.GetEntityIndex(Contexts.NodeIDTypeID)).GetEntities(TypeID);
+    public static System.Collections.Generic.HashSet<NodeEntity> GetEntitiesWithNodeIDTypeID(this NodeContext context, Enums.ActionType TypeID) {
+        return ((Entitas.EntityIndex<NodeEntity, Enums.ActionType>)context.GetEntityIndex(Contexts.NodeIDTypeID)).GetEntities(TypeID);
     }
 
     public static System.Collections.Generic.HashSet<NodeEntity> GetEntitiesWithNodeOwner(this NodeContext context, int AgentID) {

@@ -1,7 +1,7 @@
 ﻿namespace Enums
 {
     // Todo: Procedural generate enums and Intialize functions.
-    public enum ItemUsageActionType
+    public enum ActionType
     {
         None = -1,
 

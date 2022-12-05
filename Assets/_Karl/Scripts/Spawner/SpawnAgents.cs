@@ -47,7 +47,8 @@ public class SpawnAgents : BaseMonoBehaviour
                     {
                         if (agentEntity.agentAgent3DModel.Renderer)
                         {
-                            agentEntity.agentAgent3DModel.Renderer.transform.parent = transform;
+                            agentEntity.agentAgent3DModel
+                                .Renderer.transform.parent = transform;
                         }
                     }
                 }

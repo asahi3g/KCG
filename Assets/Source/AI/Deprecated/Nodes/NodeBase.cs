@@ -6,8 +6,7 @@ namespace Node
 { 
     public class NodeBase
     {
-        public virtual ItemUsageActionType Type => ItemUsageActionType.None;
-        public virtual NodeGroup NodeGroup => NodeGroup.PlayerAction;
+        public virtual ActionType Type => ActionType.None;
 
         // List of blackboard entries used in the node.
         // This allows states parameters to show in AI visual tool.
