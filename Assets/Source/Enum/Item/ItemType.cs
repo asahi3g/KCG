@@ -28,6 +28,7 @@
         RiotShield,
         GasBomb,
         FragGrenade,
+        ConcussionGrenade,
         Flare,
 
         // Equipment

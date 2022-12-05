@@ -574,11 +574,11 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
-            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.8f, 0.8f));
-            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
-            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(1.2f, 1.2f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.8f);
+            GameState.ParticlePropertiesManager.SetEndScale(2.0f);
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.2f));
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
             GameState.ParticlePropertiesManager.End();
 
