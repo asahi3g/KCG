@@ -223,6 +223,7 @@ public class Player : BaseMonoBehaviour
         GameState.AgentProcessState.Update();
         GameState.SensorUpdateSystem.Update();
         GameState.BehaviorTreeUpdateSystem.Update();
+        GameState.SquadUpdateSystem.Update();
         GameState.BlackboardUpdatePosition.Update();
 
         App.Instance.GetPlayer().GetCamera().Tick(deltaTime);

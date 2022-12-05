@@ -113,6 +113,7 @@ namespace Agent
             {
                 case Enums.AgentType.Player:
                     {
+                        GameState.Planet.Player = agentEntity; // Todo: use id instead of pointer.
                         agentEntity.isAgentPlayer = true;
 
                         if (!agentEntity.hasAgentAction)

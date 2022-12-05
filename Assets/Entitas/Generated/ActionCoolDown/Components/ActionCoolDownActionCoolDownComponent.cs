@@ -11,7 +11,7 @@ public partial class ActionCoolDownEntity {
     public ActionCoolDown.Component actionCoolDown { get { return (ActionCoolDown.Component)GetComponent(ActionCoolDownComponentsLookup.ActionCoolDown); } }
     public bool hasActionCoolDown { get { return HasComponent(ActionCoolDownComponentsLookup.ActionCoolDown); } }
 
-    public void AddActionCoolDown(Enums.ItemUsageActionType newTypeID, int newAgentID) {
+    public void AddActionCoolDown(Enums.ActionType newTypeID, int newAgentID) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDown;
         var component = (ActionCoolDown.Component)CreateComponent(index, typeof(ActionCoolDown.Component));
         component.TypeID = newTypeID;
@@ -19,7 +19,7 @@ public partial class ActionCoolDownEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceActionCoolDown(Enums.ItemUsageActionType newTypeID, int newAgentID) {
+    public void ReplaceActionCoolDown(Enums.ActionType newTypeID, int newAgentID) {
         var index = ActionCoolDownComponentsLookup.ActionCoolDown;
         var component = (ActionCoolDown.Component)CreateComponent(index, typeof(ActionCoolDown.Component));
         component.TypeID = newTypeID;

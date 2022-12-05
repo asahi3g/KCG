@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Agent;
 using Collisions;
 using Engine3D;
@@ -171,9 +172,50 @@ public partial class AgentEntity
         return new Vec2f(worldPosition.X, worldPosition.Y);
     }
 
+    public Vec2f GetAIGunFiringTarget()
+    {
+        var physicsState = agentPhysicsState;
+
+        var worldPosition = physicsState.Position;
+
+        var agents = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+        foreach(var player in agents)
+        {
+            if(player.isAgentPlayer)
+            {
+                worldPosition = player.agentPhysicsState.Position;
+            }
+        }
+
+        float rightGunXPosition = physicsState.Position.X + 10.0f;
+        float leftGunXPosition = physicsState.Position.X - 10.0f;
+
+        if (worldPosition.X < rightGunXPosition && worldPosition.X > physicsState.Position.X)
+        {
+            worldPosition.X = physicsState.Position.X + 10.0f;
+        }
+
+        if (worldPosition.X > leftGunXPosition && worldPosition.X < physicsState.Position.X)
+        {
+            worldPosition.X = physicsState.Position.X - 10.0f;
+        }
+
+        return new Vec2f(worldPosition.X, worldPosition.Y);
+    }
+
     public Vec2f GetGunOrigin()
     {
         if(agentPhysicsState.FacingDirection == 1)
+            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
+        else if (agentPhysicsState.FacingDirection == -1)
+            return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
+        else
+            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
+    }
+
+    public Vec2f GetAIGunOrigin()
+    {
+        if (agentPhysicsState.FacingDirection == 1)
             return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
         else if (agentPhysicsState.FacingDirection == -1)
             return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
@@ -191,6 +233,19 @@ public partial class AgentEntity
         Vec2f position = GetGunOrigin();
         Vec2f dir = (targetPosition - position);
         //UnityEngine.Debug.Log(targetPosition);
+        dir.Normalize();
+        Vec2f newPosition = position + dir * 1.3f;
+        position = newPosition;
+        return position;
+    }
+
+    public Vec2f GetAIGunFiringPosition()
+    {
+        Vec2f targetPosition = GetAIGunFiringTarget();
+
+        Vec2f position = GetAIGunOrigin();
+        Vec2f dir = (targetPosition - position);
+
         dir.Normalize();
         Vec2f newPosition = position + dir * 1.3f;
         position = newPosition;

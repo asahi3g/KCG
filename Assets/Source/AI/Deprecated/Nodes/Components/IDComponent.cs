@@ -9,6 +9,6 @@ namespace Node
         [PrimaryEntityIndex]
         public int                  ID;
         [EntityIndex]
-        public Enums.ItemUsageActionType      TypeID;
+        public Enums.ActionType      TypeID;
     }
 }

@@ -56,7 +56,7 @@ namespace Planet.Unity
             {
                 var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();
                 Vec2f goalPos = new Vec2f(worldPosition.X, worldPosition.Y);
-                GameState.ActionCreationSystem.CreateMovementAction(Enums.ItemUsageActionType .MoveToAction,
+                GameState.ActionCreationSystem.CreateMovementAction(Enums.ActionType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
 
