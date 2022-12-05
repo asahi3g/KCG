@@ -12,6 +12,7 @@ public class AgentRenderer : BaseMonoBehaviour
     [SerializeField] private Transform _rotation;
     [SerializeField] private Transform _scale;
     [SerializeField] private GameObject _model;
+    [SerializeField] private GameObject _model_mesh;
     [SerializeField] private Transform _pivotHead;
     [SerializeField] private Transform _handLeft;
     [SerializeField] private Transform _handRight;
@@ -28,6 +29,7 @@ public class AgentRenderer : BaseMonoBehaviour
     public AnimancerComponent GetAnimancer() => _animancer;
     public AgentEntity GetAgent() => _agent;
     public GameObject GetModel() => _model;
+    public GameObject GetModelMesh() => _model_mesh;
     public Transform GetPivotHead() => _pivotHead;
     public Transform GetHandLeft() => _handLeft;
     public Transform GetHandRight() => _handRight;

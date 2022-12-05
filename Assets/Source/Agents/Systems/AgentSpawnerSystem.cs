@@ -105,6 +105,7 @@ namespace Agent
                 Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                 agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                 agent3DModel.SetRenderer(agentRenderer);
+                agent3DModel.Material = agentRenderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial;
                 SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
             }
 

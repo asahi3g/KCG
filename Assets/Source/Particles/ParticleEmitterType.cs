@@ -39,6 +39,8 @@ namespace Particle
         Dust_Jumping, // used for jumping
         Dust_Landing, // used for landing
 
+        SwordAttack_Impact,
+
 
         Smoke_2,
         Smoke_3

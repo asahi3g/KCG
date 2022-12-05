@@ -19,7 +19,7 @@ namespace Agent
 
                 if (entity.isAgentPlayer)
                 {
-                    UnityEngine.Debug.Log(physicsState.MovementState);
+//                    UnityEngine.Debug.Log(physicsState.MovementState);
                 }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;

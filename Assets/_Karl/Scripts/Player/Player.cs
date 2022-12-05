@@ -196,7 +196,7 @@ public class Player : BaseMonoBehaviour
         GameState.PodMovementSystem.UpdateEx();
         GameState.ProjectileMovementSystem.Update();
 
-
+        GameState.AgentEffectSystem.Update(frameTime);
         GameState.AgentAgent3DModelAnimationSystem.Update();
         GameState.LootDropSystem.Update();
         GameState.FloatingTextUpdateSystem.Update(frameTime);

@@ -58,7 +58,7 @@ namespace Projectile
             var stats = agentEntity.agentStats;
             if (projectileEntity.hasProjectileDamage)
             {
-                if(agentEntity.hasAgentStagger)
+                if(agentEntity.hasAgentStagger && !agentEntity.isAgentPlayer)
                 {
                     agentEntity.Stagger();
                 }

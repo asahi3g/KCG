@@ -10,6 +10,10 @@ namespace Agent
         public GameObject Weapon;
         public Enums.AgentAnimationType AnimationType;
         public Enums.ItemAnimationSet ItemAnimationSet;
+
+        public UnityEngine.Material Material;
+        public float FlashDuration;
+        public MeshRenderer ModelMeshRenderer;
         
         public KMath.Vec2f AimTarget;
 

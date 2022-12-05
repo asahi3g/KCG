@@ -35,9 +35,50 @@ namespace Node
 
                 Vec2f playerCenterPosition = physicsState.Position + box2dCollider.Offset + box2dCollider.Size * 0.5f;
 
-                Vec2f attackPosition = physicsState.Position;   
+                Vec2f dir = cursorWorldPosition - playerCenterPosition;
+                dir.Normalize();
+                float angle = System.MathF.Atan2(dir.Y, dir.X);
+
+                bool useSwordSlash = false;
+                Vec2f attackPosition = new Vec2f();
+
+                if (physicsState.FacingDirection == 1)
+                {
+                   /* if (angle >= System.MathF.PI * 0.25f)
+                    {
+                        attackPosition = physicsState.Position;   
+                        attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
+                        if (physicsState.FacingDirection == 1)
+                        {
+                            attackPosition.X += 1.5f;
+                        }
+                        else if (physicsState.FacingDirection == -1)
+                        {
+                            attackPosition.X -= 1.5f;
+                        }    
+
+                        useSwordSlash = player.SwordSlashUp(planet, attackPosition);
+                    }
+                    else
+                    {
+                        attackPosition = physicsState.Position;   
+                        attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
+                        attackPosition.Y -= 0.75f;
+                        if (physicsState.FacingDirection == 1)
+                        {
+                            attackPosition.X += 1.5f;
+                        }
+                        else if (physicsState.FacingDirection == -1)
+                        {
+                            attackPosition.X -= 1.5f;
+                        }    
+                        useSwordSlash = player.SwordSlashDiagonal(planet, attackPosition);
+                    }*/
+                }
+
+                attackPosition = physicsState.Position;   
                 attackPosition.Y += box2dCollider.Offset.Y + box2dCollider.Size.Y * 0.5f;
-                attackPosition.Y -= 0.75f;
+               // attackPosition.Y -= 0.75f;
                 if (physicsState.FacingDirection == 1)
                 {
                     attackPosition.X += 1.5f;
@@ -45,10 +86,13 @@ namespace Node
                 else if (physicsState.FacingDirection == -1)
                 {
                     attackPosition.X -= 1.5f;
-                }         
+                }    
+                useSwordSlash = player.SwordSlashDiagonal(planet, attackPosition);
+
+                 
                 
 
-                if (player.SwordSlash(planet, attackPosition))
+                if (useSwordSlash)
                 {
 
                     foreach (var agent in agents)
@@ -83,10 +127,14 @@ namespace Node
                                 }
 
                                 agent.Knockback(KnockbackValue, -KnockbackDir);
+                                agent.FlashFor(0.125f);
 
                                 // spawns a debug floating text for damage 
                                 planet.AddFloatingText("" + damage, 0.5f, new Vec2f(direction.X * 0.05f, direction.Y * 0.05f), 
                                 new Vec2f(testPhysicsState.Position.X, testPhysicsState.Position.Y + 0.35f));
+
+                                planet.AddParticleEmitter(agent.agentPhysicsState.Position + agent.physicsBox2DCollider.Offset + agent.physicsBox2DCollider.Size * 0.5f, 
+                                Particle.ParticleEmitterType.SwordAttack_Impact);
 
                                 planet.AddParticleEffect(agent.agentPhysicsState.Position + agent.physicsBox2DCollider.Offset + agent.physicsBox2DCollider.Size * 0.5f,
                                 bloodEffect);

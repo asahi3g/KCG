@@ -30,6 +30,7 @@ namespace GameScreen
         {
             base.Update();
 
+            GameState.Planet.Player = Player;
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F3))
