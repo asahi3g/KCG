@@ -341,6 +341,24 @@ namespace Planet
             return newEntity;
         }
 
+        public void SpawnMuzzleEffect(Vec2f position, int direction)
+        {
+            if(direction == 1)
+            {
+                var Prefab = (GameObject)GameObject.Instantiate(Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new Vector3(position.X, position.Y, 0.0f), Quaternion.identity);
+                var renderer = Prefab.GetComponent<ParticleSystemRenderer>();
+                renderer.flip = new Vector3(0, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<ParticleSystem>().Play();
+            }
+            else if (direction == -1)
+            {
+                var Prefab = (GameObject)GameObject.Instantiate(Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new Vector3(position.X, position.Y, 0.0f), Quaternion.identity);
+                var renderer = Prefab.GetComponent<ParticleSystemRenderer>();
+                renderer.flip = new Vector3(-1, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<ParticleSystem>().Play();
+            }
+        }
+
         public void RemoveParticleEmitter(int index)
         {
             ParticleEntity entity = ParticleEmitterList.Get(index);
