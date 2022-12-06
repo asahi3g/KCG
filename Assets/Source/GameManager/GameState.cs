@@ -177,7 +177,6 @@ public static class GameState
     #endregion
 
     #region GUI/HUD
-    public static readonly Gui.GuiResourceManager GuiResourceManager;
     // outdated
     public static readonly KGUI.GUIManager GUIManager;
 
@@ -203,7 +202,6 @@ public static class GameState
         GeometryPropertiesManager.InitStage1();
         AdjacencyPropertiesManager.InitStage1();
         GUIManager.InitStage1();
-        GuiResourceManager.InitStage1();
         ParticleEffectPropertiesManager.InitStage1();
         AgentMoveListPropertiesManager.InitStage1();
         AgentEffectSystem.InitStage1();
@@ -224,7 +222,6 @@ public static class GameState
         GeometryPropertiesManager.InitStage2();
         AdjacencyPropertiesManager.InitStage2();
         GUIManager.InitStage2();
-        GuiResourceManager.InitStage2();
         ParticleEffectPropertiesManager.InitStage2();
         AgentMoveListPropertiesManager.InitStage2();
         AgentEffectSystem.InitStage2();
@@ -242,8 +239,7 @@ public static class GameState
         Planet = new PlanetState();
 
         PrefabManager = new Prefab.PrefabManager();
-        
-        GuiResourceManager = new Gui.GuiResourceManager();
+    
 
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
