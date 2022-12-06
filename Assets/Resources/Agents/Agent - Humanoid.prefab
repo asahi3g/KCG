@@ -2299,6 +2299,7 @@ MonoBehaviour:
   _rotation: {fileID: 4584533826158078010}
   _scale: {fileID: 8668455835473681988}
   _model: {fileID: 4584533827711139403}
+  _model_mesh: {fileID: 2249543657689452789}
   _pivotHead: {fileID: 4820132756645866074}
   _handLeft: {fileID: 2249543658561612319}
   _handRight: {fileID: 2249543658452667202}

@@ -5,6 +5,7 @@ namespace Enums
         Invalid = 0,
         Grenade,
         FragGrenade,
+        ConcussionGrenade,
         Arrow,
         Bolt,
         Bullet,

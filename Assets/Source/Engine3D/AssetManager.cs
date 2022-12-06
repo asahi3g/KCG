@@ -67,6 +67,8 @@ namespace Engine3D
         private void LoadAll()
         {
             long beginTime = DateTime.Now.Ticks;
+
+            LoadMaterials();
             
             agentAnimations.LoadAnimations();
             _modelLoaderAgents.LoadAll();
@@ -81,6 +83,11 @@ namespace Engine3D
             ResourcesLoader<UIHitpoints> resourcesLoader = new ResourcesLoader<UIHitpoints>("UI");
             resourcesLoader.LoadAll();
             resourcesLoader.GetFirst(out _prefabUIHitpoints);
+        }
+
+        public void LoadMaterials()
+        {
+            MaterialLoader.Load("Materials/FlashWhiteMaterial", MaterialType.FlashWhiteMaterial);
         }
 
     }

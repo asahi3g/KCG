@@ -1119,6 +1119,13 @@ namespace Item
             SetAction(ActionType.ThrowFragGrenadeAction);
             EndItem();
 
+            CreateItem(ItemType.ConcussionGrenade, "ConcussionGrenade");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSpriteId);
+            SetInventoryItemIcon(GrenadeSpriteId);
+            SetAction(ActionType.ThrowConcussionGrenadeAction);
+            EndItem();
+
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolGeometryPlacement);

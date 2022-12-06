@@ -20,12 +20,13 @@ namespace Agent
         {
          var planet = GameState.Planet;
             var entitiesWithMovementState = planet.EntitasContext.agent.GetGroup(
-                AgentMatcher.AllOf(AgentMatcher.AgentPhysicsState, AgentMatcher.AgentStats));
+                AgentMatcher.AllOf(AgentMatcher.AgentID));
 
             foreach (var entity in entitiesWithMovementState)
             {
                 var physicsState = entity.agentPhysicsState;
                 var box2DCollider = entity.physicsBox2DCollider;
+                var model3d = entity.agentAgent3DModel;
 
                 Vec2f feetPosition = physicsState.Position + new Vec2f(0.125f, 0.0f) + new Vec2f(0.125f, 0.0f) * physicsState.MovingDirection;
 
@@ -88,6 +89,20 @@ namespace Agent
                         emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);
                     }
                 }
+
+
+
+                
+                if (model3d.FlashDuration > 0.0f)
+                {
+                    model3d.FlashDuration -= deltaTime;
+
+                    if (model3d.FlashDuration <= 0.0f)
+                    {
+                        model3d.Renderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial = model3d.Material;
+                    }
+                }
+
 
             }
         }
