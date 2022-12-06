@@ -889,6 +889,9 @@ public partial class AgentEntity
 
     public void SetOnHoverOutline(bool enable)
     {
-        agentAgent3DModel.Renderer.GetModel().transform.Find("MediumMarine").GetComponent<HighlightPlus.HighlightEffect>().highlighted = enable;       
+        if(agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>() != null)
+        {
+            agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>().highlighted = enable;
+        }
     }
 }
