@@ -100,11 +100,11 @@ namespace Agent
                     {
                         physicsState.MovementState = AgentMovementState.None;
                         GameState.AgentIKSystem.SetIKEnabled(true);
-                        if (GameState.AgentIKSystem.Rifle != null ||
-                            GameState.AgentIKSystem.Pistol != null)
+                        if (GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotRifle() != null ||
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotPistol() != null)
                         {
-                            GameState.AgentIKSystem.Rifle.gameObject.SetActive(true);
-                            GameState.AgentIKSystem.Pistol.gameObject.SetActive(true);
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotRifle().gameObject.SetActive(true);
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotPistol().gameObject.SetActive(true);
                         }
                     }
                 }
