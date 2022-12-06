@@ -104,7 +104,8 @@ namespace Particle
 
 
             Api.Create(Enums.ParticleEffect.Explosion_2);
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part4, new Vec2f(-0.3f, -0.3f), 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Flash, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Impact, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part3, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part2, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part1, Vec2f.Zero, 0.0f);
