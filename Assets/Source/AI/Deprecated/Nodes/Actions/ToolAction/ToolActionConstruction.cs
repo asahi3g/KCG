@@ -23,6 +23,9 @@ namespace Node.Action
                 if (x >= 0 && x < planet.TileMap.MapSize.X &&
                 y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
+                    if (itemEntity.itemMechPlacement.MechID == MechType.Error)
+                        itemEntity.itemMechPlacement.MechID = MechType.SmashableBox;
+
                     var mech = GameState.MechCreationApi.Get(itemEntity.itemMechPlacement.MechID);
 
                     var xRange = UnityEngine.Mathf.CeilToInt(mech.SpriteSize.X);

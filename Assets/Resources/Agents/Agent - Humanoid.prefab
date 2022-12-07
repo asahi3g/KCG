@@ -2475,8 +2475,8 @@ MonoBehaviour:
   _pivotHead: {fileID: 4820132756645866074}
   _handLeft: {fileID: 2249543658561612319}
   _handRight: {fileID: 2249543658452667202}
-  _pivotPistol: {fileID: 2249543658238961558}
-  _pivotRifle: {fileID: 2249543658097527077}
+  _pivotPistol: {fileID: 2249543657932952889}
+  _pivotRifle: {fileID: 2249543658205316588}
   _aimTarget: {fileID: 2249543658326317823}
   _rifleBodyAim: {fileID: 2249543657041024815}
   _rifleWeaponPose: {fileID: 2249543656694901157}

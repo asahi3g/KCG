@@ -8,19 +8,13 @@ namespace Audio
     {
         private AudioSource audioSource;
 
-        public AudioSystem() { }
-
-        public AudioSystem(AudioSource _audioSource)
-        {
-            audioSource = _audioSource;
-        }
-
         public void InitStage1()
         {
         }
 
-        public void InitStage2()
+        public void InitStage2(AudioSource _audioSource)
         {
+            audioSource = _audioSource;
         }
 
         public void PlayOneShot(AudioClip clip)
@@ -65,6 +59,14 @@ namespace Audio
 
             AudioClip tempClip = Resources.Load(clipPath, typeof(AudioClip)) as AudioClip;
             audioSource.clip = tempClip;
+        }
+
+        public void SetAudioSource(AudioSource source)
+        {
+            if (source == null)
+                return;
+
+            audioSource = source;
         }
 
         public void Stop()

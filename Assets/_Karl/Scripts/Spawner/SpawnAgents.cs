@@ -40,7 +40,7 @@ public class SpawnAgents : BaseMonoBehaviour
                     AgentType agentType;
                         
                     if (length == 1) agentType = _types[0];
-                    else agentType = _types[Random.Range(0, length)];
+                    else agentType = _types[Random.Range(0, length - 1)];
 
                     AgentEntity agentEntity = planetCreationResult.GetPlanetState().AddAgent(GetSpawnPosition(), agentType, _faction);
                     if (agentEntity.hasAgentAgent3DModel)

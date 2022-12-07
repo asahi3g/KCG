@@ -10,7 +10,12 @@ namespace Vehicle.Pod
         private static int UniqueID;
         PodCreationApi PodCreationApi;
 
-        public SpawnerSystem(PodCreationApi podCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(PodCreationApi podCreationApi)
         {
             PodCreationApi = podCreationApi;
         }
