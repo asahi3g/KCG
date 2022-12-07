@@ -11,15 +11,14 @@ namespace AI
     public class InspectorView : VisualElement
     {
         public new class UxmlFactory :
-            UxmlFactory<BehaviorTreeView, UxmlTraits>
+            UxmlFactory<InspectorView, UxmlTraits>
         { }
 
         int ID;
         ScrollView scrollView;
-
-        public InspectorView(int id)
+        DropdownField agentsField;
+        public InspectorView()
         {
-            ID = id; 
             VisualElement container = new VisualElement();
             container.name = "Container";
             container.style.flexGrow = 1;

@@ -10,18 +10,8 @@ namespace AI
     {
         InspectorView inspectorView;
         BehaviorTreeView behaviorTreeView;
-        ToolbarMenu toolbarMenu;
+        DropdownField BehaviorTreeList;
         VisualElement root;
-
-        VisualElement NewTreeWindow;
-        TextField NewBehaviorName;
-
-        VisualElement AddSensorWindow;
-        DropdownField NewSensorType;
-
-        VisualElement AddBlackboardEntryWindow;
-        TextField NewEntryName;
-        DropdownField NewType;
 
 
         [MenuItem("AI/BehaviorTreeEditor")]
@@ -42,35 +32,58 @@ namespace AI
             inspectorView = root.Q<InspectorView>();
             behaviorTreeView = root.Q<BehaviorTreeView>();
             behaviorTreeView.OnNodeSelected = inspectorView.UpdateSelection;
-            SelectTree(0);
+            BehaviorTreeList = root.Q<DropdownField>();
+            BehaviorTreeList.RegisterValueChangedCallback(OnChangeValueCallback);
+            BehaviorTreeList.RegisterCallback<PointerDownEvent>(OnPointerDown);
 
-            toolbarMenu = root.Q<ToolbarMenu>();
-            for (int i = 1; i < GameState.BehaviorTreeManager.GetLength(); i++)
-            {
-                ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(i);
-                AgentEntity agent = bt.GetAgentOwner();
-                toolbarMenu.menu.AppendAction($"{agent.agentID.Type.ToString() + " iD: " + agent.agentID.ID.ToString()}", 
-                    (a) => SelectTree(i));
-            }
+            UpdateDropDownChoices();
+            SelectTree(BehaviorTreeList.index);
         }
 
         void SelectTree(int id)
         {
-            ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(id);
-            behaviorTreeView.ID = id;
             behaviorTreeView.ClearTree();
-            behaviorTreeView.PopulateView();
-            behaviorTreeView.Init(id);
-            inspectorView.Init(id);
+            if (id >= 0)
+            {
+                ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(id);
+                behaviorTreeView.ID = id;
+                behaviorTreeView.Init(id);
+                inspectorView.Init(id);
+            }
+        }
+
+        void OnChangeValueCallback(ChangeEvent<string> evt)
+        {
+            Debug.Log($"Behavior tree changed. old: {evt.previousValue}, new: {evt.newValue}");
+            SelectTree(BehaviorTreeList.index);
+        }
+
+        void OnPointerDown(PointerDownEvent evt)
+        {
+            BehaviorTreeList.choices.Clear();
+            for (int i = 1; i < GameState.BehaviorTreeManager.GetLength(); i++)
+            {
+                ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(i);
+                AgentEntity agent = bt.GetAgentOwner();
+                BehaviorTreeList.choices.Add(agent.agentID.Type.ToString() + " ID: " + agent.agentID.ID.ToString());
+            }
+        }
+
+        void UpdateDropDownChoices()
+        {
+            BehaviorTreeList.choices.Clear();
+            for (int i = 1; i < GameState.BehaviorTreeManager.GetLength(); i++)
+            {
+                ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(i);
+                AgentEntity agent = bt.GetAgentOwner();
+                BehaviorTreeList.choices.Add(agent.agentID.Type.ToString() + " ID: " + agent.agentID.ID.ToString());
+            }
         }
 
         private void OnGUI()
         {
             //Set the container height to the window
             rootVisualElement.Q<VisualElement>("Container").style.height = new StyleLength(position.height);
-            NewTreeWindow.style.height = new StyleLength(position.height);
-            AddSensorWindow.style.height = new StyleLength(position.height);
-            AddBlackboardEntryWindow.style.height = new StyleLength(position.height);
         }
     }
 }

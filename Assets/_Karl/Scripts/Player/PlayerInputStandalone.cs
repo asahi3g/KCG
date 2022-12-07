@@ -17,6 +17,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     [SerializeField] private SOInput _secondAction;
     [SerializeField] private SOInput _jetpack;
     [SerializeField] private SOInput _reload;
+    [SerializeField] private SOInput _dropItem;
     [SerializeField] private SOInput _inventory;
     [Header("Other")]
     [SerializeField] private SOInput _mainMenu;
@@ -87,6 +88,9 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         // Reload
         if (IsKeyDown(_reload)) _input.DoPlayerReload();
 
+        // Drop item
+        if (IsKeyDown(_dropItem)) _input.DoPlayerDropItem();
+        
         // Take Screenshot
         if (IsKeyDown(_screenShot)) _input.DoScreenshot();
 
