@@ -13,6 +13,8 @@ namespace Projectile
         public bool HasAnimation;
         public Animation.AnimationType AnimationType;
 
+        public int NumberOfTicks;
+        public float BlastMagnitude;
         public float StartVelocity;
         public float RampAcceleration;
         public float MaxVelocity;
