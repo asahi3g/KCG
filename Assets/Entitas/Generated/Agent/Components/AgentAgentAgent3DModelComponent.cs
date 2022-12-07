@@ -11,25 +11,31 @@ public partial class AgentEntity {
     public Agent.Agent3DModel agentAgent3DModel { get { return (Agent.Agent3DModel)GetComponent(AgentComponentsLookup.AgentAgent3DModel); } }
     public bool hasAgentAgent3DModel { get { return HasComponent(AgentComponentsLookup.AgentAgent3DModel); } }
 
-    public void AddAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
+    public void AddAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, UnityEngine.Material newMaterial, float newFlashDuration, UnityEngine.MeshRenderer newModelMeshRenderer, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
         var index = AgentComponentsLookup.AgentAgent3DModel;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
+        component.Material = newMaterial;
+        component.FlashDuration = newFlashDuration;
+        component.ModelMeshRenderer = newModelMeshRenderer;
         component.AimTarget = newAimTarget;
         component.Renderer = newRenderer;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
+    public void ReplaceAgentAgent3DModel(Agent.Model3DWeaponType newCurrentWeapon, UnityEngine.GameObject newWeapon, Enums.AgentAnimationType newAnimationType, Enums.ItemAnimationSet newItemAnimationSet, UnityEngine.Material newMaterial, float newFlashDuration, UnityEngine.MeshRenderer newModelMeshRenderer, KMath.Vec2f newAimTarget, AgentRenderer newRenderer) {
         var index = AgentComponentsLookup.AgentAgent3DModel;
         var component = (Agent.Agent3DModel)CreateComponent(index, typeof(Agent.Agent3DModel));
         component.CurrentWeapon = newCurrentWeapon;
         component.Weapon = newWeapon;
         component.AnimationType = newAnimationType;
         component.ItemAnimationSet = newItemAnimationSet;
+        component.Material = newMaterial;
+        component.FlashDuration = newFlashDuration;
+        component.ModelMeshRenderer = newModelMeshRenderer;
         component.AimTarget = newAimTarget;
         component.Renderer = newRenderer;
         ReplaceComponent(index, component);

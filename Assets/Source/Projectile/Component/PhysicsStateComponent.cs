@@ -16,6 +16,7 @@ namespace Projectile
         public bool OnGrounded = true;
 
         public float TimeToLive;
+        public int FramesToLive;
     }
 }
 
