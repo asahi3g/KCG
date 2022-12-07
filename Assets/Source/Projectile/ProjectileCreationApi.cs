@@ -90,6 +90,22 @@ namespace Projectile
                 PropertiesArray[CurrentIndex].SpriteId = SpriteId;
         }
 
+        public void SetNumberOfTicks(int ticks)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].NumberOfTicks = ticks;
+            }
+        }
+
+        public void SetBlastMagnitude(float magnitude)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].BlastMagnitude = magnitude;
+            }
+        }
+
         public void SetSize(Vec2f size)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
@@ -181,6 +197,7 @@ namespace Projectile
         public int OreIcon;
         public int GrenadeSpriteId;
         public int GrenadeSprite5;
+        public int PlaceholderSprite;
 
         public void InitializeResources()
         {
@@ -192,7 +209,7 @@ namespace Projectile
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, Enums.AtlasType.Particle);
-            int PlaceholderSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(PlaceholderSpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            PlaceholderSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(PlaceholderSpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Arrow);
             GameState.ProjectileCreationApi.SetName("arrow");

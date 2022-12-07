@@ -175,7 +175,7 @@ namespace Agent
                             
                             physicsState.ActionInProgress = false;
                             physicsState.ActionJustEnded = true;
-                            physicsState.AffectedByGravity = true;
+                            physicsState.AffectedByGravity = true; 
 
                             physicsState.TimeBetweenMoves = 0.0f;
 
@@ -216,6 +216,7 @@ namespace Agent
                      physicsState.MovementState == AgentMovementState.Stagger)
                     {
                         physicsState.MovementState = AgentMovementState.None;
+                        physicsState.AffectedByFriction = true;
                     }
                 }
 

@@ -176,6 +176,8 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
+            var properties = GameState.ProjectileCreationApi.Get((int)pEntity.projectileType.Type);
+
             ref var planet = ref GameState.Planet;
             
             //planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
@@ -196,7 +198,7 @@ namespace Projectile
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity agentEntity = planet.AgentList.Get(i);
-                if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive && agentEntity.agentID.Faction != ownerAgent.agentID.Faction)
+                if (agentEntity.isAgentAlive)
                 {
                     var agentPhysicsState = agentEntity.agentPhysicsState;
                     var agentBox2dCollider = agentEntity.physicsBox2DCollider;
@@ -208,14 +210,15 @@ namespace Projectile
                     if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                        if (pEntity.projectilePhysicsState.FramesToLive == 0)
+                        if (pEntity.projectilePhysicsState.FramesToLive == 0 && agentEntity.agentID.Faction != ownerAgent.agentID.Faction)
                         {
                             //planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
                             agentEntity.agentStats.Health.Remove(damage);
                             agentEntity.FlashFor(0.225f);
                         }
                         Vec2f dir = agentPosition - explosionCenter; 
-                        const float maxVelocity = 30.0f;
+                        const float explosionIntensity = 1.0f;
+                        float maxVelocity = properties.BlastMagnitude * explosionIntensity / properties.NumberOfTicks;
                         float pushback = maxVelocity * 0.66f + maxVelocity * 0.33f * (1.0f - (dir.Magnitude / radius));
 
                         /*int horizontalDir = 0;
@@ -228,23 +231,30 @@ namespace Projectile
                             horizontalDir = -1;
                         }
                         agentEntity.Knockback(pushback, horizontalDir, 3.0f);*/
-        
-                        agentPhysicsState.Velocity = dir.Normalized * pushback;
 
-                        const float maxY = 10.0f; 
-                        if (agentPhysicsState.Velocity.Y >= maxY)
+                        if (pEntity.projectilePhysicsState.FramesToLive == 0)
                         {
-                            agentPhysicsState.Velocity.Y = maxY;
+                            agentPhysicsState.AffectedByFriction = false;
+                            agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
+                            agentPhysicsState.StaggerDuration = 2.0f;
                         }
-                        
-                        agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
-                        agentPhysicsState.StaggerDuration = 3.0f;
+
+                        if (pEntity.projectilePhysicsState.FramesToLive % 1 == 0)
+                        {
+                            agentPhysicsState.Velocity += dir.Normalized * pushback * new Vec2f(1.0f, 1.0f);
+
+                            /*const float maxY = 20.0f * explosionIntensity; 
+                            if (agentPhysicsState.Velocity.Y >= maxY)
+                            {
+                                agentPhysicsState.Velocity.Y = maxY;
+                            }*/
+                       }
                     }
                 }
             }
 
             pEntity.projectilePhysicsState.FramesToLive++;
-            if (pEntity.projectilePhysicsState.FramesToLive >= 6)
+            if (pEntity.projectilePhysicsState.FramesToLive >= properties.NumberOfTicks)
             {
                 // Todo: Do a circle collision test.
                 pEntity.isProjectileDelete = true;
