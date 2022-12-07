@@ -52,7 +52,7 @@ namespace Node.Action
             
             if (itemEntity.hasItemType && itemEntity.hasItemDrawPosition2D)
             {
-                Vec2f itemSize = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type).SpriteSize;
+                Vec2f itemSize = GameState.ItemCreationApi.GetItemProperties(itemEntity.itemType.Type).Size;
                 Vec2f itemCenterPos = itemEntity.itemDrawPosition2D.Position + itemSize / 2.0f;
                 Vec2f agentCenterPos = agentEntity.agentPhysicsState.Position + new Vec2f(1.0f, 1.5f)/2f; // Todo: Add agentSizeCompenent
 

@@ -43,8 +43,8 @@
                     }
                 }
 
-                float w = proprieties.SpriteSize.X;
-                float h = proprieties.SpriteSize.Y;
+                float w = ItemProperties.Width;
+                float h = ItemProperties.Height;
 
                 if (!Utility.ObjectMesh.isOnScreen(x, y))
                     continue;

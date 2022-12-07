@@ -166,6 +166,19 @@ public class PlayerInput : BaseMonoBehaviour
         }
     }
 
+    public void DoPlayerDropItem()
+    {
+        if (IsGameplayBlocked()) return;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        {
+            if (agentRenderer.GetAgent().GetItem() != null)
+            {
+                GameState.ActionCreationSystem.CreateAction(ActionType.DropAction, agentRenderer.GetAgent().agentID.ID);
+            }
+        }
+    }
+
     public void DoPlayerLookTarget(Vector2 screenPosition)
     {
         if (IsGameplayBlocked()) return;

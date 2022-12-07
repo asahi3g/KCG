@@ -13,13 +13,11 @@ namespace Item
             ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
             FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemType);
 
-            Vec2f size = GameState.ItemCreationApi.GetItemProperties(itemType).SpriteSize;
-
             var entity = GameState.Planet.EntitasContext.itemParticle.CreateEntity();
             entity.AddItemID(ItemID, -1, "");
             entity.AddItemType(itemType);
             entity.AddItemPhysicsState(position, position, Vec2f.Zero, Vec2f.Zero, false);
-            entity.AddPhysicsBox2DCollider(size, Vec2f.Zero);
+            entity.AddPhysicsBox2DCollider(itemProperty.Size, Vec2f.Zero);
 
             if (fireWeaponProperties.HasClip())
                 entity.AddItemFireWeaponClip(fireWeaponProperties.ClipSize);

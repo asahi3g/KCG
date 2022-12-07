@@ -16,12 +16,6 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
-
-                if (entity.isAgentPlayer)
-                {
-                    UnityEngine.Debug.Log(physicsState.MovementState);
-                }
-
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&

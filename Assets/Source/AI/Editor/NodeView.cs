@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using Enums;
 using UnityEngine.Networking.Types;
 using Codice.CM.WorkspaceServer.DataStore;
+using KMath;
 
 namespace AI
 {
@@ -18,10 +19,11 @@ namespace AI
         public Port Input = null;
         public Port Output = null;
         public Action<NodeView> OnNodeSelected;
-        Vector2 Position;
+        public Vec2f Position { get; private set; }
 
         public NodeView(int nodeId, bool isEntryNode = false) : base("Assets/Source/AI/Editor/Resources/NodeEditorView.uxml") 
         {
+            nodeID = nodeId;
             NodeSystem.Node node = GameState.NodeManager.Get(nodeId);
             CreatePorts(isEntryNode);
             SetupClasses(isEntryNode);
@@ -29,23 +31,25 @@ namespace AI
                 title = "Root";
             else
                 title = GameState.NodeManager.GetName(nodeId);
-            style.left = Position.x;
-            style.top = Position.y;
+            style.left = Position.X;
+            style.top = Position.Y;
         }
 
         private void CreatePorts(bool isEntryNode)
         {
             NodeSystem.Node node = GameState.NodeManager.Get(nodeID);
 
-            if (isEntryNode)
+            if (!isEntryNode)
             {
                 Input = CreatePort(Direction.Input, Capacity.Single);
                 inputContainer.Add(Input);
             }
 
             if (!IsLeafNode())
+            {
                 Output = CreatePort(Direction.Output, Capacity.Multi);
-            outputContainer.Add(Output);
+                outputContainer.Add(Output);
+            }
         }
 
         private Port CreatePort(Direction dir, Capacity capacity)
@@ -99,25 +103,18 @@ namespace AI
             }
         }
 
-        public override void SetPosition(Rect newPos)
+        public void SetPos(Vec2f newPos)
         {
-            base.SetPosition(newPos);
-            Position.x = newPos.xMin;
-            Position.y = newPos.yMin;
+            base.SetPosition(new Rect(newPos.X, newPos.Y, Width, Height));
+            Position = newPos;
         }
 
-        public void AddChild(NodeView nodeView)
-        {
-            //if (nodeView.children == null)
-            //    nodeView.children = new List<int>();
-            //nodeView.children.Add(nodeView.Node.index);
-        }
 
         // Node with no child.
         public bool IsLeafNode()
         {
             NodeSystem.Node node = GameState.NodeManager.Get(nodeID);
-            return (node.Type != NodeSystem.NodeType.Action && node.Type != NodeSystem.NodeType.ActionSequence) ? true : false;
+            return (node.Type == NodeSystem.NodeType.Action || node.Type == NodeSystem.NodeType.ActionSequence) ? true : false;
 
         }
     }
