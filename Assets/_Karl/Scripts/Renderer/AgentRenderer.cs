@@ -56,7 +56,6 @@ public class AgentRenderer : BaseMonoBehaviour
 
 
 
-
     public void SetAgent(AgentEntity agent)
     {
         _agent = agent;

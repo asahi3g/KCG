@@ -82,7 +82,7 @@ namespace Node
                     agentEntity.agentPhysicsState.FacingDirection *= -1;
 
                 GameState.ActionCoolDownSystem.SetCoolDown(nodeEntity.nodeID.TypeID, agentEntity.agentID.ID, fireWeaponProperties.CoolDown);
-                GameState.Planet.SpawnMuzzleEffect(agentEntity.GetGunFiringPosition(), agentEntity.agentPhysicsState.FacingDirection);
+                GameState.ParticleEffectPropertiesManager.SpawnMuzzleFlash(agentEntity.GetGunFiringPosition(), agentEntity.agentPhysicsState.FacingDirection);
                 var spread = fireWeaponProperties.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)
                 {

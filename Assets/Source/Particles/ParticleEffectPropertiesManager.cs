@@ -78,6 +78,24 @@ namespace Particle
             ElementArray[CurrentOffset++].Emitter = type;
         }
 
+        public void SpawnMuzzleFlash(Vec2f position, int direction)
+        {
+            if (direction == 1)
+            {
+                var Prefab = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate(UnityEngine.Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new UnityEngine.Vector3(position.X, position.Y, 0.0f), UnityEngine.Quaternion.identity);
+                var renderer = Prefab.GetComponent<UnityEngine.ParticleSystemRenderer>();
+                renderer.flip = new UnityEngine.Vector3(0, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<UnityEngine.ParticleSystem>().Play();
+            }
+            else if (direction == -1)
+            {
+                var Prefab = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate(UnityEngine.Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new UnityEngine.Vector3(position.X, position.Y, 0.0f), UnityEngine.Quaternion.identity);
+                var renderer = Prefab.GetComponent<UnityEngine.ParticleSystemRenderer>();
+                renderer.flip = new UnityEngine.Vector3(-1, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<UnityEngine.ParticleSystem>().Play();
+            }
+        }
+
 
         public void End()
         {
