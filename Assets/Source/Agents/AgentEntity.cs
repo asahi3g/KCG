@@ -887,5 +887,11 @@ public partial class AgentEntity
         return result;
     }
 
-
+    public void SetOnHoverOutline(bool enable)
+    {
+        if(agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>() != null)
+        {
+            agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>().highlighted = enable;
+        }
+    }
 }
