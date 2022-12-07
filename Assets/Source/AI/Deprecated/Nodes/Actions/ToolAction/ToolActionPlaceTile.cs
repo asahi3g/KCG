@@ -26,12 +26,15 @@ namespace Node
             ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)
-            {
+            {   
                 if (itemInventory.itemTile.InputsActive)
                 {
                     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     int x = (int)worldPosition.x;
                     int y = (int)worldPosition.y;
+
+                    if (itemInventory.itemTile.TileID == TileID.Error)
+                        itemInventory.itemTile.TileID = TileID.Moon;
 
                     if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                     {
@@ -55,6 +58,9 @@ namespace Node
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 int x = (int)worldPosition.x;
                 int y = (int)worldPosition.y;
+
+                if (itemInventory.itemTile.TileID == TileID.Error)
+                    itemInventory.itemTile.TileID = TileID.Moon;
 
                 if (x >= 0 && x < planet.TileMap.MapSize.X && y >= 0 && y < planet.TileMap.MapSize.Y)
                 {
