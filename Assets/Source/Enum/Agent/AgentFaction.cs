@@ -5,7 +5,5 @@
     {
         Player,
         Enemy,
-        MarineEnemy,
-        InsectsEnemy
     }
 }
