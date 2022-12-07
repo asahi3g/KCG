@@ -29,8 +29,6 @@ namespace AI
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            PopulateView();
-
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Source/AI/Editor/Resources/BehaviorTreeEditorStyle.uss");
             styleSheets.Add(styleSheet);
         }
@@ -38,32 +36,93 @@ namespace AI
         public void Init(int Id)
         {
             ID = Id;
+            PopulateView();
         }
 
         public void PopulateView()
         {
+            const int NODES_GAPX = 30;
+
+            // Create nodeViews.
             ref BehaviorTree.BehaviorTreeExecute bt = ref GameState.BehaviorTreeManager.Get(ID);
-            NodeSystem.Node currentNode = GameState.NodeManager.Get(bt.RootNodeId);
+            NodeView rootView = new NodeView(bt.RootNodeId, isEntryNode: true);
+            NodeViews.Add(rootView);
+            AddElement(rootView);
+            CreateChildsNodeView(rootView);
 
-            // Get number of leaf nodes.
+            // Set X position of leaf nodes.
+            int NumLeafNodes = 0;
+            foreach (NodeView nodeView in NodeViews)
+            {
+                if (nodeView.IsLeafNode())
+                {
+                    NumLeafNodes++;
+                    nodeView.SetPos(new Vec2f(NumLeafNodes * (NodeView.Width + NODES_GAPX), nodeView.Position.Y));
+                }
+            }
+            // Set X position of other nodes.
+            for (int i = (NodeViews.Count - 1); i >= 0; i--)
+            {
+                NodeView nodeView = NodeViews[i];
+                if (!nodeView.IsLeafNode())
+                {
+                    NodeSystem.Node node = GameState.NodeManager.Get(nodeView.nodeID);
+                    int ChildrenCount = node.Children.Length;
+                    if (ChildrenCount == 1)
+                    {
+                        nodeView.SetPos(new Vec2f(NodeViews[i + 1].Position.X, nodeView.Position.Y));
+                    }
+                    else
+                    {
+                        NodeView firstChild = NodeViews[i + 1];
+                        NodeView lastChild = GetNodeViewByID(node.Children[ChildrenCount - 1]);
+                        nodeView.SetPos(new Vec2f((firstChild.Position.X + lastChild.Position.X)/2, nodeView.Position.Y));
+                    }
+                }
+            }
             
+            foreach (NodeView nodeView in NodeViews)
+            {
+                if (nodeView.IsLeafNode())
+                    continue;
+                NodeSystem.Node node = GameState.NodeManager.Get(nodeView.nodeID);
+                
+                foreach (int childId in node.Children)
+                {
+                    NodeView inputNode = GetNodeViewByID(childId);
+                    Edge edge = nodeView.Output.ConnectTo(inputNode.Input);
+                    AddElement(edge);
+                }
+            }
+        }
 
-            //for (int j = 0; j < bt.; j++)
-            //{
-            //    CreateNodeView(AISystemState.Behaviors.Get((int)Type).Nodes[j]);
-            //}
-            //
-            //for (int j = 0; j < AISystemState.Behaviors.Get((int)Type).Nodes.Count; j++)
-            //{
-            //    if (NodeViews[j].Node.children == null)
-            //        continue;
-            //
-            //    foreach (var index in NodeViews[j].Node.children)
-            //    {
-            //        Edge edge = NodeViews[j].Output.ConnectTo(NodeViews[index].Input);
-            //        AddElement(edge);
-            //    }
-            //}
+        // Recursive function: Add childs of node to NodeViews list.
+        void CreateChildsNodeView(NodeView parentNodeView)
+        {
+            const int NODES_GAPY = 50;
+
+            NodeSystem.Node node = GameState.NodeManager.Get(parentNodeView.nodeID);
+            if (node.Children != null)
+            {
+                foreach (int childId in node.Children)
+                {
+                    NodeView childView = CreateNodeView(childId);
+                    childView.SetPos(new Vec2f(0f, parentNodeView.Position.Y + NodeView.Height + NODES_GAPY)); // Set only y here.
+                    if (!childView.IsLeafNode())
+                        CreateChildsNodeView(childView);
+                }
+            }
+        }
+
+        NodeView GetNodeViewByID(int nodeID)
+        {
+            Debug.Log("testing");
+            foreach (var node in NodeViews)
+            { 
+                if (node.nodeID == nodeID)
+                    return node;
+            }
+            return null;
         }
 
         public void ClearTree()
@@ -75,26 +134,10 @@ namespace AI
         private NodeView CreateNodeView(int nodeID)
         {
             NodeView nodeView = new NodeView(nodeID);
-            nodeView.OnNodeSelected = OnNodeSelected;
-            AddElement(nodeView);
             NodeViews.Add(nodeView);
+            AddElement(nodeView);
             return nodeView;
         }
-
-
-        private void DeleteSelected()
-        {
-            // Delete selected.
-            DeleteSelection();
-        }
-
-        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
-        {
-            return ports.ToList()!.Where(endPort =>
-                          endPort.direction != startPort.direction &&
-                          endPort.node != startPort.node).ToList();
-        }
-
-        private Vec2f SetRootPos() => new Vec2f((resolvedStyle.width / 2.0f - NodeView.Width / 2.0f), resolvedStyle.height * 0.2f);
     }
 }
+

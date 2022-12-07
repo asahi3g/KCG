@@ -11,6 +11,12 @@ namespace Item
     public struct ItemProperties
     {
         public string ItemLabel;                 // Item Label
+
+        // Item Drawing size.
+        public const float Width = 1.0f;
+        public const float Height = 1.0f;
+        public Vec2f Size => new Vec2f(Width, Height);
+
         public ItemType ItemType;
         public ItemGroups Group;
         public ActionType ToolActionType;
@@ -25,7 +31,6 @@ namespace Item
 
         public int InventorSpriteID;
         public int SpriteID;
-        public Vec2f SpriteSize;
         public int MaxStackCount;              // Used only if stackable.
 
         public int FireWeaponID;
