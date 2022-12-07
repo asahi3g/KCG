@@ -22,7 +22,8 @@ public class PlayerInputStandalone : BaseMonoBehaviour
     [Header("Other")]
     [SerializeField] private SOInput _mainMenu;
     [SerializeField] private SOInput[] _quickSlots;
-    
+    [SerializeField] private SOInput _screenShot;
+
 
     protected override void OnEnable()
     {
@@ -89,6 +90,9 @@ public class PlayerInputStandalone : BaseMonoBehaviour
 
         // Drop item
         if (IsKeyDown(_dropItem)) _input.DoPlayerDropItem();
+        
+        // Take Screenshot
+        if (IsKeyDown(_screenShot)) _input.DoScreenshot();
 
 
         // Footer quick slots inventory

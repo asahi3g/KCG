@@ -1,6 +1,7 @@
 using Enums;
 using Inventory;
 using Item;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -177,6 +178,19 @@ public class PlayerInput : BaseMonoBehaviour
                 GameState.ActionCreationSystem.CreateAction(ActionType.DropAction, agentRenderer.GetAgent().agentID.ID);
             }
         }
+    }
+    
+    public void DoScreenshot()
+    {
+        if (IsGameplayBlocked()) return;
+
+        var date = DateTime.Now;
+        var fileName = date.Year.ToString() + "-" + date.Month.ToString() +
+            "-" + date.Day.ToString() + "-" + date.Hour.ToString() + "-" + date.Minute.ToString() +
+            "-" + date.Second.ToString() + "-" + date.Millisecond + ".png";
+        ScreenCapture.CaptureScreenshot("Assets\\Screenshots\\" + fileName);
+
+        GameState.AudioSystem.PlayOneShot("AudioClips\\steam_screenshot_effect");
     }
 
     public void DoPlayerLookTarget(Vector2 screenPosition)

@@ -2228,8 +2228,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419920045}
   m_HandleRect: {fileID: 419920044}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.5263158
+  m_Value: 0.9999998
+  m_Size: 0.52631575
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5246,6 +5246,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac80551ad741abd40bfe340ba017aec4, type: 2}
   - {fileID: 11400000, guid: cdd9f858c8c72eb46845b4f70651620b, type: 2}
   - {fileID: 11400000, guid: 2ecab0f3c38fa9449aa561bfb2702a2d, type: 2}
+  _screenShot: {fileID: 11400000, guid: 5e643b29cae476c488ca6c7366eba27b, type: 2}
 --- !u!224 &459537451 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1982605516336313853, guid: 9d170b08e682bf94db05d00dbc072e91, type: 3}
@@ -6399,8 +6400,8 @@ Camera:
   m_GameObject: {fileID: 530959981}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -6413,11 +6414,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 50
+  near clip plane: -0.22
+  far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 8.71
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6425,12 +6426,12 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 0
+  m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 0
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &530959989

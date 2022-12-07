@@ -169,6 +169,7 @@ namespace Item
             fireWeaponProperties.SpreadAngle = spreadAngle;
         }
 
+
         public void SetRangedWeaponAttribute (float bulletSpeed, float coolDown, float range, int basicDamage)
         {
             IsItemTypeValid();
@@ -409,7 +410,9 @@ namespace Item
         public int FoodIcon;
         public int FoodSpriteSheet;
         public int BoneSpriteSheet;
+        public int GoldCoinSpriteSheet;
         public int BoneIcon;
+        public int GoldCoinIcon;
         public int PlacementToolIcon;
         public int RockSpriteSheet;
         public int RemoveToolIcon;
@@ -488,6 +491,7 @@ namespace Item
             SlimeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Enemies\\Slime\\slime.png", 32, 32);
             FoodSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Food\\Food.png", 60, 60);
             BoneSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Bone\\Bone.png", 32, 32);
+            GoldCoinSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\icon_gold_coin.png", 16, 16);
             RockSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\MaterialIcons\\Rock\\rock1.png", 16, 16);
             Ore2SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Copper\\ore_copper_1.png", 16, 16);
             pipeIconSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\AdminIcon\\Pipesim\\admin_icon_pipesim.png", 16, 16);
@@ -562,6 +566,7 @@ namespace Item
             SlimeIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(SlimeSpriteSheet, 0, 0, AtlasType.Particle);
             FoodIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(FoodSpriteSheet, 0, 0, AtlasType.Particle);
             BoneIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(BoneSpriteSheet, 0, 0, AtlasType.Particle);
+            GoldCoinIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(GoldCoinSpriteSheet, 0, 0, AtlasType.Particle);
             PlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(RockSpriteSheet, 0, 0, AtlasType.Particle);
             RemoveToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(Ore2SpriteSheet, 0, 0, AtlasType.Particle);
             PipePlacementToolIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(pipeIconSpriteSheet, 0, 0, AtlasType.Particle);
@@ -841,6 +846,13 @@ namespace Item
             SetStackable();
             EndItem();
 
+            CreateItem(ItemType.GoldCoin, "GoldCoin");
+            SetGroup(ItemGroups.None);
+            SetTexture(GoldCoinIcon);
+            SetInventoryItemIcon(GoldCoinIcon);
+            SetStackable();
+            EndItem();
+
             CreateItem(ItemType.PotionTool, "PotionTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(BoneIcon);
@@ -1117,6 +1129,14 @@ namespace Item
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
             SetAction(ActionType.ThrowFragGrenadeAction);
+            EndItem();
+
+            CreateItem(ItemType.ConcussionGrenade, "ConcussionGrenade");
+            SetGroup(ItemGroups.None);
+            SetTexture(GrenadeSpriteId);
+            SetInventoryItemIcon(GrenadeSpriteId);
+            SetExplosion(5.0f, 20, 0.0f);
+            SetAction(ActionType.ThrowConcussionGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");

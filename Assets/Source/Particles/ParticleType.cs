@@ -26,7 +26,10 @@ namespace Particle
         Explosion_2_Part1,
         Explosion_2_Part2,
         Explosion_2_Part3,
-        Explosion_2_Part4,
+        Explosion_2_Shrapnel,
+        Explosion_2_Smoke,
+        Explosion_2_Impact,
+        Explosion_2_Flash,
 
 
         SwordSlash_1_Right,
@@ -37,6 +40,15 @@ namespace Particle
 
         SwordSlash_3_Right,
         SwordSlash_3_Left,
+
+
+
+        SwordSlash_1_Up_Right,
+        SwordSlash_2_Up_Right,
+        SwordSlash_3_Up_Right,
+
+
+        SwordAttack_Impact,
 
         Dust_2,
         Dust_SwordAttack,

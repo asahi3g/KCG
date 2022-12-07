@@ -9,6 +9,7 @@
         Slime,
         Food,
         Bone,
+        GoldCoin,
         HealthPotion,
         
         // Weapons
@@ -28,6 +29,7 @@
         RiotShield,
         GasBomb,
         FragGrenade,
+        ConcussionGrenade,
         Flare,
 
         // Equipment

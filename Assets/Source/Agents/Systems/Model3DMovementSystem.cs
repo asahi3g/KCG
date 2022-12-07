@@ -13,7 +13,19 @@ namespace Agent
             {
                 PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
                 Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
-                
+
+                if(agent3DModel.IsOutlineActiveOnHover)
+                {
+                    if (KMath.Vec2f.Distance(agentEntity.agentPhysicsState.Position, ECSInput.InputProcessSystem.GetCursorWorldPosition()) < 1.5f)
+                    {
+                        agentEntity.SetOnHoverOutline(true);
+                    }
+                    else
+                    {
+                        agentEntity.SetOnHoverOutline(false);
+                    }
+                }
+
                 agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
 
                 if (physicsStateComponent.FacingDirection == 1)

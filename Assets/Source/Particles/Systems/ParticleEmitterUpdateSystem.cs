@@ -13,8 +13,14 @@ namespace Particle
 
         ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
         ParticlePropertiesManager ParticlePropertiesManager;
-        public ParticleEmitterUpdateSystem(ParticleEmitterPropertiesManager particleEmitterCreationApi,
-                                            ParticlePropertiesManager particlePropertiesManager)
+
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(ParticleEmitterPropertiesManager particleEmitterCreationApi,
+                                      ParticlePropertiesManager particlePropertiesManager)
         {
             ParticleEmitterPropertiesManager = particleEmitterCreationApi;
             ParticlePropertiesManager = particlePropertiesManager;
@@ -54,10 +60,10 @@ namespace Particle
                                                         new Vec2f(position.Velocity.x, position.Velocity.y);
 
                             float rand1 = KMath.Random.Mt19937.genrand_realf();
-                            float rand2 = KMath.Random.Mt19937.genrand_realf() ;
+                            float rand2 = KMath.Random.Mt19937.genrand_realf();
 
                             x += rand1 * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
-                            y += rand2 * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
+                            y += (1.0f - rand1) * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
 
                             Velocity.X += rand1 * (emitterProperties.VelocityIntervalEnd.X - 
                                                    emitterProperties.VelocityIntervalBegin.X) -

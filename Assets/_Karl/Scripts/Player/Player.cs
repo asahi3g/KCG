@@ -71,6 +71,8 @@ public class Player : BaseMonoBehaviour
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
+                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConcussionGrenade);
+                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GoldCoin, 4);
                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
                 //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
                 
@@ -196,7 +198,7 @@ public class Player : BaseMonoBehaviour
         GameState.PodMovementSystem.UpdateEx();
         GameState.ProjectileMovementSystem.Update();
 
-
+        GameState.AgentEffectSystem.Update(frameTime);
         GameState.AgentAgent3DModelAnimationSystem.Update();
         GameState.LootDropSystem.Update();
         GameState.FloatingTextUpdateSystem.Update(frameTime);

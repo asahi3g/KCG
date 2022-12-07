@@ -8,7 +8,13 @@ namespace Particle
     {
         public static int UniqueID = 0;
         ParticlePropertiesManager ParticlePropertiesManager;
-        public ParticleSpawnerSystem(ParticlePropertiesManager particlePropertiesManager)
+
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(ParticlePropertiesManager particlePropertiesManager)
         {
             ParticlePropertiesManager = particlePropertiesManager;
         }

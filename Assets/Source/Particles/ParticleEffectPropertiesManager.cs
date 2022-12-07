@@ -78,6 +78,24 @@ namespace Particle
             ElementArray[CurrentOffset++].Emitter = type;
         }
 
+        public void SpawnMuzzleFlash(Vec2f position, int direction)
+        {
+            if (direction == 1)
+            {
+                var Prefab = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate(UnityEngine.Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new UnityEngine.Vector3(position.X, position.Y, 0.0f), UnityEngine.Quaternion.identity);
+                var renderer = Prefab.GetComponent<UnityEngine.ParticleSystemRenderer>();
+                renderer.flip = new UnityEngine.Vector3(0, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<UnityEngine.ParticleSystem>().Play();
+            }
+            else if (direction == -1)
+            {
+                var Prefab = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate(UnityEngine.Resources.Load("FX/MuzzleFlash/VFX_MuzzleFlash"), new UnityEngine.Vector3(position.X, position.Y, 0.0f), UnityEngine.Quaternion.identity);
+                var renderer = Prefab.GetComponent<UnityEngine.ParticleSystemRenderer>();
+                renderer.flip = new UnityEngine.Vector3(-1, renderer.flip.y, renderer.flip.z);
+                Prefab.GetComponent<UnityEngine.ParticleSystem>().Play();
+            }
+        }
+
 
         public void End()
         {
@@ -104,7 +122,10 @@ namespace Particle
 
 
             Api.Create(Enums.ParticleEffect.Explosion_2);
-            Api.AddEmitter(ParticleEmitterType.Explosion_2_Part4, new Vec2f(-0.3f, -0.3f), 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Flash, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Shrapnel, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Smoke, Vec2f.Zero, 0.0f);
+            Api.AddEmitter(ParticleEmitterType.Explosion_2_Impact, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part3, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part2, Vec2f.Zero, 0.0f);
             Api.AddEmitter(ParticleEmitterType.Explosion_2_Part1, Vec2f.Zero, 0.0f);

@@ -10,6 +10,10 @@ namespace Agent
         public GameObject Weapon;
         public Enums.AgentAnimationType AnimationType;
         public Enums.ItemAnimationSet ItemAnimationSet;
+
+        public UnityEngine.Material Material;
+        public float FlashDuration;
+        public MeshRenderer ModelMeshRenderer;
         
         public KMath.Vec2f AimTarget;
 
@@ -23,6 +27,9 @@ namespace Agent
     
         public bool RendererExists => Renderer != null;
         public bool IsActive => _isActive;
+
+        public bool IsOutlineActiveOnHover;
+
         public Vector3 LocalScale => _localScale;
 
 
@@ -32,7 +39,7 @@ namespace Agent
             _position.y = y;
             UpdatePosition();
         }
-        
+
         public void SetPositionZ(float z)
         {
             _position.z = z;
@@ -102,6 +109,11 @@ namespace Agent
             if (Renderer == null) return;
             MonoBehaviour.Destroy(Renderer.gameObject);
             Renderer = null;
+        }
+
+        public void SetOutlineEnabledOnHover(bool enabled)
+        {
+            IsOutlineActiveOnHover = enabled;
         }
     }
 

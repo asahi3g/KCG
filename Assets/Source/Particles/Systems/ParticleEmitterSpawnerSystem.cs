@@ -10,7 +10,13 @@ namespace Particle
         ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
         ParticlePropertiesManager ParticlePropertiesManager;
         int uniqueID = 0;
-        public ParticleEmitterSpawnerSystem(ParticleEmitterPropertiesManager particleEmitterCreationApi,
+
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(ParticleEmitterPropertiesManager particleEmitterCreationApi,
                                             ParticlePropertiesManager particlePropertiesManager)
         {
             ParticleEmitterPropertiesManager = particleEmitterCreationApi;

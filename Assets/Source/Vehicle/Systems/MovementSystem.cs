@@ -6,8 +6,12 @@ namespace Vehicle
     {
         VehicleCreationApi VehicleCreationApi;
 
-        // Constructor
-        public MovementSystem(VehicleCreationApi vehicleCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(VehicleCreationApi vehicleCreationApi)
         {
             VehicleCreationApi = vehicleCreationApi;
         }

@@ -265,6 +265,8 @@ namespace Particle
             int Smoke9_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\smoke_9.png", 512, 512);
             int Smoke18_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\smoke_18.png", 512, 512);
             int Fire4_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\fire_4.png", 512, 512);
+            int EmptyCircle_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\Circle_Empty.png", 512, 512);
+            int SpikyCircle_SpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Particles\\spiky_20.png", 512, 512);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             WhitePixel = GameState.SpriteAtlasManager.CopySpriteToAtlas(WhitePixelSheet, 0, 0, Enums.AtlasType.Particle);
@@ -274,6 +276,8 @@ namespace Particle
             Smoke9_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Smoke9_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
             Smoke18_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Smoke18_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
             Fire4_Sprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(Fire4_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            int EmptyCircleSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(EmptyCircle_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
+            int SpikyCircleSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(SpikyCircle_SpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Ore);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f);
@@ -532,7 +536,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 10.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.4f, 0.4f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
             GameState.ParticlePropertiesManager.SetEndScale(0.0f);
@@ -545,7 +549,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 7.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.3f, 0.3f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
             GameState.ParticlePropertiesManager.SetEndScale(0.0f);
@@ -558,7 +562,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
-            GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.25f, 0.25f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
             GameState.ParticlePropertiesManager.SetEndScale(0.0f);
@@ -567,16 +571,56 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.5f, 0.5f, 0.5f, 0.5f));
             GameState.ParticlePropertiesManager.End();
 
-            GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Part4);
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Smoke);
+            GameState.ParticlePropertiesManager.SetDecayRate(0.5f, 1.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 7.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(2.0f, 2.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.6f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.0f, 0.0f, 0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.End();
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Shrapnel);
+            GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
+            GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.125f, 0.125f));
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 0.7f, 0.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 0.7f, 0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.End();
+
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Impact);
+            GameState.ParticlePropertiesManager.SetDecayRate(5.2f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -0.0f));
+            GameState.ParticlePropertiesManager.SetSpriteId(EmptyCircleSprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(2.4f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
+            GameState.ParticlePropertiesManager.End();
+            
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Flash);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
             GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
-            GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.8f, 0.8f));
-            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
-            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(1.6f, 1.6f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.8f);
+            GameState.ParticlePropertiesManager.SetEndScale(2.0f);
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.2f));
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
             GameState.ParticlePropertiesManager.End();
 
@@ -592,7 +636,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
           //  GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
           //  GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 0.35f));
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
 
           //  GameState.ParticlePropertiesManager.SetIsCollidable(true);
@@ -613,7 +657,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
            // GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
            // GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(0.79f, 0.7f, 0.53f, 1.0f));
-            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 1.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1f, 1f, 1f, 0.35f));
             GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f));
          //   GameState.ParticlePropertiesManager.SetIsCollidable(true);
            // GameState.ParticlePropertiesManager.SetBounce(true);
@@ -792,6 +836,59 @@ namespace Particle
             GameState.ParticlePropertiesManager.End();
 
 
+
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_1_Up_Right);
+            GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_1_Up_Right);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_2_Up_Right);
+            GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_2_Up_Right);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_3_Up_Right);
+            GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_3_Up_Right);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+
+
+            GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordAttack_Impact);
+            GameState.ParticlePropertiesManager.SetDecayRate(8.0f);
+            GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -0.0f));
+            GameState.ParticlePropertiesManager.SetSpriteId(SpikyCircleSprite);
+            GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
+            GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
+            GameState.ParticlePropertiesManager.SetEndScale(1.0f);
+            GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
+            GameState.ParticlePropertiesManager.SetStartingColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.SetEndColor(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 1.0f));
+            GameState.ParticlePropertiesManager.End();
+
+
             
         }
 
@@ -961,11 +1058,38 @@ namespace Particle
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
             GameState.ParticleEmitterPropertiesManager.End();
 
-            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Part4);
-            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Part4);
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Shrapnel);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Shrapnel);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(60);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-4.5f, -4.5f), new Vec2f(4.5f, 4.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Smoke);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Smoke);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.2f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(20);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0.75f, -0.75f), new Vec2f(0.75f, 0.75f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Flash);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Flash);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
             GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
             GameState.ParticleEmitterPropertiesManager.SetParticleCount(10);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.Explosion_2_Impact);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.Explosion_2_Impact);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(3.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-1.5f, -1.5f), new Vec2f(1.5f, 1.5f));
             GameState.ParticleEmitterPropertiesManager.End();
@@ -1083,6 +1207,16 @@ namespace Particle
             GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.SwordSlash_3_Left);
             GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
             GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.0f);
+            GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
+            GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(10.0f);
+            GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0f, -0f), new Vec2f(-0.0f, 0.0f));
+            GameState.ParticleEmitterPropertiesManager.End();
+
+
+            GameState.ParticleEmitterPropertiesManager.Create((int)ParticleEmitterType.SwordAttack_Impact);
+            GameState.ParticleEmitterPropertiesManager.SetParticleType(ParticleType.SwordAttack_Impact);
+            GameState.ParticleEmitterPropertiesManager.SetDuration(2.0f);
+            GameState.ParticleEmitterPropertiesManager.SetSpawnRadius(0.3f);
             GameState.ParticleEmitterPropertiesManager.SetParticleCount(1);
             GameState.ParticleEmitterPropertiesManager.SetTimeBetweenEmissions(10.0f);
             GameState.ParticleEmitterPropertiesManager.SetVelocityInterval(new Vec2f(-0f, -0f), new Vec2f(-0.0f, 0.0f));

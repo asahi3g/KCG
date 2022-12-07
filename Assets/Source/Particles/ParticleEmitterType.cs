@@ -22,7 +22,10 @@ namespace Particle
         Explosion_2_Part1,
         Explosion_2_Part2,
         Explosion_2_Part3,
-        Explosion_2_Part4,
+         Explosion_2_Shrapnel,
+         Explosion_2_Smoke,
+        Explosion_2_Impact,
+        Explosion_2_Flash,
 
 
 
@@ -38,6 +41,8 @@ namespace Particle
         Dust_SwordAttack,
         Dust_Jumping, // used for jumping
         Dust_Landing, // used for landing
+
+        SwordAttack_Impact,
 
 
         Smoke_2,

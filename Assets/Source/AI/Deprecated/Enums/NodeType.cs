@@ -32,6 +32,7 @@
         ShootGrenadeAction,
         ThrowGasBombAction,
         ThrowFragGrenadeAction,
+        ThrowConcussionGrenadeAction,
         WaterAction,
         UseShieldAction,
         MeleeAttackAction,

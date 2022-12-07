@@ -16,6 +16,12 @@ namespace Agent
                 var physicsState = entity.agentPhysicsState;
                 var stats = entity.agentStats;
 
+
+                if (entity.isAgentPlayer)
+                {
+//                    UnityEngine.Debug.Log(physicsState.MovementState);
+                }
+
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
 
                 if (physicsState.MovementState != AgentMovementState.SlidingLeft &&
@@ -35,24 +41,24 @@ namespace Agent
 
                 
 
-
+                // update the jumping state
                 if (physicsState.MovementState != AgentMovementState.Falling && 
-                    physicsState.MovementState != AgentMovementState.Dashing && 
                     entity.IsStateFree())
+                {
+                    if (physicsState.JumpCounter == 1)
                     {
-                        if (physicsState.JumpCounter == 1)
-                        {
-                            physicsState.MovementState = AgentMovementState.Jump;
-                            physicsState.AffectedByGravity = true;
-                        }
-                        else if (physicsState.JumpCounter == 2)
-                        {
-                            physicsState.MovementState = AgentMovementState.Flip;
-                            physicsState.AffectedByGravity = true;
-                        }
+                        physicsState.MovementState = AgentMovementState.Jump;
+                        physicsState.AffectedByGravity = true;
                     }
+                    else if (physicsState.JumpCounter == 2)
+                    {
+                        physicsState.MovementState = AgentMovementState.Flip;
+                        physicsState.AffectedByGravity = true;
+                    }
+                }
 
 
+                
                 if (physicsState.IdleAfterShootingTime > 0)
                 {
                     physicsState.IdleAfterShootingTime -= deltaTime;
@@ -94,11 +100,11 @@ namespace Agent
                     {
                         physicsState.MovementState = AgentMovementState.None;
                         GameState.AgentIKSystem.SetIKEnabled(true);
-                        if (GameState.AgentIKSystem.Rifle != null ||
-                            GameState.AgentIKSystem.Pistol != null)
+                        if (GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotRifle() != null ||
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotPistol() != null)
                         {
-                            GameState.AgentIKSystem.Rifle.gameObject.SetActive(true);
-                            GameState.AgentIKSystem.Pistol.gameObject.SetActive(true);
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotRifle().gameObject.SetActive(true);
+                            GameState.Planet.Player.agentAgent3DModel.Renderer.GetPivotPistol().gameObject.SetActive(true);
                         }
                     }
                 }

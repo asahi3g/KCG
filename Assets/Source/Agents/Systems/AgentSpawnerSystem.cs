@@ -52,9 +52,18 @@ namespace Agent
                 newAcceleration: Vec2f.Zero, 
                 newMovingDirection: 1,
                 newFacingDirection: 1,
+                newActionCooldown: 0,
+                newJumpingTime: 0,
+                newJumpedFromGround: false,
+                newCurerentMoveList: 0,
+                newMoveIndex: 0,
+                newLastMovementState: Enums.AgentMovementState.None,
+                newTimeBetweenMoves: 0,
                 newGroundNormal: new Vec2f(0, 1.0f),
                 newMovementState: Enums.AgentMovementState.None,
                 newLastAgentAnimation: new AgentAnimation(),
+                newLastMovingDirection: 1,
+                newMovingDistance: 0,
                 newSetMovementState: false,
                 newAffectedByGravity: true,
                 newAffectedByFriction: true,
@@ -101,10 +110,13 @@ namespace Agent
             if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
             {
                 agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
-                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, Vec2f.Zero, agentRenderer);
+                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, null, 0.0f, null, Vec2f.Zero, agentRenderer, 
+                        false);
+                    
                 Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                 agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                 agent3DModel.SetRenderer(agentRenderer);
+                agent3DModel.Material = agentRenderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial;
                 SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
             }
 
