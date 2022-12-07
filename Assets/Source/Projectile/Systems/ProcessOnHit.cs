@@ -167,6 +167,7 @@ namespace Projectile
                     }
                 }
             }
+            
             // Todo: Do a circle collision test.
             pEntity.isProjectileDelete = true;
         }
@@ -179,19 +180,23 @@ namespace Projectile
             
             //planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
            // planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
+            if (pEntity.projectilePhysicsState.FramesToLive == 0)
+            {
+                planet.AddParticleEffect(pEntity.projectilePhysicsState.Position, Enums.ParticleEffect.Explosion_2);
+            }
+            UnityEngine.Debug.Log("frame : " + pEntity.projectilePhysicsState.FramesToLive);
 
-            planet.AddParticleEffect(pEntity.projectilePhysicsState.Position, Enums.ParticleEffect.Explosion_2);
-
-            Vec2f pos = pEntity.projectileOnHit.LastHitPos;
+            Vec2f explosionCenter = pEntity.projectileOnHit.LastHitPos;
             float radius = pEntity.projectileExplosive.BlastRadius;
             int damage = pEntity.projectileExplosive.MaxDamage;
+            AgentEntity ownerAgent = planet.EntitasContext.agent.GetEntityWithAgentID(pEntity.projectileID.AgentOwnerID);
 
-            Circle2D explosionCircle = new Circle2D { Center = pos, Radius = radius };
+            Circle2D explosionCircle = new Circle2D { Center = explosionCenter, Radius = radius };
 
             for (int i = 0; i < planet.AgentList.Length; i++)
             {
                 AgentEntity agentEntity = planet.AgentList.Get(i);
-                if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive)
+                if (!agentEntity.isAgentPlayer && agentEntity.isAgentAlive && agentEntity.agentID.Faction != ownerAgent.agentID.Faction)
                 {
                     var agentPhysicsState = agentEntity.agentPhysicsState;
                     var agentBox2dCollider = agentEntity.physicsBox2DCollider;
@@ -203,12 +208,41 @@ namespace Projectile
                     if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                        planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
+                        if (pEntity.projectilePhysicsState.FramesToLive == 0)
+                        {
+                            //planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
+                            agentEntity.agentStats.Health.Remove(damage);
+                            agentEntity.FlashFor(0.225f);
+                        }
+                        Vec2f dir = agentEntity.agentPhysicsState.Position - explosionCenter; 
+                        const float maxVelocity = 10.0f;
+                        float pushback = maxVelocity * 0.66f + maxVelocity * 0.33f * (1.0f - (dir.Magnitude / radius));
+
+                        /*int horizontalDir = 0;
+                        if (dir.X >= 0)
+                        {
+                            horizontalDir = 1;
+                        }
+                        else
+                        {
+                            horizontalDir = -1;
+                        }
+                        agentEntity.Knockback(pushback, horizontalDir, 3.0f);*/
+        
+                        agentPhysicsState.Velocity = dir * 5.0f;
+                        
+                      //  agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
+                     //   agentPhysicsState.StaggerDuration = 3.0f;
                     }
                 }
             }
-            // Todo: Do a circle collision test.
-            pEntity.isProjectileDelete = true;
+
+            pEntity.projectilePhysicsState.FramesToLive++;
+            if (pEntity.projectilePhysicsState.FramesToLive >= 6)
+            {
+                // Todo: Do a circle collision test.
+                pEntity.isProjectileDelete = true;
+            }
         }
 
         public void Arrow(ProjectileEntity pEntity)

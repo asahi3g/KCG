@@ -3,7 +3,6 @@ using KMath;
 class BigArena : UnityEngine.MonoBehaviour
 {
 
-    GameScreen.BigArenaScreen Screen = new GameScreen.BigArenaScreen();
     public void Start()
     {
         Initialize();
@@ -15,13 +14,10 @@ class BigArena : UnityEngine.MonoBehaviour
         UnityEngine.Application.targetFrameRate = 60;
 
         GameResources.Initialize();
-        Screen.Init(transform);
     }
 
     public void Update()
     {
-        Screen.Update();
-        Screen.Draw();
 
         Draw();
     }
@@ -29,12 +25,10 @@ class BigArena : UnityEngine.MonoBehaviour
 
     private void Draw()
     {
-        Screen.OnGui(); 
     }
 
     private void OnDrawGizmos()
     {
-       Screen.OnDrawGizmos();
     }
 
 }

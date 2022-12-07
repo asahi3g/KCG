@@ -9,6 +9,7 @@
         Slime,
         Food,
         Bone,
+        GoldCoin,
         HealthPotion,
         
         // Weapons

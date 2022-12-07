@@ -582,7 +582,7 @@ public partial class AgentEntity
         agentPhysicsState.MovementState = AgentMovementState.None;
     }
 
-    public void Knockback(float velocity, int horizontalDir)
+    public void Knockback(float velocity, int horizontalDir, float time = 1.5f)
     {
         var physicsState = agentPhysicsState;
         
@@ -592,7 +592,7 @@ public partial class AgentEntity
         }
         
         physicsState.MovementState = AgentMovementState.Stagger;
-        physicsState.StaggerDuration = 1.5f;
+        physicsState.StaggerDuration = time;
     }
 
     public void Dash(int horizontalDir)
