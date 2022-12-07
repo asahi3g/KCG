@@ -135,7 +135,6 @@ namespace Particle
             }
         }
 
-
         public void End()
         {
             CurrentIndex = -1;

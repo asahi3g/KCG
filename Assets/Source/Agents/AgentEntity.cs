@@ -216,11 +216,11 @@ public partial class AgentEntity
     public Vec2f GetGunOrigin()
     {
         if(agentPhysicsState.FacingDirection == 1)
-            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
+            return agentPhysicsState.Position + new Vec2f(0, 1.75f);
         else if (agentPhysicsState.FacingDirection == -1)
             return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
         else
-            return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
+            return agentPhysicsState.Position + new Vec2f(0, 1.75f);
     }
 
     public Vec2f GetAIGunOrigin()

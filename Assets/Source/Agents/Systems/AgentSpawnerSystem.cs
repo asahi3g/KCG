@@ -110,7 +110,9 @@ namespace Agent
             if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
             {
                 agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
-                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, null, 0.0f, null, Vec2f.Zero, agentRenderer);
+                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, null, 0.0f, null, Vec2f.Zero, agentRenderer, 
+                        false);
+                    
                 Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
                 agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
                 agent3DModel.SetRenderer(agentRenderer);

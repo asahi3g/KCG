@@ -20,8 +20,12 @@ namespace Vehicle
         bool reLaunchStart = false;
         float remaningReLaunch = 0.0f;
 
-        // Constructor
-        public AISystem(VehicleCreationApi vehicleCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(VehicleCreationApi vehicleCreationApi)
         {
             VehicleCreationApi = vehicleCreationApi;
         }

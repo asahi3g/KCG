@@ -16,6 +16,8 @@ public class GameLauncher : BaseMonoBehaviour
 
         GameResources.Initialize();
         AssetManager assetManager = AssetManager.Singelton; // force initialization
+        GameState.AudioSystem = new Audio.AudioSystem();
+        GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
         
         GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
         GameState.SpriteAtlasManager.UpdateAtlasTextures();

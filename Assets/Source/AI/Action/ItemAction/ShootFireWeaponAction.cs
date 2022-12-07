@@ -28,12 +28,12 @@ namespace Action
                 return NodeSystem.NodeState.Failure;
             Item.FireWeaponProperties fireWeaponProperties = GameState.ItemCreationApi.GetWeapon(itemEntity.itemType.Type);
 
-            if (/*physicsState.MovementState != AgentMovementState.Falling &&
-            physicsState.MovementState != AgentMovementState.Jump &&
-            physicsState.MovementState != AgentMovementState.Flip &&
-            physicsState.MovementState != AgentMovementState.JetPackFlying &&
-            physicsState.MovementState != AgentMovementState.SlidingLeft &&
-            physicsState.MovementState != AgentMovementState.SlidingRight*/true)
+            if (agentEntity.agentPhysicsState.MovementState != AgentMovementState.Falling &&
+            agentEntity.agentPhysicsState.MovementState != AgentMovementState.Jump &&
+            agentEntity.agentPhysicsState.MovementState != AgentMovementState.Flip &&
+            agentEntity.agentPhysicsState.MovementState != AgentMovementState.JetPackFlying &&
+            agentEntity.agentPhysicsState.MovementState != AgentMovementState.SlidingLeft &&
+            agentEntity.agentPhysicsState.MovementState != AgentMovementState.SlidingRight)
             {
                 Vec2f target = agentEntity.agentAgent3DModel.AimTarget;
 
@@ -62,7 +62,7 @@ namespace Action
                 ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
                 shootingData.Target = target;
 
-                GameState.Planet.AddParticleEmitter(startPos, ParticleEmitterType.MuzzleFlash);
+                GameState.ParticleEffectPropertiesManager.SpawnMuzzleFlash(agentEntity.GetGunFiringPosition(), agentEntity.agentPhysicsState.FacingDirection);
                 var spread = fireWeaponProperties.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)
                 {
@@ -75,8 +75,6 @@ namespace Action
                     {
                         projectileEntity.isProjectileFirstHIt = false;
                     }
-
-                    //projectileEntity.AddProjectileRange(WeaponProperty.Range);
                 }
 
                 return NodeSystem.NodeState.Success;
