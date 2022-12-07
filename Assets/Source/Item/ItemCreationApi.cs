@@ -1131,11 +1131,11 @@ namespace Item
             SetAction(ActionType.ThrowFragGrenadeAction);
             EndItem();
 
-            CreateItem(ItemType.ConcussionGrenade, "ConcussionGrenade");
+            CreateItem(ItemType.ConcussionGrenade, "ConcussionGrenade");  
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetExplosion(5.0f, 20, 0.0f);
+            SetExplosion(7.0f, 20, 0.0f);
             SetAction(ActionType.ThrowConcussionGrenadeAction);
             EndItem();
 
