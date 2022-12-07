@@ -87,7 +87,7 @@ namespace Engine3D
 
         public void LoadMaterials()
         {
-            MaterialLoader.Load("Materials/FlashWhiteMaterial", MaterialType.FlashWhiteMaterial);
+            MaterialLoader.Load("Materials/ShaderFlashMaterial", MaterialType.FlashWhiteMaterial);
         }
 
     }
