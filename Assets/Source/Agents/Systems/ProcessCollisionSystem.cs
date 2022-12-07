@@ -144,10 +144,7 @@ namespace Agent
              }
              else
              {
-                if (physicsState.MovementState != Enums.AgentMovementState.Jump && 
-                physicsState.MovementState != Enums.AgentMovementState.Flip && 
-                physicsState.MovementState != Enums.AgentMovementState.Falling && 
-                entity.IsStateFree())
+                if (entity.CanStickToGround() && entity.IsStateFree())
                 {
                     physicsState.PreviousPosition = physicsState.Position;
                     physicsState.Position.Y -= Physics.Constants.GroundDistance;

@@ -201,7 +201,7 @@ namespace Projectile
                     var agentPhysicsState = agentEntity.agentPhysicsState;
                     var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
-                    Vec2f agentPosition = agentPhysicsState.Position + agentBox2dCollider.Offset;
+                    Vec2f agentPosition = (agentPhysicsState.Position + agentBox2dCollider.Offset + agentBox2dCollider.Size * 0.5f);
 
                     AABox2D agentBox = new AABox2D(new Vec2f(agentPhysicsState.PreviousPosition.X, agentPhysicsState.Position.Y), agentBox2dCollider.Size);
 
@@ -214,8 +214,8 @@ namespace Projectile
                             agentEntity.agentStats.Health.Remove(damage);
                             agentEntity.FlashFor(0.225f);
                         }
-                        Vec2f dir = agentEntity.agentPhysicsState.Position - explosionCenter; 
-                        const float maxVelocity = 10.0f;
+                        Vec2f dir = agentPosition - explosionCenter; 
+                        const float maxVelocity = 30.0f;
                         float pushback = maxVelocity * 0.66f + maxVelocity * 0.33f * (1.0f - (dir.Magnitude / radius));
 
                         /*int horizontalDir = 0;
@@ -229,10 +229,16 @@ namespace Projectile
                         }
                         agentEntity.Knockback(pushback, horizontalDir, 3.0f);*/
         
-                        agentPhysicsState.Velocity = dir * 5.0f;
+                        agentPhysicsState.Velocity = dir.Normalized * pushback;
+
+                        const float maxY = 10.0f; 
+                        if (agentPhysicsState.Velocity.Y >= maxY)
+                        {
+                            agentPhysicsState.Velocity.Y = maxY;
+                        }
                         
-                      //  agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
-                     //   agentPhysicsState.StaggerDuration = 3.0f;
+                        agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
+                        agentPhysicsState.StaggerDuration = 3.0f;
                     }
                 }
             }

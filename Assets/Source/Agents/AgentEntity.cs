@@ -51,6 +51,16 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Drink;
     }
 
+    public bool CanStickToGround()
+    {
+        var physicsState = agentPhysicsState;
+        
+        return physicsState.MovementState != Enums.AgentMovementState.Jump && 
+            physicsState.MovementState != Enums.AgentMovementState.Flip && 
+            physicsState.MovementState != Enums.AgentMovementState.Falling &&
+            physicsState.MovementState != Enums.AgentMovementState.Stagger;
+    }
+
     public bool IsCrouched()
     {
         var physicsState = agentPhysicsState;
