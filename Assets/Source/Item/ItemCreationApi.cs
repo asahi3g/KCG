@@ -111,12 +111,11 @@ namespace Item
         }
 
 
-        public void SetInventoryItemIcon(int spriteId, KMath.Vec2f size)
+        public void SetInventoryItemIcon(int spriteId)
         {
             IsItemTypeValid();
 
             PropertiesArray[(int)currentIndex].InventorSpriteID = spriteId;
-            PropertiesArray[(int)currentIndex].SpriteSize = size;
         }
 
         public void SetAction(ActionType nodeID)
@@ -607,7 +606,7 @@ namespace Item
             CreateItem(ItemType.SniperRifle, "SniperRifle");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(SniperRifleIcon);
-            SetInventoryItemIcon(SniperRifleIcon, new KMath.Vec2f(0.1f, 0.1f));
+            SetInventoryItemIcon(SniperRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 200.0f, coolDown: 1f, range: 350.0f, basicDamage: 60);
             SetRangedWeaponClip(clipSize: 6, bulletsPerShot: 1, reloadTime: 1.3f);
             SetProjectileType(ProjectileType.Bullet);
@@ -617,7 +616,7 @@ namespace Item
             CreateItem(ItemType.LongRifle, "LongRifle");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(LongRifleIcon);
-            SetInventoryItemIcon(LongRifleIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 1f, range: 20.0f, basicDamage: 40);
             SetRangedWeaponClip(clipSize: 25, bulletsPerShot: 1, reloadTime: 2f);
             SetProjectileType(ProjectileType.Bullet);
@@ -627,7 +626,7 @@ namespace Item
             CreateItem(ItemType.PulseWeapon, "PulseWeapon");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PulseIcon);
-            SetInventoryItemIcon(PulseIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PulseIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 0.5f, 10.0f, false, 25);
             SetRangedWeaponClip(25, 4, 1, 1);
             SetProjectileType(ProjectileType.Bullet);
@@ -637,7 +636,7 @@ namespace Item
             CreateItem(ItemType.AutoCannon, "AutoCannon");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(LongRifleIcon);
-            SetInventoryItemIcon(LongRifleIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(LongRifleIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.5f, range: 20.0f, basicDamage: 40);
             SetRangedWeaponClip(clipSize: 40, bulletsPerShot: 3, reloadTime: 4f);
             SetProjectileType(ProjectileType.Bullet);
@@ -647,7 +646,7 @@ namespace Item
             CreateItem(ItemType.SMG, "SMG");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(SMGIcon);
-            SetInventoryItemIcon(SMGIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(SMGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.2f, range: 20.0f, basicDamage: 15);
             SetRangedWeaponClip(clipSize: 50,  bulletsPerShot: 1, reloadTime:1f);
             SetProjectileType(ProjectileType.Bullet);
@@ -661,7 +660,7 @@ namespace Item
             CreateItem(ItemType.Shotgun, "Shotgun");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(ShotgunIcon);
-            SetInventoryItemIcon(ShotgunIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 30.0f, coolDown: 1f, range: 10.0f, basicDamage: 35);
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip( clipSize:6, bulletsPerShot: 2, reloadTime: 2.5f);
@@ -673,7 +672,7 @@ namespace Item
             CreateItem(ItemType.PumpShotgun, "PumpShotgun");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(ShotgunIcon);
-            SetInventoryItemIcon(ShotgunIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(ShotgunIcon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 2f, range: 5.0f, basicDamage: 30);
             SetSpreadAngle(1.0f);
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 4, reloadTime: 2.5f);
@@ -685,7 +684,7 @@ namespace Item
             CreateItem(ItemType.Pistol, "Pistol");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PistolIcon);
-            SetInventoryItemIcon(PistolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 0.4f, range: 100.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 8, bulletsPerShot: 1, reloadTime: 1f);
             SetProjectileType(ProjectileType.Bullet);
@@ -697,7 +696,7 @@ namespace Item
             CreateItem(ItemType.RPG, "RPG");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(RPGIcon);
-            SetInventoryItemIcon(RPGIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(RPGIcon);
             SetRangedWeaponAttribute (bulletSpeed: 50.0f, coolDown: 3f, range: 50.0f, basicDamage: 100);
             SetRangedWeaponClip(clipSize: 2, bulletsPerShot: 1, reloadTime: 3);
             SetExplosion(3.0f, 15, 0f);
@@ -707,7 +706,7 @@ namespace Item
 
             CreateItem(ItemType.GrenadeLauncher, "GrenadeLauncher");
             SetTexture(GrenadeSpriteId);
-            SetInventoryItemIcon(GrenadeSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSpriteId);
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetRangedWeaponAttribute (bulletSpeed: 20.0f, coolDown: 1f, range: 20.0f, basicDamage: 25);
             SetRangedWeaponClip(clipSize: 4, bulletsPerShot: 1, reloadTime: 2);
@@ -720,7 +719,7 @@ namespace Item
             CreateItem(ItemType.Bow, "Bow");
             SetGroup(ItemGroups.ToolRangedWeapon);
             SetTexture(PistolIcon);
-            SetInventoryItemIcon(PistolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PistolIcon);
             SetRangedWeaponAttribute (bulletSpeed: 70.0f, coolDown: 3f, range: 100.0f, basicDamage: 30);
             SetRangedWeaponClip(clipSize: 1, bulletsPerShot: 1, reloadTime: 2f);
             SetProjectileType(ProjectileType.Arrow);
@@ -730,7 +729,7 @@ namespace Item
             CreateItem(ItemType.Moon, "Moon");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryItemIcon(BedrockIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -740,7 +739,7 @@ namespace Item
             CreateItem(ItemType.Dirt, "Dirt");
             SetGroup(ItemGroups.None);
             SetTexture(DirtIcon);
-            SetInventoryItemIcon(DirtIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -750,7 +749,7 @@ namespace Item
             CreateItem(ItemType.Bedrock, "Bedrock");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryItemIcon(BedrockIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -760,7 +759,7 @@ namespace Item
             CreateItem(ItemType.Pipe, "Pipe");
             SetGroup(ItemGroups.None);
             SetTexture(PipeIcon);
-            SetInventoryItemIcon(PipeIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -770,7 +769,7 @@ namespace Item
             CreateItem(ItemType.Wire, "Wire");
             SetGroup(ItemGroups.None);
             SetTexture(WireIcon);
-            SetInventoryItemIcon(WireIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(WireIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetTile(TileID.Wire);
@@ -780,14 +779,14 @@ namespace Item
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryItemIcon(GrenadeSprite5, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ActionType.ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
-            SetInventoryItemIcon(GrenadeSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSpriteId);
             SetAction(ActionType.ThrowFragGrenadeAction);
             EndItem();
 
@@ -795,7 +794,7 @@ namespace Item
             SetGroup(ItemGroups.ToolMelleWeapon);
             SetAnimationSet(Enums.ItemAnimationSet.HoldingSword);
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(1.0f, 2.0f, 0.5f, 1.0f, 10);
             SetFlags(FireWeaponProperties.MeleeFlags.Stab);
             SetAction(ActionType.MeleeAttackAction);
@@ -804,7 +803,7 @@ namespace Item
             CreateItem(ItemType.StunBaton, "StunBaton");
             SetGroup(ItemGroups.ToolMelleWeapon);
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetMeleeWeapon(0.5f, 2.0f, 1.0f, 1.0f, 5);
             SetFlags(FireWeaponProperties.MeleeFlags.Slash);
             SetAction(ActionType.MeleeAttackAction);
@@ -813,7 +812,7 @@ namespace Item
             CreateItem(ItemType.RiotShield, "RiotShield");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetShield(false);
             SetAction(ActionType.UseShieldAction);
             EndItem();
@@ -821,42 +820,42 @@ namespace Item
             CreateItem(ItemType.Ore, "Ore");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Slime, "Slime");
             SetGroup(ItemGroups.None);
             SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(SlimeIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Food, "Food");
             SetGroup(ItemGroups.None);
             SetTexture(FoodIcon);
-            SetInventoryItemIcon(FoodIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(FoodIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.Bone, "Bone");
             SetGroup(ItemGroups.None);
             SetTexture(BoneIcon);
-            SetInventoryItemIcon(BoneIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BoneIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.GoldCoin, "GoldCoin");
             SetGroup(ItemGroups.None);
             SetTexture(GoldCoinIcon);
-            SetInventoryItemIcon(GoldCoinIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(GoldCoinIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PotionTool, "PotionTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(BoneIcon);
-            SetInventoryItemIcon(BoneIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BoneIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PotionTool);
             SetAction(ActionType.ToolActionPotion);
@@ -865,7 +864,7 @@ namespace Item
             CreateItem(ItemType.HealthPotion, "HealthPotion");
             SetGroup(ItemGroups.Potion);
             SetTexture(IconItemPotionHealth);
-            SetInventoryItemIcon(IconItemPotionHealth, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconItemPotionHealth);
             SetAction(ActionType.DrinkPotionAction);
             SetStackable();
             EndItem();
@@ -873,14 +872,14 @@ namespace Item
             CreateItem(ItemType.Ore, "Ore");
             SetGroup(ItemGroups.None);
             SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(OreIcon);
             SetStackable();
             EndItem();
 
             CreateItem(ItemType.PlacementTool, "PlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolPlacement);
-            SetInventoryItemIcon(IconToolPlacement, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementTool);
             SetAction(ActionType.ToolActionPlaceTile);
@@ -889,7 +888,7 @@ namespace Item
             CreateItem(ItemType.PlacementMaterialTool, "PlaceMaterial");
             SetGroup(ItemGroups.Tool);
             SetTexture(PlacementToolIcon);
-            SetInventoryItemIcon(PlacementToolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PlacementToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.PlacementMaterialTool);
             SetAction(ActionType.MaterialPlacementAction);
@@ -898,86 +897,86 @@ namespace Item
             CreateItem(ItemType.RemoveTileTool, "RemoveTileTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolRemoveTile);
-            SetInventoryItemIcon(IconToolRemoveTile, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolRemoveTile);
             SetAction(ActionType.ToolActionRemoveTile);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySlimeTool, "SpawnSlimeTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(SlimeIcon);
-            SetInventoryItemIcon(SlimeIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(SlimeIcon);
             SetAction(ActionType.ToolActionEnemySpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemyGunnerTool, "SpawnEnemyGunnerTool");
             SetGroup(ItemGroups.None);
             SetTexture(IconToolSpawnEnemyGunner);
-            SetInventoryItemIcon(IconToolSpawnEnemyGunner, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolSpawnEnemyGunner);
             SetAction(ActionType.ToolActionEnemyGunnerSpawn);
             EndItem();
 
             CreateItem(ItemType.SpawnEnemySwordmanTool, "SpawnEnemySwordmanTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolSpawnEnemySwordsman);
-            SetInventoryItemIcon(IconToolSpawnEnemySwordsman, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolSpawnEnemySwordsman);
             SetAction(ActionType.ToolActionEnemySwordmanSpawn);
             EndItem();
 
             CreateItem(ItemType.MiningLaserTool, "MiningLaserTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(MiningLaserToolIcon);
-            SetInventoryItemIcon(MiningLaserToolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(MiningLaserToolIcon);
             SetAction(ActionType.ToolActionMiningLaser);
             EndItem();
 
             CreateItem(ItemType.ParticleEmitterPlacementTool, "ParticleEmitterPlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(OreIcon);
             SetAction(ActionType.ToolActionPlaceParticleEmitter);
             EndItem();
 
             CreateItem(ItemType.ChestPlacementTool, "ChestPlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(OreIcon);
-            SetInventoryItemIcon(OreIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(OreIcon);
             SetAction(ActionType.ToolActionPlaceChest);
             EndItem();
 
             CreateItem(ItemType.MajestyPalm, "MajestyPlant");
             SetTexture(MajestyPalmIcon);
-            SetInventoryItemIcon(MajestyPalmIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(MajestyPalmIcon);
             SetAction(ActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.SagoPalm, "SagoPlant");
             SetTexture(SagoPalmIcon);
-            SetInventoryItemIcon(SagoPalmIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(SagoPalmIcon);
             SetAction(ActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.DracaenaTrifasciata, "DracaenaTrifasciata");
             SetTexture(DracaenaTrifasciataIcon);
-            SetInventoryItemIcon(DracaenaTrifasciataIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(DracaenaTrifasciataIcon);
             SetAction(ActionType.PlantAction);
             EndItem();
 
             CreateItem(ItemType.WaterBottle, "Water");
             SetTexture(WaterIcon);
-            SetInventoryItemIcon(WaterIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(WaterIcon);
             SetAction(ActionType.WaterAction);
             EndItem();
 
             CreateItem(ItemType.HarvestTool, "HarvestTool");
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetAction(ActionType.HarvestAction);
             EndItem();
 
             CreateItem(ItemType.ConstructionTool, "ConstructionTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolConstruction);
-            SetInventoryItemIcon(IconToolConstruction, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
             SetAction(ActionType.ToolActionConstruction);
@@ -986,7 +985,7 @@ namespace Item
             CreateItem(ItemType.MechPlacementTool, "MechPlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolConstruction);
-            SetInventoryItemIcon(IconToolConstruction, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.MechTool);
             SetAction(ActionType.ToolActionMechPlacement);
@@ -995,7 +994,7 @@ namespace Item
             CreateItem(ItemType.Chest, "Chest");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryItemIcon(ChestIconItem, KMath.Vec2f.One);
+            SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.MechPlacementAction);
             EndItem();
@@ -1003,7 +1002,7 @@ namespace Item
             CreateItem(ItemType.SmashableBox, "SmashableBox");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryItemIcon(ChestIconItem, KMath.Vec2f.One);
+            SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.MechPlacementAction);
             EndItem();
@@ -1011,7 +1010,7 @@ namespace Item
             CreateItem(ItemType.SmashableEgg, "SmashableEgg");
             SetGroup(ItemGroups.Mech);
             SetTexture(ChestIconItem);
-            SetInventoryItemIcon(ChestIconItem, KMath.Vec2f.One);
+            SetInventoryItemIcon(ChestIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.MechPlacementAction);
             EndItem();
@@ -1019,7 +1018,7 @@ namespace Item
             CreateItem(ItemType.Planter, "Planter");
             SetGroup(ItemGroups.Mech);
             SetTexture(PotIconItem);
-            SetInventoryItemIcon(PotIconItem, KMath.Vec2f.One);
+            SetInventoryItemIcon(PotIconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.MechPlacementAction);
             EndItem();
@@ -1027,7 +1026,7 @@ namespace Item
             CreateItem(ItemType.Light, "Light");
             SetGroup(ItemGroups.Mech);
             SetTexture(Light2IconItem);
-            SetInventoryItemIcon(Light2IconItem, KMath.Vec2f.One);
+            SetInventoryItemIcon(Light2IconItem);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.MechPlacementAction);
             EndItem();
@@ -1035,7 +1034,7 @@ namespace Item
             CreateItem(ItemType.RemoveMech, "RemoveMech");
             SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
-            SetInventoryItemIcon(ConstructionToolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(ConstructionToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetAction(ActionType.ToolActionRemoveMech);
             EndItem();
@@ -1043,27 +1042,27 @@ namespace Item
             CreateItem(ItemType.ScannerTool, "ScannerTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
-            SetInventoryItemIcon(ConstructionToolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(ConstructionToolIcon);
             SetAction(ActionType.ToolActionScanner);
             EndItem();
 
             CreateItem(ItemType.Helmet, "Helmet");
             SetGroup(ItemGroups.Helmet);
             SetTexture(HemeltSprite);
-            SetInventoryItemIcon(HemeltSprite, KMath.Vec2f.One);
+            SetInventoryItemIcon(HemeltSprite);
             EndItem();
 
             CreateItem(ItemType.Suit, "Suit");
             SetGroup(ItemGroups.Armour);
             SetTexture(SuitSprite);
-            SetInventoryItemIcon(SuitSprite, KMath.Vec2f.One);
+            SetInventoryItemIcon(SuitSprite);
             EndItem();
 
 
             CreateItem(ItemType.Moon, "Moon");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryItemIcon(BedrockIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -1073,7 +1072,7 @@ namespace Item
             CreateItem(ItemType.Dirt, "Dirt");
             SetGroup(ItemGroups.None);
             SetTexture(DirtIcon);
-            SetInventoryItemIcon(DirtIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(DirtIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -1083,7 +1082,7 @@ namespace Item
             CreateItem(ItemType.Bedrock, "Bedrock");
             SetGroup(ItemGroups.None);
             SetTexture(BedrockIcon);
-            SetInventoryItemIcon(BedrockIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(BedrockIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -1093,7 +1092,7 @@ namespace Item
             CreateItem(ItemType.Pipe, "Pipe");
             SetGroup(ItemGroups.None);
             SetTexture(PipeIcon);
-            SetInventoryItemIcon(PipeIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(PipeIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -1103,7 +1102,7 @@ namespace Item
             CreateItem(ItemType.Wire, "Wire");
             SetGroup(ItemGroups.None);
             SetTexture(WireIcon);
-            SetInventoryItemIcon(WireIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(WireIcon);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetTile(TileID.Wire);
@@ -1113,28 +1112,28 @@ namespace Item
             CreateItem(ItemType.GasBomb, "GasBomb");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryItemIcon(GrenadeSprite5, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ActionType.ThrowGasBombAction);
             EndItem();
 
             CreateItem(ItemType.Flare, "Flare");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSprite5);
-            SetInventoryItemIcon(GrenadeSprite5, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSprite5);
             SetAction(ActionType.ThrowFlareAction);
             EndItem();
 
             CreateItem(ItemType.FragGrenade, "FragGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
-            SetInventoryItemIcon(GrenadeSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSpriteId);
             SetAction(ActionType.ThrowFragGrenadeAction);
             EndItem();
 
             CreateItem(ItemType.ConcussionGrenade, "ConcussionGrenade");
             SetGroup(ItemGroups.None);
             SetTexture(GrenadeSpriteId);
-            SetInventoryItemIcon(GrenadeSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(GrenadeSpriteId);
             SetExplosion(5.0f, 20, 0.0f);
             SetAction(ActionType.ThrowConcussionGrenadeAction);
             EndItem();
@@ -1142,7 +1141,7 @@ namespace Item
             CreateItem(ItemType.GeometryPlacementTool, "GeometryPlacementTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(IconToolGeometryPlacement);
-            SetInventoryItemIcon(IconToolGeometryPlacement, KMath.Vec2f.One);
+            SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
             SetUIPanel(PanelEnums.GeometryTool);
             SetAction(ActionType.ToolActionGeometryPlacement);
@@ -1151,21 +1150,21 @@ namespace Item
             CreateItem(ItemType.AxeTool, "AxeTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetAction(ActionType.AxeAction);
             EndItem();
 
             CreateItem(ItemType.Pickaxe, "Pickaxe");
             SetGroup(ItemGroups.None);
             SetTexture(SwordSpriteId);
-            SetInventoryItemIcon(SwordSpriteId, KMath.Vec2f.One);
+            SetInventoryItemIcon(SwordSpriteId);
             SetAction(ActionType.PickaxeAction);
             EndItem();
 
             CreateItem(ItemType.Wood, "Wood");
             SetGroup(ItemGroups.None);
             SetTexture(WoodTile);
-            SetInventoryItemIcon(WoodTile, KMath.Vec2f.One);
+            SetInventoryItemIcon(WoodTile);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             SetAction(ActionType.MaterialPlacementAction);
@@ -1175,7 +1174,7 @@ namespace Item
             CreateItem(ItemType.Diamond, "Diamond");
             SetGroup(ItemGroups.None);
             SetTexture(Diamond);
-            SetInventoryItemIcon(Diamond, KMath.Vec2f.One);
+            SetInventoryItemIcon(Diamond);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1183,7 +1182,7 @@ namespace Item
             CreateItem(ItemType.Gold, "Gold");
             SetGroup(ItemGroups.None);
             SetTexture(Gold);
-            SetInventoryItemIcon(Gold, KMath.Vec2f.One);
+            SetInventoryItemIcon(Gold);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1191,7 +1190,7 @@ namespace Item
             CreateItem(ItemType.Iron, "Iron");
             SetGroup(ItemGroups.None);
             SetTexture(Iron);
-            SetInventoryItemIcon(Iron, KMath.Vec2f.One);
+            SetInventoryItemIcon(Iron);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1199,7 +1198,7 @@ namespace Item
             CreateItem(ItemType.Emerald, "Emerald");
             SetGroup(ItemGroups.None);
             SetTexture(Emerald);
-            SetInventoryItemIcon(Emerald, KMath.Vec2f.One);
+            SetInventoryItemIcon(Emerald);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1207,7 +1206,7 @@ namespace Item
             CreateItem(ItemType.Coal, "Coal");
             SetGroup(ItemGroups.None);
             SetTexture(Coal);
-            SetInventoryItemIcon(Coal, KMath.Vec2f.One);
+            SetInventoryItemIcon(Coal);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1215,7 +1214,7 @@ namespace Item
             CreateItem(ItemType.Lapis, "Lapis");
             SetGroup(ItemGroups.None);
             SetTexture(Lapis);
-            SetInventoryItemIcon(Lapis, KMath.Vec2f.One);
+            SetInventoryItemIcon(Lapis);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1223,7 +1222,7 @@ namespace Item
             CreateItem(ItemType.PinkDia, "PinkDia");
             SetGroup(ItemGroups.None);
             SetTexture(PinkDiamond);
-            SetInventoryItemIcon(PinkDiamond, KMath.Vec2f.One);
+            SetInventoryItemIcon(PinkDiamond);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1231,7 +1230,7 @@ namespace Item
             CreateItem(ItemType.RedStone, "RedStone");
             SetGroup(ItemGroups.None);
             SetTexture(RedStone);
-            SetInventoryItemIcon(RedStone, KMath.Vec2f.One);
+            SetInventoryItemIcon(RedStone);
             SetFlags(ItemProperties.Flags.Stackable);
             SetStackable();
             EndItem();
@@ -1239,7 +1238,7 @@ namespace Item
             CreateItem(ItemType.PlaceableBackgroundTool, "PlaceableBackgroundTool");
             SetGroup(ItemGroups.Tool);
             SetTexture(ConstructionToolIcon);
-            SetInventoryItemIcon(ConstructionToolIcon, KMath.Vec2f.One);
+            SetInventoryItemIcon(ConstructionToolIcon);
             EndItem();
 
         }

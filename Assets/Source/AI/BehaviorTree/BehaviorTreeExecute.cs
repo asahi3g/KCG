@@ -49,7 +49,8 @@ namespace BehaviorTree
         public void Update()
         {
             // Todo: Remove behavior tree from manager instead.
-            if (!GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).isAgentAlive)
+            if (!GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).isAgentAlive || 
+                   GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).agentStagger.Stagger)
                 return;
 
             for (int i = 0; i < DataState.NodesExecutiondata.Length; i++)

@@ -219,6 +219,16 @@ namespace Agent
                     }
                 }
 
+                if(entity.agentStagger.Stagger)
+                {
+                    entity.agentStagger.elapsed += UnityEngine.Time.deltaTime;
+
+                    if(entity.agentStagger.elapsed > entity.agentStagger.StaggerAffectTime)
+                    {
+                        entity.UnStagger();
+                    }
+                }
+
                 if (physicsState.DyingDuration > 0)
                 {
                     physicsState.DyingDuration -= deltaTime;
