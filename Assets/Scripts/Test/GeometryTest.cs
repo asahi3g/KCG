@@ -30,7 +30,9 @@ namespace Planet.Unity
 
         public void Start()
         {
-            GameState.AudioSystem = new AudioSystem(GetComponent<AudioSource>());
+            GameState.AudioSystem = new AudioSystem();
+            GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
+            
 
             Initialize();
 

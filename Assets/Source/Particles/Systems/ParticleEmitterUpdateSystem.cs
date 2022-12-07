@@ -13,8 +13,14 @@ namespace Particle
 
         ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
         ParticlePropertiesManager ParticlePropertiesManager;
-        public ParticleEmitterUpdateSystem(ParticleEmitterPropertiesManager particleEmitterCreationApi,
-                                            ParticlePropertiesManager particlePropertiesManager)
+
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(ParticleEmitterPropertiesManager particleEmitterCreationApi,
+                                      ParticlePropertiesManager particlePropertiesManager)
         {
             ParticleEmitterPropertiesManager = particleEmitterCreationApi;
             ParticlePropertiesManager = particlePropertiesManager;

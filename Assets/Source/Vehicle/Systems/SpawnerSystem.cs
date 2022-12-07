@@ -10,7 +10,12 @@ namespace Vehicle
         private static int UniqueID;
         VehicleCreationApi VehicleCreationApi;
 
-        public SpawnerSystem(VehicleCreationApi vehicleCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(VehicleCreationApi vehicleCreationApi)
         {
             VehicleCreationApi = vehicleCreationApi;
         }
