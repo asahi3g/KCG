@@ -63,7 +63,7 @@ namespace Particle
                             float rand2 = KMath.Random.Mt19937.genrand_realf();
 
                             x += rand1 * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
-                            y += (1.0f - rand1) * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
+                            y += rand2 * emitterProperties.SpawnRadius * 2 - emitterProperties.SpawnRadius;
 
                             Velocity.X += rand1 * (emitterProperties.VelocityIntervalEnd.X - 
                                                    emitterProperties.VelocityIntervalBegin.X) -
