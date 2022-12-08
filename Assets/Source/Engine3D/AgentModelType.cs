@@ -5,6 +5,7 @@ namespace Engine3D
         Unknown,
         Humanoid,
         InsectSmall,
-        InsectHeavy
+        InsectHeavy,
+        Character,
     }
 }
