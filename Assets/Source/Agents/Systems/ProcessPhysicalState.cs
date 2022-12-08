@@ -230,6 +230,16 @@ namespace Agent
                     }
                 }
 
+                if (entity.agentStagger.ImpactEffect)
+                {
+                    entity.agentStagger.elapsed += UnityEngine.Time.deltaTime;
+
+                    if (entity.agentStagger.elapsed > entity.agentStagger.ImpactAffectTime)
+                    {
+                        entity.UnImpactEffect();
+                    }
+                }
+
                 if (physicsState.DyingDuration > 0)
                 {
                     physicsState.DyingDuration -= deltaTime;
