@@ -202,6 +202,14 @@ namespace Agent
             }
         }
 
+        public void SetImpactAffectTime(float time)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].ImpactAffectTime = time;
+            }
+        }
+
         public void End()
         {
             CurrentIndex = -1;
@@ -247,6 +255,7 @@ namespace Agent
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));        
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.SetImpactAffectTime(0.3f);
             GameState.AgentCreationApi.End();
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Marine);
@@ -261,6 +270,7 @@ namespace Agent
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
             GameState.AgentCreationApi.SetDefaultHealth(100);
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.SetImpactAffectTime(0.3f);
             GameState.AgentCreationApi.End();
 
 
@@ -296,6 +306,8 @@ namespace Agent
             GameState.AgentCreationApi.SetDefaultHealth(100);
             // Windup is zero because attack is not a melee.
             GameState.AgentCreationApi.SetBasicAttack( new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.0f, Windup = 0.0f });
+            GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.SetImpactAffectTime(0.3f);
             GameState.AgentCreationApi.End();
 
             GameState.AgentCreationApi.Create((int)Enums.AgentType.FlyingSlime);
@@ -320,6 +332,8 @@ namespace Agent
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.InsectSmall);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.0f, 1.0f, 1.0f));
+            GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.SetImpactAffectTime(0.3f);
             GameState.AgentCreationApi.End();
 
 
@@ -335,6 +349,8 @@ namespace Agent
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.GroundInsectHeavyAnimation);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.6f, 1.6f, 1.6f));
             GameState.AgentCreationApi.SetBehaviorTree(insectBehavior);
+            GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.SetImpactAffectTime(0.3f);
             GameState.AgentCreationApi.End();
         }
 

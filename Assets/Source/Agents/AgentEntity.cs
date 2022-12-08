@@ -4,6 +4,7 @@ using Agent;
 using Collisions;
 using Engine3D;
 using Enums;
+using HighlightPlus;
 using Inventory;
 using Item;
 using KMath;
@@ -150,7 +151,32 @@ public partial class AgentEntity
         agentStagger.Stagger = false;
     }
 
-    
+    public void ImpactEffect()
+    {
+        agentStagger.ImpactEffect = true;
+        var Outline = agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightEffect>();
+        if (Outline != null)
+        {
+            Outline.highlighted = true;
+            Outline.innerGlow = 5f;
+            Outline.innerGlowWidth = 2f;
+            Outline.outlineDownsampling = 2;
+        }
+    }
+
+    public void UnImpactEffect()
+    {
+        var Outline = agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightEffect>();
+        if (Outline != null)
+        {
+            Outline.highlighted = false;
+            Outline.innerGlow = 0f;
+            Outline.innerGlowWidth = 2f;
+            Outline.outlineDownsampling = 1;
+        }
+        agentStagger.ImpactEffect = false;
+    }
+
     public Vec2f GetGunFiringTarget()
     {
         var physicsState = agentPhysicsState;

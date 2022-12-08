@@ -41,7 +41,7 @@ namespace Agent
             agentEntity.AddAgentStats(new ContainerInt(agentPropertiesTemplate.DefaultHealth, 0, agentPropertiesTemplate.DefaultHealth), new ContainerInt(100, 0, 100), 
                 new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
 
-            agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
+            agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f, false, agentPropertiesTemplate.ImpactAffectTime);
 
             agentEntity.AddAgentPhysicsState(
                 newPosition: position,

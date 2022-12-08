@@ -1,4 +1,5 @@
-﻿using KMath;
+﻿using HighlightPlus;
+using KMath;
 using Particle;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ namespace Projectile
 {
     public class ProcessOnHit
     {
-        float elapsed;
         public void Update()
         {
             ref var planet = ref GameState.Planet;
@@ -61,10 +61,14 @@ namespace Projectile
             var stats = agentEntity.agentStats;
             if (projectileEntity.hasProjectileDamage)
             {
-                if(agentEntity.hasAgentStagger)
+                GameState.ParticleEffectPropertiesManager.SpawnImpactEffect(projectileEntity.projectileOnHit.LastHitPos);
+
+                if (agentEntity.hasAgentStagger)
                 {
                     agentEntity.Stagger();
+                    agentEntity.ImpactEffect();
                 }
+                
 
                 int damage = projectileEntity.projectileDamage.Damage;
 

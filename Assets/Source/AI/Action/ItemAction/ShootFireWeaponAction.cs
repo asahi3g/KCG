@@ -62,7 +62,7 @@ namespace Action
                 ref ShootFireWeaponData shootingData = ref data.GetActionSequenceData<ShootFireWeaponData>(id);
                 shootingData.Target = target;
 
-                GameState.ParticleEffectPropertiesManager.SpawnMuzzleFlash(agentEntity.GetGunFiringPosition(), agentEntity.agentPhysicsState.FacingDirection);
+                GameState.ParticleEffectPropertiesManager.SpawnMuzzleFlash(agentEntity.GetAIGunFiringPosition(), agentEntity.agentPhysicsState.FacingDirection);
                 var spread = fireWeaponProperties.SpreadAngle;
                 for (int i = 0; i < bulletsPerShot; i++)
                 {

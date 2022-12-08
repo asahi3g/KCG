@@ -96,13 +96,17 @@ namespace Particle
             }
         }
 
+        public void SpawnImpactEffect(Vec2f position)
+        {
+            var Prefab = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate(UnityEngine.Resources.Load("FX/ImpactEffect/ImpactEffect"), new UnityEngine.Vector3 (position.X, position.Y, 0.0f), UnityEngine.Quaternion.identity);
+            Prefab.GetComponent<UnityEngine.ParticleSystem>().Play();
+            
+        }
 
         public void End()
         {
 
         }
-
-
 
         public void InitializeResources()
         {
