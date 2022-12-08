@@ -235,8 +235,8 @@ namespace Agent
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
             GameState.AgentCreationApi.SetDefaultHealth(30000);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);
-            GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Character);
+            GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.HumanLightAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));        
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
             GameState.AgentCreationApi.End();

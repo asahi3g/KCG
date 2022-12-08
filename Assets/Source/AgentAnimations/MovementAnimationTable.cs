@@ -46,6 +46,7 @@ namespace Agent
         public void InitStage2()
         {
            InitSpaceMarineAnimations();
+           InitHumanLightAnimations();
             InitInsectAnimations();
         }
 

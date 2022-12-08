@@ -99,5 +99,68 @@ namespace Engine3D
         SpaceMarineSwordAttack_1,
         SpaceMarineSwordAttack_2,
         SpaceMarineSwordAttack_3,
+
+
+
+
+
+
+
+
+
+
+        HumanLightIdle,
+        HumanLightRifleIdle,
+        HumanLightPistolIdle,
+        HumanLightRifleIdleAlerted,
+        HumanLightPistolIdleAlerted,
+        HumanLightWalk,
+        HumanLightRifleWalk,
+        HumanLightPistolWalk,
+        HumanLightWalkBackward,
+        HumanLightPistolBackward,
+        HumanLightRun,
+        HumanLightRifleRun,
+        HumanLightJump,
+        HumanLightRifleJump,
+        HumanLightPistolJump,
+        HumanLightFlip,
+        HumanLightRifleFlip,
+        HumanLightPistolFlip,
+        HumanLightJog,
+        HumanLightRifleJog,
+        HumanLightPistolJog,
+        HumanLightDash,
+        HumanLightRoll,
+        HumanLightCrouch,
+        HumanLightRifleCrouch,
+        HumanLightPistolCrouch,
+        HumanLightCrouch_Walk,
+        HumanLightRifleCrouch_Walk,
+        HumanLightPistolCrouch_Walk,
+        HumanLightCrouch_WalkBackwards,
+        HumanLightRifleCrouch_WalkBackwards,
+        HumanLightLimp,
+        HumanLightDrink,
+        HumanLightPickaxeHit,
+        HumanLightChoppingTree,
+        HumanLightStagger,
+        HumanLightJumpFall,
+        HumanLightRifleJumpFall,
+        HumanLightPistolJumpFall,
+        HumanLightSwordSlash,
+        HumanLightFireGun,
+        HumanLightRifleFireGun,
+        HumanLightPistolFireGun,
+        HumanLightUseTool,
+        HumanLightSliding,
+        HumanLightJetPack,
+        HumanLightKnockedDownFront,
+        HumanLightLyingFront,
+        HumanLightKnockedDownBack,
+        HumanLightLyingBack,
+        HumanLightSwordAttack_1,
+        HumanLightSwordAttack_2,
+        HumanLightSwordAttack_3,
     }
 }
