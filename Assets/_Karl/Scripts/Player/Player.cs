@@ -20,6 +20,7 @@ public class Player : BaseMonoBehaviour
 
     public PlayerInput GetInput() => _input;
     public PlanetCamera GetCamera() => _camera;
+    public AgentRenderer GetRenderer() => _currentPlayer;
 
 
     public class PlanetCreationEvent : UnityEvent<PlanetLoader.Result>{}
