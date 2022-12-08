@@ -142,20 +142,12 @@ public partial class AgentEntity
 
     public void Stagger()
     {
-        if (isAgentAlive)
-        {
-            agentStagger.Stagger = true;
-            isAgentAlive = false;
-        }
+        agentStagger.Stagger = true;
     }
 
     public void UnStagger()
     {
-        if (!isAgentAlive)
-        {
-            agentStagger.Stagger = false;
-            isAgentAlive = true;
-        }
+        agentStagger.Stagger = false;
     }
 
     

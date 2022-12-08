@@ -520,7 +520,6 @@ namespace Item
             MineOreSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Tiles\\Gems-Ores\\gems-ores.png", 16, 16);
             
             // === Items ===
-            
             IconItemPotionHealth = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\icon_potion_health.png", 32, 32);
             IconItemPotionHealth = GameState.SpriteAtlasManager.CopySpriteToAtlas(IconItemPotionHealth, 0, 0, AtlasType.Particle);
             

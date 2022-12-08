@@ -2228,7 +2228,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419920045}
   m_HandleRect: {fileID: 419920044}
   m_Direction: 2
-  m_Value: 0.9999998
+  m_Value: 1
   m_Size: 0.52631575
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2281,7 +2281,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3500453091974370868, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_text
-      value: Reload
+      value: Inventory
       objectReference: {fileID: 0}
     - target: {fileID: 3500453091974370868, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_fontColor.a
@@ -2397,7 +2397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856334928756510095, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_text
-      value: R
+      value: Tab
       objectReference: {fileID: 0}
     - target: {fileID: 6856334928756510095, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_fontColor.a
@@ -6237,7 +6237,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3500453091974370868, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_text
-      value: Jump
+      value: Reload
       objectReference: {fileID: 0}
     - target: {fileID: 3500453091974370868, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_fontColor.a
@@ -6353,7 +6353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856334928756510095, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_text
-      value: Space
+      value: R
       objectReference: {fileID: 0}
     - target: {fileID: 6856334928756510095, guid: 19e685e494f169e46bb59527299904c3, type: 3}
       propertyPath: m_fontColor.a
