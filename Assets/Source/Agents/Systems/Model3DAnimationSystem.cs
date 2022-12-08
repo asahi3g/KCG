@@ -23,6 +23,11 @@ namespace Agent
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
+                    if (animation == null)
+                    {
+                        UnityEngine.Debug.Log(agentAnimation.Animation);
+                    }
+                    Utility.Utils.Assert(animation != null);
                     currentClip = agent3DModel.Renderer.GetAnimancer().Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 
