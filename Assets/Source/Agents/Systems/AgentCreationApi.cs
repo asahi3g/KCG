@@ -213,6 +213,7 @@ namespace Agent
             RegisterBasicActions();
             int marineBehavior = CreateMarineBehavior();
             int insectBehavior = CreateInsectBehavior();
+            int mellemarineBehavior = CreateMelleMarineBehavior();
 
             int dropID = LootTableCreationAPI.Create();
             LootTableCreationAPI.AddItem(ItemType.Slime, 1);
@@ -230,13 +231,20 @@ namespace Agent
             LootTableCreationAPI.SetEntry(6, 10);
             LootTableCreationAPI.End();
 
+
+
+            int marineDrop = LootTableCreationAPI.Create();
+            LootTableCreationAPI.AddItem(ItemType.GoldCoin, 1);
+            LootTableCreationAPI.SetEntry(1, 100);
+            LootTableCreationAPI.End();
+
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Player);
             GameState.AgentCreationApi.SetName("player");
             GameState.AgentCreationApi.SetMovement(10f, 3.5f, 2);
             GameState.AgentCreationApi.SetDefaultHealth(30000);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
-            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Character);
-            GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.HumanLightAnimations);
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);
+            GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));        
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
             GameState.AgentCreationApi.End();
@@ -244,12 +252,26 @@ namespace Agent
             GameState.AgentCreationApi.Create((int)Enums.AgentType.Marine);
             GameState.AgentCreationApi.SetName("Marine");
             GameState.AgentCreationApi.SetMovement(10f, 4.5f, 2);
-            GameState.AgentCreationApi.SetDropTableID(dropID, dropID);
+            GameState.AgentCreationApi.SetDropTableID(marineDrop, marineDrop);
             GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
             GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Humanoid);
             GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.SpaceMarineAnimations);
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));
             GameState.AgentCreationApi.SetBehaviorTree(marineBehavior);
+            GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
+            GameState.AgentCreationApi.SetDefaultHealth(100);
+            GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
+            GameState.AgentCreationApi.End();
+
+
+            GameState.AgentCreationApi.Create((int)Enums.AgentType.MelleMarine);
+            GameState.AgentCreationApi.SetMovement(10f, 4.5f, 2);
+            GameState.AgentCreationApi.SetDropTableID(marineDrop, marineDrop);
+            GameState.AgentCreationApi.SetCollisionBox(new Vec2f(-0.35f, 0.0f), new Vec2f(0.75f, 2.6f));
+            GameState.AgentCreationApi.SetAgentModelType(Engine3D.AgentModelType.Character);
+            GameState.AgentCreationApi.SetAgentAnimationType(Enums.AgentAnimationType.HumanLightAnimations);
+            GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(3.0f, 3.0f, 3.0f));
+            GameState.AgentCreationApi.SetBehaviorTree(mellemarineBehavior);
             GameState.AgentCreationApi.SetBasicAttack(new BasicAttack() { CoolDown = 0.8f, Demage = 20, Range = 1.5f, Windup = 2.0f });
             GameState.AgentCreationApi.SetDefaultHealth(100);
             GameState.AgentCreationApi.SetStaggerAffectTime(0.5f);
@@ -314,6 +336,62 @@ namespace Agent
             GameState.AgentCreationApi.SetAgentModelScale(new Vec3f(1.6f, 1.6f, 1.6f));
             GameState.AgentCreationApi.SetBehaviorTree(insectBehavior);
             GameState.AgentCreationApi.End();
+        }
+
+
+        int CreateMelleMarineBehavior()
+        {
+              // Node always returns success.
+            int successNodeID = NodeManager.CreateNode("SuccessNode", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(NodeSystem.ActionManager.SuccessActionID);
+            NodeManager.EndNode();
+
+            int wait0_1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Wait"));
+            NodeManager.SetData(new WaitAction.WaitActionData(0.5f));
+            NodeManager.EndNode();
+
+            int wait1sId = NodeManager.CreateNode("Wait", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("Wait"));
+            NodeManager.SetData(new WaitAction.WaitActionData(0f));
+            NodeManager.EndNode();
+
+            int selectTargetId = NodeManager.CreateNode("SelectClosestTarget", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("SelectClosestTarget"));
+            NodeManager.EndNode();
+
+            int moveToId = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
+            NodeManager.SetCondition(ConditionManager.GetID("InLineOfSight"));
+            NodeManager.SetAction(ActionManager.GetID("MoveDirectlyToward"));
+            NodeManager.SetData(ConditionManager.GetID("IsInAttackRange"));
+            NodeManager.EndNode();
+
+            int moveToBestScoreId = NodeManager.CreateNode("MoveToDir", NodeSystem.NodeType.Action);
+            NodeManager.SetAction(ActionManager.GetID("MoveToBestScorePos"));
+            NodeManager.EndNode();
+
+            int sequenceId = NodeManager.CreateNode("Sequence", NodeSystem.NodeType.Sequence);
+            NodeManager.SetCondition(ConditionManager.GetID("HasBulletInClip"));
+            NodeManager.AddChild(selectTargetId);
+            NodeManager.AddChild(moveToId);
+            NodeManager.AddChild(moveToBestScoreId);
+            NodeManager.AddChild(wait0_1sId);
+            NodeManager.EndNode();
+
+
+            int selectorStateId = NodeManager.CreateNode("SelectorState", NodeSystem.NodeType.Selector);
+            NodeManager.AddChild(wait1sId);
+            NodeManager.EndNode();
+
+            int repeaterId = NodeManager.CreateNode("Repeater", NodeSystem.NodeType.Repeater);
+            NodeManager.AddChild(selectorStateId);
+            NodeManager.EndNode();
+
+            int rootId = NodeManager.CreateNode("MarineBehavior", NodeSystem.NodeType.Decorator);
+            NodeManager.AddChild(repeaterId);
+            NodeManager.EndNode();
+
+            return rootId;
         }
 
         int CreateMarineBehavior()

@@ -603,6 +603,18 @@ public partial class AgentEntity
         
         physicsState.MovementState = AgentMovementState.Stagger;
         physicsState.StaggerDuration = time;
+        physicsState.SetMovementState = true;
+    }
+
+    public void Knockback(Vec2f velocity, float time = 1.5f)
+    {
+        var physicsState = agentPhysicsState;
+        
+        physicsState.Velocity = velocity;
+        
+        physicsState.MovementState = AgentMovementState.Stagger;
+        physicsState.StaggerDuration = time;
+        physicsState.SetMovementState = true;
     }
 
     public void Dash(int horizontalDir)

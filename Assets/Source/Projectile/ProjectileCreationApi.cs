@@ -268,7 +268,7 @@ namespace Projectile
             //TODO(): Add Grenade Throwing Arc
             //TODO(): Apply Force Over 3 Frames
             GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.ConcussionGrenade);
-            GameState.ProjectileCreationApi.SetNumberOfTicks(10);
+            GameState.ProjectileCreationApi.SetNumberOfTicks(3);
             GameState.ProjectileCreationApi.SetBlastMagnitude(20.0f);
             GameState.ProjectileCreationApi.SetSpriteId(PlaceholderSprite);
             GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);

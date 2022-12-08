@@ -18,6 +18,9 @@ namespace Agent
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.Default,  0,
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightIdle, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
 
+            SetAnimation(Enums.AgentMovementState.Stagger, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.Default,  0,
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightStagger, FadeTime=0.05f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
+
             SetAnimation(Enums.AgentMovementState.Rolling, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.Default,  0,
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightRoll, FadeTime=0.125f, Looping = false, Speed = 1.5f, MovementSpeedFactor = 0.0f});
 
@@ -61,7 +64,7 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightKnockedDownFront, FadeTime=1.125f, Looping = false, Speed = 0.6f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.LyingFront, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.Default, 0,
-            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightLyingFront, FadeTime=1.125f, Looping = false, Speed = 0.6f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightKnockedDownFront, FadeTime=1.125f, Looping = false, Speed = 0.6f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.SlidingLeft, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.Default, 0,
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightSliding, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
@@ -83,6 +86,9 @@ namespace Agent
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingSword,  0,
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightIdle, FadeTime=0.125f, Looping = true, Speed = 1.0f, MovementSpeedFactor = 0.0f});
+
+             SetAnimation(Enums.AgentMovementState.Stagger, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingSword,  0,
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightStagger, FadeTime=0.05f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.Rolling, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingSword,  0,
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightRoll, FadeTime=0.125f, Looping = false, Speed = 1.5f, MovementSpeedFactor = 0.0f});
@@ -139,10 +145,10 @@ namespace Agent
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightSwordAttack_1, FadeTime=0.00f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.SwordSlash, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingSword, 1, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightSwordAttack_1, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightSwordAttack_2, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.SwordSlash, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingSword, 2, 
-            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightDash, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightSwordAttack_3, FadeTime=0.0f, Looping = false, Speed = 4.0f, MovementSpeedFactor = 0.0f});
 
 
 
@@ -158,6 +164,9 @@ namespace Agent
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingRifle, 0, 
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightRifleIdle, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.0f, MovementSpeedFactor = 0.0f});
+
+             SetAnimation(Enums.AgentMovementState.Stagger, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingRifle,  0,
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightStagger, FadeTime=0.05f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.IdleAfterShooting, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingRifle, 0, 
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightRifleIdleAlerted, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.43f, MovementSpeedFactor = 0.0f});
@@ -247,6 +256,9 @@ namespace Agent
 
             SetAnimation(Enums.AgentMovementState.Idle, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingPistol, 0, 
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightPistolIdle, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.0f, MovementSpeedFactor = 0.0f});
+
+             SetAnimation(Enums.AgentMovementState.Stagger, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingPistol,  0,
+            new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightStagger, FadeTime=0.05f, Looping = false, Speed = 2.0f, MovementSpeedFactor = 0.0f});
 
             SetAnimation(Enums.AgentMovementState.IdleAfterShooting, Enums.AgentAnimationType.HumanLightAnimations, Enums.ItemAnimationSet.HoldingPistol, 0, 
             new AgentAnimation{Animation=Engine3D.AnimationType.HumanLightPistolIdleAlerted, FadeTime=0.125f, Looping = false, Speed = 1.0f, StartTime = 0.43f, MovementSpeedFactor = 0.0f});

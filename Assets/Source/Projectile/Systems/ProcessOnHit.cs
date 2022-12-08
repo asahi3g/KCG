@@ -237,6 +237,7 @@ namespace Projectile
                             agentPhysicsState.AffectedByFriction = false;
                             agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
                             agentPhysicsState.StaggerDuration = 2.0f;
+                            agentPhysicsState.SetMovementState = true;
                         }
 
                         if (pEntity.projectilePhysicsState.FramesToLive % 1 == 0)

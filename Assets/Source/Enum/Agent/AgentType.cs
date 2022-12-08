@@ -7,6 +7,7 @@ namespace Enums
         Slime,
         FlyingSlime,
         Marine,
+        MelleMarine,
         InsectSmall,
         InsectLarge,
     }

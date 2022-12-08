@@ -153,7 +153,7 @@ namespace Agent
             AnimationLoader.Load("Animations/Human Light/SwordThird", AnimationType.HumanLightSwordAttack_3);
             AnimationLoader.Load("Animations/Human Light/Jetpack", AnimationType.HumanLightJetPack);
             AnimationLoader.Load("Animations/Human Light/Stagger", AnimationType.HumanLightStagger);
-            AnimationLoader.Load("Animations/Human Light/Death2", AnimationType.HumanLightLyingFront);
+            AnimationLoader.Load("Animations/Human Light/Death", AnimationType.HumanLightKnockedDownFront);
         }
     }
 }
