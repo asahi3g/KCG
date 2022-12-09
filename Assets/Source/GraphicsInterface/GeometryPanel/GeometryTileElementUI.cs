@@ -1,6 +1,7 @@
 //imports UnityEngine
 
 using System;
+using UnityEngine;
 using Utility;
 
 namespace KGUI
@@ -48,6 +49,7 @@ namespace KGUI
 
         public override void OnMouseClick()
         {
+	        Debug.Log("OnMouseClick");
 	        var item = GameState.GUIManager.SelectedInventoryItem;
 	        item.itemTile.TileID = geometryTileID;
 	        Toggle(true);
@@ -55,12 +57,14 @@ namespace KGUI
 		
 		public void Toggle(bool value)
 		{
+			Debug.Log($"Toggle({value})");
 			toggled = value;
             border.UnityImage.color = toggled ? UnityEngine.Color.red : UnityEngine.Color.yellow;
         }
 		
 		public void ChangeMaterial(Enums.MaterialType materialType)
 		{
+			Debug.Log($"ChangeMaterial({materialType})");
 			geometryTileMaterial = materialType;
 	        
 			var tileProperty = GameState.TileCreationApi.GetTileProperty(geometryTileMaterial, geometryTileShape);

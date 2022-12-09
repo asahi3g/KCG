@@ -6,9 +6,9 @@ public class DebugPlanet : BaseMonoBehaviour
 {
     [SerializeField] private DebugChunk _debugChunk;
     
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         App.Instance.GetPlayer().onCurrentPlanetChanged.AddListener(OnCurrentPlanetChanged);
     }
     

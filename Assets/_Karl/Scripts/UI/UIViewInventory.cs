@@ -75,17 +75,43 @@ public class UIViewInventory : UIView
 
     private void OnSelectionSelect(UIContentElement previous, UIContentElement selected)
     {
+        ToggleUIViewTileGeometryAndRotation(false);
+        ToggleUIViewMapLayerType(false);
+        
         if (_inventoryEntityComponent == null) return;
         
         if (selected == null)
         {
             _inventoryEntityComponent.ClearSelectedSlotIndex();
+            
         }
         else
         {
-            _inventoryEntityComponent.SetSelectedSlotIndex(((UIContentElementInventorySlot)selected).GetSlot().Index);
+            UIContentElementInventorySlot impl = (UIContentElementInventorySlot)selected;
+            
+            // Update selected index
+            _inventoryEntityComponent.SetSelectedSlotIndex(impl.GetSlot().Index);
+            
+            // Check if is tool (open geometry shapes if needed)
+            if (impl.GetItem(out ItemInventoryEntity itemInventoryEntity))
+            {
+                if (itemInventoryEntity.hasItemTile)
+                {
+                    ToggleUIViewTileGeometryAndRotation(true);
+                    ToggleUIViewMapLayerType(true);
+                }
+            }
+        }
+
+        void ToggleUIViewTileGeometryAndRotation(bool show)
+        {
+            App.Instance.GetUI().GetView<UIViewTileGeometryAndRotation>().GetGroup().GetIdentifier().Alter(GetIdentifier(), show);
+        }
+
+        void ToggleUIViewMapLayerType(bool show)
+        {
+            App.Instance.GetUI().GetView<UIViewMapLayerType>().GetGroup().GetIdentifier().Alter(GetIdentifier(), show);
         }
     }
 
-    
 }

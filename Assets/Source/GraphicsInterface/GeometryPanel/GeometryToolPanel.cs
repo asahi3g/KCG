@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 
 namespace KGUI
 {
@@ -26,6 +27,7 @@ namespace KGUI
 
         public override void HandleClickEvent(ElementEnums elementID)
         {
+            Debug.Log($"HandleClickEvent({elementID})");
             foreach (var element in ElementList.Values.Where(element => element.ID != elementID))
             {
                 ((IToggleElement)element).Toggle(false);
@@ -34,6 +36,7 @@ namespace KGUI
 
         public override void OnActivate()
         {
+            Debug.Log("OnActivate");
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if(selectedInventoryItem == null) return;
 
@@ -49,6 +52,7 @@ namespace KGUI
         }
         public override void OnDeactivate()
         {
+            Debug.Log("OnDeactivate");
             var item = GameState.GUIManager.SelectedInventoryItem;
             if(item != null)
             {
@@ -63,6 +67,7 @@ namespace KGUI
         
         private void ToggleFirstElement()
         {
+            Debug.Log("ToggleFirstElement");
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
             
@@ -77,6 +82,7 @@ namespace KGUI
 
         private void OnChangeMaterialButtonClicked()
         {
+            Debug.Log("OnChangeMaterialButtonClicked");
             geometryTileMaterial = geometryTileMaterial.Next();
 
             changeMaterialButtonText.text = "Material: " + geometryTileMaterial;
