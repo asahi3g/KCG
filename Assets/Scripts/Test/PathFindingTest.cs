@@ -59,21 +59,8 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateMovementAction(Enums.ActionType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
-
-            Draw();
-
+            
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
-        }
-
-        private void Draw()
-        {
-            if (!Init)
-                return;
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            GameState.InventoryDrawSystem.Draw();
         }
 
         private void OnDrawGizmos()

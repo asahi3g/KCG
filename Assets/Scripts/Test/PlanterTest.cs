@@ -27,18 +27,6 @@ class PlanterTest : UnityEngine.MonoBehaviour
         GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 
-    private void OnGUI()
-    {
-        if (!Init)
-            return;
-
-        GameState.Planet.DrawHUD(Player);
-        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-            return;
-
-        KGUI.Statistics.StatisticsDisplay.DrawStatistics();
-    }
-
     private void OnDrawGizmos()
     {
         ref var planet = ref GameState.Planet;

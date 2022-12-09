@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Enums;
 using Enums.PlanetTileMap;
-using KGUI;
 using UnityEngine;
 using Utility;
 
@@ -157,12 +156,6 @@ namespace Item
             IsItemTypeValid();
             PropertiesArray[(int)currentIndex].MaxStackCount = maxStackCount;
             PropertiesArray[(int)currentIndex].ItemFlags |= ItemProperties.Flags.Stackable;
-        }
-
-        public void SetUIPanel(PanelEnums panelEnums)
-        {
-            PropertiesArray[(int) currentIndex].ItemFlags |= ItemProperties.Flags.UI;
-            PropertiesArray[(int) currentIndex].ItemPanelEnums = panelEnums;
         }
 
         public void SetPlaceable()
@@ -510,9 +503,6 @@ namespace Item
         private int IconToolConstruction;
         
         private int IconItemPotionHealth;
-        
-
-        public PanelUI PlacementToolPrefab;
 
         public void InitializeResources()
         {
@@ -899,7 +889,6 @@ namespace Item
             SetTexture(BoneIcon);
             SetInventoryItemIcon(BoneIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.PotionTool);
             SetAction(ActionType.ToolActionPotion);
             EndItem();
 
@@ -923,7 +912,6 @@ namespace Item
             SetTexture(IconToolPlacement);
             SetInventoryItemIcon(IconToolPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.PlacementTool);
             SetAction(ActionType.ToolActionPlaceTile);
             EndItem();
 
@@ -932,7 +920,6 @@ namespace Item
             SetTexture(PlacementToolIcon);
             SetInventoryItemIcon(PlacementToolIcon);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.PlacementMaterialTool);
             SetAction(ActionType.MaterialPlacementAction);
             EndItem();
 
@@ -1020,7 +1007,6 @@ namespace Item
             SetTexture(IconToolConstruction);
             SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.MechTool);
             SetAction(ActionType.ToolActionConstruction);
             EndItem();
 
@@ -1029,7 +1015,6 @@ namespace Item
             SetTexture(IconToolConstruction);
             SetInventoryItemIcon(IconToolConstruction);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.MechTool);
             SetAction(ActionType.ToolActionMechPlacement);
             EndItem();
 
@@ -1185,7 +1170,6 @@ namespace Item
             SetTexture(IconToolGeometryPlacement);
             SetInventoryItemIcon(IconToolGeometryPlacement);
             SetFlags(ItemProperties.Flags.PlacementTool);
-            SetUIPanel(PanelEnums.GeometryTool);
             SetAction(ActionType.ToolActionGeometryPlacement);
             EndItem();
 

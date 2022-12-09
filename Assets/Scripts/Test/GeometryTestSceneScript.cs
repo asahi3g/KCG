@@ -59,30 +59,12 @@ namespace Planet.Unity
                 }
 
                 planet.Update(UnityEngine.Time.deltaTime);
-                planet.DrawHUD(planet.Player);
 
                 if (enableGeometryPlacementTool)
                 {
                     geometryPlacementTool.UpdateToolGrid();
                 }
-
-                MaterialBag.hasInventoryDraw = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
             }
-        }
-
-        private void OnGUI()
-        {
-            if (!Init)
-                return;
-
-            // Draw HUD
-            GameState.Planet.DrawHUD(GameState.Planet.Player);
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            // Draw Statistics
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics();
         }
 
         private void OnDrawGizmos()

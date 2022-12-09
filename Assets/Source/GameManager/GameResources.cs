@@ -91,9 +91,4 @@ public class GameResources
         GameState.VehicleCreationApi.InitializeResources();
         GameState.PodCreationApi.InitializeResources();
     }
-
-    private static void CreatePrefabs()
-    {
-        GameState.PrefabManager.InitializeResources();
-    }
 }

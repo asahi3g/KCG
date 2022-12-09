@@ -111,9 +111,6 @@ public static class GameState
     #region Inventory
     public static readonly Inventory.CreationApi InventoryCreationApi;
     public static readonly Inventory.InventoryManager InventoryManager;
-    public static readonly Inventory.DrawSystem InventoryDrawSystem;
-    public static readonly Inventory.MouseSelectionSystem InventoryMouseSelectionSystem;
-    public static readonly Inventory.WindowScaleSystem InventoryWindowScaleSystem;
     #endregion
 
     #region Item
@@ -183,19 +180,11 @@ public static class GameState
     public static Utility.Render Renderer;
     #endregion
 
-    #region GUI/HUD
-    // outdated
-    public static readonly KGUI.GUIManager GUIManager;
-
-    #endregion
-
     #region Audio
 
     public static AudioSystem AudioSystem;
 
     #endregion
-
-    public static readonly Prefab.PrefabManager PrefabManager;
 
 
     public static void InitStage1()
@@ -207,7 +196,6 @@ public static class GameState
         LinePropertiesManager.InitStage1();
         GeometryPropertiesManager.InitStage1();
         AdjacencyPropertiesManager.InitStage1();
-        GUIManager.InitStage1();
         ParticleEffectPropertiesManager.InitStage1();
         AgentMoveListPropertiesManager.InitStage1();
         AgentEffectSystem.InitStage1();
@@ -235,7 +223,6 @@ public static class GameState
         LinePropertiesManager.InitStage2();
         GeometryPropertiesManager.InitStage2();
         AdjacencyPropertiesManager.InitStage2();
-        GUIManager.InitStage2();
         ParticleEffectPropertiesManager.InitStage2();
         AgentMoveListPropertiesManager.InitStage2();
         AgentEffectSystem.InitStage2();
@@ -258,9 +245,6 @@ public static class GameState
     static GameState()
     {
         Planet = new PlanetState();
-
-        PrefabManager = new Prefab.PrefabManager();
-    
 
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
@@ -312,10 +296,7 @@ public static class GameState
         MechSpawnerSystem = new Mech.MechSpawnSystem();
 
         InventoryManager = new Inventory.InventoryManager();
-        InventoryDrawSystem = new Inventory.DrawSystem();
         InventoryCreationApi = new Inventory.CreationApi();
-        InventoryMouseSelectionSystem = new Inventory.MouseSelectionSystem();
-        InventoryWindowScaleSystem = new Inventory.WindowScaleSystem();
 
         AnimationManager = new Animation.AnimationManager();
 
@@ -370,8 +351,6 @@ public static class GameState
         BackgroundGridOverlay = new TGen.DarkGreyBackground.RenderGridOverlay();
         BackgroundRenderMapBorder = new TGen.DarkGreyBackground.RenderMapBorder();
         BackgroundRenderMapMesh = new TGen.DarkGreyBackground.RenderMapMesh();
-
-        GUIManager = new KGUI.GUIManager();
 
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();

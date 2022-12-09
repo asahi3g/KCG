@@ -5,9 +5,7 @@ using System;
 public class InventoryTest : UnityEngine.MonoBehaviour
 {
     Inventory.InventoryManager inventoryManager;
-    Inventory.DrawSystem    inventoryDrawSystem;
     Item.SpawnerSystem      itemSpawnSystem;
-    Inventory.MouseSelectionSystem  mouseSelectionSystem;
     Inventory.InventoryList inventoryList;
     int terrariaLikeInventoryID = 2;
     int terrariaLikeInventoryModelID;
@@ -28,7 +26,6 @@ public class InventoryTest : UnityEngine.MonoBehaviour
         Initialize();
         inventoryManager = new Inventory.InventoryManager();
         itemSpawnSystem = new Item.SpawnerSystem();
-        inventoryDrawSystem = new Inventory.DrawSystem();
         inventoryList = new Inventory.InventoryList();
         GameState.Renderer.Initialize(material);
 
@@ -59,15 +56,6 @@ public class InventoryTest : UnityEngine.MonoBehaviour
             inventoryManager.AddItem(itemSpawnSystem.SpawnInventoryItem(Enums.ItemType.Ore), materialBag.inventoryID.ID);
         }
 
-        // Set basic inventory draw to on at the beggining:
-        GetInventory(inventoryID).hasInventoryToolBarDraw = true;
-        GetInventory(inventoryID).hasInventoryDraw = true;
-        GetInventory(equipmentInventoryID).hasInventoryDraw = true;
-        // Set Draw to false for custom inventories.
-        GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw = false;
-        GetInventory(customRestrictionInventoryID).hasInventoryDraw = false;
-        GetInventory(materialBag.inventoryID.ID).hasInventoryDraw = false;
-
         Init = true;
     }
 
@@ -78,42 +66,6 @@ public class InventoryTest : UnityEngine.MonoBehaviour
 
         // check if the tile sprite atlas textures needs to be updated
         GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
-
-        //  Open Inventory with Tab.        
-        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
-        {
-            GetInventory(defaultInventoryID).hasInventoryToolBarDraw = !GetInventory(defaultInventoryID).hasInventoryToolBarDraw;
-            GetInventory(defaultInventoryID).hasInventoryDraw = !GetInventory(defaultInventoryID).hasInventoryDraw;
-
-            GetInventory(defaultEquipmentID).hasInventoryDraw = !GetInventory(defaultEquipmentID).hasInventoryDraw;
-
-            GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw = !GetInventory(terrariaLikeInventoryID).hasInventoryToolBarDraw;
-            GetInventory(terrariaLikeInventoryID).hasInventoryDraw = !GetInventory(terrariaLikeInventoryID).hasInventoryDraw;
-
-            GetInventory(customRestrictionInventoryID).hasInventoryDraw = !GetInventory(customRestrictionInventoryID).hasInventoryDraw;
-            GetInventory(materialBag.inventoryID.ID).hasInventoryDraw = !GetInventory(materialBag.inventoryID.ID).hasInventoryDraw;
-        }
-
-        Draw();
-    }
-
-    private void Draw()
-    {
-        if (!Init)
-            return;
-
-        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseDown)
-            GameState.InventoryMouseSelectionSystem.OnMouseDown(inventoryList);
-
-        if (UnityEngine.Event.current.type == UnityEngine.EventType.MouseUp)
-            GameState.InventoryMouseSelectionSystem.OnMouseUP(inventoryList);
-
-        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-            return;
-
-        GameState.InventoryMouseSelectionSystem.Update();
-
-        inventoryDrawSystem.Draw();
     }
 
     private void Initialize()

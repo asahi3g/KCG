@@ -25,16 +25,6 @@ namespace Planet.Unity
         public void Update()
         {
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
-
-            Draw();
-        }
-
-        private void Draw()
-        {
-            if (!Init)
-                return;
-
-            GameState.Planet.DrawHUD(Player);
         }
 
         private void OnDrawGizmos()

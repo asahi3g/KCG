@@ -41,31 +41,11 @@ namespace Planet.Unity
             ref var planet = ref GameState.Planet;
             
             planet.Update(UnityEngine.Time.deltaTime);
-            planet.DrawHUD(Player);
 
             if (enableGeometryPlacementTool)
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
-
-            MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
-
-            Draw();
-        }
-
-        private void Draw()
-        {
-            if (!Init)
-                return;
-
-            // Draw HUD
-            GameState.Planet.DrawHUD(Player);
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            // Draw Statistics
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics();
         }
 
         private void OnDrawGizmos()

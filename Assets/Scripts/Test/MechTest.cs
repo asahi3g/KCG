@@ -59,8 +59,6 @@ namespace Planet.Unity
             selectedMechIndex = UnityEngine.Mathf.Clamp(selectedMechIndex, 0, totalMechs);
 
             planet.Update(UnityEngine.Time.deltaTime);
-            
-            MaterialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventoryID).hasInventoryDraw;
 
             Draw();
         }
@@ -68,8 +66,6 @@ namespace Planet.Unity
         private void Draw()
         {
             if (!Init) return;
-
-            GameState.Planet.DrawHUD(Player);
 
             if (showMechInventory)
             {

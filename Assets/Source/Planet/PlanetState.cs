@@ -596,36 +596,7 @@ namespace Planet
 
         }
 
-        public void DrawHUD(AgentEntity agentEntity)
-        { 
-            if(UnityEngine.Event.current == null) return;
-            
-            switch (UnityEngine.Event.current.type)
-            {
-                case UnityEngine.EventType.MouseDown:
-                    GameState.InventoryMouseSelectionSystem.OnMouseDown(InventoryList);
-                    return;
-                case UnityEngine.EventType.MouseUp:
-                    GameState.InventoryMouseSelectionSystem.OnMouseUP(InventoryList);
-                    return;
-                case not UnityEngine.EventType.Repaint:
-                    return;
-            }
 
-            // Mouse Interactions with objects.
-            GameState.AgentMouseInteractionSystem.Update();
-            GameState.MechMouseInteractionSystem.Update();
-            GameState.InventoryMouseSelectionSystem.Update();
-            GameState.InventoryDrawSystem.Draw();
-
-            if (agentEntity != null && GameState.GUIManager.ShowGUI)
-            {
-                GameState.GUIManager.Update();
-                GameState.GUIManager.Draw();
-            }
-        }
-        
-        
         public InventoryEntityComponent GetInventoryEntityComponent(int inventoryId)
         {
             return EntitasContext.inventory.GetEntityWithInventoryID(inventoryId).inventoryInventoryEntity;

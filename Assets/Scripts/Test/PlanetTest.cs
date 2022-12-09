@@ -38,22 +38,6 @@ namespace Planet.Unity
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
-
-            materialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw;
-        }
-        private void OnGUI()
-        {
-            if (!init) return;
-            ref var planet = ref GameState.Planet;
-            planet.DrawHUD(planet.Player);
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            // Draw Statistics
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint) return;
-            
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics();
         }
 
         private void OnDrawGizmos()

@@ -492,17 +492,10 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            GameState.Planet.DrawHUD(Player);
-
             if (showMechInventory)
             {
                 DrawCurrentMechHighlighter();
             }
-
-            
-          //  CharacterDisplay.Draw();
-
-                 
         }
 
         private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h, UnityEngine.Color color)
