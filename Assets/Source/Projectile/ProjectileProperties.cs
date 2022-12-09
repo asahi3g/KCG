@@ -15,11 +15,13 @@ namespace Projectile
 
         public int NumberOfTicks;
         public float BlastMagnitude;
+        public float BlastRadius;
+        public int BlastDamage;
         public float StartVelocity;
         public float RampAcceleration;
         public float MaxVelocity;
 
-        public float DeltaRotation; // Degrees/seconds.
+        public float SpriteRotationRate; // Degrees/seconds.
 
         public float LinearDrag;
         public float LinearCutOff;

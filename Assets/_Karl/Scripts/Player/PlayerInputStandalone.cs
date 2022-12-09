@@ -55,7 +55,7 @@ public class PlayerInputStandalone : BaseMonoBehaviour
         bool right = IsKey(_moveRight);
         bool up = IsKey(_moveUp);
         bool down = IsKey(_moveDown);
-        
+    
         // Look Target
         _input.DoPlayerLookTarget(_inputArea.GetLastMove().position);
 
@@ -65,20 +65,20 @@ public class PlayerInputStandalone : BaseMonoBehaviour
 
         // Walk
         _input.DoPlayerWalk(left, right);
-        
+    
         // Sprint
         if (IsKey(_sprint)) _input.DoPlayerSprint(left, right);
 
         // Dash
         if(IsKeyDown(_speedDash)) _input.DoPlayerDash(left, right);
-        
+    
         // Jump
         if(IsKeyDown(_jump)) _input.DoPlayerJump();
-        
+    
         // Jetpack
         if(IsKeyDown(_jetpack)) _input.DoPlayerJetpackBegin();
         if(IsKeyUp(_jetpack)) _input.DoPlayerJetpackEnd();
-        
+    
         // Fire
         if(IsKeyDown(_fire)) _input.DoPlayerFire();
 
@@ -90,14 +90,13 @@ public class PlayerInputStandalone : BaseMonoBehaviour
 
         // Drop item
         if (IsKeyDown(_dropItem)) _input.DoPlayerDropItem();
-        
+    
         // Take Screenshot
         if (IsKeyDown(_screenShot)) _input.DoScreenshot();
 
 
         // Footer quick slots inventory
         UpdateQuickSlots();
-
     }
 
     private void UpdatePlayer()

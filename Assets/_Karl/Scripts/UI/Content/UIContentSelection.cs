@@ -38,6 +38,11 @@ public class UIContentSelection : BaseMonoBehaviour
 
     public bool SetSelected(UIContentElement value)
     {
+        if (_selected == null && value == null)
+        {
+            return true;
+        }
+        
         // Clicking the same
         bool clickedSame = _selected != null && _selected == value;
         if (clickedSame)

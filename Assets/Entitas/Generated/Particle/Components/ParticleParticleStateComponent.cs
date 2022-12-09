@@ -11,27 +11,25 @@ public partial class ParticleEntity {
     public Particle.StateComponent particleState { get { return (Particle.StateComponent)GetComponent(ParticleComponentsLookup.ParticleState); } }
     public bool hasParticleState { get { return HasComponent(ParticleComponentsLookup.ParticleState); } }
 
-    public void AddParticleState(float newStartingHealth, float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor, KMath.Vec2f newSize) {
+    public void AddParticleState(float newStartingHealth, float newHealth, float newDecayRate, float newSpriteRotationRate, KMath.Vec4f newColor, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleState;
         var component = (Particle.StateComponent)CreateComponent(index, typeof(Particle.StateComponent));
         component.StartingHealth = newStartingHealth;
         component.Health = newHealth;
         component.DecayRate = newDecayRate;
-        component.DeltaRotation = newDeltaRotation;
-        component.DeltaScale = newDeltaScale;
+        component.SpriteRotationRate = newSpriteRotationRate;
         component.Color = newColor;
         component.Size = newSize;
         AddComponent(index, component);
     }
 
-    public void ReplaceParticleState(float newStartingHealth, float newHealth, float newDecayRate, float newDeltaRotation, float newDeltaScale, KMath.Vec4f newColor, KMath.Vec2f newSize) {
+    public void ReplaceParticleState(float newStartingHealth, float newHealth, float newDecayRate, float newSpriteRotationRate, KMath.Vec4f newColor, KMath.Vec2f newSize) {
         var index = ParticleComponentsLookup.ParticleState;
         var component = (Particle.StateComponent)CreateComponent(index, typeof(Particle.StateComponent));
         component.StartingHealth = newStartingHealth;
         component.Health = newHealth;
         component.DecayRate = newDecayRate;
-        component.DeltaRotation = newDeltaRotation;
-        component.DeltaScale = newDeltaScale;
+        component.SpriteRotationRate = newSpriteRotationRate;
         component.Color = newColor;
         component.Size = newSize;
         ReplaceComponent(index, component);

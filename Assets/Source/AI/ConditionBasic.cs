@@ -18,7 +18,7 @@ namespace Condition
             ItemInventoryEntity item = agent.GetItem();
             ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
-            if (itemProperty.Group == ItemGroups.ToolRangedWeapon)
+            if (itemProperty.Group == ItemGroupType.ToolRangedWeapon)
             {
                 if (item.hasItemFireWeaponClip)
                 {

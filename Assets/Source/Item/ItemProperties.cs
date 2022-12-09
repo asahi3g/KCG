@@ -8,6 +8,7 @@ using KMath;
 
 namespace Item
 {
+    [System.Serializable]
     public struct ItemProperties
     {
         public string ItemLabel;                 // Item Label
@@ -18,7 +19,7 @@ namespace Item
         public Vec2f Size => new Vec2f(Width, Height);
 
         public ItemType ItemType;
-        public ItemGroups Group;
+        public ItemGroupType Group;
         public ActionType ToolActionType;
         public ActionType SecondToolActionType;
         public MechType  MechType;               // Used only when item is a mech type.
@@ -53,6 +54,7 @@ namespace Item
         public bool HasUI() => ItemFlags.HasFlag(Flags.UI);
     }
 
+    [System.Serializable]
     public class FireWeaponProperties
     {
         public float BulletSpeed;

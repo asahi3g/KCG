@@ -6,12 +6,13 @@ using System;
 using Collisions;
 using PlanetTileMap;
 using Audio;
+using Engine3D;
 
 namespace Planet.Unity
 {
     class GeometryTest : MonoBehaviour
     {
-        Material Material;
+        public Material Material;
 
         AgentEntity Player;
         int PlayerID;
@@ -30,118 +31,53 @@ namespace Planet.Unity
 
         public void Start()
         {
-            GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
-            
             Initialize();
-
         }
 
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
-            Material = Resources.Load("Materials/TextureMaterial") as Material;
-            Tiled.TiledMap tileMap = Tiled.TiledMap.FromJson("generated-maps/map3.tmj", "generated-maps/");
-
-            int materialCount = Enum.GetNames(typeof(Enums.MaterialType)).Length;
-            int geometryTilesCount = Enum.GetNames(typeof(Enums.TileGeometryAndRotation)).Length;
-
-            TileProperty[][] MaterialGeometryMap = new TileProperty[materialCount][];
-            for(int i = 0; i < materialCount; i++)
-            {
-                MaterialGeometryMap[i] = new TileProperty[geometryTilesCount];
-            }
-
-            Application.targetFrameRate = 60;
-
-            GameResources.Initialize();
-
-            for(int i = 0; i < GameState.TileCreationApi.TilePropertyArray.Length; i++)
-            {
-                ref TileProperty property = ref GameState.TileCreationApi.TilePropertyArray[i];
-
-                MaterialGeometryMap[(int)property.MaterialType][(int)property.BlockShapeType] = property;
-            }
-
-            // Generating the map
-            int mapWidth = tileMap.width;
-            int mapHeight = tileMap.height;
-
-            mapWidth = ((mapWidth + 16 - 1) / 16) * 16; // multiple of 16
-            mapHeight = ((mapHeight + 16 - 1) / 16) * 16; // multiple of 16
-
-            Debug.Log(mapWidth + " " + mapHeight);
             
-            Planet = GameState.Planet;
-            Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
-            Planet.Init(mapSize);
+            PlanetLoader.Load(transform, "map3", Material, App.Instance.GetPlayer().GetCamera().GetMain(), OnPlanerLoaderSuccess, OnPlanetLoaderFailed);
 
-            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), Agent.AgentFaction.Player);
-            PlayerID = Player.agentID.ID;
-
-
-            PlayerID = Player.agentID.ID;
-            inventoryID = Player.agentInventory.InventoryID;
-
-            Planet.InitializeSystems(Material, transform);
-
-            if (enableBackgroundPlacementTool)
+            void OnPlanerLoaderSuccess(PlanetLoader.Result result)
             {
-                placementTool = new TGen.DarkGreyBackground.BackgroundPlacementTool();
-                placementTool.Initialize(new Vec2i(tileMap.width, tileMap.height), Material, transform);
-            }
+                App.Instance.GetPlayer().SetCurrentPlanet(result);
+                Planet = result.GetPlanetState();
+                
+                Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), Agent.AgentFaction.Player);
+                
+                App.Instance.GetPlayer().SetAgentRenderer(Player.agentAgent3DModel.Renderer);
 
-            //GenerateMap();
+                GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
 
-            var camera = Camera.main;
-            Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
+                PlayerID = Player.agentID.ID;
+                inventoryID = Player.agentInventory.InventoryID;
 
-            for(int j = 0; j < tileMap.height; j++)
-            {
-                for(int i = 0; i < tileMap.width; i++)
+                if (enableBackgroundPlacementTool)
                 {
-                    int tileIndex = tileMap.layers[0].data[i + ((tileMap.height - 1) - j) * tileMap.width] - 1;
-                    if (tileIndex >= 0)
-                    {
-                        Tiled.TiledMaterialAndShape tileMaterialAndShape = tileMap.GetTile(tileIndex);
-
-                        TileID tileID = MaterialGeometryMap[(int)tileMaterialAndShape.Material][(int)tileMaterialAndShape.Shape].TileID;
-
-                        Planet.TileMap.GetTile(i, j).FrontTileID = tileID;
-                    }
+                    placementTool = new TGen.DarkGreyBackground.BackgroundPlacementTool();
+                    placementTool.Initialize(new Vec2i(result.GetTileMap().width, result.GetTileMap().height), Material, transform);
                 }
             }
 
-            /*for(int i = 0; i < planet.TileMap.MapSize.X; i++)
+            void OnPlanetLoaderFailed(IError error)
             {
-                planet.TileMap.GetTile(i, 0).FrontTileID =  TileID.Bedrock;
-                planet.TileMap.GetTile(i, planet.TileMap.MapSize.Y - 1).FrontTileID = TileID.Bedrock;
+                Debug.LogError(error.GetMessage());
             }
-
-            for(int j = 0; j < planet.TileMap.MapSize.Y; j++)
-            {
-                planet.TileMap.GetTile(0, j).FrontTileID = TileID.Bedrock;
-                planet.TileMap.GetTile(planet.TileMap.MapSize.X - 1, j).FrontTileID = TileID.Bedrock;
-            }*/
-
-            //GenerateMap();
-
-            Planet.TileMap.UpdateBackTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateMidTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
-            Planet.TileMap.UpdateFrontTileMapPositions((int)lookAtPosition.x, (int)lookAtPosition.y);
 
             AddItemsToPlayer();
 
             totalMechs = GameState.MechCreationApi.PropertiesArray.Where(m => m.Name != null).Count();
-
-            PlanetTileMap.TileMapGeometry.BuildGeometry(Planet.TileMap);
-
-            UpdateMode(Player);
         }
+        
         Collisions.Box2D otherBox = new Box2D {x = 7, y = 21, w = 1.0f, h = 1.0f};
         Collisions.Box2D orrectedBox = new Box2D {x = 0, y = 17, w = 1.0f, h = 1.0f};
 
         public void Update()
         {
+            return;
+
             var mouse = ECSInput.InputProcessSystem.GetCursorWorldPosition(20);
             
             var playerPhysicsState = Player.agentPhysicsState;
@@ -209,13 +145,6 @@ namespace Planet.Unity
 
         }
         Texture2D texture;
-
-        private void OnGUI()
-        {
-            GameState.Planet.DrawHUD(Player);
-            /* CharacterDisplay.Draw();*/
-        }
-
 
         private void OnDrawGizmos()
         {

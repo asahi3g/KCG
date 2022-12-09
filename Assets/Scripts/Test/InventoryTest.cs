@@ -140,11 +140,11 @@ public class InventoryTest : UnityEngine.MonoBehaviour
         GameState.InventoryCreationApi.SetActiveSlot(5);
         GameState.InventoryCreationApi.SetActiveSlot(7);
         GameState.InventoryCreationApi.SetDefaultRestrictionTexture();
-        GameState.InventoryCreationApi.SetRestriction(1, Enums.ItemGroups.Helmet);
-        GameState.InventoryCreationApi.SetRestriction(3, Enums.ItemGroups.Ring);
-        GameState.InventoryCreationApi.SetRestriction(4, Enums.ItemGroups.Armour);
-        GameState.InventoryCreationApi.SetRestriction(5, Enums.ItemGroups.Gloves);
-        GameState.InventoryCreationApi.SetRestriction(7, Enums.ItemGroups.Belt);
+        GameState.InventoryCreationApi.SetRestriction(1, Enums.ItemGroupType.Helmet);
+        GameState.InventoryCreationApi.SetRestriction(3, Enums.ItemGroupType.Ring);
+        GameState.InventoryCreationApi.SetRestriction(4, Enums.ItemGroupType.Armour);
+        GameState.InventoryCreationApi.SetRestriction(5, Enums.ItemGroupType.Gloves);
+        GameState.InventoryCreationApi.SetRestriction(7, Enums.ItemGroupType.Belt);
         GameState.InventoryCreationApi.SetSize(3, 3);
         GameState.InventoryCreationApi.SetInventoryPos(1_650f, 430f);
         GameState.InventoryCreationApi.SetDefaultSlotColor(new UnityEngine.Color(0.0f, 0.70f, 0.55f, 0.75f));

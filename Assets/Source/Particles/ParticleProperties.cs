@@ -13,8 +13,7 @@ namespace Particle
         public float MinDecayRate;
         public float MaxDecayRate;
         public Vec2f Acceleration;
-        public float DeltaRotation;
-        public float DeltaScale;
+        public float SpriteRotationRate;
 
         // we can use a mix of sprites for the particles
         public int SpriteId;

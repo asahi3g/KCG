@@ -53,6 +53,8 @@ namespace Agent
                 newMovingDirection: 1,
                 newFacingDirection: 1,
                 newActionCooldown: 0,
+                newHitByExplosionImpact: false,
+                newHitByExplosionImpactTime: 0.0f,
                 newJumpingTime: 0,
                 newJumpedFromGround: false,
                 newCurerentMoveList: 0,
@@ -118,6 +120,10 @@ namespace Agent
                 agent3DModel.SetRenderer(agentRenderer);
                 agent3DModel.Material = agentRenderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial;
                 SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+            }
+            else
+            {
+                throw new UnityException($"Failed to create {nameof(AgentRenderer)}");
             }
 
             switch (agentType)

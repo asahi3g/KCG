@@ -1,12 +1,13 @@
 using Sprites;
 using UnityEngine;
 
-public class DebugSpriteLoader : MonoBehaviour
+public class DebugSpriteLoader : DebugBase
 {
     [SerializeField] private SpriteSheet[] _spriteSheets;
 
-    void Update()
+    protected override void OnUpdate()
     {
+        base.OnUpdate();
         _spriteSheets = GameState.SpriteLoader.SpriteSheets;
     }
 }
