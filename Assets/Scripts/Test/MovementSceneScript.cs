@@ -134,7 +134,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(128, 32);
             planet.Init(mapSize);
 
@@ -436,7 +436,7 @@ namespace Planet.Unity
 
 
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             UnityEngine.Material material = Material;
 
@@ -541,7 +541,7 @@ namespace Planet.Unity
             int x = (int)worldPosition.X;
             int y = (int)worldPosition.Y;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
@@ -592,7 +592,7 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
 
            // UnityEngine.Gizmos.DrawCube(new UnityEngine.Vector3(planet.TileMap.MapSize.X / 2.0f, planet.TileMap.MapSize.Y / 2.0f, 0.0f), new UnityEngine.Vector3(planet.TileMap.MapSize.X, planet.TileMap.MapSize.Y, 1));
@@ -841,7 +841,7 @@ namespace Planet.Unity
         {
             KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
             
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             
             ref var tileMap = ref planet.TileMap;
 
@@ -931,7 +931,7 @@ namespace Planet.Unity
 
             private void UpdateMode(AgentEntity agentEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             agentEntity.agentPhysicsState.Invulnerable = false;
             UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planet.CameraFollow.canFollow = false;

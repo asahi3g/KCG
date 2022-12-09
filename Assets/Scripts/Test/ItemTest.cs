@@ -38,7 +38,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 64);
 
             planet.Init(mapSize);

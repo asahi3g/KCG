@@ -12,7 +12,7 @@ namespace Action
         // Action used only by AI.
         static public NodeState Action(object ptr, int id)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);

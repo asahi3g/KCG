@@ -16,7 +16,6 @@ namespace Particle
 
         public void InitStage1()
         {
-
         }
 
         public void InitStage2(ParticleEmitterPropertiesManager particleEmitterCreationApi,
@@ -30,7 +29,7 @@ namespace Particle
         {
             ToDestroy.Clear();
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;;
             ParticleContext context = planet.EntitasContext.particle;
 
             float deltaTime = UnityEngine.Time.deltaTime;

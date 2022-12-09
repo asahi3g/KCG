@@ -37,7 +37,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;;
             planet.Update(Time.deltaTime);
 
             if (enableGeometryPlacementTool)
@@ -50,7 +50,7 @@ namespace Planet.Unity
         {
             // Set the color of gizmos
             Gizmos.color = Color.green;
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             // Draw a cube around the map
             if (planet.TileMap != null)
@@ -94,7 +94,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;;
             Vec2i mapSize = new Vec2i(256, 16);
             planet.Init(mapSize);
 
@@ -129,7 +129,7 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;;
             ref var tileMap = ref planet.TileMap;
 
             for (int i = 0; i < tileMap.MapSize.X; i++)
@@ -152,7 +152,7 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;;
             ref var tileMap = ref planet.TileMap;
 
             float spawnHeight = tileMap.MapSize.Y - 2;

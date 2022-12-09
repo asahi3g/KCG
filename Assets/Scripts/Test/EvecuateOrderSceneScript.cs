@@ -36,7 +36,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+             var planet =  GameState.Planet;
 
             planet.Update(UnityEngine.Time.deltaTime);
 
@@ -48,7 +48,7 @@ namespace Planet.Unity
 
         private void OnDrawGizmos()
         {
-            ref var planet = ref GameState.Planet;
+             var planet =  GameState.Planet;
 
             planet.DrawDebug();
 
@@ -113,7 +113,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+             var planet =  GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
             planet.Init(mapSize);
 
@@ -154,7 +154,7 @@ namespace Planet.Unity
         {
             KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             ref var tileMap = ref planet.TileMap;
 
@@ -216,8 +216,8 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var planet = ref GameState.Planet;
-            ref var tileMap = ref planet.TileMap;
+            var planet = GameState.Planet;
+            var tileMap = planet.TileMap;
 
             float spawnHeight = tileMap.MapSize.Y - 2;
 

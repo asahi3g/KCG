@@ -11,7 +11,7 @@ namespace Node.Action
 
         ItemInventoryEntity GetItem(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var entitasContext = planet.EntitasContext;
             AgentEntity agentEntity = entitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             if (!agentEntity.hasAgentInventory)

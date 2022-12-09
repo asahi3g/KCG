@@ -6,7 +6,7 @@
         // Should be called at the end of the frame.
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
                 ProjectileEntity entityP = planet.ProjectileList.Get(i);

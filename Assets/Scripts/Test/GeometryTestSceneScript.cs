@@ -39,7 +39,7 @@ namespace Planet.Unity
         {
             if (Init)
             {
-                ref var planet = ref GameState.Planet;
+                var planet = GameState.Planet;
                 var entitasContext = planet.EntitasContext;
                 int selectedSlot = entitasContext.inventory.GetEntityWithInventoryID(InventoryID).inventoryInventoryEntity.SelectedSlotIndex;
 
@@ -71,7 +71,7 @@ namespace Planet.Unity
         {
             // Set the color of gizmos
             UnityEngine.Gizmos.color = UnityEngine.Color.green;
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             // Draw a cube around the map
             if (planet.TileMap != null)
@@ -115,7 +115,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
             planet.Init(mapSize);
 
@@ -157,7 +157,7 @@ namespace Planet.Unity
         {
             KMath.Random.Mt19937.init_genrand((ulong)System.DateTime.Now.Ticks);
             
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             ref var tileMap = ref planet.TileMap;
 
@@ -375,7 +375,7 @@ namespace Planet.Unity
 
         void SpawnStuff()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
 
             float spawnHeight = tileMap.MapSize.Y - 2;

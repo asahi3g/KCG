@@ -21,7 +21,7 @@ namespace Action
         static public NodeState Action(object ptr, int index)
         {
             // Get Data
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             int endConditionId = data.GetNodeData<int>(index);
             ref float acceptableRadius = ref data.GetNodeData<float>(index);

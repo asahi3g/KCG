@@ -14,7 +14,7 @@ namespace Item
         // Todo: Maybe the system should not schedule action. 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.ItemParticleList.Length; i++)
             {
                 ItemParticleEntity itemParticle = planet.ItemParticleList.Get(i);

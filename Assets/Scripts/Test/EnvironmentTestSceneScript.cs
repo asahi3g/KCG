@@ -55,7 +55,7 @@ namespace Planet.Foreground
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(128, 96);
             planet.Init(mapSize);
 
@@ -112,7 +112,7 @@ namespace Planet.Foreground
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             UnityEngine.Material material = Material;
 
@@ -226,7 +226,7 @@ namespace Planet.Foreground
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
                 y >= 0 && y < planet.TileMap.MapSize.Y)
@@ -277,7 +277,7 @@ namespace Planet.Foreground
 
         private void OnDrawGizmos()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             planet.DrawDebug();
 
@@ -457,7 +457,7 @@ namespace Planet.Foreground
         {
             KMath.Random.Mt19937.init_genrand((ulong) System.DateTime.Now.Ticks);
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             ref var tileMap = ref planet.TileMap;
 
@@ -477,7 +477,7 @@ namespace Planet.Foreground
 
         private void UpdateMode(AgentEntity agentEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             agentEntity.agentPhysicsState.Invulnerable = false;
             UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;

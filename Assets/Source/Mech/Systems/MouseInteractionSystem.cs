@@ -17,7 +17,7 @@ namespace Mech
 
             List<MechEntity> meches = new List<MechEntity>(5);
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.MechList.Length; i++)
             {
                 MechEntity mech = planet.MechList.Get(i);
@@ -43,7 +43,7 @@ namespace Mech
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;

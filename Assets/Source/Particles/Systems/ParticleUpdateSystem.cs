@@ -15,7 +15,7 @@ namespace Particle
         {
             ToDestroy.Clear();
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             float deltaTime = UnityEngine.Time.deltaTime;
             IGroup<ParticleEntity> entities = planet.EntitasContext.particle.GetGroup(ParticleMatcher.ParticleState);
             foreach (var gameEntity in entities)

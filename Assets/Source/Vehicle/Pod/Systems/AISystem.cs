@@ -17,7 +17,7 @@ namespace Vehicle.Pod
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             IGroup<PodEntity> pods = planet.EntitasContext.pod.GetGroup(PodMatcher.VehiclePodPhysicsState2D);
             foreach (var pod in pods)

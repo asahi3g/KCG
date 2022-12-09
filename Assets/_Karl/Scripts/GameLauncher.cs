@@ -24,6 +24,15 @@ public class GameLauncher : BaseMonoBehaviour
         public ItemGroupType[] itemGroups;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        GameState.Initialize();
+
+        GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
+    }
+
     protected override void Start()
     {
         base.Start();

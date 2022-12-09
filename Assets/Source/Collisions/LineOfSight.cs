@@ -9,7 +9,7 @@ namespace Collisions
     {
         public static bool CanSeeAlert(int agentID, int targetAgentID)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
             var targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
 
@@ -34,7 +34,7 @@ namespace Collisions
         // Works only with angle <= 180 degrees.
         public static bool CanSeeUnalert(int agentID, int targetAgentID)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(agentID);
             var targetAgentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(targetAgentID);
 

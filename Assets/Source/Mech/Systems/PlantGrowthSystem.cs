@@ -12,7 +12,7 @@ namespace Mech
         {
             List<MechEntity> lights = new List<MechEntity>();
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.MechList.Length; i++)
             {
                 MechEntity mech = planet.MechList.Get(i);

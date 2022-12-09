@@ -15,165 +15,165 @@ public static class GameState
     public static Planet.PlanetState Planet;
     
     #region Aninmation
-    public static readonly Animation.AnimationManager AnimationManager;
-    public static readonly Animation.UpdateSystem AnimationUpdateSystem;
+    public static Animation.AnimationManager AnimationManager;
+    public static Animation.UpdateSystem AnimationUpdateSystem;
     #endregion
 
     #region AI
-    public static readonly AI.Movement.PathFinding PathFinding;
-    public static readonly AI.Movement.DrawDebugSystem PathFindingDebugSystem;
-    public static readonly AI.Movement.PositionScoreSystem MovementPositionScoreSystem;
-    public static readonly AI.BlackboardManager BlackboardManager;
-    public static readonly AI.UpdatePosition BlackboardUpdatePosition;
-    public static readonly NodeSystem.NodeManager NodeManager;
-    public static readonly NodeSystem.ActionManager ActionManager;
-    public static readonly NodeSystem.ConditionManager ConditionManager;
-    public static readonly BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
-    public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
-    public static readonly Sensor.SensorManager SensorManager;
-    public static readonly Sensor.UpdateSystem SensorUpdateSystem;
-    public static readonly AI.SquadBehvaior.SquadManager SquadManager;
-    public static readonly AI.SquadBehvaior.SquadUpdateSystem SquadUpdateSystem;
+    public static AI.Movement.PathFinding PathFinding;
+    public static AI.Movement.DrawDebugSystem PathFindingDebugSystem;
+    public static AI.Movement.PositionScoreSystem MovementPositionScoreSystem;
+    public static AI.BlackboardManager BlackboardManager;
+    public static AI.UpdatePosition BlackboardUpdatePosition;
+    public static NodeSystem.NodeManager NodeManager;
+    public static NodeSystem.ActionManager ActionManager;
+    public static NodeSystem.ConditionManager ConditionManager;
+    public static BehaviorTree.BehaviorTreeManager BehaviorTreeManager;
+    public static BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
+    public static Sensor.SensorManager SensorManager;
+    public static Sensor.UpdateSystem SensorUpdateSystem;
+    public static AI.SquadBehvaior.SquadManager SquadManager;
+    public static AI.SquadBehvaior.SquadUpdateSystem SquadUpdateSystem;
     #endregion
 
     #region PlayerActions
-    public static readonly Node.CreationSystem            ActionCreationSystem;
-    public static readonly Node.SchedulerSystem           ActionSchedulerSystem;
-    public static readonly ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
+    public static Node.CreationSystem            ActionCreationSystem;
+    public static Node.SchedulerSystem           ActionSchedulerSystem;
+    public static ActionCoolDown.CoolDownSystem  ActionCoolDownSystem;
     #endregion
 
     #region Tile
 
-    public static readonly PlanetTileMap.TileAtlasManager TileSpriteAtlasManager;
-    public static readonly PlanetTileMap.TileCreationApi TileCreationApi;
-    public static readonly PlanetTileMap.TileMapRenderer TileMapRenderer;
+    public static PlanetTileMap.TileAtlasManager TileSpriteAtlasManager;
+    public static PlanetTileMap.TileCreationApi TileCreationApi;
+    public static PlanetTileMap.TileMapRenderer TileMapRenderer;
 
     #endregion
 
     #region TGen
 
-    public static readonly TGen.Grid TGenGrid;
-    public static readonly TGen.RenderGridOverlay TGenRenderGridOverlay;
-    public static readonly TGen.RenderMapBorder TGenRenderMapBorder;
-    public static readonly TGen.RenderMapMesh TGenRenderMapMesh;
+    public static TGen.Grid TGenGrid;
+    public static TGen.RenderGridOverlay TGenRenderGridOverlay;
+    public static TGen.RenderMapBorder TGenRenderMapBorder;
+    public static TGen.RenderMapMesh TGenRenderMapMesh;
 
     #endregion
 
     #region DarkGreyBackground
 
-    public static readonly TGen.DarkGreyBackground.BackgroundGrid BackgroundGrid;
-    public static readonly TGen.DarkGreyBackground.RenderGridOverlay BackgroundGridOverlay;
-    public static readonly TGen.DarkGreyBackground.RenderMapBorder BackgroundRenderMapBorder;
-    public static readonly TGen.DarkGreyBackground.RenderMapMesh BackgroundRenderMapMesh;
+    public static TGen.DarkGreyBackground.BackgroundGrid BackgroundGrid;
+    public static TGen.DarkGreyBackground.RenderGridOverlay BackgroundGridOverlay;
+    public static TGen.DarkGreyBackground.RenderMapBorder BackgroundRenderMapBorder;
+    public static TGen.DarkGreyBackground.RenderMapMesh BackgroundRenderMapMesh;
 
     #endregion
 
     #region Sprites
 
-    public static readonly Sprites.SpriteAtlasManager SpriteAtlasManager;
-    public static readonly SpriteLoader SpriteLoader;
+    public static Sprites.SpriteAtlasManager SpriteAtlasManager;
+    public static SpriteLoader SpriteLoader;
 
     #endregion
 
     #region Mech
-    public static readonly Mech.MechCreationApi MechCreationApi;
-    public static readonly Mech.MechSpawnSystem MechSpawnerSystem;
-    public static readonly Mech.MeshBuilderSystem MechMeshBuilderSystem;
-    public static readonly Mech.MouseInteractionSystem MechMouseInteractionSystem;
-    public static readonly Mech.PlantGrowthSystem MechPlantGrowthSystem;
+    public static Mech.MechCreationApi MechCreationApi;
+    public static Mech.MechSpawnSystem MechSpawnerSystem;
+    public static Mech.MeshBuilderSystem MechMeshBuilderSystem;
+    public static Mech.MouseInteractionSystem MechMouseInteractionSystem;
+    public static Mech.PlantGrowthSystem MechPlantGrowthSystem;
     #endregion
 
     #region Agent
-    public static readonly Agent.AgentCreationApi AgentCreationApi;
-    public static readonly Agent.AgentSpawnerSystem AgentSpawnerSystem;
-    public static readonly Agent.MeshBuilderSystem AgentMeshBuilderSystem;
-    public static readonly Agent.MovementSystem AgentMovementSystem;
-    public static readonly Agent.AgentIKSystem AgentIKSystem;
-    public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
-    public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-    public static readonly Agent.Model3DMovementSystem AgentAgent3DModelMovementSystem;
-    public static readonly Agent.Model3DAnimationSystem AgentAgent3DModelAnimationSystem;
-    public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
-    public static readonly Agent.ProcessState AgentProcessState;
+    public static Agent.AgentCreationApi AgentCreationApi;
+    public static Agent.AgentSpawnerSystem AgentSpawnerSystem;
+    public static Agent.MeshBuilderSystem AgentMeshBuilderSystem;
+    public static Agent.MovementSystem AgentMovementSystem;
+    public static Agent.AgentIKSystem AgentIKSystem;
+    public static Agent.ProcessPhysicalState AgentProcessPhysicalState;
+    public static Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
+    public static Agent.Model3DMovementSystem AgentAgent3DModelMovementSystem;
+    public static Agent.Model3DAnimationSystem AgentAgent3DModelAnimationSystem;
+    public static Agent.MouseInteractionSystem AgentMouseInteractionSystem;
+    public static Agent.ProcessState AgentProcessState;
 
-    public static readonly Agent.AgentEffectSystem AgentEffectSystem;
-    public static readonly Agent.AgentMoveListPropertiesManager AgentMoveListPropertiesManager;
+    public static Agent.AgentEffectSystem AgentEffectSystem;
+    public static Agent.AgentMoveListPropertiesManager AgentMoveListPropertiesManager;
 
-    public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
+    public static Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
-    public static Collisions.LinePropertiesManager LinePropertiesManager { get; }
-    public static readonly Collisions.PointCreationApi PointCreationApi;
-    public static readonly Collisions.GeometryPropertiesManager GeometryPropertiesManager;
+    public static Collisions.LinePropertiesManager LinePropertiesManager;
+    public static Collisions.PointCreationApi PointCreationApi;
+    public static Collisions.GeometryPropertiesManager GeometryPropertiesManager;
 
-    public static readonly Collisions.AdjacencyPropertiesManager AdjacencyPropertiesManager;
+    public static Collisions.AdjacencyPropertiesManager AdjacencyPropertiesManager;
 
     #region Inventory
-    public static readonly Inventory.CreationApi InventoryCreationApi;
-    public static readonly Inventory.InventoryManager InventoryManager;
+    public static Inventory.CreationApi InventoryCreationApi;
+    public static Inventory.InventoryManager InventoryManager;
     #endregion
 
     #region Item
-    public static readonly Item.SpawnerSystem ItemSpawnSystem;
-    public static readonly Item.PickUpSystem ItemPickUpSystem;
-    public static readonly Item.MeshBuilderSystem ItemMeshBuilderSystem;
-    public static readonly Item.MovementSystem ItemMovableSystem;
-    public static readonly Item.ProcessCollisionSystem ItemProcessCollisionSystem;
-    public static readonly Item.ItemCreationApi ItemCreationApi;
+    public static Item.SpawnerSystem ItemSpawnSystem;
+    public static Item.PickUpSystem ItemPickUpSystem;
+    public static Item.MeshBuilderSystem ItemMeshBuilderSystem;
+    public static Item.MovementSystem ItemMovableSystem;
+    public static Item.ProcessCollisionSystem ItemProcessCollisionSystem;
+    public static Item.ItemCreationApi ItemCreationApi;
     #endregion
 
     #region Loot
-    public static readonly LootDrop.CreationApi LootTableCreationAPI;
-    public static readonly LootDrop.LootDropSystem LootDropSystem;
+    public static LootDrop.CreationApi LootTableCreationAPI;
+    public static LootDrop.LootDropSystem LootDropSystem;
     #endregion
 
-    public static readonly Utility.FileLoadingManager FileLoadingManager;
-    public static readonly ECSInput.InputProcessSystem InputProcessSystem;
+    public static Utility.FileLoadingManager FileLoadingManager;
+    public static ECSInput.InputProcessSystem InputProcessSystem;
 
     #region Projectile
-    public static readonly Projectile.ProjectileCreationApi ProjectileCreationApi;
-    public static readonly Projectile.ProcessCollisionSystem ProjectileCollisionSystem;
-    public static readonly Projectile.MovementSystem ProjectileMovementSystem;
-    public static readonly Projectile.SpawnerSystem ProjectileSpawnerSystem;
-    public static readonly Projectile.MeshBuilderSystem ProjectileMeshBuilderSystem;
-    public static readonly Projectile.ProcessOnHit ProjectileProcessOnHit;
-    public static readonly Projectile.ProcessState ProjectileProcessState;
-    public static readonly Projectile.DeleteSystem ProjectileDeleteSystem;
-    public static readonly Projectile.DebugSystem ProjectileDebugSystem;
+    public static Projectile.ProjectileCreationApi ProjectileCreationApi;
+    public static Projectile.ProcessCollisionSystem ProjectileCollisionSystem;
+    public static Projectile.MovementSystem ProjectileMovementSystem;
+    public static Projectile.SpawnerSystem ProjectileSpawnerSystem;
+    public static Projectile.MeshBuilderSystem ProjectileMeshBuilderSystem;
+    public static Projectile.ProcessOnHit ProjectileProcessOnHit;
+    public static Projectile.ProcessState ProjectileProcessState;
+    public static Projectile.DeleteSystem ProjectileDeleteSystem;
+    public static Projectile.DebugSystem ProjectileDebugSystem;
     #endregion
 
     #region FloatingText
-    public static readonly FloatingText.FloatingTextUpdateSystem FloatingTextUpdateSystem;
-    public static readonly FloatingText.FloatingTextSpawnerSystem FloatingTextSpawnerSystem;
-    public static readonly FloatingText.FloatingTextDrawSystem FloatingTextDrawSystem;
+    public static FloatingText.FloatingTextUpdateSystem FloatingTextUpdateSystem;
+    public static FloatingText.FloatingTextSpawnerSystem FloatingTextSpawnerSystem;
+    public static FloatingText.FloatingTextDrawSystem FloatingTextDrawSystem;
     #endregion
 
     #region Vehicle
-    public static readonly Vehicle.VehicleCreationApi VehicleCreationApi;
-    public static readonly Vehicle.ProcessCollisionSystem VehicleCollisionSystem;
-    public static readonly Vehicle.MovementSystem VehicleMovementSystem;
-    public static readonly Vehicle.SpawnerSystem VehicleSpawnerSystem;
-    public static readonly Vehicle.MeshBuilderSystem VehicleMeshBuilderSystem;
-    public static readonly Vehicle.AISystem VehicleAISystem;
+    public static Vehicle.VehicleCreationApi VehicleCreationApi;
+    public static Vehicle.ProcessCollisionSystem VehicleCollisionSystem;
+    public static Vehicle.MovementSystem VehicleMovementSystem;
+    public static Vehicle.SpawnerSystem VehicleSpawnerSystem;
+    public static Vehicle.MeshBuilderSystem VehicleMeshBuilderSystem;
+    public static Vehicle.AISystem VehicleAISystem;
 
-    public static readonly Vehicle.Pod.PodCreationApi PodCreationApi;
-    public static readonly Vehicle.Pod.ProcessCollisionSystem PodCollisionSystem;
-    public static readonly Vehicle.Pod.MovementSystem PodMovementSystem;
-    public static readonly Vehicle.Pod.SpawnerSystem PodSpawnerSystem;
-    public static readonly Vehicle.Pod.MeshBuilderSystem PodMeshBuilderSystem;
-    public static readonly Vehicle.Pod.AISystem PodAISystem;
+    public static Vehicle.Pod.PodCreationApi PodCreationApi;
+    public static Vehicle.Pod.ProcessCollisionSystem PodCollisionSystem;
+    public static Vehicle.Pod.MovementSystem PodMovementSystem;
+    public static Vehicle.Pod.SpawnerSystem PodSpawnerSystem;
+    public static Vehicle.Pod.MeshBuilderSystem PodMeshBuilderSystem;
+    public static Vehicle.Pod.AISystem PodAISystem;
     #endregion
 
     #region Particle
-    public static readonly Particle.ParticleEffectPropertiesManager ParticleEffectPropertiesManager;
-    public static readonly Particle.ParticlePropertiesManager ParticlePropertiesManager;
-    public static readonly Particle.ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
-    public static readonly Particle.ParticleEmitterUpdateSystem ParticleEmitterUpdateSystem;
-    public static readonly Particle.ParticleUpdateSystem ParticleUpdateSystem;
-    public static readonly Particle.ParticleEmitterSpawnerSystem ParticleEmitterSpawnerSystem;
-    public static readonly Particle.ParticleSpawnerSystem ParticleSpawnerSystem;
-    public static readonly Particle.ParticleProcessCollisionSystem ParticleProcessCollisionSystem;
-    public static readonly Particle.MeshBuilderSystem ParticleMeshBuilderSystem;
+    public static Particle.ParticleEffectPropertiesManager ParticleEffectPropertiesManager;
+    public static Particle.ParticlePropertiesManager ParticlePropertiesManager;
+    public static Particle.ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
+    public static Particle.ParticleEmitterUpdateSystem ParticleEmitterUpdateSystem;
+    public static Particle.ParticleUpdateSystem ParticleUpdateSystem;
+    public static Particle.ParticleEmitterSpawnerSystem ParticleEmitterSpawnerSystem;
+    public static Particle.ParticleSpawnerSystem ParticleSpawnerSystem;
+    public static Particle.ParticleProcessCollisionSystem ParticleProcessCollisionSystem;
+    public static Particle.MeshBuilderSystem ParticleMeshBuilderSystem;
     #endregion
 
     #region Render
@@ -187,62 +187,7 @@ public static class GameState
     #endregion
 
 
-    public static void InitStage1()
-    {
-        TileSpriteAtlasManager.InitStage1(SpriteLoader);
-        SpriteAtlasManager.InitStage1(SpriteLoader);
-        AgentMovementAnimationTable.InitStage1();
-        PointCreationApi.InitStage1();
-        LinePropertiesManager.InitStage1();
-        GeometryPropertiesManager.InitStage1();
-        AdjacencyPropertiesManager.InitStage1();
-        ParticleEffectPropertiesManager.InitStage1();
-        AgentMoveListPropertiesManager.InitStage1();
-        AgentEffectSystem.InitStage1();
-        AudioSystem.InitStage1();
-        VehicleCreationApi.InitStage1();
-        PodCreationApi.InitStage1();
-        MechCreationApi.InitStage1();
-        ProjectileCreationApi.InitStage1();
-        ParticleEmitterUpdateSystem.InitStage1();
-        ParticleEmitterSpawnerSystem.InitStage1();
-        ParticleSpawnerSystem.InitStage1();
-        VehicleAISystem.InitStage1();
-        VehicleMovementSystem.InitStage1();
-        VehicleSpawnerSystem.InitStage1();
-        PodMovementSystem.InitStage1();
-        PodSpawnerSystem.InitStage1();
-    }
-
-    public static void InitStage2()
-    {
-        TileSpriteAtlasManager.InitStage2();
-        SpriteAtlasManager.InitStage2();
-        AgentMovementAnimationTable.InitStage2();
-        PointCreationApi.InitStage2();
-        LinePropertiesManager.InitStage2();
-        GeometryPropertiesManager.InitStage2();
-        AdjacencyPropertiesManager.InitStage2();
-        ParticleEffectPropertiesManager.InitStage2();
-        AgentMoveListPropertiesManager.InitStage2();
-        AgentEffectSystem.InitStage2();
-        AudioSystem.InitStage2(null);
-        VehicleCreationApi.InitStage2();
-        PodCreationApi.InitStage2();
-        MechCreationApi.InitStage2();
-        ProjectileCreationApi.InitStage2();
-        ParticleEmitterUpdateSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
-        ParticleEmitterSpawnerSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
-        ParticleSpawnerSystem.InitStage2(ParticlePropertiesManager);
-        VehicleAISystem.InitStage2(VehicleCreationApi);
-        VehicleMovementSystem.InitStage2(VehicleCreationApi);
-        VehicleSpawnerSystem.InitStage2(VehicleCreationApi);
-        PodMovementSystem.InitStage2(PodCreationApi);
-        PodSpawnerSystem.InitStage2(PodCreationApi);
-    }
-
-
-    static GameState()
+    private static void InitStage1()
     {
         Planet = new PlanetState();
 
@@ -252,7 +197,7 @@ public static class GameState
         MovementPositionScoreSystem = new AI.Movement.PositionScoreSystem();
         BlackboardManager = new AI.BlackboardManager();
         BlackboardUpdatePosition = new AI.UpdatePosition();
-        NodeManager =   new NodeSystem.NodeManager();
+        NodeManager = new NodeSystem.NodeManager();
         ActionManager = new NodeSystem.ActionManager();
         ConditionManager = new NodeSystem.ConditionManager();
         BehaviorTreeManager = new BehaviorTree.BehaviorTreeManager();
@@ -374,9 +319,68 @@ public static class GameState
 
         AudioSystem = new AudioSystem();
 
+        TileSpriteAtlasManager.InitStage1(SpriteLoader);
+        SpriteAtlasManager.InitStage1(SpriteLoader);
+        AgentMovementAnimationTable.InitStage1();
+        PointCreationApi.InitStage1();
+        LinePropertiesManager.InitStage1();
+        GeometryPropertiesManager.InitStage1();
+        AdjacencyPropertiesManager.InitStage1();
+        ParticleEffectPropertiesManager.InitStage1();
+        AgentMoveListPropertiesManager.InitStage1();
+        AgentEffectSystem.InitStage1();
+        AudioSystem.InitStage1();
+        VehicleCreationApi.InitStage1();
+        PodCreationApi.InitStage1();
+        MechCreationApi.InitStage1();
+        ProjectileCreationApi.InitStage1();
+        ParticleEmitterUpdateSystem.InitStage1();
+        ParticleEmitterSpawnerSystem.InitStage1();
+        ParticleSpawnerSystem.InitStage1();
+        VehicleAISystem.InitStage1();
+        VehicleMovementSystem.InitStage1();
+        VehicleSpawnerSystem.InitStage1();
+        PodMovementSystem.InitStage1();
+        PodSpawnerSystem.InitStage1();
+    }
+
+    private static void InitStage2()
+    {
+        TileSpriteAtlasManager.InitStage2();
+        SpriteAtlasManager.InitStage2();
+        AgentMovementAnimationTable.InitStage2();
+        PointCreationApi.InitStage2();
+        LinePropertiesManager.InitStage2();
+        GeometryPropertiesManager.InitStage2();
+        AdjacencyPropertiesManager.InitStage2();
+        ParticleEffectPropertiesManager.InitStage2();
+        AgentMoveListPropertiesManager.InitStage2();
+        AgentEffectSystem.InitStage2();
+        AudioSystem.InitStage2(null);
+        VehicleCreationApi.InitStage2();
+        PodCreationApi.InitStage2();
+        MechCreationApi.InitStage2();
+        ProjectileCreationApi.InitStage2();
+        ParticleEmitterUpdateSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleEmitterSpawnerSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleSpawnerSystem.InitStage2(ParticlePropertiesManager);
+        VehicleAISystem.InitStage2(VehicleCreationApi);
+        VehicleMovementSystem.InitStage2(VehicleCreationApi);
+        VehicleSpawnerSystem.InitStage2(VehicleCreationApi);
+        PodMovementSystem.InitStage2(PodCreationApi);
+        PodSpawnerSystem.InitStage2(PodCreationApi);
+    }
+
+
+    public static void Initialize()
+    {
         //TODO(): move these out of here
         InitStage1();
         InitStage2();
+
+        GameResources.Initialize();
+        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
+        GameState.SpriteAtlasManager.UpdateAtlasTextures();
     }
     
     public static void DebugAllItemsByItemGroup()

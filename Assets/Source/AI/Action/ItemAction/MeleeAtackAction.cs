@@ -13,7 +13,7 @@ namespace Action
     {
         public static NodeState OnEnter(object ptr, int index)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             agentEntity.MonsterAttack(4.0f);
@@ -23,7 +23,7 @@ namespace Action
 
         public static NodeState OnUpdate(object ptr, int index)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref AgentPropertiesTemplate agentProperties = ref GameState.AgentCreationApi.GetRef((int)agentEntity.agentID.Type);

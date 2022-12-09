@@ -13,7 +13,7 @@ namespace Node.Action
         public override void OnEnter(NodeEntity nodeEntity)
         {
             bool Mech = false;
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             var worldPosition = ECSInput.InputProcessSystem.GetCursorWorldPosition();

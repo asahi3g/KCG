@@ -6,7 +6,7 @@ namespace Projectile
     {
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (planet.ProjectileList == null)
                 return;
                 

@@ -12,7 +12,7 @@ namespace Action
         static public NodeState OnEnter(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
 
@@ -33,7 +33,7 @@ namespace Action
         static public NodeState OnUpdate(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
 
@@ -49,7 +49,7 @@ namespace Action
         static public NodeState OnSucess(object objData, int id)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             ItemInventoryEntity item = agentEntity.GetItem();
 

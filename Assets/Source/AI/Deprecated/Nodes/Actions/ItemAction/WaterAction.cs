@@ -21,7 +21,7 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
             MechEntity plant = null;
             Vec2f planterPosition = Vec2f.Zero;

@@ -12,7 +12,7 @@ namespace Mech
             var spriteSize = mechProperties.SpriteSize;
             var spriteId = mechProperties.SpriteID;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var entity = planet.EntitasContext.mech.CreateEntity();
             entity.AddMechID(UniqueID++, -1);
             entity.AddMechSprite2D(spriteId, spriteSize);

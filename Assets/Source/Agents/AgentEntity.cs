@@ -146,12 +146,14 @@ public partial class AgentEntity
 
     public void Stagger()
     {
+        agentPhysicsState.MovementState = AgentMovementState.Stagger;
         agentStagger.Stagger = true;
     }
 
     public void UnStagger()
     {
         agentStagger.Stagger = false;
+        agentPhysicsState.MovementState = AgentMovementState.Idle;
     }
 
     public void ImpactEffect()

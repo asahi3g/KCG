@@ -97,7 +97,6 @@ public class PlayerInputStandalone : BaseMonoBehaviour
 
         // Footer quick slots inventory
         UpdateQuickSlots();
-        
     }
 
     private void UpdatePlayer()

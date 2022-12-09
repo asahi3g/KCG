@@ -11,7 +11,7 @@ namespace Node.Action
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             itemEntity.itemTile.Layer = MapLayerType.Front;
 

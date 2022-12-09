@@ -225,37 +225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 0
   m_Effectors: []
---- !u!1 &2249543656808214359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2249543656808214358}
-  m_Layer: 0
-  m_Name: MuzzlePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2249543656808214358
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249543656808214359}
-  m_LocalRotation: {x: 0.00000004470345, y: 0.19489184, z: 0.000000029802301, w: 0.98082477}
-  m_LocalPosition: {x: 0.003379, y: 0.008892, z: 0.00046}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2249543657113320174}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 22.477, z: 0}
 --- !u!1 &2249543656912623636
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,7 +540,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2249543657672267462}
-  - {fileID: 2249543656808214358}
   m_Father: {fileID: 2249543658735858304}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2486,6 +2454,7 @@ MonoBehaviour:
   _pistolWeaponPose: {fileID: 2249543656664805066}
   _pistolWeaponAiming: {fileID: 2249543657433200294}
   _pistolHandIK: {fileID: 2249543656970262133}
+  _muzzleFlashPoint: {fileID: 2249543658452667202}
 --- !u!1 &2249543658584865626
 GameObject:
   m_ObjectHideFlags: 0

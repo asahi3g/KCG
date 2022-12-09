@@ -115,7 +115,7 @@ namespace Planet.Unity
                 };
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
@@ -131,7 +131,7 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
 
             for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)
