@@ -19,11 +19,13 @@ public class ConcussionGrenadeValues : MonoBehaviour
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.ConcussionGrenade);
         GameState.ProjectileCreationApi.SetNumberOfTicks(Number_Ticks);
         GameState.ProjectileCreationApi.SetBlastMagnitude(Magnitude);
+        GameState.ProjectileCreationApi.SetBlastRadius(Radius);
+        GameState.ProjectileCreationApi.SetBlastDamage(Damage);
         GameState.ProjectileCreationApi.SetSpriteId(GameState.ProjectileCreationApi.PlaceholderSprite);
-        GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
+        GameState.ProjectileCreationApi.SetSpriteRotationRate(180.0f);
         GameState.ProjectileCreationApi.SetSize(new Vec2f(0.75f, 0.75f));
-        GameState.ProjectileCreationApi.SetStartVelocity(GrenadeLaunchVelocity);
-        GameState.ProjectileCreationApi.SetAffectedByGravity();
+        GameState.ProjectileCreationApi.SetProjectileStartVelocity(GrenadeLaunchVelocity);
+        GameState.ProjectileCreationApi.SetAffectedByGravity(true);
         GameState.ProjectileCreationApi.End();
 
 
@@ -31,7 +33,6 @@ public class ConcussionGrenadeValues : MonoBehaviour
         GameState.ItemCreationApi.SetGroup(Enums.ItemGroupType.None);
         GameState.ItemCreationApi.SetTexture(GameState.ItemCreationApi.GrenadeSpriteId);
         GameState.ItemCreationApi.SetInventoryItemIcon(GameState.ItemCreationApi.GrenadeSpriteId);
-        GameState.ItemCreationApi.SetExplosion(Radius, Damage, 0.0f);
         GameState.ItemCreationApi.SetAction(Enums.ActionType.ThrowConcussionGrenadeAction);
         GameState.ItemCreationApi.EndItem();
 

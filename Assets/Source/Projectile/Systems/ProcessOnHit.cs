@@ -195,8 +195,8 @@ namespace Projectile
                 }
 
                 Vec2f explosionCenter = pEntity.projectileOnHit.LastHitPos;
-                float radius = pEntity.projectileExplosive.BlastRadius;
-                int damage = pEntity.projectileExplosive.MaxDamage;
+                float radius = properties.BlastRadius;
+                int damage = properties.BlastDamage;
                 AgentEntity ownerAgent = planet.EntitasContext.agent.GetEntityWithAgentID(pEntity.projectileID.AgentOwnerID);
 
                 Circle2D explosionCircle = new Circle2D { Center = explosionCenter, Radius = radius };

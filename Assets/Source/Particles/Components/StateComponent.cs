@@ -10,8 +10,7 @@ namespace Particle
         public float Health;
         public float DecayRate;
 
-        public float DeltaRotation;
-        public float DeltaScale;
+        public float SpriteRotationRate;
 
         public Vec4f Color;
 

@@ -13,6 +13,8 @@ namespace Particle
             Pool = new UnityEngine.Pool.ObjectPool<UnityEngine.ParticleSystem>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, true, DefaultCapacity, MaxSize);
         }
 
+        
+
 
         public void InitStage2()
         {
