@@ -77,7 +77,7 @@ public class GameLauncher : BaseMonoBehaviour
                         Admin.AdminAPI.AddItems(agentEntity, _testItems.itemGroups, _testItems.maximumQuantity);   
                     }
 
-                    App.Instance.GetPlayer().SetAgentRenderer(agentEntity.Agent3DModel.Renderer);
+                    App.Instance.GetPlayer().SetAgentRenderer(agentEntity.agentAgent3DModel.Renderer);
                 }
 
                 // Player agent creation failed

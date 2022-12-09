@@ -368,7 +368,7 @@ namespace ECSInput
             {
                 foreach (var agentEntity in agentEntities)
                 {
-                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroups.ToolRangedWeapon)
+                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroupType.ToolRangedWeapon)
                     {
                         GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentEntity.agentID.ID);
                     }
@@ -492,7 +492,7 @@ namespace ECSInput
                 var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
-                if(itemProperty.Group is ItemGroupType.ToolRangedWeapon or ItemGroups.ToolMelleWeapon)
+                if(itemProperty.Group is ItemGroupType.ToolRangedWeapon or ItemGroupType.ToolMelleWeapon)
                 {
                     if(entity.hasAgentAction)
                     {

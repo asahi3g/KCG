@@ -34,7 +34,7 @@ public class ConcussionGrenadeValues : MonoBehaviour
 
 
         GameState.ItemCreationApi.CreateItem(Enums.ItemType.ConcussionGrenade, "ConcussionGrenade");
-        GameState.ItemCreationApi.SetGroup(Enums.ItemGroups.None);
+        GameState.ItemCreationApi.SetGroup(Enums.ItemGroupType.None);
         GameState.ItemCreationApi.SetTexture(GameState.ItemCreationApi.GrenadeSpriteId);
         GameState.ItemCreationApi.SetInventoryItemIcon(GameState.ItemCreationApi.GrenadeSpriteId);
         GameState.ItemCreationApi.SetExplosion(Radius, Damage, 0.0f);
