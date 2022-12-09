@@ -63,7 +63,7 @@ namespace Projectile
             {
                 GameState.ParticleEffectPropertiesManager.SpawnImpactEffect(projectileEntity.projectileOnHit.LastHitPos);
 
-                if (agentEntity.hasAgentStagger)
+                if (agentEntity.hasAgentStagger && !agentEntity.isAgentPlayer)
                 {
                     agentEntity.Stagger();
                     agentEntity.ImpactEffect();
@@ -182,28 +182,28 @@ namespace Projectile
 
             var properties = GameState.ProjectileCreationApi.Get((int)pEntity.projectileType.Type);
 
-            ref var planet = ref GameState.Planet;
-            
-            //planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
-           // planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
-            if (pEntity.projectilePhysicsState.FramesToLive == 0)
+            if (elapse >= 0.5f)
             {
-                planet.AddParticleEffect(pEntity.projectilePhysicsState.Position, Enums.ParticleEffect.Explosion_2);
-            }
-            UnityEngine.Debug.Log("frame : " + pEntity.projectilePhysicsState.FramesToLive);
 
-            Vec2f explosionCenter = pEntity.projectileOnHit.LastHitPos;
-            float radius = pEntity.projectileExplosive.BlastRadius;
-            int damage = pEntity.projectileExplosive.MaxDamage;
-            AgentEntity ownerAgent = planet.EntitasContext.agent.GetEntityWithAgentID(pEntity.projectileID.AgentOwnerID);
-
-            Circle2D explosionCircle = new Circle2D { Center = explosionCenter, Radius = radius };
-
-            for (int i = 0; i < planet.AgentList.Length; i++)
-            {
-                AgentEntity agentEntity = planet.AgentList.Get(i);
-                if (agentEntity.isAgentAlive)
+                ref var planet = ref GameState.Planet;
+                
+                //planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
+            // planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
+                if (pEntity.projectilePhysicsState.FramesToLive == 0)
                 {
+                    planet.AddParticleEffect(pEntity.projectilePhysicsState.Position, Enums.ParticleEffect.Explosion_2);
+                }
+
+                Vec2f explosionCenter = pEntity.projectileOnHit.LastHitPos;
+                float radius = pEntity.projectileExplosive.BlastRadius;
+                int damage = pEntity.projectileExplosive.MaxDamage;
+                AgentEntity ownerAgent = planet.EntitasContext.agent.GetEntityWithAgentID(pEntity.projectileID.AgentOwnerID);
+
+                Circle2D explosionCircle = new Circle2D { Center = explosionCenter, Radius = radius };
+
+                for (int i = 0; i < planet.AgentList.Length; i++)
+                {
+                    AgentEntity agentEntity = planet.AgentList.Get(i);
                     var agentPhysicsState = agentEntity.agentPhysicsState;
                     var agentBox2dCollider = agentEntity.physicsBox2DCollider;
 
@@ -214,7 +214,8 @@ namespace Projectile
                     if (explosionCircle.InterSectionAABB(ref agentBox))
                     {
                         // Todo: Deals with case: colliding with an object and an agent at the same frame.
-                        if (pEntity.projectilePhysicsState.FramesToLive == 0 && agentEntity.agentID.Faction != ownerAgent.agentID.Faction)
+                        if (pEntity.projectilePhysicsState.FramesToLive == 0 && agentEntity.agentID.Faction != ownerAgent.agentID.Faction && 
+                        agentEntity.isAgentAlive)
                         {
                             //planet.AddFloatingText(damage.ToString(), 2.5f, new Vec2f(0.0f, 0.1f), agentEntity.agentPhysicsState.Position);
                             agentEntity.agentStats.Health.Remove(damage);
@@ -238,10 +239,21 @@ namespace Projectile
 
                         if (pEntity.projectilePhysicsState.FramesToLive == 0)
                         {
-                            agentPhysicsState.AffectedByFriction = false;
-                            agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
-                            agentPhysicsState.StaggerDuration = 2.0f;
-                            agentPhysicsState.SetMovementState = true;
+                            
+                          //  if (agentEntity.isAgentPlayer)
+                         //   {
+                                agentPhysicsState.HitByExplosionImpact = true;
+                                agentPhysicsState.AffectedByFriction = false;
+                                agentPhysicsState.HitByExplosionImpactTime = 1.0f;
+                                agentPhysicsState.JumpCounter = 1;
+                           /* }
+                            else
+                            {
+                                agentPhysicsState.AffectedByFriction = false;
+                                agentPhysicsState.MovementState = Enums.AgentMovementState.Stagger;
+                                agentPhysicsState.StaggerDuration = 2.0f;
+                                agentPhysicsState.SetMovementState = true;
+                            }*/
                         }
 
                         if (pEntity.projectilePhysicsState.FramesToLive % 1 == 0)
@@ -253,16 +265,17 @@ namespace Projectile
                             {
                                 agentPhysicsState.Velocity.Y = maxY;
                             }*/
-                       }
+                        }
                     }
+                    
                 }
-            }
 
-            pEntity.projectilePhysicsState.FramesToLive++;
-            if (pEntity.projectilePhysicsState.FramesToLive >= properties.NumberOfTicks)
-            {
-                // Todo: Do a circle collision test.
-                pEntity.isProjectileDelete = true;
+                pEntity.projectilePhysicsState.FramesToLive++;
+                if (pEntity.projectilePhysicsState.FramesToLive >= properties.NumberOfTicks)
+                {
+                    // Todo: Do a circle collision test.
+                    pEntity.isProjectileDelete = true;
+                }
             }
         }
 

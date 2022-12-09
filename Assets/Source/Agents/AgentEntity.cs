@@ -59,7 +59,8 @@ public partial class AgentEntity
         return physicsState.MovementState != Enums.AgentMovementState.Jump && 
             physicsState.MovementState != Enums.AgentMovementState.Flip && 
             physicsState.MovementState != Enums.AgentMovementState.Falling &&
-            physicsState.MovementState != Enums.AgentMovementState.Stagger;
+            physicsState.MovementState != Enums.AgentMovementState.Stagger &&
+            !physicsState.HitByExplosionImpact;
     }
 
     public bool IsCrouched()

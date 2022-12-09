@@ -266,7 +266,7 @@ namespace Projectile
 
                 if (minTime < 1.0f)
                 {
-                    float epsilon = 0.001f;
+                    float epsilon = 0.1f;
 
                     physicsState.Position = physicsState.PreviousPosition + delta * (minTime - epsilon);
 

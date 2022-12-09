@@ -23,6 +23,11 @@ namespace Agent
         public bool JumpedFromGround; // whether the agent jumped from the ground
 
 
+        // explosion impact
+        public bool HitByExplosionImpact;
+        public float HitByExplosionImpactTime;
+
+
         // move list
         public float ActionCooldown;
         public Enums.AgentMoveList CurerentMoveList;
