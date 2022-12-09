@@ -102,7 +102,7 @@ public static class GameState
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
 
-    public static readonly Collisions.LinePropertiesManager LinePropertiesManager;
+    public static Collisions.LinePropertiesManager LinePropertiesManager { get; }
     public static readonly Collisions.PointCreationApi PointCreationApi;
     public static readonly Collisions.GeometryPropertiesManager GeometryPropertiesManager;
 

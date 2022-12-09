@@ -23,35 +23,13 @@ public class GameLauncher : BaseMonoBehaviour
         public int maximumQuantity;
         public ItemGroupType[] itemGroups;
     }
-    
-
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        GameResources.Initialize();
-        AssetManager assetManager = AssetManager.Singelton; // force initialization
-        GameState.AudioSystem = new Audio.AudioSystem();
-        GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
-        
-        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
-        GameState.SpriteAtlasManager.UpdateAtlasTextures();
-        GameState.IsInitialized = true;
-
-        RunTests();
-        GameState.DebugAllItemsByItemGroup();
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        GameState.IsInitialized = false;
-    }
 
     protected override void Start()
     {
         base.Start();
+        
+        RunTests();
+        GameState.DebugAllItemsByItemGroup();
 
         LoadMainScene(OnMainSceneLoadSuccess, OnMainSceneLoadFailed);
 

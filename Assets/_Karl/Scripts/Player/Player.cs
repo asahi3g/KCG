@@ -37,6 +37,7 @@ public class Player : BaseMonoBehaviour
     public void SetCurrentPlanet(PlanetLoader.Result planetRenderer)
     {
         _currentPlanet = planetRenderer;
+        GameState.Planet = planetRenderer.GetPlanetState();
         onCurrentPlanetChanged.Invoke(_currentPlanet);
     }
     

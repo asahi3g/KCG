@@ -121,6 +121,10 @@ namespace Agent
                 agent3DModel.Material = agentRenderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial;
                 SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
             }
+            else
+            {
+                throw new UnityException($"Failed to create {nameof(AgentRenderer)}");
+            }
 
             switch (agentType)
             {
