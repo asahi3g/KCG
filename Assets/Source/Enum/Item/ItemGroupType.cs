@@ -11,10 +11,11 @@
         Ring,
         Belt,
         Dye,
-        Gun,
-        Weapon,
-        Potion,
+        ToolRangedWeapon,
+        ToolMelleWeapon,
         Mech,
-        BuildTools
+        Potion,
+        BuildTools,
+        Tool
     }
 }

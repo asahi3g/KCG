@@ -32,6 +32,8 @@ public static class GameState
     public static readonly BehaviorTree.UpdateSystem BehaviorTreeUpdateSystem;
     public static readonly Sensor.SensorManager SensorManager;
     public static readonly Sensor.UpdateSystem SensorUpdateSystem;
+    public static readonly AI.SquadBehvaior.SquadManager SquadManager;
+    public static readonly AI.SquadBehvaior.SquadUpdateSystem SquadUpdateSystem;
     #endregion
 
     #region PlayerActions
@@ -89,10 +91,13 @@ public static class GameState
     public static readonly Agent.AgentIKSystem AgentIKSystem;
     public static readonly Agent.ProcessPhysicalState AgentProcessPhysicalState;
     public static readonly Agent.ProcessCollisionSystem AgentProcessCollisionSystem;
-    public static readonly Agent.Model3DMovementSystem AgentModel3DMovementSystem;
-    public static readonly Agent.Model3DAnimationSystem AgentModel3DAnimationSystem;
+    public static readonly Agent.Model3DMovementSystem AgentAgent3DModelMovementSystem;
+    public static readonly Agent.Model3DAnimationSystem AgentAgent3DModelAnimationSystem;
     public static readonly Agent.MouseInteractionSystem AgentMouseInteractionSystem;
     public static readonly Agent.ProcessState AgentProcessState;
+
+    public static readonly Agent.AgentEffectSystem AgentEffectSystem;
+    public static readonly Agent.AgentMoveListPropertiesManager AgentMoveListPropertiesManager;
 
     public static readonly Agent.AgentMovementAnimationTable AgentMovementAnimationTable;
     #endregion
@@ -165,7 +170,7 @@ public static class GameState
     #region Particle
     public static readonly Particle.ParticleEffectPropertiesManager ParticleEffectPropertiesManager;
     public static readonly Particle.ParticlePropertiesManager ParticlePropertiesManager;
-    public static readonly Particle.ParticleEmitterCreationApi ParticleEmitterCreationApi;
+    public static readonly Particle.ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
     public static readonly Particle.ParticleEmitterUpdateSystem ParticleEmitterUpdateSystem;
     public static readonly Particle.ParticleUpdateSystem ParticleUpdateSystem;
     public static readonly Particle.ParticleEmitterSpawnerSystem ParticleEmitterSpawnerSystem;
@@ -179,7 +184,6 @@ public static class GameState
     #endregion
 
     #region GUI/HUD
-    public static readonly Gui.GuiResourceManager GuiResourceManager;
     // outdated
     public static readonly KGUI.GUIManager GUIManager;
 
@@ -193,7 +197,6 @@ public static class GameState
 
     public static readonly Prefab.PrefabManager PrefabManager;
 
-    public static readonly GameScreen.ScreenManager ScreenManager;
 
     public static void InitStage1()
     {
@@ -205,13 +208,22 @@ public static class GameState
         GeometryPropertiesManager.InitStage1();
         AdjacencyPropertiesManager.InitStage1();
         GUIManager.InitStage1();
-        GuiResourceManager.InitStage1();
         ParticleEffectPropertiesManager.InitStage1();
+        AgentMoveListPropertiesManager.InitStage1();
+        AgentEffectSystem.InitStage1();
         AudioSystem.InitStage1();
         VehicleCreationApi.InitStage1();
         PodCreationApi.InitStage1();
         MechCreationApi.InitStage1();
         ProjectileCreationApi.InitStage1();
+        ParticleEmitterUpdateSystem.InitStage1();
+        ParticleEmitterSpawnerSystem.InitStage1();
+        ParticleSpawnerSystem.InitStage1();
+        VehicleAISystem.InitStage1();
+        VehicleMovementSystem.InitStage1();
+        VehicleSpawnerSystem.InitStage1();
+        PodMovementSystem.InitStage1();
+        PodSpawnerSystem.InitStage1();
     }
 
     public static void InitStage2()
@@ -224,14 +236,22 @@ public static class GameState
         GeometryPropertiesManager.InitStage2();
         AdjacencyPropertiesManager.InitStage2();
         GUIManager.InitStage2();
-        GuiResourceManager.InitStage2();
         ParticleEffectPropertiesManager.InitStage2();
-        AudioSystem.InitStage2();
+        AgentMoveListPropertiesManager.InitStage2();
+        AgentEffectSystem.InitStage2();
+        AudioSystem.InitStage2(null);
         VehicleCreationApi.InitStage2();
         PodCreationApi.InitStage2();
         MechCreationApi.InitStage2();
         ProjectileCreationApi.InitStage2();
-
+        ParticleEmitterUpdateSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleEmitterSpawnerSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleSpawnerSystem.InitStage2(ParticlePropertiesManager);
+        VehicleAISystem.InitStage2(VehicleCreationApi);
+        VehicleMovementSystem.InitStage2(VehicleCreationApi);
+        VehicleSpawnerSystem.InitStage2(VehicleCreationApi);
+        PodMovementSystem.InitStage2(PodCreationApi);
+        PodSpawnerSystem.InitStage2(PodCreationApi);
     }
 
 
@@ -240,8 +260,7 @@ public static class GameState
         Planet = new PlanetState();
 
         PrefabManager = new Prefab.PrefabManager();
-        
-        GuiResourceManager = new Gui.GuiResourceManager();
+    
 
         PathFinding = new AI.Movement.PathFinding();
         PathFindingDebugSystem = new AI.Movement.DrawDebugSystem();
@@ -256,6 +275,8 @@ public static class GameState
         BehaviorTreeUpdateSystem = new BehaviorTree.UpdateSystem();
         SensorManager = new Sensor.SensorManager();
         SensorUpdateSystem = new Sensor.UpdateSystem();
+        SquadManager = new AI.SquadBehvaior.SquadManager();
+        SquadUpdateSystem = new AI.SquadBehvaior.SquadUpdateSystem();
 
         SpriteLoader = new SpriteLoader();
         TileSpriteAtlasManager = new PlanetTileMap.TileAtlasManager();
@@ -274,10 +295,12 @@ public static class GameState
         AgentMovementSystem = new Agent.MovementSystem();
         AgentIKSystem = new Agent.AgentIKSystem();
         AgentMeshBuilderSystem = new Agent.MeshBuilderSystem();
-        AgentModel3DMovementSystem = new Agent.Model3DMovementSystem();
-        AgentModel3DAnimationSystem = new Agent.Model3DAnimationSystem();
+        AgentAgent3DModelMovementSystem = new Agent.Model3DMovementSystem();
+        AgentAgent3DModelAnimationSystem = new Agent.Model3DAnimationSystem();
         AgentMouseInteractionSystem = new Agent.MouseInteractionSystem();
         AgentProcessState = new Agent.ProcessState();
+        AgentMoveListPropertiesManager = new Agent.AgentMoveListPropertiesManager();
+        AgentEffectSystem = new Agent.AgentEffectSystem();
         AgentMovementAnimationTable = new Agent.AgentMovementAnimationTable();
 
         LinePropertiesManager = new Collisions.LinePropertiesManager();
@@ -302,8 +325,6 @@ public static class GameState
 
         AnimationUpdateSystem = new Animation.UpdateSystem();
 
-        //UnityImage2DCache = new Sprites.UnityImage2DCache();
-
         ItemCreationApi = new Item.ItemCreationApi();
         ItemSpawnSystem = new Item.SpawnerSystem();
         ItemPickUpSystem = new Item.PickUpSystem();
@@ -320,12 +341,12 @@ public static class GameState
 
         ParticleEffectPropertiesManager = new Particle.ParticleEffectPropertiesManager();
         ParticlePropertiesManager = new Particle.ParticlePropertiesManager();
-        ParticleEmitterCreationApi = new Particle.ParticleEmitterCreationApi();
-        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
+        ParticleEmitterPropertiesManager = new Particle.ParticleEmitterPropertiesManager();
+        ParticleEmitterUpdateSystem = new Particle.ParticleEmitterUpdateSystem();
         ParticleMeshBuilderSystem = new Particle.MeshBuilderSystem();
         ParticleUpdateSystem = new Particle.ParticleUpdateSystem();
-        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi, ParticlePropertiesManager);
-        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem(ParticlePropertiesManager);
+        ParticleEmitterSpawnerSystem = new Particle.ParticleEmitterSpawnerSystem();
+        ParticleSpawnerSystem = new Particle.ParticleSpawnerSystem();
         ParticleProcessCollisionSystem = new Particle.ParticleProcessCollisionSystem();
 
         ProjectileCreationApi = new Projectile.ProjectileCreationApi();
@@ -354,15 +375,15 @@ public static class GameState
 
         VehicleCreationApi = new Vehicle.VehicleCreationApi();
         VehicleCollisionSystem = new Vehicle.ProcessCollisionSystem();
-        VehicleMovementSystem = new Vehicle.MovementSystem(VehicleCreationApi);
-        VehicleSpawnerSystem = new Vehicle.SpawnerSystem(VehicleCreationApi);
+        VehicleMovementSystem = new Vehicle.MovementSystem();
+        VehicleSpawnerSystem = new Vehicle.SpawnerSystem();
         VehicleMeshBuilderSystem = new Vehicle.MeshBuilderSystem();
-        VehicleAISystem = new Vehicle.AISystem(VehicleCreationApi);
+        VehicleAISystem = new Vehicle.AISystem();
 
         PodCreationApi = new Vehicle.Pod.PodCreationApi();
         PodCollisionSystem = new Vehicle.Pod.ProcessCollisionSystem();
-        PodMovementSystem = new Vehicle.Pod.MovementSystem(PodCreationApi);
-        PodSpawnerSystem = new Vehicle.Pod.SpawnerSystem(PodCreationApi);
+        PodMovementSystem = new Vehicle.Pod.MovementSystem();
+        PodSpawnerSystem = new Vehicle.Pod.SpawnerSystem();
         PodMeshBuilderSystem = new Vehicle.Pod.MeshBuilderSystem();
         PodAISystem = new Vehicle.Pod.AISystem();
 
@@ -371,9 +392,8 @@ public static class GameState
         MechMeshBuilderSystem = new Mech.MeshBuilderSystem();
         MechMouseInteractionSystem = new Mech.MouseInteractionSystem();
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
-        ScreenManager = new GameScreen.ScreenManager();
 
-        AudioSystem = new AudioSystem(null);
+        AudioSystem = new AudioSystem();
 
         //TODO(): move these out of here
         InitStage1();

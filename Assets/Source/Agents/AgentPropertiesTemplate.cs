@@ -30,8 +30,9 @@ namespace Agent
         public Engine3D.AgentModelType ModelType;
         public Vec3f ModelScale;
 
-        public bool Stagger;
         public float StaggerAffectTime;
+
+        public float ImpactAffectTime;
     }
 
     public struct MovementProperties

@@ -91,6 +91,7 @@ namespace Planet
             GameState.PodMeshBuilderSystem.Initialize(material, transform, 14);
             GameState.ProjectileMeshBuilderSystem.Initialize(material, transform, 13);
             GameState.ParticleMeshBuilderSystem.Initialize(material, transform, 20);
+            GameState.ParticleMeshBuilderSystem.Mesh.obj.transform.position = new UnityEngine.Vector3(0.0f, 0.0f, -2.0f);
             GameState.MechMeshBuilderSystem.Initialize(material, transform, 10);
             GameState.Renderer.Initialize(material);
 
@@ -118,25 +119,7 @@ namespace Planet
 
         }
 
-        // Note(Mahdi): Deprecated will be removed soon
-        public AgentEntity AddAgentAsPlayer(int spriteId, int width, int height, Vec2f position, int startingAnimation, int health, int food, int water, int oxygen, int fuel)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            int inventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID()).inventoryID.ID;
-            int equipmentInventoryID =
-                AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.SpawnPlayer(spriteId, 
-                width, height, position, startingAnimation, health, food, water, oxygen, fuel, 0.2f, inventoryID,
-                equipmentInventoryID));
-
-            Player = newEntity;
-
-            return newEntity;
-        }
-
-        public AgentEntity AddAgentAsPlayer(Vec2f position, int faction = 0)
+        public AgentEntity AddAgentAsPlayer(Vec2f position, AgentFaction faction = AgentFaction.Player)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -144,7 +127,6 @@ namespace Planet
             int equipmentInventoryID = AddInventory(GameState.InventoryCreationApi.GetDefaultRestrictionInventoryModelID()).inventoryID.ID;
             
             AgentEntity agent = AddAgent(position, AgentType.Player, faction, inventoryID, equipmentInventoryID);
-            Player = agent;
             return agent;
         }
         
@@ -153,7 +135,7 @@ namespace Planet
             return AddAgent(position, agentType, 0);
         }
 
-        public AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction)
+        public AgentEntity AddAgent(Vec2f position, AgentType agentType, AgentFaction faction)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
 
@@ -161,18 +143,10 @@ namespace Planet
             return AddAgent(position, agentType, faction, inventoryID, -1);
         }
         
-        private AgentEntity AddAgent(Vec2f position, AgentType agentType, int faction, int inventoryID, int equipmentInventoryID)
+        private AgentEntity AddAgent(Vec2f position, AgentType agentType, AgentFaction faction, int inventoryID, int equipmentInventoryID)
         {
             Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
             AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, agentType, faction, inventoryID, equipmentInventoryID));
-            return newEntity;
-        }
-
-        public AgentEntity AddAgentAsEnemy(Vec2f position)
-        {
-            Utils.Assert(AgentList.Length < PlanetEntityLimits.AgentLimit);
-
-            AgentEntity newEntity = AgentList.Add(GameState.AgentSpawnerSystem.Spawn(position, AgentType.Slime, 1));
             return newEntity;
         }
 
@@ -356,7 +330,8 @@ namespace Planet
             for(int i = properties.Offset; i < properties.Offset + properties.Size; i++)
             {
                 Particle.ParticleEffectElement element = GameState.ParticleEffectPropertiesManager.GetElement(i);
-                AddParticleEmitter(position + element.Offset, element.Emitter);
+                var emitter = AddParticleEmitter(position + element.Offset, element.Emitter);
+                emitter.particleEmitterState.CurrentTime = element.Delay;
             }
         }
 
@@ -469,20 +444,6 @@ namespace Planet
 
             DebugLinesCount = 1;
 
-            /*TimeState.Deficit += deltaTime;
-
-            while (TimeState.Deficit >= frameTime)
-            {
-                TimeState.Deficit -= frameTime;
-                // do a server/client tick right here
-                {
-                    TimeState.TickTime++;
-
-
-                }
-
-            }*/
-
             PlanetTileMap.TileMapGeometry.BuildGeometry(TileMap);
 
             // check if the sprite atlas teSetTilextures needs to be updated
@@ -496,16 +457,17 @@ namespace Planet
             GameState.InputProcessSystem.Update();
             // Movement Systems
             GameState.AgentIKSystem.Update(EntitasContext.agent);
+            GameState.AgentEffectSystem.Update(frameTime);
             GameState.AgentProcessPhysicalState.Update(frameTime);
             GameState.AgentMovementSystem.Update();
-            GameState.AgentModel3DMovementSystem.Update();
+            GameState.AgentAgent3DModelMovementSystem.Update();
             GameState.ItemMovableSystem.Update();
             GameState.VehicleMovementSystem.UpdateEx();
             GameState.PodMovementSystem.UpdateEx();
             GameState.ProjectileMovementSystem.Update();
 
 
-            GameState.AgentModel3DAnimationSystem.Update();
+            GameState.AgentAgent3DModelAnimationSystem.Update();
             GameState.LootDropSystem.Update();
             GameState.FloatingTextUpdateSystem.Update(frameTime);
             GameState.AnimationUpdateSystem.Update(frameTime);
@@ -528,7 +490,7 @@ namespace Planet
             GameState.MechPlantGrowthSystem.Update();
 
             GameState.AgentProcessState.Update();
-            GameState.MovementPositionScoreSystem.UpdateEx();
+            GameState.SquadUpdateSystem.Update();
             GameState.SensorUpdateSystem.Update();
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();
@@ -576,8 +538,8 @@ namespace Planet
             GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
             
-            GameState.AgentModel3DMovementSystem.Update();
-            GameState.AgentModel3DAnimationSystem.Update();
+            GameState.AgentAgent3DModelMovementSystem.Update();
+            GameState.AgentAgent3DModelAnimationSystem.Update();
 
             GameState.FloatingTextDrawSystem.Draw(10000);
 

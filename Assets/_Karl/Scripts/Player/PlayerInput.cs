@@ -1,6 +1,7 @@
 using Enums;
 using Inventory;
 using Item;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -119,9 +120,30 @@ public class PlayerInput : BaseMonoBehaviour
                 {
                     ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
                     
-                    if (itemProperty.IsTool())
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
                     {
                         GameState.ActionCreationSystem.CreateAction(itemProperty.ToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
+                    }
+                }
+            }
+        }
+    }
+
+    public void DoSecondAction()
+    {
+        if (IsGameplayBlocked()) return;
+
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        {
+            if (agentRenderer.GetInventory(out InventoryEntityComponent inventoryEntityComponent))
+            {
+                if (GameState.InventoryManager.GetItemInSlot(inventoryEntityComponent.Index, inventoryEntityComponent.SelectedSlotIndex, out ItemInventoryEntity itemInventoryEntity))
+                {
+                    ItemProperties itemProperty = GameState.ItemCreationApi.GetItemProperties(itemInventoryEntity.itemType.Type);
+
+                    if (itemProperty.IsTool() && agentRenderer.GetAgent().isAgentAlive)
+                    {
+                        GameState.ActionCreationSystem.CreateAction(itemProperty.SecondToolActionType, agentRenderer.GetAgent().agentID.ID, itemInventoryEntity.itemID.ID);
                     }
                 }
             }
@@ -134,8 +156,41 @@ public class PlayerInput : BaseMonoBehaviour
         
         if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
         {
-            GameState.ActionCreationSystem.CreateAction(ItemUsageActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
+            if(agentRenderer.GetAgent().GetItem() != null)
+            {
+                if (GameState.ItemCreationApi.GetItemProperties(agentRenderer.GetAgent().GetItem().itemType.Type).Group == 
+                    ItemGroups.ToolRangedWeapon)
+                {
+                    GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentRenderer.GetAgent().agentID.ID);
+                }
+            }
         }
+    }
+
+    public void DoPlayerDropItem()
+    {
+        if (IsGameplayBlocked()) return;
+        
+        if (_player.GetCurrentPlayerAgent(out AgentRenderer agentRenderer))
+        {
+            if (agentRenderer.GetAgent().GetItem() != null)
+            {
+                GameState.ActionCreationSystem.CreateAction(ActionType.DropAction, agentRenderer.GetAgent().agentID.ID);
+            }
+        }
+    }
+    
+    public void DoScreenshot()
+    {
+        if (IsGameplayBlocked()) return;
+
+        var date = DateTime.Now;
+        var fileName = date.Year.ToString() + "-" + date.Month.ToString() +
+            "-" + date.Day.ToString() + "-" + date.Hour.ToString() + "-" + date.Minute.ToString() +
+            "-" + date.Second.ToString() + "-" + date.Millisecond + ".png";
+        ScreenCapture.CaptureScreenshot("Assets\\Screenshots\\" + fileName);
+
+        GameState.AudioSystem.PlayOneShot("AudioClips\\steam_screenshot_effect");
     }
 
     public void DoPlayerLookTarget(Vector2 screenPosition)

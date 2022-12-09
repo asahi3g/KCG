@@ -8,26 +8,26 @@ namespace Agent
         {
             
             float deltaTime = UnityEngine.Time.deltaTime;
-            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentAgent3DModel));
 
             foreach (var entity in entities)
             {
                 PhysicsStateComponent physicsState = entity.agentPhysicsState;        
-                Agent3DModel agent3DModel = entity.Agent3DModel;
-
-                /*if (entity.isAgentPlayer)
-                {
-                    Debug.Log(physicsState.MovementState);
-                }*/
+                Agent3DModel agent3DModel = entity.agentAgent3DModel;
 
                 Animancer.AnimancerState currentClip = null;
 
                 {
                     AgentAnimation agentAnimation = 
-                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet);
+                        GameState.AgentMovementAnimationTable.GetAnimation(physicsState.MovementState, agent3DModel.AnimationType, agent3DModel.ItemAnimationSet, physicsState.MoveIndex);
 
 
                     UnityEngine.AnimationClip animation = Engine3D.AssetManager.Singelton.GetAnimationClip(agentAnimation.Animation);
+                    if (animation == null)
+                    {
+                        UnityEngine.Debug.Log(agentAnimation.Animation);
+                    }
+                    Utility.Utils.Assert(animation != null);
                     currentClip = agent3DModel.Renderer.GetAnimancer().Play(animation, agentAnimation.FadeTime);
                     currentClip.Speed = agentAnimation.Speed + agentAnimation.MovementSpeedFactor * (System.Math.Abs(physicsState.Velocity.X) / 7.0f);
 

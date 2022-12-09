@@ -2,6 +2,7 @@
 using Engine3D;
 using Inventory;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 
 public class AgentRenderer : BaseMonoBehaviour
@@ -12,13 +13,22 @@ public class AgentRenderer : BaseMonoBehaviour
     [SerializeField] private Transform _rotation;
     [SerializeField] private Transform _scale;
     [SerializeField] private GameObject _model;
+    [SerializeField] private GameObject _model_mesh;
     [SerializeField] private Transform _pivotHead;
     [SerializeField] private Transform _handLeft;
     [SerializeField] private Transform _handRight;
     [SerializeField] private Transform _pivotPistol;
     [SerializeField] private Transform _pivotRifle;
     [SerializeField] private Transform _aimTarget;
-    
+    [SerializeField] private Rig _rifleBodyAim;
+    [SerializeField] private Rig _rifleWeaponPose;
+    [SerializeField] private Rig _rifleWeaponAiming;
+    [SerializeField] private Rig _rifleHandIK;
+    [SerializeField] private Rig _pistolBodyAim;
+    [SerializeField] private Rig _pistolWeaponPose;
+    [SerializeField] private Rig _pistolWeaponAiming;
+    [SerializeField] private Rig _pistolHandIK;
+
     private AgentEntity _agent;
     private UIHitpoints _hitpoints;
 
@@ -28,27 +38,38 @@ public class AgentRenderer : BaseMonoBehaviour
     public AnimancerComponent GetAnimancer() => _animancer;
     public AgentEntity GetAgent() => _agent;
     public GameObject GetModel() => _model;
+    public GameObject GetModelMesh() => _model_mesh;
     public Transform GetPivotHead() => _pivotHead;
     public Transform GetHandLeft() => _handLeft;
     public Transform GetHandRight() => _handRight;
     public Transform GetPivotPistol() => _pivotPistol;
     public Transform GetPivotRifle() => _pivotRifle;
     public Transform GetAimTarget() => _aimTarget;
-    
+    public Rig GetRifleBodyAim() => _rifleBodyAim;
+    public Rig GetRifleWeaponPose() => _rifleWeaponPose;
+    public Rig GetRifleWeaponAiming() => _rifleWeaponAiming;
+    public Rig GetRifleHandIK() => _rifleHandIK;
+    public Rig GetPistolBodyAim() => _pistolBodyAim;
+    public Rig GetPistolWeaponPose() => _pistolWeaponPose;
+    public Rig GetPistolWeaponAiming() => _pistolWeaponAiming;
+    public Rig GetPistolHandIK() => _pistolHandIK;
+
+
 
     public void SetAgent(AgentEntity agent)
     {
         _agent = agent;
-        if (_agent.hasAgent3DModel)
+        if (_agent.hasAgentAgent3DModel)
         {
-            _agent.Agent3DModel.Renderer.transform.parent = transform;
+            _agent.agentAgent3DModel.Renderer.transform.parent = transform;
         }
 
         // Create UI hitpoints
         if (_agent.hasAgentStats)
         {
             _hitpoints = Instantiate(AssetManager.Singelton.GetPrefabUIHitpoints(), _pivotHead, false);
-            _hitpoints.SetHitpoints(_agent.agentStats.Health);
+            _hitpoints.SetHitpoints(new ContainerInt(_agent.agentStats.Health.GetValue(), _agent.agentStats.Health.GetMax(),
+                _agent.agentStats.Health.GetMin()));
 
             bool factionFriendly = false;
             if(!agent.isAgentPlayer){

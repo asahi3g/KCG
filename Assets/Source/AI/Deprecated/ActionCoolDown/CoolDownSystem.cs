@@ -4,14 +4,14 @@
     {
         float currentTime;
 
-        public void SetCoolDown(Enums.ItemUsageActionType  type, int agentID, float time)
+        public void SetCoolDown(Enums.ActionType  type, int agentID, float time)
         {
             var entity = GameState.Planet.EntitasContext.actionCoolDown.CreateEntity();
             entity.AddActionCoolDown(type, agentID);
             entity.AddActionCoolDownTime(currentTime + time);
         }
 
-        public bool InCoolDown(Enums.ItemUsageActionType  type, int agentID)
+        public bool InCoolDown(Enums.ActionType  type, int agentID)
         {
             var coolDownList = GameState.Planet.EntitasContext.actionCoolDown.GetEntitiesWithActionCoolDownAgentID(agentID);
             foreach (var coolDown in coolDownList)

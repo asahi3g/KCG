@@ -8,8 +8,12 @@ namespace Vehicle.Pod
     {
         PodCreationApi PodCreationApi;
 
-        // Constructor
-        public MovementSystem(PodCreationApi podCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(PodCreationApi podCreationApi)
         {
             PodCreationApi = podCreationApi;
         }

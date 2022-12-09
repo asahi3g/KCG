@@ -1,8 +1,10 @@
 using System;
+using System.Numerics;
 using Agent;
 using Collisions;
 using Engine3D;
 using Enums;
+using HighlightPlus;
 using Inventory;
 using Item;
 using KMath;
@@ -50,6 +52,16 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.Drink;
     }
 
+    public bool CanStickToGround()
+    {
+        var physicsState = agentPhysicsState;
+        
+        return physicsState.MovementState != Enums.AgentMovementState.Jump && 
+            physicsState.MovementState != Enums.AgentMovementState.Flip && 
+            physicsState.MovementState != Enums.AgentMovementState.Falling &&
+            physicsState.MovementState != Enums.AgentMovementState.Stagger;
+    }
+
     public bool IsCrouched()
     {
         var physicsState = agentPhysicsState;
@@ -93,6 +105,7 @@ public partial class AgentEntity
         physicsState.MovementState != AgentMovementState.SlidingRight &&
         physicsState.MovementState != AgentMovementState.Rolling &&
         physicsState.MovementState != AgentMovementState.MonsterAttack &&
+        physicsState.MovementState != AgentMovementState.SwordSlash &&
         physicsState.MovementState != AgentMovementState.StandingUpAfterRolling;
     }
 
@@ -119,25 +132,49 @@ public partial class AgentEntity
         }
     }
 
+    public void FlashFor(float duration)
+    {
+        if (hasAgentAgent3DModel)
+        {
+            agentAgent3DModel.FlashDuration = duration;
+            agentAgent3DModel.Renderer.GetModelMesh().GetComponent<SkinnedMeshRenderer>().sharedMaterial = Engine3D.AssetManager.AssetManagerSingelton.GetMaterial(Engine3D.MaterialType.FlashWhiteMaterial);
+        }
+    }
+
     public void Stagger()
     {
-        if (isAgentAlive)
-        {
-            agentStagger.Stagger = true;
-            isAgentAlive = false;
-            Debug.Log("Freezed");
-        }
+        agentStagger.Stagger = true;
     }
 
     public void UnStagger()
     {
-        if (!isAgentAlive)
-        {
-            agentStagger.Stagger = false;
-            isAgentAlive = true;
-            Debug.Log("UnFreezed");
+        agentStagger.Stagger = false;
+    }
 
+    public void ImpactEffect()
+    {
+        agentStagger.ImpactEffect = true;
+        var Outline = agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightEffect>();
+        if (Outline != null)
+        {
+            Outline.highlighted = true;
+            Outline.innerGlow = 5f;
+            Outline.innerGlowWidth = 2f;
+            Outline.outlineDownsampling = 2;
         }
+    }
+
+    public void UnImpactEffect()
+    {
+        var Outline = agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightEffect>();
+        if (Outline != null)
+        {
+            Outline.highlighted = false;
+            Outline.innerGlow = 0f;
+            Outline.innerGlowWidth = 2f;
+            Outline.outlineDownsampling = 1;
+        }
+        agentStagger.ImpactEffect = false;
     }
 
     public Vec2f GetGunFiringTarget()
@@ -163,9 +200,50 @@ public partial class AgentEntity
         return new Vec2f(worldPosition.X, worldPosition.Y);
     }
 
+    public Vec2f GetAIGunFiringTarget()
+    {
+        var physicsState = agentPhysicsState;
+
+        var worldPosition = physicsState.Position;
+
+        var agents = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentID));
+        foreach(var player in agents)
+        {
+            if(player.isAgentPlayer)
+            {
+                worldPosition = player.agentPhysicsState.Position;
+            }
+        }
+
+        float rightGunXPosition = physicsState.Position.X + 10.0f;
+        float leftGunXPosition = physicsState.Position.X - 10.0f;
+
+        if (worldPosition.X < rightGunXPosition && worldPosition.X > physicsState.Position.X)
+        {
+            worldPosition.X = physicsState.Position.X + 10.0f;
+        }
+
+        if (worldPosition.X > leftGunXPosition && worldPosition.X < physicsState.Position.X)
+        {
+            worldPosition.X = physicsState.Position.X - 10.0f;
+        }
+
+        return new Vec2f(worldPosition.X, worldPosition.Y);
+    }
+
     public Vec2f GetGunOrigin()
     {
         if(agentPhysicsState.FacingDirection == 1)
+            return agentPhysicsState.Position + new Vec2f(0, 1.75f);
+        else if (agentPhysicsState.FacingDirection == -1)
+            return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
+        else
+            return agentPhysicsState.Position + new Vec2f(0, 1.75f);
+    }
+
+    public Vec2f GetAIGunOrigin()
+    {
+        if (agentPhysicsState.FacingDirection == 1)
             return agentPhysicsState.Position + new Vec2f(-0.28f, 1.75f);
         else if (agentPhysicsState.FacingDirection == -1)
             return agentPhysicsState.Position + new Vec2f(+0.3f, 1.75f);
@@ -176,13 +254,26 @@ public partial class AgentEntity
     public Vec2f GetGunFiringPosition()
     {
         var physicsState = agentPhysicsState;
-        var model3d = Agent3DModel;
+        var model3d = agentAgent3DModel;
 
         Vec2f targetPosition = GetGunFiringTarget();
 
         Vec2f position = GetGunOrigin();
         Vec2f dir = (targetPosition - position);
         //UnityEngine.Debug.Log(targetPosition);
+        dir.Normalize();
+        Vec2f newPosition = position + dir * 1.3f;
+        position = newPosition;
+        return position;
+    }
+
+    public Vec2f GetAIGunFiringPosition()
+    {
+        Vec2f targetPosition = GetAIGunFiringTarget();
+
+        Vec2f position = GetAIGunOrigin();
+        Vec2f dir = (targetPosition - position);
+
         dir.Normalize();
         Vec2f newPosition = position + dir * 1.3f;
         position = newPosition;
@@ -196,11 +287,13 @@ public partial class AgentEntity
 
     public void SetAimTarget(Vec2f AimTarget)
     {
-        Agent3DModel.AimTarget = AimTarget;
+        agentAgent3DModel.AimTarget = AimTarget;
     }
     
     public void HandleItemDeselected(ItemInventoryEntity item)
     {
+        if (item == null)
+            return;
         var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
         if (isAgentPlayer && itemProperty.HasUI())
@@ -216,25 +309,25 @@ public partial class AgentEntity
     
     public void SetModel3DWeapon(ItemInventoryEntity item)
     {
-        if (!hasAgent3DModel) return;
+        if (!hasAgentAgent3DModel) return;
         
         SetModel3DWeapon(item.itemType.Type);
     }
 
     public void SetModel3DWeapon(Enums.ItemType itemType)
     {
-        if (!hasAgent3DModel) return;
+        if (!hasAgentAgent3DModel) return;
         
         var itemProperty = GameState.ItemCreationApi.GetItemProperties(itemType);
-        Agent3DModel.ItemAnimationSet = itemProperty.AnimationSet;
+        agentAgent3DModel.ItemAnimationSet = itemProperty.AnimationSet;
         SetModel3DWeapon(GetModel3DWeaponFromItemToolType(itemProperty.ToolType));
     }
 
     public void SetModel3DWeapon(Model3DWeaponType weapon)
     {
-        if (!hasAgent3DModel) return;
+        if (!hasAgentAgent3DModel) return;
 
-        Agent3DModel model3d = Agent3DModel;
+        Agent3DModel model3d = agentAgent3DModel;
         model3d.CurrentWeapon = weapon;
         
         switch(weapon)
@@ -313,6 +406,7 @@ public partial class AgentEntity
         {
             physicsState.MovementState = AgentMovementState.SlidingLeft;
             physicsState.JumpCounter = 0;
+
         }
     }
 
@@ -387,7 +481,7 @@ public partial class AgentEntity
     public void MonsterAttack(float duration)
     {
         var physicsState = agentPhysicsState;
-        var model3d = Agent3DModel; 
+        var model3d = agentAgent3DModel; 
 
         if (isAgentAlive && IsStateFree())
         {
@@ -400,24 +494,110 @@ public partial class AgentEntity
         }
     }
 
-    public void SwordSlash()
+    public void SwordSlashBase(Planet.PlanetState planet, Vec2f attackPosition)
     {
-        var PhysicsState = agentPhysicsState;
+         var physicsState = agentPhysicsState;
+        var swordMoveList = GameState.AgentMoveListPropertiesManager.GetPosition(AgentMoveList.Sword);
 
-        if (IsStateFree())
+        var swordMoveListProperties = GameState.AgentMoveListPropertiesManager.Get(swordMoveList.Offset + physicsState.MoveIndex);
+
+
+        if (physicsState.TimeBetweenMoves <= swordMoveListProperties.MaxDelay && physicsState.CurerentMoveList == AgentMoveList.Sword)
         {
-            //PhysicsState.Velocity.X = 4 * PhysicsState.Speed * horizontalDir;
-            //PhysicsState.Velocity.Y = 0.0f;
+            physicsState.MoveIndex++;
+            physicsState.MoveIndex = (physicsState.MoveIndex % swordMoveList.Size);
+        }
 
-            //PhysicsState.Invulnerable = false;
-            //PhysicsState.AffectedByGravity = true;
-            PhysicsState.MovementState = AgentMovementState.SwordSlash;
+        physicsState.CurerentMoveList = AgentMoveList.Sword;
+        physicsState.Velocity = Vec2f.Zero;
+        physicsState.MovingDirection =  physicsState.FacingDirection;
+
+        if (physicsState.OnGrounded)
+        {
+            Vec2f pos = physicsState.Position + new Vec2f(0.125f, 0.0f) + new Vec2f(0.125f, 0.0f) * physicsState.MovingDirection;
+            
+            if (physicsState.MoveIndex == 1)
+            {
+                /*  var emitter = GameState.Planet.AddParticleEmitter(pos, Particle.ParticleEmitterType.Dust_SwordAttack);
+                Vec2f velocity = -1.0f * 3.0f * physicsState.FacingDirection * physicsState.GroundNormal.Perpendicular();
+                emitter.particleEmitter2dPosition.Velocity = new UnityEngine.Vector2(velocity.X, velocity.Y);*/
+            }
+        }
+
+
+        physicsState.MovementState = AgentMovementState.SwordSlash;
+        physicsState.SetMovementState = true;
+        physicsState.AffectedByGravity = false;
+        
+        float duration = 0.5f;
+
+        physicsState.ActionInProgress = true;
+        physicsState.ActionDuration = duration;
+        if (physicsState.MoveIndex == 2)
+        {
+            physicsState.ActionCooldown = 0.8f;
+        }
+        else
+        {
+            physicsState.ActionCooldown = duration;
+        }
+        physicsState.TimeBetweenMoves = 0.0f;
+    }
+
+    public bool SwordSlashDiagonal(Planet.PlanetState planet, Vec2f attackPosition)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (isAgentAlive && IsStateFree() && physicsState.ActionCooldown <= 0.0f)
+        {
+            SwordSlashBase(planet, attackPosition);
+            Agent.SwordMoveList.HandleActionDiagonal(this, attackPosition, planet);
+            
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    public bool SwordSlashUp(Planet.PlanetState planet, Vec2f attackPosition)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (isAgentAlive && IsStateFree() && physicsState.ActionCooldown <= 0.0f)
+        {
+            SwordSlashBase(planet, attackPosition);
+            Agent.SwordMoveList.HandleActionUp(this, attackPosition, planet);
+            
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    public bool SwordSlashDown(Planet.PlanetState planet, Vec2f attackPosition)
+    {
+        var physicsState = agentPhysicsState;
+
+        if (isAgentAlive && IsStateFree() && physicsState.ActionCooldown <= 0.0f)
+        {
+            SwordSlashBase(planet, attackPosition);
+            Agent.SwordMoveList.HandleActionDown(this, attackPosition, planet);
+            
+            return true;
+        }
+        else 
+        {
+            return false;
         }
     }
 
     public void JetPackFlyingBegin()
     {
-        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetMin()) return;
+        if (agentStats.Fuel.GetValue() <= agentStats.Fuel.GetValue()) return;
         if (!IsStateFree()) return;
         
         agentPhysicsState.MovementState = AgentMovementState.JetPackFlying;
@@ -430,13 +610,29 @@ public partial class AgentEntity
         agentPhysicsState.MovementState = AgentMovementState.None;
     }
 
-    public void Knockback(float velocity, int horizontalDir)
+    public void Knockback(float velocity, int horizontalDir, float time = 1.5f)
     {
         var physicsState = agentPhysicsState;
-
-        physicsState.Velocity.X = velocity * horizontalDir;
+        
+        if (physicsState.OnGrounded)
+        {
+            physicsState.Velocity = velocity * horizontalDir * physicsState.GroundNormal.Perpendicular();
+        }
+        
         physicsState.MovementState = AgentMovementState.Stagger;
-        physicsState.StaggerDuration = 1.0f;
+        physicsState.StaggerDuration = time;
+        physicsState.SetMovementState = true;
+    }
+
+    public void Knockback(Vec2f velocity, float time = 1.5f)
+    {
+        var physicsState = agentPhysicsState;
+        
+        physicsState.Velocity = velocity;
+        
+        physicsState.MovementState = AgentMovementState.Stagger;
+        physicsState.StaggerDuration = time;
+        physicsState.SetMovementState = true;
     }
 
     public void Dash(int horizontalDir)
@@ -448,12 +644,6 @@ public partial class AgentEntity
             PhysicsState.Invulnerable = true;
             PhysicsState.AffectedByGravity = false;
             PhysicsState.MovementState = AgentMovementState.Dashing;
-            if (GameState.AgentIKSystem.Rifle != null ||
-                   GameState.AgentIKSystem.Pistol != null)
-            {
-                GameState.AgentIKSystem.Rifle.gameObject.SetActive(false);
-                GameState.AgentIKSystem.Pistol.gameObject.SetActive(false);
-            }
             GameState.AgentIKSystem.SetIKEnabled(false);
             PhysicsState.DashDuration = Physics.Constants.DashTime;
             PhysicsState.DashCooldown = Physics.Constants.DashCooldown;
@@ -681,6 +871,16 @@ public partial class AgentEntity
                     // jumping
                     physicsState.Velocity.Y = physicsState.InitialJumpVelocity;
                     physicsState.JumpCounter++;
+
+                    if (physicsState.OnGrounded)
+                    {
+                        physicsState.JumpedFromGround = true;
+                    }
+                    else
+                    {
+                        physicsState.JumpedFromGround = false;
+                    } 
+
             }
             else
             {
@@ -727,5 +927,11 @@ public partial class AgentEntity
         return result;
     }
 
-
+    public void SetOnHoverOutline(bool enable)
+    {
+        if(agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>() != null)
+        {
+            agentAgent3DModel.Renderer.GetModelMesh().GetComponent<HighlightPlus.HighlightEffect>().highlighted = enable;
+        }
+    }
 }

@@ -11,23 +11,25 @@ public partial class AgentEntity {
     public Agent.IDComponent agentID { get { return (Agent.IDComponent)GetComponent(AgentComponentsLookup.AgentID); } }
     public bool hasAgentID { get { return HasComponent(AgentComponentsLookup.AgentID); } }
 
-    public void AddAgentID(int newID, int newIndex, Enums.AgentType newType, int newFaction) {
+    public void AddAgentID(int newID, int newIndex, Enums.AgentType newType, Agent.AgentFaction newFaction, int newSquadID) {
         var index = AgentComponentsLookup.AgentID;
         var component = (Agent.IDComponent)CreateComponent(index, typeof(Agent.IDComponent));
         component.ID = newID;
         component.Index = newIndex;
         component.Type = newType;
         component.Faction = newFaction;
+        component.SquadID = newSquadID;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentID(int newID, int newIndex, Enums.AgentType newType, int newFaction) {
+    public void ReplaceAgentID(int newID, int newIndex, Enums.AgentType newType, Agent.AgentFaction newFaction, int newSquadID) {
         var index = AgentComponentsLookup.AgentID;
         var component = (Agent.IDComponent)CreateComponent(index, typeof(Agent.IDComponent));
         component.ID = newID;
         component.Index = newIndex;
         component.Type = newType;
         component.Faction = newFaction;
+        component.SquadID = newSquadID;
         ReplaceComponent(index, component);
     }
 

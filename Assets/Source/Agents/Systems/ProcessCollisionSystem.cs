@@ -144,9 +144,7 @@ namespace Agent
              }
              else
              {
-                if (physicsState.MovementState != Enums.AgentMovementState.Jump && 
-                physicsState.MovementState != Enums.AgentMovementState.Flip && 
-                physicsState.MovementState != Enums.AgentMovementState.Falling)
+                if (entity.CanStickToGround() && entity.IsStateFree())
                 {
                     physicsState.PreviousPosition = physicsState.Position;
                     physicsState.Position.Y -= Physics.Constants.GroundDistance;
@@ -224,6 +222,7 @@ namespace Agent
 
            if (collidingLeft)
             {
+                Vec2f velocity = physicsState.Velocity;
                 physicsState.Velocity.X = 0.0f;
                 physicsState.Acceleration.X = 0.0f;
                 if (slidingLeft)

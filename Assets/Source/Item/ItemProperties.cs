@@ -12,9 +12,16 @@ namespace Item
     public struct ItemProperties
     {
         public string ItemLabel;                 // Item Label
+
+        // Item Drawing size.
+        public const float Width = 1.0f;
+        public const float Height = 1.0f;
+        public Vec2f Size => new Vec2f(Width, Height);
+
         public ItemType ItemType;
         public ItemGroupType Group;
-        public ItemUsageActionType ToolActionType;
+        public ActionType ToolActionType;
+        public ActionType SecondToolActionType;
         public MechType  MechType;               // Used only when item is a mech type.
         public TileID TileType;                 // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
@@ -25,7 +32,6 @@ namespace Item
 
         public int InventorSpriteID;
         public int SpriteID;
-        public Vec2f SpriteSize;
         public int MaxStackCount;              // Used only if stackable.
 
         public int FireWeaponID;

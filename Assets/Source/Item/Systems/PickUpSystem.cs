@@ -31,7 +31,7 @@ namespace Item
 
                 // Get item ceter position.
                 var ItemProperties = GameState.ItemCreationApi.GetItemProperties(itemParticle.itemType.Type);
-                Vec2f centerPos = itemParticle.itemPhysicsState.Position + ItemProperties.SpriteSize / 2.0f;
+                Vec2f centerPos = itemParticle.itemPhysicsState.Position + ItemProperties.Size / 2.0f;
                 const float PickingRadius = 2.0f; // Minimum distance to pick item.
                 int[] agentIds = Collisions.Collisions.BroadphaseAgentCircleTest(centerPos, PickingRadius);
 
@@ -41,7 +41,7 @@ namespace Item
                     if (!agent.agentInventory.AutoPick)
                         continue;
 
-                    GameState.ActionCreationSystem.CreateAction(Enums.ItemUsageActionType .PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
+                    GameState.ActionCreationSystem.CreateAction(Enums.ActionType .PickUpAction, agent.agentID.ID, itemParticle.itemID.ID);
                 }
             }
         }

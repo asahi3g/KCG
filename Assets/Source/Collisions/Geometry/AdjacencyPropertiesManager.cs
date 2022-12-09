@@ -68,7 +68,7 @@ namespace Collisions
         
         public void AddLine(TileLineSegment line)
         {
-            if ((int)line >= SegmentArray.Length)
+            if ((int)LineOffset >= SegmentArray.Length)
             {
                 Array.Resize(ref SegmentArray, SegmentArray.Length + 1024);
             }

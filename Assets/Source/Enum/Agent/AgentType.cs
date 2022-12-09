@@ -6,10 +6,8 @@ namespace Enums
         Agent,
         Slime,
         FlyingSlime,
-        Corpse,
-        EnemyMarine,
-        EnemyGunner,
-        EnemySwordman,
+        Marine,
+        MelleMarine,
         InsectSmall,
         InsectLarge,
     }

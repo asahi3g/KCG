@@ -11,21 +11,25 @@ public partial class AgentEntity {
     public Agent.StaggerComponent agentStagger { get { return (Agent.StaggerComponent)GetComponent(AgentComponentsLookup.AgentStagger); } }
     public bool hasAgentStagger { get { return HasComponent(AgentComponentsLookup.AgentStagger); } }
 
-    public void AddAgentStagger(bool newStagger, float newStaggerAffectTime, float newElapsed) {
+    public void AddAgentStagger(bool newStagger, float newStaggerAffectTime, float newElapsed, bool newImpactEffect, float newImpactAffectTime) {
         var index = AgentComponentsLookup.AgentStagger;
         var component = (Agent.StaggerComponent)CreateComponent(index, typeof(Agent.StaggerComponent));
         component.Stagger = newStagger;
         component.StaggerAffectTime = newStaggerAffectTime;
         component.elapsed = newElapsed;
+        component.ImpactEffect = newImpactEffect;
+        component.ImpactAffectTime = newImpactAffectTime;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgentStagger(bool newStagger, float newStaggerAffectTime, float newElapsed) {
+    public void ReplaceAgentStagger(bool newStagger, float newStaggerAffectTime, float newElapsed, bool newImpactEffect, float newImpactAffectTime) {
         var index = AgentComponentsLookup.AgentStagger;
         var component = (Agent.StaggerComponent)CreateComponent(index, typeof(Agent.StaggerComponent));
         component.Stagger = newStagger;
         component.StaggerAffectTime = newStaggerAffectTime;
         component.elapsed = newElapsed;
+        component.ImpactEffect = newImpactEffect;
+        component.ImpactAffectTime = newImpactAffectTime;
         ReplaceComponent(index, component);
     }
 

@@ -30,7 +30,9 @@ namespace Planet.Unity
 
         public void Start()
         {
-            GameState.AudioSystem = new AudioSystem(GetComponent<AudioSource>());
+            GameState.AudioSystem = new AudioSystem();
+            GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
+            
 
             Initialize();
 
@@ -75,16 +77,8 @@ namespace Planet.Unity
             Vec2i mapSize = new Vec2i(mapWidth, mapHeight);
             Planet.Init(mapSize);
 
-            int PlayerFaction = 0;
-            int EnemyFaction = 1;
-
-            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), PlayerFaction);
+            Player = Planet.AddAgentAsPlayer(new Vec2f(30.0f, 20.0f), Agent.AgentFaction.Player);
             PlayerID = Player.agentID.ID;
-
-            //GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
-
-            //GameState.Planet.AddVehicle(Enums.VehicleType.DropShip, new Vec2f(16.0f, 20));
-            //GameState.Planet.AddPod(new Vec2f(16.0f, 20), Enums.PodType.Default);
 
 
             PlayerID = Player.agentID.ID;

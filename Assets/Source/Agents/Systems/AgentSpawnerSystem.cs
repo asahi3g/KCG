@@ -12,67 +12,6 @@ namespace Agent
     {
         private static int UniqueID = 0;
 
-        public AgentEntity SpawnPlayer(int spriteId, int width, int height, Vec2f position,
-            int startingAnimation, int playerHealth, int playerFood, int playerWater, int playerOxygen, 
-            int playerFuel, float attackCoolDown, int inventoryID = -1, int equipmentInventoryID = -1)
-        {
-            var entity = GameState.Planet.EntitasContext.agent.CreateEntity();
-            ref AgentPropertiesTemplate properties = ref GameState.AgentCreationApi.GetRef((int)Enums.AgentType.Player);
-
-            var spriteSize = new Vec2f(width / 32f, height / 32f);
-
-            entity.isAgentPlayer = true;
-            entity.AddAgentID(UniqueID++, -1, Enums.AgentType.Player, 0);
-            entity.isAgentAlive = true;
-            entity.AddAnimationState(1.0f, new Animation.Animation{Type=startingAnimation});
-            entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite  component to the entity
-            Vec2f size = new Vec2f(spriteSize.X - 0.5f, spriteSize.Y);
-            entity.AddPhysicsBox2DCollider(size, new Vec2f(0.25f, .0f));
-            entity.AddAgentAction(AgentAlertState.UnAlert);
-            entity.AddAgentStats(new ContainerInt(9999, 0, 9999), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 
-                100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
-
-            if (inventoryID != -1)
-                entity.AddAgentInventory(inventoryID, equipmentInventoryID, true);
-
-            entity.AddAgentStagger(false, properties.StaggerAffectTime, 0.0f);
-
-            entity.AddAgentPhysicsState(
-                 newPosition: position,
-                 newPreviousPosition: default,
-                 newSpeed: properties.MovProperties.DefaultSpeed,
-                 newInitialJumpVelocity: Physics.PhysicsFormulas.GetSpeedToJump(properties.MovProperties.JumpHeight),
-                 newVelocity: Vec2f.Zero,
-                 newAcceleration: Vec2f.Zero,
-                 newMovingDirection: 1,
-                 newFacingDirection: 1,
-                 newGroundNormal: new Vec2f(0, 1.0f),
-                 newMovementState: Enums.AgentMovementState.None,
-                 newLastAgentAnimation: new AgentAnimation(),
-                 newSetMovementState: false,
-                 newAffectedByGravity: true,
-                 newAffectedByFriction: true,
-                 newInvulnerable: false,
-                 newOnGrounded: false,
-                 newDroping: false,
-                 newActionInProgress: false,
-                 newActionJustEnded: false,
-                 newIdleAfterShootingTime: 0,
-                 newJumpCounter: 0,
-                 newActionDuration: 0,
-                 newSlidingTime: 0,
-                 newDyingDuration: 0,
-                 newDashCooldown: 0,
-                 newDashDuration: 0,
-                 newStaggerDuration: 0,
-                 newRollCooldown: 0,
-                 newRollImpactDuration: 0);
-
-
-            return entity;
-        }
-
-
         private bool CreateAgentRenderer(AgentEntity agentEntity, out AgentRenderer agentRenderer)
         {
             agentRenderer = null;
@@ -89,21 +28,20 @@ namespace Agent
             return agentRenderer != null;
         }
 
-        public AgentEntity Spawn(Vec2f position, Enums.AgentType agentType, int faction,
-            int inventoryID = -1, int equipmentInventoryID = -1)
+        public AgentEntity Spawn(Vec2f position, Enums.AgentType agentType, AgentFaction faction, int inventoryID = -1, int equipmentInventoryID = -1)
         {
             AgentEntity agentEntity = GameState.Planet.EntitasContext.agent.CreateEntity();
 
             ref AgentPropertiesTemplate agentPropertiesTemplate = ref GameState.AgentCreationApi.GetRef((int)agentType);
 
-            var spriteId = 0;
-            agentEntity.AddAgentID(UniqueID++, -1, agentType, faction); // agent id 
+            agentEntity.AddAgentID(UniqueID++, -1, agentType, faction, -1); // agent id 
             agentEntity.isAgentAlive = true;
             agentEntity.AddPhysicsBox2DCollider(agentPropertiesTemplate.CollisionDimensions, agentPropertiesTemplate.CollisionOffset);
             agentEntity.AddAgentAction(AgentAlertState.UnAlert);
-            agentEntity.AddAgentStats(new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0,100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
+            agentEntity.AddAgentStats(new ContainerInt(agentPropertiesTemplate.DefaultHealth, 0, agentPropertiesTemplate.DefaultHealth), new ContainerInt(100, 0, 100), 
+                new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100), new ContainerInt(100, 0, 100));
 
-            agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f);
+            agentEntity.AddAgentStagger(false, agentPropertiesTemplate.StaggerAffectTime, 0.0f, false, agentPropertiesTemplate.ImpactAffectTime);
 
             agentEntity.AddAgentPhysicsState(
                 newPosition: position,
@@ -114,9 +52,18 @@ namespace Agent
                 newAcceleration: Vec2f.Zero, 
                 newMovingDirection: 1,
                 newFacingDirection: 1,
+                newActionCooldown: 0,
+                newJumpingTime: 0,
+                newJumpedFromGround: false,
+                newCurerentMoveList: 0,
+                newMoveIndex: 0,
+                newLastMovementState: Enums.AgentMovementState.None,
+                newTimeBetweenMoves: 0,
                 newGroundNormal: new Vec2f(0, 1.0f),
                 newMovementState: Enums.AgentMovementState.None,
                 newLastAgentAnimation: new AgentAnimation(),
+                newLastMovingDirection: 1,
+                newMovingDistance: 0,
                 newSetMovementState: false,
                 newAffectedByGravity: true,
                 newAffectedByFriction: true,
@@ -160,120 +107,42 @@ namespace Agent
                     },
                     newSquadID: -1);
             }
+            if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
+            {
+                agentEntity.AddAgentAgent3DModel(Model3DWeaponType.None, null,
+                    agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, null, 0.0f, null, Vec2f.Zero, agentRenderer, 
+                        false);
+                    
+                Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+                agent3DModel.SetLocalScale(agentPropertiesTemplate.ModelScale);
+                agent3DModel.SetRenderer(agentRenderer);
+                agent3DModel.Material = agentRenderer.GetModelMesh().GetComponent<UnityEngine.SkinnedMeshRenderer>().sharedMaterial;
+                SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+            }
 
             switch (agentType)
             {
                 case Enums.AgentType.Player:
                     {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
-                                agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale,
-                                Vec2f.Zero);
+                        GameState.Planet.Player = agentEntity; // Todo: use id instead of pointer.
+                        agentEntity.isAgentPlayer = true;
 
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-
-                            // entity.agentPhysicsState.Speed = 10.0f;
-                            agentEntity.isAgentPlayer = true;
-
-                            if(!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.UnAlert);
-                        }
-                        
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.UnAlert);
                         break;
                     }
-                case Enums.AgentType.Agent:
+                case Enums.AgentType.Marine:
                     {
-                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
-                        break;
-                    }
-                case Enums.AgentType.Slime:
-                    {
-                       // entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        agentEntity.AddAnimationState(1.0f, new Animation.Animation{Type=agentPropertiesTemplate.StartingAnimation});
-                        break;
-                    }
-                case Enums.AgentType.FlyingSlime:
-                    {
-                        //entity.AddAgentSprite2D(spriteId, spriteSize); // adds the sprite component to the entity
-                        break;
-                    }
-                case Enums.AgentType.EnemyGunner:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
-                                Enums.AgentAnimationType.HumanoidAnimation,
-                                Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
+                        if (!agentEntity.hasAgentAction)
+                            agentEntity.AddAgentAction(AgentAlertState.Alert);
+                        else
+                            agentEntity.agentAction.Action = AgentAlertState.Alert;
 
-                            agentEntity.agentPhysicsState.Speed = 6.0f;
+                        ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
+                        GameState.InventoryManager.AddItem(item, inventoryID);
+                        GameState.InventoryManager.ChangeSelectedSlot(0, inventoryID);
+                        agentEntity.SetModel3DWeapon(item);
 
-                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Pistol);
-                            Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
-                        }
-                        
-                        break;
-                    }
-                case Enums.AgentType.EnemySwordman:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,  
-                                Enums.AgentAnimationType.HumanoidAnimation,
-                                Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            agentEntity.SetModel3DWeapon(Model3DWeaponType.Sword);
-                        }
-                        
-                        break;
-                    }
-                case Enums.AgentType.InsectSmall:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null, 
-                                agentPropertiesTemplate.AnimationType, Enums.ItemAnimationSet.Default,
-                                agentPropertiesTemplate.ModelScale, Vec2f.Zero);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                        }
-
-                        break;
-                    }
-                case Enums.AgentType.InsectLarge:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
-                                agentPropertiesTemplate.AnimationType,
-                                Enums.ItemAnimationSet.Default, agentPropertiesTemplate.ModelScale, Vec2f.Zero);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                        }
-
-                        break;
-                    }
-                case Enums.AgentType.EnemyMarine:
-                    {
-                        if (CreateAgentRenderer(agentEntity, out AgentRenderer agentRenderer))
-                        {
-                            Agent3DModel agent3DModel = agentEntity.AddAgentModel3D(agentRenderer, Model3DWeaponType.None, null,
-                                Enums.AgentAnimationType.SpaceMarineAnimations, Enums.ItemAnimationSet.Default, new Vec3f(3.0f, 3.0f, 3.0f), Vec2f.Zero);
-                            SetTransformHelper(agent3DModel, position.X, position.Y, 90f);
-                            
-                            agentEntity.agentPhysicsState.Speed = 10.0f;
-
-                            if (!agentEntity.hasAgentAction)
-                                agentEntity.AddAgentAction(AgentAlertState.Alert);
-                            else
-                                agentEntity.agentAction.Action = AgentAlertState.Alert;
-
-                            ItemInventoryEntity item = GameState.ItemSpawnSystem.SpawnInventoryItem(Enums.ItemType.SMG);
-                            GameState.InventoryManager.AddItem(item, inventoryID);
-                            agentEntity.SetModel3DWeapon(item);
-                        }
-                        
                         break;
                     }
             }

@@ -49,9 +49,10 @@ namespace BehaviorTree
         public void Update()
         {
             // Todo: Remove behavior tree from manager instead.
-            if (!GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).isAgentAlive)
+            if (!GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).isAgentAlive || 
+                   GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID).agentStagger.Stagger)
                 return;
-            
+
             for (int i = 0; i < DataState.NodesExecutiondata.Length; i++)
             {
                 if (!StackTree.Contains(i))
@@ -95,16 +96,16 @@ namespace BehaviorTree
             int nextChildIndex = 0;
             switch (currentNode.Type)
             {
-                case ItemUsageActionType .Decorator:
+                case NodeType.Decorator:
                     nextChildIndex = DecoratorNode.NextRoute(GetCurrentChild());
                     break;
-                case ItemUsageActionType .Repeater:
+                case NodeType.Repeater:
                     nextChildIndex = RepeaterNode.NextRoute(ptr, index, GetCurrentChild());
                     break;
-                case ItemUsageActionType .Sequence:
+                case NodeType.Sequence:
                     nextChildIndex = SequenceNode.GetNextChildren(ptr, index, LastResult);
                     break;
-                case ItemUsageActionType .Selector:
+                case NodeType.Selector:
                     nextChildIndex = SelectorNode.GetNextChildren(ptr, index, LastResult);
                     break;
                 default:
@@ -136,7 +137,7 @@ namespace BehaviorTree
         {
             DataState.NodesExecutiondata[index].Id = node.ID;
             int DataStateSize = DataState.NodesExecutiondata[index].MemoryOffset;
-            
+
             if (index == DataState.NodesExecutiondata.Length - 1)
                 return;
 
@@ -145,10 +146,10 @@ namespace BehaviorTree
 
             int childIndex = index + 1;
             DataState.NodesExecutiondata[childIndex].MemoryOffset = DataStateSize;
-            
-            if (node.Children == null || node.Type == ItemUsageActionType .ActionSequence)
+
+            if (node.Children == null || node.Type == NodeType.ActionSequence)
                 return;
-            
+
             for (int i = 0; i < node.Children.Length; i++)
             {
                 ref NodeSystem.Node child = ref GameState.NodeManager.GetRef(node.Children[i]);
@@ -207,5 +208,7 @@ namespace BehaviorTree
         }
 
         int GetCurrentChild() => GetChildIndex(StackTree[CurrentDepth], StackTree[CurrentDepth + 1]);
+
+        public AgentEntity GetAgentOwner() => GameState.Planet.EntitasContext.agent.GetEntityWithAgentID(DataState.AgentID);
     }
 }

@@ -5,7 +5,7 @@ using KMath;
 
 namespace Particle
 {
-    public class ParticleEmitterCreationApi
+    public class ParticleEmitterPropertiesManager
     {
         // Start is called before the first frame update
 
@@ -14,7 +14,7 @@ namespace Particle
 
         private Dictionary<string, int> NameToID;
 
-        public ParticleEmitterCreationApi()
+        public ParticleEmitterPropertiesManager()
         {
             NameToID = new Dictionary<string, int>();
             PropertiesArray = new ParticleEmitterProperties[1024];
@@ -134,7 +134,6 @@ namespace Particle
                 PropertiesArray[CurrentIndex].TimeBetweenEmissions = timeBetweenEmissions;
             }
         }
-
 
         public void End()
         {

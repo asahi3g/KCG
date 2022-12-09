@@ -99,12 +99,61 @@ namespace Agent
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/SpaceMarinePistolShoot2", AnimationType.SpaceMarinePistolFireGun);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Throw", AnimationType.SpaceMarineUseTool);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Slide", AnimationType.SpaceMarineSliding);
+            AnimationLoader.Load("ArtistAnimations/SpaceMarine/SwordAttack", AnimationType.SpaceMarineSwordAttack_1);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Jetpack", AnimationType.SpaceMarineJetPack);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Stagger", AnimationType.SpaceMarineStagger);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/DEFORM_DeathKnockback", AnimationType.SpaceMarineKnockedDownFront);
             AnimationLoader.Load("ArtistAnimations/SpaceMarine/Death2", AnimationType.SpaceMarineLyingFront);
             //AnimationLoader.Load("ArtistAnimations/DEFORM_DeathKnockback", AnimationType.SpaceMarineKnockedDownBack);
             //AnimationLoader.Load("ArtistAnimations/DEFORM_Death", AnimationType.SpaceMarineLyingBack);
+
+
+
+            // Human Light
+            AnimationLoader.Load("Animations/Human Light/Idle", AnimationType.HumanLightIdle);
+            AnimationLoader.Load("Animations/Human Light/GunIdle", AnimationType.HumanLightRifleIdle);
+            AnimationLoader.Load("Animations/Human Light/PistolIdle", AnimationType.HumanLightPistolIdle);
+            AnimationLoader.Load("Animations/Human Light/GunAlerted", AnimationType.HumanLightRifleIdleAlerted);
+            AnimationLoader.Load("Animations/Human Light/PistolAlerted", AnimationType.HumanLightPistolIdleAlerted);
+            AnimationLoader.Load("Animations/Human Light/Run", AnimationType.HumanLightRun);
+            //AnimationLoader.Load("Animations/Human Light/Walking", AnimationType.HumanLightWalk);
+            AnimationLoader.Load("Animations/Human Light/Jump", AnimationType.HumanLightJump);
+            AnimationLoader.Load("Animations/Human Light/GunJump", AnimationType.HumanLightRifleJump);
+            AnimationLoader.Load("Animations/Human Light/PistolJump", AnimationType.HumanLightPistolJump);
+            AnimationLoader.Load("Animations/Human Light/JumpRoll", AnimationType.HumanLightFlip);
+            AnimationLoader.Load("Animations/Human Light/GunJumpRoll", AnimationType.HumanLightRifleFlip);
+            AnimationLoader.Load("Animations/Human Light/PistolJumpRoll", AnimationType.HumanLightPistolFlip);
+            AnimationLoader.Load("Animations/Human Light/Walking", AnimationType.HumanLightJog);
+            AnimationLoader.Load("Animations/Human Light/WalkingBackwards", AnimationType.HumanLightWalkBackward);
+            AnimationLoader.Load("Animations/Human Light/GunWalking", AnimationType.HumanLightRifleJog);
+            AnimationLoader.Load("Animations/Human Light/PistolWalking", AnimationType.HumanLightPistolJog);
+            AnimationLoader.Load("Animations/Human Light/Dodge", AnimationType.HumanLightDash);
+            AnimationLoader.Load("Animations/Human Light/Roll", AnimationType.HumanLightRoll);
+            AnimationLoader.Load("Animations/Human Light/CrouchIdle", AnimationType.HumanLightCrouch);
+            AnimationLoader.Load("Animations/Human Light/GunCrouchIdle", AnimationType.HumanLightRifleCrouch);
+            AnimationLoader.Load("Animations/Human Light/PistolCrouchIdle", AnimationType.HumanLightPistolCrouch);
+            AnimationLoader.Load("Animations/Human Light/CrouchWalk", AnimationType.HumanLightCrouch_Walk);
+            AnimationLoader.Load("Animations/Human Light/GunCrouchWalk", AnimationType.HumanLightRifleCrouch_Walk);
+            AnimationLoader.Load("Animations/Human Light/PistolCrouchWalk", AnimationType.HumanLightPistolCrouch_Walk);
+            AnimationLoader.Load("Animations/Human Light/CrouchWalkBackwards", AnimationType.HumanLightCrouch_WalkBackwards);
+            AnimationLoader.Load("Animations/Human Light/GunCrouchWalkBackwards", AnimationType.HumanLightRifleCrouch_WalkBackwards);
+            AnimationLoader.Load("Animations/Human Light/Limp", AnimationType.HumanLightLimp);
+            AnimationLoader.Load("Animations/Human Light/Drink", AnimationType.HumanLightDrink);
+            //AnimationLoader.Load("Animations/Human Light/Drink", AnimationType.HumanLightPickaxeHit);
+            AnimationLoader.Load("Animations/Human Light/JumpFall", AnimationType.HumanLightJumpFall);
+            AnimationLoader.Load("Animations/Human Light/GunJumpFall", AnimationType.HumanLightRifleJumpFall);
+            AnimationLoader.Load("Animations/Human Light/PistolJumpFall", AnimationType.HumanLightPistolJumpFall);
+            //AnimationLoader.Load("Animations/Human Light/SwordFirst", AnimationType.HumanLightSwordSlash);
+            AnimationLoader.Load("Animations/Human Light/GunShoot", AnimationType.HumanLightRifleFireGun);
+            AnimationLoader.Load("Animations/Human Light/PistolShoot", AnimationType.HumanLightPistolFireGun);
+            AnimationLoader.Load("Animations/Human Light/Throw", AnimationType.HumanLightUseTool);
+            AnimationLoader.Load("Animations/Human Light/Slide", AnimationType.HumanLightSliding);
+            AnimationLoader.Load("Animations/Human Light/SwordFirst", AnimationType.HumanLightSwordAttack_1);
+            AnimationLoader.Load("Animations/Human Light/SwordSecond", AnimationType.HumanLightSwordAttack_2);
+            AnimationLoader.Load("Animations/Human Light/SwordThird", AnimationType.HumanLightSwordAttack_3);
+            AnimationLoader.Load("Animations/Human Light/Jetpack", AnimationType.HumanLightJetPack);
+            AnimationLoader.Load("Animations/Human Light/Stagger", AnimationType.HumanLightStagger);
+            AnimationLoader.Load("Animations/Human Light/Death", AnimationType.HumanLightKnockedDownFront);
         }
     }
 }

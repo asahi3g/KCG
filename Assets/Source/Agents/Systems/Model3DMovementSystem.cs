@@ -7,13 +7,25 @@ namespace Agent
     {
         public void Update()
         {
-            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentModel3D));
+            var entities = GameState.Planet.EntitasContext.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentAgent3DModel));
             
             foreach (AgentEntity agentEntity in entities)
             {
                 PhysicsStateComponent physicsStateComponent = agentEntity.agentPhysicsState;
-                Agent3DModel agent3DModel = agentEntity.Agent3DModel;
-                
+                Agent3DModel agent3DModel = agentEntity.agentAgent3DModel;
+
+                if(agent3DModel.IsOutlineActiveOnHover)
+                {
+                    if (KMath.Vec2f.Distance(agentEntity.agentPhysicsState.Position, ECSInput.InputProcessSystem.GetCursorWorldPosition()) < 1.5f)
+                    {
+                        agentEntity.SetOnHoverOutline(true);
+                    }
+                    else
+                    {
+                        agentEntity.SetOnHoverOutline(false);
+                    }
+                }
+
                 agent3DModel.SetPosition(physicsStateComponent.Position.X, physicsStateComponent.Position.Y);
 
                 if (physicsStateComponent.FacingDirection == 1)

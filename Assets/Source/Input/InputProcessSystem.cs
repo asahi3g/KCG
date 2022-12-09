@@ -81,13 +81,13 @@ namespace ECSInput
 
                 if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, vehicle.vehiclePhysicsState2D.Position) < 3.0f || vehicle.vehicleType.HasAgent)
                 {
-                    // If player is outside the vehicle.
+                    // If agentEntity is outside the vehicle.
                     // Get in, turn on the jet and ignition.
 
-                    // If player is inside the vehicle,
+                    // If agentEntity is inside the vehicle,
                     // Get out, turn off the jet and ignition.
 
-                    if (agentEntity.Agent3DModel.IsActive)
+                    if (agentEntity.agentAgent3DModel.IsActive)
                     {
                         // Set custom events for different vehicle types.
                         // Spew out smoke when accelerate.
@@ -96,9 +96,9 @@ namespace ECSInput
                         {
                             GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -0.6f), new Vec2f(0f, 3.0f));
 
-                            // Player Gets inside of Rocket
+                            // agentEntity Gets inside of Rocket
                             // Hide Agent/Player
-                            agentEntity.Agent3DModel.SetIsActive(false);
+                            agentEntity.agentAgent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
                             vehicle.vehicleType.HasAgent = true;
 
@@ -112,9 +112,9 @@ namespace ECSInput
                         {
                             GameState.VehicleAISystem.Initialize(vehicle, new Vec2f(1.1f, -2.8f), new Vec2f(0f, 3.0f));
 
-                            // Player Gets inside of Rocket
+                            // agentEntity Gets inside of Rocket
                             // Hide Agent/Player
-                            agentEntity.Agent3DModel.SetIsActive(false);
+                            agentEntity.agentAgent3DModel.SetIsActive(false);
                             agentEntity.isAgentAlive = false;
                             vehicle.vehicleType.HasAgent = true;
 
@@ -136,7 +136,7 @@ namespace ECSInput
 
                         vehicle.vehicleType.HasAgent = false;
                         agentEntity.agentPhysicsState.Position = vehicle.vehiclePhysicsState2D.Position;
-                        agentEntity.Agent3DModel.SetIsActive(true);
+                        agentEntity.agentAgent3DModel.SetIsActive(true);
                         agentEntity.isAgentAlive = true;
 
                     }
@@ -239,21 +239,20 @@ namespace ECSInput
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AgentPlayer);
                 var mechEntities = contexts.mech.GetGroup(MechMatcher.MechID);
 
                 int inventoryID;
                 InventoryEntity playerInventory;
                 InventoryEntity equipmentInventory;
 
-                foreach (var player in players)
+                foreach (var agentEntity in agentEntities)
                 {
-                    if (player.isAgentPlayer)
+                    if (agentEntity.isAgentPlayer)
                     {
-                        inventoryID = player.agentInventory.InventoryID;
+                        inventoryID = agentEntity.agentInventory.InventoryID;
                         playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                        inventoryID = player.agentInventory.EquipmentInventoryID;
+                        inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                         equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
                         
                         foreach (var mech in mechEntities)
@@ -270,7 +269,7 @@ namespace ECSInput
                                     GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
                                 }
 
-                                if (Vec2f.Distance(player.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
+                                if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
                                 {
                                     GameState.InventoryManager.OpenInventory(playerInventory);
                                     GameState.InventoryManager.OpenInventory(equipmentInventory);
@@ -282,7 +281,7 @@ namespace ECSInput
                         }
                     }
 
-                    UpdateVehicles(player);
+                    UpdateVehicles(agentEntity);
 
                     InventoryEntity inventory = null;
                     float smallestDistance = 2.0f;
@@ -294,7 +293,7 @@ namespace ECSInput
                         {
                             
                             var physicsState = corpse.agentPhysicsState;
-                            float distance = Vec2f.Distance(physicsState.Position, player.agentPhysicsState.Position);
+                            float distance = Vec2f.Distance(physicsState.Position, agentEntity.agentPhysicsState.Position);
 
                             if (!corpse.hasAgentInventory || !(distance < smallestDistance))
                                 continue;
@@ -309,7 +308,7 @@ namespace ECSInput
                     var mechs = contexts.mech.GetEntities();
                     foreach (var mech in mechs)
                     {
-                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, player.agentPhysicsState.Position);
+                        float distance = Vec2f.Distance(mech.mechPosition2D.Value, agentEntity.agentPhysicsState.Position);
                         if (!(distance < smallestDistance))
                             continue;
 
@@ -321,17 +320,18 @@ namespace ECSInput
 
                         // Get proprietis.
                         MechProperties mechProperties = mech.GetProperties();
-                        if (mechProperties.Action != ItemUsageActionType .None)
-                            GameState.ActionCreationSystem.CreateAction(mechProperties.Action, player.agentID.ID);
+
+                        if (mechProperties.Action != ActionType .None)
+                            GameState.ActionCreationSystem.CreateAction(mechProperties.Action, agentEntity.agentID.ID);
                     }
 
                     if (inventory == null)
                         continue;
 
-                    inventoryID = player.agentInventory.InventoryID;
+                    inventoryID = agentEntity.agentInventory.InventoryID;
                     playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                     equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     if (!inventory.hasInventoryDraw)
@@ -352,35 +352,36 @@ namespace ECSInput
             // Recharge Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players) 
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ChargeAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities) 
+                    GameState.ActionCreationSystem.CreateAction(ActionType.ChargeAction, agentEntity.agentID.ID);
             }
 
             // Drop Action. 
             if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .DropAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities)
+                    GameState.ActionCreationSystem.CreateAction(ActionType.DropAction, agentEntity.agentID.ID);
             }
 
             // Reload Weapon.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ReloadAction, player.agentID.ID);
+                foreach (var agentEntity in agentEntities)
+                {
+                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroups.ToolRangedWeapon)
+                    {
+                        GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentEntity.agentID.ID);
+                    }
+                }
             }
 
-            // Shield Action.
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
-            {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
-                foreach (var player in players)
-                    GameState.ActionCreationSystem.CreateAction(ItemUsageActionType .ShieldAction, player.agentID.ID);
+            //// Shield Action.
+            //if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Mouse1))
+            //{
+            //    foreach (var agentEntity in agentEntities)
+            //        GameState.ActionCreationSystem.CreateAction(ActionType .ShieldAction, agentEntity.agentID.ID);
 
-            }
+            ////}
 
             // Show/Hide Statistics
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
@@ -415,13 +416,12 @@ namespace ECSInput
             //  Open Inventory with Tab.        
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
             {
-                var players = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer, AgentMatcher.AgentInventory));
-                foreach (var player in players)
+                foreach (var agentEntity in agentEntities)
                 {
-                    int inventoryID = player.agentInventory.InventoryID;
+                    int inventoryID = agentEntity.agentInventory.InventoryID;
                     InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
-                    inventoryID = player.agentInventory.EquipmentInventoryID;
+                    inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                     InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
 
                     if (!inventory.hasInventoryDraw)
@@ -492,7 +492,7 @@ namespace ECSInput
                 var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
-                if(itemProperty.Group is ItemGroupType.Gun or ItemGroupType.Weapon)
+                if(itemProperty.Group is ItemGroupType.ToolRangedWeapon or ItemGroups.ToolMelleWeapon)
                 {
                     if(entity.hasAgentAction)
                     {
@@ -545,10 +545,21 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, item.itemID.ID);
+                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, 
+                                        item.itemID.ID);
                                 }
                             }
-
+                            else if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Mouse1) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    if (selectedItemProperty.SecondToolActionType != null)
+                                    {
+                                        GameState.ActionCreationSystem.CreateAction(selectedItemProperty.SecondToolActionType,entity.agentID.ID,
+                                            item.itemID.ID);
+                                    }
+                                }
+                            }
                             break;
                         }
                         case ItemKeyUsage.KeyDown:
@@ -557,10 +568,21 @@ namespace ECSInput
                             {
                                 if (!InventorySystemsState.MouseDown)
                                 {
-                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType, entity.agentID.ID, item.itemID.ID);
+                                    GameState.ActionCreationSystem.CreateAction(selectedItemProperty.ToolActionType,        
+                                        entity.agentID.ID, item.itemID.ID);
                                 }
                             }
-
+                            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Mouse1) && entity.IsStateFree())
+                            {
+                                if (!InventorySystemsState.MouseDown)
+                                {
+                                    if (selectedItemProperty.SecondToolActionType != null)
+                                    {
+                                        GameState.ActionCreationSystem.CreateAction(selectedItemProperty.SecondToolActionType,entity.agentID.ID, 
+                                            item.itemID.ID);
+                                    }
+                                }
+                            }
                             break;
                         }
                     }
@@ -575,18 +597,6 @@ namespace ECSInput
                         mode = Mode.Agent;
 
                     UpdateMode(entity);
-                }
-
-                // Take Screen-Shot
-                if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F12))
-                {
-                    var date = DateTime.Now;
-                    var fileName = date.Year.ToString() + "-" + date.Month.ToString() +
-                        "-" + date.Day.ToString() + "-" + date.Hour.ToString() + "-" + date.Minute.ToString() +
-                        "-" + date.Second.ToString() + "-" + date.Millisecond + ".png";
-                    ScreenCapture.CaptureScreenshot("Assets\\Screenshots\\" + fileName);
-
-                    GameState.AudioSystem.PlayOneShot("AudioClips\\steam_screenshot_effect");
                 }
             }
         }

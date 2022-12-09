@@ -7,13 +7,19 @@ namespace Particle
     public class ParticleEmitterSpawnerSystem
     {
 
-        ParticleEmitterCreationApi ParticleEmitterCreationApi;
+        ParticleEmitterPropertiesManager ParticleEmitterPropertiesManager;
         ParticlePropertiesManager ParticlePropertiesManager;
         int uniqueID = 0;
-        public ParticleEmitterSpawnerSystem(ParticleEmitterCreationApi particleEmitterCreationApi,
+
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(ParticleEmitterPropertiesManager particleEmitterCreationApi,
                                             ParticlePropertiesManager particlePropertiesManager)
         {
-            ParticleEmitterCreationApi = particleEmitterCreationApi;
+            ParticleEmitterPropertiesManager = particleEmitterCreationApi;
             ParticlePropertiesManager = particlePropertiesManager;
         }
 
@@ -39,7 +45,7 @@ namespace Particle
         private ParticleEntity CreateParticleEmitterEntity(ParticleEmitterType type, Vec2f position)
         {
             ParticleEmitterProperties emitterProperties = 
-                        ParticleEmitterCreationApi.Get((int)type);
+                        ParticleEmitterPropertiesManager.Get((int)type);
             ParticleProperties particleProperties = 
                         ParticlePropertiesManager.Get(emitterProperties.ParticleType);
             var e = GameState.Planet.EntitasContext.particle.CreateEntity();

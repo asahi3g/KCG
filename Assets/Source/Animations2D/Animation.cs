@@ -9,6 +9,8 @@ namespace Animation
 
         public float CurrentTime;
         public int CurrentFrame;
+        public bool Loop;
+        public bool IsFinished;
 
 
 
@@ -27,8 +29,20 @@ namespace Animation
             {
                 animationType.FrameCount = 1;
             }
-        
-            CurrentFrame = (int)(CurrentTime / animationType.TimePerFrame) % animationType.FrameCount;
+
+            if (Loop)
+            {
+                CurrentFrame = (int)(CurrentTime / animationType.TimePerFrame) % animationType.FrameCount;
+            }
+            else
+            {
+                CurrentFrame = (int)(CurrentTime / animationType.TimePerFrame);
+                if (CurrentFrame >= animationType.FrameCount)
+                {
+                    CurrentFrame = animationType.FrameCount - 1;
+                    IsFinished = true;
+                }
+            }
         }
 
         public int GetSpriteId()

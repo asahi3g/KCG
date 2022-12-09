@@ -1,7 +1,7 @@
 ﻿namespace Enums
 {
     // Todo: Procedural generate enums and Intialize functions.
-    public enum ItemUsageActionType
+    public enum ActionType
     {
         None = -1,
 
@@ -32,6 +32,7 @@
         ShootGrenadeAction,
         ThrowGasBombAction,
         ThrowFragGrenadeAction,
+        ThrowConcussionGrenadeAction,
         WaterAction,
         UseShieldAction,
         MeleeAttackAction,
@@ -42,6 +43,7 @@
         ThrowFlareAction,
         PickaxeAction,
         AxeAction,
+        SecondActionTest,
 
 
         // Ttools actions
@@ -60,5 +62,6 @@
         ToolActionRemoveMech,
         ToolActionPotion,
         ToolActionGeometryPlacement,
+        ToolActionMechPlacement,
     }
 }

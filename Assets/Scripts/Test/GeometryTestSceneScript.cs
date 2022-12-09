@@ -5,6 +5,7 @@ using KMath;
 using Item;
 using Particle;
 using PlanetTileMap;
+using Enums;
 
 namespace Planet.Unity
 {
@@ -356,16 +357,13 @@ namespace Planet.Unity
             tileMap.SetFrontTile(29, 12, TileID.SB_R0_Metal);
             tileMap.SetFrontTile(30, 12, TileID.SB_R0_Metal);
 
-            planet.AddAgentAsEnemy(new Vec2f(20, 10));
-            planet.AddAgentAsEnemy(new Vec2f(20, 15));
-            planet.AddAgentAsEnemy(new Vec2f(15, 15));
+            planet.AddAgent(new Vec2f(20, 10), AgentType.InsectSmall, Agent.AgentFaction.Enemy);
+            planet.AddAgent(new Vec2f(20, 15), AgentType.InsectSmall, Agent.AgentFaction.Enemy);
+            planet.AddAgent(new Vec2f(15, 15), AgentType.InsectSmall, Agent.AgentFaction.Enemy);
 
             planet.AddAgent(new Vec2f(10, 22), Enums.AgentType.InsectSmall);
             planet.AddAgent(new Vec2f(20, 22), Enums.AgentType.InsectSmall);
             planet.AddAgent(new Vec2f(5, 12), Enums.AgentType.InsectSmall);
-
-            planet.AddAgent(new Vec2f(5, 28), Enums.AgentType.EnemyGunner);
-            planet.AddAgent(new Vec2f(10, 28), Enums.AgentType.EnemyGunner);
 
             planet.AddMech(new Vec2f(10, 2), Enums.MechType.SmashableBox);
 

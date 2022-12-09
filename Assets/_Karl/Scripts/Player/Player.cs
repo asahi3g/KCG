@@ -20,6 +20,7 @@ public class Player : BaseMonoBehaviour
 
     public PlayerInput GetInput() => _input;
     public PlanetCamera GetCamera() => _camera;
+    public AgentRenderer GetRenderer() => _currentPlayer;
 
 
     public class PlanetCreationEvent : UnityEvent<PlanetLoader.Result>{}
@@ -59,6 +60,23 @@ public class Player : BaseMonoBehaviour
             {
                 int inventoryID = agentEntity.agentInventory.InventoryID;
                 InventoryEntityComponent inventoryEntityComponent = GameState.Planet.GetInventoryEntityComponent(inventoryID);
+                
+                // Add some test items
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Pistol);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SMG);
+                
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.PlacementTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveTileTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemyGunnerTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.SpawnEnemySwordmanTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConstructionTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GeometryPlacementTool);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.Sword);
+                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.ConcussionGrenade);
+                 Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.GoldCoin, 4);
+                Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.HealthPotion, 5);
+                //Admin.AdminAPI.AddItem(GameState.InventoryManager, inventoryID, Enums.ItemType.RemoveMech);
+                
 
                 UIViewInventory inventory = App.Instance.GetUI().GetView<UIViewInventory>();
                 inventory.SetInventoryEntityComponent(inventoryEntityComponent);
@@ -175,14 +193,14 @@ public class Player : BaseMonoBehaviour
         GameState.AgentIKSystem.Update(planetState.EntitasContext.agent);
         GameState.AgentProcessPhysicalState.Update(frameTime);
         GameState.AgentMovementSystem.Update();
-        GameState.AgentModel3DMovementSystem.Update();
+        GameState.AgentAgent3DModelMovementSystem.Update();
         GameState.ItemMovableSystem.Update();
         GameState.VehicleMovementSystem.UpdateEx();
         GameState.PodMovementSystem.UpdateEx();
         GameState.ProjectileMovementSystem.Update();
 
-
-        GameState.AgentModel3DAnimationSystem.Update();
+        GameState.AgentEffectSystem.Update(frameTime);
+        GameState.AgentAgent3DModelAnimationSystem.Update();
         GameState.LootDropSystem.Update();
         GameState.FloatingTextUpdateSystem.Update(frameTime);
         GameState.AnimationUpdateSystem.Update(frameTime);
@@ -207,6 +225,7 @@ public class Player : BaseMonoBehaviour
         GameState.AgentProcessState.Update();
         GameState.SensorUpdateSystem.Update();
         GameState.BehaviorTreeUpdateSystem.Update();
+        GameState.SquadUpdateSystem.Update();
         GameState.BlackboardUpdatePosition.Update();
 
         App.Instance.GetPlayer().GetCamera().Tick(deltaTime);
@@ -245,8 +264,8 @@ public class Player : BaseMonoBehaviour
         GameState.Renderer.DrawFrame(ref GameState.MechMeshBuilderSystem.Mesh, GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Mech));
 
         
-        GameState.AgentModel3DMovementSystem.Update();
-        GameState.AgentModel3DAnimationSystem.Update();
+        GameState.AgentAgent3DModelMovementSystem.Update();
+        GameState.AgentAgent3DModelAnimationSystem.Update();
 
         GameState.FloatingTextDrawSystem.Draw(10000);
 

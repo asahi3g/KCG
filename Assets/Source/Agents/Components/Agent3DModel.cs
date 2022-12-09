@@ -10,20 +10,26 @@ namespace Agent
         public GameObject Weapon;
         public Enums.AgentAnimationType AnimationType;
         public Enums.ItemAnimationSet ItemAnimationSet;
+
+        public UnityEngine.Material Material;
+        public float FlashDuration;
+        public MeshRenderer ModelMeshRenderer;
         
         public KMath.Vec2f AimTarget;
 
 
-        private AgentRenderer _renderer;
+        public AgentRenderer Renderer;
+        private Vector3 _localScale = Vector3.one;
+
         private bool _isActive = true;
         private Vector3 _position = new Vector3(0f, 0f, -1f);
         private Quaternion _rotation = Quaternion.Euler(0f, 0f, 0f);
-        private Vector3 _localScale = Vector3.one;
-
-
-        public AgentRenderer Renderer => _renderer;
-        public bool RendererExists => _renderer != null;
+    
+        public bool RendererExists => Renderer != null;
         public bool IsActive => _isActive;
+
+        public bool IsOutlineActiveOnHover;
+
         public Vector3 LocalScale => _localScale;
 
 
@@ -33,7 +39,7 @@ namespace Agent
             _position.y = y;
             UpdatePosition();
         }
-        
+
         public void SetPositionZ(float z)
         {
             _position.z = z;
@@ -65,8 +71,8 @@ namespace Agent
 
         public void SetRenderer(AgentRenderer value)
         {
-            _renderer = value;
-            if (_renderer == null) return;
+            Renderer = value;
+            if (Renderer == null) return;
             UpdateIsActive();
             UpdatePosition();
             UpdateRotation();
@@ -76,33 +82,38 @@ namespace Agent
 
         private void UpdateIsActive()
         {
-            if (_renderer == null) return;
-            _renderer.SetIsActive(_isActive);
+            if (Renderer == null) return;
+            Renderer.SetIsActive(_isActive);
         }
 
         private void UpdateRotation()
         {
-            if (_renderer == null) return;
-            _renderer.SetRotation(_rotation);
+            if (Renderer == null) return;
+            Renderer.SetRotation(_rotation);
         }
 
         private void UpdatePosition()
         {
-            if (_renderer == null) return;
-            _renderer.SetPosition(_position);
+            if (Renderer == null) return;
+            Renderer.SetPosition(_position);
         }
 
         private void UpdateLocalScale()
         {
-            if (_renderer == null) return;
-            _renderer.SetLocalScale(_localScale);
+            if (Renderer == null) return;
+            Renderer.SetLocalScale(_localScale);
         }
 
         public void DestroyRenderer()
         {
-            if (_renderer == null) return;
-            MonoBehaviour.Destroy(_renderer.gameObject);
-            _renderer = null;
+            if (Renderer == null) return;
+            MonoBehaviour.Destroy(Renderer.gameObject);
+            Renderer = null;
+        }
+
+        public void SetOutlineEnabledOnHover(bool enabled)
+        {
+            IsOutlineActiveOnHover = enabled;
         }
     }
 

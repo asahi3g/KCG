@@ -64,7 +64,7 @@ public static class EditorGUIHelper
             if (_model3D)
             {
                 EditorGUI.indentLevel++;
-                if (agentEntity.hasAgent3DModel) Draw(agentEntity.Agent3DModel);
+                if (agentEntity.hasAgentAgent3DModel) Draw(agentEntity.agentAgent3DModel);
                 else DrawNone();
                 EditorGUI.indentLevel--;
             }
@@ -329,10 +329,10 @@ public static class EditorGUIHelper
 
     public static void Draw(StatsComponent value)
     {
-        DrawProgress(nameof(value.Food), value.Food);
-        DrawProgress(nameof(value.Fuel), value.Fuel);
-        DrawProgress(nameof(value.Water), value.Water);
-        DrawProgress(nameof(value.Oxygen), value.Oxygen);
+        DrawProgress(nameof(value.Food), new ContainerInt(value.Food.GetValue(), value.Food.GetMin(), value.Food.GetMax()));
+        DrawProgress(nameof(value.Fuel), new ContainerInt(value.Fuel.GetValue(), value.Fuel.GetMin(), value.Fuel.GetMax()));
+        DrawProgress(nameof(value.Water), new ContainerInt(value.Water.GetValue(), value.Water.GetMin(), value.Water.GetMax()));
+        DrawProgress(nameof(value.Oxygen), new ContainerInt(value.Oxygen.GetValue(), value.Oxygen.GetMin(), value.Oxygen.GetMax()));
     }
 
     public static void Draw(PhysicsStateComponent value)

@@ -10,7 +10,12 @@ namespace Vehicle.Pod
         private static int UniqueID;
         PodCreationApi PodCreationApi;
 
-        public SpawnerSystem(PodCreationApi podCreationApi)
+        public void InitStage1()
+        {
+
+        }
+
+        public void InitStage2(PodCreationApi podCreationApi)
         {
             PodCreationApi = podCreationApi;
         }
@@ -48,8 +53,8 @@ namespace Vehicle.Pod
 
             for (int i = 0; i <= podProperties.DefaultAgentCount; i++)
             {
-                var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.EnemyMarine, 1);
-                enemy.Agent3DModel.SetIsActive(false);
+                var enemy = GameState.Planet.AddAgent(Vec2f.Zero, AgentType.Marine, Agent.AgentFaction.Enemy);
+                enemy.agentAgent3DModel.SetIsActive(false);
                 enemy.isAgentAlive = false;
 
                 entity.vehiclePodStatus.AgentsInside.Add(enemy);

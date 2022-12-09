@@ -90,6 +90,22 @@ namespace Projectile
                 PropertiesArray[CurrentIndex].SpriteId = SpriteId;
         }
 
+        public void SetNumberOfTicks(int ticks)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].NumberOfTicks = ticks;
+            }
+        }
+
+        public void SetBlastMagnitude(float magnitude)
+        {
+            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
+            {
+                PropertiesArray[CurrentIndex].BlastMagnitude = magnitude;
+            }
+        }
+
         public void SetSize(Vec2f size)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
@@ -181,16 +197,19 @@ namespace Projectile
         public int OreIcon;
         public int GrenadeSpriteId;
         public int GrenadeSprite5;
+        public int PlaceholderSprite;
 
         public void InitializeResources()
         {
             OreSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\Ores\\Gems\\Hexagon\\gem_hexagon_1.png", 16, 16);
             GrenadeSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades1.png", 16, 16);
             GrenadeSprite5 = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Projectiles\\Grenades\\Grenade\\Grenades5.png", 16, 16);
+            int PlaceholderSpriteSheet = GameState.SpriteLoader.GetSpriteSheetID("Assets\\StreamingAssets\\Items\\item_placeholder.png", 16, 16);
 
             OreIcon = GameState.SpriteAtlasManager.CopySpriteToAtlas(OreSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             GrenadeSpriteId = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSpriteSheet, 0, 0, Enums.AtlasType.Particle);
             GrenadeSprite5 = GameState.SpriteAtlasManager.CopySpriteToAtlas(GrenadeSprite5, 0, 0, Enums.AtlasType.Particle);
+            PlaceholderSprite = GameState.SpriteAtlasManager.CopySpriteToAtlas(PlaceholderSpriteSheet, 0, 0, Enums.AtlasType.Particle);
 
             GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.Arrow);
             GameState.ProjectileCreationApi.SetName("arrow");
@@ -242,6 +261,18 @@ namespace Projectile
             GameState.ProjectileCreationApi.SetSpriteId(GrenadeSpriteId);
             GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
             GameState.ProjectileCreationApi.SetSize(new Vec2f(0.5f, 0.5f));
+            GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
+            GameState.ProjectileCreationApi.SetAffectedByGravity();
+            GameState.ProjectileCreationApi.End();
+
+            //TODO(): Add Grenade Throwing Arc
+            //TODO(): Apply Force Over 3 Frames
+            GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.ConcussionGrenade);
+            GameState.ProjectileCreationApi.SetNumberOfTicks(3);
+            GameState.ProjectileCreationApi.SetBlastMagnitude(20.0f);
+            GameState.ProjectileCreationApi.SetSpriteId(PlaceholderSprite);
+            GameState.ProjectileCreationApi.SetDeltaRotation(180.0f);
+            GameState.ProjectileCreationApi.SetSize(new Vec2f(0.75f, 0.75f));
             GameState.ProjectileCreationApi.SetStartVelocity(20.0f);
             GameState.ProjectileCreationApi.SetAffectedByGravity();
             GameState.ProjectileCreationApi.End();

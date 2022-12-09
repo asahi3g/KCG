@@ -39,7 +39,7 @@ namespace Planet.Unity
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
-            planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.EnemyMarine);
+            planet.AddAgent(new Vec2f(64.0f, 5.0f), Enums.AgentType.Marine);
             
             GenerateMap();
         }
@@ -76,7 +76,7 @@ namespace Planet.Unity
         private void SpawnTarget()
         {
             float x = UnityEngine.Random.Range(1.0f, 127.0f);
-            GameState.Planet.AddAgent(new Vec2f(x, 5.0f), Enums.AgentType.Slime, 1);
+            GameState.Planet.AddAgent(new Vec2f(x, 5.0f), Enums.AgentType.Slime, Agent.AgentFaction.Enemy);
         }
 
         public int GetNumOfEnemiesAlive()

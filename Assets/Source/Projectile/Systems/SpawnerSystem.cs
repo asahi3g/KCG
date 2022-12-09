@@ -26,6 +26,7 @@ namespace Projectile
                 newVelocity: (direction.Normalized + Random.Range(-0.05f
                 , 0.05f)) * projectileProperties.StartVelocity,
                 newAcceleration: Vec2f.Zero,
+                newFramesToLive: 0,
                 newOnGrounded: false,
                 newTimeToLive: projectileProperties.TimeToLive);
             
