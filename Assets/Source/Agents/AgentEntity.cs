@@ -60,6 +60,8 @@ public partial class AgentEntity
             physicsState.MovementState != Enums.AgentMovementState.Flip && 
             physicsState.MovementState != Enums.AgentMovementState.Falling &&
             physicsState.MovementState != Enums.AgentMovementState.Stagger &&
+            physicsState.MovementState != Enums.AgentMovementState.SlidingLeft &&
+            physicsState.MovementState != Enums.AgentMovementState.SlidingRight &&
             !physicsState.HitByExplosionImpact;
     }
 
