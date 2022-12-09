@@ -8,4 +8,9 @@ public class SOValue<T> : SOValueBase<T>
     {
         return _value;
     }
+
+    public void SetValue(T value)
+    {
+        _value = value;
+    }
 }
