@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using KMath;
+using UnityEngine;
 using Utility;
 
 /*
@@ -40,13 +41,27 @@ namespace KGUI
         
         public ElementUI ElementUnderCursor;
         public PanelUI PanelUnderCursor;
+        private UnityEngine.Canvas _canvas;
         
-        private UnityEngine.Canvas canvas;
+        public UnityEngine.Canvas Canvas{
+            get
+            {
+                if (_canvas == null)
+                {
+                    GameObject canvasGo = UnityEngine.GameObject.Find("Canvas");
+                    if (canvasGo != null)
+                    {
+                        _canvas = canvasGo.GetComponent<UnityEngine.Canvas>();
+                    }
+                }
+                return _canvas;
+            }
+        }
+        
 
         public void InitStage1()
         {
             UnityEngine.Cursor.visible = true;
-            canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.Canvas>();
         }
 
         public void InitStage2()
@@ -103,7 +118,7 @@ namespace KGUI
             {
                 if (active)
                 {
-                    var newPanel = UnityEngine.Object.Instantiate(panelPrefab, canvas.transform);
+                    var newPanel = UnityEngine.Object.Instantiate(panelPrefab, Canvas.transform);
                     newPanel.gameObject.SetActive(true);
                 }
             }
@@ -115,7 +130,7 @@ namespace KGUI
 
         public void Update()
         {
-            canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
+            Canvas.GetComponent<UnityEngine.UI.CanvasScaler>().referenceResolution =
                 new UnityEngine.Vector2(UnityEngine.Camera.main.pixelWidth, UnityEngine.Camera.main.pixelHeight);
             
             CursorPosition = new Vec2f(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y);
@@ -191,7 +206,7 @@ namespace KGUI
             if (GameState.Planet.TileMap != null)
             {
                 TextWrapper textWrapper = new TextWrapper();
-                textWrapper.Create("TempText", _text, canvas.transform, 1);
+                textWrapper.Create("TempText", _text, Canvas.transform, 1);
                 textWrapper.SetPosition(new UnityEngine.Vector3(canvasPosition.X, canvasPosition.Y, 0.0f));
                 textWrapper.SetSizeDelta(new UnityEngine.Vector2(hudSize.X, hudSize.Y));
                 return textWrapper;

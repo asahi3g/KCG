@@ -6,7 +6,7 @@ namespace Inventory
     {
         public int SlotID;              // Real Slot Index. If = -1. Grid possition is off -> Doesn't draw.
         public int SlotBackgroundIcon;  // Sprite icon for ring, armour, etc showing slot type, if -1 ignore/dont render
-        public Enums.ItemGroups Restriction;
+        public Enums.ItemGroupType Restriction;
     }
 
     public struct Window
@@ -91,20 +91,20 @@ namespace Inventory
     {
         private int _inventoryId;
         private int _index;
-        private Enums.ItemGroups _itemGroups;
+        private Enums.ItemGroupType _itemGroups;
         private int _itemId;
         
 
         public int InventoryId => _inventoryId;
         public int Index => _index;
-        public Enums.ItemGroups ItemGroups => _itemGroups;
+        public Enums.ItemGroupType ItemGroups => _itemGroups;
 
         public int ItemID => _itemId;
         
 
-        public Slot(int inventoryId, int index, Enums.ItemGroups itemGroups) : this(inventoryId, index, itemGroups, -1) { }
+        public Slot(int inventoryId, int index, Enums.ItemGroupType itemGroups) : this(inventoryId, index, itemGroups, -1) { }
         
-        public Slot(int inventoryId, int index, Enums.ItemGroups itemGroups, int itemId)
+        public Slot(int inventoryId, int index, Enums.ItemGroupType itemGroups, int itemId)
         {
             _inventoryId = inventoryId;
             _index = index;

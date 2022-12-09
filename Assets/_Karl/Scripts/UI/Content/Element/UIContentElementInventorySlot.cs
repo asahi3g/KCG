@@ -46,7 +46,7 @@ public class UIContentElementInventorySlot : UIContentElement
     public override void OnPointerExit(PointerEventData eventData)
     {
         base.OnPointerExit(eventData);
-        App.Instance.GetUI().GetView<UIViewItemHoverInfo>().ClearInfo(this);
+        App.Instance.GetUI().GetView<UIViewItemHoverInfo>().Clear(this);
     }
 
     public void SetSlot(UIViewInventory inventory, Slot slot)

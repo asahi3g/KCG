@@ -353,14 +353,14 @@ namespace ECSInput
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Q))
             {
                 foreach (var agentEntity in agentEntities) 
-                    GameState.ActionCreationSystem.CreateAction(ActionType .ChargeAction, agentEntity.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ActionType.ChargeAction, agentEntity.agentID.ID);
             }
 
             // Drop Action. 
             if (UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.T))
             {
                 foreach (var agentEntity in agentEntities)
-                    GameState.ActionCreationSystem.CreateAction(ActionType .DropAction, agentEntity.agentID.ID);
+                    GameState.ActionCreationSystem.CreateAction(ActionType.DropAction, agentEntity.agentID.ID);
             }
 
             // Reload Weapon.
@@ -368,7 +368,7 @@ namespace ECSInput
             {
                 foreach (var agentEntity in agentEntities)
                 {
-                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroups.ToolRangedWeapon)
+                    if (GameState.ItemCreationApi.GetItemProperties(agentEntity.GetItem().itemType.Type).Group == ItemGroupType.ToolRangedWeapon)
                     {
                         GameState.ActionCreationSystem.CreateAction(ActionType.ReloadAction, agentEntity.agentID.ID);
                     }
@@ -492,7 +492,7 @@ namespace ECSInput
                 var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
                 // If, Item is a weapon or gun.
-                if(itemProperty.Group is ItemGroups.ToolRangedWeapon or ItemGroups.ToolMelleWeapon)
+                if(itemProperty.Group is ItemGroupType.ToolRangedWeapon or ItemGroupType.ToolMelleWeapon)
                 {
                     if(entity.hasAgentAction)
                     {

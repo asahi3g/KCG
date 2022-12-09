@@ -9,7 +9,7 @@ public class UIViewItemHoverInfo : UIView
     [SerializeField] private RectTransform _pivot;
     [SerializeField] private GameObject _panel;
 
-    private ItemInventoryEntity _itemInventoryEntity;
+    private UIContentElement _current;
 
 
 
@@ -20,7 +20,7 @@ public class UIViewItemHoverInfo : UIView
 
     private void UpdatePivot()
     {
-        if (_itemInventoryEntity == null) return;
+        if (_current == null) return;
         if(RectTransformUtility.ScreenPointToLocalPointInRectangle (rectTransform, Input.mousePosition, App.Instance.GetUI().GetCamera(), out Vector2 localPoint))
         {
             _pivot.anchoredPosition = localPoint;
@@ -46,7 +46,8 @@ public class UIViewItemHoverInfo : UIView
         }
         if (slot.GetItem(out ItemInventoryEntity itemInventoryEntity))
         {
-            SetInfo(itemInventoryEntity);
+            
+            SetInfo(slot, itemInventoryEntity);
         }
         else
         {
@@ -54,11 +55,11 @@ public class UIViewItemHoverInfo : UIView
         }
     }
 
-    public void SetInfo(ItemInventoryEntity item)
+    private void SetInfo(UIContentElementInventorySlot slot, ItemInventoryEntity item)
     {
         Clear();
-        _itemInventoryEntity = item;
-        if (_itemInventoryEntity == null) return;
+        _current = slot;
+        if (_current == null) return;
 
         ItemProperties itemProperties = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
 
@@ -67,7 +68,7 @@ public class UIViewItemHoverInfo : UIView
 
         // Empty space
         _content.Create<UIContentElementItemInfoEntry>().SetInfo(null, null);
-        
+
         if (item.hasItemType)
         {
             TypeComponent type = item.itemType;
@@ -136,31 +137,75 @@ public class UIViewItemHoverInfo : UIView
             TileComponent tile = item.itemTile;
             
             _content.Create<UIContentElementItemInfoEntry>().SetInfo("------Tile------", null);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.TileID), tile.TileID);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.Layer), tile.Layer);
-            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.InputsActive), tile.InputsActive);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.TileID), tile.TileID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.Layer), tile.Layer.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(tile.InputsActive), tile.InputsActive.ToStringPretty());
+        }
+
+        if (item.hasItemMechPlacement)
+        {
+            MechPlacementComponent mech = item.itemMechPlacement;
+            
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo("------Mech------", null);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(mech.MechID), mech.MechID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(mech.InputsActive), mech.InputsActive.ToStringPretty());
+        }
+
+        if (item.hasItemInventory)
+        {
+            InventoryComponent inventory = item.itemInventory;
+            
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo("----Inventory----", null);
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(inventory.InventoryID), inventory.InventoryID.ToStringPretty());
+            _content.Create<UIContentElementItemInfoEntry>().SetInfo(nameof(inventory.SlotID), inventory.SlotID.ToStringPretty());
         }
 
         GetGroup().GetIdentifier().Alter(GetIdentifier(), true);
         _panel.SetActive(true);
     }
 
-    private void Clear()
+    public void SetInfo(UIContentElementTileGeometryAndRotation item)
+    {
+        Clear();
+        _current = item;
+        _content.Create<UIContentElementItemInfoEntry>().SetInfo(item.GetTile(), null);
+        
+        GetGroup().GetIdentifier().Alter(GetIdentifier(), true);
+        _panel.SetActive(true);
+    }
+    
+    public void SetInfo(UIContentElementMapLayerType item)
+    {
+        Clear();
+        _current = item;
+        _content.Create<UIContentElementItemInfoEntry>().SetInfo(item.GetLayer(), null);
+        
+        GetGroup().GetIdentifier().Alter(GetIdentifier(), true);
+        _panel.SetActive(true);
+    }
+
+    public void Clear()
     {
         _panel.SetActive(false);
-        _itemInventoryEntity = null;
+        _current = null;
         _content.Clear();
         GetGroup().GetIdentifier().Alter(GetIdentifier(), false);
     }
 
-    public void ClearInfo(UIContentElementInventorySlot slot)
+    public void Clear(UIContentElementInventorySlot slot)
     {
-        if (_itemInventoryEntity == null) return;
+        if (_current == null) return;
         if (slot == null) return;
         if (slot.GetItem(out ItemInventoryEntity itemInventoryEntity))
         {
-            if (_itemInventoryEntity != itemInventoryEntity) return;
-            Clear();
+            Clear((UIContentElement)slot);
         }
+    }
+    
+    public void Clear(UIContentElement element)
+    {
+        if (element == null) return;
+        if (_current != element) return;
+        Clear();
     }
 }

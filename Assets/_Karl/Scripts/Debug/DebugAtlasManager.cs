@@ -2,7 +2,7 @@ using System.IO;
 using Sprites;
 using UnityEngine;
 
-public abstract class DebugAtlasManager : BaseMonoBehaviour
+public abstract class DebugAtlasManager : DebugBase
 {
     [TextArea(3,6)]
     [SerializeField] private string _directory;
@@ -39,8 +39,9 @@ public abstract class DebugAtlasManager : BaseMonoBehaviour
         }
     }
     
-    protected virtual void Update()
+    protected override void OnUpdate()
     {
+        base.OnUpdate();
         _atlases = GetAtlases();
     }
 }
