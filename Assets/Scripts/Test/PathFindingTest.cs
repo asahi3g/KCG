@@ -71,8 +71,6 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
-            GameResources.Initialize();
-
             // Set map path.
             // 0 -> air
             // 1 -> solid

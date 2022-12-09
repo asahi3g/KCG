@@ -164,8 +164,6 @@ namespace Planet.Unity
         public void Initialize()
         {
             InventoryManager = new Inventory.InventoryManager();
-            
-            GameResources.Initialize();
 
             // Generating the map
             var planet = GameState.Planet;

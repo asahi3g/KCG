@@ -131,8 +131,6 @@ namespace Planet.Unity
 
             UnityEngine.Application.targetFrameRate = 200;
 
-            GameResources.Initialize();
-
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(128, 32);

@@ -99,8 +99,6 @@ public class RayCastTest : UnityEngine.MonoBehaviour
         rayRenderer = ray.AddComponent<RayRendererDebug>();
         rayRenderer.Init(new Line2D(squareWithRenderer.Box.center, new Vec2f(0f, 0f)));
 
-        GameResources.Initialize();
-
         var planet = GameState.Planet;
         planet.Init(mapSize);
         planet.InitializeSystems(Material, transform);

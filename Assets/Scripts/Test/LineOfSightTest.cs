@@ -36,7 +36,6 @@ public class LineOfSightTest : MonoBehaviour
         CircleSector.angle = 180f;
         CircleSector.radius = 6.0f;
         CircleSector.color = standard;
-        GameResources.Initialize();
 
         var planet = GameState.Planet;
         planet.Init(mapSize);

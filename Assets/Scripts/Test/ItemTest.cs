@@ -35,8 +35,6 @@ namespace Planet.Unity
         // Create the sprite atlas for testing purposes
         public void Initialize()
         {
-            GameResources.Initialize();
-
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 64);

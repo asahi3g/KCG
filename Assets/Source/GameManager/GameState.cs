@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Audio;
+using Engine3D;
 using Enums;
 using Item;
 using Planet;
@@ -11,7 +12,7 @@ using UnityEngine;
 // <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors">Static Constructor</a>
 public static class GameState
 {
-    public static bool IsInitialized;
+    public static bool IsInitialized { get; private set; }
     public static Planet.PlanetState Planet;
     
     #region Aninmation
@@ -189,6 +190,67 @@ public static class GameState
 
     private static void InitStage1()
     {
+        TileSpriteAtlasManager.InitStage1(SpriteLoader);
+        SpriteAtlasManager.InitStage1(SpriteLoader);
+        AgentMovementAnimationTable.InitStage1();
+        PointCreationApi.InitStage1();
+        LinePropertiesManager.InitStage1();
+        GeometryPropertiesManager.InitStage1();
+        AdjacencyPropertiesManager.InitStage1();
+        ParticleEffectPropertiesManager.InitStage1();
+        AgentMoveListPropertiesManager.InitStage1();
+        AgentEffectSystem.InitStage1();
+        AudioSystem.InitStage1();
+        VehicleCreationApi.InitStage1();
+        PodCreationApi.InitStage1();
+        MechCreationApi.InitStage1();
+        ProjectileCreationApi.InitStage1();
+        ParticleEmitterUpdateSystem.InitStage1();
+        ParticleEmitterSpawnerSystem.InitStage1();
+        ParticleSpawnerSystem.InitStage1();
+        VehicleAISystem.InitStage1();
+        VehicleMovementSystem.InitStage1();
+        VehicleSpawnerSystem.InitStage1();
+        PodMovementSystem.InitStage1();
+        PodSpawnerSystem.InitStage1();
+    }
+
+    private static void InitStage2()
+    {
+        TileSpriteAtlasManager.InitStage2();
+        SpriteAtlasManager.InitStage2();
+        AgentMovementAnimationTable.InitStage2();
+        PointCreationApi.InitStage2();
+        LinePropertiesManager.InitStage2();
+        GeometryPropertiesManager.InitStage2();
+        AdjacencyPropertiesManager.InitStage2();
+        ParticleEffectPropertiesManager.InitStage2();
+        AgentMoveListPropertiesManager.InitStage2();
+        AgentEffectSystem.InitStage2();
+        AudioSystem.InitStage2(null);
+        VehicleCreationApi.InitStage2();
+        PodCreationApi.InitStage2();
+        MechCreationApi.InitStage2();
+        ProjectileCreationApi.InitStage2();
+        ParticleEmitterUpdateSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleEmitterSpawnerSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
+        ParticleSpawnerSystem.InitStage2(ParticlePropertiesManager);
+        VehicleAISystem.InitStage2(VehicleCreationApi);
+        VehicleMovementSystem.InitStage2(VehicleCreationApi);
+        VehicleSpawnerSystem.InitStage2(VehicleCreationApi);
+        PodMovementSystem.InitStage2(PodCreationApi);
+        PodSpawnerSystem.InitStage2(PodCreationApi);
+    }
+
+
+    public static void Initialize()
+    {
+        if (IsInitialized)
+        {
+            Debug.LogWarning($"{nameof(GameState)} already initialized");
+            return;
+        }
+
         Planet = new PlanetState();
 
         PathFinding = new AI.Movement.PathFinding();
@@ -318,69 +380,35 @@ public static class GameState
         MechPlantGrowthSystem = new Mech.PlantGrowthSystem();
 
         AudioSystem = new AudioSystem();
+        AssetManager assetManager = AssetManager.Singelton; // force initialization
 
-        TileSpriteAtlasManager.InitStage1(SpriteLoader);
-        SpriteAtlasManager.InitStage1(SpriteLoader);
-        AgentMovementAnimationTable.InitStage1();
-        PointCreationApi.InitStage1();
-        LinePropertiesManager.InitStage1();
-        GeometryPropertiesManager.InitStage1();
-        AdjacencyPropertiesManager.InitStage1();
-        ParticleEffectPropertiesManager.InitStage1();
-        AgentMoveListPropertiesManager.InitStage1();
-        AgentEffectSystem.InitStage1();
-        AudioSystem.InitStage1();
-        VehicleCreationApi.InitStage1();
-        PodCreationApi.InitStage1();
-        MechCreationApi.InitStage1();
-        ProjectileCreationApi.InitStage1();
-        ParticleEmitterUpdateSystem.InitStage1();
-        ParticleEmitterSpawnerSystem.InitStage1();
-        ParticleSpawnerSystem.InitStage1();
-        VehicleAISystem.InitStage1();
-        VehicleMovementSystem.InitStage1();
-        VehicleSpawnerSystem.InitStage1();
-        PodMovementSystem.InitStage1();
-        PodSpawnerSystem.InitStage1();
-    }
-
-    private static void InitStage2()
-    {
-        TileSpriteAtlasManager.InitStage2();
-        SpriteAtlasManager.InitStage2();
-        AgentMovementAnimationTable.InitStage2();
-        PointCreationApi.InitStage2();
-        LinePropertiesManager.InitStage2();
-        GeometryPropertiesManager.InitStage2();
-        AdjacencyPropertiesManager.InitStage2();
-        ParticleEffectPropertiesManager.InitStage2();
-        AgentMoveListPropertiesManager.InitStage2();
-        AgentEffectSystem.InitStage2();
-        AudioSystem.InitStage2(null);
-        VehicleCreationApi.InitStage2();
-        PodCreationApi.InitStage2();
-        MechCreationApi.InitStage2();
-        ProjectileCreationApi.InitStage2();
-        ParticleEmitterUpdateSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
-        ParticleEmitterSpawnerSystem.InitStage2(ParticleEmitterPropertiesManager, ParticlePropertiesManager);
-        ParticleSpawnerSystem.InitStage2(ParticlePropertiesManager);
-        VehicleAISystem.InitStage2(VehicleCreationApi);
-        VehicleMovementSystem.InitStage2(VehicleCreationApi);
-        VehicleSpawnerSystem.InitStage2(VehicleCreationApi);
-        PodMovementSystem.InitStage2(PodCreationApi);
-        PodSpawnerSystem.InitStage2(PodCreationApi);
-    }
-
-
-    public static void Initialize()
-    {
-        //TODO(): move these out of here
         InitStage1();
         InitStage2();
 
-        GameResources.Initialize();
-        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
-        GameState.SpriteAtlasManager.UpdateAtlasTextures();
+        LootTableCreationAPI.InitializeResources();
+        TGenRenderGridOverlay.InitializeResources();
+        BackgroundGridOverlay.InitializeResources();
+        TileCreationApi.InitializeResources();
+        AnimationManager.InitializeResources();
+        ItemCreationApi.InitializeResources();
+        AgentCreationApi.InitializeResources();
+        ParticlePropertiesManager.InitializeResources();
+        ParticlePropertiesManager.InitializeEmitterResources();
+        ProjectileCreationApi.InitializeResources();
+        MechCreationApi.InitializeResources();
+        VehicleCreationApi.InitializeResources();
+        PodCreationApi.InitializeResources();
+        
+        TileSpriteAtlasManager.UpdateAtlasTextures();
+        SpriteAtlasManager.UpdateAtlasTextures();
+
+        IsInitialized = true;
+        Debug.Log($"{nameof(GameState)} initialized".Color(Color.green));
+    }
+
+    public static void UnInitialize()
+    {
+        IsInitialized = false;
     }
     
     public static void DebugAllItemsByItemGroup()

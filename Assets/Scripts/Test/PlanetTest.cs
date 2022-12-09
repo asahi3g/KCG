@@ -98,9 +98,7 @@ namespace Planet.Unity
             UnityEngine.Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
-
-            GameResources.Initialize();
-
+            
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);

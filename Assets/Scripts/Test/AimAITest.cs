@@ -32,8 +32,6 @@ namespace Planet.Unity
 
         public void Initialize()
         {
-            GameResources.Initialize();
-
             Vec2i mapSize = new Vec2i(128, 16);
             var planet = GameState.Planet;
 

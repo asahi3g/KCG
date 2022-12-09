@@ -70,7 +70,6 @@ public class InventoryTest : UnityEngine.MonoBehaviour
 
     private void Initialize()
     {
-        GameResources.Initialize();
         GameState.InventoryCreationApi.InitStage1();
         GameState.InventoryCreationApi.InitStage2();
 
