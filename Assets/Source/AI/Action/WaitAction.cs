@@ -21,7 +21,7 @@ namespace Action
         {
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             ref WaitActionData waitData = ref data.GetNodeData<WaitActionData>(id);
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             var physicsState = agent.agentPhysicsState;
 

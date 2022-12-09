@@ -233,7 +233,7 @@ namespace Particle
             velocity.X = rand1 * -1 * velocityValueX;
             velocity.Y = rand2 * -1 * velocityValueY;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             planet.ParticleList.Add(SpawnDebrisParticle(position, part1Vertices, part1Coords, velocity));
 
 

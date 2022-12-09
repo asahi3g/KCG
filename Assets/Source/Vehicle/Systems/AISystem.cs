@@ -63,7 +63,7 @@ namespace Vehicle
             // Scan planet and find open-sky area.
             // Spawn vehicle to open sky area found.
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if(vehicle != null)
             {
                 if(vehicle.hasVehicleType)

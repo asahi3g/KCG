@@ -41,7 +41,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         planet.DrawDebug();
 
         // Set the color of gizmos
@@ -80,7 +80,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
         GameResources.Initialize();
 
         // Generating the map
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         Vec2i mapSize = new Vec2i(32, 32);
         planet.Init(mapSize);
 
@@ -102,7 +102,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     void GenerateMap()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         ref var tileMap = ref planet.TileMap;
 
         for (int j = 0; j < tileMap.MapSize.Y; j++)
@@ -147,7 +147,7 @@ class PlanterTest : UnityEngine.MonoBehaviour
 
     void SpawnStuff()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         Player = planet.AddAgentAsPlayer(new Vec2f(2, 2), 0);
         planet.AddMech(new Vec2f(4, 2), Enums.MechType.Planter);
         planet.AddMech(new Vec2f(8, 2), Enums.MechType.Planter);

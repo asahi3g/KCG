@@ -27,7 +27,7 @@ namespace KGUI
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
             
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var inventories = planet.EntitasContext.inventory.GetGroup(InventoryMatcher.AllOf(InventoryMatcher.InventoryID));
 
             foreach (var inventory in inventories)

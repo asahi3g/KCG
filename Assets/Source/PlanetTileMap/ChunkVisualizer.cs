@@ -7,7 +7,7 @@ namespace PlanetTileMap
         // Display Chunk Visualizer
         public static void Draw(float xOffset, float yOffset)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (planet.TileMap == null)
                 return;
 

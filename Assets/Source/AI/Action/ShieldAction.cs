@@ -14,7 +14,7 @@ namespace Action
         static public NodeState Action(object objData, int index)
         {
             ref NodesExecutionState data = ref UnsafeUtility.As<object, NodesExecutionState>(ref objData);
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
 
             if (!agentEntity.hasAgentInventory)

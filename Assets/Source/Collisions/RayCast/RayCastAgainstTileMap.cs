@@ -64,7 +64,7 @@ namespace Collisions
                 }
 
                 // Test tile at new test point
-                ref var planet = ref GameState.Planet;
+                var planet = GameState.Planet;
                 if (vMapCheck.X >= 0 && vMapCheck.X < planet.TileMap.MapSize.X && vMapCheck.Y >= 0 && vMapCheck.Y < planet.TileMap.MapSize.Y)
                 {
                     Enums.PlanetTileMap.TileID tileID = planet.TileMap.GetFrontTileID(vMapCheck.X, vMapCheck.Y);

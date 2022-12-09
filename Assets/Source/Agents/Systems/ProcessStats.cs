@@ -6,7 +6,7 @@
         {
             const int MaximumMapBoundaries = 10;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref AgentList agentList = ref planet.AgentList;
 
             for (int i = 0; i < agentList.Length; i++)

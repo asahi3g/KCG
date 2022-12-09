@@ -9,7 +9,7 @@ namespace FloatingText
 
         public void Update(float deltaTime)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             FloatingTextEntity[] entities = planet.EntitasContext.floatingText.GetEntities();
 
             foreach (var entity in entities)

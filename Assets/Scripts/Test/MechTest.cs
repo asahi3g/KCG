@@ -44,7 +44,7 @@ namespace Planet.Unity
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             UnityEngine.Material material = Material;
 
@@ -84,7 +84,7 @@ namespace Planet.Unity
             int y = (int)worldPosition.Y;
 
             //var viewportPos = Camera.main.WorldToViewportPoint(new Vector3(x, y));
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             if (x >= 0 && x < planet.TileMap.MapSize.X &&
             y >= 0 && y < planet.TileMap.MapSize.Y)
@@ -172,7 +172,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 16);
             planet.Init(mapSize);
 
@@ -243,7 +243,7 @@ namespace Planet.Unity
 
         void GenerateMap()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)

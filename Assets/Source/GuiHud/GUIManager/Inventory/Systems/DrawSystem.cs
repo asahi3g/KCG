@@ -11,7 +11,7 @@ namespace Inventory
 
         public void Draw()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var inventoryList = planet.InventoryList;
 
             // Draw tool bar.

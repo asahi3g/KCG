@@ -40,7 +40,7 @@ namespace PlanetTileMap
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
             
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
@@ -113,7 +113,7 @@ namespace PlanetTileMap
 
             LayerMeshes[(int)MapLayerType.Front].Clear();
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {
@@ -194,7 +194,7 @@ namespace PlanetTileMap
             var topRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
             var bottomRight = (Vector2)cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.nearClipPlane));
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             int index = 0;
             for (int y = (int)(bottomLeft.y - 10); y < planet.TileMap.MapSize.Y && y <= (topRight.y + 10); y++)
             {

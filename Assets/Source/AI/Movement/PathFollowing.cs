@@ -15,7 +15,7 @@ namespace AI.Movement
         // if true bot can walk in the given direction. If false bot will need ot jump to reach its goal.
         static public bool IsPathFree(Vec2i currentTile, int direction)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
 
             TileID currentTileIDx = planet.TileMap.GetFrontTileID(currentTile.X, currentTile.Y);
             TileID frontTileIDX = planet.TileMap.GetFrontTileID((currentTile.X + direction), currentTile.Y);

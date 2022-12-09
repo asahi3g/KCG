@@ -166,7 +166,7 @@ namespace Collisions
         
         public static bool IsCollidingLeft(this ref AABox2D borders, Vec2f velocity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (velocity.X >= 0.0f) return false;
             
             int x = borders.xmin < 0 ? (int) borders.xmin - 1 : (int)borders.xmin;
@@ -336,7 +336,7 @@ namespace Collisions
 
         public static bool IsCollidingRight(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (velocity.X <= 0.0f) return false;
             
             int x = borders.xmax < 0 ? (int) borders.xmax - 1 : (int)borders.xmax;
@@ -653,7 +653,7 @@ namespace Collisions
 
         public static bool IsCollidingBottom(this ref AABox2D borders, Vec2f velocity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (velocity.Y >= 0.0f) return false;
             
             // LeftBottom.X >= 0f ? (int)LeftBottom.X : (int)LeftBottom.X - 1;
@@ -976,7 +976,7 @@ namespace Collisions
 
         public static bool IsCollidingTop(this ref AABox2D borders, PlanetTileMap.TileMap tileMap, Vec2f velocity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             if (velocity.Y <= 0.0f) return false;
             
             int y = (int)borders.ymax;

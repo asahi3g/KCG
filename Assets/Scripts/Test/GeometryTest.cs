@@ -49,6 +49,8 @@ namespace Planet.Unity
                 
                 App.Instance.GetPlayer().SetAgentRenderer(Player.agentAgent3DModel.Renderer);
 
+                GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
+
                 PlayerID = Player.agentID.ID;
                 inventoryID = Player.agentInventory.InventoryID;
 
@@ -89,7 +91,7 @@ namespace Planet.Unity
             Vec2f velocity = new Vec2f(mouse.X - orrectedBox.x, mouse.Y - orrectedBox.y);
             Collisions.Collisions.SweptBox2dCollision(ref orrectedBox, velocity, otherBox, false);
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
             Material material = Material;
 

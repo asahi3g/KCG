@@ -20,7 +20,7 @@ namespace ECSInput
 
         private void UpdateMode(AgentEntity agentEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             agentEntity.agentPhysicsState.Invulnerable = false;
             UnityEngine.Camera.main.gameObject.GetComponent<CameraMove>().enabled = false;
             planet.CameraFollow.canFollow = false;
@@ -147,7 +147,7 @@ namespace ECSInput
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             Contexts contexts = planet.EntitasContext;
 
             IGroup<AgentEntity> agentEntities = contexts.agent.GetGroup(AgentMatcher.AllOf(AgentMatcher.AgentPlayer));
