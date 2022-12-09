@@ -13,13 +13,7 @@ public class ConcussionGrenadeValues : MonoBehaviour
     [SerializeField] float GrenadeLaunchVelocity = 20.0f;
    // [SerializeField] float GrenadeAirResistance;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   // Update is called once per frame
     void Update()
     {
         GameState.ProjectileCreationApi.Create((int)Enums.ProjectileType.ConcussionGrenade);
