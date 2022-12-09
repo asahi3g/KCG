@@ -53,6 +53,8 @@ namespace Agent
                 newMovingDirection: 1,
                 newFacingDirection: 1,
                 newActionCooldown: 0,
+                newHitByExplosionImpact: false,
+                newHitByExplosionImpactTime: 0.0f,
                 newJumpingTime: 0,
                 newJumpedFromGround: false,
                 newCurerentMoveList: 0,

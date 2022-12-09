@@ -66,7 +66,7 @@ public class GameLauncher : BaseMonoBehaviour
                 Debug.Log($"Planet creation successful fileName[{result.GetFileName()}] size[{result.GetMapSize()}]");
                 App.Instance.GetPlayer().SetCurrentPlanet(result);
             
-                AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(10f, 10f), AgentType.Player, 0);
+                AgentEntity agentEntity = result.GetPlanetState().AddAgent(new Vec2f(64f, 130f), AgentType.Player, 0);
 
                 // Player agent creation successful
                 if (agentEntity != null)

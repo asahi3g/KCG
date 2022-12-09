@@ -30,7 +30,7 @@ namespace Action
             ProjectileEntity projectileEntity = planet.AddProjectile(StartPos, new Vec2f(x - StartPos.X, y - StartPos.Y).Normalized, Enums.ProjectileType.ConcussionGrenade, agentEntity.agentID.ID);
             projectileEntity.AddProjectileExplosive(fireWeaponProperties.BlastRadius, fireWeaponProperties.MaxDamage, fireWeaponProperties.Elapse);
             planet.AddFloatingText(fireWeaponProperties.GrenadeFlags.ToString(), 2.0f, new Vec2f(0, 0), new Vec2f(agentEntity.agentPhysicsState.Position.X + 0.5f, agentEntity.agentPhysicsState.Position.Y));
-            agentEntity.UseTool(1.0f);
+            //agentEntity.UseTool(0.25f);
 
             return NodeState.Success;
 

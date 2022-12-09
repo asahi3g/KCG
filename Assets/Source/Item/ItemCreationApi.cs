@@ -1176,7 +1176,7 @@ namespace Item
             SetGroup(ItemGroupType.None);
             SetTexture(GrenadeSpriteId);
             SetInventoryItemIcon(GrenadeSpriteId);
-            SetExplosion(7.0f, 50, 0.0f);
+            SetExplosion(7.0f, 50, 3.0f);
             SetAction(ActionType.ThrowConcussionGrenadeAction);
             EndItem();
 

@@ -115,19 +115,11 @@ namespace Particle
             }
         }
 
-        public void SetDeltaRotation(float deltaRotation)
+        public void SetSpriteRotationRate(float rate)
         {
             if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
             {
-                PropertiesArray[CurrentIndex].DeltaRotation = deltaRotation;
-            }
-        }
-
-        public void SetDeltaScale(float deltaScale)
-        {
-            if (CurrentIndex >= 0 && CurrentIndex < PropertiesArray.Length)
-            {
-                PropertiesArray[CurrentIndex].DeltaScale = deltaScale;
+                PropertiesArray[CurrentIndex].SpriteRotationRate = rate;
             }
         }
 
@@ -282,8 +274,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Ore);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -20.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(OreIcon);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.5f, 0.5f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(1.0f, 10.0f));
@@ -295,8 +286,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.OreExplosionParticle);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(OreIcon);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.5f, 0.5f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -308,8 +298,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.DustParticle);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.Dust);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.35f, 0.35f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -332,8 +321,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.GasParticle);
             GameState.ParticlePropertiesManager.SetDecayRate(0.17f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.Smoke);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(4.5f, 4.5f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -345,8 +333,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Blood);
             GameState.ParticlePropertiesManager.SetDecayRate(1.5f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(ParticleSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.075f, 0.075f), new Vec2f(0.575f, 0.575f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 2.5f));
@@ -361,8 +348,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.MuzzleFlash);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(ParticleSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.075f, 0.075f), new Vec2f(0.575f, 0.575f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 2.5f));
@@ -379,8 +365,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.SetName("Blood");
             GameState.ParticlePropertiesManager.SetDecayRate(0.3f, 1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -15.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.15f, 0.15f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -397,8 +382,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.BloodSmoke);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(ParticleSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.7f, 0.70f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0f));
@@ -413,8 +397,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.BloodFog);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(ParticleSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.9f, 0.9f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0f));
@@ -429,8 +412,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Wood);
             GameState.ParticlePropertiesManager.SetDecayRate(0.5f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(90.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(90.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WoodSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(1.0f, 5.0f));
@@ -443,8 +425,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion);
             GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.Explosion);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -456,8 +437,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Shrapnel);
             GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(OreIcon);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.125f, 0.125f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -473,8 +453,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.MetalBulletImpact);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.2f, 0.2f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -489,8 +468,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.RockBulletImpact);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.2f, 0.2f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -505,8 +483,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.BloodImpact);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
-            GameState.ParticlePropertiesManager.SetDeltaScale(-1.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -522,7 +499,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.BulletTrail);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(ParticleSprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -535,7 +512,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Part1);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 10.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.4f, 0.4f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
@@ -548,7 +525,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Part2);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 7.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.3f, 0.3f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
@@ -561,7 +538,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Part3);
             GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.25f, 0.25f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
@@ -574,7 +551,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Smoke);
             GameState.ParticlePropertiesManager.SetDecayRate(0.5f, 1.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 7.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(2.0f, 2.0f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -587,7 +564,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Shrapnel);
             GameState.ParticlePropertiesManager.SetDecayRate(2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(130.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(130.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhitePixel);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.125f, 0.125f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -614,7 +591,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Explosion_2_Flash);
             GameState.ParticlePropertiesManager.SetDecayRate(6.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(1.6f, 1.6f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.8f);
@@ -628,7 +605,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
-           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+           // GameState.ParticlePropertiesManager.SetSpriteRotationRate(180.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -649,7 +626,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_3);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
-           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+           // GameState.ParticlePropertiesManager.SetSpriteRotationRate(180.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -668,7 +645,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_SwordAttack);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
-           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+           // GameState.ParticlePropertiesManager.SetSpriteRotationRate(180.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -688,7 +665,7 @@ namespace Particle
           /*  GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_2);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
-           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+           // GameState.ParticlePropertiesManager.SetSpriteRotationRate(180.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -707,7 +684,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Dust_3);
             GameState.ParticlePropertiesManager.SetDecayRate(1.0f, 2.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, -1.0f));
-           // GameState.ParticlePropertiesManager.SetDeltaRotation(180.0f);
+           // GameState.ParticlePropertiesManager.SetSpriteRotationRate(180.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(Smoke18_Sprite);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(0.0f);
@@ -725,7 +702,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Smoke_2);
             GameState.ParticlePropertiesManager.SetDecayRate(1.5f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 5.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
@@ -738,7 +715,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.Smoke_3);
             GameState.ParticlePropertiesManager.SetDecayRate(0.7f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 1.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0.0f);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0.0f);
             GameState.ParticlePropertiesManager.SetSpriteId(WhiteCircle);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(0.1f, 0.1f));
             GameState.ParticlePropertiesManager.SetStartingScale(1.0f);
@@ -753,7 +730,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_1_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_1_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -766,7 +743,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_1_Left);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_1_Left);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -785,7 +762,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_2_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_2_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 2.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -798,7 +775,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_2_Left);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_2_Left);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 2.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -813,7 +790,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_3_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_3_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 1.5f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -826,7 +803,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_3_Left);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_3_Left);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 1.5f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -841,7 +818,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_1_Up_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_1_Up_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -853,7 +830,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_2_Up_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_2_Up_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));
@@ -865,7 +842,7 @@ namespace Particle
             GameState.ParticlePropertiesManager.Create((int)ParticleType.SwordSlash_3_Up_Right);
             GameState.ParticlePropertiesManager.SetDecayRate(4.0f);
             GameState.ParticlePropertiesManager.SetAcceleration(new Vec2f(0.0f, 0.0f));
-            GameState.ParticlePropertiesManager.SetDeltaRotation(0);
+            GameState.ParticlePropertiesManager.SetSpriteRotationRate(0);
             GameState.ParticlePropertiesManager.SetAnimationType(Animation.AnimationType.SwordSlash_3_Up_Right);
             GameState.ParticlePropertiesManager.SetSize(new Vec2f(3.0f, 3.0f));
             GameState.ParticlePropertiesManager.SetStartingVelocity(new Vec2f(0.0f, 0.0f));

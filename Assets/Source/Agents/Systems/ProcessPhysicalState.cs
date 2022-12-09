@@ -19,7 +19,7 @@ namespace Agent
 
                 if (entity.isAgentPlayer)
                 {
-//                    UnityEngine.Debug.Log(physicsState.MovementState);
+                    UnityEngine.Debug.Log(physicsState.MovementState);
                 }
 
                 float MaximumVelocityToFall = Physics.Constants.MaximumVelocityToFall;
@@ -68,6 +68,16 @@ namespace Agent
                     if (physicsState.MovementState == AgentMovementState.IdleAfterShooting)
                     {
                         physicsState.MovementState = AgentMovementState.None;
+                    }
+                }
+
+                if (physicsState.HitByExplosionImpactTime > 0)
+                {
+                    physicsState.HitByExplosionImpactTime -= deltaTime;
+                    if (physicsState.HitByExplosionImpactTime <= 0.0f)
+                    {
+                        physicsState.HitByExplosionImpact = false;
+                        physicsState.AffectedByFriction = true;
                     }
                 }
 
