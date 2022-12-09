@@ -27,7 +27,7 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             oxygenAmount = planet.Player != null ? planet.Player.agentStats.Oxygen.GetValue() : 0;
             progressBar.Update(oxygenAmount);
             infoTextWrapper.Update();

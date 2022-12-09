@@ -12,7 +12,7 @@ namespace Inventory
             if (InventorySystemsState.ClickedSlotslotID < 0)
                 return;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             InventorySystemsState.MouseDown = false;
             InventoryEntity inventoryEntity = planet.EntitasContext.inventory.GetEntityWithInventoryID(InventorySystemsState.ClickedInventoryID);
 

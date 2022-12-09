@@ -10,7 +10,7 @@ namespace Node
         // Todo: Fix scanner item crashing bug and fix this action.
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ItemInventoryEntity itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 

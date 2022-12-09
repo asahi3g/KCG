@@ -31,7 +31,7 @@ namespace Vehicle
             // Add default agents 
 
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var entity = planet.EntitasContext.vehicle.CreateEntity();
 
             entity.AddVehicleID(UniqueID, -1);

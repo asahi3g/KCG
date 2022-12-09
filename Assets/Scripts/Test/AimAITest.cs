@@ -35,7 +35,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             Vec2i mapSize = new Vec2i(128, 16);
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
 
             planet.Init(mapSize);
             planet.InitializeSystems(Material, transform);
@@ -46,7 +46,7 @@ namespace Planet.Unity
 
         private void GenerateMap()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref var tileMap = ref planet.TileMap;
 
             for (int j = 0; j < tileMap.MapSize.Y; j++)
@@ -81,7 +81,7 @@ namespace Planet.Unity
 
         public int GetNumOfEnemiesAlive()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             int numOfEnemies = 0;
             for (int i = 0; i < planet.AgentList.Length; i++)
             {

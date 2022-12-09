@@ -13,7 +13,7 @@ namespace Action
         static public NodeState Action(object ptr, int index)
         {
             // Get Data
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState data = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(data.AgentID);
             var physicsState = agent.agentPhysicsState;

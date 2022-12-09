@@ -4,7 +4,7 @@
     {
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ref MechList mechList = ref planet.MechList;
 
             for (int i = 0; i < mechList.Length; i++)

@@ -6,7 +6,7 @@ namespace Agent
     {
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             UnityEngine.Vector3 position = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             Vec2f mousePos = new Vec2f(position.x, position.y);
             Vec2f playerPos = planet.Player.agentPhysicsState.Position;

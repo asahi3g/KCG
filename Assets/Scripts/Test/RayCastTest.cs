@@ -101,7 +101,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
 
         GameResources.Initialize();
 
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         planet.Init(mapSize);
         planet.InitializeSystems(Material, transform);
         
@@ -156,7 +156,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
     
     void GenerateMap()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         CreateSquare(new Vec2f(0f, 0f),  new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_1").lineRenderer.sortingOrder = 11;
         CreateSquare(new Vec2f(16f, 0f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_2").lineRenderer.sortingOrder = 11;
         CreateSquare(new Vec2f(0f, 16f), new Vec2f(16f, 16f), UnityEngine.Color.white, false, "Chunk_3").lineRenderer.sortingOrder = 11;
@@ -198,7 +198,7 @@ public class RayCastTest : UnityEngine.MonoBehaviour
     }
     void RegenerateMap()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)

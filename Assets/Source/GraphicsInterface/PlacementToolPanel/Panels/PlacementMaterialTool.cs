@@ -23,7 +23,7 @@ namespace KGUI
         
         public override void OnActivate()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var selectedInventoryItem = GameState.GUIManager.SelectedInventoryItem;
             if (selectedInventoryItem == null) return;
             

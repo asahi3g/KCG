@@ -19,7 +19,7 @@ namespace KGUI.Statistics
 
         public static void DrawStatistics()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             frameCount++;
             dt += Time.deltaTime;
             if (dt > 1.0 / updateRate)

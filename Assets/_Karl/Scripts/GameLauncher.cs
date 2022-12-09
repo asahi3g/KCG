@@ -14,13 +14,9 @@ public class GameLauncher : BaseMonoBehaviour
     {
         base.Awake();
 
-        GameResources.Initialize();
-        AssetManager assetManager = AssetManager.Singelton; // force initialization
-        GameState.AudioSystem = new Audio.AudioSystem();
+        GameState.Initialize();
+
         GameState.AudioSystem.SetAudioSource(GetComponent<AudioSource>());
-        
-        GameState.TileSpriteAtlasManager.UpdateAtlasTextures();
-        GameState.SpriteAtlasManager.UpdateAtlasTextures();
     }
 
     protected override void Start()

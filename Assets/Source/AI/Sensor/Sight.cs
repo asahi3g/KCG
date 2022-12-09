@@ -8,7 +8,7 @@ namespace Sensor
     {
         public static void Update(in Sensor sensor)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(sensor.OwnerID);
 
             // Todo: Get agent sight.

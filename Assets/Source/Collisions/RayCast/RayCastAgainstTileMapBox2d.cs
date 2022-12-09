@@ -90,7 +90,7 @@ namespace Collisions
                 Vec2f currentPoint = vRayStart + vRayDir * fDistance - offset;
                 Vec2f limit = currentPoint + new Vec2f(width, height);
 
-                ref var planet = ref GameState.Planet;
+                var planet = GameState.Planet;
                 if ((currentPoint.X < 0 && limit.X < 0) ||
                     (currentPoint.Y < 0 && limit.Y < 0) ||
                     (currentPoint.X >= planet.TileMap.MapSize.X && limit.X >= planet.TileMap.MapSize.X) ||

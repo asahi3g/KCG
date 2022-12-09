@@ -123,7 +123,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         GameResources.Initialize();
 
         // Generating the map
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         planet.Init(mapSize);
         player = new AgentEntity();
 
@@ -142,7 +142,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
 
     void GenerateMap()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         
         var halfSize = new Vec2f(16f / 2f, 16f / 2f);
         
@@ -192,7 +192,7 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
     }
     void RegenerateMap()
     {
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         for (int x = 0; x < mapSize.X; x++)
         {
             for (int y = mapSize.Y - 3; y < mapSize.Y; y++)

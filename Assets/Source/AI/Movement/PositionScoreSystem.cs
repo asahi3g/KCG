@@ -22,7 +22,7 @@ namespace AI.Movement
         // -Move nearby enemies to those points while firing on the player.
         public void Update(int squadID)
         {
-            ref Planet.PlanetState planet = ref GameState.Planet;
+            Planet.PlanetState planet = GameState.Planet;
             ref Squad squad = ref GameState.SquadManager.Get(squadID);
             // Todo: Make range an attribute.
             const int Range = 30;

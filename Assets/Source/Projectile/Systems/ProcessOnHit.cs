@@ -9,7 +9,7 @@ namespace Projectile
     {
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {
                 ProjectileEntity projectileEntity = planet.ProjectileList.Get(i);
@@ -99,7 +99,7 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             
             if (elapse <= 0.05f)
                 planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.DustEmitter);
@@ -141,7 +141,7 @@ namespace Projectile
         {
             float elapse = Time.time - pEntity.projectileOnHit.FirstHitTime;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             
             planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
             planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);
@@ -182,7 +182,7 @@ namespace Projectile
 
             var properties = GameState.ProjectileCreationApi.Get((int)pEntity.projectileType.Type);
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             
             //planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ExplosionEmitter);
            // planet.AddParticleEmitter(pEntity.projectilePhysicsState.Position, ParticleEmitterType.ShrapnelEmitter);

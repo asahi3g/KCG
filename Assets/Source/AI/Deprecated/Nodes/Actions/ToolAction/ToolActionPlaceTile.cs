@@ -22,7 +22,7 @@ namespace Node
                 return;
             }
             
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             ItemInventoryEntity itemInventory = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             if (itemInventory.hasItemTile)

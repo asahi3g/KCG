@@ -44,7 +44,7 @@ namespace Planet.Unity
             GameResources.Initialize();
 
             // Generating the map
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var mapSize = new Vec2i(16, 16);
             AgentEntity player = new AgentEntity();
 

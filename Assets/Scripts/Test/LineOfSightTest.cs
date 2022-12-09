@@ -38,7 +38,7 @@ public class LineOfSightTest : MonoBehaviour
         CircleSector.color = standard;
         GameResources.Initialize();
 
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         planet.Init(mapSize);
         planet.InitializeSystems(Material, transform);
         Player = planet.AddAgent(new Vec2f(mapSize.X / 2, mapSize.Y / 2), Enums.AgentType.FlyingSlime, 0);
@@ -102,7 +102,7 @@ public class LineOfSightTest : MonoBehaviour
             CircleSector.radius = dir.Magnitude;
         }
         
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         planet.Update(Time.deltaTime); 
 
         Vec2f sectorDir = new Vec2f(MathF.Cos(theta * Mathf.Deg2Rad), MathF.Sin(theta * Mathf.Deg2Rad));
@@ -145,7 +145,7 @@ public class LineOfSightTest : MonoBehaviour
         XorShift64Star random = new XorShift64Star();
         random.SetSeed((ulong)seed);
         
-        ref var planet = ref GameState.Planet;
+        var planet = GameState.Planet;
         ref var tileMap = ref planet.TileMap;
 
         for (int j = tileMap.MapSize.Y - 1; j >= 0; j--)

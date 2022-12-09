@@ -22,7 +22,7 @@ namespace Projectile
 
         public void UpdateEx(float deltaTime)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             const float THRESHOLD_VERTICAL_SPEED = 2.0f; // If slower than this stick to the ground.
             ref PlanetTileMap.TileMap tileMap = ref planet.TileMap;
 

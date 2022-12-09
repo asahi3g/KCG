@@ -11,7 +11,7 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             AgentEntity agentEntity = planet.EntitasContext.agent.GetEntityWithAgentID(nodeEntity.nodeOwner.AgentID);
 
             var mechs = planet.EntitasContext.mech.GetGroup(MechMatcher.MechID);

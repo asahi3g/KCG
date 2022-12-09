@@ -9,7 +9,7 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

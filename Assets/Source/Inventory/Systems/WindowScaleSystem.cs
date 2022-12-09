@@ -16,7 +16,7 @@ namespace Inventory
             int[] openInventoryIndices = new int[MAX_OPEN_INVENTORY_COUNT];
             int length = 0;
 
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             for (int i = 0; i < planet.InventoryList.Length; i++)
             {
                 if (planet.InventoryList.Get(i).hasInventoryDraw)

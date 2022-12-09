@@ -10,7 +10,7 @@ namespace Node
 
         public override void OnEnter(NodeEntity nodeEntity)
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             var itemEntity = planet.EntitasContext.itemInventory.GetEntityWithItemID(nodeEntity.nodeTool.ItemID);
 
             var player = planet.Player;

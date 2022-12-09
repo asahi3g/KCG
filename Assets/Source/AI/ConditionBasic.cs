@@ -12,7 +12,7 @@ namespace Condition
     {
         static bool HasBulletInClip(object ptr)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ItemInventoryEntity item = agent.GetItem();
@@ -34,7 +34,7 @@ namespace Condition
 
         static bool HasEnemyAlive(object ptr)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             for (int i = 0; i < planet.AgentList.Length; i++)
@@ -49,7 +49,7 @@ namespace Condition
 
         static bool IsInAttackRange(object ptr)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
@@ -66,7 +66,7 @@ namespace Condition
 
         static bool InLineOfSight(object ptr)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);
@@ -83,7 +83,7 @@ namespace Condition
 
         public static bool ItIsOnTheNextTile(object ptr)
         {
-            ref PlanetState planet = ref GameState.Planet;
+            PlanetState planet = GameState.Planet;
             ref NodesExecutionState stateData = ref NodesExecutionState.GetRef((ulong)ptr);
             AgentEntity agent = planet.EntitasContext.agent.GetEntityWithAgentID(stateData.AgentID);
             ref Blackboard blackboard = ref GameState.BlackboardManager.Get(agent.agentController.BlackboardID);

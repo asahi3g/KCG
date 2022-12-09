@@ -58,7 +58,7 @@ namespace Projectile
 
         public void Update()
         {
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             float deltaTime = UnityEngine.Time.deltaTime;
             for (int i = 0; i < planet.ProjectileList.Length; i++)
             {

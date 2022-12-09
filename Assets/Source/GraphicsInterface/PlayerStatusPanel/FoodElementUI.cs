@@ -26,7 +26,7 @@ namespace KGUI
         public override void Update()
         {
             base.Update();
-            ref var planet = ref GameState.Planet;
+            var planet = GameState.Planet;
             foodAmount = planet.Player?.agentStats.Food.GetValue() ?? 0;
             progressBar.Update(foodAmount);
             infoText.Update();
