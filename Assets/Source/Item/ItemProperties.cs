@@ -3,7 +3,6 @@
 using System;
 using Enums;
 using Enums.PlanetTileMap;
-using KGUI;
 using KMath;
 
 namespace Item
@@ -26,7 +25,6 @@ namespace Item
         public TileID TileType;                 // Used only when item is a material type.
         public ItemToolType ToolType;           // used for weapon/tool attachement
         public ItemAnimationSet AnimationSet;   // used to change agent animations (like walking with rifle)
-        public PanelEnums ItemPanelEnums;
 
         public ItemKeyUsage KeyUsage;
 

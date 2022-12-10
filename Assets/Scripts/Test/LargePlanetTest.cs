@@ -12,7 +12,6 @@ namespace Planet.Unity
         [UnityEngine.SerializeField] UnityEngine.Material Material;
 
         Inventory.InventoryManager inventoryManager;
-        Inventory.DrawSystem inventoryDrawSystem;
         AgentEntity Player;
         int PlayerID;
 
@@ -59,17 +58,12 @@ namespace Planet.Unity
 
             if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
                 return;
-
-            inventoryDrawSystem.Draw();
         }
 
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
             inventoryManager = new Inventory.InventoryManager();
-            inventoryDrawSystem = new Inventory.DrawSystem();
-
-            GameResources.Initialize();
 
             // Generating the map
             var planet = GameState.Planet;

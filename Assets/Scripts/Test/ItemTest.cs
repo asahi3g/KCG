@@ -25,16 +25,6 @@ namespace Planet.Unity
         public void Update()
         {
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
-
-            Draw();
-        }
-
-        private void Draw()
-        {
-            if (!Init)
-                return;
-
-            GameState.Planet.DrawHUD(Player);
         }
 
         private void OnDrawGizmos()
@@ -45,8 +35,6 @@ namespace Planet.Unity
         // Create the sprite atlas for testing purposes
         public void Initialize()
         {
-            GameResources.Initialize();
-
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(16, 64);

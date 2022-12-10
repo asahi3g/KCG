@@ -300,11 +300,6 @@ public partial class AgentEntity
         if (item == null)
             return;
         var itemProperty = GameState.ItemCreationApi.GetItemProperties(item.itemType.Type);
-
-        if (isAgentPlayer && itemProperty.HasUI())
-        {
-            GameState.GUIManager.SetPanelActive(itemProperty.ItemPanelEnums, false);
-        }
     }
 
     public void ClearModel3DWeapon()

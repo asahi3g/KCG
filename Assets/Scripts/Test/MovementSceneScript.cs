@@ -131,8 +131,6 @@ namespace Planet.Unity
 
             UnityEngine.Application.targetFrameRate = 200;
 
-            GameResources.Initialize();
-
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(128, 32);
@@ -492,17 +490,10 @@ namespace Planet.Unity
             if (!Init)
                 return;
 
-            GameState.Planet.DrawHUD(Player);
-
             if (showMechInventory)
             {
                 DrawCurrentMechHighlighter();
             }
-
-            
-          //  CharacterDisplay.Draw();
-
-                 
         }
 
         private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h, UnityEngine.Color color)

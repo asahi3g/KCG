@@ -13,9 +13,7 @@ namespace Inventory
             var InventoryEntityTemplate = GameState.InventoryCreationApi.Get(InventoryEntityTemplateID);
             var inventoryEntity = GameState.Planet.EntitasContext.inventory.CreateEntity();
             inventoryEntity.AddInventoryID(uniqueID++);
-            if (InventoryEntityTemplate.HasToolBar)
-                inventoryEntity.hasInventoryToolBarDraw = true;
-            
+
             int size = InventoryEntityTemplate.SlotCount;
             inventoryEntity.AddInventoryInventoryEntity(-1, InventoryEntityTemplateID, new Slot[size], new BitSet((uint)size), type);
 
@@ -37,18 +35,6 @@ namespace Inventory
         public InventoryEntity CreateDefaultInventory(Enums.InventoryEntityType type = Enums.InventoryEntityType.Default)
         {
             return CreateInventory(GameState.InventoryCreationApi.GetDefaultPlayerInventoryModelID(), type);
-        }
-
-        public void OpenInventory(InventoryEntity inventoryEntity)
-        {
-            inventoryEntity.hasInventoryDraw = true;
-            GameState.InventoryWindowScaleSystem.OnOpenWindow(inventoryEntity);
-        }
-
-        public void CloseInventory(InventoryList inventoryList, InventoryEntity inventoryEntity)
-        {
-            inventoryEntity.hasInventoryDraw = false;
-            GameState.InventoryWindowScaleSystem.OnCloseWindow(inventoryList);
         }
 
         public bool AddItemAtSlot(ItemInventoryEntity itemEntity, int inventoryID, int slotID)

@@ -36,9 +36,6 @@ namespace Planet.Foreground
         private UnityEngine.Color wrongHlColor = UnityEngine.Color.red;
         private UnityEngine.Color correctHlColor = UnityEngine.Color.green;
 
-
-        KGui.CharacterDisplay CharacterDisplay;
-
         static bool Init = false;
 
         public void Start()
@@ -54,8 +51,6 @@ namespace Planet.Foreground
         public void Initialize()
         {
             UnityEngine.Application.targetFrameRate = 60;
-
-            GameResources.Initialize();
 
             // Generating the map
             var planet = GameState.Planet;
@@ -92,10 +87,6 @@ namespace Planet.Foreground
             HighliterMesh = new Utility.FrameMesh("HighliterGameObject", Material, transform,
                 GameState.SpriteAtlasManager.GetSpriteAtlas(AtlasType.Generic), 30);
 
-
-
-            CharacterDisplay = new KGui.CharacterDisplay();
-            CharacterDisplay.SetPlayer(playerAgentEntity);
 
             UpdateMode(playerAgentEntity);
         }
@@ -168,9 +159,7 @@ namespace Planet.Foreground
             }
 
             Draw();
-
-
-            CharacterDisplay.Update();
+            
             planet.Update(UnityEngine.Time.deltaTime);
 
         }
@@ -182,17 +171,10 @@ namespace Planet.Foreground
             if (!Init)
                 return;
 
-            GameState.Planet.DrawHUD(playerAgentEntity);
-
             if (showMechInventory)
             {
                 DrawCurrentMechHighlighter();
             }
-
-
-            CharacterDisplay.Draw();
-
-
         }
 
         private void DrawQuad(UnityEngine.GameObject gameObject, float x, float y, float w, float h,

@@ -27,18 +27,6 @@ class PlanterTest : UnityEngine.MonoBehaviour
         GameState.Planet.Update(UnityEngine.Time.deltaTime);
     }
 
-    private void OnGUI()
-    {
-        if (!Init)
-            return;
-
-        GameState.Planet.DrawHUD(Player);
-        if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-            return;
-
-        KGUI.Statistics.StatisticsDisplay.DrawStatistics();
-    }
-
     private void OnDrawGizmos()
     {
         var planet = GameState.Planet;
@@ -77,8 +65,6 @@ class PlanterTest : UnityEngine.MonoBehaviour
     // create the sprite atlas for testing purposes
     public void Initialize()
     {
-        GameResources.Initialize();
-
         // Generating the map
         var planet = GameState.Planet;
         Vec2i mapSize = new Vec2i(32, 32);

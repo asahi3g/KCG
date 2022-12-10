@@ -120,8 +120,6 @@ public class RectangleTileCollisionTest_v2 : UnityEngine.MonoBehaviour
         R2       = region2_obj.AddComponent<TestSquare>();
         SetRegions(square.xmin, square.xmax, square.ymin, square.ymax, new Vec2f(3f, 3f));
 
-        GameResources.Initialize();
-
         // Generating the map
         var planet = GameState.Planet;
         planet.Init(mapSize);

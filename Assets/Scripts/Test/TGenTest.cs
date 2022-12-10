@@ -36,19 +36,10 @@ namespace Planet.Unity
         public void Update()
         {
             GameState.Planet.Update(Time.deltaTime);
-
-            Draw();
-        }
-
-        private void Draw()
-        {
-            GameState.Planet.DrawHUD(player);
         }
 
         public void Initialize()
         {
-            GameResources.Initialize();
-           
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);

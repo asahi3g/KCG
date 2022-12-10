@@ -38,22 +38,6 @@ namespace Planet.Unity
             {
                 geometryPlacementTool.UpdateToolGrid();
             }
-
-            materialBag.hasInventoryDraw = planet.EntitasContext.inventory.GetEntityWithInventoryID(inventoryID).hasInventoryDraw;
-        }
-        private void OnGUI()
-        {
-            if (!init) return;
-            var planet = GameState.Planet;
-            planet.DrawHUD(planet.Player);
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            // Draw Statistics
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint) return;
-            
-            KGUI.Statistics.StatisticsDisplay.DrawStatistics();
         }
 
         private void OnDrawGizmos()
@@ -114,9 +98,7 @@ namespace Planet.Unity
             UnityEngine.Application.targetFrameRate = 60;
 
             inventoryManager = new Inventory.InventoryManager();
-
-            GameResources.Initialize();
-
+            
             // Generating the map
             var planet = GameState.Planet;
             Vec2i mapSize = new Vec2i(32, 32);

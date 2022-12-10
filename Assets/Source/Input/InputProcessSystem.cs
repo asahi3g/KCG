@@ -3,7 +3,6 @@
 using Agent;
 using Enums;
 using Inventory;
-using KGUI.Statistics;
 using KMath;
 using Mech;
 using PlanetTileMap;
@@ -247,39 +246,6 @@ namespace ECSInput
 
                 foreach (var agentEntity in agentEntities)
                 {
-                    if (agentEntity.isAgentPlayer)
-                    {
-                        inventoryID = agentEntity.agentInventory.InventoryID;
-                        playerInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                        inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
-                        equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-                        
-                        foreach (var mech in mechEntities)
-                        {
-                            if (mech.mechType.mechType == MechType.CraftingTable)
-                            {
-                                if (mech.mechCraftingTable.InputInventory.hasInventoryDraw ||
-                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw)
-                                {
-                                    mech.mechCraftingTable.InputInventory.hasInventoryDraw = false;
-                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw = false;
-
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
-                                }
-
-                                if (Vec2f.Distance(agentEntity.agentPhysicsState.Position, mech.mechPosition2D.Value) < 2.0f)
-                                {
-                                    GameState.InventoryManager.OpenInventory(playerInventory);
-                                    GameState.InventoryManager.OpenInventory(equipmentInventory);
-
-                                    mech.mechCraftingTable.InputInventory.hasInventoryDraw = true;
-                                    mech.mechCraftingTable.OutputInventory.hasInventoryDraw = true;
-                                }
-                            }
-                        }
-                    }
 
                     UpdateVehicles(agentEntity);
 
@@ -333,19 +299,6 @@ namespace ECSInput
 
                     inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
                     equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                    if (!inventory.hasInventoryDraw)
-                    {
-                        GameState.InventoryManager.OpenInventory(inventory);
-                        GameState.InventoryManager.OpenInventory(playerInventory);
-                        GameState.InventoryManager.OpenInventory(equipmentInventory);
-                    }
-                    else 
-                    {
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, playerInventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
-                    }
                 }
             }
 
@@ -383,16 +336,6 @@ namespace ECSInput
 
             ////}
 
-            // Show/Hide Statistics
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F1))
-            {
-                if (StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled)
-                    StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled = false;
-                else if (!StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled)
-                    StatisticsDisplay.TextWrapper.GetGameObject().GetComponent<Text>().enabled = true;
-
-            }
-
             // Remove Tile Front At Cursor Position.
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F2))
             {
@@ -411,38 +354,6 @@ namespace ECSInput
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.F4))
             {
                 TileMapRenderer.TileCollisionDebugging = !TileMapRenderer.TileCollisionDebugging;
-            }
-
-            //  Open Inventory with Tab.        
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Tab))
-            {
-                foreach (var agentEntity in agentEntities)
-                {
-                    int inventoryID = agentEntity.agentInventory.InventoryID;
-                    InventoryEntity inventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                    inventoryID = agentEntity.agentInventory.EquipmentInventoryID;
-                    InventoryEntity equipmentInventory = contexts.inventory.GetEntityWithInventoryID(inventoryID);
-
-                    if (!inventory.hasInventoryDraw)
-                    {
-                        GameState.InventoryManager.OpenInventory(inventory);
-                        GameState.InventoryManager.OpenInventory(equipmentInventory);
-                    }
-                    else
-                    {
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, inventory);
-                        GameState.InventoryManager.CloseInventory(planet.InventoryList, equipmentInventory);
-                        if (!inventory.hasInventoryDraw)    // If inventory was open close all open inventories.
-                        {
-                            for (int i = 0; i < planet.InventoryList.Length; i++)
-                            {
-                                if (planet.InventoryList.Get(i).hasInventoryDraw)
-                                    GameState.InventoryManager.CloseInventory(planet.InventoryList, planet.InventoryList.Get(i));
-                            }
-                        }
-                    }
-                }
             }
 
             // Change Pulse Weapon Mode.
@@ -504,28 +415,6 @@ namespace ECSInput
                     if (entity.hasAgentAction)
                     {
                         entity.agentAction.Action = AgentAlertState.UnAlert;
-                    }
-                }
-                
-
-                for (int i = 0; i < InventoryEntityTemplate.Width; i++)
-                {
-                    var keyCode = UnityEngine.KeyCode.Alpha1 + i;
-                    if (UnityEngine.Input.GetKeyDown(keyCode))
-                    {
-                        if (inventory.inventoryInventoryEntity.SelectedSlotIndex != i)
-                        {
-                            entity.HandleItemDeselected(item);
-                        }
-                        inventory.inventoryInventoryEntity.SetSelectedSlotIndex(i);
-                        item = GameState.InventoryManager.GetItemInSlot(inventoryID, i);
-                        GameState.GUIManager.SelectedInventoryItem = item;
-                        if (item == null) return;
-
-                        entity.SetModel3DWeapon(item);
-                        
-                        planet.AddFloatingText(item.itemType.Type.ToString(), 2.0f, Vec2f.Zero, new Vec2f(entity.agentPhysicsState.Position.X + 0.4f,
-                                    entity.agentPhysicsState.Position.Y));
                     }
                 }
 

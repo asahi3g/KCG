@@ -59,21 +59,8 @@ namespace Planet.Unity
                 GameState.ActionCreationSystem.CreateMovementAction(Enums.ActionType.MoveToAction,
                    SelectedAgent.agentID.ID, goalPos);
             }
-
-            Draw();
-
+            
             GameState.Planet.Update(UnityEngine.Time.deltaTime);
-        }
-
-        private void Draw()
-        {
-            if (!Init)
-                return;
-
-            if (UnityEngine.Event.current.type != UnityEngine.EventType.Repaint)
-                return;
-
-            GameState.InventoryDrawSystem.Draw();
         }
 
         private void OnDrawGizmos()
@@ -84,8 +71,6 @@ namespace Planet.Unity
         // create the sprite atlas for testing purposes
         public void Initialize()
         {
-            GameResources.Initialize();
-
             // Set map path.
             // 0 -> air
             // 1 -> solid
