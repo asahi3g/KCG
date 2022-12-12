@@ -89,6 +89,7 @@ namespace Planet.Unity
             int EnemyFaction = 1;
 
             Player = Planet.AddPlayer(new Vec2f(30.0f, 6), PlayerFaction);
+            var material = new UnityEngine.Material(UnityEngine.Shader.Find("Unlit/ShaderTest"));
             PlayerID = Player.agentID.ID;
 
             GameState.Planet.AddAgent(new Vec2f(10.0f, 10f), Enums.AgentType.EnemyMarine, EnemyFaction);
@@ -98,7 +99,8 @@ namespace Planet.Unity
             PlayerID = Player.agentID.ID;
             inventoryID = Player.agentInventory.InventoryID;
 
-            Planet.InitializeSystems(Material, transform);
+
+            Planet.InitializeSystems(material, transform);
             //GenerateMap();
             var camera = Camera.main;
             Vector3 lookAtPosition = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, camera.nearClipPlane));
@@ -181,7 +183,6 @@ namespace Planet.Unity
 
             ref var planet = ref GameState.Planet;
             ref var tileMap = ref planet.TileMap;
-            Material material = Material;
 
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
@@ -224,7 +225,7 @@ namespace Planet.Unity
 
 
             CharacterDisplay.Update();
-            planet.Update(Time.deltaTime, Material, transform);
+            planet.Update2(Time.deltaTime, Material, transform, new UnityEngine.Vector3(playerPosition.X, 0, playerPosition.Y));
 
         }
         Texture2D texture;

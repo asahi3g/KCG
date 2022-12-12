@@ -433,11 +433,31 @@ namespace Planet
 
         }
 
-        // updates the entities, must call the systems and so on ..
         public void Update(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform)
         {
+            Update2(deltaTime, material, transform, new UnityEngine.Vector3(0, 1, 0));
+        }
+
+        // updates the entities, must call the systems and so on ..
+        public void Update2(float deltaTime, UnityEngine.Material material, UnityEngine.Transform transform, UnityEngine.Vector3 position)
+        {
+
             float targetFps = 30.0f;
             float frameTime = 1.0f / targetFps;
+
+
+            RenderTexture current = null;
+            if (UnityEngine.Camera.current != null)
+            {
+                current = UnityEngine.Camera.current.targetTexture;
+            }
+
+            if (PostProcess.mainRenderBuffers != null && UnityEngine.Camera.current)
+            {
+
+                // UnityEngine.Graphics.SetRenderTarget(PostProcess.mainRenderBuffers, PostProcess.mainRenderTexture0.depthBuffer);
+                UnityEngine.Camera.current.SetTargetBuffers(PostProcess.mainRenderBuffers, PostProcess.mainRenderTexture0.depthBuffer);
+            }
 
             /*TimeState.Deficit += deltaTime;
 
@@ -508,7 +528,10 @@ namespace Planet
             GameState.BehaviorTreeUpdateSystem.Update();
             GameState.BlackboardUpdatePosition.Update();
 
-            CameraFollow.Update();
+            Camera.main.orthographicSize = 20.0f / GameState.InputProcessSystem.scale;
+            GameState.Planet.CameraFollow.Update();
+            Camera.main.ResetWorldToCameraMatrix();
+            Camera.main.ResetProjectionMatrix();
 
             TileMap.UpdateTileSprites();
 
@@ -522,7 +545,7 @@ namespace Planet
             // Update Meshes.
             GameState.TileMapRenderer.UpdateBackLayerMesh();
             GameState.TileMapRenderer.UpdateMidLayerMesh();
-            GameState.TileMapRenderer.UpdateFrontLayerMesh();
+            GameState.TileMapRenderer.UpdateFrontLayerMesh2(Player.agentModel3D.GameObject, position);
             GameState.ItemMeshBuilderSystem.UpdateMesh();
             GameState.AgentMeshBuilderSystem.UpdateMesh();
             GameState.VehicleMeshBuilderSystem.UpdateMesh();

@@ -79,7 +79,9 @@ namespace TGen
         FP_R0,
         FP_R1,
         FP_R2,
-        FP_R3
+        FP_R3,
+
+        LIGHT
     }
 
 }

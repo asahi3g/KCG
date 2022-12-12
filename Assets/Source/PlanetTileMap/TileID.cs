@@ -165,5 +165,6 @@
         L2_R5_Rock,
         L2_R6_Rock,
         L2_R7_Rock,
+        LIGHT,
     }
 }

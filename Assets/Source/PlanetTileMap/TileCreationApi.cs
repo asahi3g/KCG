@@ -1740,6 +1740,14 @@ namespace PlanetTileMap
 
             CreateMetalGeometryTiles();
             CreateRockGeometryTiles();
+
+            GameState.TileCreationApi.CreateTileProperty(TileID.LIGHT);
+            GameState.TileCreationApi.SetTileMaterialType(MaterialType.Metal);
+            GameState.TileCreationApi.SetTilePropertyShape(Enums.TileGeometryAndRotation.LIGHT);
+            GameState.TileCreationApi.SetSpriteRuleType(SpriteRuleType.NoRule);
+            GameState.TileCreationApi.SetTilePropertySpriteSheet16(MoonSpriteSheet, 11, 10);
+            GameState.TileCreationApi.EndTileProperty();
+
         }
     }
 }

@@ -32,6 +32,10 @@ namespace PixelEffect
         void OnRenderImage(UnityEngine.RenderTexture source, UnityEngine.RenderTexture destination)
         {
 
+            if (source == null)
+            {
+                return;
+            }
             if (pixelMaterial == null)
             {
                 UnityEngine.Graphics.Blit(source, destination);

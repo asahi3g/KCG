@@ -16,6 +16,7 @@ public class CameraFollow
 
     // Follow Condition
     public bool canFollow = false;
+    public static bool STOP = false;
 
     // Doc: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html
     public void Update()
@@ -35,6 +36,7 @@ public class CameraFollow
             }
 
             // Follow Player Position
+            if (STOP == false)
             UnityEngine.Camera.main.transform.position = UnityEngine.Vector3.Slerp(UnityEngine.Camera.main.transform.position, new UnityEngine.Vector3(PlayerPos.X, PlayerPos.Y, -10.0f), followSpeed * UnityEngine.Time.deltaTime);
         }
         

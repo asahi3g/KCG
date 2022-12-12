@@ -1,7 +1,10 @@
 ﻿//imports UnityEngine
 
 using KMath;
+using PlanetTileMap;
 using System.Collections.Generic;
+using System.Drawing;
+using UnityEngine;
 
 namespace Utility
 {
@@ -10,8 +13,12 @@ namespace Utility
         public UnityEngine.GameObject obj;
         public List<UnityEngine.Vector3> vertices;
         public List<UnityEngine.Vector2> uvs;
-        public List<int> triangles;
+
         public List<UnityEngine.Color> colors;
+        public List<int> triangles;
+
+        public List<UnityEngine.Vector2> lightPositions;
+        public List<UnityEngine.Vector4> lightColors;
 
         public FrameMesh(string name, UnityEngine.Material material, UnityEngine.Transform transform, Sprites.SpriteAtlas Atlassprite, int drawOrder = 0)
         {
@@ -19,7 +26,9 @@ namespace Utility
             obj.transform.SetParent(transform);
 
             var mat = UnityEngine.Object.Instantiate(material);
-            mat.SetTexture("MainTex", Atlassprite.Texture);
+
+
+            mat.SetTexture("_MainTex", Atlassprite.Texture);
 
             var mesh = new UnityEngine.Mesh
             {
@@ -29,7 +38,13 @@ namespace Utility
             var mf = obj.GetComponent<UnityEngine.MeshFilter>();
             mf.sharedMesh = mesh;
             var mr = obj.GetComponent<UnityEngine.MeshRenderer>();
-            mr.sharedMaterial = mat;
+
+            UnityEngine.Debug.Log("FRAME_MESH: " + name);
+
+            var Material = new UnityEngine.Material(UnityEngine.Shader.Find("Unlit/ShaderTest"));
+
+            mr.sharedMaterial = Material;
+
             mr.sortingOrder = drawOrder;
 
             // Todo: prealocate lists.
@@ -37,6 +52,42 @@ namespace Utility
             triangles = new List<int>();
             uvs = new List<UnityEngine.Vector2>();
             colors = new List<UnityEngine.Color>();
+            lightPositions = new List<UnityEngine.Vector2>();
+            lightColors = new List<UnityEngine.Vector4>();
+            //SetLightPosition(new Vector3(1, 0, 1));
+        }
+
+        public static void SetLightPosition(UnityEngine.Material material, List<UnityEngine.Vector2> positions, List<UnityEngine.Vector4> colors, Transform tx = null)
+        {
+            var lightCount = positions.Count;
+            material.SetVector("_KCG_LightCount", new Vector4(lightCount, lightCount, lightCount, lightCount));
+
+            for (int i = 0; i < positions.Count; i++)
+            {
+                string name = "_KCG_LightPosition" + i.ToString();
+
+                var worldPos = new Vector3(positions[i].x, positions[i].y, 0);
+  	            material.SetVector(name, new Vector4(worldPos.x, worldPos.y, worldPos.z, 1));
+                if (i >= 15)
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < colors.Count; i++)
+            {
+                string name = "_KCG_LightColor" + i.ToString();
+  	            material.SetVector(name, new Vector4(colors[i].x, colors[i].y, colors[i].z, 1));
+                if (i >= 15)
+                {
+                    break;
+                }
+            }
+
+        }
+
+        public void SetLightPosition(Transform tx = null)
+        {
+            SetLightPosition(this.obj.GetComponent<UnityEngine.MeshRenderer>().sharedMaterial, lightPositions, lightColors, tx);
         }
 
         public void Clear()
@@ -45,6 +96,8 @@ namespace Utility
             uvs.Clear();
             triangles.Clear();
             colors.Clear();
+            lightPositions.Clear();
+            lightColors.Clear();
         }
 
 
@@ -58,7 +111,7 @@ namespace Utility
             return new Vec2f(tmpX * c - pos.Y * s, tmpX * s + pos.Y * c);
         }
 
-        public void UpdateVertex(int index, float x, float y, float w, float h, float r = 1.0f, float g = 1.0f, float b = 1.0f, float a = 1.0f, float angle = 0)
+        public void UpdateVertex(int index, float x, float y, float w, float h, bool light = false, float r = 0, float g = 0, float b = 0, float a = 0, float angle = 0)
         {
             angle = angle * 3.14f / 180.0f;
             Vec2f topLeft = new Vec2f(0, h);
@@ -78,6 +131,14 @@ namespace Utility
             var p1 = new UnityEngine.Vector3(TopRight.X + x, TopRight.Y + y, 0);
             var p2 = new UnityEngine.Vector3(topLeft.X + x, topLeft.Y + y, 0);
             var p3 = new UnityEngine.Vector3(BottomRight.X + x, BottomRight.Y + y, 0);
+
+            var center = p0 + (p1 - p0) * 0.5f;
+
+            if (light)
+            {
+                lightPositions.Add(new UnityEngine.Vector2(center.x, center.y));
+                lightColors.Add(new UnityEngine.Color(r, g, b, a));
+            }
 
             int triangleIndex = vertices.Count;
 
@@ -133,6 +194,18 @@ namespace Utility
             uvs.Add(uv1);
             uvs.Add(uv2);
             uvs.Add(uv3);
+        }
+
+        public void UpdateColor(int index, UnityEngine.Color color, bool light = false)
+        {
+            colors.Add(color);
+            colors.Add(color);
+            colors.Add(color);
+            colors.Add(color);
+
+            if (light)
+                lightColors.Add(color);
+
         }
 
         public void UpdateUV(Vec2f[] coords)

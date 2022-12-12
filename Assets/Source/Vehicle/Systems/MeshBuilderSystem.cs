@@ -34,7 +34,7 @@ namespace Vehicle
                 // Update UVs
                 Mesh.UpdateUV(textureCoords, (index) * 4);
                 // Update Vertices
-                Mesh.UpdateVertex((index++ * 4), x, y, width, height, entity.vehiclePhysicsState2D.Rotation);
+                Mesh.UpdateVertex((index++ * 4), x, y, width, height, false, entity.vehiclePhysicsState2D.Rotation);
 
 
                 if (entity.hasVehicleThruster && entity.hasVehicleThrusterSprite2D)
@@ -57,14 +57,14 @@ namespace Vehicle
 
                     // Update Vertices
                     Mesh.UpdateVertex((index++ * 4), x + thruster1X, y + thruster1Y, thrusterWidth, thrusterHeight,
-                        entity.vehiclePhysicsState2D.Rotation);
+                        false, entity.vehiclePhysicsState2D.Rotation);
 
                     // Update UVs
                     Mesh.UpdateUV(Thruster2textureCoords, (index) * 4);
 
                     // Update Vertices
                     Mesh.UpdateVertex((index++ * 4), x + thruster2X, y + thruster2Y, thrusterWidth, thrusterHeight,
-                        entity.vehiclePhysicsState2D.Rotation);
+                        false,entity.vehiclePhysicsState2D.Rotation);
 
                 }
             }
